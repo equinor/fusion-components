@@ -20,5 +20,14 @@
   "bugs": {
     "url": "https://github.com/equinor/fusion-components/issues"
   },
-  "homepage": "https://github.com/equinor/fusion-components#readme"
+  "homepage": "https://github.com/equinor/fusion-components#readme",
+  "devDependencies": {
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-merge": "^4.2.1"
+  }
 }
