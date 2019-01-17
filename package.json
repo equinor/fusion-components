@@ -1,0 +1,24 @@
+{
+  "name": "@fusion/components",
+  "version": "1.0.0",
+  "description": "Common react components used by fusion core and fusion apps",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/equinor/fusion-components.git"
+  },
+  "keywords": [
+    "fusion",
+    "react",
+    "components"
+  ],
+  "author": "Martin Førre",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/equinor/fusion-components/issues"
+  },
+  "homepage": "https://github.com/equinor/fusion-components#readme"
+}
