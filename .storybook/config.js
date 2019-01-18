@@ -1,9 +1,7 @@
 import React from "react";
 import { configure, addDecorator } from "@storybook/react";
 import { withOptions } from "@storybook/addon-options";
-import { themes } from "@storybook/components";
 import { withInfo } from "@storybook/addon-info";
-import "./fonts.less";
 
 addDecorator(stories => <div style={{ fontFamily: "Equinor", textAlign: "center" }}>{stories()}</div>);
 
@@ -44,7 +42,7 @@ addDecorator(
                 backgroundColor: "white",
                 borderRight: "2px solid rgba(0, 0, 0, 0.1)",
                 padding: 8,
-                fontFamily: "Equinor",
+                fontFamily: "Equinor-Storybook",
             },
 
             menuLink: {
