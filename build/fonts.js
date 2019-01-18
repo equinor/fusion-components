@@ -1,5 +1,5 @@
 // Support for github pages
-const publicPath = process.env.NODE_ENV === "production" ? "fusion-components/fonts/" : "/fonts/";
+const publicPath = process.env.NODE_ENV === "production" ? "/fusion-components/fonts/" : "/fonts/";
 
 module.exports = {
     module: {
