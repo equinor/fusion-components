@@ -4,6 +4,7 @@ import { withOptions } from "@storybook/addon-options";
 import { withInfo } from "@storybook/addon-info";
 import results from "../.jest-test-results.json";
 import { withTests } from "@storybook/addon-jest";
+import { themes } from "@storybook/components";
 
 addDecorator(stories => <div style={{ fontFamily: "Equinor", textAlign: "center" }}>{stories()}</div>);
 addDecorator(withTests({ results }));
@@ -41,26 +42,35 @@ addDecorator(
 addDecorator(
     withOptions({
         addonPanelInRight: true,
-        // theme: {
-        //     storiesNav: {
-        //         backgroundColor: "white",
-        //         borderRight: "2px solid rgba(0, 0, 0, 0.1)",
-        //         padding: 8,
-        //         fontFamily: "Equinor-Storybook",
-        //     },
+        name: "Fusion Components",
+        url: "https://github.com/equinor/fusion-components",
+        sidebarAnimations: false,
+        theme: {
+            ...themes.normal,
+            storiesNav: {
+                ...themes.normal.storiesNavbar,
+                backgroundColor: "white",
+                borderRight: "2px solid rgba(0, 0, 0, 0.1)",
+                padding: 8,
+                // fontFamily: "Equinor",
+            },
 
-        //     menuLink: {
-        //         padding: 8,
-        //         color: "#007079",
-        //     },
+            menuLink: {
+                ...themes.normal.menuLink,
+                padding: 8,
+                color: "#007079",
+                // fontFamily: "Equinor",
+            },
 
-        //     activeMenuLink: {
-        //         padding: 8,
-        //         color: "#007079",
-        //         backgroundColor: "#EDFCF4",
-        //         borderRadius: 4,
-        //     },
-        // },
+            activeMenuLink: {
+                ...themes.normal.activeMenuLink,
+                padding: 8,
+                color: "#007079",
+                backgroundColor: "#EDFCF4",
+                borderRadius: 4,
+                // fontFamily: "Equinor",
+            },
+        },
     })
 );
 
