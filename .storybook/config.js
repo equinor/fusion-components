@@ -3,8 +3,7 @@ import { configure, addDecorator } from "@storybook/react";
 import { withOptions } from "@storybook/addon-options";
 import { themes } from "@storybook/components";
 import { withInfo } from "@storybook/addon-info";
-import "./fonts.js";
-import "../src/styles/fonts.less";
+import "./fonts.less";
 
 addDecorator(stories => <div style={{ fontFamily: "Equinor", textAlign: "center" }}>{stories()}</div>);
 
