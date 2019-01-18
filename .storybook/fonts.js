@@ -1,0 +1,16 @@
+import "../src/fonts/Equinor-Regular.woff";
+import "../src/fonts/Equinor-Regular.woff2";
+import "../src/fonts/Equinor-Italic.woff";
+import "../src/fonts/Equinor-Italic.woff2";
+import "../src/fonts/Equinor-Light.woff";
+import "../src/fonts/Equinor-Light.woff2";
+import "../src/fonts/Equinor-LightItalic.woff";
+import "../src/fonts/Equinor-LightItalic.woff2";
+import "../src/fonts/Equinor-Bold.woff";
+import "../src/fonts/Equinor-Bold.woff2";
+import "../src/fonts/Equinor-BoldItalic.woff";
+import "../src/fonts/Equinor-BoldItalic.woff2";
+import "../src/fonts/Equinor-Medium.woff";
+import "../src/fonts/Equinor-Medium.woff2";
+import "../src/fonts/Equinor-MediumItalic.woff";
+import "../src/fonts/Equinor-MediumItalic.woff2";

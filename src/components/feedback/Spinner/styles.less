@@ -1,0 +1,167 @@
+@import "~styles/colors.less";
+@import "~styles/variables.less";
+
+
+
+//Positioning
+.spinnerContainer{
+    --small-spinner: calc(var(--grid-unit) * 3px);
+    --medium-spinner: calc(var(--grid-unit) * 6px);
+    --large-spinner: calc(var(--grid-unit) * 10px);
+
+    display: flex;
+    flex-direction: column;
+
+    .spinnerTitle{
+        font-size: 14px;
+        color: @color-accent1;
+        text-align: left;
+        flex-shrink: 0;
+    }
+
+    //Default
+    .spinner {
+        flex-shrink: 0;
+        margin-bottom: calc(var(--grid-unit) * 3px);
+
+        &.small{
+            margin-bottom: calc(var(--grid-unit) * 2px);
+        }
+    }
+
+    //Floating
+    &.floatingContainer {
+        display: block;
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+
+        .spinnerTitle{
+            text-align: center;
+        }
+
+        .spinner {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+
+            &.small + .spinnerTitle{
+                top: calc(50% + (var(--small-spinner) / 2) + (var(--grid-unit) * 2px));
+            }
+
+            & + .spinnerTitle{
+                top: calc(50% + (var(--medium-spinner) / 2) + (var(--grid-unit) * 3px));
+            }
+        }
+
+        .spinnerTitle{
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        p {
+            position: absolute;
+            top: 50%; left: 50%;
+        }
+    }
+
+    //Centered
+    &.centeredContainer {
+        width: 100%;
+        align-items: center;
+        padding: calc(var(--grid-unit) * 2px) 0;
+
+        .spinnerTitle{
+            text-align: center;
+        }
+    }
+
+    //Inline
+    &.inline {
+        display: inline-block;
+
+        .spinner{
+            display: inline-flex;
+            height: 100%;
+            align-items: center;
+            margin: 0;
+        }
+
+        .spinnerBox{
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+
+//Spinner sizes
+.spinner{
+    &.small .spinnerBox{
+        width: var(--small-spinner);
+        height: var(--small-spinner);
+    }
+
+    .spinnerBox{
+        width: var(--medium-spinner);
+        height: var(--medium-spinner);
+    }
+}
+
+//Spinner circle
+.spinnerBox {
+    animation: spin 2s linear infinite;
+    transform-origin: center center;
+}
+
+//Spinner border + colors. Default color is signal
+.spinner{
+    .spinnerBorder{
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        animation: dash 1.5s ease-in-out infinite;
+        stroke-linecap: round;
+        stroke: @color-signal;
+    }
+
+    &.primary {
+        .spinnerBorder{
+            stroke: @color-primary;
+        }
+
+        & + .spinnerTitle{
+            color: @color-primary;
+        }
+    }
+}
+
+
+//Rotate animation
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+//Border animation
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35px;
+    }
+
+    100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124px;
+    }
+}
