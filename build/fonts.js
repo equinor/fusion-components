@@ -1,3 +1,6 @@
+// Support for github pages
+const publicPath = process.env.NODE_ENV === "production" ? "fusion-components/fonts/" : "/fonts/";
+
 module.exports = {
     module: {
         rules: [
@@ -7,7 +10,9 @@ module.exports = {
                     loader: "file-loader",
                     options: {
                         name: "[name].[ext]",
+                        useRelativePath: true,
                         outputPath: "fonts/",
+                        publicPath,
                     },
                 }],
             },
