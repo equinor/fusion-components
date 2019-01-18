@@ -1,0 +1,101 @@
+@import "~styles/variables.less";
+@import "~styles/colors.less";
+@import "~styles/fonts.less";
+
+@import "./variables.less";
+@import "./variants.less";
+@import "./sizes.less";
+
+.container {
+    font-family: Equinor;
+    display: inline-block;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: var(--corner-radius);
+    box-sizing: border-box;
+
+    & + & {
+        margin-left: calc(var(--grid-unit) * 1px) !important;
+    }
+
+    &:focus {
+        outline: 1px dashed rgba(0, 0, 0, .5);
+    }
+
+    &:active {
+        outline: none;
+    }
+
+    .button {
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid;
+        border-radius: var(--corner-radius);
+        position: relative;
+        z-index: 1;
+        min-width: 0;
+        vertical-align: middle;
+        overflow: hidden;
+
+        label{
+            cursor: pointer;
+        }
+    }
+
+    .icon{
+        text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &.block {
+        display: block;
+        width: calc(100% + (var(--grid-unit) * 1px));
+
+        .button {
+            display: block;
+        }
+    }
+    &.flex {
+        display: flex;
+        width: calc(100% + (var(--grid-unit) * 1px));
+
+        .button {
+            display: flex;
+        }
+    }
+
+    /* Variants */
+    &.contained {
+        .variant-contained(primary, @color-primary, @color-primary-text, @color-primary-alt1, @color-primary-pressed, @color-accent3, @color-primary);
+        .variant-contained(signal, @color-signal, @color-signal-text, @color-signal-alt1, @color-signal-alt3, @color-signal-text, @color-signal);
+
+        &[disabled] {
+            .button-disabled();
+        }
+    }
+
+    &.outlined {
+        .variant-outlined(primary, #243746, @color-primary, @color-primary-pressed, @color-accent3, @color-primary);
+        .variant-outlined(signal, #243746, @color-signal, @color-signal-alt3,  @color-signal-text, #243746);
+
+        &[disabled] {
+            .button-disabled();
+        }
+    }
+
+    &.frameless {
+        .variant-frameless(primary, @color-primary, @color-accent2, @color-primary-pressed, @color-accent3, @color-primary);
+        .variant-frameless(signal, @color-signal, @color-accent1, @color-signal-alt3, @color-signal, @color-signal-text);
+
+        &[disabled] {
+            .button-disabled-frameless() !important;
+        }
+    }
+
+    /* Sizes */
+    .button-sizes();
+}
