@@ -7,7 +7,7 @@
     "scripts": {
         "test": "jest --coverage",
         "storybook": "start-storybook -p 9001 -c .storybook",
-        "build:storybook": "build-storybook -c .storybook -o /docs",
+        "build:storybook": "build-storybook -c .storybook -o /docs -s ./src/fonts",
         "prepublish": "yarn test"
     },
     "repository": {
