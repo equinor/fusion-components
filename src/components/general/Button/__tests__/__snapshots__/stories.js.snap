@@ -1,0 +1,376 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General components/Button Contained 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <button
+      className="container contained primary small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Small button
+      </span>
+    </button>
+    <button
+      className="container contained primary small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Medium button
+      </span>
+    </button>
+    <button
+      className="container contained primary small medium large"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Large button
+      </span>
+    </button>
+    <button
+      className="container contained primary small medium"
+      disabled={true}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>,
+  <div
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <button
+      className="container contained primary signal small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Small button
+      </span>
+    </button>
+    <button
+      className="container contained primary signal small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Medium button
+      </span>
+    </button>
+    <button
+      className="container contained primary signal small medium large"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Large button
+      </span>
+    </button>
+    <button
+      className="container contained primary signal small medium"
+      disabled={true}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>,
+]
+`;
+
+exports[`General components/Button Frameless 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <button
+      className="container frameless primary small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Small button
+      </span>
+    </button>
+    <button
+      className="container frameless primary small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Medium button
+      </span>
+    </button>
+    <button
+      className="container frameless primary small medium large"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Large button
+      </span>
+    </button>
+    <button
+      className="container frameless primary small medium"
+      disabled={true}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>,
+  <div
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <button
+      className="container frameless primary signal small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Small button
+      </span>
+    </button>
+    <button
+      className="container frameless primary signal small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Medium button
+      </span>
+    </button>
+    <button
+      className="container frameless primary signal small medium large"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Large button
+      </span>
+    </button>
+    <button
+      className="container frameless primary signal small medium"
+      disabled={true}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>,
+]
+`;
+
+exports[`General components/Button Outlined 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <button
+      className="container outlined primary small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Small button
+      </span>
+    </button>
+    <button
+      className="container outlined primary small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Medium button
+      </span>
+    </button>
+    <button
+      className="container outlined primary small medium large"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Large button
+      </span>
+    </button>
+    <button
+      className="container outlined primary small medium"
+      disabled={true}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>,
+  <div
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <button
+      className="container outlined primary signal small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Small button
+      </span>
+    </button>
+    <button
+      className="container outlined primary signal small medium"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Medium button
+      </span>
+    </button>
+    <button
+      className="container outlined primary signal small medium large"
+      disabled={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Large button
+      </span>
+    </button>
+    <button
+      className="container outlined primary signal small medium"
+      disabled={true}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>,
+]
+`;

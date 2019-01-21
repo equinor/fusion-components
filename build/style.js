@@ -12,7 +12,7 @@ module.exports = {
                     options: {
                         modules: true,
                         localIdentName: "fc--[local]--[hash:base64:5]",
-                        url: false,
+                        // url: false,
                     },
                 }, {
                     loader: "less-loader",
