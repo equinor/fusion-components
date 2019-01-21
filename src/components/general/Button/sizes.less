@@ -1,39 +1,40 @@
-@import "./variables.less";
+@import './variables.less';
 
 .button-size(@height-multiplier, @padding-multiplier) {
-    padding: calc(var(--click-area) * 1px);
-    margin: calc(var(--click-area) * -1px);
-    height: calc((var(--grid-unit) * @height-multiplier) + (var(--click-area) * 2px));
+  padding: calc(var(--click-area) * 1px);
+  margin: calc(var(--click-area) * -1px);
+  height: calc((var(--grid-unit) * @height-multiplier) + (var(--click-area) * 2px));
 
+  .button {
+    font-size: 14px;
+    padding: 0 calc(var(--grid-unit) * @padding-multiplier);
+    height: calc(var(--grid-unit) * @height-multiplier);
+    line-height: calc(var(--grid-unit) * @height-multiplier);
+  }
+
+  &.icon {
     .button {
-        font-size: 14px;
-        padding: 0 calc(var(--grid-unit) * @padding-multiplier);
+      padding: 0 calc(var(--grid-unit) * @padding-multiplier) 0
+        calc(var(--grid-unit) * @height-multiplier + var(--grid-unit) * 2);
+
+      .icon {
+        width: calc(var(--grid-unit) * @height-multiplier);
         height: calc(var(--grid-unit) * @height-multiplier);
-        line-height: calc(var(--grid-unit) * @height-multiplier);
+      }
     }
-
-    &.icon{
-        .button{
-            padding: 0 calc(var(--grid-unit) * @padding-multiplier) 0 calc(var(--grid-unit) * @height-multiplier + var(--grid-unit) * 2);
-
-            .icon{
-                width: calc(var(--grid-unit) * @height-multiplier);
-                height: calc(var(--grid-unit) * @height-multiplier);
-            }
-        }
-    }
+  }
 }
 
 .button-sizes() {
-    &.small {
-        .button-size(3px, 1px);
-    }
+  &.small {
+    .button-size(3px, 1px);
+  }
 
-    &.medium {
-        .button-size(4px, 2px);
-    }
+  &.medium {
+    .button-size(4px, 2px);
+  }
 
-    &.large {
-        .button-size(6px, 2px);
-    }
+  &.large {
+    .button-size(6px, 2px);
+  }
 }
