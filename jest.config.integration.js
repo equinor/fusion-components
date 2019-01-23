@@ -24,7 +24,7 @@ module.exports = {
   // collectCoverageFrom: null,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  // coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -55,9 +55,9 @@ module.exports = {
   // globalTeardown: null,
 
   // A set of global variables that need to be available in all test environments
-  globals: {
-    window: true,
-  },
+  // globals: {
+  //   window: true,
+  // },
 
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: [
@@ -89,7 +89,7 @@ module.exports = {
   // notifyMode: "always",
 
   // A preset that is used as a base for Jest's configuration
-  // preset: "jest-puppeteer",
+  preset: "jest-puppeteer",
 
   // Run tests from one or more projects
   // projects: null,
@@ -114,7 +114,7 @@ module.exports = {
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
-  //   "<rootDir>"
+  //   ""
   // ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
@@ -124,7 +124,7 @@ module.exports = {
   setupFiles: ["<rootDir>/.jest/register-context.js"],
 
   // The path to a module that runs some code to configure or set up the testing framework before each test
-  // setupTestFrameworkScriptFile: "<rootDir>/.jest/setup-tests.js",
+  setupTestFrameworkScriptFile: "<rootDir>/.jest/setup-tests.js",
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
@@ -150,7 +150,7 @@ module.exports = {
   // ],
 
   // The regexp pattern Jest uses to detect test files
-  testRegex: "\.stories\.js$",
+  // testRegex: "./*\\.test\\.js$",
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: null,

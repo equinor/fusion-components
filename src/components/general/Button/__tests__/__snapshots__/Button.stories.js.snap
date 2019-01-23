@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`General components/Button Contained 1`] = `
+exports[`General components/Button Contained: General components/Button.Contained 1`] = `
 Array [
   <div
     style={
@@ -125,7 +125,7 @@ Array [
 ]
 `;
 
-exports[`General components/Button Frameless 1`] = `
+exports[`General components/Button Frameless: General components/Button.Frameless 1`] = `
 Array [
   <div
     style={
@@ -250,7 +250,7 @@ Array [
 ]
 `;
 
-exports[`General components/Button Outlined 1`] = `
+exports[`General components/Button Outlined: General components/Button.Outlined 1`] = `
 Array [
   <div
     style={

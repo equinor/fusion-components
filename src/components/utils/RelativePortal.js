@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import global from "global";
+import document from "global/document";
 import { findDOMNode, createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
@@ -14,7 +16,7 @@ class RelativePortalChild extends Component {
 
     componentDidMount = () => {
         document.addEventListener("scroll", this.updatePositioning, true);
-        window.addEventListener("resize", this.updatePositioning, true);
+        global.addEventListener("resize", this.updatePositioning, true);
         document.addEventListener("click", this.handleClickOutside, false);
         this.updatePositioning();
     }
@@ -25,9 +27,9 @@ class RelativePortalChild extends Component {
 
     componentWillUnmount = () => {
         document.removeEventListener("scroll", this.updatePositioning, true);
-        window.removeEventListener("resize", this.updatePositioning, true);
+        global.removeEventListener("resize", this.updatePositioning, true);
         document.removeEventListener("click", this.handleClickOutside, false);
-        window.cancelAnimationFrame(this.animationFrame);
+        global.cancelAnimationFrame(this.animationFrame);
     }
 
     isInsideNode(node, e) {
@@ -98,8 +100,8 @@ class RelativePortalChild extends Component {
         const { top, left, width, height } = this.state;
 
         if (rect.top !== top || rect.left !== left || rect.width !== width || rect.height !== height) {
-            window.cancelAnimationFrame(this.animationFrame);
-            this.animationFrame = window.requestAnimationFrame(() => {
+            global.cancelAnimationFrame(this.animationFrame);
+            this.animationFrame = global.requestAnimationFrame(() => {
                 this.setState({
                     top: rect.top,
                     left: rect.left,

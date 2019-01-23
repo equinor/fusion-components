@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`General components/Popover Inline 1`] = `
+exports[`General components/Popover Inline: General components/Popover.Inline 1`] = `
 <div>
   <div
     className="container left bottom"
@@ -84,7 +84,7 @@ exports[`General components/Popover Inline 1`] = `
 </div>
 `;
 
-exports[`General components/Popover Relative 1`] = `
+exports[`General components/Popover Relative: General components/Popover.Relative 1`] = `
 <button
   className="container contained primary small medium"
   disabled={false}

@@ -2,34 +2,48 @@ import renderer from "react-test-renderer";
 
 export const action = (actionName) => jest.fn();
 
-export const storiesOf = (groupName) => {
-  const api = {
-    add(storyName, story) {
-      describe(groupName, () => {
-        it(storyName, () => {
-          const component = renderer.create(story());
+export const storiesOf = groupName => {
+    const api = {
+        parameters: {
+            includeVisualTesting: true,
+        },
 
-          // @TODO Enable custom names once released:
-          // > https://github.com/facebook/jest/pull/2094
-          expect(component.toJSON()).toMatchSnapshot(
-            // `${groupName}.${storyName}`
-          );
-        });
-      });
+        add(storyName, story) {
+            describe(groupName, () => {
+                it(storyName, () => {
+                    const component = renderer.create(story());
 
-      return api;
-    },
+                    expect(component.toJSON()).toMatchSnapshot(
+                        `${groupName}.${storyName}`
+                    );
+                });
 
-    addDecorator() {
-      return api;
-    },
+                if(api.parameters.includeVisualTesting) {
+                    it("visually looks correct", async () => {
+                        // APIs from jest-puppeteer
+                        await page.goto(`http://localhost:9002/iframe.html?selectedKind=${encodeURIComponent(groupName)}&selectedStory=${encodeURIComponent(storyName)}`);
+                        const image = await page.screenshot();
 
-    addParameters() {
-      return api;
-    }
-  };
+                        // API from jest-image-snapshot
+                        expect(image).toMatchImageSnapshot();
+                    });
+                }
+            });
 
-  return api;
+            return api;
+        },
+
+        addDecorator() {
+            return api;
+        },
+
+        addParameters(parameters) {
+            api.parameters = { ...api.parameters, ...parameters };
+            return api;
+        },
+    };
+
+    return api;
 };
 
 export const addDecorator = () => {};

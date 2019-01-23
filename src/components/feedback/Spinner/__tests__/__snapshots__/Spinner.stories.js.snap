@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Feedback components/Spinner Default 1`] = `
+exports[`Feedback components/Spinner Default: Feedback components/Spinner.Default 1`] = `
 Array [
   <div
     className="spinnerContainer"

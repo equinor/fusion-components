@@ -1,5 +1,6 @@
 import { createContext, Component } from "react";
 import PropTypes from "prop-types";
+import global from "global";
 
 const FUSION_NAMED_CONTEXT_GLOBAL_PREFIX = "__fusion_named_context:";
 const FUSION_NAMED_CONTEXT_MOUNTED_EVENT_TYPE = "FUSION_NAMED_CONTEXT_MOUNTED";
@@ -11,8 +12,8 @@ const getContextName = name => FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name;
 const ensureContext = (name, defaultValue) => {
     const contextName = getContextName(name);
 
-    if(!window[contextName]) {
-        window[contextName] = {
+    if(!global[contextName]) {
+        global[contextName] = {
             listners: [],
             value: defaultValue,
             providers: 0,
@@ -20,7 +21,7 @@ const ensureContext = (name, defaultValue) => {
         };
     }
 
-    return window[contextName];
+    return global[contextName];
 };
 
 const registerConsumer = (name, defaultValue, listner) => {
@@ -72,7 +73,7 @@ const contextUpdated = (name, value) => {
         context: {
             name,
         },
-    }, window.location.origin);
+    }, global.location.origin);
 };
 
 const contextMounted = name => {
@@ -81,7 +82,7 @@ const contextMounted = name => {
         context: {
             name,
         },
-    }, window.location.origin);
+    }, global.location.origin);
 };
 
 const contextUnmounted = name => {
@@ -90,7 +91,7 @@ const contextUnmounted = name => {
         context: {
             name,
         },
-    }, window.location.origin);
+    }, global.location.origin);
 };
 
 const createProvider = name => {
@@ -152,8 +153,8 @@ const createConsumer = (name, defaultValue) => {
 
 
 
-window.addEventListener("message", e => {
-    if(!e.data || e.origin !== window.location.origin) {
+global.addEventListener("message", e => {
+    if(!e.data || e.origin !== global.location.origin) {
         return;
     }
 
@@ -171,9 +172,9 @@ export const createGlobalNamedContext = (name, defaultValue = null) => {
 };
 
 export const createNamedContext = (name, defaultValue = null) => {
-    if(!window[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name]) {
-        window[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name] = createContext(defaultValue);
+    if(!global[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name]) {
+        global[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name] = createContext(defaultValue);
     }
 
-    return window[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name];
+    return global[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name];
 };
