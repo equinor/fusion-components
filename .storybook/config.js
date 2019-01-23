@@ -6,7 +6,7 @@ import results from "../.jest-test-results.json";
 import { withTests } from "@storybook/addon-jest";
 import { themes } from "@storybook/components";
 
-addDecorator(stories => <div style={{ fontFamily: "Equinor", textAlign: "center" }}>{stories()}</div>);
+addDecorator(stories => <div style={{ textAlign: "center" }}>{stories()}</div>);
 addDecorator(withTests({ results }));
 
 addDecorator(
@@ -15,27 +15,6 @@ addDecorator(
         propTablesExclude: [
             React.Fragment,
         ],
-        styles: {
-            header: {
-                h1: {
-                    fontFamily: "Equinor",
-                },
-                h2: {
-                    fontFamily: "Equinor",
-                },
-                body: {
-                    fontFamily: "Equinor",
-                },
-            },
-            source: {
-                h1: {
-                    fontFamily: "Equinor",
-                },
-            },
-            propTableHead: {
-                fontFamily: "Equinor",
-            },
-        },
     })
 );
 
@@ -52,14 +31,12 @@ addDecorator(
                 backgroundColor: "white",
                 borderRight: "2px solid rgba(0, 0, 0, 0.1)",
                 padding: 8,
-                // fontFamily: "Equinor",
             },
 
             menuLink: {
                 ...themes.normal.menuLink,
                 padding: 8,
                 color: "#007079",
-                // fontFamily: "Equinor",
             },
 
             activeMenuLink: {
@@ -68,7 +45,6 @@ addDecorator(
                 color: "#007079",
                 backgroundColor: "#EDFCF4",
                 borderRadius: 4,
-                // fontFamily: "Equinor",
             },
         },
     })
