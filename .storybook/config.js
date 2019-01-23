@@ -6,15 +6,17 @@ import results from "../.jest-test-results.json";
 import { withTests } from "@storybook/addon-jest";
 import { themes } from "@storybook/components";
 
-addDecorator(stories => <div style={{ fontFamily: "Equinor", textAlign: "center" }}>{stories()}</div>);
+addDecorator(stories => (
+    <div style={{ fontFamily: "Equinor", textAlign: "center" }}>
+        {stories()}
+    </div>
+));
 addDecorator(withTests({ results }));
 
 addDecorator(
     withInfo({
         inline: true,
-        propTablesExclude: [
-            React.Fragment,
-        ],
+        propTablesExclude: [React.Fragment],
         styles: {
             header: {
                 h1: {

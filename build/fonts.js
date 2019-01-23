@@ -25,12 +25,14 @@ module.exports = {
         rules: [
             {
                 test: /\.(woff(2)?|ttf|eot|svg)$/,
-                use: [{
-                    loader: "url-loader",
-                    options: {
-                        limit: 10000000,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 10000000,
+                        },
                     },
-                }],
+                ],
             },
         ],
     },

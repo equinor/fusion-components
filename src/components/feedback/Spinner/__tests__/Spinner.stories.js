@@ -1,14 +1,16 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import Spinner from "../";
+import Spinner from "..";
 
 storiesOf("Feedback components/Spinner", module)
-    .addParameters({ jest: [ "Spinner.stories" ] })
+    .addParameters({ jest: ["Spinner.stories"] })
     .add("Default", () => (
         <React.Fragment>
             <Spinner />
             <Spinner primary />
             <Spinner small />
-            <p>Inline spinner <Spinner inline /></p>
+            <p>
+                Inline spinner <Spinner inline />
+            </p>
         </React.Fragment>
     ));

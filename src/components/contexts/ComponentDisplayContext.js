@@ -10,4 +10,7 @@ export const componentDisplayTypeClassNames = (displayType, styles) => ({
     [styles.comfortable]: displayType === componentDisplayTypes.comfortable,
 });
 
-export default createNamedContext("fusion-display-type-context", componentDisplayTypes.comfortable);
+export default createNamedContext(
+    "fusion-display-type-context",
+    componentDisplayTypes.comfortable
+);
