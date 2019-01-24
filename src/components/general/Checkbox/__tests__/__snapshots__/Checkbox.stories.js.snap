@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General components/Checkbox With label 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flex": 1,
+      "justifyContent": "space-around",
+    }
+  }
+>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={false}
+      disabled={false}
+      id="heisann"
+      name="Heisann"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="heisann"
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        Heisann
+      </span>
+    </label>
+  </div>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={false}
+      disabled={true}
+      id="heisann"
+      name="Heisann"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="heisann"
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        Heisann
+      </span>
+    </label>
+  </div>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={true}
+      disabled={false}
+      id="heisann"
+      name="Heisann"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="heisann"
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        Heisann
+      </span>
+    </label>
+  </div>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={true}
+      disabled={true}
+      id="heisann"
+      name="Heisann"
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor="heisann"
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        Heisann
+      </span>
+    </label>
+  </div>
+</div>
+`;
+
+exports[`General components/Checkbox Without label 1`] = `
+<div
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flex": 1,
+      "justifyContent": "space-around",
+    }
+  }
+>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={false}
+      disabled={false}
+      id=""
+      name=""
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor=""
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        
+      </span>
+    </label>
+  </div>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={false}
+      disabled={true}
+      id=""
+      name=""
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor=""
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        
+      </span>
+    </label>
+  </div>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={true}
+      disabled={false}
+      id=""
+      name=""
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor=""
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        
+      </span>
+    </label>
+  </div>
+  <div
+    className="checkboxContainer comfortable"
+  >
+    <input
+      checked={true}
+      disabled={true}
+      id=""
+      name=""
+      onChange={[Function]}
+      type="checkbox"
+    />
+    <label
+      htmlFor=""
+      onClick={[Function]}
+    >
+      <span
+        className="checkboxLabel"
+      >
+        
+      </span>
+    </label>
+  </div>
+</div>
+`;

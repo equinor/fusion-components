@@ -1,0 +1,122 @@
+@import "~styles/variables.less";
+@import "~styles/colors.less";
+
+.checkboxContainer {
+  --checkbox-height: calc(var(--grid-unit) * 2px);
+  --checkbox-width: calc(var(--grid-unit) * 2px);
+
+  height: calc(var(--grid-unit) * 6px);
+  padding: calc((var(--grid-unit) * 2px) - 3px);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+
+  &.comfortable {
+    input + label {
+      font-size: 14px;
+    }
+  }
+
+  &.compact {
+    input + label {
+      font-size: 11px;
+    }
+  }
+
+  input {
+    opacity: 0;
+    height: 0;
+    width: 0;
+
+    &:checked ~ .checkmark {
+      &::after {
+        display: block;
+      }
+    }
+
+    &:focus ~ .checkmark {
+      &::before {
+        display: block;
+      }
+    }
+  }
+
+  &.primary {
+    color: @color-primary;
+
+    & > .checkmark {
+      border-color: @color-primary;
+    }
+
+    & > input:checked ~ .checkmark {
+      background-color: @color-primary;
+    }
+
+    & > input:checked:disabled ~ .checkmark {
+      background-color: @color-primary-alt2;
+    }
+
+    & > input:disabled ~ .checkmark {
+      border-color: @color-primary-alt2;
+    }
+  }
+
+  &.secondary {
+    color: @color-signal;
+
+    & > .checkmark {
+      border-color: @color-signal;
+    }
+
+    & > input:checked ~ .checkmark {
+      background-color: @color-signal;
+    }
+
+    & > input:checked:disabled ~ .checkmark {
+      background-color: @color-signal-alt2;
+    }
+
+    & > input:disabled ~ .checkmark {
+      border-color: @color-signal-alt2;
+    }
+  }
+
+  .checkmark {
+    height: var(--checkbox-height);
+    width: var(--checkbox-width);
+    margin-right: calc(var(--grid-unit) * 1px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+    border-radius: 2px;
+    box-sizing: border-box;
+
+    &:after {
+      width: calc(var(--checkbox-width) * 0.25);
+      height: calc(var(--checkbox-height) * 0.6);
+      margin-bottom: calc(var(--checkbox-height) * 0.13);
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      content: "";
+      display: none;
+    }
+
+    &:before {
+      width: calc(var(--checkbox-width) + 2px);
+      height: calc(var(--checkbox-height) + 2px);
+      border: 1px dashed #bfbfbf;
+      position: absolute;
+      content: "";
+      display: none;
+    }
+  }
+}
