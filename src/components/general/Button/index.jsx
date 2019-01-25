@@ -1,65 +1,10 @@
 import React, { Component } from "react";
-// import FontAwesome from "react-fontawesome";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import ComponentDisplayContext, {
     componentDisplayTypes,
 } from "../../contexts/ComponentDisplayContext";
 import styles from "./styles.less";
-
-// export const ButtonFontIcon = ({ name }) => {
-//     return (
-//         <span className={styles.icon}>
-//             <FontAwesome name={name}/>
-//         </span>
-//     );
-// };
-
-const getMouseDownClasses = props => ({
-    [styles.mouseIsDown]: props.isMouseDown,
-    [styles.mouseHasBeenDown]: props.mouseHasBeenDown,
-});
-
-const getButtonVariantClasses = props => ({
-    [styles.contained]:
-        props.contained || (!props.outlined && !props.frameless), // Default to contained
-    [styles.outlined]: props.outlined,
-    [styles.frameless]: props.frameless,
-    [styles.icon]:
-        Array.isArray(props.children) &&
-        props.children.find(
-            c => typeof c !== "undefined" && c.type === ButtonFontIcon
-        ),
-});
-
-const getButtonStyleClasses = props => ({
-    [styles.primary]: props.primary,
-    [styles.signal]: props.signal,
-});
-
-const getButtonSizeClasses = (displayType, props) => ({
-    [styles.small]:
-        props.small || displayType === componentDisplayTypes.compact,
-    [styles.medium]:
-        (props.medium || (!props.small && !props.large)) &&
-        displayType !== componentDisplayTypes.compact, // Default to medium
-    [styles.large]:
-        props.large && displayType !== componentDisplayTypes.compact,
-});
-
-const getButtonClasses = (displayType, props) =>
-    classNames(
-        props.className,
-        styles.container,
-        {
-            [styles.block]: props.block,
-            [styles.flex]: props.flex,
-        },
-        getMouseDownClasses(props),
-        getButtonVariantClasses(props),
-        getButtonStyleClasses(props),
-        getButtonSizeClasses(displayType, props)
-    );
 
 class Button extends Component {
     static propTypes = {
@@ -89,14 +34,14 @@ class Button extends Component {
         /** Large button */
         large: PropTypes.bool,
 
-        //Link
+        // Link
         /** Provide an url and the button wil use <a>-tag instead of <button>-tag */
         url: PropTypes.string,
         /** Set target="_blank" */
         targetBlank: PropTypes.bool,
         onMouseDown: PropTypes.func,
-        onClickCapture: PropTypes.func,
-        onClick: PropTypes.func,
+        onClickCapture: PropTypes.bool,
+        onClick: PropTypes.bool,
     };
 
     static defaultProps = {
@@ -118,7 +63,19 @@ class Button extends Component {
 
     state = {
         isMouseDown: false,
+        mouseHasBeenDown: false,
     };
+
+    onMouseUp() {
+        this.setState({
+            isMouseDown: false,
+            mouseHasBeenDown: true,
+        });
+
+        if (this.button) {
+            this.button.blur();
+        }
+    }
 
     onMouseDown(e) {
         const { onMouseDown } = this.props;
@@ -132,16 +89,61 @@ class Button extends Component {
         });
     }
 
-    onMouseUp() {
-        this.setState({
-            isMouseDown: false,
-            mouseHasBeenDown: true,
-        });
+    getMouseDownClasses = () => {
+        const { isMouseDown, mouseHasBeenDown } = this.state;
 
-        if (this.button) {
-            this.button.blur();
-        }
-    }
+        return {
+            [styles.mouseIsDown]: isMouseDown,
+            [styles.mouseHasBeenDown]: mouseHasBeenDown,
+        };
+    };
+
+    getButtonVariantClasses = () => {
+        const { contained, outlined, frameless } = this.props;
+
+        return {
+            [styles.contained]: contained || (!outlined && !frameless), // Default to contained
+            [styles.outlined]: outlined,
+            [styles.frameless]: frameless,
+            [styles.icon]: false,
+        };
+    };
+
+    getButtonStyleClasses = () => {
+        const { primary, signal } = this.props;
+        return {
+            [styles.primary]: primary,
+            [styles.signal]: signal,
+        };
+    };
+
+    getButtonSizeClasses = displayType => {
+        const { small, medium, large } = this.props;
+
+        return {
+            [styles.small]:
+                small || displayType === componentDisplayTypes.compact,
+            [styles.medium]:
+                (medium || (!small && !large)) &&
+                displayType !== componentDisplayTypes.compact, // Default to medium
+            [styles.large]:
+                large && displayType !== componentDisplayTypes.compact,
+        };
+    };
+
+    getButtonClasses = (displayType, props) =>
+        classNames(
+            props.className,
+            styles.container,
+            {
+                [styles.block]: props.block,
+                [styles.flex]: props.flex,
+            },
+            this.getMouseDownClasses(props),
+            this.getButtonVariantClasses(props),
+            this.getButtonStyleClasses(props),
+            this.getButtonSizeClasses(displayType)
+        );
 
     renderButtonContent() {
         const { children } = this.props;
@@ -157,7 +159,7 @@ class Button extends Component {
             targetBlank,
         } = this.props;
 
-        const containerClassNames = getButtonClasses(displayType, {
+        const containerClassNames = this.getButtonClasses(displayType, {
             ...this.props,
             ...this.state,
         });

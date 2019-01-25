@@ -88,6 +88,7 @@ export default class RelativePortalChild extends Component {
 
     updatePositioning = () => {
         const { handleOutOfBounds, relativeTo } = this.props;
+        // eslint-disable-next-line react/no-find-dom-node
         const node = findDOMNode(relativeTo);
 
         if (!node) {
