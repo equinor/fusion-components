@@ -12,9 +12,7 @@ addDecorator(withTests({ results }));
 addDecorator(
     withInfo({
         inline: true,
-        propTablesExclude: [
-            React.Fragment,
-        ],
+        propTablesExclude: [React.Fragment],
     })
 );
 
@@ -50,7 +48,7 @@ addDecorator(
     })
 );
 
-const req = require.context("../src", true, /\.stories\.js$/);
+const req = require.context("../src", true, /\.stories\.jsx$/);
 
 const loadStories = () => {
     req.keys().forEach(filename => req(filename));
