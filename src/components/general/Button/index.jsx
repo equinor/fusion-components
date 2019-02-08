@@ -40,8 +40,8 @@ class Button extends Component {
         /** Set target="_blank" */
         targetBlank: PropTypes.bool,
         onMouseDown: PropTypes.func,
-        onClickCapture: PropTypes.bool,
-        onClick: PropTypes.bool,
+        onClickCapture: PropTypes.func,
+        onClick: PropTypes.func,
     };
 
     static defaultProps = {
