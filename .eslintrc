@@ -9,9 +9,10 @@
   "rules": {
     "prettier/prettier": ["error"],
     "linebreak-style": 0,
+    
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   },
-  "settings": {   
+  "settings": {
      "import/resolver": "webpack"
   }
 }

@@ -86,7 +86,7 @@ exports[`General components/Popover Inline 1`] = `
 
 exports[`General components/Popover Relative 1`] = `
 <button
-  className="container contained primary small medium"
+  className="container contained primary comfortable"
   disabled={false}
   onClick={[Function]}
   onClickCapture={[Function]}

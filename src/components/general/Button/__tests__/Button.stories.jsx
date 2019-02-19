@@ -8,28 +8,22 @@ const eventsFromNames = actions("onClick");
 const createButtonStory = props => () => (
     <React.Fragment>
         <div style={{ padding: 8 }}>
-            <Button primary small {...props} {...eventsFromNames}>
-                Small button
+            <Button primary compact {...props} {...eventsFromNames}>
+                Compact button
             </Button>
-            <Button primary {...props} {...eventsFromNames}>
-                Medium button
-            </Button>
-            <Button primary large {...props} {...eventsFromNames}>
-                Large button
+            <Button primary comfortable {...props} {...eventsFromNames}>
+                Comfortable button
             </Button>
             <Button primary disabled {...props} {...eventsFromNames}>
                 Disabled button
             </Button>
         </div>
         <div style={{ padding: 8 }}>
-            <Button signal small {...props} {...eventsFromNames}>
-                Small button
+            <Button signal compact {...props} {...eventsFromNames}>
+                Compact button
             </Button>
-            <Button signal {...props} {...eventsFromNames}>
-                Medium button
-            </Button>
-            <Button signal large {...props} {...eventsFromNames}>
-                Large button
+            <Button signal comfortable {...props} {...eventsFromNames}>
+                Comfortable button
             </Button>
             <Button signal disabled {...props} {...eventsFromNames}>
                 Disabled button

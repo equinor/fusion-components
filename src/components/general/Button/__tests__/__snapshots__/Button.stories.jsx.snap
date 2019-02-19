@@ -10,7 +10,7 @@ Array [
     }
   >
     <button
-      className="container contained primary small medium"
+      className="container contained primary compact"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -21,11 +21,11 @@ Array [
       <span
         className="button"
       >
-        Small button
+        Compact button
       </span>
     </button>
     <button
-      className="container contained primary small medium"
+      className="container contained primary comfortable"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -36,26 +36,11 @@ Array [
       <span
         className="button"
       >
-        Medium button
+        Comfortable button
       </span>
     </button>
     <button
-      className="container contained primary small medium large"
-      disabled={false}
-      onClick={[Function]}
-      onClickCapture={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-      type="button"
-    >
-      <span
-        className="button"
-      >
-        Large button
-      </span>
-    </button>
-    <button
-      className="container contained primary small medium"
+      className="container contained primary comfortable"
       disabled={true}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -78,7 +63,7 @@ Array [
     }
   >
     <button
-      className="container contained primary signal small medium"
+      className="container contained primary signal compact"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -89,11 +74,11 @@ Array [
       <span
         className="button"
       >
-        Small button
+        Compact button
       </span>
     </button>
     <button
-      className="container contained primary signal small medium"
+      className="container contained primary signal comfortable"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -104,26 +89,11 @@ Array [
       <span
         className="button"
       >
-        Medium button
+        Comfortable button
       </span>
     </button>
     <button
-      className="container contained primary signal small medium large"
-      disabled={false}
-      onClick={[Function]}
-      onClickCapture={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-      type="button"
-    >
-      <span
-        className="button"
-      >
-        Large button
-      </span>
-    </button>
-    <button
-      className="container contained primary signal small medium"
+      className="container contained primary signal comfortable"
       disabled={true}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -151,7 +121,7 @@ Array [
     }
   >
     <button
-      className="container frameless primary small medium"
+      className="container frameless primary compact"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -162,11 +132,11 @@ Array [
       <span
         className="button"
       >
-        Small button
+        Compact button
       </span>
     </button>
     <button
-      className="container frameless primary small medium"
+      className="container frameless primary comfortable"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -177,26 +147,11 @@ Array [
       <span
         className="button"
       >
-        Medium button
+        Comfortable button
       </span>
     </button>
     <button
-      className="container frameless primary small medium large"
-      disabled={false}
-      onClick={[Function]}
-      onClickCapture={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-      type="button"
-    >
-      <span
-        className="button"
-      >
-        Large button
-      </span>
-    </button>
-    <button
-      className="container frameless primary small medium"
+      className="container frameless primary comfortable"
       disabled={true}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -219,7 +174,7 @@ Array [
     }
   >
     <button
-      className="container frameless primary signal small medium"
+      className="container frameless primary signal compact"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -230,11 +185,11 @@ Array [
       <span
         className="button"
       >
-        Small button
+        Compact button
       </span>
     </button>
     <button
-      className="container frameless primary signal small medium"
+      className="container frameless primary signal comfortable"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -245,26 +200,11 @@ Array [
       <span
         className="button"
       >
-        Medium button
+        Comfortable button
       </span>
     </button>
     <button
-      className="container frameless primary signal small medium large"
-      disabled={false}
-      onClick={[Function]}
-      onClickCapture={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-      type="button"
-    >
-      <span
-        className="button"
-      >
-        Large button
-      </span>
-    </button>
-    <button
-      className="container frameless primary signal small medium"
+      className="container frameless primary signal comfortable"
       disabled={true}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -292,7 +232,7 @@ Array [
     }
   >
     <button
-      className="container outlined primary small medium"
+      className="container outlined primary compact"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -303,11 +243,11 @@ Array [
       <span
         className="button"
       >
-        Small button
+        Compact button
       </span>
     </button>
     <button
-      className="container outlined primary small medium"
+      className="container outlined primary comfortable"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -318,26 +258,11 @@ Array [
       <span
         className="button"
       >
-        Medium button
+        Comfortable button
       </span>
     </button>
     <button
-      className="container outlined primary small medium large"
-      disabled={false}
-      onClick={[Function]}
-      onClickCapture={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-      type="button"
-    >
-      <span
-        className="button"
-      >
-        Large button
-      </span>
-    </button>
-    <button
-      className="container outlined primary small medium"
+      className="container outlined primary comfortable"
       disabled={true}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -360,7 +285,7 @@ Array [
     }
   >
     <button
-      className="container outlined primary signal small medium"
+      className="container outlined primary signal compact"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -371,11 +296,11 @@ Array [
       <span
         className="button"
       >
-        Small button
+        Compact button
       </span>
     </button>
     <button
-      className="container outlined primary signal small medium"
+      className="container outlined primary signal comfortable"
       disabled={false}
       onClick={[Function]}
       onClickCapture={[Function]}
@@ -386,26 +311,11 @@ Array [
       <span
         className="button"
       >
-        Medium button
+        Comfortable button
       </span>
     </button>
     <button
-      className="container outlined primary signal small medium large"
-      disabled={false}
-      onClick={[Function]}
-      onClickCapture={[Function]}
-      onMouseDown={[Function]}
-      onMouseUp={[Function]}
-      type="button"
-    >
-      <span
-        className="button"
-      >
-        Large button
-      </span>
-    </button>
-    <button
-      className="container outlined primary signal small medium"
+      className="container outlined primary signal comfortable"
       disabled={true}
       onClick={[Function]}
       onClickCapture={[Function]}

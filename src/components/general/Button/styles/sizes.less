@@ -1,4 +1,4 @@
-@import './variables.less';
+@import "./variables.less";
 
 .button-size(@height-multiplier, @padding-multiplier) {
   padding: calc(var(--click-area) * 1px);
@@ -26,15 +26,11 @@
 }
 
 .button-sizes() {
-  &.small {
+  &.compact {
     .button-size(3px, 1px);
   }
 
-  &.medium {
+  &.comfortable {
     .button-size(4px, 2px);
-  }
-
-  &.large {
-    .button-size(6px, 2px);
   }
 }
