@@ -1,35 +1,29 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { contextMounted, contextUpdated, contextUnmounted } from "./helpers";
 
-export default name =>
-    class NamedContextProvider extends Component {
-        static propTypes = {
-            value: PropTypes.shape.isRequired,
-            children: PropTypes.node.isRequired,
-        };
+export default name => {
+    const Provider = ({ value, children }) => {
+        const [isMounted, setIsMounted] = useState(false);
 
-        componentDidMount() {
-            const { value } = this.props;
-            contextMounted(name);
-            contextUpdated(name, value);
-        }
-
-        componentDidUpdate(prevProps) {
-            const { value } = this.props;
-
-            if (value !== prevProps.value) {
-                contextUpdated(name, value);
+        useEffect(() => {
+            if (!isMounted) {
+                setIsMounted(true);
+                contextMounted(name);
             }
-        }
 
-        componentWillUnmount() {
-            contextUnmounted(name);
-        }
+            contextUpdated(name, value);
 
-        render() {
-            const { children } = this.props;
+            return () => contextUnmounted(name);
+        }, [value]);
 
-            return children;
-        }
+        return children;
     };
+
+    Provider.propTypes = {
+        value: PropTypes.shape.isRequired,
+        children: PropTypes.node.isRequired,
+    };
+
+    Provider.displayName = "@fusion/components/utils/NamedContext/Provider";
+};
