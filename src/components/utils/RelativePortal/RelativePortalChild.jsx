@@ -1,82 +1,45 @@
-import React, { Component } from "react";
-import { findDOMNode } from "react-dom";
+import React, { useState, useEffect, createRef } from "react";
 import PropTypes from "prop-types";
 import { findParentWithScroll, isInsideNode } from "./helpers";
 
 const RelativePortalContext = React.createContext();
 
-let i = 999;
-export default class RelativePortalChild extends Component {
-    static propTypes = {
-        parentRelativePortal: PropTypes.node.isRequired,
-        onClickOutside: PropTypes.func,
-        handleOutOfBounds: PropTypes.func,
-        children: PropTypes.node.isRequired,
-        relativeTo: PropTypes.node.isRequired,
-    };
+const i = 999;
 
-    static defaultProps = {
-        onClickOutside: () => {},
-        handleOutOfBounds: () => {},
-    };
+const RelativePortalChild = ({
+    parentRelativePortal,
+    onClickOutside,
+    handleOutOfBounds,
+    relativeTo,
+    children,
+}) => {
+    const [position, setPosition] = useState({ top: 0, left: 0 });
+    const [size, setSize] = useState({ width: 0, height: 0 });
+    const [zIndex] = useState(i + 1);
+    const [clickedInsideChild, setClickedInsideChild] = useState(false);
+    let animationFrame = null;
+    const nodeRef = createRef();
 
-    state = {
-        top: 0,
-        left: 0,
-        width: 0,
-        height: 0,
-        zIndex: i += 1,
-    };
+    const handleOnChildClick = () => setClickedInsideChild(true);
 
-    animationFrame = null;
-
-    componentDidMount = () => {
-        document.addEventListener("scroll", this.updatePositioning, true);
-        window.addEventListener("resize", this.updatePositioning, true);
-        document.addEventListener("click", this.handleClickOutside, false);
-        this.updatePositioning();
-    };
-
-    componentDidUpdate() {
-        this.updatePositioning();
-    }
-
-    componentWillUnmount = () => {
-        document.removeEventListener("scroll", this.updatePositioning, true);
-        window.removeEventListener("resize", this.updatePositioning, true);
-        document.removeEventListener("click", this.handleClickOutside, false);
-        window.cancelAnimationFrame(this.animationFrame);
-    };
-
-    getContext() {
-        return {
-            onClick: this.handleOnChildClick,
-        };
-    }
-
-    handleOnChildClick = () => {
-        this.clickedInsideChild = true;
-    };
-
-    handleOnClick = () => {
-        const { parentRelativePortal } = this.props;
+    const handleOnClick = () => {
         if (parentRelativePortal) {
             parentRelativePortal.onClick();
         }
     };
 
-    handleClickOutside = e => {
-        const { onClickOutside } = this.props;
+    const handleClickOutside = e => {
         setTimeout(() => {
-            const children = Array.from(this.node.childNodes);
+            const childNodes = Array.from(nodeRef.current.childNodes);
+
             if (
-                this.clickedInsideChild ||
-                children.reduce(
+                clickedInsideChild ||
+                childNodes.reduce(
                     (isInside, node) => isInside && isInsideNode(node, e),
                     true
                 )
             ) {
-                this.clickedInsideChild = false;
+                clickedInsideChild(false);
                 return;
             }
 
@@ -86,17 +49,16 @@ export default class RelativePortalChild extends Component {
         });
     };
 
-    updatePositioning = () => {
-        const { handleOutOfBounds, relativeTo } = this.props;
-        // eslint-disable-next-line react/no-find-dom-node
-        const node = findDOMNode(relativeTo);
+    const updatePositioning = () => {
+        const node = relativeTo ? relativeTo.current || relativeTo : null;
 
         if (!node) {
             return;
         }
 
         const rect = node.getBoundingClientRect();
-        const { top, left, width, height } = this.state;
+        const { top, left } = position;
+        const { width, height } = size;
 
         if (
             rect.top !== top ||
@@ -104,11 +66,14 @@ export default class RelativePortalChild extends Component {
             rect.width !== width ||
             rect.height !== height
         ) {
-            window.cancelAnimationFrame(this.animationFrame);
-            this.animationFrame = window.requestAnimationFrame(() => {
-                this.setState({
+            window.cancelAnimationFrame(animationFrame);
+            animationFrame = window.requestAnimationFrame(() => {
+                setPosition({
                     top: rect.top,
                     left: rect.left,
+                });
+
+                setSize({
                     width: rect.width,
                     height: rect.height,
                 });
@@ -129,25 +94,61 @@ export default class RelativePortalChild extends Component {
         }
     };
 
-    render() {
-        const { children } = this.props;
-        return (
-            <RelativePortalContext.Provider value={this.getContext()}>
-                <div
-                    ref={node => {
-                        this.node = node;
-                    }}
-                    style={{
-                        position: "fixed",
-                        overflow: "visible",
-                        pointerEvents: "none",
-                        ...this.state,
-                    }}
-                    onClickCapture={this.handleOnClick}
-                >
-                    {children}
-                </div>
-            </RelativePortalContext.Provider>
-        );
-    }
-}
+    const getContext = () => ({
+        onClick: handleOnChildClick,
+    });
+
+    useEffect(() => {
+        document.addEventListener("scroll", updatePositioning, true);
+        window.addEventListener("resize", updatePositioning, true);
+        document.addEventListener("click", handleClickOutside, false);
+        updatePositioning();
+
+        return () => {
+            document.removeEventListener("scroll", updatePositioning, true);
+            window.removeEventListener("resize", updatePositioning, true);
+            document.removeEventListener("click", handleClickOutside, false);
+            window.cancelAnimationFrame(animationFrame);
+        };
+    });
+
+    return (
+        <RelativePortalContext.Provider value={getContext()}>
+            <div
+                ref={nodeRef}
+                style={{
+                    position: "fixed",
+                    overflow: "visible",
+                    pointerEvents: "none",
+                    zIndex,
+                    ...position,
+                    ...size,
+                }}
+                onClickCapture={handleOnClick}
+            >
+                {children}
+            </div>
+        </RelativePortalContext.Provider>
+    );
+};
+
+RelativePortalChild.propTypes = {
+    parentRelativePortal: PropTypes.node.isRequired,
+    onClickOutside: PropTypes.func,
+    handleOutOfBounds: PropTypes.func,
+    children: PropTypes.node.isRequired,
+    relativeTo: PropTypes.oneOf(
+        PropTypes.instanceOf(Element),
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ).isRequired,
+};
+
+RelativePortalChild.defaultProps = {
+    onClickOutside: () => {},
+    handleOutOfBounds: () => {},
+};
+
+RelativePortalChild.displayName =
+    "@fusion/components/utils/RelativePortal/Child";
+
+export default RelativePortalChild;
