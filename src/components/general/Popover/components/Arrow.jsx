@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./styles.less";
+import styles from "../styles.less";
 
-export default () => (
+const PopoverArrow = () => (
     <div className={styles.arrow}>
         <svg
             width="18"
@@ -51,3 +51,7 @@ export default () => (
         </svg>
     </div>
 );
+
+PopoverArrow.displayName = "@fusion/components/general/Popover/Arrow";
+
+export default PopoverArrow;

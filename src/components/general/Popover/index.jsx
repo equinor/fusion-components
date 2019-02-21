@@ -1,104 +1,86 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import RelativePortal from "components/utils/RelativePortal";
-import Arrow from "./Arrow";
-import styles from "./styles.less";
+import PopoverContent from "./components/Content";
+import {
+    popoverHorizontalPositions,
+    popoverVerticalPositions,
+} from "./positioning";
 
-export const popoverHorizontalPositions = {
-    left: "left",
-    right: "right",
-};
+export { popoverHorizontalPositions, popoverVerticalPositions };
 
-export const popoverVerticalPositions = {
-    top: "top",
-    bottom: "bottom",
-};
-
-export default class Popover extends Component {
-    static propTypes = {
-        isOpen: PropTypes.bool.isRequired,
-        onClose: PropTypes.func.isRequired,
-        relativeTo: PropTypes.node,
-        horizontalPosition: PropTypes.oneOf(
-            Object.values(popoverHorizontalPositions)
-        ),
-        verticalPosition: PropTypes.oneOf(
-            Object.values(popoverVerticalPositions)
-        ),
-        inset: PropTypes.bool,
-        children: PropTypes.node.isRequired,
-    };
-
-    static defaultProps = {
-        inset: false,
-        relativeTo: null,
-    };
-
-    static defaultProps = {
-        horizontalPosition: popoverHorizontalPositions.left,
-        verticalPosition: popoverVerticalPositions.bottom,
-    };
-
-    handleClickOutside() {
-        const { isOpen } = this.props;
-        if (isOpen) {
-            setTimeout(() => this.close());
-        }
+const Popover = ({
+    isOpen,
+    onClose,
+    relativeTo,
+    horizontalPosition,
+    verticalPosition,
+    inset,
+    children,
+}) => {
+    if (!isOpen) {
+        return null;
     }
 
-    close() {
-        const { onClose } = this.props;
+    const renderPopover = () => (
+        <PopoverContent
+            horizontalPosition={horizontalPosition}
+            verticalPosition={verticalPosition}
+            inset={inset}
+            isRelative={!!relativeTo}
+        >
+            {children}
+        </PopoverContent>
+    );
+
+    const close = () => {
         if (onClose) {
             onClose();
         }
-    }
+    };
 
-    renderPopover() {
-        const {
-            relativeTo,
-            children,
-            horizontalPosition,
-            verticalPosition,
-            inset,
-        } = this.props;
-
-        const containerClassNames = classNames(
-            styles.container,
-            styles[horizontalPosition],
-            styles[verticalPosition],
-            {
-                [styles.isInset]: inset,
-                [styles.isRelative]: relativeTo,
-            }
-        );
-
-        return (
-            <div className={containerClassNames}>
-                <Arrow />
-                <div className={styles.content}>{children}</div>
-            </div>
-        );
-    }
-
-    render() {
-        const { isOpen, relativeTo } = this.props;
-
-        if (!isOpen) {
-            return null;
+    const handleClickOutside = () => {
+        if (isOpen) {
+            setTimeout(() => close());
         }
+    };
 
-        if (!relativeTo) {
-            return this.renderPopover();
-        }
-
-        return (
-            <RelativePortal
-                relativeTo={relativeTo}
-                onClickOutside={e => this.handleClickOutside(e)}
-            >
-                {this.renderPopover()}
-            </RelativePortal>
-        );
+    if (!relativeTo) {
+        return renderPopover();
     }
-}
+
+    return (
+        <RelativePortal
+            relativeTo={relativeTo}
+            onClickOutside={handleClickOutside}
+        >
+            {renderPopover()}
+        </RelativePortal>
+    );
+};
+
+Popover.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    relativeTo: PropTypes.oneOf(
+        PropTypes.instanceOf(Element),
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    ),
+    horizontalPosition: PropTypes.oneOf(
+        Object.values(popoverHorizontalPositions)
+    ),
+    verticalPosition: PropTypes.oneOf(Object.values(popoverVerticalPositions)),
+    inset: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+};
+
+Popover.defaultProps = {
+    inset: false,
+    relativeTo: null,
+    horizontalPosition: popoverHorizontalPositions.left,
+    verticalPosition: popoverVerticalPositions.bottom,
+};
+
+Popover.displayName = "@fusion/components/general/Popover";
+
+export default Popover;
