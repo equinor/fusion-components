@@ -1,4 +1,4 @@
-import React, { useState, createRef, forwardRef } from "react";
+import React, { useState, useContext, createRef, forwardRef } from "react";
 import PropTypes from "prop-types";
 import ComponentDisplayContext from "../../contexts/ComponentDisplayContext";
 import ButtonComponent from "./components/Button";
@@ -7,6 +7,7 @@ import AnchorComponent from "./components/Anchor";
 const Button = forwardRef((props, ref) => {
     // Used to apply "radar" animation on mouse up
     const [mouseHasBeenDown, setMouseHasBeenDown] = useState(false);
+    const displayType = useContext(ComponentDisplayContext);
 
     const buttonRef = ref || createRef();
 
@@ -28,30 +29,24 @@ const Button = forwardRef((props, ref) => {
         buttonRef.current.blur();
     };
 
-    return (
-        <ComponentDisplayContext.Consumer>
-            {displayType =>
-                props.url ? (
-                    <AnchorComponent
-                        {...props}
-                        displayType={displayType}
-                        ref={buttonRef}
-                        mouseHasBeenDown={mouseHasBeenDown}
-                        onMouseDown={handleOnMouseDown}
-                        onMouseUp={handleOnMouseUp}
-                    />
-                ) : (
-                    <ButtonComponent
-                        {...props}
-                        displayType={displayType}
-                        ref={buttonRef}
-                        mouseHasBeenDown={mouseHasBeenDown}
-                        onMouseDown={handleOnMouseDown}
-                        onMouseUp={handleOnMouseUp}
-                    />
-                )
-            }
-        </ComponentDisplayContext.Consumer>
+    return props.url ? (
+        <AnchorComponent
+            {...props}
+            displayType={displayType}
+            ref={buttonRef}
+            mouseHasBeenDown={mouseHasBeenDown}
+            onMouseDown={handleOnMouseDown}
+            onMouseUp={handleOnMouseUp}
+        />
+    ) : (
+        <ButtonComponent
+            {...props}
+            displayType={displayType}
+            ref={buttonRef}
+            mouseHasBeenDown={mouseHasBeenDown}
+            onMouseDown={handleOnMouseDown}
+            onMouseUp={handleOnMouseUp}
+        />
     );
 });
 
