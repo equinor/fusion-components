@@ -15,7 +15,6 @@ const getButtonVariantClasses = ({ contained, outlined, frameless }) => ({
     [styles.contained]: contained || (!outlined && !frameless), // Default to contained
     [styles.outlined]: outlined,
     [styles.frameless]: frameless,
-    [styles.icon]: false,
 });
 
 const getButtonStyleClasses = ({ primary, signal }) => ({
