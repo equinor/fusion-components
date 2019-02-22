@@ -25,5 +25,5 @@ export default name => {
         children: PropTypes.node.isRequired,
     };
 
-    Provider.displayName = "@fusion/components/utils/NamedContext/Provider";
+    Provider.displayName = "NamedContextProvider";
 };

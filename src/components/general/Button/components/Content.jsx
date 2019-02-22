@@ -6,7 +6,7 @@ const Content = ({ children }) => (
     <span className={styles.button}>{children}</span>
 );
 
-Content.displayName = "@fusion/components/general/Button/Content";
+Content.displayName = "ButtonContent";
 
 Content.propTypes = {
     children: PropTypes.node.isRequired,

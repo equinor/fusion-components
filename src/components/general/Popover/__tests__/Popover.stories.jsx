@@ -54,10 +54,10 @@ const ControlledPopover = () => {
 };
 
 storiesOf("General components/Popover", module)
-    .addParameters({ jest: ["Popover.stories"] })
+    .addParameters({ jest: ["Popover.stories.jsx"] })
     .add("Inline", () => (
         <div>
-            <Popover isOpen>
+            <Popover isOpen onClose={() => action("close")}>
                 <div style={{ padding: 8 }}>Some content</div>
             </Popover>
         </div>

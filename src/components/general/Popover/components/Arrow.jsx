@@ -52,6 +52,6 @@ const PopoverArrow = () => (
     </div>
 );
 
-PopoverArrow.displayName = "@fusion/components/general/Popover/Arrow";
+PopoverArrow.displayName = "PopoverArrow";
 
 export default PopoverArrow;

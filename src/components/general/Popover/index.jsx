@@ -62,10 +62,10 @@ const Popover = ({
 Popover.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    relativeTo: PropTypes.oneOf(
+    relativeTo: PropTypes.oneOf([
         PropTypes.instanceOf(Element),
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ),
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    ]),
     horizontalPosition: PropTypes.oneOf(
         Object.values(popoverHorizontalPositions)
     ),
@@ -81,6 +81,6 @@ Popover.defaultProps = {
     verticalPosition: popoverVerticalPositions.bottom,
 };
 
-Popover.displayName = "@fusion/components/general/Popover";
+Popover.displayName = "Popover";
 
 export default Popover;

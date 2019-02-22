@@ -20,7 +20,7 @@ export default (name, defaultValue) => {
         return children(value);
     };
 
-    Consumer.displayName = "@fusion/components/utils/NamedContext/Consumer";
+    Consumer.displayName = "NamedContextConsumer";
 
     return Consumer;
 };

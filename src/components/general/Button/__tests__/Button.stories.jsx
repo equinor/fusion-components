@@ -33,7 +33,7 @@ const createButtonStory = props => () => (
 );
 
 storiesOf("General components/Button", module)
-    .addParameters({ jest: ["Button.stories"] })
+    .addParameters({ jest: ["Button.stories.jsx"] })
     .add("Contained", createButtonStory({ contained: true }))
     .add("Outlined", createButtonStory({ outlined: true }))
     .add("Frameless", createButtonStory({ frameless: true }));

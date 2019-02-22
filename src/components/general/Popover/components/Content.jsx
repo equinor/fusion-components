@@ -45,6 +45,6 @@ PopoverContent.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-PopoverContent.displayName = "@fusion/components/general/Popover/Content";
+PopoverContent.displayName = "PopoverContent";
 
 export default PopoverContent;

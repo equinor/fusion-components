@@ -137,10 +137,10 @@ RelativePortalChild.propTypes = {
     onClickOutside: PropTypes.func,
     handleOutOfBounds: PropTypes.func,
     children: PropTypes.node.isRequired,
-    relativeTo: PropTypes.oneOf(
+    relativeTo: PropTypes.oneOf([
         PropTypes.instanceOf(Element),
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) })
-    ).isRequired,
+        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    ]).isRequired,
 };
 
 RelativePortalChild.defaultProps = {

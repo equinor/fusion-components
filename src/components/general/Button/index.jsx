@@ -55,7 +55,7 @@ const Button = forwardRef((props, ref) => {
     );
 });
 
-Button.displayName = "@fusion/components/general/Button";
+Button.displayName = "Button";
 
 Button.propTypes = {
     children: PropTypes.node.isRequired,

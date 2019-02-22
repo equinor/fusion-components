@@ -30,6 +30,6 @@ const RelativePortal = props =>
         container
     );
 
-RelativePortal.displayName = "@fusion/components/utils/RelativePortal";
+RelativePortal.displayName = "RelativePortal";
 
 export default RelativePortal;
