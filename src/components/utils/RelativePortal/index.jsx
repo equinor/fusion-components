@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import { createPortal } from "react-dom";
 import RelativePortalChild from "./RelativePortalChild";
 
@@ -17,18 +17,17 @@ const container = (existing => {
 
 const RelativePortalContext = React.createContext();
 
-export default class RelativePortal extends Component {
-    render() {
-        return createPortal(
-            <RelativePortalContext.Consumer>
-                {parentRelativePortal => (
-                    <RelativePortalChild
-                        {...this.props}
-                        parentRelativePortal={parentRelativePortal}
-                    />
-                )}
-            </RelativePortalContext.Consumer>,
-            container
-        );
-    }
-}
+const RelativePortal = props => {
+    const parentRelativePortal = useContext(RelativePortalContext);
+    return createPortal(
+        <RelativePortalChild
+            {...props}
+            parentRelativePortal={parentRelativePortal}
+        />,
+        container
+    );
+};
+
+RelativePortal.displayName = "RelativePortal";
+
+export default RelativePortal;

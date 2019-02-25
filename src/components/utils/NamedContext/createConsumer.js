@@ -1,5 +1,4 @@
-import { Component } from "react";
-import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
 import { ensureContext } from "./helpers";
 
 const registerConsumer = (name, defaultValue, listner) => {
@@ -11,40 +10,17 @@ const registerConsumer = (name, defaultValue, listner) => {
     return () => listners.splice(listners.indexOf(listner), 1);
 };
 
-export default (name, defaultValue) =>
-    class NamedContextConsumer extends Component {
-        static propTypes = {
-            children: PropTypes.node.isRequired,
-        };
+export default (name, defaultValue) => {
+    const Consumer = ({ children }) => {
+        const context = ensureContext(name, defaultValue);
+        const [value, setValue] = useState(context.value);
 
-        constructor(props) {
-            super(props);
+        useEffect(() => registerConsumer(name, defaultValue, setValue), []);
 
-            const context = ensureContext(name, defaultValue);
-
-            this.state = {
-                value: context.value,
-            };
-        }
-
-        componentDidMount() {
-            this.unregisterConsumer = registerConsumer(
-                name,
-                defaultValue,
-                value => {
-                    this.setState({ value });
-                }
-            );
-        }
-
-        componentWillUnmount() {
-            this.unregisterConsumer();
-        }
-
-        render() {
-            const { children } = this.props;
-            const { value } = this.state;
-
-            return children(value);
-        }
+        return children(value);
     };
+
+    Consumer.displayName = "NamedContextConsumer";
+
+    return Consumer;
+};

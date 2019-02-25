@@ -1,212 +1,106 @@
-import React, { Component } from "react";
+import React, { useState, useContext, createRef, forwardRef } from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
-import ComponentDisplayContext, {
-    componentDisplayTypes,
-} from "../../contexts/ComponentDisplayContext";
-import styles from "./styles.less";
+import ComponentDisplayContext from "../../contexts/ComponentDisplayContext";
+import ButtonComponent from "./components/Button";
+import AnchorComponent from "./components/Anchor";
 
-class Button extends Component {
-    static propTypes = {
-        children: PropTypes.node.isRequired,
-        /** Disable the button */
-        disabled: PropTypes.bool,
+const Button = forwardRef((props, ref) => {
+    // Used to apply "radar" animation on mouse up
+    const [mouseHasBeenDown, setMouseHasBeenDown] = useState(false);
+    const displayType = useContext(ComponentDisplayContext);
 
-        // Variants
-        /** Use the contained variant */
-        contained: PropTypes.bool,
-        /** Use the outlined variant */
-        outlined: PropTypes.bool,
-        /** Use the frameless variant */
-        frameless: PropTypes.bool,
+    const buttonRef = ref || createRef();
 
-        // Styles
-        /** Use the primary coloring */
-        primary: PropTypes.bool,
-        /** Use the signal coloring */
-        signal: PropTypes.bool,
+    const handleOnMouseDown = e => {
+        const { onMouseDown } = props;
 
-        // Sizes
-        /** Small button */
-        small: PropTypes.bool,
-        /** Medium button */
-        medium: PropTypes.bool,
-        /** Large button */
-        large: PropTypes.bool,
+        setMouseHasBeenDown(false);
 
-        // Link
-        /** Provide an url and the button wil use <a>-tag instead of <button>-tag */
-        url: PropTypes.string,
-        /** Set target="_blank" */
-        targetBlank: PropTypes.bool,
-        onMouseDown: PropTypes.func,
-        onClickCapture: PropTypes.func,
-        onClick: PropTypes.func,
-    };
-
-    static defaultProps = {
-        disabled: false,
-        contained: false,
-        outlined: false,
-        frameless: false,
-        primary: true,
-        signal: false,
-        small: true,
-        medium: true,
-        large: false,
-        url: null,
-        targetBlank: false,
-        onMouseDown: () => {},
-        onClickCapture: () => {},
-        onClick: () => {},
-    };
-
-    state = {
-        isMouseDown: false,
-        mouseHasBeenDown: false,
-    };
-
-    onMouseUp() {
-        this.setState({
-            isMouseDown: false,
-            mouseHasBeenDown: true,
-        });
-
-        if (this.button) {
-            this.button.blur();
-        }
-    }
-
-    onMouseDown(e) {
-        const { onMouseDown } = this.props;
         if (onMouseDown) {
             onMouseDown(e);
         }
-
-        this.setState({
-            isMouseDown: true,
-            mouseHasBeenDown: false,
-        });
-    }
-
-    getMouseDownClasses = () => {
-        const { isMouseDown, mouseHasBeenDown } = this.state;
-
-        return {
-            [styles.mouseIsDown]: isMouseDown,
-            [styles.mouseHasBeenDown]: mouseHasBeenDown,
-        };
     };
 
-    getButtonVariantClasses = () => {
-        const { contained, outlined, frameless } = this.props;
-
-        return {
-            [styles.contained]: contained || (!outlined && !frameless), // Default to contained
-            [styles.outlined]: outlined,
-            [styles.frameless]: frameless,
-            [styles.icon]: false,
-        };
+    const handleOnMouseUp = () => {
+        setMouseHasBeenDown(true);
+        // Focus is automatically set to the button on click,
+        // but we don't want it to have focus after the click
+        // action is performed. Only when tabbing to the button
+        buttonRef.current.blur();
     };
 
-    getButtonStyleClasses = () => {
-        const { primary, signal } = this.props;
-        return {
-            [styles.primary]: primary,
-            [styles.signal]: signal,
-        };
-    };
+    return props.url ? (
+        <AnchorComponent
+            {...props}
+            displayType={displayType}
+            ref={buttonRef}
+            mouseHasBeenDown={mouseHasBeenDown}
+            onMouseDown={handleOnMouseDown}
+            onMouseUp={handleOnMouseUp}
+        />
+    ) : (
+        <ButtonComponent
+            {...props}
+            displayType={displayType}
+            ref={buttonRef}
+            mouseHasBeenDown={mouseHasBeenDown}
+            onMouseDown={handleOnMouseDown}
+            onMouseUp={handleOnMouseUp}
+        />
+    );
+});
 
-    getButtonSizeClasses = displayType => {
-        const { small, medium, large } = this.props;
+Button.displayName = "Button";
 
-        return {
-            [styles.small]:
-                small || displayType === componentDisplayTypes.compact,
-            [styles.medium]:
-                (medium || (!small && !large)) &&
-                displayType !== componentDisplayTypes.compact, // Default to medium
-            [styles.large]:
-                large && displayType !== componentDisplayTypes.compact,
-        };
-    };
+Button.propTypes = {
+    children: PropTypes.node.isRequired,
+    /** Disable the button */
+    disabled: PropTypes.bool,
 
-    getButtonClasses = (displayType, props) =>
-        classNames(
-            props.className,
-            styles.container,
-            {
-                [styles.block]: props.block,
-                [styles.flex]: props.flex,
-            },
-            this.getMouseDownClasses(props),
-            this.getButtonVariantClasses(props),
-            this.getButtonStyleClasses(props),
-            this.getButtonSizeClasses(displayType)
-        );
+    // Variants
+    /** Use the contained variant */
+    contained: PropTypes.bool,
+    /** Use the outlined variant */
+    outlined: PropTypes.bool,
+    /** Use the frameless variant */
+    frameless: PropTypes.bool,
 
-    renderButtonContent() {
-        const { children } = this.props;
-        return <span className={styles.button}>{children}</span>;
-    }
+    // Styles
+    /** Use the primary coloring */
+    primary: PropTypes.bool,
+    /** Use the signal coloring */
+    signal: PropTypes.bool,
 
-    renderButton(displayType) {
-        const {
-            disabled,
-            onClick,
-            onClickCapture,
-            url,
-            targetBlank,
-        } = this.props;
+    // Sizes
+    /** Compact button */
+    compact: PropTypes.bool,
+    /** Comfortable button */
+    comfortable: PropTypes.bool,
 
-        const containerClassNames = this.getButtonClasses(displayType, {
-            ...this.props,
-            ...this.state,
-        });
+    // Link
+    /** Provide an url and the button wil use <a>-tag instead of <button>-tag */
+    url: PropTypes.string,
+    /** Set target="_blank" */
+    targetBlank: PropTypes.bool,
+    onMouseDown: PropTypes.func,
+    onClickCapture: PropTypes.func,
+    onClick: PropTypes.func,
+};
 
-        if (url) {
-            return (
-                <a
-                    className={containerClassNames}
-                    disabled={disabled}
-                    href={url}
-                    target={targetBlank ? "_blank" : "_self"}
-                    onMouseDown={() => this.onMouseDown()}
-                    onMouseUp={() => this.onMouseUp()}
-                    onClickCapture={onClickCapture}
-                    ref={button => {
-                        this.button = button;
-                    }}
-                >
-                    {this.renderButtonContent()}
-                </a>
-            );
-        }
-        return (
-            <button
-                type="button"
-                className={containerClassNames}
-                disabled={disabled}
-                onClick={onClick}
-                onMouseDown={e => this.onMouseDown(e)}
-                onMouseUp={() => this.onMouseUp()}
-                onClickCapture={onClickCapture}
-                ref={button => {
-                    this.button = button;
-                }}
-            >
-                {this.renderButtonContent()}
-            </button>
-        );
-    }
-
-    render() {
-        return (
-            <ComponentDisplayContext.Consumer>
-                {displayType => this.renderButton(displayType)}
-            </ComponentDisplayContext.Consumer>
-        );
-    }
-}
+Button.defaultProps = {
+    disabled: false,
+    contained: false,
+    outlined: false,
+    frameless: false,
+    primary: true,
+    signal: false,
+    compact: false,
+    comfortable: true,
+    url: null,
+    targetBlank: false,
+    onMouseDown: () => {},
+    onClickCapture: () => {},
+    onClick: () => {},
+};
 
 export default Button;

@@ -1,81 +1,65 @@
-import React, { Component } from "react";
+import React, { useState, createRef } from "react";
 import { storiesOf } from "@storybook/react";
-import { actions } from "@storybook/addon-actions";
+import { action } from "@storybook/addon-actions";
 import Button from "components/general/Button";
 import Popover from "..";
 
-const eventsFromNames = actions("onClose");
+const buttonRef = createRef();
+const ControlledPopover = () => {
+    const [showPopover, setShowPopover] = useState(false);
 
-class RelativePopoverContainer extends Component {
-    state = {
-        showPopover: false,
-    };
-
-    button = React.createRef();
-
-    onClose = () => {
-        this.setState({ showPopover: false });
-        eventsFromNames.onClose();
-    };
-
-    render() {
-        const { showPopover } = this.state;
-
-        return (
-            <React.Fragment>
-                <Button
-                    primary
-                    contained
-                    onClick={() => this.setState({ showPopover: !showPopover })}
-                    ref={this.button}
+    return (
+        <React.Fragment>
+            <Button
+                primary
+                contained
+                onClick={() => setShowPopover(!showPopover)}
+                ref={buttonRef}
+            >
+                Click me
+            </Button>
+            <Popover
+                isOpen={showPopover}
+                relativeTo={buttonRef.current}
+                onClose={() => action("close")}
+            >
+                <div
+                    style={{
+                        padding: 8,
+                        width: 400,
+                        fontFamily: "Equinor",
+                    }}
                 >
-                    Click me
-                </Button>
-                <Popover
-                    isOpen={showPopover}
-                    relativeTo={this.button.current}
-                    onClose={this.onClose}
-                >
-                    <div
-                        style={{
-                            padding: 8,
-                            width: 400,
-                            fontFamily: "Equinor",
-                        }}
-                    >
-                        <h2>Hello there!</h2>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce eu mi eu ipsum venenatis aliquam nec
-                            auctor ante. Interdum et malesuada fames ac ante
-                            ipsum primis in faucibus.
-                        </p>
-                        <div style={{ textAlign: "right" }}>
-                            <Button
-                                small
-                                primary
-                                frameless
-                                onClick={() =>
-                                    this.setState({ showPopover: false })
-                                }
-                            >
-                                Close
-                            </Button>
-                        </div>
+                    <h2>Hello there!</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Fusce eu mi eu ipsum venenatis aliquam nec auctor ante.
+                        Interdum et malesuada fames ac ante ipsum primis in
+                        faucibus.
+                    </p>
+                    <div style={{ textAlign: "right" }}>
+                        <Button
+                            small
+                            primary
+                            frameless
+                            onClick={() => setShowPopover(false)}
+                        >
+                            Close
+                        </Button>
                     </div>
-                </Popover>
-            </React.Fragment>
-        );
-    }
-}
+                </div>
+            </Popover>
+        </React.Fragment>
+    );
+};
 
 storiesOf("General components/Popover", module)
-    .addParameters({ jest: ["Popover.stories"] })
+    .addParameters({ jest: ["Popover.stories.jsx"] })
     .add("Inline", () => (
         <div>
-            <Popover isOpen {...eventsFromNames}>
+            <Popover isOpen onClose={() => action("close")}>
                 <div style={{ padding: 8 }}>Some content</div>
             </Popover>
         </div>
     ))
-    .add("Relative", () => <RelativePopoverContainer />);
+    .add("Relative", () => <ControlledPopover />);

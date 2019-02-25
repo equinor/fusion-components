@@ -13,7 +13,7 @@
     }
 }
 
-.variant-contained(@name, @background-color, @text-color, @hover-color, @pressed-color, @icon-bg-color, @icon-color) {
+.variant-contained(@name, @background-color, @text-color, @hover-color, @pressed-color) {
     &.@{name} {
         transition: background-color .2s;
 
@@ -21,11 +21,6 @@
             background-color: @background-color;
             border-color: @background-color;
             color: @text-color;
-        }
-
-        .icon{
-            background: @icon-bg-color;
-            color: @icon-color;
         }
 
         &:hover {
@@ -57,7 +52,7 @@
     }
 }
 
-.variant-outlined(@name, @color, @hover-color, @pressed-color, @icon-bg-color, @icon-color) {
+.variant-outlined(@name, @color, @hover-color, @pressed-color) {
     &.@{name} {
         transition: background-color .2s;
 
@@ -65,11 +60,6 @@
             background-color: white;
             color: @color;
             border-color: @color;
-        }
-
-        .icon{
-            background: @icon-bg-color;
-            color: @icon-color;
         }
 
         &:hover {
@@ -101,7 +91,7 @@
     }
 }
 
-.variant-frameless(@name, @color, @hover-color, @pressed-color, @icon-bg-color, @icon-color) {
+.variant-frameless(@name, @color, @hover-color, @pressed-color) {
     &.@{name} {
         transition: background-color .2s;
 
@@ -109,11 +99,6 @@
             background: none;
             border-color: transparent;
             color: @color;
-        }
-
-        .icon{
-            background: @icon-bg-color;
-            color: @icon-color;
         }
 
         &:hover {
@@ -160,11 +145,6 @@
         color: #A3A3A3 !important;
     }
 
-    .icon{
-        background-color: #B8B8B8 !important;
-        color: #A3A3A3 !important;
-    }
-
     &:hover {
         .button {
             background-color: #E6E6E6 !important;
@@ -189,11 +169,6 @@
 
     .button {
         color: #E6E6E6 !important;
-    }
-
-    .icon{
-        background-color: #B8B8B8 !important;
-        color: #A3A3A3 !important;
     }
 
     &:hover {
