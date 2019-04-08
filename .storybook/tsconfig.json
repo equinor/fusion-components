@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "../src/**/*",
+        "../css-modules.d.ts"
+    ]
+}

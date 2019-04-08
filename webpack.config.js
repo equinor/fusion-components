@@ -4,5 +4,6 @@ const fonts = require("./build/fonts");
 const eslint = require("./build/eslint");
 const prettier = require("./build/prettier");
 const resolve = require("./build/resolve");
+const typescript = require("./build/typescript");
 
-module.exports = merge(styles, fonts, resolve, eslint, prettier);
+module.exports = merge(styles, fonts, resolve, eslint, typescript, prettier);
