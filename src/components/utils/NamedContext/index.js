@@ -18,25 +18,17 @@ window.addEventListener("message", e => {
 
 export const createGlobalNamedContext = (name, defaultValue = null) => {
     const existingContext = ensureContext(name, defaultValue);
-    contextUpdated(
-        name,
-        existingContext ? existingContext.value : defaultValue
-    );
+    contextUpdated(name, existingContext ? existingContext.value : defaultValue);
 
     return {
         Provider: createProvider(name),
-        Consumer: createConsumer(
-            name,
-            existingContext ? existingContext.value : defaultValue
-        ),
+        Consumer: createConsumer(name, existingContext ? existingContext.value : defaultValue),
     };
 };
 
 export const createNamedContext = (name, defaultValue = null) => {
     if (!window[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name]) {
-        window[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name] = createContext(
-            defaultValue
-        );
+        window[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name] = createContext(defaultValue);
     }
 
     return window[FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name];

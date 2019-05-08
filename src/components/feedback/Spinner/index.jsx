@@ -71,6 +71,8 @@ const Spinner = ({
 };
 
 Spinner.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+
     /** Floats the spinner over content in the container */
     floating: PropTypes.bool,
 
@@ -88,15 +90,19 @@ Spinner.propTypes = {
 
     /** Inline the spinner */
     inline: PropTypes.bool,
+
+    size: PropTypes.number,
 };
 
 Spinner.defaultProps = {
+    children: null,
     floating: false,
     centered: false,
     primary: false,
     title: "",
     small: false,
     inline: false,
+    size: 24,
 };
 
 export default Spinner;

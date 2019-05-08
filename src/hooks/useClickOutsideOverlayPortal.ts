@@ -1,14 +1,17 @@
 import useOverlayContainer from "./useOverlayContainer";
 import useEventListener from "./useEventListener";
 
-export default (callback : EventListener) : void => {
+export default (callback : EventListener, target: HTMLElement = null) : void => {
     const overlayContainer = useOverlayContainer();
 
     const handleClick : EventListener = e => {
-        if(!overlayContainer.contains(e.target as Node)) {
+        const clickedOutsideTarget = target && target !== e.target && !target.contains(e.target as Node);
+        const clickedOnOrOutsideOverlay = overlayContainer === e.target || !overlayContainer.contains(e.target as Node);
+
+        if(clickedOutsideTarget || clickedOnOrOutsideOverlay) {
             callback(e);
         }
     };
 
-    useEventListener(overlayContainer, "click", handleClick, [callback]);
+    useEventListener(document.body, "click", handleClick, [callback, target]);
 };

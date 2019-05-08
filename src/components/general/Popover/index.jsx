@@ -2,10 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import RelativePortal from "components/utils/RelativePortal";
 import PopoverContent from "./components/Content";
-import {
-    popoverHorizontalPositions,
-    popoverVerticalPositions,
-} from "./positioning";
+import { popoverHorizontalPositions, popoverVerticalPositions } from "./positioning";
 
 export { popoverHorizontalPositions, popoverVerticalPositions };
 
@@ -50,10 +47,7 @@ const Popover = ({
     }
 
     return (
-        <RelativePortal
-            relativeTo={relativeTo}
-            onClickOutside={handleClickOutside}
-        >
+        <RelativePortal relativeTo={relativeTo} onClickOutside={handleClickOutside}>
             {renderPopover()}
         </RelativePortal>
     );
@@ -66,9 +60,7 @@ Popover.propTypes = {
         PropTypes.instanceOf(Element),
         PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     ]),
-    horizontalPosition: PropTypes.oneOf(
-        Object.values(popoverHorizontalPositions)
-    ),
+    horizontalPosition: PropTypes.oneOf(Object.values(popoverHorizontalPositions)),
     verticalPosition: PropTypes.oneOf(Object.values(popoverVerticalPositions)),
     inset: PropTypes.bool,
     children: PropTypes.node.isRequired,

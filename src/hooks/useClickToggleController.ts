@@ -1,19 +1,25 @@
-import { Dispatch, useState, useCallback } from "react";
+import { MutableRefObject, useState, useRef, useCallback, useEffect, SetStateAction } from "react";
 import useClickOutsideOverlayPortal from "./useClickOutsideOverlayPortal";
 import useEventListener from "./useEventListener";
 
-export default (): [Boolean, Dispatch<HTMLElement>] => {
+export default (): [Boolean, MutableRefObject<HTMLElement>, React.Dispatch<SetStateAction<boolean>>] => {
     const [isToggled, setIsToggled] = useState(false);
-    const [ref, setRef] = useState<HTMLElement>(null);
+    const [internalRef, setInternalRef] = useState(null);
 
     const toggle = () => setIsToggled(prevIsToggled => !prevIsToggled);
-    const close = useCallback(() => isToggled && setIsToggled(false), [
-        isToggled,
-    ]);
+    const close = useCallback(() => isToggled && setIsToggled(false), [isToggled]);
 
     useClickOutsideOverlayPortal(close);
 
-    useEventListener(ref, "click", toggle, [isToggled, ref]);
+    useEventListener(internalRef, "click", toggle, [isToggled, internalRef]);
 
-    return [isToggled, setRef];
+    // TODO : Find a better solition for this
+    const ref = useRef(null);
+    useEffect(() => {
+        if (ref.current !== internalRef) {
+            setInternalRef(ref.current);
+        }
+    });
+
+    return [isToggled, ref, setIsToggled];
 };

@@ -1,8 +1,14 @@
 import { useEffect, EffectCallback } from "react";
 
-export default (node: HTMLElement | Window, eventType: string, handler: EventListener, dependencies?: readonly any[], useCapture: boolean = false) => {
-    useEffect(() : EffectCallback => {
-        if(!node) {
+export default (
+    node: HTMLElement | Window,
+    eventType: string,
+    handler: EventListener,
+    dependencies: any[],
+    useCapture: boolean = false
+) => {
+    useEffect((): EffectCallback => {
+        if (!node) {
             return;
         }
 
@@ -12,4 +18,4 @@ export default (node: HTMLElement | Window, eventType: string, handler: EventLis
             node.removeEventListener(eventType, handler, useCapture);
         };
     }, dependencies);
-}
+};

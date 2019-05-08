@@ -10,12 +10,7 @@ const ControlledPopover = () => {
 
     return (
         <React.Fragment>
-            <Button
-                primary
-                contained
-                onClick={() => setShowPopover(!showPopover)}
-                ref={buttonRef}
-            >
+            <Button primary contained onClick={() => setShowPopover(!showPopover)} ref={buttonRef}>
                 Click me
             </Button>
             <Popover
@@ -32,18 +27,12 @@ const ControlledPopover = () => {
                 >
                     <h2>Hello there!</h2>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Fusce eu mi eu ipsum venenatis aliquam nec auctor ante.
-                        Interdum et malesuada fames ac ante ipsum primis in
-                        faucibus.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eu mi eu
+                        ipsum venenatis aliquam nec auctor ante. Interdum et malesuada fames ac ante
+                        ipsum primis in faucibus.
                     </p>
                     <div style={{ textAlign: "right" }}>
-                        <Button
-                            small
-                            primary
-                            frameless
-                            onClick={() => setShowPopover(false)}
-                        >
+                        <Button small primary frameless onClick={() => setShowPopover(false)}>
                             Close
                         </Button>
                     </div>

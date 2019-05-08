@@ -16,10 +16,8 @@ export const findParentWithScroll = node => {
     };
 
     const regex = /(auto|scroll)/;
-    const style = (domNode, prop) =>
-        getComputedStyle(domNode, null).getPropertyValue(prop);
-    const overflow = domNode =>
-        style(domNode, "overflow") + style(domNode, "overflow-y");
+    const style = (domNode, prop) => getComputedStyle(domNode, null).getPropertyValue(prop);
+    const overflow = domNode => style(domNode, "overflow") + style(domNode, "overflow-y");
     const scroll = domNode => regex.test(overflow(domNode));
 
     const scrollParent = domNode => {

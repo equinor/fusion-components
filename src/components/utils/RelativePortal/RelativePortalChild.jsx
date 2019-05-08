@@ -34,10 +34,7 @@ const RelativePortalChild = ({
 
             if (
                 clickedInsideChild ||
-                childNodes.reduce(
-                    (isInside, node) => isInside && isInsideNode(node, e),
-                    true
-                )
+                childNodes.reduce((isInside, node) => isInside && isInsideNode(node, e), true)
             ) {
                 clickedInsideChild(false);
                 return;
@@ -82,10 +79,8 @@ const RelativePortalChild = ({
             if (handleOutOfBounds) {
                 const parentWithScroll = findParentWithScroll(node);
                 if (parentWithScroll) {
-                    const parentOffset = parentWithScroll.getBoundingClientRect()
-                        .top;
-                    const childOffset =
-                        node.getBoundingClientRect().top - node.clientHeight;
+                    const parentOffset = parentWithScroll.getBoundingClientRect().top;
+                    const childOffset = node.getBoundingClientRect().top - node.clientHeight;
                     if (parentOffset > childOffset) {
                         handleOutOfBounds();
                     }
@@ -148,7 +143,6 @@ RelativePortalChild.defaultProps = {
     handleOutOfBounds: () => {},
 };
 
-RelativePortalChild.displayName =
-    "@fusion/components/utils/RelativePortal/Child";
+RelativePortalChild.displayName = "@fusion/components/utils/RelativePortal/Child";
 
 export default RelativePortalChild;
