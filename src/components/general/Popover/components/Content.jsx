@@ -2,20 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import Arrow from "./Arrow";
-import {
-    popoverHorizontalPositions,
-    popoverVerticalPositions,
-} from "../positioning";
+import { popoverHorizontalPositions, popoverVerticalPositions } from "../positioning";
 
 import styles from "../styles.less";
 
-const PopoverContent = ({
-    horizontalPosition,
-    verticalPosition,
-    inset,
-    isRelative,
-    children,
-}) => {
+const PopoverContent = ({ horizontalPosition, verticalPosition, inset, isRelative, children }) => {
     const containerClassNames = classNames(
         styles.container,
         styles[horizontalPosition],
@@ -35,14 +26,18 @@ const PopoverContent = ({
 };
 
 PopoverContent.propTypes = {
-    isRelative: PropTypes.bool.isRequired,
-    horizontalPosition: PropTypes.oneOf(
-        Object.values(popoverHorizontalPositions)
-    ).isRequired,
-    verticalPosition: PropTypes.oneOf(Object.values(popoverVerticalPositions))
-        .isRequired,
-    inset: PropTypes.bool.isRequired,
+    isRelative: PropTypes.bool,
+    horizontalPosition: PropTypes.oneOf(Object.values(popoverHorizontalPositions)),
+    verticalPosition: PropTypes.oneOf(Object.values(popoverVerticalPositions)),
+    inset: PropTypes.bool,
     children: PropTypes.node.isRequired,
+};
+
+PopoverContent.defaultProps = {
+    isRelative: true,
+    inset: false,
+    horizontalPosition: popoverHorizontalPositions.left,
+    verticalPosition: popoverVerticalPositions.bottom,
 };
 
 PopoverContent.displayName = "PopoverContent";

@@ -20,10 +20,7 @@ const RelativePortalContext = React.createContext();
 const RelativePortal = props => {
     const parentRelativePortal = useContext(RelativePortalContext);
     return createPortal(
-        <RelativePortalChild
-            {...props}
-            parentRelativePortal={parentRelativePortal}
-        />,
+        <RelativePortalChild {...props} parentRelativePortal={parentRelativePortal} />,
         container
     );
 };

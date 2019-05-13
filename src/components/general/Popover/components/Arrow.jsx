@@ -35,11 +35,7 @@ const PopoverArrow = () => (
                         type="matrix"
                         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0"
                     />
-                    <feBlend
-                        mode="normal"
-                        in2="effect1_dropShadow"
-                        result="effect2_dropShadow"
-                    />
+                    <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow" />
                     <feBlend
                         mode="normal"
                         in="SourceGraphic"
