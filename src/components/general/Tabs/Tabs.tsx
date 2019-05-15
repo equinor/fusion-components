@@ -2,7 +2,13 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import * as styles from "./styles.less";
 
-const Tabs = ({ onTabClick, activeTabKey, children }) => {
+type TabsProps = {
+    onTabClick: (tabKey: string) => void,
+    activeTabKey: string,
+    children: any,
+};
+
+const Tabs = ({ onTabClick, activeTabKey, children }: TabsProps) => {
     const renderTabContent = () => {
         const active = children.find(child => child.props.tabKey === activeTabKey);
         if (!active) {
@@ -37,13 +43,6 @@ Tabs.displayName = "Tabs";
 Tabs.propTypes = {
     activeTabKey: PropTypes.string.isRequired,
     onTabClick: PropTypes.func.isRequired,
-    tabs: PropTypes.arrayOf(
-        PropTypes.shape({
-            tabKey: PropTypes.string.isRequired,
-            title: PropTypes.string,
-            disabled: PropTypes.bool,
-        })
-    ),
 };
 
 export default Tabs;
