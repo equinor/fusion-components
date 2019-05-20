@@ -43,6 +43,9 @@ Tabs.displayName = "Tabs";
 Tabs.propTypes = {
     activeTabKey: PropTypes.string.isRequired,
     onTabClick: PropTypes.func.isRequired,
+    
+    // Has to be Tab component
+    children: PropTypes.node.isRequired
 };
 
 export default Tabs;

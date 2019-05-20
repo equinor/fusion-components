@@ -3,7 +3,14 @@ import * as styles from "./styles.less";
 import * as classNames from "classnames";
 import * as PropTypes from "prop-types";
 
-const Tab = ({ isCurrent, title, disabled, onTabClick }) => {
+type TabProps = {
+    isCurrent?: boolean,
+    title: string,
+    disabled?: boolean,
+    onTabClick: () => void,
+};
+
+const Tab = ({ isCurrent, title, disabled, onTabClick }: TabProps) => {
     const [isHovering, setIsHovering] = React.useState(false);
     const [isPressed, setIsPressed] = React.useState(false);
 
@@ -38,7 +45,13 @@ Tab.propTypes = {
     isCurrent: PropTypes.bool,
     title: PropTypes.string.isRequired,
     disabled: PropTypes.bool,
-    onTabClick: PropTypes.func
-}
+    onTabClick: PropTypes.func,
+};
+
+Tab.defaultProps = {
+    isCurrent: false,
+    disabled: false,
+    onTabClick: null,
+};
 
 export default Tab;
