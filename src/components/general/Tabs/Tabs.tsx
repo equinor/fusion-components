@@ -14,7 +14,7 @@ type TabContentType = {
 };
 
 const TabContent = ({ children, activeTabKey } :TabContentType) => {
-    const active = children.find(child => child.props.tabKey === activeTabKey);
+    const active = React.Children.toArray(children).find(child => child.props.tabKey === activeTabKey);
     if (!active) {
         return null;
     }
