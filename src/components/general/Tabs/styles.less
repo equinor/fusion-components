@@ -13,7 +13,7 @@
 
         .tab {
             cursor: pointer;
-            height: calc(var(--grid-unit)* 6px);
+            height: calc(var(--grid-unit)* 5px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -21,51 +21,64 @@
             background: none;
             color: inherit;
             border: none;
-            padding: 0;
             font: inherit;
             min-width:0;
             overflow: hidden;
+            padding-top: calc(var(--grid-unit)* 0.5px);
+            padding-bottom: calc(var(--grid-unit)* 0.5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             .title {
                 font-size: 16px;
-                padding: 0 calc(var(--grid-unit)* 2px) 0 calc(var(--grid-unit)* 2px);
+                padding: calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 2px) calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 2px);
                 user-select: none;
                 overflow: hidden;
+                height: calc(var(--grid-unit)* 3px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &.pressed {
+                    background-color: #DEEDEE;
+                    border-radius: calc(var(--grid-unit)* 0.5px);
+                }
+
+                &:focus{
+                    border:2px solid red;
+                }
             }
 
-            &:focus {
-                outline: 1px dashed #BFBFBF;
+            &:hover {
+                background-color: fade(#007079, 5%);
             }
+            &.pressed{
+                // outline:none;
+                background-color: initial;
+            }
+
             &.disabled {
                 cursor: not-allowed;
                 color: #E6E6E6 !important;
                 outline:none;
-
-            }
-
-            &.hover {
-                background-color: fade(#666666, 5%);
+                &:hover {
+                    background-color: initial
+                }
             }
 
             &.current {
                 color: #004E55;
                 border-bottom: 2px solid #004E55;
-                outline:none;
-                &.hover{
+                padding-bottom: calc(var(--grid-unit)* 0.5px - 2px);
+                // outline:none;
+                &:hover{
                     background-color: initial;
-                    border-bottom: 2px solid @color-accent2;
                     color: @color-accent2;
                 }
                 &.pressed {
-                    background-color: #DEEDEE;
-                    border-radius: calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 1px) 0px 0px;;
+                    border-radius: calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 1px) 0px 0px;
                 }
-            }
-
-            &.pressed {
-                background-color: #DEEDEE;
-                border-radius: calc(var(--grid-unit)* 1px);
-                outline:none;
             }
         }
     }

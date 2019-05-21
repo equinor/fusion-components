@@ -6,7 +6,7 @@ import { FirstChapter, SecondChapter, ThirdChapter } from "./TabContent";
 const TabsStory = () => {
     const [activeTabKey, setActiveTabKey] = React.useState("chapter1");
     return (
-        <Tabs activeTabKey={activeTabKey} onTabClick={tabKey => setActiveTabKey(tabKey)}>
+        <Tabs activeTabKey={activeTabKey} onChange={tabKey => setActiveTabKey(tabKey)}>
             <Tab tabKey="chapter1" title="Chapter 1">
                 <FirstChapter changeChapter={tabKey => setActiveTabKey(tabKey)} />
             </Tab>

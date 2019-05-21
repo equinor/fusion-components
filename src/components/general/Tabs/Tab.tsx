@@ -7,35 +7,41 @@ type TabProps = {
     isCurrent?: boolean,
     title: string,
     disabled?: boolean,
-    onTabClick: () => void,
+    onChange: () => void,
+    url?: string,
 };
 
-const Tab = ({ isCurrent, title, disabled, onTabClick }: TabProps) => {
-    const [isHovering, setIsHovering] = React.useState(false);
+const Tab = ({ isCurrent, title, disabled, onChange, url }: TabProps) => {
     const [isPressed, setIsPressed] = React.useState(false);
 
     const tabClasses = classNames(styles.tab, {
         [styles.current]: isCurrent,
-        [styles.hover]: isHovering && !disabled,
-        [styles.pressed]: isPressed && !disabled,
         [styles.disabled]: disabled,
+        [styles.pressed]: isPressed && !disabled,
     });
-    const titleClasses = classNames(styles.title);
+    const titleClasses = classNames(styles.title, {
+        [styles.pressed]: isPressed && !disabled,
+    });
+
+    if (disabled) {
+        return (
+            <span className={tabClasses}>
+                <div className={titleClasses}>{title}</div>
+            </span>
+        );
+    }
 
     return (
-        <button
+        <a
             className={tabClasses}
-            onClick={() => !disabled && onTabClick()}
-            onMouseOver={() => setIsHovering(true)}
-            onMouseLeave={() => {
-                setIsHovering(false);
-                setIsPressed(false);
-            }}
+            onClick={() => !disabled && onChange()}
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
+            onMouseLeave={() => isPressed && setIsPressed(false) }
+            href={url}
         >
-            <span className={titleClasses}>{title}</span>
-        </button>
+            <div className={titleClasses}>{title}</div>
+        </a>
     );
 };
 
@@ -45,13 +51,14 @@ Tab.propTypes = {
     isCurrent: PropTypes.bool,
     title: PropTypes.string.isRequired,
     disabled: PropTypes.bool,
-    onTabClick: PropTypes.func,
+    onChange: PropTypes.func,
+    url: PropTypes.string,
 };
 
 Tab.defaultProps = {
     isCurrent: false,
     disabled: false,
-    onTabClick: null,
+    onChange: null,
 };
 
 export default Tab;
