@@ -1,9 +1,8 @@
 {
-    "name": "@fusion/components",
-    "version": "1.0.0",
+    "name": "@equinor/fusion-components",
+    "version": "0.0.1",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
-    "jsnext:main": "src/index.js",
     "scripts": {
         "test": "jest",
         "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
@@ -21,7 +20,7 @@
         "react",
         "components"
     ],
-    "author": "Martin Førre",
+    "author": "Fusion Core",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/equinor/fusion-components/issues"
@@ -95,5 +94,8 @@
     },
     "dependencies": {
         "@equinor/fusion": "^0.1.3"
-    }
+    },
+    "files": [
+        "/dist"
+    ]
 }
