@@ -1,12 +1,16 @@
 import * as React from "react";
-import { mount } from "enzyme";
+import { mount, ReactWrapper } from "enzyme";
 
-const HookScopeComponent = ({ useHook, ...props }) => {
+type HookScopeComponentProps = {
+    useHook: (props: any) => void,
+};
+
+const HookScopeComponent: React.FC<HookScopeComponentProps> = ({ useHook, ...props }) => {
     useHook(props);
     return null;
 };
 
-let mounted = null;
+let mounted: ReactWrapper | null = null;
 
 afterEach(() => {
     // Clean up after each test
@@ -15,7 +19,7 @@ afterEach(() => {
     }
 });
 
-export const hookTestScope = (useHook: Function, props: Object = {}) => {
+export const hookTestScope = (useHook: (props: any) => void, props: Object = {}) => {
     mounted = mount(<HookScopeComponent {...props} useHook={useHook} />);
     return mounted;
 };

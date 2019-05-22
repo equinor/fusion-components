@@ -1,14 +1,14 @@
-import { useEffect, EffectCallback } from "react";
+import { useEffect } from "react";
 
 export default (
-    node: HTMLElement | Window,
+    node: HTMLElement | Window | null,
     eventType: string,
     handler: EventListener,
     dependencies: any[],
     useCapture: boolean = false
 ) => {
-    useEffect((): EffectCallback => {
-        if (!node) {
+    useEffect(() => {
+        if (node == null) {
             return;
         }
 

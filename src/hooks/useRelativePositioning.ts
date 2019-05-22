@@ -1,4 +1,4 @@
-import { useState, useEffect, MutableRefObject, EffectCallback } from "react";
+import { useState, useEffect, MutableRefObject } from "react";
 import useEventListener from "./useEventListener";
 
 const defaultRect: ClientRect = {
@@ -10,11 +10,11 @@ const defaultRect: ClientRect = {
     height: 0,
 };
 
-export default (ref: MutableRefObject<HTMLElement>) => {
+export default (ref: MutableRefObject<HTMLElement | null>) => {
     const [rect, setRect] = useState(defaultRect);
 
-    const setRectFromRef = (): EffectCallback => {
-        if (!ref.current) {
+    const setRectFromRef = () => {
+        if (ref.current === null) {
             return;
         }
 
