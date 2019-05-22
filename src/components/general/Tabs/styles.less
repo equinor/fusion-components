@@ -9,7 +9,7 @@
     .tabsPane {
         display: flex;
         flex-direction: row;
-        border-bottom: 1px solid #E6E6E6;
+        border-bottom: 1px solid var(--color-black-alt4);
 
         .tab {
             cursor: pointer;
@@ -41,26 +41,26 @@
                 justify-content: center;
 
                 &.pressed {
-                    background-color: #DEEDEE;
+                    background-color: var(--color-primary-alt4);
                     border-radius: calc(var(--grid-unit)* 0.5px);
                 }
+            }
 
-                &:focus{
-                    border:2px solid red;
-                }
+            &:focus{
+                outline: 1px dashed rgba(0, 0, 0, .5);
             }
 
             &:hover {
-                background-color: fade(#007079, 5%);
+                background-color: var(--color-primary-hover-alt1);
             }
             &.pressed{
-                // outline:none;
+                outline:none;
                 background-color: initial;
             }
 
             &.disabled {
                 cursor: not-allowed;
-                color: #E6E6E6 !important;
+                color: var(--color-black-alt4) !important;
                 outline:none;
                 &:hover {
                     background-color: initial
@@ -68,13 +68,13 @@
             }
 
             &.current {
-                color: #004E55;
-                border-bottom: 2px solid #004E55;
+                color: var(--color-primary);
+                border-bottom: 2px solid var(--color-primary);
                 padding-bottom: calc(var(--grid-unit)* 0.5px - 2px);
-                // outline:none;
+                outline:none;
                 &:hover{
                     background-color: initial;
-                    color: @color-accent2;
+                    color: var(--color-primary-hover);
                 }
                 &.pressed {
                     border-radius: calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 1px) 0px 0px;
