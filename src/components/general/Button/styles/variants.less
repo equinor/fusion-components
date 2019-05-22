@@ -1,18 +1,5 @@
 @import "./variables.less";
 
-.blop-animation(@name, @color) {
-    @animation-name: ~"blop-@{name}";
-    @keyframes @animation-name {
-        0% {
-            box-shadow: 0 0 0 calc(var(--click-area) * 1px) @color;
-        }
-
-        100% {
-            box-shadow: 0 0 0 calc(var(--click-area) * 2px) @color;
-        }
-    }
-}
-
 .variant-contained(@name, @background-color, @text-color, @hover-color, @pressed-color) {
     &.@{name} {
         transition: background-color .2s;
@@ -38,17 +25,6 @@
                 border-color: @background-color;
             }
         }
-
-        &.mouseHasBeenDown {
-            @animation-name: ~"blop-@{name}";
-            .button {
-                animation-name: @animation-name;
-                animation-duration: .2s;
-                animation-iteration-count: 1;
-            }
-        }
-
-        .blop-animation(@name, @pressed-color);
     }
 }
 
@@ -73,16 +49,6 @@
                 background-color: @background-color;
             }
         }
-        &.mouseHasBeenDown {
-            @animation-name: ~"blop-@{name}";
-            .button {
-                animation-name: @animation-name;
-                animation-duration: .2s;
-                animation-iteration-count: 1;
-            }
-        }
-
-        .blop-animation(@name,@hover-color);
     }
 }
 
@@ -114,21 +80,11 @@
 
         &:focus {
             .button {
-                border-color: #243746;
-                color: #243746;
+                background-color: @pressed-color;
+
+                color: @color;
             }
         }
-
-        &.mouseHasBeenDown {
-            @animation-name: ~"blop-@{name}";
-            .button {
-                animation-name: @animation-name;
-                animation-duration: .2s;
-                animation-iteration-count: 1;
-            }
-        }
-
-        .blop-animation(@name, @pressed-color);
     }
 }
 
