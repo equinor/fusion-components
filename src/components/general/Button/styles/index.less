@@ -62,29 +62,26 @@
 
     /* Variants */
     &.contained {
-        .variant-contained(primary, @color-primary, @color-primary-text, @color-primary-alt1, @color-primary-pressed);
-        .variant-contained(signal, @color-signal, @color-signal-text, @color-signal-alt1, @color-signal-alt3);
+        .variant-contained(primary, var(--color-primary), var(--color-white), var(--color-primary-hover), var(--color-primary-alt4));
 
         &[disabled] {
-            .button-disabled();
+            .button-disabled(var(--color-black-alt4), var(--color-black-alt4), var(--color-black-alt2));
         }
-    }
+    }   
 
     &.outlined {
-        .variant-outlined(primary, #243746, @color-primary, @color-primary-pressed);
-        .variant-outlined(signal, #243746, @color-signal, @color-signal-alt3);
+        .variant-outlined(primary, var(--color-primary-alt4), var(--color-primary), var(--color-primary-alt3));
 
         &[disabled] {
-            .button-disabled();
+            .button-disabled(var(--color-black-alt4), var(--color-black-alt3), var(--color-black-alt2));
         }
     }
 
     &.frameless {
-        .variant-frameless(primary, @color-primary, @color-accent2, @color-primary-pressed);
-        .variant-frameless(signal, @color-signal, @color-accent1, @color-signal-alt3);
+        .variant-frameless(primary, var(--color-primary), var(--color-primary-hover), var(--color-primary-alt4));
 
         &[disabled] {
-            .button-disabled-frameless() !important;
+            .button-disabled(transparent, transparent, var(--color-black-alt2));
         }
     }
 
