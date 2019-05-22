@@ -1,0 +1,42 @@
+@import "~styles/mixins.less";
+
+.container {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 .grid-unit(2px)[];
+    height: .grid-unit(10px)[];
+    align-items: center;
+    background: white;
+    border-bottom: 2px solid #E3E5E7;
+}
+
+.fusionTitleContainer {
+    flex-shrink: 0;
+}
+
+.fusionTitleContainer,
+.fusionTitleContainer:visited,
+.fusionLogo,
+.fusionTitle {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 15px;
+    color: black;
+}
+
+.fusionLogo {
+    margin-right: .grid-unit(2px)[];
+}
+
+.contextContainer {
+    flex-grow: 2;
+}
+
+.tempCurrentUser {
+    justify-self: flex-end;
+}
