@@ -1,9 +1,10 @@
 @import "~styles/mixins.less";
 
 .container {
-    display: flex;
-    box-sizing: border-box;
-    width: 100%;
+    display: grid;
+    grid-template-columns: .grid-unit(15px)[] auto max-content;
+    grid-template-rows: 100%;
+    grid-template-areas: "logo context user";
     padding: 0 .grid-unit(2px)[];
     height: .grid-unit(10px)[];
     align-items: center;
@@ -12,7 +13,7 @@
 }
 
 .fusionTitleContainer {
-    flex-shrink: 0;
+    grid-area: "logo";
 }
 
 .fusionTitleContainer,
@@ -38,5 +39,5 @@
 }
 
 .tempCurrentUser {
-    justify-self: flex-end;
+    grid-area: "user";
 }
