@@ -18,17 +18,6 @@ const createButtonStory = props => () => (
                 Disabled button
             </Button>
         </div>
-        <div style={{ padding: 8 }}>
-            <Button signal compact {...props} {...eventsFromNames}>
-                Compact button
-            </Button>
-            <Button signal comfortable {...props} {...eventsFromNames}>
-                Comfortable button
-            </Button>
-            <Button signal disabled {...props} {...eventsFromNames}>
-                Disabled button
-            </Button>
-        </div>
     </React.Fragment>
 );
 
