@@ -18,9 +18,9 @@
         }
 
         &:active {
-            background-color: @pressed-color;
-
             .button {
+                box-shadow: 0 0 0 2px @pressed-color;
+
                 background-color: @background-color;
                 border-color: @background-color;
             }
@@ -44,8 +44,9 @@
             }
         }
         &:active{
-            background-color: @background-color;
             .button {
+                box-shadow: 0 0 0 2px @background-color;
+
                 background-color: @background-color;
             }
         }
@@ -71,17 +72,15 @@
         }
 
         &:active {
-            background-color: @pressed-color;
-
             .button {
+                background-color: @pressed-color;
                 border-color: transparent !important;
             }
         }
 
         &:focus {
             .button {
-                background-color: @pressed-color;
-
+                box-shadow: 0 0 0 2px @pressed-color;
                 color: @color;
             }
         }
@@ -112,6 +111,7 @@
             background-color: @background-color !important;
             border-color: @border-color !important;
             color: @text-color !important;
+            box-shadow: none;
         }
     }
 }

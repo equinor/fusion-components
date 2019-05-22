@@ -18,13 +18,6 @@
         margin-left: calc(var(--grid-unit) * 1px) !important;
     }
 
-    &:focus {
-        outline: 1px dashed rgba(0, 0, 0, .5);
-    }
-
-    &:active {
-        outline: none;
-    }
 
     .button {
         display: inline-block;
@@ -39,6 +32,18 @@
 
         label {
             cursor: pointer;
+        }
+    }
+
+    &:focus {
+        .button {
+            outline: 1px dashed var(--color-black-alt3);
+        }
+    }
+    
+    &:active {
+        .button{
+            outline: none;
         }
     }
 
