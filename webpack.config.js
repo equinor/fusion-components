@@ -21,6 +21,23 @@ module.exports = merge(
         output: {
             filename: "index.js",
             path: path.resolve(__dirname, "dist"),
+            library: "default",
+            libraryTarget: "umd",
         },
+    },
+    {
+        externals: {
+            react: {
+                commonjs: "react",
+                commonjs2: "react",
+                amd: "react",
+            },
+            "@equinor/fusion": {
+                commonjs: "@equinor/fusion",
+                commonjs2: "@equinor/fusion",
+                amd: "@equinor/fusion",
+            },
+        },
+        mode: "production"
     }
 );
