@@ -12,7 +12,7 @@ module.exports = merge(
     fonts,
     resolve,
     eslint,
-    typescript,
+    typescript("./src"),
     prettier,
     {
         entry: "./src/index.ts",
@@ -38,6 +38,6 @@ module.exports = merge(
                 amd: "@equinor/fusion",
             },
         },
-        mode: "production"
+        mode: "production",
     }
 );

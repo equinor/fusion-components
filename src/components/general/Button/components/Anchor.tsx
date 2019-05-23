@@ -1,13 +1,22 @@
-import React, { forwardRef } from "react";
-import PropTypes from "prop-types";
+import React, { forwardRef, EventHandler, SyntheticEvent } from "react";
 import Content from "./Content";
 import getButtonClasses from "../buttonClasses";
 
-const AnchorComponent = forwardRef(
+type AnchorProps = {
+    url: string,
+    targetBlank?: boolean,
+    onClick?: EventHandler<SyntheticEvent>,
+    onClickCapture?: EventHandler<SyntheticEvent>,
+    onMouseDown?: EventHandler<SyntheticEvent>,
+    onMouseUp: EventHandler<SyntheticEvent>,
+    displayType: string,
+    mouseHasBeenDown: boolean,
+}
+
+const AnchorComponent = forwardRef<HTMLAnchorElement | null, AnchorProps>(
     (
         {
             children,
-            disabled,
             url,
             targetBlank,
             onMouseDown,
@@ -20,7 +29,6 @@ const AnchorComponent = forwardRef(
     ) => (
         <a
             className={getButtonClasses(props)}
-            disabled={disabled}
             href={url}
             target={targetBlank ? "_blank" : "_self"}
             onMouseDown={onMouseDown}
@@ -34,24 +42,12 @@ const AnchorComponent = forwardRef(
     )
 );
 
-AnchorComponent.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-    disabled: PropTypes.bool,
-    url: PropTypes.string.isRequired,
-    targetBlank: PropTypes.bool,
-    onClick: PropTypes.func,
-    onClickCapture: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseUp: PropTypes.func,
-};
-
 AnchorComponent.defaultProps = {
-    disabled: true,
     targetBlank: false,
-    onClick: null,
-    onClickCapture: null,
-    onMouseDown: null,
-    onMouseUp: null,
+    onClick: () => {},
+    onClickCapture: () => {},
+    onMouseDown: () => {},
+    onMouseUp: () => {},
 };
 
 AnchorComponent.displayName = "@fusion/components/general/Button/AnchorComponent";

@@ -1,7 +1,8 @@
 {
     "compilerOptions": {
         "jsx": "react",
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "rootDir": "../",
     },
     "include": [
         "../src/**/*",

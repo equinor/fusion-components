@@ -7,6 +7,8 @@ import {
 } from "@equinor/fusion";
 import AuthUser from "@equinor/fusion/lib/auth/AuthUser";
 
+import FusionRoot from "../src/components/core/Root";
+
 const mockUser = {
     id: "1337",
     fullName: "Charles Carmichael",
@@ -44,15 +46,13 @@ const serviceResolver: ServiceResolver = {
 };
 
 const FusionWrapper: React.FC = ({ children }) => {
-    const overlay = React.useRef();
-    const root = React.useRef();
+    const overlay = React.useRef(null);
+    const root = React.useRef(null);
     const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root });
     return (
         <FusionContext.Provider value={fusionContext}>
-            <div style={{ fontFamily: "Equinor, sans-serif" }}>
-                <div ref={root}>{children}</div>
-                <div ref={overlay} />
-            </div>
+            <FusionRoot ref={root}>{children}</FusionRoot>
+            <div ref={overlay} />
         </FusionContext.Provider>
     );
 };

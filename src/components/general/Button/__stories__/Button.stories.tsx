@@ -1,7 +1,7 @@
-import React from "react";
+import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { actions } from "@storybook/addon-actions";
-import Button from "..";
+import Button from "../index";
 
 const eventsFromNames = actions("onClick");
 
