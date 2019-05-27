@@ -1,8 +1,3 @@
-@import "~styles/colors.less";
-@import "~styles/variables.less";
-
-
-
 //Positioning
 .spinnerContainer{
     --small-spinner: calc(var(--grid-unit) * 3px);
@@ -14,7 +9,7 @@
 
     .spinnerTitle{
         font-size: 14px;
-        color: @color-accent1;
+        color: var(--color-secondary-accent);
         text-align: left;
         flex-shrink: 0;
     }
@@ -120,16 +115,16 @@
         stroke-dashoffset: 0;
         animation: dash 1.5s ease-in-out infinite;
         stroke-linecap: round;
-        stroke: @color-signal;
+        stroke: var(--color-secondary);
     }
 
     &.primary {
         .spinnerBorder{
-            stroke: @color-primary;
+            stroke: var(--color-primary);
         }
 
         & + .spinnerTitle{
-            color: @color-primary;
+            color: var(--color-primary);
         }
     }
 }

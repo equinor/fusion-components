@@ -1,0 +1,21 @@
+@import "~styles/variables.less";
+@import "~styles/colors.less";
+
+.container {
+    font-family: Equinor, sans-serif;
+    width: 100%;
+    height: 100%;
+    color: var(--color-primary-accent);
+    position: relative;
+    display: grid;
+    grid-template-rows: max-content auto;
+    grid-template-areas:
+        "header"
+        "content";
+}
+
+:global {
+    a {
+        color: var(--color-primary);
+    }
+}

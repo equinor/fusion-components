@@ -1,9 +1,29 @@
-import React, { Children } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import styles from './styles.less';
+import * as React from "react";
+import classNames from "classnames";
+import styles from "./styles.less";
 
-const Spinner = ({
+type SpinnerProps = {
+    floating?: boolean,
+
+    /** Center the spinner */
+    centered?: boolean,
+
+    /** Use primary color instead of default */
+    primary?: boolean,
+
+    /** Optional title */
+    title?: string,
+
+    /** Use small spinner */
+    small?: boolean,
+
+    /** Inline the spinner */
+    inline?: boolean,
+
+    size?: number,
+};
+
+const Spinner: React.FC<SpinnerProps> = ({
     floating,
     centered,
     primary,
@@ -65,41 +85,16 @@ const Spinner = ({
                 </svg>
             </div>
             {title ? <h2 className={styles.spinnerTitle}>{title}</h2> : null}
-            {Children.count(children) > 0 ? <p>{children}</p> : null}
+            {React.Children.count(children) > 0 ? <p>{children}</p> : null}
         </div>
     );
 };
 
-Spinner.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-
-    /** Floats the spinner over content in the container */
-    floating: PropTypes.bool,
-
-    /** Center the spinner */
-    centered: PropTypes.bool,
-
-    /** Use primary color instead of default */
-    primary: PropTypes.bool,
-
-    /** Optional title */
-    title: PropTypes.string,
-
-    /** Use small spinner */
-    small: PropTypes.bool,
-
-    /** Inline the spinner */
-    inline: PropTypes.bool,
-
-    size: PropTypes.number,
-};
-
 Spinner.defaultProps = {
-    children: null,
     floating: false,
     centered: false,
     primary: false,
-    title: '',
+    title: "",
     small: false,
     inline: false,
     size: 24,

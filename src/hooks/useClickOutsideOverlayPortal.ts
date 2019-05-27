@@ -1,7 +1,7 @@
 import useOverlayContainer from "./useOverlayContainer";
 import useEventListener from "./useEventListener";
 
-export default (callback : EventListener, target: HTMLElement = null) : void => {
+export default (callback : EventListener, target?: HTMLElement | null) : void => {
     const overlayContainer = useOverlayContainer();
 
     const handleClick : EventListener = e => {
