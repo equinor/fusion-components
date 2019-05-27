@@ -1,14 +1,14 @@
-import React, { useContext } from "react";
-import { createPortal } from "react-dom";
-import RelativePortalChild from "./RelativePortalChild";
+import React, { useContext } from 'react';
+import { createPortal } from 'react-dom';
+import RelativePortalChild from './RelativePortalChild';
 
-const containerId = "FUSION_COMPONENTS_OVERLAYS_CONTAINER";
+const containerId = 'FUSION_COMPONENTS_OVERLAYS_CONTAINER';
 const container = (existing => {
     if (existing) {
         return existing;
     }
 
-    const element = document.createElement("div");
+    const element = document.createElement('div');
     element.id = containerId;
     document.body.appendChild(element);
 
@@ -25,6 +25,6 @@ const RelativePortal = props => {
     );
 };
 
-RelativePortal.displayName = "RelativePortal";
+RelativePortal.displayName = 'RelativePortal';
 
 export default RelativePortal;

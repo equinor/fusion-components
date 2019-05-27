@@ -1,6 +1,6 @@
-import React, { useState, useEffect, createRef } from "react";
-import PropTypes from "prop-types";
-import { findParentWithScroll, isInsideNode } from "./helpers";
+import React, { useState, useEffect, createRef } from 'react';
+import PropTypes from 'prop-types';
+import { findParentWithScroll, isInsideNode } from './helpers';
 
 const RelativePortalContext = React.createContext();
 
@@ -94,15 +94,15 @@ const RelativePortalChild = ({
     });
 
     useEffect(() => {
-        document.addEventListener("scroll", updatePositioning, true);
-        window.addEventListener("resize", updatePositioning, true);
-        document.addEventListener("click", handleClickOutside, false);
+        document.addEventListener('scroll', updatePositioning, true);
+        window.addEventListener('resize', updatePositioning, true);
+        document.addEventListener('click', handleClickOutside, false);
         updatePositioning();
 
         return () => {
-            document.removeEventListener("scroll", updatePositioning, true);
-            window.removeEventListener("resize", updatePositioning, true);
-            document.removeEventListener("click", handleClickOutside, false);
+            document.removeEventListener('scroll', updatePositioning, true);
+            window.removeEventListener('resize', updatePositioning, true);
+            document.removeEventListener('click', handleClickOutside, false);
             window.cancelAnimationFrame(animationFrame);
         };
     });
@@ -112,9 +112,9 @@ const RelativePortalChild = ({
             <div
                 ref={nodeRef}
                 style={{
-                    position: "fixed",
-                    overflow: "visible",
-                    pointerEvents: "none",
+                    position: 'fixed',
+                    overflow: 'visible',
+                    pointerEvents: 'none',
                     zIndex,
                     ...position,
                     ...size,
@@ -143,6 +143,6 @@ RelativePortalChild.defaultProps = {
     handleOutOfBounds: () => {},
 };
 
-RelativePortalChild.displayName = "@fusion/components/utils/RelativePortal/Child";
+RelativePortalChild.displayName = '@fusion/components/utils/RelativePortal/Child';
 
 export default RelativePortalChild;

@@ -1,14 +1,14 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 import {
     handleMessage,
     ensureContext,
     contextUpdated,
     FUSION_NAMED_CONTEXT_GLOBAL_PREFIX,
-} from "./helpers";
-import createProvider from "./createProvider";
-import createConsumer from "./createConsumer";
+} from './helpers';
+import createProvider from './createProvider';
+import createConsumer from './createConsumer';
 
-window.addEventListener("message", e => {
+window.addEventListener('message', e => {
     if (!e.data || e.origin !== window.location.origin) {
         return;
     }

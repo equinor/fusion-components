@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "../styles.less";
+import React from 'react';
+import styles from '../styles.less';
 
 const PopoverArrow = () => (
     <div className={styles.arrow}>
@@ -48,6 +48,6 @@ const PopoverArrow = () => (
     </div>
 );
 
-PopoverArrow.displayName = "PopoverArrow";
+PopoverArrow.displayName = 'PopoverArrow';
 
 export default PopoverArrow;

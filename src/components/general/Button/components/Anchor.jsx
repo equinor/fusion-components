@@ -1,7 +1,7 @@
-import React, { forwardRef } from "react";
-import PropTypes from "prop-types";
-import Content from "./Content";
-import getButtonClasses from "../buttonClasses";
+import React, { forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import Content from './Content';
+import getButtonClasses from '../buttonClasses';
 
 const AnchorComponent = forwardRef(
     (
@@ -22,7 +22,7 @@ const AnchorComponent = forwardRef(
             className={getButtonClasses(props)}
             disabled={disabled}
             href={url}
-            target={targetBlank ? "_blank" : "_self"}
+            target={targetBlank ? '_blank' : '_self'}
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
             onClick={onClick}
@@ -54,6 +54,6 @@ AnchorComponent.defaultProps = {
     onMouseUp: null,
 };
 
-AnchorComponent.displayName = "@fusion/components/general/Button/AnchorComponent";
+AnchorComponent.displayName = '@fusion/components/general/Button/AnchorComponent';
 
 export default AnchorComponent;

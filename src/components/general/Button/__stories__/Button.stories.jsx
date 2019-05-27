@@ -1,9 +1,9 @@
-import React from "react";
-import { storiesOf } from "@storybook/react";
-import { actions } from "@storybook/addon-actions";
-import Button from "..";
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { actions } from '@storybook/addon-actions';
+import Button from '..';
 
-const eventsFromNames = actions("onClick");
+const eventsFromNames = actions('onClick');
 
 const createButtonStory = props => () => (
     <React.Fragment>
@@ -32,8 +32,8 @@ const createButtonStory = props => () => (
     </React.Fragment>
 );
 
-storiesOf("General components/Button", module)
-    .addParameters({ jest: ["Button.stories.jsx"] })
-    .add("Contained", createButtonStory({ contained: true }))
-    .add("Outlined", createButtonStory({ outlined: true }))
-    .add("Frameless", createButtonStory({ frameless: true }));
+storiesOf('General components/Button', module)
+    .addParameters({ jest: ['Button.stories.jsx'] })
+    .add('Contained', createButtonStory({ contained: true }))
+    .add('Outlined', createButtonStory({ outlined: true }))
+    .add('Frameless', createButtonStory({ frameless: true }));

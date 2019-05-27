@@ -1,7 +1,7 @@
-import React, { forwardRef } from "react";
-import PropTypes from "prop-types";
-import Content from "./Content";
-import getButtonClasses from "../buttonClasses";
+import React, { forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import Content from './Content';
+import getButtonClasses from '../buttonClasses';
 
 const ButtonComponent = forwardRef(
     ({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, ...props }, ref) => (
@@ -37,6 +37,6 @@ ButtonComponent.defaultProps = {
     onMouseUp: null,
 };
 
-ButtonComponent.displayName = "@fusion/components/general/Button/ButtonComponent";
+ButtonComponent.displayName = '@fusion/components/general/Button/ButtonComponent';
 
 export default ButtonComponent;
