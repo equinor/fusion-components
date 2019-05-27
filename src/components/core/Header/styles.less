@@ -1,0 +1,50 @@
+@import "~styles/mixins.less";
+
+.container {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: .grid-unit(15px)[] auto max-content;
+    grid-template-rows: 100%;
+    grid-template-areas: "logo context user";
+    padding: 0 .grid-unit(2px)[];
+    height: .grid-unit(10px)[];
+    align-items: center;
+    background: white;
+    border-bottom: 2px solid var(--color-black-alt4);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.fusionTitleContainer {
+    grid-area: logo;
+}
+
+.fusionTitleContainer,
+.fusionTitleContainer:visited,
+.fusionTitleContainer:hover,
+.fusionTitleContainer:active,
+.fusionLogo,
+.fusionTitle {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-primary-accent);
+}
+
+.fusionLogo {
+    margin-right: .grid-unit(2px)[];
+}
+
+.contextContainer {
+    grid-area: context;
+}
+
+.tempCurrentUser {
+    grid-area: user;
+}

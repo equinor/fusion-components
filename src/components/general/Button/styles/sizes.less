@@ -1,12 +1,12 @@
 @import "./variables.less";
 
-.button-size(@height-multiplier, @padding-multiplier) {
-    padding: calc(var(--click-area) * 1px);
+.button-size(@height-multiplier, @padding-multiplier, @font-size) {
+    padding: calc(var(--click-area) * 1px) 0 calc(var(--click-area) * 1px) 0;
     margin: calc(var(--click-area) * -1px);
     height: calc((var(--grid-unit) * @height-multiplier) + (var(--click-area) * 2px));
 
     .button {
-        font-size: 14px;
+        font-size: @font-size;
         padding: 0 calc(var(--grid-unit) * @padding-multiplier);
         height: calc(var(--grid-unit) * @height-multiplier);
         line-height: calc(var(--grid-unit) * @height-multiplier);
@@ -15,10 +15,10 @@
 
 .button-sizes() {
     &.compact {
-        .button-size(3px, 1px);
+        .button-size(3px, 2px, 12px);
     }
 
     &.comfortable {
-        .button-size(4px, 2px);
+        .button-size(4.5px, 2px, 14px);
     }
 }

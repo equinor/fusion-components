@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import useClickToggleController from "../useClickToggleController";
 import useOverlayPortal from "../useOverlayPortal";
@@ -6,8 +7,9 @@ import PopoverContent from "../../components/general/Popover/components/Content"
 import * as styles from "./styles.less";
 import useClickOutsideOverlayPortal from "../useClickOutsideOverlayPortal";
 
-export default (content: React.ReactNode, props?: any): React.MutableRefObject<HTMLElement> => {
-    const popoverContentRef = React.useRef(null);
+
+export default (content: React.ReactNode, props?: any): React.MutableRefObject<HTMLElement | null> => {
+    const popoverContentRef = React.useRef<HTMLDivElement | null>(null);
     const [isOpen, ref, setIsOpen] = useClickToggleController();
     const rect = useRelativePositioning(ref);
 

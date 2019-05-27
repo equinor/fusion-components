@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = rootDir => ({
     module: {
         rules: [
             {
@@ -6,9 +6,12 @@ module.exports = {
                 use: [
                     {
                         loader: "awesome-typescript-loader",
+                        options: {
+                            rootDir,
+                        },
                     },
                 ],
             },
         ],
     },
-};
+});

@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
-import Button from '..';
+import Button from '../index';
 
 const eventsFromNames = actions('onClick');
 
@@ -15,17 +15,6 @@ const createButtonStory = props => () => (
                 Comfortable button
             </Button>
             <Button primary disabled {...props} {...eventsFromNames}>
-                Disabled button
-            </Button>
-        </div>
-        <div style={{ padding: 8 }}>
-            <Button signal compact {...props} {...eventsFromNames}>
-                Compact button
-            </Button>
-            <Button signal comfortable {...props} {...eventsFromNames}>
-                Comfortable button
-            </Button>
-            <Button signal disabled {...props} {...eventsFromNames}>
                 Disabled button
             </Button>
         </div>

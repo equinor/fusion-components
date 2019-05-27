@@ -3,10 +3,14 @@ import useEventListener from "./useEventListener";
 
 export default (delay: Number): [Boolean, MutableRefObject<any>] => {
     const [isHovering, setIsHovering] = useState<Boolean>(false);
-    const ref = useRef<HTMLElement>(null);
+    const ref = useRef<HTMLElement | null>(null);
 
-    const handleMouseMove : EventListener = e => {
-        const refContainsTarget : Boolean = ref.current.contains(e.target as Node);
+    const handleMouseMove: EventListener = e => {
+        if(ref.current === null) {
+            return;
+        }
+        
+        const refContainsTarget = ref.current.contains(e.target as Node);
         if (!isHovering && refContainsTarget) {
             setIsHovering(true);
         } else if (isHovering && !refContainsTarget) {
