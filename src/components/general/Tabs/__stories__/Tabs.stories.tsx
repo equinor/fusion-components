@@ -16,7 +16,16 @@ const TabsStory = () => {
             <Tab tabKey="chapter3" title="Chapter 3">
                 <ThirdChapter changeChapter={tabKey => setActiveTabKey(tabKey)} />
             </Tab>
-            <Tab tabKey="chapter4" title="Chapter 4" disabled />
+            <Tab tabKey="chapter4" title="Chapter 4">
+                <ThirdChapter changeChapter={tabKey => setActiveTabKey(tabKey)} />
+            </Tab>
+            <Tab tabKey="chapter5" title="Chapter 5">
+                <ThirdChapter changeChapter={tabKey => setActiveTabKey(tabKey)} />
+            </Tab>
+            <Tab tabKey="chapter6" title="Chapter 6">
+                <ThirdChapter changeChapter={tabKey => setActiveTabKey(tabKey)} />
+            </Tab>
+            <Tab tabKey="chapter7" title="Chapter 7" disabled />
         </Tabs>
     );
 };

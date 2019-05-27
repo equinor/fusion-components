@@ -1,12 +1,18 @@
 .tabs{
-    width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 
     .tabsPane {
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid var(--color-black-alt4);
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        
+        &::-webkit-scrollbar { 
+            display: none; 
+        }
 
         .tab {
             cursor: pointer;
@@ -26,6 +32,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            white-space: nowrap;
+            flex-shrink: 0;
 
             .title {
                 font-size: 16px;

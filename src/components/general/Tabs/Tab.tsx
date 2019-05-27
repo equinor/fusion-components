@@ -7,13 +7,12 @@ type TabProps = {
     title: string,
     tabKey: string,
     disabled?: boolean,
-    onChange?: () => void,
+    onChange?: (e: React.MouseEvent<HTMLAnchorElement,MouseEvent>) => void,
     url?: string,
 };
 
 const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
     const [isPressed, setIsPressed] = React.useState(false);
-
     const tabClasses = classNames(styles.tab, {
         [styles.current]: isCurrent,
         [styles.disabled]: disabled,
@@ -34,7 +33,7 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
     return (
         <a
             className={tabClasses}
-            onClick={() => !disabled && onChange && onChange()}
+            onClick={e => !disabled && onChange && onChange(e)}
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
             onMouseLeave={() => isPressed && setIsPressed(false) }
