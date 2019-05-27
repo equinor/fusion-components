@@ -11,13 +11,13 @@ export const getBreakpoint = <T extends Breakpoint>(breakpoints: T[], nodeRect: 
         .map(breakpoint => accessor(breakpoint));
     const maxBreakpoint = Math.max(...breakpointValues);
 
-    return breakpoints.find(breakpoint => accessor(breakpoint) === maxBreakpoint)
+    return breakpoints.find(breakpoint => accessor(breakpoint) === maxBreakpoint) as T;
 
 }
 
 const useBreakpoint = <T extends Breakpoint>(checkSize: (rect: ClientRect) => T[]): [MutableRefObject<HTMLDivElement>, T[]] => {
     const [currentBreakpoints, setCurrentBreakpoints] = useState<T[]>([]);
-    const nodeRef = useRef<HTMLDivElement>(null);
+    const nodeRef = useRef<HTMLDivElement>();
 
     const performCheckSize = () => {
         if (!nodeRef.current) {
@@ -32,7 +32,7 @@ const useBreakpoint = <T extends Breakpoint>(checkSize: (rect: ClientRect) => T[
 
     useEffect(performCheckSize, [])
 
-    return [nodeRef, currentBreakpoints];
+    return [nodeRef as MutableRefObject<HTMLDivElement>, currentBreakpoints];
 };
 
 export default useBreakpoint;

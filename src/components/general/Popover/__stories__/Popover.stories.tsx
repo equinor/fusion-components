@@ -1,8 +1,8 @@
 import React, { useState, createRef } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Button from 'components/general/Button';
-import Popover from '..';
+import Button from '../../Button';
+import Popover from '../index';
 
 const buttonRef = createRef();
 const ControlledPopover = () => {
