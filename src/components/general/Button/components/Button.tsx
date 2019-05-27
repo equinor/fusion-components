@@ -1,9 +1,18 @@
-import React, { forwardRef } from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import Content from "./Content";
 import getButtonClasses from "../buttonClasses";
 
-const ButtonComponent = forwardRef(
+type ButtonProps = {
+    disabled?: boolean,
+    onClick?: React.EventHandler<React.SyntheticEvent>,
+    onClickCapture?: React.EventHandler<React.SyntheticEvent>,
+    onMouseDown?: React.EventHandler<React.SyntheticEvent>,
+    onMouseUp?: React.EventHandler<React.SyntheticEvent>,
+    displayType: string,
+    mouseHasBeenDown: boolean,
+};
+
+const ButtonComponent = React.forwardRef<HTMLButtonElement | null, React.PropsWithChildren<ButtonProps>>(
     ({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, ...props }, ref) => (
         <button
             type="button"
@@ -20,21 +29,12 @@ const ButtonComponent = forwardRef(
     )
 );
 
-ButtonComponent.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-    disabled: PropTypes.bool,
-    onClick: PropTypes.func,
-    onClickCapture: PropTypes.func,
-    onMouseDown: PropTypes.func,
-    onMouseUp: PropTypes.func,
-};
-
 ButtonComponent.defaultProps = {
     disabled: true,
-    onClick: null,
-    onClickCapture: null,
-    onMouseDown: null,
-    onMouseUp: null,
+    onClick: () => {},
+    onClickCapture: () => {},
+    onMouseDown: () => {},
+    onMouseUp: () => {},
 };
 
 ButtonComponent.displayName = "@fusion/components/general/Button/ButtonComponent";

@@ -1,17 +1,17 @@
 import * as React from "react";
 import * as styles from "./styles.less";
 import * as classNames from "classnames";
-import * as PropTypes from "prop-types";
 
 type TabProps = {
     isCurrent?: boolean,
     title: string,
+    tabKey: string,
     disabled?: boolean,
-    onChange: () => void,
+    onChange?: () => void,
     url?: string,
 };
 
-const Tab = ({ isCurrent, title, disabled, onChange, url }: TabProps) => {
+const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
     const [isPressed, setIsPressed] = React.useState(false);
 
     const tabClasses = classNames(styles.tab, {
@@ -34,7 +34,7 @@ const Tab = ({ isCurrent, title, disabled, onChange, url }: TabProps) => {
     return (
         <a
             className={tabClasses}
-            onClick={() => !disabled && onChange()}
+            onClick={() => !disabled && onChange && onChange()}
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
             onMouseLeave={() => isPressed && setIsPressed(false) }
@@ -47,18 +47,10 @@ const Tab = ({ isCurrent, title, disabled, onChange, url }: TabProps) => {
 
 Tab.displayName = "Tab";
 
-Tab.propTypes = {
-    isCurrent: PropTypes.bool,
-    title: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-    onChange: PropTypes.func,
-    url: PropTypes.string,
-};
-
 Tab.defaultProps = {
     isCurrent: false,
     disabled: false,
-    onChange: null,
+    onChange: () => {},
 };
 
 export default Tab;

@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 import * as styles from "./styles.less";
 
 type TabsProps = {
@@ -13,7 +12,7 @@ type TabContentType = {
     activeTabKey: string,
 };
 
-const TabContent = ({ children, activeTabKey } :TabContentType) => {
+const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
     const active = React.Children.toArray(children).find(child => child.props.tabKey === activeTabKey);
     if (!active) {
         return null;
@@ -25,7 +24,7 @@ const TabContent = ({ children, activeTabKey } :TabContentType) => {
     return <React.Fragment>{clonedChildren}</React.Fragment>;
 };
 
-const TabPane = ({ children, onChange, activeTabKey }: TabsProps) => {
+const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     const clonedChildren = React.Children.map(children, child => {
         const { title, tabKey } = child.props;
         if (!title || !tabKey) {
@@ -40,7 +39,7 @@ const TabPane = ({ children, onChange, activeTabKey }: TabsProps) => {
     return <React.Fragment>{clonedChildren}</React.Fragment>;
 };
 
-const Tabs = ({ onChange, activeTabKey, children }: TabsProps) => {
+const Tabs: React.FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
     return (
         <div className={styles.tabs}>
             <div className={styles.tabsPane}>
@@ -58,13 +57,5 @@ const Tabs = ({ onChange, activeTabKey, children }: TabsProps) => {
 };
 
 Tabs.displayName = "Tabs";
-
-Tabs.propTypes = {
-    activeTabKey: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-
-    // Has to be Tab component
-    children: PropTypes.node.isRequired,
-};
 
 export default Tabs;
