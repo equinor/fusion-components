@@ -21,6 +21,6 @@ const PopoverStory = () => {
     );
 };
 
-storiesOf("Hooks", module).add("Popover", () => {
+storiesOf("Hooks|Popover", module).add("Popover", () => {
     return <PopoverStory />;
 });

@@ -1,7 +1,7 @@
-import React, { Children } from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import styles from "./styles.less";
+import React, { Children } from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import styles from './styles.less';
 
 const Spinner = ({
     floating,
@@ -99,7 +99,7 @@ Spinner.defaultProps = {
     floating: false,
     centered: false,
     primary: false,
-    title: "",
+    title: '',
     small: false,
     inline: false,
     size: 24,

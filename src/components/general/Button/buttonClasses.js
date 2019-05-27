@@ -1,6 +1,6 @@
-import classNames from "classnames";
-import { componentDisplayTypes } from "../../contexts/ComponentDisplayContext";
-import styles from "./styles/index.less";
+import classNames from 'classnames';
+import { componentDisplayTypes } from '../../contexts/ComponentDisplayContext';
+import styles from './styles/index.less';
 
 const getLayoutClasses = ({ block, flex }) => ({
     [styles.block]: block,

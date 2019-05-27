@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Feedback components/Spinner Default 1`] = `
+exports[`Feedback|Spinner Default 1`] = `
 Array [
   <div
     className="spinnerContainer"
@@ -80,8 +80,8 @@ Array [
           className="spinnerBox"
           style={
             Object {
-              "height": undefined,
-              "width": undefined,
+              "height": 24,
+              "width": 24,
             }
           }
           viewBox="24 24 48 48"

@@ -34,10 +34,12 @@
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
         "@storybook/addon-actions": "^5.0.10",
-        "@storybook/addon-info": "^5.0.10",
+        "@storybook/addon-info": "^5.0.11",
         "@storybook/addon-jest": "^5.0.10",
+        "@storybook/addon-knobs": "^5.0.11",
         "@storybook/addon-options": "^5.0.10",
-        "@storybook/addon-storyshots": "^5.0.10",
+        "@storybook/addon-storyshots": "^5.0.11",
+        "@storybook/addon-viewport": "^5.0.11",
         "@storybook/react": "^5.0.10",
         "@types/enzyme": "^3.9.1",
         "@types/jest": "^24.0.11",
@@ -76,6 +78,8 @@
         "react-test-renderer": "^16.8.6",
         "style-loader": "^0.23.1",
         "ts-jest": "^24.0.2",
+        "tslint": "^5.16.0",
+        "tslint-config-prettier": "^1.18.0",
         "typescript": "^3.4.5",
         "url-loader": "^1.1.2",
         "webpack": "^4.30.0",
@@ -89,6 +93,6 @@
         "babel-core": "7.0.0-bridge.0"
     },
     "dependencies": {
-        "@storybook/theming": "^5.0.10"
+        "@storybook/theming": "^5.0.11"
     }
 }

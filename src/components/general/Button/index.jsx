@@ -1,8 +1,8 @@
-import React, { useState, useContext, createRef, forwardRef } from "react";
-import PropTypes from "prop-types";
-import ComponentDisplayContext from "../../contexts/ComponentDisplayContext";
-import ButtonComponent from "./components/Button";
-import AnchorComponent from "./components/Anchor";
+import React, { useState, useContext, createRef, forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import ComponentDisplayContext from '../../contexts/ComponentDisplayContext';
+import ButtonComponent from './components/Button';
+import AnchorComponent from './components/Anchor';
 
 const Button = forwardRef((props, ref) => {
     // Used to apply "radar" animation on mouse up
@@ -50,7 +50,7 @@ const Button = forwardRef((props, ref) => {
     );
 });
 
-Button.displayName = "Button";
+Button.displayName = 'Button';
 
 Button.propTypes = {
     children: PropTypes.node.isRequired,

@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import RelativePortal from "components/utils/RelativePortal";
-import PopoverContent from "./components/Content";
-import { popoverHorizontalPositions, popoverVerticalPositions } from "./positioning";
+import React from 'react';
+import PropTypes from 'prop-types';
+import RelativePortal from 'components/utils/RelativePortal';
+import PopoverContent from './components/Content';
+import { popoverHorizontalPositions, popoverVerticalPositions } from './positioning';
 
 export { popoverHorizontalPositions, popoverVerticalPositions };
 
@@ -73,6 +73,6 @@ Popover.defaultProps = {
     verticalPosition: popoverVerticalPositions.bottom,
 };
 
-Popover.displayName = "Popover";
+Popover.displayName = 'Popover';
 
 export default Popover;

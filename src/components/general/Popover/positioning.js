@@ -1,9 +1,9 @@
 export const popoverHorizontalPositions = {
-    left: "left",
-    right: "right",
+    left: 'left',
+    right: 'right',
 };
 
 export const popoverVerticalPositions = {
-    top: "top",
-    bottom: "bottom",
+    top: 'top',
+    bottom: 'bottom',
 };

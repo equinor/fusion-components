@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import Arrow from "./Arrow";
-import { popoverHorizontalPositions, popoverVerticalPositions } from "../positioning";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import Arrow from './Arrow';
+import { popoverHorizontalPositions, popoverVerticalPositions } from '../positioning';
 
-import styles from "../styles.less";
+import styles from '../styles.less';
 
 const PopoverContent = ({ horizontalPosition, verticalPosition, inset, isRelative, children }) => {
     const containerClassNames = classNames(
@@ -40,6 +40,6 @@ PopoverContent.defaultProps = {
     verticalPosition: popoverVerticalPositions.bottom,
 };
 
-PopoverContent.displayName = "PopoverContent";
+PopoverContent.displayName = 'PopoverContent';
 
 export default PopoverContent;

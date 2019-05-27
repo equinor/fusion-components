@@ -1,8 +1,8 @@
-import React, { useState, createRef } from "react";
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import Button from "components/general/Button";
-import Popover from "..";
+import React, { useState, createRef } from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import Button from 'components/general/Button';
+import Popover from '..';
 
 const buttonRef = createRef();
 const ControlledPopover = () => {
@@ -16,13 +16,13 @@ const ControlledPopover = () => {
             <Popover
                 isOpen={showPopover}
                 relativeTo={buttonRef.current}
-                onClose={() => action("close")}
+                onClose={() => action('close')}
             >
                 <div
                     style={{
                         padding: 8,
                         width: 400,
-                        fontFamily: "Equinor",
+                        fontFamily: 'Equinor',
                     }}
                 >
                     <h2>Hello there!</h2>
@@ -31,7 +31,7 @@ const ControlledPopover = () => {
                         ipsum venenatis aliquam nec auctor ante. Interdum et malesuada fames ac ante
                         ipsum primis in faucibus.
                     </p>
-                    <div style={{ textAlign: "right" }}>
+                    <div style={{ textAlign: 'right' }}>
                         <Button small primary frameless onClick={() => setShowPopover(false)}>
                             Close
                         </Button>
@@ -42,13 +42,13 @@ const ControlledPopover = () => {
     );
 };
 
-storiesOf("General components/Popover", module)
-    .addParameters({ jest: ["Popover.stories.jsx"] })
-    .add("Inline", () => (
+storiesOf('General|Popover', module)
+    .addParameters({ jest: ['Popover.stories.jsx'] })
+    .add('Inline', () => (
         <div>
-            <Popover isOpen onClose={() => action("close")}>
+            <Popover isOpen onClose={() => action('close')}>
                 <div style={{ padding: 8 }}>Some content</div>
             </Popover>
         </div>
     ))
-    .add("Relative", () => <ControlledPopover />);
+    .add('Relative', () => <ControlledPopover />);
