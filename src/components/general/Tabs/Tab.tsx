@@ -7,12 +7,15 @@ type TabProps = {
     title: string,
     tabKey: string,
     disabled?: boolean,
-    onChange?: (e: React.MouseEvent<HTMLAnchorElement,MouseEvent>) => void,
+    onChange?: () => void,
     url?: string,
+    onCurrent?: (ref: React.MutableRefObject<HTMLAnchorElement | null>) => void,
 };
 
-const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
+const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, onCurrent }) => {
     const [isPressed, setIsPressed] = React.useState(false);
+    const tabRef = React.useRef<HTMLAnchorElement | null>(null);
+
     const tabClasses = classNames(styles.tab, {
         [styles.current]: isCurrent,
         [styles.disabled]: disabled,
@@ -30,14 +33,27 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
         );
     }
 
+    React.useEffect(() => {
+        if (isCurrent && tabRef) {
+            onCurrent && onCurrent(tabRef);
+        }
+    }, [isCurrent]);
+
     return (
         <a
             className={tabClasses}
-            onClick={e => !disabled && onChange && onChange(e)}
+            onClick={() => !disabled && onChange && onChange()}
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
-            onMouseLeave={() => isPressed && setIsPressed(false) }
+            onMouseLeave={() => isPressed && setIsPressed(false)}
             href={url}
+            ref={tabRef}
+            tabIndex={0}        
+            onKeyDown ={e => {
+                if(e.keyCode === 13 || e.keyCode === 32){
+                    !disabled && onChange && onChange()
+                }
+            }}
         >
             <div className={titleClasses}>{title}</div>
         </a>
@@ -50,6 +66,7 @@ Tab.defaultProps = {
     isCurrent: false,
     disabled: false,
     onChange: () => {},
+    onCurrent: () => {},
 };
 
 export default Tab;
