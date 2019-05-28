@@ -37,6 +37,6 @@ export default (keyBoardEvents: KeyBoardEvents) => {
         ref,
     ]);
 
-    return setRef
+    return {setRef, ref}
    
 }

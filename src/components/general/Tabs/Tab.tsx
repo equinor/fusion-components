@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as styles from "./styles.less";
 import * as classNames from "classnames";
+import useKeyBoardNavigation from "../../../hooks/useKeyboardNavigation";
 
 type TabProps = {
     isCurrent?: boolean,
@@ -9,12 +10,19 @@ type TabProps = {
     disabled?: boolean,
     onChange?: () => void,
     url?: string,
-    onCurrent?: (ref: React.MutableRefObject<HTMLAnchorElement | null>) => void,
+    onCurrent?: (ref: HTMLElement) => void,
 };
 
 const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, onCurrent }) => {
     const [isPressed, setIsPressed] = React.useState(false);
-    const tabRef = React.useRef<HTMLAnchorElement | null>(null);
+
+    const tabRef = useKeyBoardNavigation({
+        onEnter: () => {
+            if (tabRef.ref) {
+                !disabled && onChange && onChange();
+            }
+        },
+    });
 
     const tabClasses = classNames(styles.tab, {
         [styles.current]: isCurrent,
@@ -34,8 +42,8 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, on
     }
 
     React.useEffect(() => {
-        if (isCurrent && tabRef) {
-            onCurrent && onCurrent(tabRef);
+        if (isCurrent && tabRef.ref) {
+            onCurrent && onCurrent(tabRef.ref);
         }
     }, [isCurrent]);
 
@@ -47,13 +55,8 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, on
             onMouseUp={() => setIsPressed(false)}
             onMouseLeave={() => isPressed && setIsPressed(false)}
             href={url}
-            ref={tabRef}
-            tabIndex={0}        
-            onKeyDown ={e => {
-                if(e.keyCode === 13 || e.keyCode === 32){
-                    !disabled && onChange && onChange()
-                }
-            }}
+            ref={tabRef.setRef}
+            tabIndex={0}
         >
             <div className={titleClasses}>{title}</div>
         </a>
