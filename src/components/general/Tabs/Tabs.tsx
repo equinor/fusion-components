@@ -49,7 +49,7 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
         }
         return React.cloneElement(child, {
             onChange: () => onChange(tabKey),
-            onCurrent: (ref: HTMLElement) => scrollToTab(ref),
+            onCurrent: scrollToTab,
             isCurrent: tabKey === activeTabKey,
         });
     });
