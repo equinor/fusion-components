@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "scripts": {
@@ -8,7 +8,7 @@
         "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
         "prebuild:storybook": "yarn run test:generate-output",
         "storybook": "start-storybook -p 9001 -c .storybook",
-        "build:storybook": "build-storybook -c .storybook -o /docs",
+        "build:storybook": "build-storybook -c .storybook -o ./docs",
         "prepublish": "yarn test"
     },
     "repository": {
