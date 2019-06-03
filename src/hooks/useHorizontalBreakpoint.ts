@@ -7,10 +7,10 @@ export type HorizontalBreakpoint = Breakpoint & {
 
 export default (
     breakpoints: HorizontalBreakpoint[]
-): [MutableRefObject<HTMLDivElement>, HorizontalBreakpoint] => {
+): [MutableRefObject<HTMLDivElement>, string | null] => {
     const [ref, currentBreakpoints] = useBreakpoint(rect => {
         return [getBreakpoint(breakpoints, rect, x => x.width)];
     });
 
-    return [ref, currentBreakpoints[0]];
+    return [ref, currentBreakpoints[0] || null];
 };

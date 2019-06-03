@@ -1,23 +1,23 @@
-import {useState, useRef, useEffect, MutableRefObject} from 'react';
+import { useState, useRef, useEffect, MutableRefObject } from 'react';
 import useEventListener from './useEventListener';
 
 export type Breakpoint = {
     key: string,
 };
 
-export const getBreakpoint = <T extends Breakpoint>(breakpoints: T[], nodeRect: ClientRect, accessor: (x: T|ClientRect) => number): T => {
+export const getBreakpoint = <T extends Breakpoint>(breakpoints: T[], nodeRect: ClientRect, accessor: (x: T|ClientRect) => number): string => {
     const breakpointValues = breakpoints
         .filter(breakpoint => accessor(breakpoint) <= accessor(nodeRect))
         .map(breakpoint => accessor(breakpoint));
     const maxBreakpoint = Math.max(...breakpointValues);
 
-    return breakpoints.find(breakpoint => accessor(breakpoint) === maxBreakpoint) as T;
-
+    const result = breakpoints.find(breakpoint => accessor(breakpoint) === maxBreakpoint) as T;
+    return result.key;
 }
 
-const useBreakpoint = <T extends Breakpoint>(checkSize: (rect: ClientRect) => T[]): [MutableRefObject<HTMLDivElement>, T[]] => {
-    const [currentBreakpoints, setCurrentBreakpoints] = useState<T[]>([]);
-    const nodeRef = useRef<HTMLDivElement>();
+const useBreakpoint = (checkSize: (rect: ClientRect) => string[]): [MutableRefObject<HTMLDivElement>, string[]] => {
+    const [currentBreakpoints, setCurrentBreakpoints] = useState<string[]>([]);
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     const performCheckSize = () => {
         if (!nodeRef.current) {
@@ -29,7 +29,6 @@ const useBreakpoint = <T extends Breakpoint>(checkSize: (rect: ClientRect) => T[
     };
 
     useEventListener(window, 'resize', performCheckSize, [], true);
-
     useEffect(performCheckSize, [])
 
     return [nodeRef as MutableRefObject<HTMLDivElement>, currentBreakpoints];

@@ -4,6 +4,7 @@
         "tslint-config-prettier"
     ],
     "rules": {
+        "prettier": true,
         "file-name-casing": [true, {"index.tsx": "camel-case", ".tsx": "pascal-case", ".ts": "camel-case"}],
         "no-console": false,
         "ordered-imports": false,

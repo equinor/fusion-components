@@ -36,6 +36,6 @@ const KeyboardNavigationStory = () => {
     );
 };
 
-storiesOf('Hooks', module).add('KeyboardNavigation', () => {
+storiesOf('Hooks|KeyboardNavigation', module).add('default', () => {
     return <KeyboardNavigationStory />;
 });

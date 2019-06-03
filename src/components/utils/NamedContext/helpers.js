@@ -26,6 +26,10 @@ const notifyConsumers = name => {
 };
 
 export const handleMessage = message => {
+    if (!message || !message.context) {
+        return;
+    }
+
     const mountedContext = ensureContext(message.context.name);
 
     switch (message.type) {

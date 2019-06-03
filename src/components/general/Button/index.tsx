@@ -1,5 +1,5 @@
 import * as React from "react";
-import ComponentDisplayContext from "../../contexts/ComponentDisplayContext";
+import ComponentDisplayContext from "../../contexts/componentDisplayContext";
 import ButtonComponent from "./components/Button";
 import AnchorComponent from "./components/Anchor";
 
