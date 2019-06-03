@@ -5,7 +5,7 @@ import ErrorMessage from "../index";
 const ErrorMessageStory = () =>{
     
     return(
-        <ErrorMessage title="This the title for the Error Message" />
+        <ErrorMessage message="This the message for the Error Message" hasError/>
     )
 }
 

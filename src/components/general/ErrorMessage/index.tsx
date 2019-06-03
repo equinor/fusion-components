@@ -7,6 +7,9 @@ export const errorTypes = {
     error: "error",
     accessDenied: "accessDenied",
     notFound: "notFound",
+    noData:"noData",
+    noFiles:"noFiles",
+    noActionsCreated:"noActionsCreated"
 };
 
 type ErrorMessageProps = {
