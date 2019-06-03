@@ -28,19 +28,21 @@ const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
 
 const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     const tabsPaneRef = React.useRef<HTMLDivElement | null>(null);
+    const activeTabRef = React.useRef<HTMLElement | null>(null);
 
-    const scrollToTab = (tabRef: HTMLElement) => {
+    const scrollToTab = (tabRef: HTMLElement | null) => {
         if (!tabsPaneRef.current || !tabRef) {
             return;
         }
         const pane = tabsPaneRef.current;
-        const tab = tabRef;
 
         if (pane.scrollWidth === pane.offsetWidth) {
             return;
         }
-        pane.scrollTo(tab.offsetLeft - pane.offsetWidth / 2 + tab.offsetWidth / 2, 0);
-    };
+        pane.scrollTo(tabRef.offsetLeft - pane.offsetWidth / 2 + tabRef.offsetWidth / 2, 0);
+    };          
+
+    React.useEffect(() => scrollToTab(activeTabRef.current), [activeTabKey]);
 
     const clonedChildren = React.Children.map(children, child => {
         const { title, tabKey } = child.props;
@@ -48,8 +50,10 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
             return null;
         }
         return React.cloneElement(child, {
-            onChange: () => onChange(tabKey),
-            onCurrent: scrollToTab,
+            onChange: (ref: HTMLElement) => {
+                activeTabRef.current = ref;
+                onChange(tabKey);
+            },
             isCurrent: tabKey === activeTabKey,
         });
     });

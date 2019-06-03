@@ -8,18 +8,23 @@ type TabProps = {
     title: string,
     tabKey: string,
     disabled?: boolean,
-    onChange?: () => void,
+    onChange?: (ref: HTMLElement) => void,
     url?: string,
-    onCurrent?: (ref: HTMLElement) => void,
 };
 
-const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, onCurrent }) => {
+const Tab: React.FC<TabProps> = ({
+    isCurrent,
+    title,
+    disabled,
+    onChange,
+    url,
+}) => {
     const [isPressed, setIsPressed] = React.useState(false);
 
     const tabRef = useKeyBoardNavigation({
         onEnter: () => {
-            if (tabRef.ref) {
-                !disabled && onChange && onChange();
+            if (tabRef.current) {
+                !disabled && onChange && onChange(tabRef.current);
             }
         },
     });
@@ -41,16 +46,10 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, on
         );
     }
 
-    React.useEffect(() => {
-        if (isCurrent && tabRef.ref) {
-            onCurrent && onCurrent(tabRef.ref);
-        }
-    }, [isCurrent]);
-
     return (
         <a
             className={tabClasses}
-            onClick={() => !disabled && onChange && onChange()}
+            onClick={() => !disabled && onChange && tabRef.current && onChange(tabRef.current)}
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
             onMouseLeave={() => isPressed && setIsPressed(false)}
@@ -69,7 +68,6 @@ Tab.defaultProps = {
     isCurrent: false,
     disabled: false,
     onChange: () => {},
-    onCurrent: () => {},
 };
 
 export default Tab;
