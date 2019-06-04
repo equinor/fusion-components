@@ -1,6 +1,6 @@
-import * as React from "react";
-import Button from "../../Button";
-import styles from "./styles.less";
+import * as React from 'react';
+import Button from '../../Button';
+import styles from './styles.less';
 
 const firstChapterText = `Super mario landed gentry 
     erudite headmaster circus strongman, circus strongma
@@ -19,13 +19,13 @@ const thirdChapterText = `Consectetur erudite headmaster wario lando calrissian 
     crumb catcher middle eastern despot louis xiii what a bounder?`;
 
 type ChapterProps = {
-    changeChapter: (chapter: string) => void,
+    changeChapter: (chapter: string) => void;
 };
 
 export const FirstChapter: React.FC<ChapterProps> = props => {
     return (
         <div className={styles.content}>
-            <Button primary comfortable onClick={() => props.changeChapter("chapter2")}>
+            <Button primary comfortable onClick={() => props.changeChapter('chapter2')}>
                 Next Chapter
             </Button>
             <div className={styles.chapter}>{firstChapterText}</div>
@@ -36,10 +36,10 @@ export const FirstChapter: React.FC<ChapterProps> = props => {
 export const SecondChapter: React.FC<ChapterProps> = props => {
     return (
         <div className={styles.content}>
-            <Button primary comfortable onClick={() => props.changeChapter("chapter1")}>
+            <Button primary comfortable onClick={() => props.changeChapter('chapter1')}>
                 Previous Chapter
             </Button>
-            <Button primary comfortable onClick={() => props.changeChapter("chapter3")}>
+            <Button primary comfortable onClick={() => props.changeChapter('chapter3')}>
                 Next Chapter
             </Button>
             <div className={styles.chapter}>{secondChapterText}</div>
@@ -50,7 +50,7 @@ export const SecondChapter: React.FC<ChapterProps> = props => {
 export const ThirdChapter: React.FC<ChapterProps> = props => {
     return (
         <div className={styles.content}>
-            <Button primary comfortable onClick={() => props.changeChapter("chapter2")}>
+            <Button primary comfortable onClick={() => props.changeChapter('chapter2')}>
                 Previous Chapter
             </Button>
             <div className={styles.chapter}>{thirdChapterText}</div>

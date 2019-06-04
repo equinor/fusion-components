@@ -1,14 +1,14 @@
-import * as React from "react";
-import * as styles from "./styles.less";
-import * as classNames from "classnames";
+import * as React from 'react';
+import * as styles from './styles.less';
+import * as classNames from 'classnames';
 
 type TabProps = {
-    isCurrent?: boolean,
-    title: string,
-    tabKey: string,
-    disabled?: boolean,
-    onChange?: () => void,
-    url?: string,
+    isCurrent?: boolean;
+    title: string;
+    tabKey: string;
+    disabled?: boolean;
+    onChange?: () => void;
+    url?: string;
 };
 
 const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
@@ -37,7 +37,7 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
             onClick={() => !disabled && onChange && onChange()}
             onMouseDown={() => setIsPressed(true)}
             onMouseUp={() => setIsPressed(false)}
-            onMouseLeave={() => isPressed && setIsPressed(false) }
+            onMouseLeave={() => isPressed && setIsPressed(false)}
             href={url}
         >
             <div className={titleClasses}>{title}</div>
@@ -45,7 +45,7 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
     );
 };
 
-Tab.displayName = "Tab";
+Tab.displayName = 'Tab';
 
 Tab.defaultProps = {
     isCurrent: false,

@@ -1,9 +1,9 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import useKeyboardNavigation from "../useKeyboardNavigation.ts";
+import * as React from 'react';
+import { storiesOf } from '@storybook/react';
+import useKeyboardNavigation from '../useKeyboardNavigation.ts';
 
 const KeyboardNavigationStory = () => {
-    const listItems = ["Item 1", "Item 2", "Item 3"];
+    const listItems = ['Item 1', 'Item 2', 'Item 3'];
 
     const [currentItem, setCurrentItem] = React.useState(null);
     const ref = useKeyboardNavigation({
@@ -14,8 +14,8 @@ const KeyboardNavigationStory = () => {
 
     const setStyle = listId => {
         return {
-            fontWeight: listId === currentItem ? "600" : "200",
-            listStyleType: "none",
+            fontWeight: listId === currentItem ? '600' : '200',
+            listStyleType: 'none',
         };
     };
     return (
@@ -23,7 +23,7 @@ const KeyboardNavigationStory = () => {
             <input
                 ref={ref}
                 placeholder={
-                    currentItem !== null ? listItems[currentItem] : "Click me to use navigation"
+                    currentItem !== null ? listItems[currentItem] : 'Click me to use navigation'
                 }
                 readOnly
             />
@@ -36,6 +36,6 @@ const KeyboardNavigationStory = () => {
     );
 };
 
-storiesOf("Hooks", module).add("KeyboardNavigation", () => {
+storiesOf('Hooks', module).add('KeyboardNavigation', () => {
     return <KeyboardNavigationStory />;
 });

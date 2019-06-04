@@ -1,19 +1,21 @@
-import * as React from "react";
-import * as styles from "./styles.less";
+import * as React from 'react';
+import * as styles from './styles.less';
 
 type TabsProps = {
-    onChange: (tabKey: string) => void,
-    activeTabKey: string,
-    children: any,
+    onChange: (tabKey: string) => void;
+    activeTabKey: string;
+    children: any;
 };
 
 type TabContentType = {
-    children: any,
-    activeTabKey: string,
+    children: any;
+    activeTabKey: string;
 };
 
 const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
-    const active = React.Children.toArray(children).find(child => child.props.tabKey === activeTabKey);
+    const active = React.Children.toArray(children).find(
+        child => child.props.tabKey === activeTabKey
+    );
     if (!active) {
         return null;
     }
@@ -56,6 +58,6 @@ const Tabs: React.FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
     );
 };
 
-Tabs.displayName = "Tabs";
+Tabs.displayName = 'Tabs';
 
 export default Tabs;

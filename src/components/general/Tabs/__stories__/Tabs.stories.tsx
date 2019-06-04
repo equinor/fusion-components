@@ -1,10 +1,10 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import { Tabs, Tab } from "../index";
-import { FirstChapter, SecondChapter, ThirdChapter } from "./TabContent";
+import * as React from 'react';
+import { storiesOf } from '@storybook/react';
+import { Tabs, Tab } from '../index';
+import { FirstChapter, SecondChapter, ThirdChapter } from './TabContent';
 
 const TabsStory = () => {
-    const [activeTabKey, setActiveTabKey] = React.useState("chapter1");
+    const [activeTabKey, setActiveTabKey] = React.useState('chapter1');
     return (
         <Tabs activeTabKey={activeTabKey} onChange={tabKey => setActiveTabKey(tabKey)}>
             <Tab tabKey="chapter1" title="Chapter 1">
@@ -20,6 +20,6 @@ const TabsStory = () => {
         </Tabs>
     );
 };
-storiesOf("General components/Tabs", module)
-    .addParameters({ jest: ["Tabs.stories.jsx"] })
-    .add("Tabs", () => <TabsStory />);
+storiesOf('General components/Tabs', module)
+    .addParameters({ jest: ['Tabs.stories.jsx'] })
+    .add('Tabs', () => <TabsStory />);

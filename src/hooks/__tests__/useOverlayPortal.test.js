@@ -1,12 +1,12 @@
-import * as React from "react";
-import { act } from "react-dom/test-utils";
-import { shallow } from "enzyme";
-import { hookTestScope } from "./hookTestScope";
-import useOverlayPortal from "../useOverlayPortal";
+import * as React from 'react';
+import { act } from 'react-dom/test-utils';
+import { shallow } from 'enzyme';
+import { hookTestScope } from './hookTestScope';
+import useOverlayPortal from '../useOverlayPortal';
 
 // ../__mocks__/useOverlayContainer.ts
-jest.mock("../useOverlayContainer");
-import useOverlayContainer, { prepend, removeChild } from "../useOverlayContainer";
+jest.mock('../useOverlayContainer');
+import useOverlayContainer, { prepend, removeChild } from '../useOverlayContainer';
 
 beforeEach(() => {
     useOverlayContainer.mockClear();
@@ -14,9 +14,9 @@ beforeEach(() => {
     removeChild.mockClear();
 });
 
-describe("useOverlayPortal", () => {
-    it("Should prepend to the overlay container", () => {
-        const content = (<div>Oh my</div>);
+describe('useOverlayPortal', () => {
+    it('Should prepend to the overlay container', () => {
+        const content = <div>Oh my</div>;
         hookTestScope(() => {
             useOverlayPortal(true, content);
         });
@@ -26,7 +26,7 @@ describe("useOverlayPortal", () => {
         expect(prepend.mock.calls[0][0].innerHTML).toEqual(shallow(content).html());
     });
 
-    it("Should not add to the overlay container if not visible", () => {
+    it('Should not add to the overlay container if not visible', () => {
         hookTestScope(() => {
             useOverlayPortal(false, <div>Oh my</div>);
         });
@@ -35,10 +35,13 @@ describe("useOverlayPortal", () => {
         expect(prepend).not.toHaveBeenCalled();
     });
 
-    it("Should remove child when visible is set to false", () => {
-        const scope = hookTestScope(({ isVisible }) => {
-            useOverlayPortal(isVisible, <div>Oh my</div>);
-        }, { isVisible: true });
+    it('Should remove child when visible is set to false', () => {
+        const scope = hookTestScope(
+            ({ isVisible }) => {
+                useOverlayPortal(isVisible, <div>Oh my</div>);
+            },
+            { isVisible: true }
+        );
 
         expect(removeChild).not.toHaveBeenCalled();
         expect(prepend).toHaveBeenCalledTimes(1);
@@ -53,13 +56,16 @@ describe("useOverlayPortal", () => {
         expect(prepend).toHaveBeenCalledTimes(1);
     });
 
-    it("Should reprepend when the content change", () => {
-        const scope = hookTestScope(({ content }) => {
-            useOverlayPortal(true, <div>{content}</div>);
-        }, { content: "Initial" });
+    it('Should reprepend when the content change', () => {
+        const scope = hookTestScope(
+            ({ content }) => {
+                useOverlayPortal(true, <div>{content}</div>);
+            },
+            { content: 'Initial' }
+        );
 
         act(() => {
-            scope.setProps({ content: "Hello there 🙋‍"});
+            scope.setProps({ content: 'Hello there 🙋‍' });
         });
 
         expect(removeChild).toHaveBeenCalledTimes(1);
