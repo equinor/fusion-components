@@ -24,7 +24,7 @@ module.exports = {
     // collectCoverageFrom: null,
 
     // The directory where Jest should output its coverage files
-    coverageDirectory: "coverage",
+    coverageDirectory: 'coverage',
 
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: [
@@ -58,22 +58,15 @@ module.exports = {
     // globals: {},
 
     // An array of directory names to be searched recursively up from the requiring module's location
-    moduleDirectories: ["node_modules", "src"],
+    moduleDirectories: ['node_modules', 'src'],
 
     // An array of file extensions your modules use
-    moduleFileExtensions: [
-      "js",
-      "json",
-      "jsx",
-      "ts",
-      "tsx",
-      "node"
-    ],
+    moduleFileExtensions: ['js', 'json', 'jsx', 'ts', 'tsx', 'node'],
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     moduleNameMapper: {
-        "\\.(css|less)$": "identity-obj-proxy",
-        "^@storybook/react$": "<rootDir>/__mocks__/@storybook/react",
+        '\\.(css|less)$': 'identity-obj-proxy',
+        '^@storybook/react$': '<rootDir>/__mocks__/@storybook/react',
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -119,9 +112,9 @@ module.exports = {
 
     // The paths to modules that run some code to configure or set up the testing environment before each test
     setupFiles: [
-        "<rootDir>/.jest/register-context.js",
-        "<rootDir>/.jest/setup-jsdom.js",
-        "<rootDir>/.jest/enzyme-adapter-react.js"
+        '<rootDir>/.jest/register-context.js',
+        '<rootDir>/.jest/setup-jsdom.js',
+        '<rootDir>/.jest/enzyme-adapter-react.js',
     ],
 
     // The path to a module that runs some code to configure or set up the testing framework before each test
@@ -141,9 +134,9 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files
     testMatch: [
-        "**/__tests__/**/*.js?(x)",
-        "**/__stories__/**/*.js?(x)",
-    //   "**/?(*.)+(spec|test).js?(x)"
+        '**/__tests__/**/*.js?(x)',
+        '**/__stories__/**/*.js?(x)',
+        //   "**/?(*.)+(spec|test).js?(x)"
     ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -168,13 +161,13 @@ module.exports = {
 
     // A map from regular expressions to paths to transformers
     transform: {
-        "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+        '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
     },
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
     transformIgnorePatterns: [
-        "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-        "^.+\\.module\\.(css|sass|scss)$"
+        '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
+        '^.+\\.module\\.(css|sass|scss)$',
     ],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them

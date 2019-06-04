@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Hooks KeyboardNavigation 1`] = `
+exports[`Hooks|KeyboardNavigation default 1`] = `
 Array [
   <input
     placeholder="Click me to use navigation"

@@ -1,8 +1,8 @@
-import * as React from "react";
-import { useCurrentUser } from "@equinor/fusion";
-import FusionLogo from "../FusionLogo";
+import * as React from 'react';
+import { useCurrentUser } from '@equinor/fusion';
+import FusionLogo from '../FusionLogo';
 
-import * as styles from "./styles.less";
+import * as styles from './styles.less';
 
 type FusionHeaderProps = {};
 
@@ -15,9 +15,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = () => {
                 <span className={styles.fusionLogo}>
                     <FusionLogo scale={0.8} />
                 </span>
-                <span className={styles.fusionTitle}>
-                    fusion
-                </span>
+                <span className={styles.fusionTitle}>fusion</span>
             </a>
 
             <div className={styles.contextContainer} />

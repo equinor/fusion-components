@@ -1,12 +1,18 @@
 .tabs{
-    width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 
     .tabsPane {
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid var(--color-black-alt4);
+        overflow-x: auto;
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar { 
+            display: none; 
+        }
 
         .tab {
             cursor: pointer;
@@ -15,36 +21,42 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            background: none;
+            background: none;   
             color: inherit;
             border: none;
             font: inherit;
             min-width:0;
             overflow: hidden;
-            padding-top: calc(var(--grid-unit)* 0.5px);
-            padding-bottom: calc(var(--grid-unit)* 0.5px);
+            padding: calc(var(--grid-unit)* 0.5px);
             display: flex;
             align-items: center;
             justify-content: center;
+            white-space: nowrap;
+            flex-shrink: 0;
 
             .title {
                 font-size: 16px;
-                padding: calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 2px) calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 2px);
+                padding: calc(var(--grid-unit)* 1px);
                 user-select: none;
                 overflow: hidden;
                 height: calc(var(--grid-unit)* 3px);
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                outline: none;
 
                 &.pressed {
                     background-color: var(--color-primary-alt4);
                     border-radius: calc(var(--grid-unit)* 0.5px);
+                    outline: none;
                 }
             }
 
             &:focus{
-                outline: 1px dashed var(--color-black-alt3);
+                outline: none;
+                .title {
+                    outline: 1px dashed var(--color-black-alt3);
+                }
             }
 
             &:hover {
@@ -53,12 +65,14 @@
             &.pressed{
                 outline:none;
                 background-color: initial;
+                .title {
+                    outline:none;
+                }
             }
 
             &.disabled {
                 cursor: not-allowed;
                 color: var(--color-black-alt4) !important;
-                outline:none;
                 &:hover {
                     background-color: initial
                 }
@@ -68,13 +82,16 @@
                 color: var(--color-primary);
                 border-bottom: 2px solid var(--color-primary);
                 padding-bottom: calc(var(--grid-unit)* 0.5px - 2px);
-                outline:none;
+                
                 &:hover{
                     background-color: initial;
                     color: var(--color-primary-hover);
                 }
                 &.pressed {
                     border-radius: calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 1px) 0px 0px;
+                }
+                .title {
+                    outline:none;
                 }
             }
         }

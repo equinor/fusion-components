@@ -1,15 +1,15 @@
-import * as React from "react";
-import Content from "./Content";
-import getButtonClasses from "../buttonClasses";
+import * as React from 'react';
+import Content from './Content';
+import getButtonClasses from '../buttonClasses';
 
 type ButtonProps = {
-    disabled?: boolean,
-    onClick?: React.EventHandler<React.SyntheticEvent>,
-    onClickCapture?: React.EventHandler<React.SyntheticEvent>,
-    onMouseDown?: React.EventHandler<React.SyntheticEvent>,
-    onMouseUp?: React.EventHandler<React.SyntheticEvent>,
-    displayType: string,
-    mouseHasBeenDown: boolean,
+    disabled?: boolean;
+    onClick?: React.EventHandler<React.SyntheticEvent>;
+    onClickCapture?: React.EventHandler<React.SyntheticEvent>;
+    onMouseDown?: React.EventHandler<React.SyntheticEvent>;
+    onMouseUp?: React.EventHandler<React.SyntheticEvent>;
+    displayType: string;
+    mouseHasBeenDown: boolean;
 };
 
 const ButtonComponent = React.forwardRef<
@@ -38,6 +38,6 @@ ButtonComponent.defaultProps = {
     onMouseUp: () => {},
 };
 
-ButtonComponent.displayName = "@fusion/components/general/Button/ButtonComponent";
+ButtonComponent.displayName = '@fusion/components/general/Button/ButtonComponent';
 
 export default ButtonComponent;

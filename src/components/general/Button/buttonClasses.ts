@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ComponentDisplayTypesEnum } from '../../contexts/componentDisplayContext';
+import { componentDisplayTypes } from '../../contexts/componentDisplayContext';
 import styles from './styles/index.less';
 
 const getLayoutClasses = ({ block, flex }) => ({
@@ -23,10 +23,10 @@ const getButtonStyleClasses = ({ primary, signal }) => ({
 });
 
 const getButtonSizeClasses = ({ compact, comfortable, displayType }) => ({
-    [styles.compact]: displayType === ComponentDisplayTypesEnum.COMPACT || compact,
+    [styles.compact]: displayType === componentDisplayTypes.compact || compact,
     [styles.comfortable]:
-        (displayType === ComponentDisplayTypesEnum.COMFORTABLE &&
-            displayType !== ComponentDisplayTypesEnum.COMFORTABLE) ||
+        (displayType === componentDisplayTypes &&
+            displayType !== componentDisplayTypes.comfortable) ||
         (comfortable && !compact),
 });
 

@@ -1,26 +1,26 @@
-import * as React from "react";
-import classNames from "classnames";
-import styles from "./styles.less";
+import * as React from 'react';
+import classNames from 'classnames';
+import styles from './styles.less';
 
 type SpinnerProps = {
-    floating?: boolean,
+    floating?: boolean;
 
     /** Center the spinner */
-    centered?: boolean,
+    centered?: boolean;
 
     /** Use primary color instead of default */
-    primary?: boolean,
+    primary?: boolean;
 
     /** Optional title */
-    title?: string,
+    title?: string;
 
     /** Use small spinner */
-    small?: boolean,
+    small?: boolean;
 
     /** Inline the spinner */
-    inline?: boolean,
+    inline?: boolean;
 
-    size?: number,
+    size?: number;
 };
 
 const Spinner: React.FC<SpinnerProps> = ({
