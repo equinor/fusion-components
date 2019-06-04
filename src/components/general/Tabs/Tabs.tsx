@@ -1,15 +1,15 @@
-import * as React from "react";
-import * as styles from "./styles.less";
+import * as React from 'react';
+import * as styles from './styles.less';
 
 type TabsProps = {
-    onChange: (tabKey: string) => void,
-    activeTabKey: string,
-    children: any,
+    onChange: (tabKey: string) => void;
+    activeTabKey: string;
+    children: any;
 };
 
 type TabContentType = {
-    children: any,
-    activeTabKey: string,
+    children: any;
+    activeTabKey: string;
 };
 
 const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
@@ -40,7 +40,7 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
             return;
         }
         pane.scrollTo(tabRef.offsetLeft - pane.offsetWidth / 2 + tabRef.offsetWidth / 2, 0);
-    };          
+    };
 
     React.useEffect(() => scrollToTab(activeTabRef.current), [activeTabKey]);
 
@@ -79,6 +79,6 @@ const Tabs: React.FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
     );
 };
 
-Tabs.displayName = "Tabs";
+Tabs.displayName = 'Tabs';
 
 export default Tabs;

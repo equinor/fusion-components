@@ -5,7 +5,7 @@ module.exports = rootDir => ({
                 test: /\.tsx?$/,
                 use: [
                     {
-                        loader: "awesome-typescript-loader",
+                        loader: 'awesome-typescript-loader',
                         options: {
                             rootDir,
                         },

@@ -1,24 +1,18 @@
-import * as React from "react";
-import * as styles from "./styles.less";
-import * as classNames from "classnames";
-import useKeyBoardNavigation from "../../../hooks/useKeyboardNavigation";
+import * as React from 'react';
+import * as styles from './styles.less';
+import * as classNames from 'classnames';
+import useKeyBoardNavigation from '../../../hooks/useKeyboardNavigation';
 
 type TabProps = {
-    isCurrent?: boolean,
-    title: string,
-    tabKey: string,
-    disabled?: boolean,
-    onChange?: (ref: HTMLElement) => void,
-    url?: string,
+    isCurrent?: boolean;
+    title: string;
+    tabKey: string;
+    disabled?: boolean;
+    onChange?: (ref: HTMLElement) => void;
+    url?: string;
 };
 
-const Tab: React.FC<TabProps> = ({
-    isCurrent,
-    title,
-    disabled,
-    onChange,
-    url,
-}) => {
+const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
     const [isPressed, setIsPressed] = React.useState(false);
 
     const tabRef = useKeyBoardNavigation({
@@ -62,7 +56,7 @@ const Tab: React.FC<TabProps> = ({
     );
 };
 
-Tab.displayName = "Tab";
+Tab.displayName = 'Tab';
 
 Tab.defaultProps = {
     isCurrent: false,

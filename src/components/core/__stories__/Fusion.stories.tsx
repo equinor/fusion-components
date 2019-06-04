@@ -1,13 +1,13 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import FusionHeader from "../Header";
-import FusionContent from "../Content";
+import * as React from 'react';
+import { storiesOf } from '@storybook/react';
+import FusionHeader from '../Header';
+import FusionContent from '../Content';
 
-storiesOf("Core components/Fusion", module).add("Default", () => (
+storiesOf('Core components/Fusion', module).add('Default', () => (
     <React.Fragment>
         <FusionHeader />
         <FusionContent>
-            <div style={{ maxWidth: 800, margin: "20px auto" }}>
+            <div style={{ maxWidth: 800, margin: '20px auto' }}>
                 <h2>Scrolling appears a bit weird in Storybook</h2>
                 <h3>The header disappears when scrolling past ~50%</h3>
                 <h4>But works like a charm when placed directly within body with margin: 0;</h4>

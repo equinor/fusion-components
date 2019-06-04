@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import { act } from "react-dom/test-utils";
-import { hookTestScope } from "./hookTestScope";
-import useRelativePositioning from "../useRelativePositioning";
-import { is } from "immutable";
+import { useRef } from 'react';
+import { act } from 'react-dom/test-utils';
+import { hookTestScope } from './hookTestScope';
+import useRelativePositioning from '../useRelativePositioning';
+import { is } from 'immutable';
 
 const mockedRef = {
     current: {
@@ -14,8 +14,8 @@ beforeEach(() => {
     mockedRef.current.getBoundingClientRect.mockClear();
 });
 
-describe("useRelativePositioning", () => {
-    it("Should default to blank rect if ref.current is not set", () => {
+describe('useRelativePositioning', () => {
+    it('Should default to blank rect if ref.current is not set', () => {
         let rect;
 
         hookTestScope(() => {
@@ -32,7 +32,7 @@ describe("useRelativePositioning", () => {
         });
     });
 
-    it("Should get the rect of ref.current on mount if set", () => {
+    it('Should get the rect of ref.current on mount if set', () => {
         let rect;
         const mockRect = {
             left: 1,
@@ -51,7 +51,7 @@ describe("useRelativePositioning", () => {
         expect(rect).toEqual(mockRect);
     });
 
-    it("Should get client rect on window resize", () => {
+    it('Should get client rect on window resize', () => {
         hookTestScope(() => {
             useRelativePositioning(mockedRef);
         });
@@ -65,7 +65,7 @@ describe("useRelativePositioning", () => {
         expect(mockedRef.current.getBoundingClientRect).toHaveBeenCalledTimes(2);
     });
 
-    it("Should get client rect on scroll", () => {
+    it('Should get client rect on scroll', () => {
         hookTestScope(() => {
             useRelativePositioning(mockedRef);
         });
@@ -79,7 +79,7 @@ describe("useRelativePositioning", () => {
         expect(mockedRef.current.getBoundingClientRect).toHaveBeenCalledTimes(2);
     });
 
-    is("Should update when the ref updates", () => {
+    is('Should update when the ref updates', () => {
         let ref;
 
         hookTestScope(() => {
