@@ -33,5 +33,5 @@ export default (keyBoardEvents: KeyBoardEvents) => {
 
     useEventListener(ref, 'keydown', handleKeyDown, [keyBoardEvents, ref]);
 
-    return setRef;
+    return { setRef, current: ref };
 };

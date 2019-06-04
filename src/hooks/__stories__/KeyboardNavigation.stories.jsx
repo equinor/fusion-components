@@ -11,7 +11,6 @@ const KeyboardNavigationStory = () => {
             setCurrentItem(currentItem < listItems.length - 1 ? currentItem + 1 : currentItem),
         onUp: () => setCurrentItem(currentItem > 0 ? currentItem - 1 : currentItem),
     });
-
     const setStyle = listId => {
         return {
             fontWeight: listId === currentItem ? '600' : '200',
@@ -21,7 +20,7 @@ const KeyboardNavigationStory = () => {
     return (
         <React.Fragment>
             <input
-                ref={ref}
+                ref={ref.setRef}
                 placeholder={
                     currentItem !== null ? listItems[currentItem] : 'Click me to use navigation'
                 }
