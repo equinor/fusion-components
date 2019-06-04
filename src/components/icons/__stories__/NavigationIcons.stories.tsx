@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
-import { withKnobs, number, color, boolean, radios } from '@storybook/addon-knobs';
+import { withKnobs, number, color, boolean, radios, select } from '@storybook/addon-knobs';
 
 import {
     UnfoldIcon,
@@ -16,6 +16,7 @@ import {
     ChevronIcon,
     CheckIcon,
     CancelIcon,
+    ArrowIcon,
 } from '../components/navigation';
 
 const eventsFromNames = actions('onClick');
@@ -137,3 +138,24 @@ stories.add('Cancel', () => (
         color={color('color', '#000')}
     />
 ));
+
+stories.add('Arrow', () => {
+    const options = {
+        Up: 'up',
+        Down: 'down',
+        Back: 'back',
+        Forward: 'forward',
+        iosBack: 'ios-back',
+        iosForward: 'ios-forward',
+    };
+
+    return (
+        <ArrowIcon
+            {...eventsFromNames}
+            direction={select('direction', options, 'up')}
+            width={number('width', 24)}
+            height={number('height', 24)}
+            color={color('color', '#000')}
+        />
+    );
+});

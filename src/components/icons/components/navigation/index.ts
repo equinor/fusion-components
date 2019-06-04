@@ -10,3 +10,4 @@ export { default as CloseIcon } from './CloseIcon';
 export { default as ChevronIcon } from './ChevronIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as CancelIcon } from './CancelIcon';
+export { default as ArrowIcon } from './ArrowIcon';
