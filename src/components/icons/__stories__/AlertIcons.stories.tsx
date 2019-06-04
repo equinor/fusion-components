@@ -3,10 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
 import { withKnobs, number, color, boolean } from '@storybook/addon-knobs';
 
-import AddAlertIcon from '../components/alert/AddAlertIcon';
-import ErrorIcon from '../components/alert/ErrorIcon';
-import WarningIcon from '../components/alert/WarningIcon';
-import NotificationIcon from '../components/alert/NotificationIcon';
+import { AddAlertIcon, WarningIcon, ErrorIcon, NotificationIcon } from '../components/alert';
 
 const eventsFromNames = actions('onClick');
 
