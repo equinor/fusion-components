@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import InfoToolbar from './components/InfoToolbar';
 import {
-    ComponentDisplayTypesEnum,
+    componentDisplayTypes,
     componentDisplayTypeClassNames,
 } from '../../contexts/componentDisplayContext';
 import useHorizontalBreakpoint, {
@@ -105,7 +105,7 @@ const DataTable: React.FC<DataTableProps> = ({
     const [breakpointRef, size] = useHorizontalBreakpoint(sizeBreakpoints);
     const [scrollRef, scroll] = useScrollSpy(false, false);
 
-    const displayType = ComponentDisplayTypesEnum.COMFORTABLE;
+    const displayType = componentDisplayTypes.comfortable;
 
     const classname = classnames(
         styles.container,
