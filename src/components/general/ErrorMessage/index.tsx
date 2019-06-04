@@ -1,96 +1,100 @@
 import * as React from "react";
 import Button from "../Button";
 import styles from "./styles.less";
-import BanIcon from "./BanIcon";
+import * as Icons from "./errorIcons";
+import classNames from "classnames";
 
-export const errorTypes = {
-    error: "error",
-    accessDenied: "accessDenied",
-    notFound: "notFound",
-    noData:"noData",
-    noFiles:"noFiles",
-    noActionsCreated:"noActionsCreated"
-};
+export enum ErrorTypes {
+    error= "error",
+    accessDenied= "accessDenied",
+    notFound= "notFound",
+    noData= "noData",
+    noAttachment= "noAttachment",
+    noActionsCreated= "noActionsCreated",
+}
 
 type ErrorMessageProps = {
     hasError?: boolean,
-    onRetry?: (retries: number) => void,
-    errorType?: "error" | "accessDenied" | "notFound",
+    errorType?:ErrorTypes,
     message?: any,
-    maxRetries?: number,
     resourceName?: string,
     title?: string,
     children?: any,
+    icon?: any,
+    button?: string,
+    onButtonClick?: (event?: React.SyntheticEvent<Element, Event>) => void,
+    small?:boolean
 };
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({
     hasError,
-    onRetry,
-    errorType = errorTypes.error,
+    errorType = ErrorTypes.error,
     message,
-    maxRetries = 5,
     resourceName,
     title,
     children,
+    icon,
+    button,
+    onButtonClick,
+    small,
 }) => {
-    const [retries, setRetries] = React.useState(0);
 
     const getErrorMessageForType = errorType => {
         switch (errorType) {
-            case errorTypes.error:
-                return "Oops! Something went wrong!";
-            case errorTypes.accessDenied:
-                return "No access!";
-            case errorTypes.notFound:
-                return `The ${resourceName} could not be found`;
+            case ErrorTypes.accessDenied:
+                return {
+                    title: "It seems like you don´t have access to this content",
+                    icon: Icons.AccessDenied,
+                };
+            case ErrorTypes.notFound:
+                return {
+                    title: `The ${resourceName} could not be found`,
+                    icon: Icons.ErrorOrNotFound,
+                };
+            case ErrorTypes.noData:
+                return {
+                    title: `Unfortunately, we could not find any data for this component`,
+                    icon: Icons.noData,
+                };
+            case ErrorTypes.noAttachment:
+                return {
+                    title: `There haven´t been uploaded attachments yet`,
+                    icon: Icons.noAttachment,
+                };
+            case ErrorTypes.noActionsCreated:
+                return {
+                    title: "No actions created",
+                    icon: Icons.NoAction,
+                };
+
+            default:
+                return {
+                    title: "Oops! Something went wrong!",
+                    icon: Icons.ErrorOrNotFound,
+                };
         }
     };
-
-    const retry = () => {
-        if (retries >= maxRetries) {
-            return;
-        }
-
-        setRetries(retries + 1);
-        onRetry && onRetry(retries);
-    };
-
-    const renderRetries = React.useMemo(() => {
-        if (errorType === errorTypes.error) {
-            return (
-                <div className={styles.actions}>
-                    {retries < maxRetries && (
-                        <Button primary contained onClick={retry}>
-                            Retry
-                        </Button>
-                    )}
-                    {retries >= maxRetries && (
-                        <p>
-                            This does not seem to be working right now. Please try again later or
-                            register a support ticket
-                        </p>
-                    )}
-                </div>
-            );
-        }
-    }, [retries]);
-
-    const isRetry = retries > 0;
 
     if (!hasError) {
-        return children && children(isRetry);
+        return children;
     }
+    const error = React.useMemo(() => getErrorMessageForType(errorType), [errorType]);
+
+    const messageContainerClasses = classNames(styles.messageContainer, {
+        [styles.small]: small,
+    })
 
     return (
         <div className={styles.container}>
-            {children && children(isRetry)}
-            <div className={styles.messageContainer}>
-                {errorType === errorTypes.accessDenied && <BanIcon />}
-                <div className={styles.message}>
-                    <p>{title || getErrorMessageForType(errorType)}</p>
-                    {message}
-                </div>
-                {renderRetries}
+            <div className={messageContainerClasses}>
+                {icon || error.icon}
+                <div className={styles.title}>{title || error.title}</div>
+                <div className={styles.message}>{message}</div>
+                {button ? (
+                    <Button outlined contained onClick={onButtonClick}>
+                        {button}
+                    </Button>
+                ) : null}
             </div>
         </div>
     );

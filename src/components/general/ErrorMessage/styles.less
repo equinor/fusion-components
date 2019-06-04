@@ -1,11 +1,14 @@
 @import "~styles/variables.less";
 
+
+
 .container {
     position: relative;
     width: 100%;
     height: 100%;
 
     .messageContainer {
+        position: relative;
         top: 0; left: 0; bottom: 0; right: 0;
         display: flex;
         align-content: center;
@@ -14,19 +17,33 @@
         flex-direction: column;
         background: rgba(255, 255, 255, .8);
         z-index: 999;
-
-        .message {
-            font-size: 14px;
-            line-break: 24px;
-            margin-bottom: calc(var(--grid-unit) * 2px);
-            text-align: center;
-            p{
-                font-weight: 500;
-            }
+        
+        .title {
+            padding-top: calc(var(--grid-unit)* 6px);
+            font-size: 28px;
+            height: calc(var(--grid-unit)* 4px);
         }
-        .icon {
-            font-size: 100px;
-            color: #cccccc;
+        .message {
+            font-size: 20px;
+            height: calc(var(--grid-unit)* 3px);
+            padding-bottom: calc(var(--grid-unit) * 10px);
+            padding-top: calc(var(--grid-unit)* 3px);
+            text-align: center;
+        }
+        &.small{
+            .title{
+                padding-top: calc(var(--grid-unit)* 5px);
+                font-size: 16px;
+                height: calc(var(--grid-unit)* 3px);
+                font-weight: 600;
+            }
+            .message {
+                font-size: 16px;
+                height: calc(var(--grid-unit)* 2px);
+                padding-bottom: calc(var(--grid-unit) * 4px);
+                padding-top: calc(var(--grid-unit)* 1px);
+
+            }
         }
     }
 }

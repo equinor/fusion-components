@@ -1,31 +1,32 @@
 import * as React from "react";
-import ErrorMessage, { errorTypes } from "../ErrorMessage";
+import ErrorMessage, { ErrorTypes } from "../ErrorMessage";
 import PropTypes from "prop-types";
 
 type ErrorBoundaryProps = {
     hasError?: boolean,
-    onRetry?: (retries: number) => void,
-    errorType: "error" | "accessDenied" | "notFound",
+    errorType: ErrorTypes,
     message?: string,
-    maxRetries?: number,
 };
+
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     static propTypes = {
         hasError: PropTypes.bool,
         onRetry: PropTypes.func,
-        errorType: PropTypes.oneOf(Object.values(errorTypes)),
+        errorType: PropTypes.oneOf(Object.values(ErrorTypes)),
         message: PropTypes.node,
         maxRetries: PropTypes.number,
     };
     static defaultProps = {
-        errorType: errorTypes.error
+        errorType: ErrorTypes.error
       }
 
     state = {
         hasError: false,
+        retries: 0,
     };
 
-    componentDidCatch() {
+    componentDidCatch(error, errorInfo) {
+
         this.setState({ hasError: true });
 
     }
@@ -46,28 +47,24 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
         return this.props.children;
     }
 
-    onRetry(retries) {
-        const { onRetry } = this.props;
+    onRetry() {
 
         if(this.state.hasError) {
             return window.location.reload();
-        } else if(onRetry) {
-            onRetry(retries);
-        }
+        } 
     }
 
     render() {
-        const { hasError, errorType, maxRetries } = this.props;
-
+        const { hasError, errorType, children } = this.props;
         return (
             <ErrorMessage
                 hasError={this.state.hasError || hasError}
-                errorType={errorType || errorTypes.error}
+                errorType={errorType || ErrorTypes.error}
                 message={this.getErrorMessage()}
-                onRetry={retries => this.onRetry(retries)}
-                maxRetries={maxRetries}
+                onButtonClick={() => this.onRetry()}
+                button="Retry"
             >
-                {() => this.renderChildren()}
+                {children}
             </ErrorMessage>
         );
     }
