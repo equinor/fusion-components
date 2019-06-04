@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import FusionHeader from '../Header';
 import FusionContent from '../Content';
 
-storiesOf('Core components/Fusion', module).add('Default', () => (
+storiesOf('Core|Fusion', module).add('Default', () => (
     <React.Fragment>
         <FusionHeader />
         <FusionContent>

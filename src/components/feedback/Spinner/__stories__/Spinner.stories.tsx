@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Spinner from '../index';
 
-storiesOf('Feedback components/Spinner', module)
+storiesOf('Feedback|Spinner', module)
     .addParameters({ jest: ['Spinner.stories.jsx'] })
     .add('Default', () => (
         <React.Fragment>
