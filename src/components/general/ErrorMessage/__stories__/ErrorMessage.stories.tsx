@@ -2,21 +2,14 @@ import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import ErrorMessage, { ErrorTypes } from "../index";
 
-const Splitter = () => {
-    return (
-        <div
-            style={{
-                border: "0.5px solid gray",
-                margin: "40px auto 40px auto",
-                width: "40%"
-            }}
-        />
-    );
-};
 
+const styles = {
+    display:"flex",
+    width:"70%"
+}
 const ErrorMessageError = () => {
     return (
-        <React.Fragment>
+        <div style={styles}>
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
@@ -24,7 +17,6 @@ const ErrorMessageError = () => {
                 action="Resolve the problem"
                 onTakeAction={() => window.location.reload()}
             />
-            <Splitter />
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
@@ -33,13 +25,13 @@ const ErrorMessageError = () => {
                 onTakeAction={() => window.location.reload()}
                 small
             />
-        </React.Fragment>
+        </div>
     );
 };
 
 const ErrorMessageNoData = () => {
     return (
-        <React.Fragment>
+        <div style={styles}>
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
@@ -47,7 +39,6 @@ const ErrorMessageNoData = () => {
                 onTakeAction={() => window.location.reload()}
                 errorType={ErrorTypes.noData}
             />
-            <Splitter />
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
@@ -56,19 +47,18 @@ const ErrorMessageNoData = () => {
                 errorType={ErrorTypes.noData}
                 small
             />
-        </React.Fragment>
+        </div>
     );
 };
 const ErrorMessageNotFound = () => {
     return (
-        <React.Fragment>
+        <div style={styles}>
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.notFound}
                 resourceName="person"
             />
-            <Splitter />
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
@@ -76,19 +66,18 @@ const ErrorMessageNotFound = () => {
                 resourceName="person"
                 small
             />
-        </React.Fragment>
+        </div>
     );
 };
 const ErrorMessageNoAccess = () => {
     return (
-        <React.Fragment>
+        <div style={styles}>
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.accessDenied}
                 action="Resolve the problem"
             />
-            <Splitter />
             <ErrorMessage
                 message="Your error message describing how to resolve the problem"
                 hasError
@@ -96,7 +85,7 @@ const ErrorMessageNoAccess = () => {
                 action="Resolve the problem"
                 small
             />
-        </React.Fragment>
+        </div>
     );
 };
 storiesOf("General components/ErrorMessage", module)
