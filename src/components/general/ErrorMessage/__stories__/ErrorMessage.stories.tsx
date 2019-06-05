@@ -18,18 +18,18 @@ const ErrorMessageError = () => {
     return (
         <React.Fragment>
             <ErrorMessage
-                message="An error occurred, please click the button below to retry"
+                message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.error}
-                action="Retry"
+                action="Resolve the problem"
                 onButtonClick={() => window.location.reload()}
             />
             <Splitter />
             <ErrorMessage
-                message="An error occurred, please click the button below to retry"
+                message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.error}
-                action="Retry"
+                action="Resolve the problem"
                 onButtonClick={() => window.location.reload()}
                 small
             />
@@ -41,17 +41,17 @@ const ErrorMessageNoData = () => {
     return (
         <React.Fragment>
             <ErrorMessage
-                message="Try go to the direct data source to check if the data is present"
+                message="Your error message describing how to resolve the problem"
                 hasError
-                action="Go to the direct data source"
+                action="Resolve the problem"
                 onButtonClick={() => window.location.reload()}
                 errorType={ErrorTypes.noData}
             />
             <Splitter />
             <ErrorMessage
-                message="Try go to the direct data source to check if the data is present"
+                message="Your error message describing how to resolve the problem"
                 hasError
-                action="Go to the direct data source"
+                action="Resolve the problem"
                 onButtonClick={() => window.location.reload()}
                 errorType={ErrorTypes.noData}
                 small
@@ -63,14 +63,14 @@ const ErrorMessageNotFound = () => {
     return (
         <React.Fragment>
             <ErrorMessage
-                message="Put in a request in Service Now to add the person"
+                message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.notFound}
                 resourceName="person"
             />
             <Splitter />
             <ErrorMessage
-                message="Put in a request in Service Now to add the person"
+                message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.notFound}
                 resourceName="person"
@@ -83,17 +83,17 @@ const ErrorMessageNoAccess = () => {
     return (
         <React.Fragment>
             <ErrorMessage
-                message="Add a request to get access"
+                message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.accessDenied}
-                action="Request access"
+                action="Resolve the problem"
             />
             <Splitter />
             <ErrorMessage
-                message="Add a request to get access"
+                message="Your error message describing how to resolve the problem"
                 hasError
                 errorType={ErrorTypes.accessDenied}
-                action="Request access"
+                action="Resolve the problem"
                 small
             />
         </React.Fragment>
