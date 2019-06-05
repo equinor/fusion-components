@@ -9,11 +9,9 @@ export enum ErrorTypes {
     accessDenied= "accessDenied",
     notFound= "notFound",
     noData= "noData",
-    noAttachment= "noAttachment",
-    noActionsCreated= "noActionsCreated",
 }
 
-type ErrorMessageProps = {
+export type ErrorMessageProps = {
     hasError?: boolean,
     errorType?:ErrorTypes,
     message?: any,
@@ -21,7 +19,7 @@ type ErrorMessageProps = {
     title?: string,
     children?: any,
     icon?: any,
-    button?: string,
+    action?: string,
     onButtonClick?: (event?: React.SyntheticEvent<Element, Event>) => void,
     small?:boolean
 };
@@ -34,7 +32,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     title,
     children,
     icon,
-    button,
+    action,
     onButtonClick,
     small,
 }) => {
@@ -56,17 +54,6 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
                     title: `Unfortunately, we could not find any data for this component`,
                     icon: Icons.noData,
                 };
-            case ErrorTypes.noAttachment:
-                return {
-                    title: `There haven´t been uploaded attachments yet`,
-                    icon: Icons.noAttachment,
-                };
-            case ErrorTypes.noActionsCreated:
-                return {
-                    title: "No actions created",
-                    icon: Icons.NoAction,
-                };
-
             default:
                 return {
                     title: "Oops! Something went wrong!",
@@ -82,7 +69,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
 
     const messageContainerClasses = classNames(styles.messageContainer, {
         [styles.small]: small,
-    })
+    });
 
     return (
         <div className={styles.container}>
@@ -90,9 +77,9 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
                 {icon || error.icon}
                 <div className={styles.title}>{title || error.title}</div>
                 <div className={styles.message}>{message}</div>
-                {button ? (
+                {action ? (
                     <Button outlined contained onClick={onButtonClick}>
-                        {button}
+                        {action}
                     </Button>
                 ) : null}
             </div>

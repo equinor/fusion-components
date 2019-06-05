@@ -21,7 +21,7 @@ const ErrorMessageError = () => {
                 message="An error occurred, please click the button below to retry"
                 hasError
                 errorType={ErrorTypes.error}
-                button="Retry"
+                action="Retry"
                 onButtonClick={() => window.location.reload()}
             />
             <Splitter />
@@ -29,7 +29,7 @@ const ErrorMessageError = () => {
                 message="An error occurred, please click the button below to retry"
                 hasError
                 errorType={ErrorTypes.error}
-                button="Retry"
+                action="Retry"
                 onButtonClick={() => window.location.reload()}
                 small
             />
@@ -43,7 +43,7 @@ const ErrorMessageNoData = () => {
             <ErrorMessage
                 message="Try go to the direct data source to check if the data is present"
                 hasError
-                button="Go to the direct data source"
+                action="Go to the direct data source"
                 onButtonClick={() => window.location.reload()}
                 errorType={ErrorTypes.noData}
             />
@@ -51,7 +51,7 @@ const ErrorMessageNoData = () => {
             <ErrorMessage
                 message="Try go to the direct data source to check if the data is present"
                 hasError
-                button="Go to the direct data source"
+                action="Go to the direct data source"
                 onButtonClick={() => window.location.reload()}
                 errorType={ErrorTypes.noData}
                 small
@@ -86,65 +86,22 @@ const ErrorMessageNoAccess = () => {
                 message="Add a request to get access"
                 hasError
                 errorType={ErrorTypes.accessDenied}
-                button="Request access"
+                action="Request access"
             />
             <Splitter />
             <ErrorMessage
                 message="Add a request to get access"
                 hasError
                 errorType={ErrorTypes.accessDenied}
-                button="Request access"
+                action="Request access"
                 small
             />
         </React.Fragment>
     );
 };
-const ErrorMessageNoFiles = () => {
-    return (
-        <React.Fragment>
-            <ErrorMessage
-                message="Try adding some attachments using the button below"
-                hasError
-                errorType={ErrorTypes.noAttachment}
-                button="Add file"
-            />
-            <Splitter />
-            <ErrorMessage
-                message="Try adding some attachments using the button below"
-                hasError
-                errorType={ErrorTypes.noAttachment}
-                button="Add file"
-                small
-            />
-        </React.Fragment>
-    );
-};
-const ErrorMessageNoActionsCreated = () => {
-    return (
-        <React.Fragment>
-            <ErrorMessage
-                message="Please click the button below to add a action"
-                hasError
-                errorType={ErrorTypes.noActionsCreated}
-                button="Add action"
-            />
-            <Splitter />
-            <ErrorMessage
-                message="Please click the button below to add a action"
-                hasError
-                errorType={ErrorTypes.noActionsCreated}
-                button="Add action"
-                small
-            />
-        </React.Fragment>
-    );
-};
-
 storiesOf("General components/ErrorMessage", module)
     .addParameters({ jest: ["ErrorMessage.stories.tsx"] })
     .add("Error", () => <ErrorMessageError />)
     .add("NoData", () => <ErrorMessageNoData />)
     .add("NotFound", () => <ErrorMessageNotFound />)
-    .add("NoAccess", () => <ErrorMessageNoAccess />)
-    .add("noAttachment", () => <ErrorMessageNoFiles />)
-    .add("NoActionsCreated", () => <ErrorMessageNoActionsCreated />);
+    .add("NoAccess", () => <ErrorMessageNoAccess />);

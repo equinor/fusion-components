@@ -1,68 +1,64 @@
 import * as React from "react";
-import ErrorMessage, { ErrorTypes } from "../ErrorMessage";
-import PropTypes from "prop-types";
+import ErrorMessage, { ErrorMessageProps, ErrorTypes } from "../ErrorMessage";
 
-type ErrorBoundaryProps = {
-    hasError?: boolean,
-    errorType: ErrorTypes,
-    message?: string,
-};
-
-export default class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
-    static propTypes = {
-        hasError: PropTypes.bool,
-        onRetry: PropTypes.func,
-        errorType: PropTypes.oneOf(Object.values(ErrorTypes)),
-        message: PropTypes.node,
-        maxRetries: PropTypes.number,
-    };
+export default class ErrorBoundary extends React.Component<ErrorMessageProps> {
     static defaultProps = {
-        errorType: ErrorTypes.error
-      }
+        errorType: ErrorTypes.error,
+    };
 
     state = {
         hasError: false,
-        retries: 0,
+        errorMessage: "",
     };
 
-    componentDidCatch(error, errorInfo) {
-
-        this.setState({ hasError: true });
-
+    componentDidCatch(error) {
+        this.setState({
+            hasError: true,
+            errorMessage: error.message || "",
+        });
     }
 
     getErrorMessage() {
-        if(this.state.hasError) {
-            return "Unhandled error message"; // TODO
+        const { errorMessage } = this.state;
+        const { message } = this.props;
+
+        if (message) {
+            return message;
+        }
+        if (errorMessage !== "") {
+            return errorMessage;
         }
 
-        return this.props.message;
+        return "Unhandled error message";
     }
 
     renderChildren() {
-        if(this.state.hasError) {
+        if (this.state.hasError) {
             return null;
         }
 
         return this.props.children;
     }
 
-    onRetry() {
-
-        if(this.state.hasError) {
+    onButtonClick() {
+        if (this.state.hasError) {
+            if (this.props.onButtonClick) {
+                return this.props.onButtonClick();
+            }
             return window.location.reload();
-        } 
+        }
     }
 
     render() {
-        const { hasError, errorType, children } = this.props;
+        const { hasError, errorType, children, action } = this.props;
         return (
             <ErrorMessage
                 hasError={this.state.hasError || hasError}
                 errorType={errorType || ErrorTypes.error}
                 message={this.getErrorMessage()}
-                onButtonClick={() => this.onRetry()}
-                button="Retry"
+                onButtonClick={() => this.onButtonClick()}
+                action={action || "Retry"}
+                {...this.props}
             >
                 {children}
             </ErrorMessage>

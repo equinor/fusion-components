@@ -4,21 +4,25 @@ import ErrorBoundary from "../index";
 import Button from "../../Button";
 
 const BuggyDivider = () => {
-    const [count, setCount] = React.useState(5);
-    if(count === 0){
-        throw new Error("Cant divide by zero!")
+    const [count, setCount] = React.useState(0);
+    if (count === 5) {
+        throw new Error("This component can't count to five");
+    }
 
-    }   
-    
     return (
-        <React.Fragment>
-            <span>What is 100 divided by {count -1} ?</span>
-            <Button
-                onClick={() => setCount(count -1)}
-            >
-                Lets find out
-            </Button>
-        </React.Fragment>
+        <div
+            style={{
+                position: "relative",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "10%",
+                textAlign: "center",
+            }}
+        >
+            <span>Count to five: {count}</span>
+            <br />
+            <Button onClick={() => setCount(count + 1)}>Count!</Button>
+        </div>
     );
 };
 
