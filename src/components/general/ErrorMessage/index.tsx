@@ -20,7 +20,7 @@ export type ErrorMessageProps = {
     children?: any,
     icon?: any,
     action?: string,
-    onButtonClick?: (event?: React.SyntheticEvent<Element, Event>) => void,
+    onTakeAction?: (event?: React.SyntheticEvent<Element, Event>) => void,
     small?:boolean
 };
 
@@ -33,7 +33,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     children,
     icon,
     action,
-    onButtonClick,
+    onTakeAction,
     small,
 }) => {
 
@@ -78,7 +78,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
                 <div className={styles.title}>{title || error.title}</div>
                 <div className={styles.message}>{message}</div>
                 {action ? (
-                    <Button outlined contained onClick={onButtonClick}>
+                    <Button outlined contained onClick={onTakeAction}>
                         {action}
                     </Button>
                 ) : null}

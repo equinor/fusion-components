@@ -36,22 +36,13 @@ export default class ErrorBoundary extends React.Component<ErrorMessageProps> {
         return "Unhandled error message";
     }
 
-    renderChildren() {
-        if (this.state.hasError) {
-            return null;
+    takeAction = () => {
+        if(this.state.hasError && this.props.onTakeAction)  {
+            return this.props.onTakeAction();
         }
-
-        return this.props.children;
+        window.location.reload();
     }
-
-    onButtonClick() {
-        if (this.state.hasError) {
-            if (this.props.onButtonClick) {
-                return this.props.onButtonClick();
-            }
-            return window.location.reload();
-        }
-    }
+    
 
     render() {
         const { hasError, errorType, children, action } = this.props;
@@ -60,7 +51,7 @@ export default class ErrorBoundary extends React.Component<ErrorMessageProps> {
                 hasError={this.state.hasError || hasError}
                 errorType={errorType || ErrorTypes.error}
                 message={this.getErrorMessage()}
-                onButtonClick={() => this.onButtonClick()}
+                onTakeAction={this.takeAction}
                 action={action || "Retry"}
                 {...this.props}
             >

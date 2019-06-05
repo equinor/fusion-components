@@ -22,7 +22,7 @@ const ErrorMessageError = () => {
                 hasError
                 errorType={ErrorTypes.error}
                 action="Resolve the problem"
-                onButtonClick={() => window.location.reload()}
+                onTakeAction={() => window.location.reload()}
             />
             <Splitter />
             <ErrorMessage
@@ -30,7 +30,7 @@ const ErrorMessageError = () => {
                 hasError
                 errorType={ErrorTypes.error}
                 action="Resolve the problem"
-                onButtonClick={() => window.location.reload()}
+                onTakeAction={() => window.location.reload()}
                 small
             />
         </React.Fragment>
@@ -44,7 +44,7 @@ const ErrorMessageNoData = () => {
                 message="Your error message describing how to resolve the problem"
                 hasError
                 action="Resolve the problem"
-                onButtonClick={() => window.location.reload()}
+                onTakeAction={() => window.location.reload()}
                 errorType={ErrorTypes.noData}
             />
             <Splitter />
@@ -52,7 +52,7 @@ const ErrorMessageNoData = () => {
                 message="Your error message describing how to resolve the problem"
                 hasError
                 action="Resolve the problem"
-                onButtonClick={() => window.location.reload()}
+                onTakeAction={() => window.location.reload()}
                 errorType={ErrorTypes.noData}
                 small
             />
