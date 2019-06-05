@@ -8,13 +8,17 @@ export default class ErrorBoundary extends React.Component<ErrorMessageProps> {
 
     state = {
         hasError: false,
+        error: null,
+        errorInfo: null,
         errorMessage: "",
     };
 
-    componentDidCatch(error) {
+    componentDidCatch(error, errorInfo) {
         this.setState({
             hasError: true,
-            errorMessage: error.message || "",
+            error,
+            errorInfo,
+            errorMessage: error.message || ""
         });
     }
 
