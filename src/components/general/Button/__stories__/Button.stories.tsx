@@ -21,7 +21,7 @@ const createButtonStory = props => () => (
     </React.Fragment>
 );
 
-storiesOf('General components/Button', module)
+storiesOf('General|Button', module)
     .addParameters({ jest: ['Button.stories.jsx'] })
     .add('Contained', createButtonStory({ contained: true }))
     .add('Outlined', createButtonStory({ outlined: true }))
