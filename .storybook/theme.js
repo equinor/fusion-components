@@ -6,4 +6,5 @@ export default create({
     brandUrl: "https://github.com/equinor/fusion-components",
     colorPrimary: "#FF1243",
     colorSecondary: "#007079",
+    fontBase: "Equinor, sans-serif",
 });
