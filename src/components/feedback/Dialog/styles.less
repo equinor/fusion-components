@@ -1,0 +1,37 @@
+.container {
+    padding: calc(var(--grid-unit)* 2px) calc(var(--grid-unit)* 3px) calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 3px);
+    border: 1px solid var(--color-black-alt4);
+    border-radius: 4px;
+    max-width: calc(var(--grid-unit)* 35px);
+
+    .dialogTitle {
+        margin: 0;
+        padding-bottom: calc(var(--grid-unit)*3px);
+        font-size: 20px;
+        line-height: calc(var(--grid-unit)*4px);
+    }
+    .dialogContent{
+        padding-bottom: calc(var(--grid-unit)*3px);
+        line-height: calc(var(--grid-unit)*3px);
+        font-size: 16px;
+        &.scrollable {
+            max-height: calc(var(--grid-unit)* 13px);
+            overflow-y: auto;
+            border-top: 1px solid var(--color-black-alt4);
+            border-bottom: 1px solid var(--color-black-alt4);
+
+            &::-webkit-scrollbar {
+                width: 0px;
+                background: transparent;
+                height: 0px;
+                background-color: transparent;
+            }
+        }   
+    }
+    .dialogActions{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 0 0 auto;
+    }
+}
