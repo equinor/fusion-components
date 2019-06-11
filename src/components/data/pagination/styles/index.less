@@ -1,0 +1,57 @@
+@import '~styles/mixins.less';
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .rowsPerPage {
+        font-size: 16px;
+        line-height: .grid-unit(5px)[];
+        margin-right: .grid-unit(4px)[];
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        select {
+            font-size: 16px;
+            border: none;
+            width: .grid-unit(11px)[];
+            height: .grid-unit(5px)[];
+            text-indent: .grid-unit(1px)[];
+            background-color: var(--color-black-alt5);
+            margin-left: .grid-unit(3px)[];
+            margin-right: .grid-unit(8px)[];
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    button {
+        background: none;
+        border: 1px solid var(--color-black-alt5);
+        height: .grid-unit(6px)[];
+        min-width: .grid-unit(6px)[];
+        margin-right: .grid-unit(1px)[];
+        cursor: pointer;
+        font-size: 14px;
+        box-sizing: border-box;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &:hover {
+            border-radius: .grid-unit(0.5px)[];
+            background: var(--color-primary-hover);
+            color: var(--color-white);
+        }
+
+        &.current {
+            border-color: var(--color-primary);
+        }
+    }
+}

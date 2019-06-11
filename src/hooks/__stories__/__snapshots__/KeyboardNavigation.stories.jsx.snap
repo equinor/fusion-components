@@ -43,3 +43,47 @@ Array [
   </ul>,
 ]
 `;
+
+exports[`Hooks|KeyboardNavigation Default 1`] = `
+Array [
+  <input
+    placeholder="Click me to use navigation"
+    readOnly={true}
+  />,
+  <ul>
+    <li
+      style={
+        Object {
+          "fontWeight": "200",
+          "listStyleType": "none",
+        }
+      }
+    >
+       
+      Item 1
+    </li>
+    <li
+      style={
+        Object {
+          "fontWeight": "200",
+          "listStyleType": "none",
+        }
+      }
+    >
+       
+      Item 2
+    </li>
+    <li
+      style={
+        Object {
+          "fontWeight": "200",
+          "listStyleType": "none",
+        }
+      }
+    >
+       
+      Item 3
+    </li>
+  </ul>,
+]
+`;
