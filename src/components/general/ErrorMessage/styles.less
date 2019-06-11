@@ -9,13 +9,14 @@
 
     .messageContainer {
         position: relative;
-        top: 20%; left: 0; bottom: 0; right: 0;
+        top: 0%; left: 0; bottom: 0; right: 0;
         display: flex;
         align-content: center;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         z-index: 999;
+        margin-top:calc(var(--grid-unit)*15px);
         
         .title {
             padding-top: calc(var(--grid-unit)* 6px);
@@ -30,6 +31,8 @@
             text-align: center;
         }
         &.small{
+            margin-top: 0;
+            
             .title{
                 padding-top: calc(var(--grid-unit)* 5px);
                 font-size: 16px;
