@@ -1,18 +1,18 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
     module: {
         rules: [
             {
-                enforce: "pre",
+                enforce: 'pre',
                 test: /\.jsx?$/,
                 resolve: {
-                    extensions: [".js", ".jsx"],
+                    extensions: ['.js', '.jsx'],
                 },
                 exclude: /node_modules/,
-                loader: "eslint-loader",
+                loader: 'eslint-loader',
                 options: {
-                    configFile: path.resolve(__dirname, "..", ".eslintrc"),
+                    configFile: path.resolve(__dirname, '..', '.eslintrc'),
                 },
             },
         ],

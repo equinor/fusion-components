@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
     module: {
@@ -6,18 +6,14 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 resolve: {
-                    extensions: [".js", ".jsx"],
+                    extensions: ['.js', '.jsx'],
                 },
-                enforce: "pre",
+                enforce: 'pre',
                 exclude: /node_modules/,
                 use: {
-                    loader: "prettier-loader",
+                    loader: 'prettier-loader',
                     options: {
-                        configFile: path.resolve(
-                            __dirname,
-                            "..",
-                            ".prettierrc"
-                        ),
+                        configFile: path.resolve(__dirname, '..', '.prettierrc'),
                     },
                 },
             },
