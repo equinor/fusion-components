@@ -88,7 +88,7 @@ const ErrorMessageNoAccess = () => {
         </div>
     );
 };
-storiesOf("General components/ErrorMessage", module)
+storiesOf("Feedback|ErrorMessage", module)
     .addParameters({ jest: ["ErrorMessage.stories.tsx"] })
     .add("Error", () => <ErrorMessageError />)
     .add("NoData", () => <ErrorMessageNoData />)

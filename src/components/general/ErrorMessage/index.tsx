@@ -1,8 +1,10 @@
 import * as React from "react";
 import Button from "../Button";
 import styles from "./styles.less";
-import * as Icons from "./errorIcons";
 import classNames from "classnames";
+import { WarningIcon }from "../../icons/components/alert";
+import {BlockIcon} from "../../icons/components/content";
+import {SyncDisabledIcon } from "../../icons/components/notification";
 
 export enum ErrorTypes {
     error= "error",
@@ -38,26 +40,33 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
 }) => {
 
     const getErrorMessageForType = errorType => {
+        const iconProps = {
+            width:80,
+            height:80,
+            cursor:"default",
+            color:"#666666",
+        }
+
         switch (errorType) {
             case ErrorTypes.accessDenied:
                 return {
                     title: "It seems like you don´t have access to this content",
-                    icon: Icons.AccessDenied,
+                    icon: <BlockIcon {...iconProps}/>,
                 };
             case ErrorTypes.notFound:
                 return {
                     title: `The ${resourceName} could not be found`,
-                    icon: Icons.ErrorOrNotFound,
+                    icon: <WarningIcon {...iconProps} outline/>,
                 };
             case ErrorTypes.noData:
                 return {
                     title: `Unfortunately, we could not find any data for this component`,
-                    icon: Icons.noData,
+                    icon: <SyncDisabledIcon {...iconProps}/>,
                 };
             default:
                 return {
                     title: "Oops! Something went wrong!",
-                    icon: Icons.ErrorOrNotFound,
+                    icon:  <WarningIcon {...iconProps} outline/>,
                 };
         }
     };
