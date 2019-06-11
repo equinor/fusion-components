@@ -34,6 +34,6 @@ const ErrorBoundaryStory = () => {
     );
 };
 
-storiesOf("Feedback|ErrorBoundary", module)
+storiesOf("General|ErrorBoundary", module)
     .addParameters({ jest: ["ErrorBoundary.stories.tsx"] })
     .add("ErrorBoundary", () => <ErrorBoundaryStory />);
