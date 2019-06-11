@@ -54,4 +54,4 @@ const TabsStory = () => {
 };
 storiesOf('General|Tabs', module)
     .addParameters({ jest: ['Tabs.stories.jsx'] })
-    .add('Tabs', () => <TabsStory />);
+    .add('Default', () => <TabsStory />);
