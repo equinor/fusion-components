@@ -1,0 +1,43 @@
+@import '~styles/mixins.less';
+
+.container {
+    background-color: var(--color-black-alt1);
+    height: .grid-unit(6px)[];
+    width: .grid-unit(43px)[];
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    justify-content: space-between;
+
+    .message{
+        color: var(--color-white);
+        padding: .grid-unit(2px)[];
+        font-size: 12px;
+        line-height: .grid-unit(2px)[];
+
+    }
+    .actionGroup {
+        padding: 0 .grid-unit(2px)[];
+    }
+
+    &.left {
+        left: .grid-unit(1px)[];
+    }
+    &.right {
+        right: .grid-unit(1px)[];
+    }
+
+    &.center{
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    &.top {
+        top: .grid-unit(1px)[];
+    }
+    &.bottom {
+        bottom: .grid-unit(1px)[];
+    }
+}
