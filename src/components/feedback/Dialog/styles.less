@@ -1,34 +1,31 @@
+@import '~styles/mixins.less';
+
 .container {
-    padding: calc(var(--grid-unit)* 2px) calc(var(--grid-unit)* 3px) calc(var(--grid-unit)* 1px) calc(var(--grid-unit)* 3px);
+    padding: .grid-unit(2px)[] 0 .grid-unit(1px)[] 0;
     border: 1px solid var(--color-black-alt4);
     border-radius: 4px;
-    max-width: calc(var(--grid-unit)* 35px);
+    max-width: .grid-unit(35px)[];
 
     .dialogTitle {
         margin: 0;
-        padding-bottom: calc(var(--grid-unit)*3px);
+        padding: 0 .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
         font-size: 20px;
-        line-height: calc(var(--grid-unit)*4px);
+        line-height: .grid-unit(4px)[];
     }
     .dialogContent{
-        padding-bottom: calc(var(--grid-unit)*3px);
-        line-height: calc(var(--grid-unit)*3px);
+        padding: .grid-unit(1px)[] .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
+        line-height: .grid-unit(3px)[];
         font-size: 16px;
+
         &.scrollable {
-            max-height: calc(var(--grid-unit)* 13px);
+            max-height: .grid-unit(13px)[];
             overflow-y: auto;
             border-top: 1px solid var(--color-black-alt4);
             border-bottom: 1px solid var(--color-black-alt4);
-
-            &::-webkit-scrollbar {
-                width: 0px;
-                background: transparent;
-                height: 0px;
-                background-color: transparent;
-            }
         }   
     }
     .dialogActions{
+        padding: .grid-unit(1px)[] .grid-unit(3px)[] 0 .grid-unit(3px)[];
         display: flex;
         align-items: center;
         justify-content: flex-end;
