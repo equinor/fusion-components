@@ -10,10 +10,10 @@ const BannerStory = () => {
         <Banner
             message="This is the banner message, loooogn text, This is the banner message, loooogn textThis is the banner message, loooogn textThis is the banner message, loooogn textv"
             actions={[
-                <Button frameless comfortable>
+                <Button frameless comfortable key="do-something">
                     Do something
                 </Button>,
-                <Button frameless comfortable>
+                <Button frameless comfortable key="dismiss">
                     Dismiss
                 </Button>,
             ]}

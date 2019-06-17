@@ -4,14 +4,15 @@ import styles from './styles.less';
 type BannerProps = {
     message: string;
     actions: Array<JSX.Element>;
+    icon?: any
 };
 
 const Banner: React.FC<BannerProps> = ({ message, actions }) => {
     const bannerActions = React.useMemo(() => {
-        if (actions && actions.length > 0) {
-            return <div className={styles.actions}>{actions.map(action => action)}</div>;
+        if (!actions || !actions.length) {
+            return null
         }
-        return null;
+        return <div className={styles.actions}>{actions.map(action => action)}</div>;;
     }, [actions]);
 
     return (
