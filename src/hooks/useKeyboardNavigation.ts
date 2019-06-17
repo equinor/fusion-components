@@ -2,21 +2,21 @@ import { useState, useEffect } from "react";
 import useEventListener from "./useEventListener";
 
 const KEY_HANDLERS = {
-    38: "onUp",
-    40: "onDown",
-    37: "onLeft",
-    39: "onRight",
-    13: "onEnter",
-    27: "onEscape",
+    38: 'onUp',
+    40: 'onDown',
+    37: 'onLeft',
+    39: 'onRight',
+    13: 'onEnter',
+    27: 'onEscape',
 };
 
 export type KeyBoardEvents = {
-    onUp?: Function,
-    onDown?: Function,
-    onLeft?: Function,
-    onRight?: Function,
-    onEnter?: Function,
-    onEscape?: Function,
+    onUp?: Function;
+    onDown?: Function;
+    onLeft?: Function;
+    onRight?: Function;
+    onEnter?: Function;
+    onEscape?: Function;
 };
 
 export default (keyBoardEvents: KeyBoardEvents, externalRef: HTMLElement | null = null) => {

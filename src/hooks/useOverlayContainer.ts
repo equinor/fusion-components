@@ -1,4 +1,4 @@
-const overlayId = "fusion-overlay-container";
+const overlayId = 'fusion-overlay-container';
 
 const overlayChildStyling = `
     #${overlayId} {
@@ -20,13 +20,13 @@ let overlayContainer = document.getElementById(`#${overlayId}`);
 export default (): HTMLElement => {
     if (!overlayContainer) {
         // Set up styling
-        const overlayStyle = document.createElement("style");
-        overlayStyle.type = "text/css";
+        const overlayStyle = document.createElement('style');
+        overlayStyle.type = 'text/css';
         overlayStyle.appendChild(document.createTextNode(overlayChildStyling));
         document.head.appendChild(overlayStyle);
 
         // Create and add overlay container
-        overlayContainer = document.createElement("div");
+        overlayContainer = document.createElement('div');
         overlayContainer.id = overlayId;
 
         document.body.appendChild(overlayContainer);

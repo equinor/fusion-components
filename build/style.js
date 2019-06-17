@@ -5,18 +5,18 @@ module.exports = {
                 test: /\.less$/,
                 use: [
                     {
-                        loader: "style-loader",
+                        loader: 'style-loader',
                     },
                     {
-                        loader: "css-loader",
+                        loader: 'css-loader',
                         options: {
                             modules: true,
-                            localIdentName: "fc--[local]--[hash:base64:5]",
+                            localIdentName: 'fc--[local]--[hash:base64:5]',
                             // url: false,
                         },
                     },
                     {
-                        loader: "less-loader",
+                        loader: 'less-loader',
                     },
                 ],
             },

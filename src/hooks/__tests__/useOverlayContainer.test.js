@@ -1,8 +1,8 @@
-import { hookTestScope } from "./hookTestScope";
-import useOverlayContainer from "../useOverlayContainer";
+import { hookTestScope } from './hookTestScope';
+import useOverlayContainer from '../useOverlayContainer';
 
-describe("useOverlayContainer", () => {
-    it("Should return the same instance every time", () => {
+describe('useOverlayContainer', () => {
+    it('Should return the same instance every time', () => {
         hookTestScope(() => {
             const firstContainer = useOverlayContainer();
             const secondContainer = useOverlayContainer();

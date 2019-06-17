@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
     IAuthContainer,
     createFusionContext,
@@ -8,14 +8,14 @@ import {
 } from "@equinor/fusion";
 import AuthUser from "@equinor/fusion/lib/auth/AuthUser";
 
-import FusionRoot from "../src/components/core/Root";
+import FusionRoot from '../src/components/core/Root';
 
 const mockUser = {
-    id: "1337",
-    fullName: "Charles Carmichael",
-    givenName: "Charles",
-    familyName: "Carmichael",
-    upn: "chca@equinot.com",
+    id: '1337',
+    fullName: 'Charles Carmichael',
+    givenName: 'Charles',
+    familyName: 'Carmichael',
+    upn: 'chca@equinot.com',
     roles: [],
 };
 

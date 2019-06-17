@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { ensureContext } from "./helpers";
+import { useState, useEffect } from 'react';
+import { ensureContext } from './helpers';
 
 const registerConsumer = (name, defaultValue, listner) => {
     const context = ensureContext(name, defaultValue);
@@ -20,7 +20,7 @@ export default (name, defaultValue) => {
         return children(value);
     };
 
-    Consumer.displayName = "NamedContextConsumer";
+    Consumer.displayName = 'NamedContextConsumer';
 
     return Consumer;
 };

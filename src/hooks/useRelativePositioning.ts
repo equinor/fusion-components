@@ -1,5 +1,5 @@
-import { useState, useEffect, MutableRefObject } from "react";
-import useEventListener from "./useEventListener";
+import { useState, useEffect, MutableRefObject } from 'react';
+import useEventListener from './useEventListener';
 
 const defaultRect: ClientRect = {
     left: 0,
@@ -25,8 +25,8 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
 
     useEffect(setRectFromRef, [ref.current]);
 
-    useEventListener(window, "resize", setRectFromRef, [ref.current]);
-    useEventListener(document.body, "scroll", setRectFromRef, [ref.current]);
+    useEventListener(window, 'resize', setRectFromRef, [ref.current]);
+    useEventListener(document.body, 'scroll', setRectFromRef, [ref.current]);
 
     return rect;
 };

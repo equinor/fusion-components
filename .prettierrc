@@ -1,8 +1,8 @@
 {
   "printWidth": 100,
-  "singleQuote": false,
+  "singleQuote": true,
   "trailingComma": "es5",
   "endOfLine": "crlf",
-  "parser": "flow",
+  "parser": "typescript",
   "tabWidth": 4
 }
