@@ -2,6 +2,7 @@ import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import Button from '../../general/Button';
+import useElevationClassName from '../../../hooks/useElevationClassName';
 
 export enum verticalPositions {
     top = 'top',
@@ -20,50 +21,54 @@ type SnackBarProps = {
     message?: string;
     cancelLabel?: string;
     onCancel?: () => void;
+    cancellable?: boolean;
+    abortSignal: AbortSignal;
 };
 
 const SnackBar: React.FC<SnackBarProps> = ({
     verticalPosition = verticalPositions.bottom,
     horizontalPosition = horizontalPositions.left,
-    open,
     message,
     cancelLabel,
     onCancel,
+    cancellable,
+    abortSignal,
 }) => {
-    const snackBarMessage = React.useMemo(() => {
-        if (message) {
-            return <span className={styles.message}>{message}</span>;
-        }
-        return null;
-    }, [message]);
+    const [isVisible, setIsVisible] = React.useState(false);
 
-    const cancelButton = React.useMemo(() => {
-        if (cancelLabel) {
-            return (
-                <Button primary comfortable frameless onClick={() => onCancel && onCancel()}>
-                    {cancelLabel}
-                </Button>
-            );
-        }
-        return null;
-    }, [cancelLabel, onCancel]);
+    React.useEffect(() => {
+        setIsVisible(true)
+    },[])
+
+    const onAbort = React.useCallback(() => setIsVisible(false),[]);
+    React.useEffect(() => {
+        abortSignal.addEventListener("abort",onAbort);
+        return (() => {
+            abortSignal.removeEventListener("abort", onAbort);
+        });
+    },[abortSignal]);
+
+    const cancelButton = cancellable ? (
+        <div className={styles.cancelButton}>
+            <Button primary comfortable frameless onClick={() => onCancel && onCancel()}>
+                {cancelLabel}
+            </Button>
+        </div>
+    ) : null;
 
     const containerStyles = classNames(
         styles.container,
+        useElevationClassName(6),
         styles[horizontalPosition],
-        styles[verticalPosition]
+        styles[verticalPosition], {
+            [styles.isVisible]: isVisible,
+        }
     );
-
-    if (!open) {
-        return null;
-    }
 
     return (
         <div className={containerStyles}>
-            {snackBarMessage}
-            <div className={styles.actionGroup}>
-                {cancelButton}
-            </div>
+            <span className={styles.message}>{message}</span>
+            {cancelButton}
         </div>
     );
 };

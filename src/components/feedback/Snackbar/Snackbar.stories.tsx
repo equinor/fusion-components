@@ -4,17 +4,18 @@ import SnackBar from './index';
 import Button from '../../general/Button';
 
 const SnackBarStory = () => {
-    const [open, setOpen] = React.useState(false);
+    const abortController = new AbortController();
+    setTimeout(() => {
+        abortController.abort();
+    }, 3000);
+    
     return (
         <div>
-            <Button primary comfortable onClick={() => setOpen(true)}>
-                Snack time!
-            </Button>
             <SnackBar
                 message="This is the snack bar message"
-                open={open}
                 cancelLabel="Cancel"
-                onCancel ={() => setOpen(false)}
+                abortSignal={abortController.signal}
+                cancellable
             />
         </div>
     );

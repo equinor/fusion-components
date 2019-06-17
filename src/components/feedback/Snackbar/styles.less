@@ -9,6 +9,12 @@
     align-items: center;
     position: fixed;
     justify-content: space-between;
+    transition: opacity .2s;
+    opacity: 0;
+
+    &.isVisible{
+        opacity: 1;
+    } 
 
     .message{
         color: var(--color-white);
@@ -17,7 +23,7 @@
         line-height: .grid-unit(2px)[];
 
     }
-    .actionGroup {
+    .cancelButton {
         padding: 0 .grid-unit(2px)[];
         display: flex;
     }
