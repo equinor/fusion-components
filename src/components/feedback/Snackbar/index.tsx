@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
+import Button from '../../general/Button';
 
 export enum verticalPositions {
     top = 'top',
@@ -16,48 +17,19 @@ type SnackBarProps = {
     verticalPosition?: verticalPositions;
     horizontalPosition?: horizontalPositions;
     open?: boolean;
-    autoHideDuration?: number;
-    onClose?: () => void;
     message?: string;
-    actions?: Array<JSX.Element>;
+    cancelLabel?: string;
+    onCancel?: () => void;
 };
 
 const SnackBar: React.FC<SnackBarProps> = ({
     verticalPosition = verticalPositions.bottom,
     horizontalPosition = horizontalPositions.left,
     open,
-    autoHideDuration = 6000,
-    onClose,
     message,
-    actions,
+    cancelLabel,
+    onCancel,
 }) => {
-    const autoHideRef = React.useRef<any>();
-
-    const setAutoHideTimeout = React.useCallback(() => {
-        clearTimeout(autoHideRef.current);
-        autoHideRef.current = setTimeout(() => {
-            if (!onClose) {
-                return;
-            }
-            onClose();
-        }, autoHideDuration);
-    }, [autoHideDuration, onClose]);
-
-    React.useEffect(() => {
-        if (open) {
-            setAutoHideTimeout();
-        }
-        return () => {
-            clearTimeout(autoHideRef.current);
-        };
-    });
-
-    const startAutoTimeout = React.useCallback(() => setAutoHideTimeout(), [autoHideRef]);
-
-    const cancelAutoTimeout = React.useCallback(() => clearTimeout(autoHideRef.current), [
-        autoHideRef,
-    ]);
-
     const snackBarMessage = React.useMemo(() => {
         if (message) {
             return <span className={styles.message}>{message}</span>;
@@ -65,12 +37,16 @@ const SnackBar: React.FC<SnackBarProps> = ({
         return null;
     }, [message]);
 
-    const snackBarActions = React.useMemo(() => {
-        if (actions && actions.length > 0) {
-            return <div className={styles.actionGroup}>{actions.map(action => action)}</div>;
+    const cancelButton = React.useMemo(() => {
+        if (cancelLabel) {
+            return (
+                <Button primary comfortable frameless onClick={() => onCancel && onCancel()}>
+                    {cancelLabel}
+                </Button>
+            );
         }
         return null;
-    }, [actions]);
+    }, [cancelLabel, onCancel]);
 
     const containerStyles = classNames(
         styles.container,
@@ -83,13 +59,11 @@ const SnackBar: React.FC<SnackBarProps> = ({
     }
 
     return (
-        <div
-            className={containerStyles}
-            onMouseEnter={cancelAutoTimeout}
-            onMouseLeave={startAutoTimeout}
-        >
+        <div className={containerStyles}>
             {snackBarMessage}
-            {snackBarActions}
+            <div className={styles.actionGroup}>
+                {cancelButton}
+            </div>
         </div>
     );
 };
