@@ -5,7 +5,8 @@ import ErrorMessage, { ErrorTypes } from "../index";
 
 const styles = {
     display:"flex",
-    width:"70%"
+    width:"70%",
+    height:"100%",
 }
 const ErrorMessageError = () => {
     return (
