@@ -46,10 +46,12 @@ const Menu: React.FC<MenuProps> = props => {
             nextItemIndex += direction;
         }
 
-        setFocusedSectionKey(props.sections[nextSectionIndex].key);
-        setFocusedItemKey(props.sections[nextSectionIndex].items[nextItemIndex].key);
+        const nextSection = props.sections[nextSectionIndex];
 
-        if(props.sections[nextSectionIndex].items[nextItemIndex].isDisabled) {
+        setFocusedSectionKey(nextSection.key);
+        setFocusedItemKey(nextSection.items[nextItemIndex].key);
+
+        if(nextSection.items[nextItemIndex].isDisabled) {
             nextOrPrev(direction);
         }
     };
