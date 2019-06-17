@@ -18,35 +18,35 @@ export type MenuProps = {
     keyboardNavigationRef?: HTMLElement | null,
 };
 
-const Menu: React.FC<MenuProps> = props => {
-    const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(props.sections.length ? props.sections[0].key : null);
-    const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(props.sections.length && props.sections[0].items.length ? props.sections[0].items[0].key : null);
+const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavigationRef }: MenuProps) => {
+    const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(sections.length ? sections[0].key : null);
+    const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(sections.length && sections[0].items.length ? sections[0].items[0].key : null);
 
     const nextOrPrev = (direction: number) => {
-        const sectionIndex = props.sections.findIndex(section => section.key === focusedSectionKey);
+        const sectionIndex = sections.findIndex(section => section.key === focusedSectionKey);
         let nextSectionIndex = sectionIndex;
 
         if (sectionIndex === -1) {
-            nextSectionIndex = direction === -1 ? props.sections.length - 1 : 0;
+            nextSectionIndex = direction === -1 ? sections.length - 1 : 0;
         }
 
-        const items = props.sections[nextSectionIndex].items;
+        const items = sections[nextSectionIndex].items;
 
         const itemIndex = items.findIndex(item => item.key === focusedItemKey);
         let nextItemIndex = itemIndex;
 
         if (nextItemIndex === -1) {
-            nextSectionIndex = direction === -1 ? props.sections.length - 1 : 0;
-            nextItemIndex = direction === -1 ? props.sections[nextSectionIndex].items.length - 1 : 0;
+            nextSectionIndex = direction === -1 ? sections.length - 1 : 0;
+            nextItemIndex = direction === -1 ? sections[nextSectionIndex].items.length - 1 : 0;
         } else if (nextItemIndex === 0 && direction === -1) {
-            nextSectionIndex += (sectionIndex + props.sections.length - 1) % props.sections.length;
+            nextSectionIndex += (sectionIndex + sections.length - 1) % sections.length;
         } else if (nextItemIndex === items.length - 1 && direction === 1) {
-            nextSectionIndex += (sectionIndex + props.sections.length + 1) % props.sections.length;
+            nextSectionIndex += (sectionIndex + sections.length + 1) % sections.length;
         } else {
             nextItemIndex += direction;
         }
 
-        const nextSection = props.sections[nextSectionIndex];
+        const nextSection = sections[nextSectionIndex];
 
         setFocusedSectionKey(nextSection.key);
         setFocusedItemKey(nextSection.items[nextItemIndex].key);
@@ -57,13 +57,13 @@ const Menu: React.FC<MenuProps> = props => {
     };
 
     const reset = () => {
-        setFocusedSectionKey(props.sections.length ? props.sections[0].key : null);
-        setFocusedItemKey(props.sections.length && props.sections[0].items.length ? props.sections[0].items[0].key : null);
+        setFocusedSectionKey(sections.length ? sections[0].key : null);
+        setFocusedItemKey(sections.length && sections[0].items.length ? sections[0].items[0].key : null);
     };
 
-    const onClick = item => {
-        if (props.onClick) {
-            props.onClick(item);
+    const onItemClick = item => {
+        if (onClick) {
+            onClick(item);
         }
     };
 
@@ -71,7 +71,7 @@ const Menu: React.FC<MenuProps> = props => {
         onUp: () => nextOrPrev(-1),
         onDown: () => nextOrPrev(+1),
         onEnter: () => {
-            const section = props.sections.find(section => section.key === focusedSectionKey);
+            const section = sections.find(section => section.key === focusedSectionKey);
             if (!section) {
                 return;
             }
@@ -84,15 +84,15 @@ const Menu: React.FC<MenuProps> = props => {
             onClick(item);
         },
         onEscape: reset,
-    }, props.keyboardNavigationRef);
+    }, keyboardNavigationRef);
 
-    React.useEffect(reset, [props.sections]);
+    React.useEffect(reset, [sections]);
 
-    const className = classNames(styles.container, useElevationClassName(props.elevation));
+    const className = classNames(styles.container, useElevationClassName(elevation));
 
     return (
         <div className={className}>
-            {props.sections.map(section => (
+            {sections.map(section => (
                 <section key={section.key}>
                     {section.items.map((item, index) => (
                         <MenuItem
@@ -102,7 +102,7 @@ const Menu: React.FC<MenuProps> = props => {
                                 focusedSectionKey === section.key && focusedItemKey === item.key
                             }
                             item={item}
-                            onClick={onClick}
+                            onClick={onItemClick}
                         />
                     ))}
                 </section>
