@@ -1,0 +1,22 @@
+
+@import '~styles/mixins.less';
+
+.container {
+    display: flex;
+    min-width: .grid-unit(6px)[];
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-black-alt4);
+    align-items: center;
+
+    .message {
+        padding: .grid-unit(2px)[];
+        padding-right: .grid-unit(11px)[];
+        font-size: 14px;
+        line-height: .grid-unit(2px)[];
+    }
+
+    .actions {
+        padding-right: .grid-unit(2px)[];
+        display: flex;
+    }
+}
