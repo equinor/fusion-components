@@ -32,9 +32,8 @@ const AuthTokenInput = ({ active }) => {
 }
 
 addons.register("FUSION", api => {
-    console.log("TEST");
     addons.addPanel("FUSION/authtoken", {
-        title: "Auth token",
+        title: "Auth",
         render: ({ active, key }) => <AuthTokenInput key={key} active={active} />
     });
 });

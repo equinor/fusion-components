@@ -93,7 +93,7 @@
         "babel-core": "7.0.0-bridge.0"
     },
     "dependencies": {
-        "@equinor/fusion": "^0.1.8"
+        "@equinor/fusion": "^0.1.16"
     },
     "files": [
         "/dist"
