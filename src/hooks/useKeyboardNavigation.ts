@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import useEventListener from './useEventListener';
+import { useState, useEffect } from "react";
+import useEventListener from "./useEventListener";
 
 const KEY_HANDLERS = {
     38: 'onUp',
@@ -19,8 +19,8 @@ export type KeyBoardEvents = {
     onEscape?: Function;
 };
 
-export default (keyBoardEvents: KeyBoardEvents) => {
-    const [ref, setRef] = useState<HTMLElement | null>(null);
+export default (keyBoardEvents: KeyBoardEvents, externalRef: HTMLElement | null = null) => {
+    const [ref, setRef] = useState<HTMLElement | null>(externalRef);
 
     const handleKeyDown = e => {
         const keyCode = e.keyCode;
@@ -31,7 +31,11 @@ export default (keyBoardEvents: KeyBoardEvents) => {
         }
     };
 
-    useEventListener(ref, 'keydown', handleKeyDown, [keyBoardEvents, ref]);
+    useEventListener(ref, "keydown", handleKeyDown, [keyBoardEvents, ref]);
+
+    useEffect(() => {
+        setRef(externalRef);
+    }, [externalRef]);
 
     return { setRef, current: ref };
 };

@@ -1,0 +1,89 @@
+@import '~styles/mixins.less';
+@import '~styles/variables.less';
+
+.container {
+    --width-multiplier: 75px;
+    background-color: var(--color-black-alt1);
+    height: .grid-unit(6px)[];
+    width: calc(var(--width-multiplier)* var(--grid-unit));
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    justify-content: space-between;
+    transition: opacity .2s;
+    opacity: 0;
+
+    @media (max-width: @mobile-max-width) {
+        --width-multiplier: 38px;
+    }
+
+    &.isVisible{
+        opacity: 1;
+    }
+
+    .message{
+        color: var(--color-white);
+        padding: .grid-unit(2px)[];
+        font-size: 12px;
+        line-height: .grid-unit(2px)[];
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        @media (max-width: @mobile-max-width) {
+            white-space: normal;
+            padding: 0 .grid-unit(2px)[];
+            max-height: .grid-unit(4px)[];
+        }
+    }
+    .cancelButton {
+        padding: 0 .grid-unit(2px)[];
+        display: flex;
+        height: 100%;
+        align-items: center;
+
+        button {
+            box-sizing: border-box;
+            width: 100%;
+            background: none;
+            outline: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            height: calc(var(--grid-unit) * 4.5px);
+            border-radius: 4px;
+
+            span {
+                color: var(--color-primary-alt1);
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+
+            }
+        }
+    }
+
+    &.left {
+        left: .grid-unit(1px)[];
+    }
+    &.right {
+        right: .grid-unit(1px)[];
+    }
+
+    &.center{
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    &.top {
+        top: .grid-unit(1px)[];
+    }
+    &.bottom {
+        bottom: .grid-unit(1px)[];
+    }
+}
