@@ -4,13 +4,13 @@ import classNames from 'classnames';
 import useElevationClassName from '../../../hooks/useElevationClassName';
 
 export enum VerticalPositions {
-    top = 'top',
-    bottom = 'bottom',
+    Top = 'top',
+    Bottom = 'bottom',
 }
 export enum HorizontalPositions {
-    left = 'left',
-    right = 'right',
-    center = 'center',
+    Left = 'left',
+    Right = 'right',
+    Center = 'center',
 }
 
 type SnackBarProps = {
@@ -24,8 +24,8 @@ type SnackBarProps = {
 };
 
 const SnackBar: React.FC<SnackBarProps> = ({
-    verticalPosition = VerticalPositions.bottom,
-    horizontalPosition = HorizontalPositions.left,
+    verticalPosition = VerticalPositions.Bottom,
+    horizontalPosition = HorizontalPositions.Left,
     message,
     cancelLabel,
     onCancel,
