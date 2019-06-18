@@ -17,7 +17,6 @@ export enum horizontalPositions {
 type SnackBarProps = {
     verticalPosition?: verticalPositions;
     horizontalPosition?: horizontalPositions;
-    open?: boolean;
     message?: string;
     cancelLabel?: string;
     onCancel?: () => void;
@@ -37,16 +36,17 @@ const SnackBar: React.FC<SnackBarProps> = ({
     const [isVisible, setIsVisible] = React.useState(false);
 
     React.useEffect(() => {
-        setIsVisible(true)
-    },[])
+        setIsVisible(true);
+    }, []);
 
-    const onAbort = React.useCallback(() => setIsVisible(false),[]);
+    const onAbort = React.useCallback(() => setIsVisible(false), []);
+
     React.useEffect(() => {
-        abortSignal.addEventListener("abort",onAbort);
-        return (() => {
-            abortSignal.removeEventListener("abort", onAbort);
-        });
-    },[abortSignal]);
+        abortSignal.addEventListener('abort', onAbort);
+        return () => {
+            abortSignal.removeEventListener('abort', onAbort);
+        };
+    }, [abortSignal]);
 
     const cancelButton = cancellable ? (
         <div className={styles.cancelButton}>
@@ -60,7 +60,8 @@ const SnackBar: React.FC<SnackBarProps> = ({
         styles.container,
         useElevationClassName(6),
         styles[horizontalPosition],
-        styles[verticalPosition], {
+        styles[verticalPosition],
+        {
             [styles.isVisible]: isVisible,
         }
     );
