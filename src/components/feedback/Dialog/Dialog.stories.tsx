@@ -21,10 +21,10 @@ const DialogStory = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-
+            <br />
             <Dialog>
                 <DialogTitle>New Dialog</DialogTitle>
-                <DialogContent scrollable>This is the content of the Dialog
+                <DialogContent>This is the content of the Dialog
                 This is the content of the Dialog
                 This is the content of the Dialog
                 This is the content of the Dialog

@@ -4,7 +4,7 @@
     padding: .grid-unit(2px)[] 0 .grid-unit(1px)[] 0;
     border: 1px solid var(--color-black-alt4);
     border-radius: 4px;
-    max-width: .grid-unit(35px)[];
+    width: .grid-unit(35px)[];
 
     .dialogTitle {
         margin: 0;
@@ -16,10 +16,11 @@
         padding: .grid-unit(1px)[] .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
         line-height: .grid-unit(3px)[];
         font-size: 16px;
+        min-height: .grid-unit(10px)[];
+        max-height: .grid-unit(13px)[];
+        overflow-y: auto;
 
         &.scrollable {
-            max-height: .grid-unit(13px)[];
-            overflow-y: auto;
             border-top: 1px solid var(--color-black-alt4);
             border-bottom: 1px solid var(--color-black-alt4);
         }   
