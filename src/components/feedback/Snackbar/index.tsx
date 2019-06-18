@@ -1,22 +1,21 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import Button from '../../general/Button';
 import useElevationClassName from '../../../hooks/useElevationClassName';
 
-export enum verticalPositions {
+export enum VerticalPositions {
     top = 'top',
     bottom = 'bottom',
 }
-export enum horizontalPositions {
+export enum HorizontalPositions {
     left = 'left',
     right = 'right',
     center = 'center',
 }
 
 type SnackBarProps = {
-    verticalPosition?: verticalPositions;
-    horizontalPosition?: horizontalPositions;
+    verticalPosition?: VerticalPositions;
+    horizontalPosition?: HorizontalPositions;
     message?: string;
     cancelLabel?: string;
     onCancel?: () => void;
@@ -25,8 +24,8 @@ type SnackBarProps = {
 };
 
 const SnackBar: React.FC<SnackBarProps> = ({
-    verticalPosition = verticalPositions.bottom,
-    horizontalPosition = horizontalPositions.left,
+    verticalPosition = VerticalPositions.bottom,
+    horizontalPosition = HorizontalPositions.left,
     message,
     cancelLabel,
     onCancel,
