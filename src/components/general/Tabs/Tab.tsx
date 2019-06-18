@@ -14,14 +14,15 @@ type TabProps = {
 
 const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
     const [isPressed, setIsPressed] = React.useState(false);
+    const tabRef = React.useRef<HTMLAnchorElement>(null);
 
-    const tabRef = useKeyBoardNavigation({
+    useKeyBoardNavigation({
         onEnter: () => {
             if (tabRef.current) {
                 !disabled && onChange && onChange(tabRef.current);
             }
         },
-    });
+    }, tabRef.current);
 
     const tabClasses = classNames(styles.tab, {
         [styles.current]: isCurrent,
@@ -48,7 +49,7 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
             onMouseUp={() => setIsPressed(false)}
             onMouseLeave={() => isPressed && setIsPressed(false)}
             href={url}
-            ref={tabRef.setRef}
+            ref={tabRef}
             tabIndex={0}
         >
             <div className={titleClasses}>{title}</div>

@@ -8,7 +8,7 @@ export default (isVisible: Boolean, content: ReactNode): void => {
     const overlayContainer = useOverlayContainer();
 
     useEffect(() => {
-        if (!isVisible) {
+        if (!isVisible || !overlayContainer) {
             return;
         }
 

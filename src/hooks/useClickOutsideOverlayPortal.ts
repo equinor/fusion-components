@@ -8,7 +8,7 @@ export default (callback: EventListener, target?: HTMLElement | null): void => {
         const clickedOutsideTarget =
             target && target !== e.target && !target.contains(e.target as Node);
         const clickedOnOrOutsideOverlay =
-            overlayContainer === e.target || !overlayContainer.contains(e.target as Node);
+            overlayContainer === e.target || (overlayContainer && !overlayContainer.contains(e.target as Node));
 
         if (clickedOutsideTarget || clickedOnOrOutsideOverlay) {
             callback(e);
