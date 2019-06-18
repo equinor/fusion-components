@@ -51,9 +51,7 @@ const SnackBar: React.FC<SnackBarProps> = ({
         <div className={styles.cancelButton}>
             <button onClick={() => onCancel && onCancel()}>
                 <span>{cancelLabel}</span>
-
             </button>
-      
         </div>
     ) : null;
 
