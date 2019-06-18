@@ -10,7 +10,23 @@ const DialogStory = () => {
                 <DialogTitle>New Dialog</DialogTitle>
                 <DialogContent >This is the content of the Dialog
                     This is the content of the Dialog
+                
+                    </DialogContent>
+                <DialogActions>
+                    <Button primary comfortable frameless>
+                        Button
+                    </Button>
+                    <Button primary comfortable frameless>
+                        Button
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <br />
+            <Dialog>
+                <DialogTitle>New Dialog</DialogTitle>
+                <DialogContent >This is the content of the Dialog
                     This is the content of the Dialog
+                    This is the content of the DialogThis is the content of the DialogThis is the content of the Dialog
                     </DialogContent>
                 <DialogActions>
                     <Button primary comfortable frameless>
