@@ -5,6 +5,12 @@
     border: 1px solid var(--color-black-alt4);
     border-radius: 4px;
     width: .grid-unit(70px)[];
+    max-height: .grid-unit(29px)[];
+
+    @media (max-width: 737px) {
+        width: .grid-unit(35px)[];
+        max-height: 80vh;
+    }
 
     .dialogTitle {
         margin: 0;
@@ -13,16 +19,16 @@
         line-height: .grid-unit(4px)[];
     }
     .dialogContent{
-        padding: .grid-unit(1px)[] .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
+        margin: .grid-unit(1px)[] .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
         line-height: .grid-unit(3px)[];
         font-size: 16px;
         max-height: .grid-unit(9px)[];
-        overflow-y: auto;
+        overflow-y: hidden;
 
-        &.scrollable {
-            border-top: 1px solid var(--color-black-alt4);
-            border-bottom: 1px solid var(--color-black-alt4);
-        }   
+        @media (max-width: 737px) {
+            max-height: calc(80vh - .grid-unit(18px)[]);
+        }
+ 
     }
     .dialogActions{
         padding: .grid-unit(2px)[] .grid-unit(3px)[] .grid-unit(1px)[] .grid-unit(3px)[];

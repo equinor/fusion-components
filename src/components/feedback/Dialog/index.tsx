@@ -16,20 +16,7 @@ export const DialogTitle: React.FC<DialogProps> = ({ children }) => (
 );
 
 export const DialogContent: React.FC<DialogProps> = ({ children }) => {
-    const contentRef = React.useRef<HTMLDivElement | null>(null);
-    const [isScrollable, setIsScrollable] = React.useState(false);
-    
-    React.useEffect(() => {
-        if(contentRef.current){
-            contentRef.current.offsetHeight < contentRef.current.scrollHeight && setIsScrollable(true);
-        }
-    }, [contentRef]);
-    
-    const contentClasses = classNames(styles.dialogContent, {
-        [styles.scrollable]: isScrollable,
-    });
-
-    return <div className={contentClasses} ref={contentRef}>{children}</div>;
+    return <div className={styles.dialogContent} >{children}</div>;
 };
 
 export const DialogActions: React.FC<DialogProps> = ({ children }) => (
