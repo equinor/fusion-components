@@ -50,9 +50,11 @@ const SnackBar: React.FC<SnackBarProps> = ({
 
     const cancelButton = cancellable ? (
         <div className={styles.cancelButton}>
-            <Button primary comfortable frameless onClick={() => onCancel && onCancel()}>
-                {cancelLabel}
-            </Button>
+            <button onClick={() => onCancel && onCancel()}>
+                <span>{cancelLabel}</span>
+
+            </button>
+      
         </div>
     ) : null;
 
@@ -68,7 +70,7 @@ const SnackBar: React.FC<SnackBarProps> = ({
 
     return (
         <div className={containerStyles}>
-            <span className={styles.message}>{message}</span>
+            <div className={styles.message}>{message}</div>
             {cancelButton}
         </div>
     );

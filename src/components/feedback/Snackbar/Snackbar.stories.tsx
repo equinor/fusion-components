@@ -4,17 +4,18 @@ import SnackBar from './index';
 
 const SnackBarStory = () => {
     const abortController = new AbortController();
-    setTimeout(() => {
-        abortController.abort();
-    }, 3000);
+    // setTimeout(() => {
+    //     abortController.abort();
+    // }, 3000);
 
     return (
         <div>
             <SnackBar
-                message="This is the snack bar message"
+                message="This is the snack bar messag e This is the snack bar messagThis is the snack bar messagThis is the snack bar messagThis is the snack bar messag"
                 cancelLabel="Cancel"
                 abortSignal={abortController.signal}
                 cancellable
+                onCancel={() => abortController.abort()}
             />
         </div>
     );
