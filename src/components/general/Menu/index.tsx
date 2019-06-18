@@ -81,7 +81,7 @@ const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavig
                 return;
             }
 
-            onClick(item);
+            onItemClick(item);
         },
         onEscape: reset,
     }, keyboardNavigationRef);
