@@ -1,4 +1,5 @@
 @import '~styles/mixins.less';
+@import '~styles/variables.less';
 
 .container {
     padding: .grid-unit(2px)[] 0 .grid-unit(1px)[] 0;
@@ -7,7 +8,7 @@
     width: .grid-unit(70px)[];
     max-height: .grid-unit(29px)[];
 
-    @media (max-width: 737px) {
+    @media (max-width: @mobile-max-width) {
         width: .grid-unit(35px)[];
         max-height: 80vh;
     }
@@ -25,7 +26,7 @@
         max-height: .grid-unit(9px)[];
         overflow-y: hidden;
 
-        @media (max-width: 737px) {
+        @media (max-width: @mobile-max-width) {
             max-height: calc(80vh - .grid-unit(18px)[]);
         }
  
