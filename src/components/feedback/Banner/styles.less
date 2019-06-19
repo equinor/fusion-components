@@ -3,20 +3,33 @@
 
 .container {
     display: flex;
-    min-width: .grid-unit(6px)[];
     justify-content: space-between;
     border-bottom: 1px solid var(--color-black-alt4);
     align-items: center;
+    width: 100%;
+    max-height: 0;
+    transition: max-height .2s ease-out;
 
-    .message {
-        padding: .grid-unit(2px)[];
-        padding-right: .grid-unit(11px)[];
-        font-size: 14px;
-        line-height: .grid-unit(2px)[];
+    &.isVisible {
+        max-height: .grid-unit(9px)[];
+    }
+    
+    .information {
+        display:  flex;
+        .message {
+            padding: .grid-unit(2px)[];
+            font-size: 14px;
+            line-height: .grid-unit(3px)[];
+        }
+        .icon{
+            padding: .grid-unit(2px)[];
+        }
+
     }
 
     .actions {
         padding-right: .grid-unit(2px)[];
+        padding-left: .grid-unit(11px)[];
         display: flex;
     }
 }

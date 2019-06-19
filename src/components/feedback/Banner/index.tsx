@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styles from './styles.less';
 import Button from '../../general/Button';
+import classNames from "classnames";
 
 type BannerProps = {
     message: string;
@@ -21,6 +22,12 @@ const Banner: React.FC<BannerProps> = ({
     actionLabel,
     onAction,
 }) => {
+    const [isVisible, setIsVisible] = React.useState(false);
+
+    React.useEffect(() => {
+        setIsVisible(true);
+    }, []);
+
     const cancelButton = (
         <Button frameless comfortable onClick={onCancel}>
             {cancelLabel}
@@ -34,10 +41,16 @@ const Banner: React.FC<BannerProps> = ({
 
     const bannerIcon = icon ? <div className={styles.icon}>{icon}</div> : null;
 
+    const containerClasses = classNames(styles.container, {
+        [styles.isVisible]: isVisible
+    })
+
     return (
-        <div className={styles.container}>
-            {}
-            <div className={styles.message}>{message}</div>
+        <div className={containerClasses}>
+            <div className={styles.information}>
+                {bannerIcon}
+                <div className={styles.message}>{message}</div>
+            </div>
             <div className={styles.actions}>
                 {actionButton}
                 {cancelButton}
