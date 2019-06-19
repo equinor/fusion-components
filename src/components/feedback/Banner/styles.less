@@ -1,28 +1,50 @@
 
 @import '~styles/mixins.less';
+@import '~styles/variables.less';
 
 .container {
+    
     display: flex;
-    justify-content: space-between;
     border-bottom: 1px solid var(--color-black-alt4);
     align-items: center;
     width: 100%;
     max-height: 0;
-    transition: max-height .2s ease-out;
+    transition: max-height .2s ease-in;
+    background-color: var(--color-white);
+
+    @media (max-width: @mobile-max-width) {
+        flex-direction: column;
+    }
 
     &.isVisible {
-        max-height: .grid-unit(9px)[];
+        max-height: .grid-unit(90px)[];
     }
     
     .information {
         display:  flex;
+        justify-self: flex-start;
+        width: 100%;
+        margin: .grid-unit(2px)[];
+        align-items: center;
+        
+        @media (max-width: @mobile-max-width) {
+            margin-top: .grid-unit(1px)[];
+        }
+
         .message {
-            padding: .grid-unit(2px)[];
             font-size: 14px;
             line-height: .grid-unit(3px)[];
+            overflow: hidden;
+            max-height: .grid-unit(6px)[];
+
         }
         .icon{
-            padding: .grid-unit(2px)[];
+            align-self: center;
+            padding-right: .grid-unit(3px)[];
+
+            @media (max-width: @mobile-max-width) {
+                padding-right: .grid-unit(2px)[];
+            }
         }
 
     }
@@ -31,5 +53,14 @@
         padding-right: .grid-unit(2px)[];
         padding-left: .grid-unit(11px)[];
         display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        justify-self: flex-end;
+        
+        @media (max-width: @mobile-max-width) {
+            padding-left:0;
+            width: 100%;
+            min-height: .grid-unit(6px)[];
+        }
     }
 }

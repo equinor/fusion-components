@@ -1,16 +1,16 @@
 import * as React from 'react';
 import styles from './styles.less';
 import Button from '../../general/Button';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 type BannerProps = {
     message: string;
     icon?: any;
     cancelLabel: string;
     onCancel: () => void;
-    action: boolean;
-    actionLabel: string;
-    onAction: () => void;
+    action?: boolean;
+    actionLabel?: string;
+    onAction?: () => void;
 };
 
 const Banner: React.FC<BannerProps> = ({
@@ -42,14 +42,14 @@ const Banner: React.FC<BannerProps> = ({
     const bannerIcon = icon ? <div className={styles.icon}>{icon}</div> : null;
 
     const containerClasses = classNames(styles.container, {
-        [styles.isVisible]: isVisible
-    })
+        [styles.isVisible]: isVisible,
+    });
 
     return (
         <div className={containerClasses}>
             <div className={styles.information}>
                 {bannerIcon}
-                <div className={styles.message}>{message}</div>
+                <span className={styles.message}>{message}</span>
             </div>
             <div className={styles.actions}>
                 {actionButton}
