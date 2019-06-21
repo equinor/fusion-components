@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import useEventListener from "./useEventListener";
+import { useState, useEffect } from 'react';
+import useEventListener from './useEventListener';
 
 const KEY_HANDLERS = {
     38: 'onUp',
@@ -31,7 +31,7 @@ export default (keyBoardEvents: KeyBoardEvents, externalRef: HTMLElement | null 
         }
     };
 
-    useEventListener(ref, "keydown", handleKeyDown, [keyBoardEvents, ref]);
+    useEventListener(ref, 'keydown', handleKeyDown, [keyBoardEvents, ref]);
 
     useEffect(() => {
         setRef(externalRef);
