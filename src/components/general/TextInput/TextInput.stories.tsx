@@ -5,7 +5,12 @@ import TextInput from "./index";
 const TextInputStory =() => {
     const [value, setValue] = React.useState("");
     return(
-        <TextInput onChange={(value) =>setValue(value) } value={value}/>
+        <React.Fragment>
+        <TextInput onChange={value =>setValue(value) } value={value} label="Text Input" placeholder="Input text"/>
+        <br />
+        <TextInput error label="Error input" placeholder="Error" onChange={value =>setValue(value) } value={value} />
+        </React.Fragment>
+        
     )
 }
 

@@ -1,0 +1,62 @@
+@import '~styles/mixins.less';
+
+
+
+.inputContainer {
+    display:  flex;
+    flex-direction: column;
+    min-height: .grid-unit(5px)[];
+    max-height: .grid-unit(7px)[];
+    width: .grid-unit(41px)[];
+    background-color: var(--color-black-alt5);
+    border-bottom: 1px solid var(--color-primary-accent);
+    caret-color:  var(--color-primary);
+
+    &:hover {
+        cursor: text;
+    }
+
+    &.focus {
+        border-bottom-width: 2px solid var(--color-primary);
+
+        &.error{
+            border-bottom-color: var(--color-red);
+        }
+
+    }
+
+    &.error {
+        border-bottom-color: var(--color-red);
+        caret-color: var(--color-red);
+
+        .label {
+            color: var(--color-red);
+        }
+    }
+
+    .label {
+        padding: 0 .grid-unit(1px)[];
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .inputContent {
+        padding: 0 .grid-unit(1px)[] .grid-unit(1px)[] .grid-unit(1px)[];
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            font-size: 16px;
+            line-height: .grid-unit(3px)[];
+            width: 100%;
+            outline: none;
+            background-color: var(--color-black-alt5);
+            border:none;
+        }
+        .icon {
+            width: .grid-unit(3px)[];
+            height: .grid-unit(3px)[];
+        }
+    }
+
+}
