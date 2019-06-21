@@ -5,8 +5,8 @@ import {
     ServiceResolver,
     FusionContext,
     AuthContainer,
-} from "@equinor/fusion";
-import AuthUser from "@equinor/fusion/lib/auth/AuthUser";
+} from '@equinor/fusion';
+import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
 
 import FusionRoot from '../src/components/core/Root';
 
@@ -20,7 +20,7 @@ const mockUser = {
 };
 
 class StorybookAuthContainer implements IAuthContainer {
-    private authToken: string = "";
+    authToken: string = localStorage.getItem("FUSION_STORYBOOK_AUTH_TOKEN") || '';
     private internalAuthContainer = new AuthContainer();
 
     async handleWindowCallbackAsync(): Promise<void> {
@@ -28,10 +28,10 @@ class StorybookAuthContainer implements IAuthContainer {
     }
 
     async acquireTokenAsync(resource: string): Promise<string | null> {
-        if(this.authToken) {
+        if (this.authToken) {
             return this.authToken;
         }
-        
+
         return await this.internalAuthContainer.acquireTokenAsync(resource);
     }
 
@@ -53,6 +53,7 @@ class StorybookAuthContainer implements IAuthContainer {
 
     setAuthToken(token: string) {
         this.authToken = token;
+        localStorage.setItem("FUSION_STORYBOOK_AUTH_TOKEN", token);
     }
 }
 
@@ -61,12 +62,12 @@ const authContainer = new StorybookAuthContainer();
 authContainer.handleWindowCallbackAsync();
 
 // Expose the auth container to the auth token addon
-window.parent["authContainer"] = authContainer;
+window.parent['authContainer'] = authContainer;
 
 const serviceResolver: ServiceResolver = {
-    getDataProxyBaseUrl: () => "https://pro-s-dataproxy-ci.azurewebsites.net",
-    getFusionBaseUrl: () => "https://pro-s-portal-ci.azurewebsites.net",
-    getContextBaseUrl: () => "https://pro-s-context-pr-842.azurewebsites.net",
+    getDataProxyBaseUrl: () => 'https://pro-s-dataproxy-ci.azurewebsites.net',
+    getFusionBaseUrl: () => 'https://pro-s-portal-ci.azurewebsites.net',
+    getContextBaseUrl: () => 'https://pro-s-context-pr-842.azurewebsites.net',
 };
 
 const coreAppClientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
@@ -77,14 +78,15 @@ authContainer.registerAppAsync(coreAppClientId, [
 ]);
 
 const FusionWrapper: React.FC = ({ children }) => {
-    const overlay = React.useRef(null);
-    const root = React.useRef(null);
+    const overlay = React.useRef<HTMLElement | null>(null);
+    const root = React.useRef<HTMLElement | null>(null);
     const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root });
 
     return (
         <FusionContext.Provider value={fusionContext}>
-            <FusionRoot ref={root}>{children}</FusionRoot>
-            <div ref={overlay} />
+            <FusionRoot rootRef={root} overlayRef={overlay}>
+                {children}
+            </FusionRoot>
         </FusionContext.Provider>
     );
 };

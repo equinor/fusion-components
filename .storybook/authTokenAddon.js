@@ -2,7 +2,7 @@ import * as React from "react";
 import addons from "@storybook/addons";
 
 const AuthTokenInput = ({ active }) => {
-    const [authToken, setAuthToken] = React.useState("");
+    const [authToken, setAuthToken] = React.useState(localStorage.getItem("FUSION_STORYBOOK_AUTH_TOKEN") || '');
 
     const onAuthTokenInputChange = (e) => {
         setAuthToken(e.target.value);
