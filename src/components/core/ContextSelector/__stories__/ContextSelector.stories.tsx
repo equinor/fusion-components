@@ -24,11 +24,6 @@ const OrgChartContextSelectorStory = () => (
         </FusionHeader>
         
         <FusionContent>
-            {/* <div style={{  borderBottom: "1px solid #E6E6E6" }}>
-                <span style={{padding: "0 16px", height: 48, lineHeight: "48px", marginRight: 40, fontSize: 14 }}>Would you like to connect <strong>MAR. Mariner Project (L.OMARC.001)</strong> to <strong>Johan Sverdrup Ph2 DG3-DG4</strong>?</span>
-                <Button frameless primary comfortable>Dismiss</Button>
-                <Button frameless primary comfortable>Yes</Button>
-            </div> */}
             <h1 style={{ textAlign: "center", margin: 16 }}>Pro Org</h1>
         </FusionContent>
     </React.Fragment>
