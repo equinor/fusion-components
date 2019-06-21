@@ -43,14 +43,10 @@ export default (
         });
     }, [currentContext]);
 
-    const TEMPCONTEXTTYPEDISPLAYNAMEMAP = {
-        "OrgChart": "Pro Org",
-    };
-
     const mapContextToMenuItem = (context: Context) => ({
         key: context.id,
         title: context.title,
-        aside: TEMPCONTEXTTYPEDISPLAYNAMEMAP[context.type.id] || context.type.id,
+        aside: context.type.id, // TODO: Should get a displayName from the backend in the future
         isSelected: currentContext ? context.id === currentContext.id : false,
     });
 
