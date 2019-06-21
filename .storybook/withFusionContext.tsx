@@ -42,7 +42,9 @@ class StorybookAuthContainer implements IAuthContainer {
 
 const authContainer = new StorybookAuthContainer();
 const serviceResolver: ServiceResolver = {
-    getDataProxyBaseUrl: () => '',
+    getDataProxyBaseUrl: () => 'https://pro-s-dataproxy-ci.azurewebsites.net',
+    getFusionBaseUrl: () => 'https://pro-s-portal-ci.azurewebsites.net',
+    getContextBaseUrl: () => 'https://pro-s-context-pr-842.azurewebsites.net',
 };
 
 const FusionWrapper: React.FC = ({ children }) => {
