@@ -2,16 +2,20 @@
     background: white;
     border-radius: 4px;
 
-    min-width: calc(var(--grid-unit) * 35px);
+    min-width: fit-content;
     max-width: calc(var(--grid-unit) * 70px);
     margin: 0 0 calc(var(--grid-unit) * 4px) 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 
     section {
         margin: 0;
         padding: calc(var(--grid-unit) * 1px) 0;
 
         h5 {
-            margin: 0 calc(var(--grid-unit) * 1px);
+            margin: calc(var(--grid-unit) * 1px) calc(var(--grid-unit) * 2px);
         }
 
         button {
@@ -26,8 +30,9 @@
             justify-content: center;
             padding: 0;
             cursor: pointer;
+            white-space: nowrap;
 
-            span {
+            > span {
                 height: calc(var(--grid-unit) * 5.5px);
                 padding: 0 calc(var(--grid-unit) * 4px);
                 display: flex;
@@ -37,6 +42,10 @@
                 width: calc(100% - (var(--grid-unit) / 2) * 1px);
                 border: 1px dashed transparent;
                 text-align: left;
+
+                span {
+                    flex-grow: 2;
+                }
             }
             
             &:not([disabled]) {
@@ -48,7 +57,7 @@
                     background-color: var(--color-black-alt4);
                 }
     
-                &:focus span, &.isFocused span {
+                &:focus > span, &.isFocused > span {
                     border: 1px dashed var(--color-black-alt3);
                     border-radius: 4px;
                 }
@@ -56,7 +65,7 @@
                 &:active {
                     background: none;
     
-                    span {
+                    > span {
                         background-color: var(--color-primary-alt4);
                         border: 1px dashed transparent;
                         border-radius: 4px;
