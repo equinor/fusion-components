@@ -6,7 +6,7 @@ import * as styles from './styles.less';
 
 type FusionHeaderProps = {};
 
-const FusionHeader: React.FC<FusionHeaderProps> = () => {
+const FusionHeader: React.FC<FusionHeaderProps> = ({ children }) => {
     const currentUser = useCurrentUser();
 
     return (
@@ -18,7 +18,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = () => {
                 <span className={styles.fusionTitle}>fusion</span>
             </a>
 
-            <div className={styles.contextContainer} />
+            <div className={styles.contextContainer}>{children}</div>
 
             <div className={styles.tempCurrentUser}>
                 {currentUser ? currentUser.givenName : null}
