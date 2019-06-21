@@ -4,7 +4,7 @@ import styles from './styles.less';
 
 type FusionContainerProps = {};
 
-const FusionRoot = React.forwardRef<HTMLDivElement, React.Props<FusionContainerProps>>(
+const FusionContainer = React.forwardRef<HTMLDivElement, React.Props<FusionContainerProps>>(
     ({ children }, ref) => {
         return (
             <div className={styles.container} ref={ref}>
@@ -14,4 +14,4 @@ const FusionRoot = React.forwardRef<HTMLDivElement, React.Props<FusionContainerP
     }
 );
 
-export default FusionRoot;
+export default FusionContainer;
