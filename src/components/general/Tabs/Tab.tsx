@@ -15,7 +15,7 @@ type TabProps = {
 const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
     const [isPressed, setIsPressed] = React.useState(false);
     const tabRef = React.useRef<HTMLAnchorElement>(null);
-
+    
     useKeyBoardNavigation({
         onEnter: () => {
             if (tabRef.current) {
