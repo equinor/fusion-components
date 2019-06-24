@@ -1,6 +1,5 @@
 @import '~styles/mixins.less';
 
-
 .inputContainer{
     display: flex;
     flex-direction: column;
@@ -21,6 +20,20 @@
             cursor: text;
         }
 
+        &.disabled {
+          border-bottom-color: var(--color-black-alt5);
+          cursor: not-allowed;
+
+          .inputTextContent{
+            .label {
+                color: var(--color-primary-accent);
+                opacity: 0.6;
+            }
+            input{
+                cursor: not-allowed;
+            }
+        }
+        }
         &.focus {
             border-bottom: 2px solid var(--color-primary);
     
@@ -48,7 +61,11 @@
             display: flex;
             flex-direction: column;
             padding-bottom: .grid-unit(1px)[];
-
+            width: 100%;
+            
+            &.labelLess{
+                padding-top: .grid-unit(1px)[];
+            }
 
             .label {
                 font-size: 12px;
@@ -62,21 +79,32 @@
                 outline: none;
                 background-color: var(--color-black-alt5);
                 border:none;
-    
+     
                 &::placeholder {
                     color: var(--color-primary-accent);
-                    opacity: 0.8;
+                    opacity: 0.6;
                 }
             }
         }
         .icon {
-            justify-self: center;
-            width: .grid-unit(3px)[];
-            height: .grid-unit(3px)[];
+            
+            align-self: center;
+            padding-left: .grid-unit(2px)[];
+
+            svg{
+                width: .grid-unit(3px)[];
+                height: .grid-unit(3px)[];
+            }
         }
     }
     .helperText{
-        padding: .grid-unit(1px)[] .grid-unit(1px)[] 0 .grid-unit(1px)[];
+        padding: 0 .grid-unit(1px)[];
         font-size: 11px;
+        line-height: .grid-unit(2px)[];
+        color: var(--color-black-alt1);
+
+        &.error {
+            color: var(--color-red);
+        }
     }
 }
