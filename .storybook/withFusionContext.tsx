@@ -4,7 +4,6 @@ import {
     createFusionContext,
     ServiceResolver,
     FusionContext,
-    AuthContainer,
 } from '@equinor/fusion';
 import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
 
@@ -21,7 +20,6 @@ const mockUser = {
 
 class StorybookAuthContainer implements IAuthContainer {
     authToken: string = localStorage.getItem("FUSION_STORYBOOK_AUTH_TOKEN") || '';
-    private internalAuthContainer = new AuthContainer();
 
     async handleWindowCallbackAsync(): Promise<void> {
         throw new Error("Not implemented");

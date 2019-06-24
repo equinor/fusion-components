@@ -10,7 +10,6 @@ const FusionLogo: React.FC<FusionLogoProps> = ({ scale = 1 }) => (
         height="35"
         viewBox="0 0 50 35"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
         style={{ transform: `scale(${scale})` }}
     >
         <path

@@ -6,7 +6,7 @@
     "scripts": {
         "test": "jest",
         "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
-        "prebuild:storybook": "yarn run test:generate-output",
+        
         "storybook": "start-storybook -p 9001 -c .storybook",
         "build:storybook": "build-storybook -c .storybook -o ./docs",
         "prepublish": "yarn test"
