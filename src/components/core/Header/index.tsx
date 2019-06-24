@@ -1,11 +1,12 @@
 import React from 'react';
-import { useCurrentUser, useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
+import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
 import FusionLogo from '../FusionLogo';
 
 import styles from './styles.less';
 import { useAppContext } from '@equinor/fusion/lib/app/AppContext'; // TODO: Expose from @equinor/fusion root
 import classNames from 'classnames';
 import ComponentDisplayToggleButton from './components/ComponentDisplayToggleButton';
+import CurrentUserButton from './components/CurrentUserButton';
 
 type FusionHeaderProps = {
     start: React.ReactElement | null;
@@ -14,7 +15,6 @@ type FusionHeaderProps = {
 };
 
 const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) => {
-    const currentUser = useCurrentUser();
     const currentApp = useAppContext();
 
     const componentDisplayType = useComponentDisplayType();
@@ -47,7 +47,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
             <aside className={styles.asideContainer}>
                 <ComponentDisplayToggleButton />
                 {aside}
-                <button>{currentUser ? currentUser.givenName : null}</button>
+                <CurrentUserButton />
             </aside>
         </header>
     );

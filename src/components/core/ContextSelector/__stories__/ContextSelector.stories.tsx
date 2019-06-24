@@ -45,12 +45,7 @@ const ContractContextSelectorStory = () => (
     </React.Fragment>
 );
 
-storiesOf('Core components/Context Selector', module).add('PDP', () => <PDPContextSelectorStory />);
-
-storiesOf('Core components/Context Selector', module).add('OrgChart', () => (
-    <OrgChartContextSelectorStory />
-));
-
-storiesOf('Core components/Context Selector', module).add('Contract', () => (
-    <ContractContextSelectorStory />
-));
+storiesOf('Core|Context Selector', module)
+    .add('PDP', () => <PDPContextSelectorStory />)
+    .add('OrgChart', () => <OrgChartContextSelectorStory />)
+    .add('Contract', () => <ContractContextSelectorStory />);

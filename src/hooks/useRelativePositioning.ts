@@ -27,7 +27,6 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
             newRect.width !== rect.width ||
             newRect.height !== rect.height
         ) {
-            console.log("SET RECT", newRect, rect);
             setRect(newRect);
         }
     };

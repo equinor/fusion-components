@@ -19,8 +19,8 @@ export type MenuProps = {
 };
 
 const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavigationRef }: MenuProps) => {
-    const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(sections.length ? sections[0].key : null);
-    const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(sections.length && sections[0].items.length ? sections[0].items[0].key : null);
+    const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(null);
+    const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(null);
 
     const nextOrPrev = (direction: number) => {
         const sectionIndex = sections.findIndex(section => section.key === focusedSectionKey);
@@ -57,8 +57,8 @@ const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavig
     };
 
     const reset = () => {
-        setFocusedSectionKey(sections.length ? sections[0].key : null);
-        setFocusedItemKey(sections.length && sections[0].items.length ? sections[0].items[0].key : null);
+        setFocusedSectionKey(keyboardNavigationRef && sections.length ? sections[0].key : null);
+        setFocusedItemKey(keyboardNavigationRef && sections.length && sections[0].items.length ? sections[0].items[0].key : null);
     };
 
     const onItemClick = item => {
