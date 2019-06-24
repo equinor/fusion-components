@@ -11,7 +11,7 @@ type TextInputProps = {
     label?: string;
     onChange: (newValue: string) => void;
     value?: string;
-    icon?: HTMLOrSVGImageElement;
+    icon?: any;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 };
 
@@ -39,7 +39,7 @@ const TextInput: React.FC<TextInputProps> = ({
     };
 
     const setInputFocus = () => {
-        if (inputRef.current) {
+        if (inputRef.current && !disabled) {
             inputRef.current.focus();
             setFocus(true);
         }
@@ -51,16 +51,18 @@ const TextInput: React.FC<TextInputProps> = ({
         }
     };
 
-    const inputContainerClasses = classNames(styles.inputContainer, {
+    const inputContentClasses = classNames(styles.inputContent, {
         [styles.focus]: focus,
         [styles.error]: error,
     });
 
     return (
-        <div className={inputContainerClasses} onClick={setInputFocus}>
-            <span className={styles.label}>{label}</span>
-            <div className={styles.inputContent}>
-                <input
+        <div className={styles.inputContainer} >
+            
+            <div className={inputContentClasses} onClick={setInputFocus}>
+                <div className={styles.inputTextContent}>
+                    <span className={styles.label}>{label}</span>
+                    <input
                     ref={inputRef}
                     placeholder={placeholder}
                     onBlur={handleBlur}
@@ -68,10 +70,14 @@ const TextInput: React.FC<TextInputProps> = ({
                     onChange={handleChange}
                     {...rest}
                 />
+                </div>
                 <div className={styles.icon}>{icon}</div>
             </div>
+            <div className={styles.helperText}>{helperText}</div>
         </div>
     );
 };
+
+TextInput.displayName = 'TextInput';
 
 export default TextInput;
