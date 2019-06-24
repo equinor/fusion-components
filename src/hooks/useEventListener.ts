@@ -17,5 +17,5 @@ export default (
         return () => {
             node.removeEventListener(eventType, handler, useCapture);
         };
-    }, dependencies);
+    }, [node, ...dependencies]);
 };

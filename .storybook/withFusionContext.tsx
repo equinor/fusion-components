@@ -4,6 +4,7 @@ import {
     createFusionContext,
     ServiceResolver,
     FusionContext,
+    AuthContainer,
 } from '@equinor/fusion';
 import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
 
@@ -19,42 +20,73 @@ const mockUser = {
 };
 
 class StorybookAuthContainer implements IAuthContainer {
-    handleWindowCallbackAsync(): Promise<void> {
-        throw new Error('Method not implemented.');
+    authToken: string = localStorage.getItem("FUSION_STORYBOOK_AUTH_TOKEN") || '';
+    private internalAuthContainer = new AuthContainer();
+
+    async handleWindowCallbackAsync(): Promise<void> {
+        await this.internalAuthContainer.handleWindowCallbackAsync();
     }
 
-    acquireTokenAsync(resource: string): Promise<string> {
-        throw new Error('Method not implemented.');
+    async acquireTokenAsync(resource: string): Promise<string | null> {
+        if (this.authToken) {
+            return this.authToken;
+        }
+
+        return await this.internalAuthContainer.acquireTokenAsync(resource);
     }
 
-    registerAppAsync(clientId: string, resources: string[]): Promise<boolean> {
-        throw new Error('Method not implemented.');
+    async registerAppAsync(clientId: string, resources: string[]): Promise<boolean> {
+        return await this.internalAuthContainer.registerAppAsync(clientId, resources);
     }
 
     login(clientId: string): void {
-        throw new Error('Method not implemented.');
+        this.internalAuthContainer.login(clientId);
     }
 
-    async getCachedUserAsync(): Promise<AuthUser> {
-        return AuthUser.fromJSON(mockUser);
+    async getCachedUserAsync(): Promise<AuthUser | null> {
+        try {
+            return await this.internalAuthContainer.getCachedUserAsync();
+        } catch {
+            return AuthUser.fromJSON(mockUser);
+        }
+    }
+
+    setAuthToken(token: string) {
+        this.authToken = token;
+        localStorage.setItem("FUSION_STORYBOOK_AUTH_TOKEN", token);
     }
 }
 
 const authContainer = new StorybookAuthContainer();
+
+authContainer.handleWindowCallbackAsync();
+
+// Expose the auth container to the auth token addon
+window.parent['authContainer'] = authContainer;
+
 const serviceResolver: ServiceResolver = {
     getDataProxyBaseUrl: () => 'https://pro-s-dataproxy-ci.azurewebsites.net',
     getFusionBaseUrl: () => 'https://pro-s-portal-ci.azurewebsites.net',
     getContextBaseUrl: () => 'https://pro-s-context-pr-842.azurewebsites.net',
 };
 
+const coreAppClientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
+authContainer.registerAppAsync(coreAppClientId, [
+    serviceResolver.getDataProxyBaseUrl(),
+    serviceResolver.getFusionBaseUrl(),
+    serviceResolver.getContextBaseUrl(),
+]);
+
 const FusionWrapper: React.FC = ({ children }) => {
-    const overlay = React.useRef(null);
-    const root = React.useRef(null);
+    const overlay = React.useRef<HTMLElement | null>(null);
+    const root = React.useRef<HTMLElement | null>(null);
     const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root });
+
     return (
         <FusionContext.Provider value={fusionContext}>
-            <FusionRoot ref={root}>{children}</FusionRoot>
-            <div ref={overlay} />
+            <FusionRoot rootRef={root} overlayRef={overlay}>
+                {children}
+            </FusionRoot>
         </FusionContext.Provider>
     );
 };

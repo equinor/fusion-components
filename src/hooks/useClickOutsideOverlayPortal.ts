@@ -1,19 +1,19 @@
 import useOverlayContainer from './useOverlayContainer';
 import useEventListener from './useEventListener';
+import { useFusionContext } from '@equinor/fusion';
 
-export default (callback: EventListener, target?: HTMLElement | null): void => {
+export default (callback: EventListener, ...targets: Array<HTMLElement | null>): void => {
     const overlayContainer = useOverlayContainer();
+    const fusionContext = useFusionContext();
 
     const handleClick: EventListener = e => {
-        const clickedOutsideTarget =
-            target && target !== e.target && !target.contains(e.target as Node);
-        const clickedOnOrOutsideOverlay =
-            overlayContainer === e.target || !overlayContainer.contains(e.target as Node);
+        const relevantTargets = targets.filter(t => t);
+        const clickedOutsideTarget = relevantTargets.map(target => target && target !== e.target && !target.contains(e.target as Node)).filter(hit => hit).length === relevantTargets.length;
 
-        if (clickedOutsideTarget || clickedOnOrOutsideOverlay) {
+        if (clickedOutsideTarget) {
             callback(e);
         }
     };
 
-    useEventListener(document.body, 'click', handleClick, [callback, target]);
+    useEventListener(fusionContext.refs.root.current, 'click', handleClick, [callback, ...targets]);
 };

@@ -94,6 +94,7 @@ const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavig
         <div className={className}>
             {sections.map(section => (
                 <section key={section.key}>
+                    {!!section.title && <h5>{section.title}</h5>}
                     {section.items.map((item, index) => (
                         <MenuItem
                             key={item.key}
