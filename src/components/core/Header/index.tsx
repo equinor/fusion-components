@@ -1,28 +1,54 @@
-import * as React from 'react';
-import { useCurrentUser } from '@equinor/fusion';
+import React from 'react';
+import { useCurrentUser, useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
 import FusionLogo from '../FusionLogo';
 
-import * as styles from './styles.less';
+import styles from './styles.less';
+import { useAppContext } from '@equinor/fusion/lib/app/AppContext'; // TODO: Expose from @equinor/fusion root
+import classNames from 'classnames';
+import ComponentDisplayToggleButton from './ComponentDisplayToggleButton';
 
-type FusionHeaderProps = {};
+type FusionHeaderProps = {
+    start: React.ReactElement | null;
+    content: React.ReactElement | null;
+    aside: React.ReactElement | null;
+};
 
-const FusionHeader: React.FC<FusionHeaderProps> = () => {
+const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) => {
     const currentUser = useCurrentUser();
+    const currentApp = useAppContext();
+
+    const componentDisplayType = useComponentDisplayType();
+
+    const headerClassNames = classNames(styles.container, {
+        [styles.comfortable]: componentDisplayType === ComponentDisplayType.Comfortable,
+        [styles.compact]: componentDisplayType === ComponentDisplayType.Compact,
+    });
 
     return (
-        <header className={styles.container}>
+        <header className={headerClassNames}>
+            <div className={styles.startContainer}>
+                {start}
+            </div>
             <a href="/" className={styles.fusionTitleContainer}>
                 <span className={styles.fusionLogo}>
                     <FusionLogo scale={0.8} />
                 </span>
                 <span className={styles.fusionTitle}>fusion</span>
+                {currentApp && currentApp.appKey && (
+                    <>
+                        <span>|</span>
+                        <a href={currentApp.appPath}>{currentApp.appKey}</a>
+                    </>
+                )}
             </a>
 
-            <div className={styles.contextContainer} />
+            <div className={styles.contentContainer}>{content}</div>
 
-            <div className={styles.tempCurrentUser}>
-                {currentUser ? currentUser.givenName : null}
-            </div>
+            <aside className={styles.asideContainer}>
+                <ComponentDisplayToggleButton />
+                {aside}
+                <button>{currentUser ? currentUser.givenName : null}</button>
+            </aside>
         </header>
     );
 };

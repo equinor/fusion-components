@@ -1,5 +1,4 @@
 import { useState, useEffect, MutableRefObject } from 'react';
-import useEventListener from './useEventListener';
 
 const defaultRect: ClientRect = {
     left: 0,
@@ -20,13 +19,41 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
 
         const newRect = ref.current.getBoundingClientRect();
 
-        setRect(newRect);
+        if (
+            newRect.bottom !== rect.bottom ||
+            newRect.top !== rect.top ||
+            newRect.left !== rect.left ||
+            newRect.right !== rect.right ||
+            newRect.width !== rect.width ||
+            newRect.height !== rect.height
+        ) {
+            console.log("SET RECT", newRect, rect);
+            setRect(newRect);
+        }
     };
 
     useEffect(setRectFromRef, [ref.current]);
 
-    useEventListener(window, 'resize', setRectFromRef, [ref.current]);
-    useEventListener(document.body, 'scroll', setRectFromRef, [ref.current]);
+    let animationFrame: number;
+    let isStopped = false;
+    const update = () => {
+        if (isStopped) {
+            return;
+        }
+
+        setRectFromRef();
+
+        animationFrame = window.requestAnimationFrame(update);
+    };
+
+    useEffect(() => {
+        animationFrame = window.requestAnimationFrame(update);
+
+        return () => {
+            window.cancelAnimationFrame(animationFrame);
+            isStopped = true;
+        };
+    }, [rect]);
 
     return rect;
 };

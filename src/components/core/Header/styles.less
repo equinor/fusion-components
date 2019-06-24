@@ -3,21 +3,61 @@
 .container {
     grid-area: header;
     display: grid;
-    grid-template-columns: .grid-unit(15px)[] auto max-content;
+    grid-template-areas: "start logo content aside";
+    grid-template-columns: max-content max-content auto max-content;
     grid-template-rows: 100%;
-    grid-template-areas: "logo context user";
-    padding: 0 .grid-unit(2px)[];
-    height: .grid-unit(10px)[];
     align-items: center;
     background: white;
     border-bottom: 2px solid var(--color-black-alt4);
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-}
 
-.fusionTitleContainer {
-    grid-area: logo;
+    &.comfortable {
+        padding: 0 .grid-unit(2px)[];
+        height: .grid-unit(10px)[];
+
+        .startContainer, .asideContainer {
+            > button {
+                margin-right: .grid-unit(2px)[];
+            }
+
+            :last-child, :only-child {
+                margin: 0;
+            }
+        }
+
+        .startContainer {
+            margin-right: .grid-unit(2px)[];
+        }
+
+        .fusionTitleContainer {
+            margin-right: .grid-unit(6px)[];
+        }
+    }
+
+    &.compact {
+        padding: 0 .grid-unit(2px)[];
+        height: .grid-unit(6px)[];
+
+        .startContainer, .asideContainer {
+            > button {
+                margin-right: .grid-unit(1px)[];
+            }
+
+            :last-child, :only-child {
+                margin: 0;
+            }
+        }
+
+        .startContainer {
+            margin-right: .grid-unit(1px)[];
+        }
+
+        .fusionTitleContainer {
+            margin-right: .grid-unit(4px)[];
+        }
+    }
 }
 
 .fusionTitleContainer,
@@ -26,7 +66,6 @@
 .fusionTitleContainer:active,
 .fusionLogo,
 .fusionTitle {
-    margin: 0;
     padding: 0;
     height: 100%;
     display: flex;
@@ -37,14 +76,44 @@
     color: var(--color-primary-accent);
 }
 
+
+.startContainer {
+    grid-area: start;
+}
+
 .fusionLogo {
     margin-right: .grid-unit(2px)[];
 }
 
-.contextContainer {
-    grid-area: context;
+.fusionTitleContainer {
+    grid-area: logo;
 }
 
-.tempCurrentUser {
-    grid-area: user;
+.contentContainer {
+    grid-area: content;
+}
+
+.asideContainer {
+    grid-area: aside;
+    display: flex;
+    height: 100%;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.startContainer, .asideContainer {
+    > button {
+        min-width: .grid-unit(6px)[];
+        height: .grid-unit(6px)[];
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0 .grid-unit(2px)[];
+        box-sizing: border-box;
+    }
 }

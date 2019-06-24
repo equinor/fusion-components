@@ -1,3 +1,84 @@
 .container {
-    background: red;
+    position: absolute;
+}
+
+.tooltip {
+    position: absolute;
+    background: var(--color-black-alt1);
+    padding: calc(var(--grid-unit) * 1px);
+    border-radius: 1px;
+    overflow: visible;
+
+    .content {
+        white-space: nowrap;
+        font-size: 12px;
+        line-height: 16px;
+        color: var(--color-white);
+    }
+
+    .arrow {
+        position: absolute;
+        color: var(--color-black-alt1);
+    }
+
+    &.below, &.above {
+        left: 50%;
+        transform: translateX(-50%);
+    
+        .arrow {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &.below {
+        top: 100%;
+        margin-top: calc(var(--grid-unit) * 1px);
+    
+        .arrow {
+            bottom: 100%;
+        }
+    }
+
+    &.above {
+        bottom: 100%;
+        margin-bottom: calc(var(--grid-unit) * 1px);
+    
+        .arrow {
+            top: 100%;
+            transform: translateX(-50%) rotate(180deg);
+        }
+    }
+
+    &.left, &.right {
+        top: 50%;
+        transform: translateY(-50%);
+
+        .arrow {
+            top: 50%;
+        }
+    }
+
+    &.left {
+        right: 100%;
+        margin-right: calc(var(--grid-unit) * 1px);
+
+        .arrow {
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%) rotate(90deg);
+            margin-left: -1px; /* Compensate for aspect ratio when rotating 90deg */
+        }
+    }
+
+    &.right {
+        left: 100%;
+        margin-left: calc(var(--grid-unit) * 1px);
+
+        .arrow {
+            right: 100%;
+            transform: translateY(-50%) rotate(-90deg);
+            margin-right: -1px; /* Compensate for aspect ratio when rotating 90deg */
+        }
+    }
 }

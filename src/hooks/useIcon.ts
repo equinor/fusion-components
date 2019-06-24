@@ -13,7 +13,7 @@ const useIcon = (content: React.SVGAttributes<SVGElement>) => {
     const iconFactory = ({
         height = 24,
         width = 24,
-        color = '#000',
+        color = '',
         cursor='pointer',
         ...rest
     }: IconFactoryProps) => {
