@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ContextTypes, useContextManager, useCurrentContext, Context } from '@equinor/fusion';
+import { ContextTypes, useContextManager, useCurrentContext, Context, useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
 import useContextSearchResults from './useContextSearchResults';
 import classNames from 'classnames';
 import styles from './styles.less';
@@ -144,11 +144,17 @@ const ContextSelector: React.FC<ContextSelectorProps> = ({ types }: ContextSelec
         return 'Select context';
     };
 
+    const componentDisplayType = useComponentDisplayType();
+    const containerClassNames = classNames(styles.container, {
+        [styles.comfortable]: componentDisplayType === ComponentDisplayType.Comfortable,
+        [styles.compact]: componentDisplayType === ComponentDisplayType.Compact,
+    });
+
     return (
         <div
             ref={containerRef}
             onClick={onOpen}
-            className={styles.container}
+            className={containerClassNames}
         >
             <SearchIcon color="#DADADA" />
             {shouldShowResultsDropdown ? (

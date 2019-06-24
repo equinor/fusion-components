@@ -4,7 +4,6 @@ import { ContextTypes } from '@equinor/fusion';
 import ContextSelector from '../index';
 import FusionHeader from '../../Header';
 import FusionContent from '../../Content';
-import Button from '../../../general/Button';
 
 const PDPContextSelectorStory = () => (
     <React.Fragment>

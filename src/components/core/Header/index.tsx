@@ -5,7 +5,7 @@ import FusionLogo from '../FusionLogo';
 import styles from './styles.less';
 import { useAppContext } from '@equinor/fusion/lib/app/AppContext'; // TODO: Expose from @equinor/fusion root
 import classNames from 'classnames';
-import ComponentDisplayToggleButton from './ComponentDisplayToggleButton';
+import ComponentDisplayToggleButton from './components/ComponentDisplayToggleButton';
 
 type FusionHeaderProps = {
     start: React.ReactElement | null;
@@ -31,7 +31,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
             </div>
             <a href="/" className={styles.fusionTitleContainer}>
                 <span className={styles.fusionLogo}>
-                    <FusionLogo scale={0.8} />
+                    <FusionLogo scale={componentDisplayType === ComponentDisplayType.Compact ? 0.7 : 0.8} />
                 </span>
                 <span className={styles.fusionTitle}>fusion</span>
                 {currentApp && currentApp.appKey && (

@@ -1,23 +1,53 @@
 .container {
     display: flex;
     align-items: center;
-    padding: 0 calc(var(--grid-unit) * 2px);
+
+    &.comfortable {
+        .searchInput {
+            padding: 0 calc(var(--grid-unit) * 1px);
+            line-height: calc(var(--grid-unit) * 6px);
+            height: calc(var(--grid-unit) * 6px);
+            font-size: 16px;
+            margin-left: calc(var(--grid-unit) * 2px);
+        }
+
+        .contextButton {
+            padding: 0 calc(var(--grid-unit) * 1px);
+            line-height: calc(var(--grid-unit) * 6px);
+            height: calc(var(--grid-unit) * 6px);
+            margin-left: calc(var(--grid-unit) * 2px);
+            font-size: 16px;
+        }
+    }
+
+    &.compact {
+        .searchInput {
+            padding: 0 calc(var(--grid-unit) * 1px);
+            line-height: calc(var(--grid-unit) * 5px);
+            height: calc(var(--grid-unit) * 5px);
+            font-size: 15px;
+            margin-left: calc(var(--grid-unit) * 2px);
+        }
+
+        .contextButton {
+            padding: 0 calc(var(--grid-unit) * 1px);
+            line-height: calc(var(--grid-unit) * 5px);
+            height: calc(var(--grid-unit) * 5px);
+            margin-left: calc(var(--grid-unit) * 2px);
+            font-size: 15px;
+        }
+    }
 }
 
 .searchInput {
     min-width: calc(var(--grid-unit) * 50px);
     width: fit-content;
-    padding: 0 calc(var(--grid-unit) * 1px);
-    line-height: calc(var(--grid-unit) * 6px);
-    height: calc(var(--grid-unit) * 6px);
     border: none;
     border-bottom: 1px solid transparent;
     outline: none;
-    font-size: 16px;
     color: var(--color-primary-accent);
     background: none;
     box-sizing: border-box;
-    margin-left: calc(var(--grid-unit) * 2px);
 
     &::placeholder {
         color: var(--color-primary-accent);
@@ -33,18 +63,12 @@
 }
 
 .contextButton {
-    padding: 0 calc(var(--grid-unit) * 1px);
-    line-height: calc(var(--grid-unit) * 6px);
-    height: calc(var(--grid-unit) * 6px);
     border: none;
-    border-bottom: 1px solid transparent;
     outline: none;
-    font-size: 16px;
     color: var(--color-primary-accent);
     background: none;
     text-align: center;
     box-sizing: border-box;
-    margin-left: calc(var(--grid-unit) * 2px);
     cursor: pointer;
 }
 
