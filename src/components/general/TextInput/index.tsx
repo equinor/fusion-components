@@ -13,6 +13,7 @@ type TextInputProps = {
     value?: string;
     icon?: any;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+    onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
 const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildren<TextInputProps>>(
@@ -28,6 +29,7 @@ const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildre
             value = '',
             icon,
             onBlur,
+            onIconAction,
             ...props
         },
         ref
@@ -63,7 +65,11 @@ const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildre
             </span>
         );
 
-        const inputIcon = icon && <div className={styles.icon}>{icon}</div>;
+        const inputIcon = icon && (
+            <div className={styles.icon} onClick={onIconAction}>
+                {icon}
+            </div>
+        );
 
         const inputHelperText = React.useMemo(() => {
             if (errorMessage && error) {
@@ -90,8 +96,12 @@ const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildre
         });
 
         return (
-            <div className={styles.inputContainer} ref={inputContainerRef}>
-                <div className={inputContentClasses} onClick={setInputFocus}>
+            <div className={styles.inputContainer}>
+                <div
+                    className={inputContentClasses}
+                    onClick={setInputFocus}
+                    ref={inputContainerRef}
+                >
                     <div className={inputTextContentClasses}>
                         {inputLabel}
                         <input
