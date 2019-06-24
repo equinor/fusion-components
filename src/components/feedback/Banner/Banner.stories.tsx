@@ -45,7 +45,7 @@ const BannerStory = () => {
                                 setOpen(false);
                                 setOpenSnack(true);
                             }}
-                            icon={<WarningIcon outline cursor="default" height={36} width={36} />}
+                            icon={<WarningIcon outline cursor="default" height={32} width={32} />}
                         />
                     </div>
                 ) : null}
