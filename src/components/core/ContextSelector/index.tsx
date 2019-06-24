@@ -26,7 +26,7 @@ const ContextSelector: React.FC<ContextSelectorProps> = ({ types }: ContextSelec
         try {
             const possibleContexts = await contextManager.exchangeCurrentContextAsync(...types);
             const linkedContext = currentContext
-                ? await contextManager.getLinkedContext(currentContext)
+                ? await contextManager.getLinkedContextAsync(currentContext)
                 : null;
 
             setIsFetchingRelatedContexts(false);
