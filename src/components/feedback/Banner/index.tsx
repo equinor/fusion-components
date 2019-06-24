@@ -6,7 +6,6 @@ import classNames from 'classnames';
 type BannerProps = {
     message: string;
     icon?: any;
-    cancelLabel: string;
     onCancel: () => void;
     action?: boolean;
     actionLabel?: string;
@@ -16,7 +15,6 @@ type BannerProps = {
 const Banner: React.FC<BannerProps> = ({
     message,
     icon,
-    cancelLabel,
     onCancel,
     action,
     actionLabel,
@@ -30,7 +28,7 @@ const Banner: React.FC<BannerProps> = ({
 
     const cancelButton = (
         <Button frameless comfortable onClick={onCancel}>
-            {cancelLabel}
+            Dismiss
         </Button>
     );
     const actionButton = action ? (
