@@ -1,34 +1,37 @@
 import * as React from 'react';
-import styles from "./styles.less";
-import classNames from "classnames";
+import styles from './styles.less';
+import classNames from 'classnames';
 
 type TextInputProps = {
-    disabled?: boolean,
-    errorMessage?: string,
-    error?: boolean,
-    helperText?: string,
-    isOptional?: boolean,
-    placeholder?: string,
-    label?: string,
-    onChange: (newValue: string) => void,
-    value?: string,
-}
+    disabled?: boolean;
+    error?: boolean;
+    helperText?: string;
+    isRequired?: boolean;
+    placeholder?: string;
+    label?: string;
+    onChange: (newValue: string) => void;
+    value?: string;
+    icon?: HTMLOrSVGImageElement;
+    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+};
 
 const TextInput: React.FC<TextInputProps> = ({
     disabled = false,
-    errorMessage,
     error,
     helperText,
-    isOptional = false,
-    placeholder = "",
+    isRequired = false,
+    placeholder = '',
     label,
     onChange,
-    value = "",
+    value = '',
+    icon,
+    onBlur,
+    ...rest
 }) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [focus, setFocus] = React.useState(false);
 
-    const handleChange = (event) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!disabled) {
             const newValue = event.target.value;
             onChange(newValue);
@@ -36,26 +39,39 @@ const TextInput: React.FC<TextInputProps> = ({
     };
 
     const setInputFocus = () => {
-        if(inputRef.current){
+        if (inputRef.current) {
             inputRef.current.focus();
             setFocus(true);
         }
-    }
+    };
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        if (!disabled) {
+            setFocus(false);
+            onBlur && onBlur(event);
+        }
+    };
 
     const inputContainerClasses = classNames(styles.inputContainer, {
         [styles.focus]: focus,
-        [styles.error]: error
-    })
-    
-    return <div className={inputContainerClasses} onClick={setInputFocus}>
-        <span className={styles.label}>{label}</span>
-        <div className={styles.inputContent}>
-            <input ref={inputRef} placeholder={placeholder} onBlur={() => setFocus(false)}/>
-            <div className={styles.icon}>
-                
+        [styles.error]: error,
+    });
+
+    return (
+        <div className={inputContainerClasses} onClick={setInputFocus}>
+            <span className={styles.label}>{label}</span>
+            <div className={styles.inputContent}>
+                <input
+                    ref={inputRef}
+                    placeholder={placeholder}
+                    onBlur={handleBlur}
+                    value={value}
+                    onChange={handleChange}
+                    {...rest}
+                />
+                <div className={styles.icon}>{icon}</div>
             </div>
         </div>
-    </div>
+    );
 };
 
 export default TextInput;

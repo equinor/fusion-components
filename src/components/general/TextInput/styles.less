@@ -17,10 +17,13 @@
     }
 
     &.focus {
-        border-bottom-width: 2px solid var(--color-primary);
+        border-bottom: 2px solid var(--color-primary);
 
         &.error{
             border-bottom-color: var(--color-red);
+        }
+        .inputContent {
+            padding-bottom: calc(.grid-unit(1px)[] - 1px);
         }
 
     }
@@ -52,6 +55,11 @@
             outline: none;
             background-color: var(--color-black-alt5);
             border:none;
+
+            &::placeholder {
+                color: var(--color-primary-accent);
+                opacity: 0.8;
+            }
         }
         .icon {
             width: .grid-unit(3px)[];
