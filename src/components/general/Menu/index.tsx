@@ -1,9 +1,8 @@
 import * as React from "react";
 import classNames from "classnames";
-import useElevationClassName, { Elevation } from "../../../hooks/useElevationClassName";
-import useKeyboardNavigation from "../../../hooks/useKeyboardNavigation";
 import MenuItem, { MenuItemType } from "./MenuItem";
 import styles from "./styles.less";
+import { useKeyboardNavigation, Elevation, useElevationClassName } from 'index';
 
 export type MenuSection = {
     key: string,
@@ -17,6 +16,8 @@ export type MenuProps = {
     onClick?: (item: MenuItemType) => void | Promise<void>,
     keyboardNavigationRef?: HTMLElement | null,
 };
+
+export { MenuItemType };
 
 const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavigationRef }: MenuProps) => {
     const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(null);

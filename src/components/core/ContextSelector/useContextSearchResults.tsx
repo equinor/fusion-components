@@ -6,12 +6,15 @@ import {
     useCurrentContext,
     Context,
 } from '@equinor/fusion';
-import Menu, { MenuSection } from '../../general/Menu';
-import useRelativePortal from '../../../hooks/useRelativePortal';
-import useClickOutsideOverlayPortal from '../../../hooks/useClickOutsideOverlayPortal';
-import useElevationClassName from '../../../hooks/useElevationClassName';
 import classNames from 'classnames';
-import styles from "./styles.less";
+import styles from './styles.less';
+import {
+    MenuSection,
+    Menu,
+    useElevationClassName,
+    useRelativePortal,
+    useClickOutsideOverlayPortal,
+} from 'index';
 
 export default (
     inputRef: HTMLElement | null,
@@ -73,7 +76,12 @@ export default (
     }
 
     // Add context history to results menu sections if nothing else is displayed
-    if (history.length && shouldShow && (queryText.length === 0 || isQuerying) && sections.length === 0) {
+    if (
+        history.length &&
+        shouldShow &&
+        (queryText.length === 0 || isQuerying) &&
+        sections.length === 0
+    ) {
         sections.push({
             key: 'history',
             title: 'Recent searches',
@@ -107,21 +115,23 @@ export default (
             );
         }
 
-        if(showNoResultsMessage) {
-            const noResultsClassNames = classNames(styles.noResultsMessage, useElevationClassName(2));
+        if (showNoResultsMessage) {
+            const noResultsClassNames = classNames(
+                styles.noResultsMessage,
+                useElevationClassName(2)
+            );
             return (
                 <div className={noResultsClassNames}>
-                    <h5>No results for <strong>{queryText}</strong></h5>
+                    <h5>
+                        No results for <strong>{queryText}</strong>
+                    </h5>
                 </div>
             );
         }
     };
 
     const popoverContent = (
-        <div
-            ref={popoverRef}
-            className={styles.popover}
-        >
+        <div ref={popoverRef} className={styles.popover}>
             {getPopoverContent()}
         </div>
     );

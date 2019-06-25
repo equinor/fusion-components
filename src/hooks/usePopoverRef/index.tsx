@@ -1,10 +1,12 @@
 import * as React from 'react';
-import useClickToggleController from '../useClickToggleController';
-import useOverlayPortal from '../useOverlayPortal';
-import useRelativePositioning from '../useRelativePositioning';
 import * as styles from './styles.less';
-import useClickOutsideOverlayPortal from '../useClickOutsideOverlayPortal';
-import PopoverContainer, { PopoverContainerProps } from "./components/Container";
+import PopoverContainer, { PopoverContainerProps } from './components/Container';
+import {
+    useClickToggleController,
+    useRelativePositioning,
+    useClickOutsideOverlayPortal,
+    useOverlayPortal,
+} from 'index';
 
 export default <T extends HTMLElement>(
     content: React.ReactNode,

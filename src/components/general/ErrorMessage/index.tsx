@@ -1,29 +1,27 @@
-import * as React from "react";
-import Button from "../Button";
-import styles from "./styles.less";
-import classNames from "classnames";
-import { WarningIcon }from "../../icons/components/alert";
-import {BlockIcon} from "../../icons/components/content";
-import {SyncDisabledIcon } from "../../icons/components/notification";
+import * as React from 'react';
+import Button from '../Button';
+import styles from './styles.less';
+import classNames from 'classnames';
+import { BlockIcon, WarningIcon, SyncDisabledIcon } from 'index';
 
 export enum ErrorTypes {
-    error= "error",
-    accessDenied= "accessDenied",
-    notFound= "notFound",
-    noData= "noData",
+    error = 'error',
+    accessDenied = 'accessDenied',
+    notFound = 'notFound',
+    noData = 'noData',
 }
 
 export type ErrorMessageProps = {
-    hasError?: boolean,
-    errorType?:ErrorTypes,
-    message?: any,
-    resourceName?: string,
-    title?: string,
-    children?: any,
-    icon?: any,
-    action?: string,
-    onTakeAction?: (event?: React.SyntheticEvent<Element, Event>) => void,
-    small?:boolean
+    hasError?: boolean;
+    errorType?: ErrorTypes;
+    message?: any;
+    resourceName?: string;
+    title?: string;
+    children?: any;
+    icon?: any;
+    action?: string;
+    onTakeAction?: (event?: React.SyntheticEvent<Element, Event>) => void;
+    small?: boolean;
 };
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({
@@ -38,35 +36,34 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     onTakeAction,
     small,
 }) => {
-
     const getErrorMessageForType = errorType => {
         const iconProps = {
-            width:80,
-            height:80,
-            cursor:"default",
-            color:"#666666",
-        }
+            width: 80,
+            height: 80,
+            cursor: 'default',
+            color: '#666666',
+        };
 
         switch (errorType) {
             case ErrorTypes.accessDenied:
                 return {
-                    title: "It seems like you don´t have access to this content",
-                    icon: <BlockIcon {...iconProps}/>,
+                    title: 'It seems like you don´t have access to this content',
+                    icon: <BlockIcon {...iconProps} />,
                 };
             case ErrorTypes.notFound:
                 return {
                     title: `The ${resourceName} could not be found`,
-                    icon: <WarningIcon {...iconProps} outline/>,
+                    icon: <WarningIcon {...iconProps} outline />,
                 };
             case ErrorTypes.noData:
                 return {
                     title: `Unfortunately, we could not find any data for this component`,
-                    icon: <SyncDisabledIcon {...iconProps}/>,
+                    icon: <SyncDisabledIcon {...iconProps} />,
                 };
             default:
                 return {
-                    title: "Oops! Something went wrong!",
-                    icon:  <WarningIcon {...iconProps} outline/>,
+                    title: 'Oops! Something went wrong!',
+                    icon: <WarningIcon {...iconProps} outline />,
                 };
         }
     };

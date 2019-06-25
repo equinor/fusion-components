@@ -1,9 +1,6 @@
 import React from 'react';
 import { useCurrentUser, useFusionContext } from '@equinor/fusion';
-import useIcon, { IconProps } from '../../../../hooks/useIcon';
-import usePopoverRef from '../../../../hooks/usePopoverRef';
-import Menu, { MenuSection } from '../../../general/Menu';
-import { MenuItemType } from '../../../general/Menu/MenuItem';
+import { useIcon, IconProps, MenuSection, MenuItemType, Menu, usePopoverRef } from 'index';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
@@ -40,10 +37,10 @@ const CurrentUserDropdown: React.FC = () => {
             // Should be provided through the fusion context, not props
         },
     ];
-    
+
     const onClick = async (item: MenuItemType) => {
-        switch(item.key) {
-            case "logout":
+        switch (item.key) {
+            case 'logout':
                 await auth.container.logoutAsync();
                 break;
         }

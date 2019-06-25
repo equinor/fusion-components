@@ -1,9 +1,7 @@
-import useOverlayContainer from './useOverlayContainer';
 import useEventListener from './useEventListener';
 import { useFusionContext } from '@equinor/fusion';
 
 export default (callback: EventListener, ...targets: Array<HTMLElement | null>): void => {
-    const overlayContainer = useOverlayContainer();
     const fusionContext = useFusionContext();
 
     const handleClick: EventListener = e => {

@@ -1,5 +1,5 @@
 import { useRef, useState, MutableRefObject, useCallback } from 'react';
-import useEventListener from './useEventListener';
+import { useEventListener } from 'index';
 
 let showTimeout: NodeJS.Timeout;
 export default (delay: number = 300): [Boolean, MutableRefObject<any>] => {

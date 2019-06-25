@@ -1,10 +1,8 @@
 import * as React from 'react';
-import useHoverToggleController from '../useHoverToggleController';
-import useOverlayPortal from '../useOverlayPortal';
 import * as styles from './styles.less';
-import useRelativePositioning from '../useRelativePositioning';
 import Arrow from './Arrow';
 import classNames from 'classnames';
+import { useRelativePositioning, useHoverToggleController, useOverlayPortal } from 'index';
 
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 
