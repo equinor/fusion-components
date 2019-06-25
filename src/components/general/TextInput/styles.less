@@ -3,7 +3,6 @@
 .inputContainer{
     display: flex;
     flex-direction: column;
-
     
     .inputContent {
         display:  flex;
@@ -14,7 +13,7 @@
         background-color: var(--color-black-alt5);
         border-bottom: 1px solid var(--color-primary-accent);
         caret-color: var(--color-primary);
-        padding: 0 .grid-unit(2px)[];
+        padding: .grid-unit(1px)[] .grid-unit(2px)[];
 
         &:hover {
             cursor: text;
@@ -23,59 +22,45 @@
         &.disabled {
           border-bottom-color: var(--color-black-alt5);
           cursor: not-allowed;
+        }
 
-          .inputTextContent{
-            .label {
-                color: var(--color-primary-accent);
-                opacity: 0.6;
-            }
-            input{
-                cursor: not-allowed;
-            }
-        }
-        }
         &.focus {
             border-bottom: 2px solid var(--color-primary);
-    
-            &.error{
-                border-bottom-color: var(--color-red);
-            } 
-            .inputTextContent{
-                padding-bottom: calc(.grid-unit(1px)[] - 1px);
-
-            }
+            padding-bottom: calc(.grid-unit(1px)[] - 1px);
         }
-    
+        
         &.error {
             border-bottom-color: var(--color-red);
             caret-color: var(--color-red);
-
-            .inputTextContent{
-                .label {
-                    color: var(--color-red);
-                }
-            }
+        }
+        
+        &.labelLess{
+            padding-top: 0;
+            padding-bottom: 0;
         }
 
         .inputTextContent{
             display: flex;
             flex-direction: column;
-            padding-bottom: .grid-unit(1px)[];
             width: 100%;
-            
-            &.labelLess{
-                padding-top: .grid-unit(1px)[];
-            }
+            justify-content: center;
+            position: relative;
 
-            .label {
-                font-size: 12px;
-                line-height: 12px;
-                padding-top: .grid-unit(1px)[];
+            label {
+                position: absolute;
+                color: var(--color-primary-accent);
+                opacity: 0.6;
+                font-size: 16px;
+                transition: top ease .2s, font-size .2s;
+                top: 50%;
+                -ms-transform: translateY(-50%);
+                transform: translateY(-50%);
             }
 
             input {
                 font-size: 16px;
-                line-height: .grid-unit(3px)[];
+                line-height: .grid-unit(2px)[];
+                height: .grid-unit(3px)[];
                 width: 100%;
                 outline: none;
                 background-color: var(--color-black-alt5);
@@ -84,6 +69,32 @@
                 &::placeholder {
                     color: var(--color-primary-accent);
                     opacity: 0.6;
+                }
+            }
+
+            &.moveLabel{
+                label {
+                    font-size: 12px;
+                    line-height: 14px;
+                    top: .grid-unit(1px)[];
+                    opacity: 1;
+                    position: relative;
+                }
+                &.error{
+                    label{
+                        color: var(--color-red);
+                    }
+                }
+            }
+
+            &.disabled{
+                label {
+                    color: var(--color-primary-accent);
+                    opacity: 0.6;
+                    cursor: not-allowed;
+                }
+                input{
+                    cursor: not-allowed;
                 }
             }
         }

@@ -9,7 +9,7 @@ const TextInputStory = () => {
     const [value, setValue] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
-    const inputRef = React.useRef<HTMLDivElement | null>(null);
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
 
     const simulateLoad = () => {
         setLoading(true);
@@ -37,7 +37,6 @@ const TextInputStory = () => {
                 onChange={value => setValue(value)}
                 value={value}
                 label="Text Input"
-                placeholder="Input text"
                 isOptional
                 helperText="Input text"
             />
@@ -45,7 +44,6 @@ const TextInputStory = () => {
             <TextInput
                 error
                 label="Error input"
-                placeholder="Error"
                 errorMessage="An error occurred"
                 onChange={value => setValue(value)}
                 value={value}
@@ -56,17 +54,16 @@ const TextInputStory = () => {
                 value={value}
                 disabled
                 label="Disabled"
-                placeholder="Can't change me"
             />
             <br />
             <TextInput
                 onChange={value => setValue(value)}
                 value={value}
-                placeholder="Search"
                 icon={!loading ? <SearchIcon color="#666666" /> : <Spinner inline />}
                 onIconAction={simulateLoad}
                 error={hasError}
                 errorMessage="Error: At least 8 characters"
+                label="Search"
                 ref={inputRef}
             />
             <br />
