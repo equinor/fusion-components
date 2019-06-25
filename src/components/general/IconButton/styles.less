@@ -30,14 +30,17 @@
         }
     }
 
+    .display-type(@size-multiplier) {
+        width: calc(var(--grid-unit) * @size-multiplier);
+        height: calc(var(--grid-unit) * @size-multiplier);
+    }
+
     &.comfortable {
-        width: calc(var(--grid-unit) * 6px);
-        height: calc(var(--grid-unit) * 6px);
+        .display-type(6px);
     }
 
     &.compact {
-        width: calc(var(--grid-unit) * 4px);
-        height: calc(var(--grid-unit) * 4px);
+        .display-type(4px);
     }
 
     &.isActive {
