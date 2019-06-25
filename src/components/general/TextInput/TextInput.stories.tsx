@@ -1,19 +1,35 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import TextInput from './index';
-import { WarningIcon } from '../../icons/components/alert';
 import { SearchIcon } from '../../icons/components/action';
 import Spinner from '../../feedback/Spinner';
+import useKeyboardNavigation from '../../../hooks/useKeyboardNavigation';
 
 const TextInputStory = () => {
     const [value, setValue] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
+    const inputRef = React.useRef<HTMLDivElement | null>(null);
 
     const simulateLoad = () => {
         setLoading(true);
-        setTimeout(() => {setLoading(false); setHasError(true)}, 3000);
+        setTimeout(() => {
+            setLoading(false);
+            value.length <= 8 && setHasError(true);
+        }, 3000);
     };
+    React.useEffect(() => {
+        if (hasError) {
+            setHasError(false);
+        }
+    }, [value]);
+
+    useKeyboardNavigation(
+        {
+            onEnter: () => simulateLoad(),
+        },
+        inputRef.current
+    );
 
     return (
         <React.Fragment>
@@ -22,7 +38,8 @@ const TextInputStory = () => {
                 value={value}
                 label="Text Input"
                 placeholder="Input text"
-                isRequired
+                isOptional
+                helperText="Input text"
             />
             <br />
             <TextInput
@@ -32,7 +49,6 @@ const TextInputStory = () => {
                 errorMessage="An error occurred"
                 onChange={value => setValue(value)}
                 value={value}
-                icon={<WarningIcon outline cursor="default" color="#FF3B3B" />}
             />
             <br />
             <TextInput
@@ -50,7 +66,8 @@ const TextInputStory = () => {
                 icon={!loading ? <SearchIcon color="#666666" /> : <Spinner inline />}
                 onIconAction={simulateLoad}
                 error={hasError}
-                errorMessage="Could not fetch data"
+                errorMessage="Error: At least 8 characters"
+                ref={inputRef}
             />
             <br />
         </React.Fragment>

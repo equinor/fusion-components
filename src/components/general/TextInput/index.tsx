@@ -1,14 +1,16 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
+import { ErrorIcon } from '../../icons/components/alert';
 
 type TextInputProps = {
     disabled?: boolean;
     error?: boolean;
     errorMessage?: string;
-    isRequired?: boolean;
+    isOptional?: boolean;
     placeholder?: string;
     label?: string;
+    helperText?: string;
     onChange: (newValue: string) => void;
     value?: string;
     icon?: any;
@@ -22,7 +24,7 @@ const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildre
             disabled = false,
             error,
             errorMessage,
-            isRequired = false,
+            isOptional = false,
             placeholder = '',
             label,
             onChange,
@@ -30,6 +32,7 @@ const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildre
             icon,
             onBlur,
             onIconAction,
+            helperText = '',
             ...props
         },
         ref
@@ -58,18 +61,23 @@ const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildre
             }
         };
 
-        const inputLabel = label && (
-            <span className={styles.label}>
-                {label}
-                {isRequired && '*'}
-            </span>
-        );
+        const inputLabel = label && <span className={styles.label}>{label}</span>;
 
-        const inputIcon = icon && (
-            <div className={styles.icon} onClick={onIconAction}>
-                {icon}
-            </div>
-        );
+        const inputIcon = React.useMemo(() => {
+            if (!error && !icon) {
+                return null;
+            }
+            const inputIcon = error ? (
+                <ErrorIcon outline={false} color="#FF3B3B" cursor="default" />
+            ) : (
+                icon
+            );
+            return (
+                <div className={styles.icon} onClick={onIconAction}>
+                    {inputIcon}
+                </div>
+            );
+        }, [icon, error]);
 
         const inputHelperText = React.useMemo(() => {
             if (errorMessage && error) {
@@ -79,11 +87,14 @@ const TextInput = React.forwardRef<HTMLDivElement | null, React.PropsWithChildre
                     </div>
                 );
             }
-            if (isRequired) {
-                return <div className={styles.helperText}>*Required</div>;
+            if (helperText || isOptional) {
+                const optional =
+                    helperText && isOptional ? ' - Optional' : isOptional ? 'Optional' : '';
+
+                return <div className={styles.helperText}>{helperText + optional}</div>;
             }
             return null;
-        }, [errorMessage, error, isRequired]);
+        }, [errorMessage, error, isOptional]);
 
         const inputContentClasses = classNames(styles.inputContent, {
             [styles.focus]: focus,
