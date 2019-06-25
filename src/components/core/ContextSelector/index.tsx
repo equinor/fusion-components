@@ -1,10 +1,17 @@
 import * as React from 'react';
-import { ContextTypes, useContextManager, useCurrentContext, Context } from '@equinor/fusion';
+import {
+    ContextTypes,
+    useContextManager,
+    useCurrentContext,
+    Context,
+    useComponentDisplayType,
+    ComponentDisplayType,
+} from '@equinor/fusion';
 import useContextSearchResults from './useContextSearchResults';
 import classNames from 'classnames';
 import styles from './styles.less';
-import Spinner from '../../feedback/Spinner';
 import SearchIcon from '../../icons/components/search';
+import { Spinner } from 'index';
 
 type ContextSelectorProps = {
     types: ContextTypes[];
@@ -144,12 +151,14 @@ const ContextSelector: React.FC<ContextSelectorProps> = ({ types }: ContextSelec
         return 'Select context';
     };
 
+    const componentDisplayType = useComponentDisplayType();
+    const containerClassNames = classNames(styles.container, {
+        [styles.comfortable]: componentDisplayType === ComponentDisplayType.Comfortable,
+        [styles.compact]: componentDisplayType === ComponentDisplayType.Compact,
+    });
+
     return (
-        <div
-            ref={containerRef}
-            onClick={onOpen}
-            className={styles.container}
-        >
+        <div ref={containerRef} onClick={onOpen} className={containerClassNames}>
             <SearchIcon color="#DADADA" />
             {shouldShowResultsDropdown ? (
                 <>
@@ -165,9 +174,7 @@ const ContextSelector: React.FC<ContextSelectorProps> = ({ types }: ContextSelec
                     {isQuerying && <Spinner inline />}
                 </>
             ) : (
-                <button className={styles.contextButton}>
-                    {getButtonContent()}
-                </button>
+                <button className={styles.contextButton}>{getButtonContent()}</button>
             )}
         </div>
     );

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import useEventListener from './useEventListener';
+import { useEventListener } from 'index';
 
 const KEY_HANDLERS = {
     38: 'onUp',

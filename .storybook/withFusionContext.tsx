@@ -4,7 +4,6 @@ import {
     createFusionContext,
     ServiceResolver,
     FusionContext,
-    AuthContainer,
 } from '@equinor/fusion';
 import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
 
@@ -20,11 +19,11 @@ const mockUser = {
 };
 
 class StorybookAuthContainer implements IAuthContainer {
-    authToken: string = localStorage.getItem("FUSION_STORYBOOK_AUTH_TOKEN") || '';
-    private internalAuthContainer = new AuthContainer();
+    
+    authToken: string = localStorage.getItem('FUSION_STORYBOOK_AUTH_TOKEN') || '';
 
     async handleWindowCallbackAsync(): Promise<void> {
-        await this.internalAuthContainer.handleWindowCallbackAsync();
+        throw new Error('Not implemented');
     }
 
     async acquireTokenAsync(resource: string): Promise<string | null> {
@@ -32,34 +31,36 @@ class StorybookAuthContainer implements IAuthContainer {
             return this.authToken;
         }
 
-        return await this.internalAuthContainer.acquireTokenAsync(resource);
+        throw new Error('Not implemented');
     }
 
     async registerAppAsync(clientId: string, resources: string[]): Promise<boolean> {
-        return await this.internalAuthContainer.registerAppAsync(clientId, resources);
+        throw new Error('Not implemented');
     }
 
     login(clientId: string): void {
-        this.internalAuthContainer.login(clientId);
+        throw new Error('Not implemented');
+    }
+
+    async logoutAsync(clientId?: string): Promise<void> {
+        alert("Can't sign out of storybook...");
     }
 
     async getCachedUserAsync(): Promise<AuthUser | null> {
-        try {
-            return await this.internalAuthContainer.getCachedUserAsync();
-        } catch {
-            return AuthUser.fromJSON(mockUser);
-        }
+        return AuthUser.fromJSON(mockUser);
+    }
+    
+    getCachedUser(): AuthUser {
+        return AuthUser.fromJSON(mockUser);
     }
 
     setAuthToken(token: string) {
         this.authToken = token;
-        localStorage.setItem("FUSION_STORYBOOK_AUTH_TOKEN", token);
+        localStorage.setItem('FUSION_STORYBOOK_AUTH_TOKEN', token);
     }
 }
 
 const authContainer = new StorybookAuthContainer();
-
-authContainer.handleWindowCallbackAsync();
 
 // Expose the auth container to the auth token addon
 window.parent['authContainer'] = authContainer;
@@ -69,13 +70,6 @@ const serviceResolver: ServiceResolver = {
     getFusionBaseUrl: () => 'https://pro-s-portal-ci.azurewebsites.net',
     getContextBaseUrl: () => 'https://pro-s-context-pr-842.azurewebsites.net',
 };
-
-const coreAppClientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
-authContainer.registerAppAsync(coreAppClientId, [
-    serviceResolver.getDataProxyBaseUrl(),
-    serviceResolver.getFusionBaseUrl(),
-    serviceResolver.getContextBaseUrl(),
-]);
 
 const FusionWrapper: React.FC = ({ children }) => {
     const overlay = React.useRef<HTMLElement | null>(null);

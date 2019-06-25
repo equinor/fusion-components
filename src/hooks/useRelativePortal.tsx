@@ -1,6 +1,5 @@
 import * as React from 'react';
-import useOverlayPortal from './useOverlayPortal';
-import useRelativePositioning from './useRelativePositioning';
+import { useRelativePositioning, useOverlayPortal } from 'index';
 
 export default (content: React.ReactNode, ref: React.RefObject<any>, isVisible: boolean = true) => {
     const rect = useRelativePositioning(ref);

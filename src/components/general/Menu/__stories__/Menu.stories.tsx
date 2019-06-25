@@ -42,4 +42,4 @@ const MenuStory = () => {
     );
 };
 
-storiesOf("General components/Menu", module).add("Default", () => <MenuStory />);
+storiesOf("General|Menu", module).add("Default", () => <MenuStory />);

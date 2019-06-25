@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import useIcon, { IconProps } from '../../../../hooks/useIcon';
+import { IconProps, useIcon } from 'index';
 
 const SearchIcon = (props: IconProps) => {
     const iconFactory = useIcon(

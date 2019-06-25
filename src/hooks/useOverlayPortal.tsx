@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ReactNode, useRef, useEffect } from 'react';
 import * as ReactDOM from 'react-dom';
 import { FusionContext, useFusionContext } from '@equinor/fusion';
-import useOverlayContainer from './useOverlayContainer';
+import { useOverlayContainer } from 'index';
 
 export default (isVisible: Boolean, content: ReactNode): void => {
     const fusionContext = useFusionContext();

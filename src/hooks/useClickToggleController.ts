@@ -1,6 +1,5 @@
 import { MutableRefObject, useState, useRef, useCallback, useEffect, SetStateAction } from 'react';
-import useClickOutsideOverlayPortal from './useClickOutsideOverlayPortal';
-import useEventListener from './useEventListener';
+import { useClickOutsideOverlayPortal, useEventListener } from 'index';
 
 export default <T extends HTMLElement>(): [
     Boolean,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './styles.less';
-import Button from '../../general/Button';
 import classNames from 'classnames';
+import { Button } from 'index';
 
 type BannerProps = {
     message: string;

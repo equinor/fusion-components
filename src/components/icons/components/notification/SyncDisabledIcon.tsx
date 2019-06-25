@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import useIcon, { IconProps } from '../../../../hooks/useIcon';
+import { IconProps, useIcon } from 'index';
 
 const SyncDisabledIcon = (props: IconProps) => {
     const iconFactory = useIcon(
