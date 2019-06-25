@@ -11,7 +11,7 @@ import {
 export default <T extends HTMLElement>(
     content: React.ReactNode,
     props?: PopoverContainerProps
-): React.MutableRefObject<T | null> => {
+): [React.MutableRefObject<T | null>, boolean] => {
     const popoverContentRef = React.useRef<HTMLDivElement | null>(null);
     const [isOpen, ref, setIsOpen] = useClickToggleController<T>();
     const rect = useRelativePositioning(ref);
@@ -36,5 +36,5 @@ export default <T extends HTMLElement>(
         </div>
     );
 
-    return ref;
+    return [ref, isOpen];
 };

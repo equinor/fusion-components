@@ -6,7 +6,7 @@ import usePopoverRef from '../index';
 const PopoverContent = () => <div>This is a popover!</div>;
 
 const PopoverStory = () => {
-    const popoverRef = usePopoverRef(<PopoverContent />, {
+    const [popoverRef, isOpen] = usePopoverRef(<PopoverContent />, {
         justify: 'center', // start = "left" | middle = "center" | end = "right"
         placement: 'below', // start = "top" | middle = "center" | end = "bottom"
     });
