@@ -1,9 +1,8 @@
 import React from 'react';
-import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
+import { useComponentDisplayType, ComponentDisplayType, useAppContext } from '@equinor/fusion';
 import FusionLogo from '../FusionLogo';
 
 import styles from './styles.less';
-import { useAppContext } from '@equinor/fusion/lib/app/AppContext'; // TODO: Expose from @equinor/fusion root
 import classNames from 'classnames';
 import ComponentDisplayToggleButton from './components/ComponentDisplayToggleButton';
 import CurrentUserButton from './components/CurrentUserButton';
