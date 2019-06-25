@@ -7,6 +7,7 @@ export { default as ContextSelector } from './components/core/ContextSelector';
 
 // General components
 export { default as Button } from './components/general/Button';
+export { default as IconButton } from './components/general/IconButton';
 export { default as ErrorBoundary } from './components/general/ErrorBoundary';
 export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
