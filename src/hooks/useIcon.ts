@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
 
 type IconFactoryProps = {
     height?: number;
@@ -10,15 +11,15 @@ type IconFactoryProps = {
 export type IconProps = {} & IconFactoryProps;
 
 const useIcon = (content: React.SVGAttributes<SVGElement>) => {
+    const displayType = useComponentDisplayType();
+
     const iconFactory = ({
-        height = 24,
-        width = 24,
+        height = displayType === ComponentDisplayType.Compact ? 16 : 24,
+        width = displayType === ComponentDisplayType.Compact ? 16 : 24,
         color = '',
-        cursor='pointer',
         ...rest
     }: IconFactoryProps) => {
         const props = {
-            cursor,
             height,
             style: { color },
             viewBox: '0 0 24 24',
