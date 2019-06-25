@@ -19,10 +19,11 @@ const mockUser = {
 };
 
 class StorybookAuthContainer implements IAuthContainer {
-    authToken: string = localStorage.getItem("FUSION_STORYBOOK_AUTH_TOKEN") || '';
+    
+    authToken: string = localStorage.getItem('FUSION_STORYBOOK_AUTH_TOKEN') || '';
 
     async handleWindowCallbackAsync(): Promise<void> {
-        throw new Error("Not implemented");
+        throw new Error('Not implemented');
     }
 
     async acquireTokenAsync(resource: string): Promise<string | null> {
@@ -30,24 +31,32 @@ class StorybookAuthContainer implements IAuthContainer {
             return this.authToken;
         }
 
-        throw new Error("Not implemented");
+        throw new Error('Not implemented');
     }
 
     async registerAppAsync(clientId: string, resources: string[]): Promise<boolean> {
-        throw new Error("Not implemented");
+        throw new Error('Not implemented');
     }
 
     login(clientId: string): void {
-        throw new Error("Not implemented");
+        throw new Error('Not implemented');
+    }
+
+    async logoutAsync(clientId?: string): Promise<void> {
+        alert("Can't sign out of storybook...");
     }
 
     async getCachedUserAsync(): Promise<AuthUser | null> {
         return AuthUser.fromJSON(mockUser);
     }
+    
+    getCachedUser(): AuthUser {
+        return AuthUser.fromJSON(mockUser);
+    }
 
     setAuthToken(token: string) {
         this.authToken = token;
-        localStorage.setItem("FUSION_STORYBOOK_AUTH_TOKEN", token);
+        localStorage.setItem('FUSION_STORYBOOK_AUTH_TOKEN', token);
     }
 }
 
