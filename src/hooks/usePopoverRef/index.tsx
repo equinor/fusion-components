@@ -1,17 +1,19 @@
 import * as React from 'react';
-import useClickToggleController from '../useClickToggleController';
-import useOverlayPortal from '../useOverlayPortal';
-import useRelativePositioning from '../useRelativePositioning';
-import PopoverContent from '../../components/general/Popover/components/Content';
 import * as styles from './styles.less';
-import useClickOutsideOverlayPortal from '../useClickOutsideOverlayPortal';
+import PopoverContainer, { PopoverContainerProps } from './components/Container';
+import {
+    useClickToggleController,
+    useRelativePositioning,
+    useClickOutsideOverlayPortal,
+    useOverlayPortal,
+} from 'index';
 
-export default (
+export default <T extends HTMLElement>(
     content: React.ReactNode,
-    props?: any
-): React.MutableRefObject<HTMLElement | null> => {
+    props?: PopoverContainerProps
+): React.MutableRefObject<T | null> => {
     const popoverContentRef = React.useRef<HTMLDivElement | null>(null);
-    const [isOpen, ref, setIsOpen] = useClickToggleController();
+    const [isOpen, ref, setIsOpen] = useClickToggleController<T>();
     const rect = useRelativePositioning(ref);
 
     const close = React.useCallback(() => isOpen && setIsOpen(false), [isOpen]);
@@ -30,7 +32,7 @@ export default (
                 left: rect.left,
             }}
         >
-            <PopoverContent {...props}>{content}</PopoverContent>
+            <PopoverContainer {...props}>{content}</PopoverContainer>
         </div>
     );
 

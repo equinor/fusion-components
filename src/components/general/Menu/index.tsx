@@ -1,9 +1,8 @@
 import * as React from "react";
 import classNames from "classnames";
-import useElevationClassName, { Elevation } from "../../../hooks/useElevationClassName";
-import useKeyboardNavigation from "../../../hooks/useKeyboardNavigation";
 import MenuItem, { MenuItemType } from "./MenuItem";
 import styles from "./styles.less";
+import { useKeyboardNavigation, Elevation, useElevationClassName } from 'index';
 
 export type MenuSection = {
     key: string,
@@ -18,9 +17,11 @@ export type MenuProps = {
     keyboardNavigationRef?: HTMLElement | null,
 };
 
+export { MenuItemType };
+
 const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavigationRef }: MenuProps) => {
-    const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(sections.length ? sections[0].key : null);
-    const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(sections.length && sections[0].items.length ? sections[0].items[0].key : null);
+    const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(null);
+    const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(null);
 
     const nextOrPrev = (direction: number) => {
         const sectionIndex = sections.findIndex(section => section.key === focusedSectionKey);
@@ -57,8 +58,8 @@ const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavig
     };
 
     const reset = () => {
-        setFocusedSectionKey(sections.length ? sections[0].key : null);
-        setFocusedItemKey(sections.length && sections[0].items.length ? sections[0].items[0].key : null);
+        setFocusedSectionKey(keyboardNavigationRef && sections.length ? sections[0].key : null);
+        setFocusedItemKey(keyboardNavigationRef && sections.length && sections[0].items.length ? sections[0].items[0].key : null);
     };
 
     const onItemClick = item => {
@@ -94,6 +95,7 @@ const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavig
         <div className={className}>
             {sections.map(section => (
                 <section key={section.key}>
+                    {!!section.title && <h5>{section.title}</h5>}
                     {section.items.map((item, index) => (
                         <MenuItem
                             key={item.key}

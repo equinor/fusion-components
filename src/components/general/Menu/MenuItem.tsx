@@ -5,6 +5,7 @@ import styles from "./styles.less";
 export type MenuItemType = {
     key: string;
     title: string;
+    aside?: string;
     isSelected?: boolean;
     isDisabled?: boolean;
 };
@@ -40,7 +41,10 @@ const MenuItem: React.FC<MenuItemProps> = props => {
             tabIndex={props.index + 1}
             onClick={onClick}
         >
-            <span>{props.item.title}</span>
+            <span>
+                <span>{props.item.title}</span>
+                {props.item.aside && <aside>{props.item.aside}</aside>}
+            </span>
         </button>
     );
 };

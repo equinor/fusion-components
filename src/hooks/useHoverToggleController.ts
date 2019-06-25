@@ -1,26 +1,23 @@
-import { useRef, useState, MutableRefObject } from 'react';
-import useEventListener from './useEventListener';
+import { useRef, useState, MutableRefObject, useCallback } from 'react';
+import { useEventListener } from 'index';
 
-export default (delay: Number): [Boolean, MutableRefObject<any>] => {
+let showTimeout: NodeJS.Timeout;
+export default (delay: number = 300): [Boolean, MutableRefObject<any>] => {
     const [isHovering, setIsHovering] = useState<Boolean>(false);
     const ref = useRef<HTMLElement | null>(null);
 
-    const handleMouseMove: EventListener = e => {
-        if (ref.current === null) {
-            return;
-        }
+    const show = useCallback(() => {
+        clearTimeout(showTimeout);
+        showTimeout = setTimeout(() => setIsHovering(true), delay);
+    }, [delay]);
 
-        const refContainsTarget = ref.current.contains(e.target as Node);
-        if (!isHovering && refContainsTarget) {
-            setIsHovering(true);
-        } else if (isHovering && !refContainsTarget) {
-            setIsHovering(false);
-        }
+    const hide = () => {
+        clearTimeout(showTimeout);
+        setIsHovering(false);
     };
 
-    useEventListener(document.body, 'mousemove', handleMouseMove, [isHovering, ref.current]);
-
-    useEventListener(window, 'mouseout', () => setIsHovering(false), [isHovering, ref.current]);
+    useEventListener(ref.current, 'mouseenter', show, [ref.current]);
+    useEventListener(ref.current, 'mouseleave', hide, [ref.current]);
 
     return [isHovering, ref];
 };

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ComponentDisplayContext from '../../contexts/ComponentDisplayContext';
+import { useComponentDisplayType } from '@equinor/fusion';
 import ButtonComponent from './components/Button';
 import AnchorComponent from './components/Anchor';
 
@@ -40,7 +40,7 @@ const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<Butt
     (props, ref) => {
         // Used to apply "radar" animation on mouse up
         const [mouseHasBeenDown, setMouseHasBeenDown] = React.useState(false);
-        const displayType = React.useContext<string>(ComponentDisplayContext);
+        const displayType = useComponentDisplayType();
 
         const buttonRef =
             (ref as React.RefObject<HTMLElement | null>) || React.createRef<HTMLElement | null>();

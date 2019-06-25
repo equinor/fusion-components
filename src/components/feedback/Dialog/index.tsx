@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import useElevationClassName from '../../../hooks/useElevationClassName'
+import { useElevationClassName } from 'index';
 
 type DialogProps = {
     children: any;

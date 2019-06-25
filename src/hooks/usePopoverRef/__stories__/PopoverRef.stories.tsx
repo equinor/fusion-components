@@ -7,11 +7,8 @@ const PopoverContent = () => <div>This is a popover!</div>;
 
 const PopoverStory = () => {
     const popoverRef = usePopoverRef(<PopoverContent />, {
-        // horizontalPosition: "right",
-        // verticalPosition: "top",
-        justify: 'middle', // start = "left" | middle = "center" | end = "right"
-        align: 'end', // start = "top" | middle = "center" | end = "bottom"
-        alignArrow: 'start', // start = "left" | middle = "center" | end = "right"
+        justify: 'center', // start = "left" | middle = "center" | end = "right"
+        placement: 'below', // start = "top" | middle = "center" | end = "bottom"
     });
 
     return (
