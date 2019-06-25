@@ -2,40 +2,22 @@
     display: flex;
     align-items: center;
 
-    &.comfortable {
-        .searchInput {
+    .display-type(@height-multiplier, @font-size) {
+        .searchInput, .contextButton {
             padding: 0 calc(var(--grid-unit) * 1px);
-            line-height: calc(var(--grid-unit) * 6px);
-            height: calc(var(--grid-unit) * 6px);
-            font-size: 16px;
+            line-height: calc(var(--grid-unit) * @height-multiplier);
+            height: calc(var(--grid-unit) * @height-multiplier);
             margin-left: calc(var(--grid-unit) * 2px);
-        }
-
-        .contextButton {
-            padding: 0 calc(var(--grid-unit) * 1px);
-            line-height: calc(var(--grid-unit) * 6px);
-            height: calc(var(--grid-unit) * 6px);
-            margin-left: calc(var(--grid-unit) * 2px);
-            font-size: 16px;
+            font-size: @font-size;
         }
     }
 
-    &.compact {
-        .searchInput {
-            padding: 0 calc(var(--grid-unit) * 1px);
-            line-height: calc(var(--grid-unit) * 5px);
-            height: calc(var(--grid-unit) * 5px);
-            font-size: 15px;
-            margin-left: calc(var(--grid-unit) * 2px);
-        }
+    &.comfortable {
+        .display-type(6px, 16px);
+    }
 
-        .contextButton {
-            padding: 0 calc(var(--grid-unit) * 1px);
-            line-height: calc(var(--grid-unit) * 5px);
-            height: calc(var(--grid-unit) * 5px);
-            margin-left: calc(var(--grid-unit) * 2px);
-            font-size: 15px;
-        }
+    &.compact {
+        .display-type(5px, 15px);
     }
 }
 
