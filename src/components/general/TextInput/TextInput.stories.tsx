@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import TextInput from './index';
-import { SearchIcon } from '../../icons/components/action';
-import Spinner from '../../feedback/Spinner';
-import useKeyboardNavigation from '../../../hooks/useKeyboardNavigation';
+import { useKeyboardNavigation, Spinner, SearchIcon } from "index";
 
 const TextInputStory = () => {
     const [value, setValue] = React.useState('');
@@ -32,7 +30,7 @@ const TextInputStory = () => {
     );
 
     return (
-        <React.Fragment>
+        <div style={{"display": "flex", "padding": "8px", "flexDirection":"column"}}>
             <TextInput
                 onChange={value => setValue(value)}
                 value={value}
@@ -59,7 +57,7 @@ const TextInputStory = () => {
             <TextInput
                 onChange={value => setValue(value)}
                 value={value}
-                icon={!loading ? <SearchIcon color="#666666" /> : <Spinner inline />}
+                icon={!loading ? <SearchIcon color="#666666" /> : <Spinner inline primary/>}
                 onIconAction={simulateLoad}
                 error={hasError}
                 errorMessage="Error: At least 8 characters"
@@ -67,7 +65,7 @@ const TextInputStory = () => {
                 ref={inputRef}
             />
             <br />
-        </React.Fragment>
+        </div>
     );
 };
 
