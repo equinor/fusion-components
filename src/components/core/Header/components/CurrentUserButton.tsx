@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentUser, useFusionContext } from '@equinor/fusion';
-import { useIcon, IconProps, MenuSection, MenuItemType, Menu, usePopoverRef } from 'index';
+import { IconProps, MenuSection, MenuItemType, Menu, usePopoverRef, useIcon, IconButton } from 'index';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
@@ -51,7 +51,7 @@ const CurrentUserDropdown: React.FC = () => {
 
 const CurrentUserButton: React.FC = () => {
     const currentUser = useCurrentUser();
-    const popoverRef = usePopoverRef<HTMLButtonElement>(<CurrentUserDropdown />, {
+    const [popoverRef, isOpen] = usePopoverRef<HTMLButtonElement>(<CurrentUserDropdown />, {
         placement: 'below',
         justify: 'end',
         centered: true,
@@ -63,9 +63,9 @@ const CurrentUserButton: React.FC = () => {
     }
 
     return (
-        <button ref={popoverRef}>
+        <IconButton active={isOpen} ref={popoverRef}>
             <CurrentUserIcon />
-        </button>
+        </IconButton>
     );
 };
 

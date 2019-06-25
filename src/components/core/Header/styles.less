@@ -20,8 +20,6 @@
         .startContainer, .asideContainer {
             > button {
                 margin-right: .grid-unit(1px)[];
-                width: .grid-unit(6px)[];
-                height: .grid-unit(6px)[];
             }
 
             :last-child, :only-child {
@@ -45,8 +43,6 @@
         .startContainer, .asideContainer {
             > button {
                 margin-right: .grid-unit(1px)[];
-                width: .grid-unit(4px)[];
-                height: .grid-unit(4px)[];
             }
 
             :last-child, :only-child {
@@ -105,18 +101,13 @@
     align-items: center;
 }
 
+/* Override the icon button colors */
 .startContainer, .asideContainer {
-    > button {
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        color: var(--color-black-alt2);
+    > button > span {
+        color: var(--color-black-alt2) !important;
+    }
+
+    > button:global(.isActive) > span {
+        color: var(--color-white) !important;
     }
 }
