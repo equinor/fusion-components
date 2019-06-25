@@ -27,7 +27,7 @@ storiesOf('Core|Fusion', module).add('Default', () => (
         <FusionHeader
             start={<button><AppSelectorIcon /></button>}
             content={<span>Context selector</span>}
-            aside={<button>Other button</button>}
+            aside={null}
         />
         <FusionContent>
             <div style={{ maxWidth: 800, margin: '20px auto' }}>
