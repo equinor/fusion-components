@@ -18,10 +18,7 @@ type TextInputProps = {
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-const TextInput = React.forwardRef<
-    HTMLInputElement | null,
-    React.PropsWithChildren<TextInputProps>
->(
+const TextInput = React.forwardRef<HTMLInputElement | null,React.PropsWithChildren<TextInputProps>>(
     (
         {
             disabled = false,
