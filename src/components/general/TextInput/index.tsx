@@ -69,7 +69,7 @@ const TextInput = React.forwardRef<HTMLInputElement | null,React.PropsWithChildr
                 return null;
             }
             const inputIcon = error ? (
-                <ErrorIcon outline={false} color="#FF3B3B" cursor="default" />
+                <ErrorIcon outline={false} color="#FF3B3B"/>
             ) : (
                 icon
             );

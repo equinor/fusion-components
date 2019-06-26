@@ -57,7 +57,7 @@ const TextInputStory = () => {
             <TextInput
                 onChange={value => setValue(value)}
                 value={value}
-                icon={!loading ? <SearchIcon color="#666666" /> : <Spinner inline primary/>}
+                icon={!loading ? <SearchIcon color="#666666" cursor="pointer"/> : <Spinner inline primary/>}
                 onIconAction={simulateLoad}
                 error={hasError}
                 errorMessage="Error: At least 8 characters"
