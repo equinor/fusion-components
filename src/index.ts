@@ -12,6 +12,7 @@ export { default as ErrorBoundary } from './components/general/ErrorBoundary';
 export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
+export { default as TextInput } from "./components/general/TextInput";
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -35,6 +36,9 @@ export { default as useRelativePositioning } from './hooks/useRelativePositionin
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
-export { WarningIcon } from './components/icons/components/alert';
+export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { BlockIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
+export { SearchIcon } from './components/icons/components/action';
+
+
