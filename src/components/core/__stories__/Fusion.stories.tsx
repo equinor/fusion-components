@@ -2,6 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import FusionHeader from '../Header';
 import FusionContent from '../Content';
+import { IconButton } from 'index';
 
 const AppSelectorIcon = () => {
     return (
@@ -25,9 +26,9 @@ const AppSelectorIcon = () => {
 storiesOf('Core|Fusion', module).add('Default', () => (
     <React.Fragment>
         <FusionHeader
-            start={<button><AppSelectorIcon /></button>}
+            start={<IconButton><AppSelectorIcon /></IconButton>}
             content={<span>Context selector</span>}
-            aside={<button>Other button</button>}
+            aside={null}
         />
         <FusionContent>
             <div style={{ maxWidth: 800, margin: '20px auto' }}>

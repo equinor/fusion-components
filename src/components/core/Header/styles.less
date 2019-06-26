@@ -19,7 +19,7 @@
 
         .startContainer, .asideContainer {
             > button {
-                margin-right: .grid-unit(2px)[];
+                margin-right: .grid-unit(1px)[];
             }
 
             :last-child, :only-child {
@@ -28,7 +28,7 @@
         }
 
         .startContainer {
-            margin-right: .grid-unit(2px)[];
+            margin-right: .grid-unit(1px)[];
         }
 
         .fusionTitleContainer {
@@ -82,7 +82,7 @@
 }
 
 .fusionLogo {
-    margin-right: .grid-unit(2px)[];
+    margin-right: .grid-unit(1px)[];
 }
 
 .fusionTitleContainer {
@@ -101,20 +101,13 @@
     align-items: center;
 }
 
+/* Override the icon button colors */
 .startContainer, .asideContainer {
-    > button {
-        min-width: .grid-unit(6px)[];
-        height: .grid-unit(6px)[];
-        background: none;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 0 .grid-unit(2px)[];
-        box-sizing: border-box;
-        color: var(--color-black-alt2);
+    > button > span {
+        color: var(--color-black-alt2) !important;
+    }
+
+    > button:global(.isActive) > span {
+        color: var(--color-white) !important;
     }
 }

@@ -30,7 +30,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
             </div>
             <a href="/" className={styles.fusionTitleContainer}>
                 <span className={styles.fusionLogo}>
-                    <FusionLogo scale={componentDisplayType === ComponentDisplayType.Compact ? 0.7 : 0.8} />
+                    <FusionLogo scale={0.7} />
                 </span>
                 <span className={styles.fusionTitle}>fusion</span>
                 {currentApp && currentApp.appKey && (

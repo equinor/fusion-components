@@ -2,7 +2,7 @@ import { MutableRefObject, useState, useRef, useCallback, useEffect, SetStateAct
 import { useClickOutsideOverlayPortal, useEventListener } from 'index';
 
 export default <T extends HTMLElement>(): [
-    Boolean,
+    boolean,
     MutableRefObject<T | null>,
     React.Dispatch<SetStateAction<boolean>>
 ] => {
