@@ -13,7 +13,7 @@ type TextInputProps = {
     helperText?: string;
     onChange: (newValue: string) => void;
     value?: string;
-    icon?: any;
+    icon?: React.ReactElement;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
