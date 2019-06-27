@@ -4,6 +4,7 @@ export { default as FusionRoot } from './components/core/Root';
 export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
 export { default as ContextSelector } from './components/core/ContextSelector';
+export { default as AppWrapper } from './components/core/AppWrapper';
 
 // General components
 export { default as Button } from './components/general/Button';
