@@ -52,4 +52,32 @@
     height: 0;
     pointer-events: none;
     top: 0; left: 0;
+    z-index: 99999999999;
+}
+
+:global {
+    ::-webkit-scrollbar {
+        width: calc(var(--grid-unit) * .5px);
+        height: calc(var(--grid-unit) * 1px);
+        overflow: visible;
+    }
+
+    ::-webkit-scrollbar-track {
+        width: calc(var(--grid-unit) * .5px);
+        height: calc(var(--grid-unit) * 1px);
+        background: var(--color-black-alt4);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-black-alt3);
+        border-radius: 100px;
+
+        &:hover {
+            background: var(--color-black-alt2);
+        }
+        
+        &:active {
+            background: var(--color-primary-accent);
+        }
+    }
 }
