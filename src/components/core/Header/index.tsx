@@ -1,5 +1,5 @@
 import React from 'react';
-import { useComponentDisplayType, ComponentDisplayType, useAppContext } from '@equinor/fusion';
+import { useComponentDisplayType, ComponentDisplayType, useCurrentApp, combineUrls } from '@equinor/fusion';
 import FusionLogo from '../FusionLogo';
 
 import styles from './styles.less';
@@ -14,7 +14,7 @@ type FusionHeaderProps = {
 };
 
 const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) => {
-    const currentApp = useAppContext();
+    const currentApp = useCurrentApp();
 
     const componentDisplayType = useComponentDisplayType();
 
@@ -33,10 +33,10 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
                     <FusionLogo scale={0.7} />
                 </span>
                 <span className={styles.fusionTitle}>fusion</span>
-                {currentApp && currentApp.appKey && (
+                {currentApp && currentApp.key && (
                     <>
                         <span>|</span>
-                        <a href={currentApp.appPath}>{currentApp.appKey}</a>
+                        <a href={combineUrls("/apps", currentApp.key)}>{currentApp.key}</a>
                     </>
                 )}
             </a>
