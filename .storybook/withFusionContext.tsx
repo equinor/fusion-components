@@ -69,6 +69,9 @@ const serviceResolver: ServiceResolver = {
     getDataProxyBaseUrl: () => 'https://pro-s-dataproxy-ci.azurewebsites.net',
     getFusionBaseUrl: () => 'https://pro-s-portal-ci.azurewebsites.net',
     getContextBaseUrl: () => 'https://pro-s-context-pr-842.azurewebsites.net',
+    getOrgBaseUrl: () => 'https://pro-s-org-ci.azurewebsites.net',
+    getPowerBiBaseUrl: () => 'https://pro-s-powerbi-ci.azurewebsites.net',
+    getTasksBaseUrl: () => 'https://pro-s-tasks-ci.azurewebsites.net',
 };
 
 const FusionWrapper: React.FC = ({ children }) => {
