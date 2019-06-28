@@ -6,6 +6,7 @@ import {
     FusionContext,
 } from '@equinor/fusion';
 import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
+import { HashRouter } from 'react-router-dom';
 
 import FusionRoot from '../src/components/core/Root';
 
@@ -19,7 +20,6 @@ const mockUser = {
 };
 
 class StorybookAuthContainer implements IAuthContainer {
-    
     authToken: string = localStorage.getItem('FUSION_STORYBOOK_AUTH_TOKEN') || '';
 
     async handleWindowCallbackAsync(): Promise<void> {
@@ -49,7 +49,7 @@ class StorybookAuthContainer implements IAuthContainer {
     async getCachedUserAsync(): Promise<AuthUser | null> {
         return AuthUser.fromJSON(mockUser);
     }
-    
+
     getCachedUser(): AuthUser {
         return AuthUser.fromJSON(mockUser);
     }
@@ -81,9 +81,11 @@ const FusionWrapper: React.FC = ({ children }) => {
 
     return (
         <FusionContext.Provider value={fusionContext}>
-            <FusionRoot rootRef={root} overlayRef={overlay}>
-                {children}
-            </FusionRoot>
+            <HashRouter>
+                <FusionRoot rootRef={root} overlayRef={overlay}>
+                    {children}
+                </FusionRoot>
+            </HashRouter>
         </FusionContext.Provider>
     );
 };

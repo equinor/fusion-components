@@ -35,6 +35,11 @@
         .fusionTitleContainer {
             margin-right: .grid-unit(6px)[];
         }
+
+        .appNameDivider {
+            height: .grid-unit(3px)[];
+            margin: 0 .grid-unit(1px)[];
+        }
     }
 
     &.compact {
@@ -58,6 +63,24 @@
         .fusionTitleContainer {
             margin-right: .grid-unit(4px)[];
         }
+
+        .appNameDivider {
+            height: .grid-unit(2px)[];
+            margin: 0 .grid-unit(1px)[];
+        }
+    }
+
+    .appNameLink,
+    .appNameLink:visited,
+    .appNameLink:hover,
+    .appNameLink.active {
+        text-decoration: none;
+        color: var(--color-primary-accent);
+        font-size: 16px;
+        font-weight: 200;
+        display: inline-flex;
+        height: 100%;
+        align-items: center;
     }
 }
 
@@ -111,4 +134,10 @@
     > button:global(.isActive) > span {
         color: var(--color-white) !important;
     }
+}
+
+.appNameDivider {
+    display: inline-block;
+    width: 1px;
+    background-color: var(--color-black-alt4);
 }

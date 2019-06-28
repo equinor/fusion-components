@@ -1,5 +1,6 @@
 import React from 'react';
 import { useComponentDisplayType, ComponentDisplayType, useCurrentApp, combineUrls } from '@equinor/fusion';
+import { NavLink } from "react-router-dom";
 import FusionLogo from '../FusionLogo';
 
 import styles from './styles.less';
@@ -28,18 +29,18 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
             <div className={styles.startContainer}>
                 {start}
             </div>
-            <a href="/" className={styles.fusionTitleContainer}>
+            <NavLink to="/" className={styles.fusionTitleContainer}>
                 <span className={styles.fusionLogo}>
                     <FusionLogo scale={0.7} />
                 </span>
                 <span className={styles.fusionTitle}>fusion</span>
                 {currentApp && currentApp.key && (
                     <>
-                        <span>|</span>
-                        <a href={combineUrls("/apps", currentApp.key)}>{currentApp.key}</a>
+                        <span className={styles.appNameDivider} />
+                        <NavLink to={combineUrls("/apps", currentApp.key)} className={styles.appNameLink}>{currentApp.name}</NavLink>
                     </>
                 )}
-            </a>
+            </NavLink>
 
             <div className={styles.contentContainer}>{content}</div>
 
