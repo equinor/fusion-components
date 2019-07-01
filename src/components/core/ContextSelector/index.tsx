@@ -10,7 +10,7 @@ import {
 import useContextSearchResults from './useContextSearchResults';
 import classNames from 'classnames';
 import styles from './styles.less';
-import SearchIcon from '../../icons/components/search';
+import { SearchIcon } from '../../icons/components/action';
 import { Spinner } from 'index';
 
 type ContextSelectorProps = {
