@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -89,7 +89,8 @@
     },
     "peerDependencies": {
         "react": "^16.8.1",
-        "@equinor/fusion": "^0.1.39"
+        "@equinor/fusion": "^0.1.39",
+        "react-router-dom": "^5.0.1"
     },
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
