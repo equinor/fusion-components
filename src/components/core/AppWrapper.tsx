@@ -40,7 +40,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
     }, [appKey]);
 
     const appHistory = useMemo(
-        () => createBrowserHistory({ basename: combineUrls('app', appKey || '') }),
+        () => createBrowserHistory({ basename: combineUrls('apps', appKey || '') }),
         [appKey]
     );
 
