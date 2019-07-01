@@ -7,14 +7,21 @@ const KeyboardNavigationStory = () => {
 
     const [currentItem, setCurrentItem] = React.useState<number | null>(0);
     const [ref, setRef] = React.useState<HTMLElement | null>(null);
-    useKeyboardNavigation({
-        onDown: () => {
-            setCurrentItem(
-                currentItem && currentItem < listItems.length - 1 ? currentItem + 1 : currentItem
-            );
+    useKeyboardNavigation(
+        {
+            onDown: () =>
+                setCurrentItem(
+                    currentItem !== null && currentItem < listItems.length - 1
+                        ? currentItem + 1
+                        : currentItem
+                ),
+            onUp: () =>
+                setCurrentItem(
+                    currentItem !== null && currentItem > 0 ? currentItem - 1 : currentItem
+                ),
         },
-        onUp: () => setCurrentItem(currentItem && currentItem > 0 ? currentItem - 1 : currentItem),
-    }, ref);
+        ref
+    );
     return (
         <React.Fragment>
             <input
@@ -22,7 +29,6 @@ const KeyboardNavigationStory = () => {
                 placeholder={
                     currentItem !== null ? listItems[currentItem] : 'Click me to use navigation'
                 }
-                
             />
             <ul>
                 {listItems.map((item, index) => (
