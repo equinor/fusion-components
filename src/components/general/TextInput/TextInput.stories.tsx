@@ -61,7 +61,6 @@ const TextInputStory = () => {
                 onIconAction={simulateLoad}
                 error={hasError}
                 errorMessage="Error: At least 8 characters"
-                label="Search"
                 ref={inputRef}
             />
             <br />
