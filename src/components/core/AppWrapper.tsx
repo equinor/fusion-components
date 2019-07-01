@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
-import { useFusionContext, combineUrls } from "@equinor/fusion";
+import React, { useState, useEffect, useMemo } from 'react';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { useFusionContext, combineUrls } from '@equinor/fusion';
 
 type AppWrapperProps = {
-    appKey: string;
+    appKey?: string;
 };
 
 const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
@@ -13,11 +13,11 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
     } = useFusionContext();
     const [isFetching, setIsFetching] = useState(false);
 
-    const currentApp = appContainer.get(appKey);
+    const currentApp = appContainer.get(appKey || null);
 
     const setCurrentApp = async () => {
         setIsFetching(true);
-        await appContainer.setCurrentAppAsync(appKey);
+        await appContainer.setCurrentAppAsync(appKey || null);
         setIsFetching(false);
     };
 
@@ -32,7 +32,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
             forceUpdate(null);
         }
 
-        return appContainer.on("update", app => {
+        return appContainer.on('update', app => {
             if (app.key === appKey) {
                 forceUpdate(null);
             }
@@ -40,7 +40,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
     }, [appKey]);
 
     const appHistory = useMemo(
-        () => createBrowserHistory({ basename: combineUrls("app", appKey) }),
+        () => createBrowserHistory({ basename: combineUrls('app', appKey || '') }),
         [appKey]
     );
 
