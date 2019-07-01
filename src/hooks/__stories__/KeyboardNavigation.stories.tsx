@@ -9,15 +9,12 @@ const KeyboardNavigationStory = () => {
     const [ref, setRef] = React.useState<HTMLElement | null>(null);
     useKeyboardNavigation({
         onDown: () => {
-            console.log(currentItem && (currentItem < listItems.length - 1))
-            console.log(currentItem ? currentItem + 1 : null )
             setCurrentItem(
                 currentItem && currentItem < listItems.length - 1 ? currentItem + 1 : currentItem
             );
         },
         onUp: () => setCurrentItem(currentItem && currentItem > 0 ? currentItem - 1 : currentItem),
     }, ref);
-    console.log(currentItem)
     return (
         <React.Fragment>
             <input

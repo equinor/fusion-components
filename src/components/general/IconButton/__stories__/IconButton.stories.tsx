@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
 import IconButton from '../index';
-import SearchIcon from '../../../icons/components/search';
+import { SearchIcon } from '../../../icons/components/action';
 
 const eventsFromNames = actions('onClick');
 
