@@ -9,14 +9,16 @@
     align-items: center;
     background: white;
     border-bottom: 2px solid var(--color-black-alt4);
-    position: -webkit-sticky;
     position: sticky;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 2;
 
     &.comfortable {
         padding: 0 .grid-unit(2px)[];
         height: .grid-unit(10px)[];
+        width: calc(100% - (var(--grid-unit) * 4px));
 
         .startContainer, .asideContainer {
             > button {
@@ -45,6 +47,7 @@
     &.compact {
         padding: 0 .grid-unit(2px)[];
         height: .grid-unit(6px)[];
+        width: calc(100% - (var(--grid-unit) * 4px));
 
         .startContainer, .asideContainer {
             > button {
