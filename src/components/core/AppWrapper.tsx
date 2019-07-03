@@ -7,7 +7,7 @@ type AppWrapperProps = {
     appKey?: string;
 };
 
-const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
+const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     const {
         app: { container: appContainer },
     } = useFusionContext();
@@ -23,6 +23,9 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
 
     useEffect(() => {
         setCurrentApp();
+        return () => {
+            appContainer.setCurrentAppAsync(null);
+        };
     }, [appKey]);
 
     const [, forceUpdate] = useState();
