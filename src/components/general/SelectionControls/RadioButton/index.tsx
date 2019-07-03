@@ -1,4 +1,4 @@
-import React, { useRef, MutableRefObject, forwardRef } from 'react';
+import React, { MutableRefObject, forwardRef } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 
@@ -10,10 +10,9 @@ type RadioProps = {
 
 const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
     ({ selected, onChange, disabled }, ref) => {
-        const inputRef =
-            (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
 
-        const containerClassNames = classNames(styles.container, {
+        const inputRef = ref as MutableRefObject<HTMLInputElement | null>;
+        const containerClassNames = classNames(styles.radioButtonContainer, {
             [styles.disabled]: disabled,
         });
 

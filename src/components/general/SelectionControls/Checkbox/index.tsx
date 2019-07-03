@@ -15,7 +15,7 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
 
-        const containerClassNames = classNames(styles.container, {
+        const containerClassNames = classNames(styles.checkboxContainer, {
             [styles.disabled]: disabled,
         });
 

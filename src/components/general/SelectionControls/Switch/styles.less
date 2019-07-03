@@ -1,30 +1,25 @@
 @import '~styles/mixins.less';
+@import '../inputStyles.less';
 
-.container {
-    height: .grid-unit(6px)[];
-    width: .grid-unit(6px)[];
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.switchContainer {
+    .inputStyles(activator, var(--color-supplementary-alt1), var(--color-black-alt4));
 
-    .switch{
-        height: .grid-unit(1px)[];
-        width: 34px;
-        border-radius: 4px;
-        background-color: var(--color-black-alt3);
-        display: flex;
-        align-items: center;
-        position: relative;
-        z-index: 0;
-
-        &.isActive {
-            background-color:var(--color-supplementary-alt1);
-
-            .activator{
-                transform: translateX(calc(34px - calc(var(--grid-unit) * 2px)));//34px - 16px || 8px
-                background-color: var(--color-primary);
-            }
+    input + label {
+        &::before {
+            box-sizing: border-box;
+            border: 1px solid var(--color-black-alt3);
+            content: '';
+            position: absolute;
+            text-align: center;
+            transition: all .2s;
+            height: .grid-unit(1px)[];
+            width: 34px;
+            border-radius: 4px;
+            background-color: var(--color-black-alt3);
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 0;            
         }
         .activator{
             background-color: var(--color-black-alt2);
@@ -35,42 +30,42 @@
             left: 0;
             z-index: 1;
             position: absolute;
+            transform: translateX(calc(var(--grid-unit) * 2px - 1px));
         }
-        
-        
     }
-
-    &:hover{
-        &:not(.disabled) {
-            background-color: var(--color-primary-alt4);
-            border-radius: 50%;
-
-            .switch{
-                &.isActive{
-                    .activator{
-                        background-color: var(--color-primary-hover);
-                    }
-                }
-            }
+    input:checked + label {
+        border-color: var(--color-supplementary-alt1);
+        .activator{
+            transform: translateX(33px);
         }
     }
 
-    &:active {
-        &:not(.disabled){
-            background-color: var(--color-primary-alt3);
-        }
-    }
+    // &:hover{
+    //     &:not(.disabled) {
+    //         .switch{
+    //             &.isActive{
+    //                 .activator{
+    //                     background-color: var(--color-primary-hover);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    // &:active {
+    //     &:not(.disabled){
+    //         background-color: var(--color-primary-alt3);
+    //     }
+    // }
     
-    &.disabled{
-        cursor: not-allowed;
-
-        .switch {
-            background-color: var(--color-black-alt4);
-            .activator{
-                background-color: var(--color-black-alt4);
-            }
-        }
-    }
+    // &.disabled{
+    //     .switch {
+    //         background-color: var(--color-black-alt4);
+    //         .activator{
+    //             background-color: var(--color-black-alt4);
+    //         }
+    //     }
+    // }
   
 }
 
