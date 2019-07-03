@@ -22,6 +22,8 @@
         color: var(--color-white);
         cursor: pointer;
         display: flex;
+        justify-content: center;
+        align-items: center;
 
         &::before {
             box-sizing: border-box;
@@ -31,25 +33,19 @@
             height: .grid-unit(2px)[];
             display: block;
             position: absolute;
-            border-radius: 2px;
+            border-radius: 50%;
             text-align: center;
             transition: all .2s;
         }
 
-        span{
-            line-height: .grid-unit(2px)[];
-            display: inline-block;
-            position: relative;
-            text-align: center;
-            width: .grid-unit(2px)[];
-            height: .grid-unit(2px)[];
-        }
-
-        .checkmark {
-            color: var(--color-white);
+        .dot {
+            background-color: var(--color-primary);
+            border-radius: 50%;
             transform: scale(0.8);
             opacity: 0;
             transition: all .1s;
+            height: .grid-unit(1px)[];
+            width: .grid-unit(1px)[];
         }
     }
 
@@ -57,23 +53,9 @@
     input:checked + label {
         &::before {
             border-color: var(--color-primary);
-            background-color:  var(--color-primary);
         }
 
-        .checkmark {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    //Indeterminate
-    input:indeterminate + label{
-        &::before {
-            border-color: var(--color-primary);
-            background-color:  var(--color-primary);
-        }
-
-        .checkmark {
+        .dot {
             transform: scale(1);
             opacity: 1;
         }
@@ -105,7 +87,7 @@
                 border-color: var(--color-black-alt4);
                 background: var(--color-white);
             }
-            .checkmark {
+            .dot {
                 opacity: 0;
             }
         }
@@ -113,10 +95,10 @@
         input:checked + label{
             &::before {
                 border-color: var(--color-black-alt4);
-                background: var(--color-black-alt4);
 
             }
-            .checkmark {
+            .dot {
+                background-color: var(--color-black-alt4);
                 opacity: 1;
             }
 

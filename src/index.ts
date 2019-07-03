@@ -14,7 +14,7 @@ export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
 export { default as TextInput } from "./components/general/TextInput";
-export { Switch, CheckBox } from "./components/general/SelectionControls";
+export { Switch, CheckBox, RadioButton } from "./components/general/SelectionControls";
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';

@@ -28,7 +28,6 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
         return (
             <div className={containerClassNames} onClick={onChange}>
                 <input
-                    className={styles.checkbox}
                     type="checkbox"
                     checked={selected}
                     disabled={disabled}

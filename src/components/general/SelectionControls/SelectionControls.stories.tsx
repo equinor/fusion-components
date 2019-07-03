@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Switch, CheckBox } from './index';
+import { Switch, CheckBox, RadioButton } from './index';
 
 const SwitchStory = () => {
     const [active, setActive] = React.useState(false);
@@ -24,6 +24,17 @@ const CheckboxStory = () => {
     );
 };
 
+const RadioButtonStory = () => {
+    const [active, setActive] = React.useState(false);
+    return (
+        <div style={{ padding: '8px' }}>
+            <RadioButton selected={active} onChange={() => setActive(!active)} />
+            <RadioButton disabled />
+            <RadioButton disabled selected/>
+        </div>
+    );
+};
 storiesOf('General|Selection Controls', module)
     .add('Switch', () => <SwitchStory />)
-    .add('Checkbox', () => <CheckboxStory />);
+    .add('Checkbox', () => <CheckboxStory />)
+    .add('Radio Button', () => <RadioButtonStory />);
