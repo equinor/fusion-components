@@ -14,6 +14,7 @@ export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
 export { default as TextInput } from "./components/general/TextInput";
+export { Switch, CheckBox } from "./components/general/SelectionControls";
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -40,6 +41,6 @@ export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { BlockIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
-export { SearchIcon } from './components/icons/components/action';
+export { SearchIcon, DoneIcon, MinimizeIcon } from './components/icons/components/action';
 
 
