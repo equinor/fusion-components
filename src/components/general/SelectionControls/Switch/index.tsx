@@ -16,9 +16,6 @@ const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
         const containerClassNames = classNames(styles.switchContainer, {
             [styles.disabled]: disabled,
         });
-        const switchClassNames = classNames(styles.switch, {
-            [styles.isActive]: active,
-        });
 
         const activatorClassNames = classNames(styles.activator, useElevationClassName(1));
 
@@ -36,13 +33,6 @@ const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
                 </label>
             </div>
         )
-        // return (
-        //     <div className={containerClassNames} onClick={onChange}>
-        //         <div className={switchClassNames} ref={switchRef}>
-        //             <div className={activatorClassNames} />
-        //         </div>
-        //     </div>
-        // );
     }
 );
 

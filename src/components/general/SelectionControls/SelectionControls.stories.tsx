@@ -8,6 +8,7 @@ const SwitchStory = () => {
         <div style={{ padding: '8px' }}>
             <Switch active={active} onChange={() => setActive(!active)} />
             <Switch disabled />
+            <Switch active disabled />
         </div>
     );
 };

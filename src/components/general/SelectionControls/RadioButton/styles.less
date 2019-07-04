@@ -3,20 +3,14 @@
 @import '../inputStyles.less';
 
 .radioButtonContainer {
-    .inputStyles(dot, initial, initial);
+    .inputStyles(dot, var(--color-primary), initial, initial);
 
     input + label {
         &::before {
-            box-sizing: border-box;
             border: 1px solid var(--color-primary);
-            content: '';
             width: .grid-unit(2px)[];
             height: .grid-unit(2px)[];
-            display: block;
-            position: absolute;
             border-radius: 50%;
-            text-align: center;
-            transition: all .2s;
         }
 
         .dot {
