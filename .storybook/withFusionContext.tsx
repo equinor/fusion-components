@@ -33,7 +33,6 @@ class StorybookAuthContainer extends AuthContainer {
     authToken: string = localStorage.getItem('FUSION_STORYBOOK_AUTH_TOKEN') || '';
 
     async handleWindowCallbackAsync(): Promise<void> {
-        debugger;
         await super.handleWindowCallbackAsync();
         // window.location.search = '?';
     }
