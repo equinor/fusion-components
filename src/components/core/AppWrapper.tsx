@@ -43,22 +43,25 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
         });
     }, [appKey]);
 
+    const appBasename = useMemo(() => combineUrls('apps', appKey || ''), [appKey]);
     const appHistory = useMemo(
-        () => createBrowserHistory({ basename: combineUrls('apps', appKey || '') }),
-        [appKey]
+        () => createBrowserHistory({ basename: appBasename }),
+        [appBasename]
     );
 
     // Keep global and app history objects in sync
     useEffect(() => {
         const unlistenFromGlobalHistory = history.listen(x => {
-            if (x.pathname !== appHistory.location.pathname) {
-                appHistory.push(x.pathname, x.state);
+            const pathname = x.pathname.replace(appBasename, "").replace(/\/\//gm, "/");
+            if (pathname !== appHistory.location.pathname) {
+                appHistory.push(pathname, x.state);
             }
         });
 
         const unlistenFromAppHistory = appHistory.listen(x => {
-            if (x.pathname !== history.location.pathname) {
-                history.push(x.pathname, x.state);
+            const pathname = combineUrls(appBasename, x.pathname);
+            if (pathname !== history.location.pathname) {
+                history.push(pathname, x.state);
             }
         });
 
