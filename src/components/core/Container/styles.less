@@ -11,10 +11,12 @@
         "content";
 
     &.comfortable {
-        grid-template-rows: calc((var(--grid-unit) * 10px) + 2px) auto;
+        --header-height: calc((var(--grid-unit) * 10px) + 2px);
+        grid-template-rows: var(--header-height) calc(100% - var(--header-height));
     }
 
     &.compact {
-        grid-template-rows: calc((var(--grid-unit) * 6px) + 2px) auto;
+        --header-height: calc((var(--grid-unit) * 6px) + 2px);
+        grid-template-rows: var(--header-height) calc(100% - var(--header-height));
     }
 }
