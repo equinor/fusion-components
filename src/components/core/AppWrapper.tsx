@@ -52,22 +52,16 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     // Keep global and app history objects in sync
     useEffect(() => {
         const unlistenFromGlobalHistory = history.listen(x => {
-            const pathname = x.pathname.replace(appBasename, "").replace(/\/\//gm, "/");
+            const pathname = x.pathname.replace(appBasename, "")
+                .replace(/\/\//gm, "/") // Replace double slashes (//) with single slash
+                .replace(/^\/*/, "/"); // Ensure single slash in the beginning
             if (pathname !== appHistory.location.pathname) {
                 appHistory.push(pathname, x.state);
             }
         });
 
-        const unlistenFromAppHistory = appHistory.listen(x => {
-            const pathname = combineUrls(appBasename, x.pathname);
-            if (pathname !== history.location.pathname) {
-                history.push(pathname, x.state);
-            }
-        });
-
         return () => {
             unlistenFromGlobalHistory();
-            unlistenFromAppHistory();
         };
     }, [appHistory]);
 
