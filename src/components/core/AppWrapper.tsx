@@ -10,6 +10,7 @@ type AppWrapperProps = {
 const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     const {
         app: { container: appContainer },
+        history,
     } = useFusionContext();
     const [isFetching, setIsFetching] = useState(false);
 
@@ -47,6 +48,26 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
         [appKey]
     );
 
+    // Keep global and app history objects in sync
+    useEffect(() => {
+        const unlistenFromGlobalHistory = history.listen(x => {
+            if (x.pathname !== appHistory.location.pathname) {
+                appHistory.push(x.pathname, x.state);
+            }
+        });
+
+        const unlistenFromAppHistory = appHistory.listen(x => {
+            if (x.pathname !== history.location.pathname) {
+                history.push(x.pathname, x.state);
+            }
+        });
+
+        return () => {
+            unlistenFromGlobalHistory();
+            unlistenFromAppHistory();
+        };
+    }, [appHistory]);
+
     if (currentApp === null && isFetching) {
         return <div>Is fetching</div>;
     }
@@ -61,7 +82,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     }
 
     return (
-        <HistoryContext.Provider value={{ history:  appHistory}}>
+        <HistoryContext.Provider value={{ history: appHistory }}>
             <Router history={appHistory}>
                 <AppComponent />
             </Router>
