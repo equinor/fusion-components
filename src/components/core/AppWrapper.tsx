@@ -1,10 +1,52 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Router } from 'react-router-dom';
-import { createBrowserHistory, Location } from 'history';
+import {
+    History,
+    Path,
+    LocationState,
+    LocationDescriptorObject,
+} from 'history';
+import { stripBasename, createPath } from 'history/PathUtils';
 import { useFusionContext, combineUrls, HistoryContext } from '@equinor/fusion';
 
 type AppWrapperProps = {
     appKey?: string;
+};
+
+const createAppHistory = (history: History, appKey?: string): History => {
+    const basename = combineUrls('/apps', appKey || '');
+
+    const ensurePathBaseName = (path: Path | LocationDescriptorObject<LocationState>) => {
+        if (!path.hasOwnProperty('pathname')) {
+            return combineUrls(basename, path.toString());
+        }
+
+        const location = path as LocationDescriptorObject<LocationState>;
+        return combineUrls(basename, createPath(location));
+    };
+
+    return {
+        ...history,
+        location: {
+            ...history.location,
+            pathname: stripBasename(history.location.pathname, basename),
+        },
+        createHref: location => basename + history.createHref(location),
+        push: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) =>
+            history.push(ensurePathBaseName(path), state),
+        replace: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) =>
+            history.replace(ensurePathBaseName(path), state),
+        listen: func =>
+            history.listen((location, action) =>
+                func(
+                    {
+                        ...location,
+                        pathname: stripBasename(location.pathname, basename),
+                    },
+                    action
+                )
+            ),
+    };
 };
 
 const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
@@ -43,37 +85,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
         });
     }, [appKey]);
 
-    const appBasename = useMemo(() => combineUrls('apps', appKey || ''), [appKey]);
-    const appHistory = useMemo(() => createBrowserHistory({ basename: appBasename }), [
-        appBasename,
-    ]);
-
-    const updateAppHistory = (location: Location<any>) => {
-        // Ignore paths that's not within the current app
-        if (location.pathname.indexOf(appBasename) === -1) {
-            return;
-        }
-
-        const pathname = location.pathname
-            .replace(appBasename, '') // App history is relative to the app basename, so remove it
-            .replace(/\/\//gm, '/') // Replace double slashes (//) with single slash
-            .replace(/^\/*/, '/'); // Ensure single slash in the beginning
-        if (pathname !== appHistory.location.pathname) {
-            appHistory.push(pathname, location.state);
-        }
-    };
-
-    // Keep global and app history objects in sync
-    useEffect(() => {
-        const unlistenFromGlobalHistory = history.listen(updateAppHistory);
-
-        // Perform initial sync
-        updateAppHistory(history.location);
-
-        return () => {
-            unlistenFromGlobalHistory();
-        };
-    }, [appHistory]);
+    const appHistory = useMemo(() => createAppHistory(history, appKey), [appKey]);
 
     if (currentApp === null && isFetching) {
         return <div>Is fetching</div>;
