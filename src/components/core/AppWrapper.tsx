@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Router } from 'react-router-dom';
-import {
-    History,
-    Path,
-    LocationState,
-    LocationDescriptorObject,
-} from 'history';
-import { stripBasename, createPath } from 'history/PathUtils';
+import { History, Path, LocationState, LocationDescriptorObject, createPath } from 'history';
 import { useFusionContext, combineUrls, HistoryContext } from '@equinor/fusion';
 
-type AppWrapperProps = {
-    appKey?: string;
+const hasBasename = (path: string, prefix: string) => {
+    return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
+};
+
+const stripBasename = (path: string, prefix: string) => {
+    return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
 };
 
 const createAppHistory = (history: History, appKey?: string): History => {
@@ -47,6 +45,10 @@ const createAppHistory = (history: History, appKey?: string): History => {
                 )
             ),
     };
+};
+
+type AppWrapperProps = {
+    appKey?: string;
 };
 
 const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
