@@ -15,7 +15,7 @@ const createAppHistory = (history: History, appKey?: string): History => {
     const basename = combineUrls('/apps', appKey || '');
 
     const ensurePathBaseName = (path: Path | LocationDescriptorObject<LocationState>) => {
-        if (!path.hasOwnProperty('pathname')) {
+        if (typeof path === "string") {
             return combineUrls(basename, path.toString());
         }
 
