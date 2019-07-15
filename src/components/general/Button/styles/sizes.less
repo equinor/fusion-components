@@ -2,7 +2,7 @@
 
 .button-size(@height-multiplier, @padding-multiplier, @font-size) {
     padding: calc(var(--click-area) * 1px) 0 calc(var(--click-area) * 1px) 0;
-    margin: calc(var(--click-area) * -1px);
+    margin: calc(var(--click-area) * -1px) 0;
     height: calc((var(--grid-unit) * @height-multiplier) + (var(--click-area) * 2px));
 
     .button {

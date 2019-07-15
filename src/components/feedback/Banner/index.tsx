@@ -27,12 +27,12 @@ const Banner: React.FC<BannerProps> = ({
     }, []);
 
     const cancelButton = (
-        <Button frameless comfortable onClick={onCancel}>
+        <Button frameless onClick={onCancel}>
             Dismiss
         </Button>
     );
     const actionButton = action ? (
-        <Button frameless comfortable onClick={onAction}>
+        <Button frameless onClick={onAction}>
             {actionLabel}
         </Button>
     ) : null;

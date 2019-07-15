@@ -1,5 +1,6 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
+import withFusionStory from "../../../../.storybook/withFusionStory";
 import useElevationClassName, { Elevation } from "../index";
 
 type BoxProps = {
@@ -48,6 +49,8 @@ const ElevationStory = () => (
     </div>
 );
 
-storiesOf("Hooks", module).add("useElevationClassName", () => {
-    return <ElevationStory />;
-});
+storiesOf("Hooks", module)
+    .addDecorator(withFusionStory("useElevationClassName"))
+    .add("useElevationClassName", () => {
+        return <ElevationStory />;
+    });

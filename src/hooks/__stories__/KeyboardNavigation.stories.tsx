@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import withFusionStory from "../../../.storybook/withFusionStory";
 import useKeyboardNavigation from '../useKeyboardNavigation';
 
 const KeyboardNavigationStory = () => {
@@ -47,6 +48,8 @@ const KeyboardNavigationStory = () => {
     );
 };
 
-storiesOf('Hooks|KeyboardNavigation', module).add('Default', () => {
-    return <KeyboardNavigationStory />;
-});
+storiesOf('Hooks|KeyboardNavigation', module)
+    .addDecorator(withFusionStory("KeyboardNavigation"))
+    .add('Default', () => {
+        return <KeyboardNavigationStory />;
+    });
