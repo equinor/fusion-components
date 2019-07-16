@@ -20,7 +20,8 @@ export default (isVisible: Boolean, content: ReactNode): void => {
             </Router>,
             ref.current
         );
-        overlayContainer.prepend(ref.current);
+        
+        overlayContainer.appendChild(ref.current);
 
         return () => {
             overlayContainer.removeChild(ref.current);
