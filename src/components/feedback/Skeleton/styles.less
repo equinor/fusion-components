@@ -1,0 +1,22 @@
+.bar {
+    display: inline-block;
+    height: calc(var(--grid-unit) * 2px);
+    background-image: linear-gradient(90deg, var(--color-black-alt4), var(--color-black-alt5), var(--color-black-alt4));
+    background-size: 200% calc(var(--grid-unit) * 2px);
+    animation: skeleton-slide 2s infinite forwards linear;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-slide {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: -100% 0%;
+    }
+
+    100% {
+        background-position: -200% 0%;
+    }
+}

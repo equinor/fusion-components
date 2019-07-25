@@ -79,22 +79,22 @@ class StorybookAuthContainer extends AuthContainer {
 
     protected buildLoginUrl(app: AuthApp, nonce: AuthNonce, customParams?: object): string {
         const base =
-            "https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0/oauth2/authorize";
+            'https://login.microsoftonline.com/3aa4a235-b6e2-48d5-9195-7fcf05b459b0/oauth2/authorize';
         const params: any = {
             ...customParams,
             client_id: app.clientId,
-            response_type: "id_token",
-            redirect_uri: getTopLevelWindow(window).location.origin + "?path=/signin",
-            domain_hint: "@equinor.com",
+            response_type: 'id_token',
+            redirect_uri: getTopLevelWindow(window).location.origin + '?path=/signin',
+            domain_hint: '@equinor.com',
             nonce: nonce.getKey(),
         };
 
         const queryString = Object.keys(params).reduce(
-            (query, key) => query + `${query ? "&" : ""}${key}=${encodeURIComponent(params[key])}`,
-            ""
+            (query, key) => query + `${query ? '&' : ''}${key}=${encodeURIComponent(params[key])}`,
+            ''
         );
 
-        return base + "?" + queryString;
+        return base + '?' + queryString;
     }
 }
 
@@ -112,7 +112,8 @@ const serviceResolver: ServiceResolver = {
     getOrgBaseUrl: () => 'https://pro-s-org-ci.azurewebsites.net',
     getPowerBiBaseUrl: () => 'https://pro-s-powerbi-ci.azurewebsites.net',
     getTasksBaseUrl: () => 'https://pro-s-tasks-ci.azurewebsites.net',
-    getProjectsApiUrl: () => 'https://pro-s-projects-ci.azurewebsites.net',
+    getProjectsBaseUrl: () => 'https://pro-s-projects-ci.azurewebsites.net',
+    getMeetingsBaseUrl: () => 'https://pro-s-meetingsv2-ci.azurewebsites.net',
 };
 
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
