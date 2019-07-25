@@ -1,0 +1,38 @@
+export default {
+    grid: (value: number) => `calc(var(--grid-unit) * ${value}px)`,
+
+    // Colors
+    cssColors: {
+        primary: 'var(--color-primary)',
+        primaryAlt1: 'var(--color-primary-alt1)',
+        primaryAlt2: 'var(--color-primary-alt2)',
+        primaryAlt3: 'var(--color-primary-alt3)',
+        primaryAlt4: 'var(--color-primary-alt4)',
+        primaryAccent: 'var(--color-primary-accent)',
+        primaryHover: 'var(--color-primary-hover)',
+        primaryHoverAlt1: 'var(--color-primary-hover-alt1)',
+        secondary: 'var(--color-secondary)',
+        secondaryAlt1: 'var(--color-secondary-alt1)',
+        secondaryAlt2: 'var(--color-secondary-alt2)',
+        secondaryAlt3: 'var(--color-secondary-alt3)',
+        secondaryAlt4: 'var(--color-secondary-alt4)',
+        secondaryAccent: 'var(--color-secondary-accent)',
+        black: 'var(--color-black)',
+        blackAlt1: 'var(--color-black-alt1)',
+        blackAlt2: 'var(--color-black-alt2)',
+        blackAlt3: 'var(--color-black-alt3)',
+        blackAlt4: 'var(--color-black-alt4)',
+        blackAlt5: 'var(--color-black-alt5)',
+        white: 'var(--color-white)',
+        supplementary: 'var(--color-supplementary)',
+        supplementaryAlt1: 'var(--color-supplementary-alt1)',
+        supplementaryAlt2: 'var(--color-supplementary-alt2)',
+        yellow: 'var(--color-yellow)',
+        orange: 'var(--color-orange)',
+        red: 'var(--color-red)',
+        green: 'var(--color-green)',
+        purple: 'var(--color-purple)',
+        blue: 'var(--color-blue)',
+        turquoise: 'var(--color-turquoise)',
+    }
+};

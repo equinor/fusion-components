@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-    useComponentDisplayType,
-    ComponentDisplayType,
+    useComponentDisplayClassNames,
     useCurrentApp,
     combineUrls,
 } from '@equinor/fusion';
@@ -22,12 +21,7 @@ type FusionHeaderProps = {
 const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) => {
     const currentApp = useCurrentApp();
 
-    const componentDisplayType = useComponentDisplayType();
-
-    const headerClassNames = classNames(styles.container, {
-        [styles.comfortable]: componentDisplayType === ComponentDisplayType.Comfortable,
-        [styles.compact]: componentDisplayType === ComponentDisplayType.Compact,
-    });
+    const headerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
     return (
         <header className={headerClassNames}>
