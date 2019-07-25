@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { Button } from 'index';
@@ -6,7 +6,7 @@ import { Button } from 'index';
 type BannerProps = {
     message: string;
     icon?: any;
-    onCancel: () => void;
+    onDismiss: () => void;
     action?: boolean;
     actionLabel?: string;
     onAction?: () => void;
@@ -15,22 +15,17 @@ type BannerProps = {
 const Banner: React.FC<BannerProps> = ({
     message,
     icon,
-    onCancel,
+    onDismiss,
     action,
     actionLabel,
     onAction,
 }) => {
-    const [isVisible, setIsVisible] = React.useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    const cancelButton = (
-        <Button frameless onClick={onCancel}>
-            Dismiss
-        </Button>
-    );
     const actionButton = action ? (
         <Button frameless onClick={onAction}>
             {actionLabel}
@@ -51,7 +46,9 @@ const Banner: React.FC<BannerProps> = ({
             </div>
             <div className={styles.actions}>
                 {actionButton}
-                {cancelButton}
+                <Button frameless onClick={onDismiss}>
+                    Dismiss
+                </Button>
             </div>
         </div>
     );
