@@ -53,8 +53,8 @@ const FusionStory = () => {
     const onSnackbarClick = async () => {
         const response = await sendNotificationAsync({
             level: 'low',
-            title: 'This is a snackbar #' + snackbarCount++,
-            cancelLabel: 'Cancel',
+            title: 'This is is low priority notification #' + snackbarCount++,
+            cancelLabel: 'Undo',
         });
 
         snackbar(response);
@@ -63,7 +63,7 @@ const FusionStory = () => {
     const onBannerClick = async () => {
         const response = await sendNotificationAsync({
             level: 'medium',
-            title: 'What a nice banner! This is nr. ' + bannerCount++,
+            title: 'What a nice banner! And this is medium priority notification #' + bannerCount++,
             confirmLabel: 'Sure is',
         });
 
@@ -73,7 +73,7 @@ const FusionStory = () => {
     const onDialogClick = async () => {
         const response = await sendNotificationAsync({
             level: 'high',
-            title: 'Are you sure this is a dialog?',
+            title: 'Are you sure you want a blocking notification?',
             body:
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in fringilla magna, nec posuere justo.',
             cancelLabel: 'Cancel',
@@ -100,9 +100,9 @@ const FusionStory = () => {
                     <h3>The header disappears when scrolling past ~50%</h3>
                     <h4>But works like a charm when placed directly within body with margin: 0;</h4>
                     <p>
-                        <Button onClick={onSnackbarClick}>Show snackbar</Button>
-                        <Button onClick={onBannerClick}>Show banner</Button>
-                        <Button onClick={onDialogClick}>Show dialog</Button>
+                        <Button onClick={onSnackbarClick}>Show low priority notification</Button>
+                        <Button onClick={onBannerClick}>Show medium priority notification</Button>
+                        <Button onClick={onDialogClick}>Show high priority blocking notification</Button>
                     </p>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in fringilla
