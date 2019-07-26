@@ -10,7 +10,7 @@ import useContextSearchResults from './useContextSearchResults';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { SearchIcon } from '../../icons/components/action';
-import { Spinner } from 'index';
+import { Spinner } from '@equinor/fusion-components';
 
 type ContextSelectorProps = {
     types: ContextTypes[];

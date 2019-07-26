@@ -1,8 +1,7 @@
 import React, { useRef, useCallback } from 'react';
-import { DataTableListProps } from '../types';
+import { DataTableListProps } from '../dataTableTypes';
 import styles from '../styles.less';
-import { PaginationArrow } from 'components/icons/components/navigation';
-import { IconButton, SkeletonBar } from 'index';
+import { IconButton, SkeletonBar, PaginationArrow } from '@equinor/fusion-components';
 import { getString } from '../utils';
 import { Page } from '@equinor/fusion';
 

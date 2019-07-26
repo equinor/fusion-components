@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '../Button';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { BlockIcon, WarningIcon, SyncDisabledIcon } from 'index';
+import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 export enum ErrorTypes {

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import styles from '../styles.less';
-import { ExpandCellProps } from '../types';
+import { ExpandCellProps } from '../dataTableTypes';
 
 const ExpandCell: React.FC<ExpandCellProps> = ({
     isExpandable,

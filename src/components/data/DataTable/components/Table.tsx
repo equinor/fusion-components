@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { DataTableTableProps } from '../types';
+import { DataTableTableProps } from '../dataTableTypes';
 import DataTableHeader from './Header';
 import DataTableBody from './Body';
 import DataTableSkeleton from './Skeleton';

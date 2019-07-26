@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTableBodyProps } from '../types';
+import { DataTableBodyProps } from '../dataTableTypes';
 import Row from './Row';
 import { getString, getBoolean } from '../utils';
 

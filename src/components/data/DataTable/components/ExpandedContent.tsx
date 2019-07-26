@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExpandedContentProps } from '../types';
+import { ExpandedContentProps } from '../dataTableTypes';
 import styles from '../styles.less';
 import { getCellContent } from '../utils';
 

@@ -14,7 +14,7 @@ import {
     useElevationClassName,
     useRelativePortal,
     useClickOutsideOverlayPortal,
-} from 'index';
+} from '@equinor/fusion-components';
 
 export default (
     inputRef: HTMLElement | null,

@@ -2,7 +2,7 @@ import React from 'react';
 import { actions } from '@storybook/addon-actions';
 import { DataTableColumn } from '../index';
 import { DataItem } from './storyData';
-import { Button, styling } from 'index';
+import { Button, styling } from '@equinor/fusion-components';
 
 const eventsFromNames = actions('onClick');
 

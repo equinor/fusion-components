@@ -1,11 +1,11 @@
 import React from 'react';
-import { DataTableProps } from './types';
+import { DataTableProps } from './dataTableTypes';
 import Table from './components/Table';
 import List from './components/List';
 import styles from './styles.less';
 import classnames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { useHorizontalBreakpoint } from 'index';
+import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 
 enum Breakpoints {
     medium = 'medium',
@@ -81,6 +81,6 @@ function DataTable<T>({
     );
 }
 
-export { DataTableColumn } from './types';
+export { DataTableColumn } from './dataTableTypes';
 
 export default DataTable;

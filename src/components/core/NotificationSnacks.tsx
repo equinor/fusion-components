@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import { useFusionContext, NotificationRequest, NotificationResponse } from '@equinor/fusion';
-import { Snackbar } from 'index';
+import { Snackbar } from '@equinor/fusion-components';
 
 const NotificationSnacks: React.FC = () => {
     const { notificationCenter } = useFusionContext();

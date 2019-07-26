@@ -1,9 +1,9 @@
 import React from 'react';
-import { DataTableHeaderProps, DataTableColumn } from '../types';
+import { DataTableHeaderProps, DataTableColumn } from '../dataTableTypes';
 import styles from '../styles.less';
 import classnames from 'classnames';
 import { SortDirection } from '@equinor/fusion';
-import { SortIcon } from 'components/icons/components/action';
+import { SortIcon } from '@equinor/fusion-components';
 
 function getCellClassNames<T>(base: string, column: DataTableColumn<T>) {
     return classnames(base, {

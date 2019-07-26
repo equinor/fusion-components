@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import FusionHeader from '../Header';
 import FusionContent from '../Content';
-import { IconButton, Button } from 'index';
+import { IconButton, Button } from '@equinor/fusion-components';
 import { useFusionContext, useNotificationCenter } from '@equinor/fusion';
 
 const snackbar = action('snackbar');

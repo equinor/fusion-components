@@ -5,8 +5,8 @@ import {
     DataTableColumn,
     DataItemBooleanAccessor,
     DataItemBooleanAccessorFunction,
-} from './types';
-import { useEventListener } from 'index';
+} from './dataTableTypes';
+import { useEventListener } from '@equinor/fusion-components';
 
 export const getString = <T>(item: T, accessor: DataItemPropertyAccessor<T>): string => {
     if (typeof accessor === 'string') {

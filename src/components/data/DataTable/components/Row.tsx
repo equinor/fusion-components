@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DataTableRowProps } from '../types';
+import { DataTableRowProps } from '../dataTableTypes';
 import Cell from './Cell';
 import ExpandCell from './ExpandCell';
 import ExpandedContent from './ExpandedContent';

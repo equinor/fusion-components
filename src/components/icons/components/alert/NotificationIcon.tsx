@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IconProps, useIcon } from 'index';
+import { IconProps, useIcon } from '@equinor/fusion-components';
 
 const NotificationIcon = (props: IconProps) => {
     const iconFactory = useIcon(

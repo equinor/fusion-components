@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { useElevationClassName, useEventListener } from 'index';
+import { useElevationClassName, useEventListener } from '@equinor/fusion-components';
 
 export enum VerticalPositions {
     Top = 'top',

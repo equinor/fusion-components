@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import { useFusionContext, NotificationRequest, NotificationResponse } from '@equinor/fusion';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from 'index';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@equinor/fusion-components';
 
 import styles from './styles.less';
 

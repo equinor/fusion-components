@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useFusionContext, NotificationRequest, NotificationResponse } from '@equinor/fusion';
-import { Banner } from 'index';
+import { Banner } from '@equinor/fusion-components';
 
 type BannerNotification = {
     request: NotificationRequest;

@@ -6,7 +6,7 @@ import {
     useRelativePositioning,
     useClickOutsideOverlayPortal,
     useOverlayPortal,
-} from 'index';
+} from '@equinor/fusion-components';
 
 export default <T extends HTMLElement>(
     content: React.ReactNode,

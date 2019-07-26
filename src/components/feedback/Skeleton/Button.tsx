@@ -1,6 +1,6 @@
 import React from 'react';
 import SkeletonBar from './Bar';
-import { Button, ButtonProps } from 'index';
+import { Button, ButtonProps } from '@equinor/fusion-components';
 
 type SkeletonButtonProps = ButtonProps & {
     width?: number | string;

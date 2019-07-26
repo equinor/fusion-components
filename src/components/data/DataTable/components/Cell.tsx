@@ -1,5 +1,5 @@
 import React from 'react';
-import { DataTableCellProps } from '../types';
+import { DataTableCellProps } from '../dataTableTypes';
 import { getCellContent } from '../utils';
 import classNames from 'classnames';
 import styles from '../styles.less';
