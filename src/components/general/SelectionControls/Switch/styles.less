@@ -1,0 +1,60 @@
+@import '~styles/mixins.less';
+@import '../inputStyles.less';
+
+.switchContainer {
+    .inputStyles(activator, var(--color-supplementary-alt1), var(--color-supplementary-alt1), var(--color-black-alt4));
+
+    input + label {
+        &::before {
+            border: 1px solid var(--color-black-alt3);
+            height: .grid-unit(1px)[];
+            width: 34px;
+            border-radius: 4px;
+            background-color: var(--color-black-alt3);
+            align-items: center;
+            z-index: 0;            
+        }
+        .activator{
+            background-color: var(--color-black-alt2);
+            border-radius: 50%;
+            width: .grid-unit(2px)[];
+            height: .grid-unit(2px)[];
+            transition: transform ease 0.2s;
+            left: 0;
+            z-index: 1;
+            position: absolute;
+            transform: translateX(calc(var(--grid-unit) * 2px - 1px));
+        }
+    }
+
+    input:checked + label {
+        border-color: var(--color-supplementary-alt1);
+        .activator{
+            transform: translateX(33px);
+            background-color: var(--color-primary);
+        }
+    }
+
+    &:hover:not(.disabled){
+        input + label{
+            .activator{
+                background-color: var(--color-primary-hover);
+            }
+        }  
+    }
+    
+    &.disabled{
+        input + label{
+            &::before {
+                border-color: var(--color-black-alt4);
+                background-color: var(--color-black-alt4)
+            }
+            .activator {
+                opacity: 1;
+            }
+        }
+       
+    }
+  
+}
+

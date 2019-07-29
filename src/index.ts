@@ -17,6 +17,7 @@ export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
 export { default as TextInput } from "./components/general/TextInput";
+export { Switch, CheckBox, RadioButton } from "./components/general/SelectionControls";
 export { default as Pagination, PaginationSkeleton, PaginationChangeHandler } from "./components/general/Pagination";
 
 // Feedback components
@@ -49,7 +50,7 @@ export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { BlockIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
-export { SearchIcon, SortIcon } from './components/icons/components/action';
+export { SearchIcon, DoneIcon, SortIcon, MinimizeIcon } from './components/icons/components/action';
 export { PaginationArrow } from './components/icons/components/navigation';
 
 // Styling
