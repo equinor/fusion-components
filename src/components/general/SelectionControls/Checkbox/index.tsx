@@ -20,8 +20,8 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
         });
 
         useEffect(() => {
-            if (inputRef.current && indeterminate) {
-                inputRef.current.indeterminate = true;
+            if (inputRef.current) {
+                inputRef.current.indeterminate = indeterminate ? true : false;
             }
         }, [indeterminate]);
 
