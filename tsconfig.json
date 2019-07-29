@@ -5,20 +5,24 @@
         "importHelpers": true,
         "module": "esnext",
         "outDir": "dist",
-        "rootDir": "./src",
-        "baseUrl": "./src",
+        "rootDir": "src",
+        "baseUrl": "./",
         "strict": true,
         "target": "es2017",
         "composite": false,
         "moduleResolution": "node",
         "jsx": "react",
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "paths": {
+            "@equinor/fusion-components": ["./src/index"]
+        }
     },
     "include": [
-        "./src/**/*",
+        "src/**/*",
         "./css-modules.d.ts",
     ],
     "exclude": [
-        "./src/**/*.stories.*"
+        "src/**/*.stories.*",
+        "src/**/__stories__/*"
     ]
 }

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
+import withFusionStory from "../../../../../.storybook/withFusionStory";
 import ErrorBoundary from "../index";
 import Button from "../../Button";
 
@@ -12,10 +13,7 @@ const BuggyDivider = () => {
     return (
         <div
             style={{
-                position: "relative",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "10%",
+                margin: "0 auto",
                 textAlign: "center",
             }}
         >
@@ -36,4 +34,5 @@ const ErrorBoundaryStory = () => {
 
 storiesOf("General|ErrorBoundary", module)
     .addParameters({ jest: ["ErrorBoundary.stories.tsx"] })
+    .addDecorator(withFusionStory("ErrorBoundary"))
     .add("ErrorBoundary", () => <ErrorBoundaryStory />);

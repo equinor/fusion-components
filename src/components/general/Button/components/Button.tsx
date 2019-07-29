@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Content from './Content';
 import getButtonClasses from '../buttonClasses';
+import { ComponentDisplayType } from '@equinor/fusion';
 
 type ButtonProps = {
     disabled?: boolean;
@@ -8,7 +9,7 @@ type ButtonProps = {
     onClickCapture?: React.EventHandler<React.SyntheticEvent>;
     onMouseDown?: React.EventHandler<React.SyntheticEvent>;
     onMouseUp?: React.EventHandler<React.SyntheticEvent>;
-    displayType: string;
+    displayType: ComponentDisplayType;
     mouseHasBeenDown: boolean;
 };
 

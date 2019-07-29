@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { useElevationClassName } from 'index';
+import { useElevationClassName, useEventListener } from '@equinor/fusion-components';
 
 export enum VerticalPositions {
     Top = 'top',
@@ -21,6 +21,7 @@ type SnackBarProps = {
     onCancel?: () => void;
     cancellable?: boolean;
     abortSignal: AbortSignal;
+    onDismiss: () => void;
 };
 
 const SnackBar: React.FC<SnackBarProps> = ({
@@ -31,16 +32,20 @@ const SnackBar: React.FC<SnackBarProps> = ({
     onCancel,
     cancellable,
     abortSignal,
+    onDismiss,
 }) => {
-    const [isVisible, setIsVisible] = React.useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    const onAbort = React.useCallback(() => setIsVisible(false), []);
+    const onAbort = useCallback(() => {
+        setIsVisible(false);
+        onDismiss();
+    }, [onDismiss]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         abortSignal.addEventListener('abort', onAbort);
         return () => {
             abortSignal.removeEventListener('abort', onAbort);

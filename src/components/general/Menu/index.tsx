@@ -2,7 +2,7 @@ import * as React from "react";
 import classNames from "classnames";
 import MenuItem, { MenuItemType } from "./MenuItem";
 import styles from "./styles.less";
-import { useKeyboardNavigation, Elevation, useElevationClassName } from 'index';
+import { useKeyboardNavigation, Elevation, useElevationClassName } from '@equinor/fusion-components';
 
 export type MenuSection = {
     key: string,

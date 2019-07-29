@@ -4,14 +4,13 @@ import {
     useContextManager,
     useCurrentContext,
     Context,
-    useComponentDisplayType,
-    ComponentDisplayType,
+    useComponentDisplayClassNames,
 } from '@equinor/fusion';
 import useContextSearchResults from './useContextSearchResults';
 import classNames from 'classnames';
 import styles from './styles.less';
-import SearchIcon from '../../icons/components/search';
-import { Spinner } from 'index';
+import { SearchIcon } from '../../icons/components/action';
+import { Spinner } from '@equinor/fusion-components';
 
 type ContextSelectorProps = {
     types: ContextTypes[];
@@ -151,11 +150,7 @@ const ContextSelector: React.FC<ContextSelectorProps> = ({ types }: ContextSelec
         return 'Select context';
     };
 
-    const componentDisplayType = useComponentDisplayType();
-    const containerClassNames = classNames(styles.container, {
-        [styles.comfortable]: componentDisplayType === ComponentDisplayType.Comfortable,
-        [styles.compact]: componentDisplayType === ComponentDisplayType.Compact,
-    });
+    const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
     return (
         <div ref={containerRef} onClick={onOpen} className={containerClassNames}>

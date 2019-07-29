@@ -1,15 +1,60 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-import { useFusionContext, combineUrls } from '@equinor/fusion';
+import { History, Path, LocationState, LocationDescriptorObject, createPath } from 'history';
+import { useFusionContext, combineUrls, HistoryContext } from '@equinor/fusion';
+
+const hasBasename = (path: string, prefix: string) => {
+    return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
+};
+
+const stripBasename = (path: string, prefix: string) => {
+    return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
+};
+
+const createAppHistory = (history: History, appKey?: string): History => {
+    const basename = combineUrls('/apps', appKey || '');
+
+    const ensurePathBaseName = (path: Path | LocationDescriptorObject<LocationState>) => {
+        if (typeof path === "string") {
+            return combineUrls(basename, path.toString());
+        }
+
+        const location = path as LocationDescriptorObject<LocationState>;
+        return combineUrls(basename, createPath(location));
+    };
+
+    return {
+        ...history,
+        location: {
+            ...history.location,
+            pathname: stripBasename(history.location.pathname, basename),
+        },
+        createHref: location => basename + history.createHref(location),
+        push: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) =>
+            history.push(ensurePathBaseName(path), state),
+        replace: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) =>
+            history.replace(ensurePathBaseName(path), state),
+        listen: func =>
+            history.listen((location, action) =>
+                func(
+                    {
+                        ...location,
+                        pathname: stripBasename(location.pathname, basename),
+                    },
+                    action
+                )
+            ),
+    };
+};
 
 type AppWrapperProps = {
     appKey?: string;
 };
 
-const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
+const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     const {
         app: { container: appContainer },
+        history,
     } = useFusionContext();
     const [isFetching, setIsFetching] = useState(false);
 
@@ -23,6 +68,9 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
 
     useEffect(() => {
         setCurrentApp();
+        return () => {
+            appContainer.setCurrentAppAsync(null);
+        };
     }, [appKey]);
 
     const [, forceUpdate] = useState();
@@ -39,10 +87,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
         });
     }, [appKey]);
 
-    const appHistory = useMemo(
-        () => createBrowserHistory({ basename: combineUrls('app', appKey || '') }),
-        [appKey]
-    );
+    const appHistory = useMemo(() => createAppHistory(history, appKey), [appKey]);
 
     if (currentApp === null && isFetching) {
         return <div>Is fetching</div>;
@@ -58,9 +103,11 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }: AppWrapperProps) => {
     }
 
     return (
-        <Router history={appHistory}>
-            <AppComponent />
-        </Router>
+        <HistoryContext.Provider value={{ history: appHistory }}>
+            <Router history={appHistory}>
+                <AppComponent />
+            </Router>
+        </HistoryContext.Provider>
     );
 };
 

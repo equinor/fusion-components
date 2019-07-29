@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "0.0.13",
+    "version": "0.0.33",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -8,8 +8,12 @@
         "test": "jest",
         "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
         "storybook": "start-storybook -p 9001 -c .storybook",
+        "start": "start-storybook -p 9001 -c .storybook",
         "build:storybook": "build-storybook -c .storybook -o ./docs",
-        "prepublish": "yarn test"
+        "prepublish": "yarn test",
+        "prebuild": "rm -rf dist",
+        "build": "webpack",
+        "postbuild": "tsc --emitDeclarationOnly true"
     },
     "repository": {
         "type": "git",
@@ -32,15 +36,16 @@
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
-        "@storybook/addon-actions": "^5.0.10",
+        "@equinor/fusion": "^0.1.85",
+        "@storybook/addon-actions": "^5.1.9",
         "@storybook/addon-info": "^5.1.9",
-        "@storybook/addon-jest": "^5.0.10",
-        "@storybook/addon-knobs": "^5.0.11",
-        "@storybook/addon-options": "^5.0.10",
+        "@storybook/addon-jest": "^5.1.9",
+        "@storybook/addon-knobs": "^5.1.9",
+        "@storybook/addon-options": "^5.1.9",
         "@storybook/addon-storyshots": "^5.1.9",
-        "@storybook/addon-viewport": "^5.0.11",
-        "@storybook/react": "^5.0.10",
-        "@storybook/theming": "^5.0.11",
+        "@storybook/addon-viewport": "^5.1.9",
+        "@storybook/react": "^5.1.9",
+        "@storybook/theming": "^5.1.9",
         "@types/classnames": "^2.2.7",
         "@types/enzyme": "^3.9.1",
         "@types/jest": "^24.0.11",
@@ -68,6 +73,7 @@
         "eslint-plugin-prettier": "^3.0.1",
         "eslint-plugin-react": "7.12.4",
         "file-loader": "^3.0.1",
+        "history": "^4.9.0",
         "identity-obj-proxy": "^3.0.0",
         "jest": "^24.7.1",
         "jsdom": "^15.0.0",
@@ -75,9 +81,11 @@
         "less-loader": "^4.1.0",
         "prettier": "^1.17.0",
         "prettier-loader": "^2.1.1",
+        "prettier-stylelint": "^0.4.2",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
+        "react-router-dom": "^5.0.1",
         "react-test-renderer": "^16.8.6",
         "style-loader": "^0.23.1",
         "ts-jest": "^24.0.2",
@@ -89,16 +97,14 @@
     },
     "peerDependencies": {
         "react": "^16.8.1",
-        "@equinor/fusion": "^0.1.39",
-        "react-router-dom": "^5.0.1"
+        "@equinor/fusion": "^0.1.66",
+        "react-router-dom": "^5.0.1",
+        "history": "^4.9.0"
     },
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
     },
-    "dependencies": {
-        "@equinor/fusion": "^0.1.41",
-        "react-router-dom": "^5.0.1"
-    },
+    "dependencies": {},
     "files": [
         "/dist"
     ]

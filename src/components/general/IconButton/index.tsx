@@ -2,22 +2,21 @@ import React, { forwardRef, PropsWithChildren, MutableRefObject, useRef, MouseEv
 import classNames from 'classnames';
 
 import styles from './styles.less';
-import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type IconButtonProps = {
     active?: boolean;
     toggler?: boolean;
+    disabled?: boolean;
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconButtonProps>>(
-    ({ active, toggler, children, ...props }, ref) => {
-        const displayType = useComponentDisplayType();
-        const buttonClassNames = classNames(styles.container, {
-            [styles.compact]: displayType === ComponentDisplayType.Compact,
-            [styles.comfortable]: displayType === ComponentDisplayType.Comfortable,
+    ({ active, toggler, disabled, children, ...props }, ref) => {
+        const buttonClassNames = classNames(styles.container, useComponentDisplayClassNames(styles), {
             [styles.isToggler]: toggler,
             [styles.isActive]: active,
+            [styles.isDisabled]: disabled,
             ["isActive"]: active,
         });
 
@@ -26,7 +25,7 @@ const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconBu
             useRef<HTMLButtonElement | null>(null);
 
         return (
-            <button ref={buttonRef} className={buttonClassNames} {...props}>
+            <button ref={buttonRef} className={buttonClassNames} disabled={disabled} {...props}>
                 <span className={styles.iconContainer}>{children}</span>
             </button>
         );

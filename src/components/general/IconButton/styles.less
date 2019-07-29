@@ -22,13 +22,7 @@
     &.isToggler {
         .iconContainer {
             border-radius: 1px;
-        }
-    }
-
-    &:hover {
-        .iconContainer {
-             background-color: var(--color-black-alt5);
-             border-color: var(--color-black-alt4);
+            border: 1px solid var(--color-black-alt4);
         }
     }
 
@@ -45,6 +39,41 @@
         .display-type(4px);
     }
 
+    &.isDisabled,
+    &.isDisabled:active,
+    &.isDisabled:hover,
+    &.isDisabled:hover:not(:active),
+    &.isDisabled:hover:not(:active):not(.isActive) {
+        cursor: not-allowed;
+
+        .iconContainer {
+            color: var(--color-black-alt3);
+            background: none;
+            border-color: transparent;
+            box-shadow: initial;
+        }
+    }
+
+    &:hover {
+        .iconContainer {
+            background-color: var(--color-primary-alt4);
+            border-color: var(--color-primary-alt4);
+            color: var(--color-primary-hover);
+        }
+        &:not(:active) {
+            .iconContainer{
+                background-color: var(--color-primary-hover);
+
+            }
+            &:not(.isActive){
+                .iconContainer {
+                    background-color: var(--color-black-alt5);
+                }
+            }
+        }
+        
+    }
+
     &.isActive {
         .iconContainer {
             background-color: var(--color-primary);
@@ -57,16 +86,28 @@
                 width: calc(100% - (var(--grid-unit) * 1px));
                 height: calc(100% - (var(--grid-unit) * 1px));
                 margin: calc(var(--grid-unit) * .5px);
+                border-radius: 4px;
             }   
         }
     }
-
     &:active {
         .iconContainer {
             background-color: var(--color-primary-alt4);
             border-color: var(--color-primary-alt4);
             box-shadow: 0 0 0 2px var(--color-primary-alt4);
             color: var(--color-primary) !important;
+        }
+        
+        &.isToggler {
+            .iconContainer {
+                margin: auto;
+                width: calc(var(--grid-unit) * 4px);
+                height: calc(var(--grid-unit) * 4px);
+                border-radius: 4px;
+                background-color: var(--color-primary-alt3);
+                box-shadow: 0 0 0 2px var(--color-primary-alt3);
+                border-color: var(--color-primary-alt3);
+            }
         }
     }
 }

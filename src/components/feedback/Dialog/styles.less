@@ -6,7 +6,9 @@
     border: 1px solid var(--color-black-alt4);
     border-radius: 4px;
     width: .grid-unit(70px)[];
-    max-height: .grid-unit(29px)[];
+    // max-height: .grid-unit(29px)[];
+    background: var(--color-white);    
+    margin: calc(var(--grid-unit) * 10px) 0;
 
     @media (max-width: @mobile-max-width) {
         width: .grid-unit(35px)[];
@@ -23,8 +25,8 @@
         margin: .grid-unit(1px)[] .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
         line-height: .grid-unit(3px)[];
         font-size: 16px;
-        max-height: .grid-unit(9px)[];
-        overflow-y: hidden;
+        // max-height: .grid-unit(9px)[];
+        // overflow-y: hidden;
 
         @media (max-width: @mobile-max-width) {
             max-height: calc(80vh - .grid-unit(18px)[]);

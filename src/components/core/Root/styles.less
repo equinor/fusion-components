@@ -41,10 +41,14 @@
         line-height: calc(var(--grid-unit) * 3px);
         font-weight: 500;
     }
+
+    --overlay-z-index: 9991;
+    --snacks-z-index: 9992;
+    --dialog-z-index: 9993;
 }
 
 .overlay {
-    position: absolute;
+    position: fixed;
     overflow: visible;
     width: 0;
     height: 0;
@@ -52,7 +56,26 @@
     height: 0;
     pointer-events: none;
     top: 0; left: 0;
-    z-index: 99999999999;
+    z-index: var(--overlay-z-index);
+}
+
+.snacks {
+    position: fixed;
+    bottom: calc(var(--grid-unit) * 2px);
+    left: calc(var(--grid-unit) * 2px);
+    overflow: visible;
+    z-index: var(--snacks-z-index);
+}
+
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    pointer-events: none;
+    z-index: var(--dialog-z-index);
 }
 
 :global {

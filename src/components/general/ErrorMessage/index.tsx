@@ -2,7 +2,8 @@ import * as React from 'react';
 import Button from '../Button';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { BlockIcon, WarningIcon, SyncDisabledIcon } from 'index';
+import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 export enum ErrorTypes {
     error = 'error',
@@ -21,7 +22,6 @@ export type ErrorMessageProps = {
     icon?: any;
     action?: string;
     onTakeAction?: (event?: React.SyntheticEvent<Element, Event>) => void;
-    small?: boolean;
 };
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({
@@ -34,7 +34,6 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     icon,
     action,
     onTakeAction,
-    small,
 }) => {
     const getErrorMessageForType = errorType => {
         const iconProps = {
@@ -73,9 +72,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     }
     const error = React.useMemo(() => getErrorMessageForType(errorType), [errorType]);
 
-    const messageContainerClasses = classNames(styles.messageContainer, {
-        [styles.small]: small,
-    });
+    const messageContainerClasses = classNames(styles.messageContainer, useComponentDisplayClassNames(styles));
 
     return (
         <div className={styles.container}>

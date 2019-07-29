@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import withFusionStory from "../../../../.storybook/withFusionStory";
 import TextInput from './index';
 import { useKeyboardNavigation, Spinner, SearchIcon } from "index";
 
@@ -61,7 +62,6 @@ const TextInputStory = () => {
                 onIconAction={simulateLoad}
                 error={hasError}
                 errorMessage="Error: At least 8 characters"
-                label="Search"
                 ref={inputRef}
             />
             <br />
@@ -69,4 +69,6 @@ const TextInputStory = () => {
     );
 };
 
-storiesOf('General|TextInput', module).add('Default', () => <TextInputStory />);
+storiesOf('General|TextInput', module)
+    .addDecorator(withFusionStory("TextInput"))
+    .add('Default', () => <TextInputStory />);

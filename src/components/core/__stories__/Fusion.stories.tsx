@@ -1,9 +1,14 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import FusionHeader from '../Header';
 import FusionContent from '../Content';
-import { IconButton } from 'index';
-import { useFusionContext } from '@equinor/fusion';
+import { IconButton, Button } from '@equinor/fusion-components';
+import { useFusionContext, useNotificationCenter } from '@equinor/fusion';
+
+const snackbar = action('snackbar');
+const banner = action('banner');
+const dialog = action('dialog');
 
 const AppSelectorIcon = () => {
     return (
@@ -24,10 +29,14 @@ const AppSelectorIcon = () => {
     );
 };
 
+let snackbarCount = 1;
+let bannerCount = 1;
+
 const FusionStory = () => {
     const { app } = useFusionContext();
+    const sendNotificationAsync = useNotificationCenter();
 
-    React.useEffect(() => {
+    useEffect(() => {
         app.container.updateManifest('storybook', {
             AppComponent: FusionContent,
             key: 'storybook',
@@ -40,6 +49,39 @@ const FusionStory = () => {
 
         app.container.setCurrentAppAsync('storybook');
     }, []);
+
+    const onSnackbarClick = async () => {
+        const response = await sendNotificationAsync({
+            level: 'low',
+            title: 'This is is low priority notification #' + snackbarCount++,
+            cancelLabel: 'Undo',
+        });
+
+        snackbar(response);
+    };
+
+    const onBannerClick = async () => {
+        const response = await sendNotificationAsync({
+            level: 'medium',
+            title: 'What a nice banner! And this is medium priority notification #' + bannerCount++,
+            confirmLabel: 'Sure is',
+        });
+
+        banner(response);
+    };
+
+    const onDialogClick = async () => {
+        const response = await sendNotificationAsync({
+            level: 'high',
+            title: 'Are you sure you want a blocking notification?',
+            body:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in fringilla magna, nec posuere justo.',
+            cancelLabel: 'Cancel',
+            confirmLabel: 'I\'m sure',
+        });
+
+        dialog(response);
+    };
 
     return (
         <React.Fragment>
@@ -57,6 +99,11 @@ const FusionStory = () => {
                     <h2>Scrolling appears a bit weird in Storybook</h2>
                     <h3>The header disappears when scrolling past ~50%</h3>
                     <h4>But works like a charm when placed directly within body with margin: 0;</h4>
+                    <p>
+                        <Button onClick={onSnackbarClick}>Show low priority notification</Button>
+                        <Button onClick={onBannerClick}>Show medium priority notification</Button>
+                        <Button onClick={onDialogClick}>Show high priority blocking notification</Button>
+                    </p>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in fringilla
                         magna, nec posuere justo. Nullam tempus lectus lorem, at venenatis magna

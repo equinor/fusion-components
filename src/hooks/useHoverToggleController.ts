@@ -1,5 +1,5 @@
 import { useRef, useState, MutableRefObject, useCallback } from 'react';
-import { useEventListener } from 'index';
+import { useEventListener } from '@equinor/fusion-components';
 
 let showTimeout: NodeJS.Timeout;
 export default (delay: number = 300): [Boolean, MutableRefObject<any>] => {

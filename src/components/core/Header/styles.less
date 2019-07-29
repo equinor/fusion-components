@@ -9,14 +9,16 @@
     align-items: center;
     background: white;
     border-bottom: 2px solid var(--color-black-alt4);
-    position: -webkit-sticky;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 2;
 
     &.comfortable {
         padding: 0 .grid-unit(2px)[];
         height: .grid-unit(10px)[];
+        width: calc(100% - (var(--grid-unit) * 4px));
 
         .startContainer, .asideContainer {
             > button {
@@ -45,6 +47,7 @@
     &.compact {
         padding: 0 .grid-unit(2px)[];
         height: .grid-unit(6px)[];
+        width: calc(100% - (var(--grid-unit) * 4px));
 
         .startContainer, .asideContainer {
             > button {
@@ -73,23 +76,23 @@
     .appNameLink,
     .appNameLink:visited,
     .appNameLink:hover,
+    .appNameLink:focus,
     .appNameLink.active {
         text-decoration: none;
-        color: var(--color-primary-accent);
+        color: var(--color-primary-accent) !important;
         font-size: 16px;
-        font-weight: 200;
+        font-weight: 400;
         display: inline-flex;
         height: 100%;
         align-items: center;
     }
 }
 
-.fusionTitleContainer,
-.fusionTitleContainer:visited,
-.fusionTitleContainer:hover,
-.fusionTitleContainer:active,
-.fusionLogo,
-.fusionTitle {
+.fusionTitleContainer a,
+.fusionTitleContainer a:visited,
+.fusionTitleContainer a:hover,
+.fusionTitleContainer a:focus,
+.fusionTitleContainer a:active {
     padding: 0;
     height: 100%;
     display: flex;
@@ -97,7 +100,7 @@
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    color: var(--color-primary-accent);
+    color: var(--color-primary-accent) !important;
 }
 
 
@@ -111,6 +114,8 @@
 
 .fusionTitleContainer {
     grid-area: logo;
+    display: flex;
+    align-items: center;
 }
 
 .contentContainer {
