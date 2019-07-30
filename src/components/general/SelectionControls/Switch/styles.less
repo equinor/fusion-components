@@ -4,6 +4,20 @@
 .switchContainer {
     .inputStyles(activator, var(--color-supplementary-alt1), var(--color-supplementary-alt1), var(--color-black-alt4));
 
+    &.compact {
+        input + label {
+            &::before{
+                width: 22px;
+           
+            }
+            .activator{
+                width: .grid-unit(1.5px)[];
+                height: .grid-unit(1.5px)[];
+                transform: translateX(calc(var(--grid-unit) * 1.8px - 1px));
+            }
+        }
+    }
+
     input + label {
         &::before {
             border: 1px solid var(--color-black-alt3);
@@ -32,7 +46,12 @@
         .activator{
             transform: translateX(33px);
             background-color: var(--color-primary);
+
+            &.compact {
+                transform: translateX(22px);
+            }
         }
+        
     }
 
     &:hover:not(.disabled){

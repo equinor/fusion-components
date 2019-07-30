@@ -10,6 +10,11 @@
     justify-content: center;
     align-items: center;
 
+    &.compact {
+        height: .grid-unit(4px)[];
+        width: .grid-unit(4px)[];
+    }
+
     input {
         opacity: 0;
         position: absolute;
@@ -20,7 +25,6 @@
     }
 
     input + label {
-        position: relative;
         color: var(--color-white);
         cursor: pointer;
         display: flex;

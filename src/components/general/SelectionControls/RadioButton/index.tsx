@@ -2,6 +2,7 @@ import React, { MutableRefObject, forwardRef } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { useColorOverrideFilter } from "../utils";
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type RadioProps = {
     selected?: boolean;
@@ -14,7 +15,7 @@ const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
     ({ selected, onChange, disabled, color }, ref) => {
 
         const inputRef = ref as MutableRefObject<HTMLInputElement | null>;
-        const containerClassNames = classNames(styles.radioButtonContainer, {
+        const containerClassNames = classNames(styles.radioButtonContainer, useComponentDisplayClassNames(styles),{
             [styles.disabled]: disabled,
         });
 
