@@ -12,7 +12,7 @@ import {
     useSorting,
     Pagination,
 } from '@equinor/fusion';
-import { DataTableColumn } from '../types';
+import { DataTableColumn } from '@equinor/fusion-components';
 
 const emptyArray = [];
 const WithSkeleton: React.FC = () => {
