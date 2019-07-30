@@ -24,7 +24,7 @@ function Table<T>({
     const tableRef = useRef<HTMLDivElement>(null);
     const skeletonRows = pagination ? pagination.perPage : 10;
 
-    const { visibleColumns, collapsedColumns } = useVisibleColumns(columns, tableRef);
+    const { visibleColumns, collapsedColumns } = useVisibleColumns(columns, tableRef, [data]);
     const columnTemplate = generateColumnTemplate(visibleColumns);
     const [expandedItems, setExpandedItems] = useState<T[]>([]);
     const rowTemplate = generateRowTemplate(data, expandedItems, skeletonRows);
