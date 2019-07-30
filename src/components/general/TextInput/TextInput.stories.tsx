@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from "../../../../.storybook/withFusionStory";
 import TextInput from './index';
-import { useKeyboardNavigation, Spinner, SearchIcon } from "index";
+import { useKeyboardNavigation, Spinner, SearchIcon } from "@equinor/fusion-components";
 
 const TextInputStory = () => {
     const [value, setValue] = React.useState('');
