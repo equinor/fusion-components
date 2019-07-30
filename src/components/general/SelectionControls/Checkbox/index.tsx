@@ -2,6 +2,7 @@ import React, { useRef, MutableRefObject, forwardRef, useEffect } from 'react';
 import styles from './styles.less';
 import { DoneIcon, MinimizeIcon } from 'index';
 import classNames from 'classnames';
+import { useComponentDisplayType } from '@equinor/fusion';
 
 type CheckboxProps = {
     selected?: boolean;
@@ -14,6 +15,8 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
     ({ selected, onChange, disabled, indeterminate }, ref) => {
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
+
+        const displayType = useComponentDisplayType();
 
         const containerClassNames = classNames(styles.checkboxContainer, {
             [styles.disabled]: disabled,
