@@ -19,6 +19,7 @@ export { Tabs, Tab } from './components/general/Tabs';
 export { default as TextInput } from "./components/general/TextInput";
 export { Switch, CheckBox, RadioButton } from "./components/general/SelectionControls";
 export { default as Pagination, PaginationSkeleton, PaginationChangeHandler } from "./components/general/Pagination";
+export { default as FilterPane, FilterTypes, applyFilters, FilterTerm, FilterSection, Count, FilterCount } from "./components/general/FilterPane";
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -50,8 +51,8 @@ export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { BlockIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
-export { SearchIcon, DoneIcon, SortIcon, MinimizeIcon } from './components/icons/components/action';
-export { PaginationArrow, DropArrow } from './components/icons/components/navigation';
+export { SearchIcon, DoneIcon, SortIcon, MinimizeIcon, DropdownArrow, CollapseIcon } from './components/icons/components/action';
+export { PaginationArrow } from './components/icons/components/navigation';
 
 // Styling
 export { default as styling } from "./styles/styling";

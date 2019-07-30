@@ -14,7 +14,7 @@
         "jsx": "react",
         "noImplicitAny": false,
         "paths": {
-            "@equinor/fusion-components": ["./src/index"]
+            "@equinor/fusion-components": ["./src/index.ts"]
         }
     },
     "include": [
