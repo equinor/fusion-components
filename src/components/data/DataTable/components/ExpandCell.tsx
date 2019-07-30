@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from '../styles.less';
 import { ExpandCellProps } from '../dataTableTypes';
+import { DropdownArrow } from "@equinor/fusion-components"
 
 const ExpandCell: React.FC<ExpandCellProps> = ({
     isExpandable,
@@ -21,7 +22,7 @@ const ExpandCell: React.FC<ExpandCellProps> = ({
             [styles.isHovering]: isHovering,
         })}
     >
-        {isExpandable && <span>&gt;</span>}
+        {isExpandable && <DropdownArrow isOpen={isExpanded} />}
     </div>
 );
 

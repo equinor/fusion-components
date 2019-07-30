@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
-import { withKnobs, number, color, select } from '@storybook/addon-knobs';
+import { withKnobs, number, color, select, boolean } from '@storybook/addon-knobs';
 import withFusionStory from "../../../../.storybook/withFusionStory";
 
-import { SearchIcon, DoneIcon, SortIcon, MinimizeIcon } from '../components/action';
+import { SearchIcon, DoneIcon, SortIcon, MinimizeIcon, DropdownArrow } from '../components/action';
 
 const eventsFromNames = actions('onClick');
 
@@ -46,5 +46,11 @@ stories.add('Sort', () => (
             Ascending: 'asc',
             Descending: 'desc',
         })}
+    />
+));
+stories.add('Dropdown', () => (
+    <DropdownArrow
+        {...eventsFromNames}
+        isOpen={boolean('I sopen')}
     />
 ));

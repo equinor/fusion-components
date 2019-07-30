@@ -101,7 +101,8 @@ const hasNarrowerParent = (node: HTMLElement, width?: number): boolean => {
  */
 export const useVisibleColumns = <T>(
     columns: DataTableColumn<T>[],
-    ref: React.RefObject<HTMLDivElement>
+    ref: React.RefObject<HTMLDivElement>,
+    deps: any[]
 ) => {
     const [collapsedColumns, setCollapsedColumns] = useState<DataTableColumn<T>[]>([]);
     const [testCollapsedColumns, setTestCollapsedColumns] = useState<DataTableColumn<T>[]>([]);
@@ -148,7 +149,11 @@ export const useVisibleColumns = <T>(
 
         const columnsLeft = columns.length - collapsedColumns.length;
 
-        if (isNarrower && (resize.from > resize.to || resize.from === resize.to) && columnsLeft > 2) {
+        if (
+            isNarrower &&
+            (resize.from > resize.to || resize.from === resize.to) &&
+            columnsLeft > 2
+        ) {
             // The table is wider that the parent, and the user is making the window smaller
             // so we need to recalculate columns
             setShouldRecalculateColumns(true);
@@ -190,6 +195,7 @@ export const useVisibleColumns = <T>(
         shouldRecalculateColumns,
         collapsedColumns,
         resize,
+        ...deps,
     ]);
 
     const onResize = () => {

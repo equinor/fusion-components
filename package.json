@@ -53,6 +53,7 @@
         "@types/react-dom": "^16.8.4",
         "@types/react-router-dom": "^4.3.3",
         "@types/storybook__react": "^4.0.1",
+        "@types/tinycolor2": "^1.4.2",
         "awesome-typescript-loader": "^5.2.1",
         "babel-core": "7.0.0-bridge.0",
         "babel-eslint": "^10.0.1",
@@ -104,7 +105,9 @@
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
     },
-    "dependencies": {},
+    "dependencies": {
+        "tinycolor2": "^1.4.1"
+    },
     "files": [
         "/dist"
     ]
