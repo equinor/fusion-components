@@ -51,7 +51,7 @@ export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { BlockIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
 export { SearchIcon, DoneIcon, SortIcon, MinimizeIcon } from './components/icons/components/action';
-export { PaginationArrow } from './components/icons/components/navigation';
+export { PaginationArrow, DropArrow } from './components/icons/components/navigation';
 
 // Styling
 export { default as styling } from "./styles/styling";

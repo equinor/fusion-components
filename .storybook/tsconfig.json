@@ -3,6 +3,10 @@
         "jsx": "react",
         "allowSyntheticDefaultImports": true,
         "rootDir": "../",
+        "baseUrl": "../",
+        "paths": {
+            "@equinor/fusion-components": ["./src/index"]
+        }
     },
     "include": [
         "../src/**/*",
