@@ -2,7 +2,7 @@ import React, { useRef, MutableRefObject, forwardRef, useEffect } from 'react';
 import styles from './styles.less';
 import { DoneIcon, MinimizeIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import tinycolor from 'tinycolor2';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { useColorOverrideFilter } from '../utils';
 
 type CheckboxProps = {
@@ -18,7 +18,8 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
 
-        const containerClassNames = classNames(styles.checkboxContainer, {
+
+        const containerClassNames = classNames(styles.checkboxContainer, useComponentDisplayClassNames(styles),{
             [styles.disabled]: disabled,
         });
 

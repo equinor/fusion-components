@@ -5,7 +5,19 @@
 .radioButtonContainer {
     .inputStyles(dot, var(--color-primary), initial, initial);
 
+    &.compact {
+        input + label {
+            &::before{
+                width: .grid-unit(1.8px)[];
+                height: .grid-unit(1.8px)[];
+           
+            }
+        }
+    }
+    
     input + label {
+        position: relative;
+
         &::before {
             border: 1px solid var(--color-primary);
             width: .grid-unit(2px)[];
