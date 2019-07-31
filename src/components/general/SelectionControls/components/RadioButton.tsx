@@ -1,7 +1,6 @@
 import React, { MutableRefObject, forwardRef } from 'react';
-import styles from './styles.less';
+import styles from '../styles.less';
 import classNames from 'classnames';
-import { useColorOverrideFilter } from "../utils";
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type RadioProps = {
@@ -13,16 +12,18 @@ type RadioProps = {
 
 const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
     ({ selected, onChange, disabled, color }, ref) => {
-
         const inputRef = ref as MutableRefObject<HTMLInputElement | null>;
-        const containerClassNames = classNames(styles.radioButtonContainer, useComponentDisplayClassNames(styles),{
-            [styles.disabled]: disabled,
-        });
-
-        const { hueFilter, slFilter } = useColorOverrideFilter(color);
+        const containerClassNames = classNames(
+            styles.container,
+            styles.radio,
+            useComponentDisplayClassNames(styles),
+            {
+                [styles.disabled]: disabled,
+            }
+        );
 
         return (
-            <div style={{ filter: hueFilter }} className={containerClassNames} onClick={onChange}>
+            <div className={containerClassNames} onClick={onChange}>
                 <input
                     type="radio"
                     checked={selected}
@@ -30,8 +31,8 @@ const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
                     readOnly
                     ref={inputRef}
                 />
-                <label style={{ filter: slFilter }}>
-                    <span className={styles.dot} />
+                <label style={{ borderColor: color }}>
+                    <span className={styles.dot} style={{ backgroundColor: color }} />
                 </label>
             </div>
         );
