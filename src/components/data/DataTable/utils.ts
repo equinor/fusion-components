@@ -135,7 +135,7 @@ export const useVisibleColumns = <T>(
 
         // Check if the parent is narrower than the table
         const isNarrower = hasNarrowerParent(ref.current);
-        console.log(isNarrower)
+
         const columnsLeft = columns.length - collapsedColumns.length;
 
         if (
