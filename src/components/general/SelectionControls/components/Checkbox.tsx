@@ -1,9 +1,8 @@
 import React, { useRef, MutableRefObject, forwardRef, useEffect } from 'react';
-import styles from './styles.less';
+import styles from '../styles.less';
 import { DoneIcon, MinimizeIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import tinycolor from 'tinycolor2';
-import { useColorOverrideFilter } from '../utils';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type CheckboxProps = {
     selected?: boolean;
@@ -18,9 +17,14 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
 
-        const containerClassNames = classNames(styles.checkboxContainer, {
-            [styles.disabled]: disabled,
-        });
+        const containerClassNames = classNames(
+            styles.container,
+            styles.checkbox,
+            useComponentDisplayClassNames(styles),
+            {
+                [styles.disabled]: disabled,
+            }
+        );
 
         useEffect(() => {
             if (inputRef.current) {
@@ -28,10 +32,8 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
             }
         }, [indeterminate]);
 
-        const { hueFilter, slFilter } = useColorOverrideFilter(color);
-
         return (
-            <div style={{ filter: hueFilter }} className={containerClassNames} onClick={onChange}>
+            <div className={containerClassNames} onClick={onChange}>
                 <input
                     type="checkbox"
                     checked={selected}
@@ -39,13 +41,9 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
                     readOnly
                     ref={inputRef}
                 />
-                <label style={{ filter: slFilter }}>
+                <label style={{ borderColor: color, backgroundColor: color }}>
                     <span className={styles.checkmark}>
-                        {indeterminate ? (
-                            <MinimizeIcon width={16} height={16} />
-                        ) : (
-                            <DoneIcon width={16} height={16} />
-                        )}
+                        {indeterminate ? <MinimizeIcon /> : selected ? <DoneIcon /> : null}
                     </span>
                 </label>
             </div>

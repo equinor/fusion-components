@@ -1,7 +1,8 @@
 import React, { forwardRef, MutableRefObject } from 'react';
 import classNames from 'classnames';
-import styles from './styles.less';
+import styles from '../styles.less';
 import { useElevationClassName } from '@equinor/fusion-components';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type SwitchProps = {
     active?: boolean;
@@ -13,13 +14,18 @@ const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
     ({ active, onChange, disabled }, ref) => {
         const switchRef = ref as MutableRefObject<HTMLInputElement | null>;
 
-        const containerClassNames = classNames(styles.switchContainer, {
-            [styles.disabled]: disabled,
-        });
+        const containerClassNames = classNames(
+            styles.container,
+            styles.switch,
+            useComponentDisplayClassNames(styles),
+            {
+                [styles.disabled]: disabled,
+            }
+        );
 
-        const activatorClassNames = classNames(styles.activator, useElevationClassName(1));
+        const activatorClassNames = classNames(styles.activator, useElevationClassName(2));
 
-        return(
+        return (
             <div className={containerClassNames} onClick={onChange}>
                 <input
                     type="checkbox"
@@ -32,7 +38,7 @@ const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
                     <span className={activatorClassNames} />
                 </label>
             </div>
-        )
+        );
     }
 );
 

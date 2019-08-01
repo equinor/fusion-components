@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "0.0.33",
+    "version": "0.0.35",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -105,9 +105,7 @@
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
     },
-    "dependencies": {
-        "tinycolor2": "^1.4.1"
-    },
+    "dependencies": {},
     "files": [
         "/dist"
     ]

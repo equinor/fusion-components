@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import withFusionStory from "../../../../.storybook/withFusionStory";
 import { Switch, CheckBox, RadioButton } from './index';
 
 const SwitchStory = () => {
@@ -31,11 +32,12 @@ const RadioButtonStory = () => {
         <div style={{ padding: '8px' }}>
             <RadioButton selected={active} onChange={() => setActive(!active)} />
             <RadioButton disabled />
-            <RadioButton disabled selected/>
+            <RadioButton disabled selected />
         </div>
     );
 };
 storiesOf('General|Selection Controls', module)
+    .addDecorator(withFusionStory('Selection Controls'))
     .add('Switch', () => <SwitchStory />)
     .add('Checkbox', () => <CheckboxStory />)
     .add('Radio Button', () => <RadioButtonStory />);
