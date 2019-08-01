@@ -78,18 +78,19 @@ export const generateRowTemplate = <T>(rows: T[], expandedRows: T[], skeletonRow
 };
 
 const hasNarrowerParent = (node: HTMLElement, width?: number): boolean => {
-    width = width || node.offsetWidth;
-    const parent = node.parentElement;
+    return node.scrollWidth > node.offsetWidth;
+    // width = width || node.offsetWidth;
+    // const parent = node.parentElement;
 
-    if (!parent) {
-        return false;
-    }
+    // if (!parent) {
+    //     return false;
+    // }
 
-    if (parent.offsetWidth < width) {
-        return true;
-    }
+    // if (parent.offsetWidth < width) {
+    //     return true;
+    // }
 
-    return hasNarrowerParent(parent, width);
+    // return hasNarrowerParent(parent, width);
 };
 
 /**
@@ -146,7 +147,7 @@ export const useVisibleColumns = <T>(
 
         // Check if the parent is narrower than the table
         const isNarrower = hasNarrowerParent(ref.current);
-
+        console.log(isNarrower)
         const columnsLeft = columns.length - collapsedColumns.length;
 
         if (

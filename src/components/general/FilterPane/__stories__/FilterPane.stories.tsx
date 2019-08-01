@@ -161,7 +161,7 @@ const FilterPaneStory: React.FC = () => {
     };
 
     return (
-        <div style={{ display: 'flex', height: '100%' }}>
+        <div style={{ display: 'flex', height: '100%', width: '100%' }}>
             <FilterPane
                 id="story"
                 data={storyData}
@@ -169,7 +169,7 @@ const FilterPaneStory: React.FC = () => {
                 terms={terms}
                 onChange={onChange}
             />
-            <div style={{ marginLeft: styling.grid(2) }}>
+            <div style={{ marginLeft: styling.grid(2), width: 1, flexGrow: 1, }}>
                 <Table data={filteredData} />
             </div>
         </div>
