@@ -79,18 +79,6 @@ export const generateRowTemplate = <T>(rows: T[], expandedRows: T[], skeletonRow
 
 const hasNarrowerParent = (node: HTMLElement, width?: number): boolean => {
     return node.scrollWidth > node.offsetWidth;
-    // width = width || node.offsetWidth;
-    // const parent = node.parentElement;
-
-    // if (!parent) {
-    //     return false;
-    // }
-
-    // if (parent.offsetWidth < width) {
-    //     return true;
-    // }
-
-    // return hasNarrowerParent(parent, width);
 };
 
 /**
