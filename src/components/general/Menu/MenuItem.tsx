@@ -39,7 +39,7 @@ const MenuItem: React.FC<MenuItemProps> = props => {
             disabled={props.item.isDisabled}
             ref={ref}
             tabIndex={props.index + 1}
-            onClick={onClick}
+            onMouseDown={onClick}
         >
             <span>
                 <span>{props.item.title}</span>

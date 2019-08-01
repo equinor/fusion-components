@@ -1,47 +1,77 @@
-import React, { useState, useRef } from 'react';
-import { TextInput, DropArrow, Menu } from '@equinor/fusion-components';
+import React, { useState, useRef, useCallback } from 'react';
+import {
+    TextInput,
+    DropdownArrow,
+    Menu,
+    useClickOutsideOverlayPortal,
+    useRelativePortal,
+} from '@equinor/fusion-components';
+import styles from './styles.less';
 
-const Dropdown = () => {
+type DropdownSelections = {
+    title: string;
+    key: string;
+};
+
+type DropdownProps = {
+    label?: string;
+    selections: DropdownSelections[];
+    onSelect?: (item: DropdownSelections) => void;
+    selected?: string;
+};
+
+const Dropdown: React.FC<DropdownProps> = ({ selections, label, onSelect, selected }) => {
     const [open, setOpen] = useState(false);
-    const [dropdownValue, setDropdownValue] = useState("");
+    const [inputValue, setInputValue] = useState('');
+    const [dropdownSelections, setDropdownSelections] = useState(selections);
+
     const inputRef = useRef<HTMLInputElement | null>(null);
-    return (
-        <div>
-            <TextInput
-                onChange={() => setOpen(!open)}
-                label="Dropdown"
-                icon={<DropArrow cursor="pointer" direction={open ? 'up' : 'down'} />}
-                onIconAction={() => setOpen(!open)}
-                value={dropdownValue}
-            />
+    const inputContainerRef = useRef<HTMLDivElement | null>(null);
+
+    const close = useCallback(() => open && setOpen(false), [open]);
+
+    const filterSearch = useCallback(inputValue => {
+        setDropdownSelections(
+            selections.filter(selection =>
+                selection.title.toLowerCase().includes(inputValue.toLowerCase())
+            )
+        );
+    }, []);
+
+    useClickOutsideOverlayPortal(close, inputContainerRef.current);
+
+    useRelativePortal(
+        <div className={styles.menuContainer}>
             <Menu
-                onClick={item => setDropdownValue("item")}
-                keyboardNavigationRef={inputRef}
+                onClick={item => {
+                    onSelect && onSelect(item);
+                    setOpen(false);
+                }}
+                keyboardNavigationRef={inputRef.current}
                 sections={[
                     {
-                        key: 'This is the only section, but I still need a key',
-                        items: [
-                            {
-                                key: '1',
-                                title: 'First',
-                            },
-                            {
-                                key: '2',
-                                title: 'Selected',
-                                isSelected: true,
-                            },
-                            {
-                                key: '3',
-                                title: 'Disabled',
-                                isDisabled: true,
-                            },
-                            {
-                                key: '4',
-                                title: 'Last',
-                            },
-                        ],
+                        key: 'DropdownSelection',
+                        items: dropdownSelections,
                     },
                 ]}
+            />
+        </div>,
+        inputContainerRef,
+        open
+    );
+    return (
+        <div className={styles.inputContainer} ref={inputContainerRef}>
+            <TextInput
+                onChange={value => {
+                    setInputValue(value);
+                    filterSearch(value);
+                }}
+                label={label}
+                icon={<DropdownArrow cursor="pointer" isOpen={open} />}
+                onIconAction={() => open && setOpen(false)}
+                onClick={() => !open && setOpen(true)}
+                value={open ? inputValue : selected}
+                ref={inputRef}
             />
         </div>
     );
