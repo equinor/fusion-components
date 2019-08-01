@@ -63,6 +63,10 @@ const Dropdown: React.FC<DropdownProps> = ({ selections, label, onSelect, select
         <div className={styles.inputContainer} ref={inputContainerRef}>
             <TextInput
                 onChange={value => {
+                    if (!open) {
+                        setOpen(true);
+                        return;
+                    }
                     setInputValue(value);
                     filterSearch(value);
                 }}
