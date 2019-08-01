@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Dropdown from './index';
+import withFusionStory from '../../../../.storybook/withFusionStory';
 
 const DropdownStory = () => {
     const [selected, setSelected] = React.useState('');
@@ -26,10 +27,10 @@ const DropdownStory = () => {
                     },
                 ]}
                 label="Dropdown"
-                selected = {selected}
+                selected={selected}
                 onSelect={item => setSelected(item.title)}
             />
-            <br/>
+            <br />
             <Dropdown
                 selections={[
                     {
@@ -49,11 +50,13 @@ const DropdownStory = () => {
                         title: 'Last',
                     },
                 ]}
-                selected = {selected}
+                selected={selected}
                 onSelect={item => setSelected(item.title)}
             />
         </div>
     );
 };
 
-storiesOf('General|Dropdown', module).add('Default', () => <DropdownStory />);
+storiesOf('General|Dropdown', module)
+    .addDecorator(withFusionStory('Tabs'))
+    .add('Default', () => <DropdownStory />);
