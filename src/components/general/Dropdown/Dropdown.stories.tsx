@@ -58,5 +58,5 @@ const DropdownStory = () => {
 };
 
 storiesOf('General|Dropdown', module)
-    .addDecorator(withFusionStory('Tabs'))
+    .addDecorator(withFusionStory('Dropdown'))
     .add('Default', () => <DropdownStory />);

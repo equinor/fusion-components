@@ -6,7 +6,6 @@ const eslint = require('../build/eslint');
 const prettier = require('../build/prettier');
 const resolve = require('../build/resolve');
 const typescript = require('../build/typescript');
-const path = require('path');
 
 module.exports = ({ config }) =>
     merge(config, styles, fonts, eslint, prettier, typescript('../'), resolve, {
