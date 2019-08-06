@@ -57,3 +57,6 @@ export { PaginationArrow } from './components/icons/components/navigation';
 // Styling
 export { default as styling } from "./styles/styling";
 
+// Utils
+export {default as RelativeOverlayPortal} from "./components/utils/RelativeOverlayPortal"
+

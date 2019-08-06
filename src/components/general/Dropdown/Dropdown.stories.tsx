@@ -8,7 +8,7 @@ const DropdownStory = () => {
     return (
         <div style={{ margin: '8px' }}>
             <Dropdown
-                selections={[
+                options={[
                     {
                         key: '1',
                         title: 'First',
@@ -32,7 +32,7 @@ const DropdownStory = () => {
             />
             <br />
             <Dropdown
-                selections={[
+                options={[
                     {
                         key: '1',
                         title: 'First',
