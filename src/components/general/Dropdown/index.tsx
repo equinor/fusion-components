@@ -3,15 +3,15 @@ import React, {
     useRef,
     useCallback,
     useEffect,
-    forwardRef,
     MutableRefObject,
+    ReactNode,
+    FC,
 } from 'react';
 import {
     TextInput,
     DropdownArrow,
     Menu,
     useClickOutsideOverlayPortal,
-    useRelativePortal,
     useOverlayContainer,
     useRelativePositioning,
 } from '@equinor/fusion-components';
@@ -32,7 +32,7 @@ type DropdownProps = {
     selected?: string;
 };
 
-const Dropdown: React.FC<DropdownProps> = ({ selections, label, onSelect, selected }) => {
+const Dropdown: FC<DropdownProps> = ({ selections, label, onSelect, selected }) => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [dropdownSelections, setDropdownSelections] = useState(selections);
@@ -51,29 +51,7 @@ const Dropdown: React.FC<DropdownProps> = ({ selections, label, onSelect, select
     }, []);
 
     useClickOutsideOverlayPortal(close, inputContainerRef.current);
-    // console.log("IS OPEN", open);
-    // useRelativePortal(
-    //     <div className={styles.menuContainer}>
-    //         <Menu
-    //             onClick={item => {
-    //                 console.log(open);
-    //                 if (open) {
-    //                     onSelect && onSelect(item);
-    //                     setOpen(false);
-    //                 }
-    //             }}
-    //             keyboardNavigationRef={inputRef.current}
-    //             sections={[
-    //                 {
-    //                     key: 'DropdownSelection',
-    //                     items: dropdownSelections,
-    //                 },
-    //             ]}
-    //         />
-    //     </div>,
-    //     inputContainerRef,
-    //     open
-    // );
+
     return (
         <div className={styles.inputContainer} ref={inputContainerRef}>
             <TextInput
@@ -92,7 +70,7 @@ const Dropdown: React.FC<DropdownProps> = ({ selections, label, onSelect, select
                 value={open ? inputValue : selected}
                 ref={inputRef}
             />
-            <Overlay relativeRef={inputContainerRef} >
+            <Overlay relativeRef={inputContainerRef} show={open}>
                 <div className={styles.menuContainer}>
                     <Menu
                         onClick={item => {
@@ -116,34 +94,49 @@ const Dropdown: React.FC<DropdownProps> = ({ selections, label, onSelect, select
     );
 };
 
-const Overlay = ({ children, relativeRef }) => {
+type OverlayProps = {
+    children?: ReactNode,
+    relativeRef: MutableRefObject<HTMLElement | null>,
+    show?: boolean
+
+}
+
+const Overlay: FC<OverlayProps> = ({ children, relativeRef, show }) => {
     const fusionContext = useFusionContext();
-    const ref = document.createElement('div');
+    const element = document.createElement('div');
     const overlayContainer = useOverlayContainer();
-    const rect = useRelativePositioning(relativeRef as MutableRefObject<HTMLDivElement | null>);
+    const rect = useRelativePositioning(relativeRef);
 
     useEffect(() => {
-        overlayContainer && overlayContainer.appendChild(ref);
+        overlayContainer && overlayContainer.appendChild(element);
 
         return () => {
-            overlayContainer && overlayContainer.removeChild(ref);
+            overlayContainer && overlayContainer.removeChild(element);
         };
     }, []);
-    return createPortal(
-        <div
-            style={{
-                position: 'absolute',
-                width: rect.width,
-                height: rect.height,
-                top: rect.top,
-                left: rect.left,
-            }}
-        >
-            <Router history={fusionContext.history}>
-                <FusionContext.Provider value={fusionContext}>{children}</FusionContext.Provider>
-            </Router>
-        </div>,
-        ref
+    if(show===false) {
+        return null;
+    }
+    return (
+        overlayContainer &&
+        createPortal(
+            <div
+                style={{
+                    position: 'absolute',
+                    width: rect.width,
+                    height: rect.height,
+                    top: rect.top,
+                    left: rect.left,
+                }}
+            >
+                <Router history={fusionContext.history}>
+                    <FusionContext.Provider value={fusionContext}>
+                        {children}
+                    </FusionContext.Provider>
+                </Router>
+            </div>,
+            overlayContainer
+        )
     );
 };
 
