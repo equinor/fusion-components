@@ -74,7 +74,6 @@ const Dropdown: FC<DropdownProps> = ({ selections, label, onSelect, selected }) 
                 <div className={styles.menuContainer}>
                     <Menu
                         onClick={item => {
-                            console.log(open);
                             if (open) {
                                 onSelect && onSelect(item);
                                 setOpen(false);
