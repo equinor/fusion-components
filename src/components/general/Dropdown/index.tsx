@@ -57,6 +57,13 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect }) => {
         return selectedItem ? selectedItem.title : '';
     }, [open, inputValue, options]);
 
+    const select = useCallback(item => {
+        if (open) {
+            onSelect && onSelect(item);
+            setOpen(false);
+            setInputValue('');
+        }
+    },[open, onSelect])
 
     return (
         <div className={styles.inputContainer} ref={inputContainerRef}>
@@ -78,12 +85,7 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect }) => {
             <RelativeOverlayPortal relativeRef={inputContainerRef} show={open}>
                 <div className={styles.menuContainer}>
                     <Menu
-                        onClick={item => {
-                            if (open) {
-                                onSelect && onSelect(item);
-                                setOpen(false);
-                            }
-                        }}
+                        onClick={select}
                         keyboardNavigationRef={inputRef.current}
                         sections={[
                             {
