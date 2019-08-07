@@ -1,60 +1,47 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Dropdown from './index';
+import Dropdown,{DropdownOption} from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 
+const dropdownOptions = [
+    {
+        key: '1',
+        title: 'First',
+    },
+    {
+        key: '2',
+        title: 'Selected',
+        isSelected: true,
+    },
+    {
+        key: '3',
+        title: 'Disabled',
+        isDisabled: true,
+    },
+    {
+        key: '4',
+        title: 'Last',
+    },
+];
+
 const DropdownStory = () => {
-    const [selected, setSelected] = React.useState('');
-    const [selectedNoLabel, setSelectedNoLabel] = React.useState('');
+
+    const [options, setOptions] = React.useState<DropdownOption[]>(dropdownOptions);
+    const [optionsNoLAbel, setOptionsNoLabel] = React.useState<DropdownOption[]>(dropdownOptions);
+
+    const updateOptions = item => options.map(option =>{ return {...option, isSelected : item.key === option.key}});
+
     return (
         <div style={{ margin: '8px' }}>
             <Dropdown
-                options={[
-                    {
-                        key: '1',
-                        title: 'First',
-                    },
-                    {
-                        key: '2',
-                        title: 'Selected',
-                        isSelected: true,
-                    },
-                    {
-                        key: '3',
-                        title: 'Disabled',
-                        isDisabled: true,
-                    },
-                    {
-                        key: '4',
-                        title: 'Last',
-                    },
-                ]}
+                options={options}
                 label="Dropdown"
-                selected={selected}
-                onSelect={item => setSelected(item.title)}
+                onSelect={item => setOptions(updateOptions(item))}
             />
-            <br />
+            <br/>
             <Dropdown
-                options={[
-                    {
-                        key: '1',
-                        title: 'First',
-                    },
-                    {
-                        key: '2',
-                        title: 'Selected',
-                    },
-                    {
-                        key: '3',
-                        title: 'Disabled',
-                    },
-                    {
-                        key: '4',
-                        title: 'Last',
-                    },
-                ]}
-                selected={selectedNoLabel}
-                onSelect={item => setSelectedNoLabel(item.title)}
+                options={optionsNoLAbel}
+                onSelect={item => setOptionsNoLabel(updateOptions(item))}
             />
         </div>
     );

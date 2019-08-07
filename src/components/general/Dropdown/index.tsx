@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, FC, useEffect } from 'react';
+import React, { useState, useRef, useCallback, FC, useEffect, useMemo } from 'react';
 import {
     TextInput,
     DropdownArrow,
@@ -8,7 +8,7 @@ import {
 } from '@equinor/fusion-components';
 import styles from './styles.less';
 
-type DropdownOption = {
+export type DropdownOption = {
     title: string;
     key: string;
     isSelected?: boolean;
@@ -19,10 +19,9 @@ type DropdownProps = {
     label?: string;
     options: DropdownOption[];
     onSelect?: (item: DropdownOption) => void;
-    selected?: string;
 };
 
-const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => {
+const Dropdown: FC<DropdownProps> = ({ options, label, onSelect }) => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>([]);
@@ -30,11 +29,12 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const inputContainerRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => {
-        !dropdownOptions.length && setDropdownOptions(options);
-    }, [options]);
-
     const close = useCallback(() => open && setOpen(false), [open]);
+    useClickOutsideOverlayPortal(close, inputContainerRef.current);
+
+    useEffect(() => {
+        setDropdownOptions(options);
+    }, [options]);
 
     const filterSearch = useCallback(
         inputValue => {
@@ -49,20 +49,14 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => 
 
     useEffect(() => filterSearch(inputValue), [inputValue]);
 
-    useClickOutsideOverlayPortal(close, inputContainerRef.current);
+    const value = useMemo(() => {
+        if (open) {
+            return inputValue;
+        }
+        const selectedItem = options.find(option => option.isSelected === true);
+        return selectedItem ? selectedItem.title : '';
+    }, [open, inputValue, options]);
 
-    const updateDropdownOptions = useCallback((item: DropdownOption) => {
-        const newDropdownOptions = [...dropdownOptions];
-        const currentSelectedIndex = dropdownOptions.findIndex(current => current.isSelected === true);
-        if(currentSelectedIndex !== -1){
-            newDropdownOptions[currentSelectedIndex].isSelected = false;
-        };
-        const newSelectedIndex = dropdownOptions.findIndex(current => current.key === item.key);
-        if(newSelectedIndex !== -1){
-            newDropdownOptions[newSelectedIndex].isSelected = true;
-        };
-        setDropdownOptions(newDropdownOptions);
-    }, [dropdownOptions]);
 
     return (
         <div className={styles.inputContainer} ref={inputContainerRef}>
@@ -78,7 +72,7 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => 
                 icon={<DropdownArrow cursor="pointer" isOpen={open} />}
                 onIconAction={() => open && setOpen(false)}
                 onClick={() => !open && setOpen(true)}
-                value={open ? inputValue : selected}
+                value={value}
                 ref={inputRef}
             />
             <RelativeOverlayPortal relativeRef={inputContainerRef} show={open}>
@@ -86,7 +80,6 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => 
                     <Menu
                         onClick={item => {
                             if (open) {
-                                updateDropdownOptions(item);
                                 onSelect && onSelect(item);
                                 setOpen(false);
                             }
