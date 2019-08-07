@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, MutableRefObject, useEffect } from 'react';
+import React, { FC, ReactNode, MutableRefObject } from 'react';
 import { useOverlayContainer, useRelativePositioning } from '@equinor/fusion-components';
 import { createPortal } from 'react-dom';
 
@@ -9,17 +9,8 @@ type OverlayProps = {
 };
 
 const RelativeOverlayPortal: FC<OverlayProps> = ({ children, relativeRef, show }) => {
-    const element = document.createElement('div');
     const overlayContainer = useOverlayContainer();
     const rect = useRelativePositioning(relativeRef);
-
-    useEffect(() => {
-        overlayContainer && overlayContainer.appendChild(element);
-
-        return () => {
-            overlayContainer && overlayContainer.removeChild(element);
-        };
-    }, []);
 
     if (!overlayContainer || show === false) {
         return null;

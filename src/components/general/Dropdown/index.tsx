@@ -11,6 +11,8 @@ import styles from './styles.less';
 type DropdownOption = {
     title: string;
     key: string;
+    isSelected?: boolean;
+    isDisabled?: boolean;
 };
 
 type DropdownProps = {
@@ -23,24 +25,44 @@ type DropdownProps = {
 const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => {
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState('');
-    const [dropdownOption, setDropdownOption] = useState<DropdownOption[]>([]);
+    const [dropdownOptions, setDropdownOptions] = useState<DropdownOption[]>([]);
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const inputContainerRef = useRef<HTMLDivElement | null>(null);
 
-    useEffect(() => setDropdownOption(options), [options])
+    useEffect(() => {
+        !dropdownOptions.length && setDropdownOptions(options);
+    }, [options]);
 
     const close = useCallback(() => open && setOpen(false), [open]);
 
-    const filterSearch = useCallback(inputValue => {
-        setDropdownOption(
-            options.filter(option =>
-                option.title.toLowerCase().includes(inputValue.toLowerCase())
-            )
-        );
-    }, [options]);
+    const filterSearch = useCallback(
+        inputValue => {
+            setDropdownOptions(
+                options.filter(option =>
+                    option.title.toLowerCase().includes(inputValue.toLowerCase())
+                )
+            );
+        },
+        [options]
+    );
+
+    useEffect(() => filterSearch(inputValue), [inputValue]);
 
     useClickOutsideOverlayPortal(close, inputContainerRef.current);
+
+    const updateDropdownOptions = useCallback((item: DropdownOption) => {
+        const newDropdownOptions = [...dropdownOptions];
+        const currentSelectedIndex = dropdownOptions.findIndex(current => current.isSelected === true);
+        if(currentSelectedIndex !== -1){
+            newDropdownOptions[currentSelectedIndex].isSelected = false;
+        };
+        const newSelectedIndex = dropdownOptions.findIndex(current => current.key === item.key);
+        if(newSelectedIndex !== -1){
+            newDropdownOptions[newSelectedIndex].isSelected = true;
+        };
+        setDropdownOptions(newDropdownOptions);
+    }, [dropdownOptions]);
 
     return (
         <div className={styles.inputContainer} ref={inputContainerRef}>
@@ -51,7 +73,6 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => 
                         return;
                     }
                     setInputValue(value);
-                    filterSearch(value);
                 }}
                 label={label}
                 icon={<DropdownArrow cursor="pointer" isOpen={open} />}
@@ -65,6 +86,7 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => 
                     <Menu
                         onClick={item => {
                             if (open) {
+                                updateDropdownOptions(item);
                                 onSelect && onSelect(item);
                                 setOpen(false);
                             }
@@ -73,7 +95,7 @@ const Dropdown: FC<DropdownProps> = ({ options, label, onSelect, selected }) => 
                         sections={[
                             {
                                 key: 'DropdownSelection',
-                                items: dropdownOption,
+                                items: dropdownOptions,
                             },
                         ]}
                     />

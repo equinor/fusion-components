@@ -5,6 +5,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 
 const DropdownStory = () => {
     const [selected, setSelected] = React.useState('');
+    const [selectedNoLabel, setSelectedNoLabel] = React.useState('');
     return (
         <div style={{ margin: '8px' }}>
             <Dropdown
@@ -16,10 +17,12 @@ const DropdownStory = () => {
                     {
                         key: '2',
                         title: 'Selected',
+                        isSelected: true,
                     },
                     {
                         key: '3',
                         title: 'Disabled',
+                        isDisabled: true,
                     },
                     {
                         key: '4',
@@ -50,8 +53,8 @@ const DropdownStory = () => {
                         title: 'Last',
                     },
                 ]}
-                selected={selected}
-                onSelect={item => setSelected(item.title)}
+                selected={selectedNoLabel}
+                onSelect={item => setSelectedNoLabel(item.title)}
             />
         </div>
     );
