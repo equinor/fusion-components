@@ -12,13 +12,17 @@ type TextInputProps = {
     label?: string;
     helperText?: string;
     onChange: (newValue: string) => void;
+    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     value?: string;
     icon?: React.ReactElement;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-const TextInput = React.forwardRef<HTMLInputElement | null,React.PropsWithChildren<TextInputProps>>(
+const TextInput = React.forwardRef<
+    HTMLInputElement | null,
+    React.PropsWithChildren<TextInputProps>
+>(
     (
         {
             disabled = false,
@@ -28,6 +32,7 @@ const TextInput = React.forwardRef<HTMLInputElement | null,React.PropsWithChildr
             placeholder = '',
             label,
             onChange,
+            onClick,
             value = '',
             icon,
             onBlur,
@@ -68,11 +73,7 @@ const TextInput = React.forwardRef<HTMLInputElement | null,React.PropsWithChildr
             if (!error && !icon) {
                 return null;
             }
-            const inputIcon = error ? (
-                <ErrorIcon outline={false} color="#FF3B3B"/>
-            ) : (
-                icon
-            );
+            const inputIcon = error ? <ErrorIcon outline={false} color="#FF3B3B" /> : icon;
             return (
                 <div className={styles.icon} onClick={onIconAction}>
                     {inputIcon}
@@ -101,7 +102,7 @@ const TextInput = React.forwardRef<HTMLInputElement | null,React.PropsWithChildr
             [styles.focus]: focus,
             [styles.error]: error,
             [styles.disabled]: disabled,
-            [styles.labelLess]: !label
+            [styles.labelLess]: !label,
         });
 
         const inputTextContentClasses = classNames(styles.inputTextContent, {
@@ -112,7 +113,13 @@ const TextInput = React.forwardRef<HTMLInputElement | null,React.PropsWithChildr
 
         return (
             <div className={styles.inputContainer}>
-                <div className={inputContentClasses} onClick={setInputFocus}>
+                <div
+                    className={inputContentClasses}
+                    onClick={e => {
+                        setInputFocus();
+                        onClick && onClick(e);
+                    }}
+                >
                     <div className={inputTextContentClasses}>
                         {inputLabel}
                         <input

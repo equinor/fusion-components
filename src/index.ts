@@ -20,6 +20,7 @@ export { default as TextInput } from "./components/general/TextInput";
 export { Switch, CheckBox, RadioButton } from "./components/general/SelectionControls";
 export { default as Pagination, PaginationSkeleton, PaginationChangeHandler } from "./components/general/Pagination";
 export { default as FilterPane, FilterTypes, applyFilters, FilterTerm, FilterSection, Count, FilterCount } from "./components/general/FilterPane";
+export {default as Dropdown, DropdownOption} from "./components/general/Dropdown"
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -56,4 +57,7 @@ export { PaginationArrow } from './components/icons/components/navigation';
 
 // Styling
 export { default as styling } from "./styles/styling";
+
+// Utils
+export {default as RelativeOverlayPortal} from "./components/utils/RelativeOverlayPortal"
 
