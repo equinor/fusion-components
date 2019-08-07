@@ -42,7 +42,6 @@ const SideSheetStory = () => {
                 Open Side Sheet
             </Button>
             <SideSheet
-                header="This is the side sheet header"
                 show={isOpen}
                 onClose={() => setIsOpen(false)}
             >
