@@ -24,7 +24,7 @@ function Section<T>({ terms, filterCount, section, onChange, paneIsCollapsed }: 
     );
 
     const toggleCollapse = useCallback(() => {
-        setIsCollapsed(!isCollapsed);
+        section.isCollapsible && setIsCollapsed(!isCollapsed);
     }, [isCollapsed]);
 
     const sectionClassNames = useMemo(

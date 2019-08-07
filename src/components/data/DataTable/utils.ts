@@ -6,7 +6,6 @@ import {
     DataItemBooleanAccessor,
     DataItemBooleanAccessorFunction,
 } from './dataTableTypes';
-import { useEventListener } from '@equinor/fusion-components';
 
 export const getString = <T>(item: T, accessor: DataItemPropertyAccessor<T>): string => {
     if (typeof accessor === 'string') {
@@ -77,19 +76,29 @@ export const generateRowTemplate = <T>(rows: T[], expandedRows: T[], skeletonRow
     );
 };
 
-const hasNarrowerParent = (node: HTMLElement, width?: number): boolean => {
-    width = width || node.offsetWidth;
-    const parent = node.parentElement;
+const nodeIsTooWide = (node: HTMLElement): boolean => {
+    return node.scrollWidth > node.offsetWidth;
+};
 
-    if (!parent) {
-        return false;
-    }
+const getNextColumnToCollapse = <T>(
+    columns: DataTableColumn<T>[],
+    collapsedColumns: DataTableColumn<T>[]
+) => {
+    // Remove already collapsed columns
+    // Sort the columns by priority
+    const sortedColumns = columns
+        .filter(c => !collapsedColumns.find(cc => cc.key === c.key))
+        .sort((a, b) => {
+            if (!a.priority) {
+                return -1;
+            } else if (!b.priority) {
+                return 1;
+            }
 
-    if (parent.offsetWidth < width) {
-        return true;
-    }
+            return b.priority - a.priority;
+        });
 
-    return hasNarrowerParent(parent, width);
+    return sortedColumns[0];
 };
 
 /**
@@ -106,58 +115,29 @@ export const useVisibleColumns = <T>(
 ) => {
     const [collapsedColumns, setCollapsedColumns] = useState<DataTableColumn<T>[]>([]);
     const [testCollapsedColumns, setTestCollapsedColumns] = useState<DataTableColumn<T>[]>([]);
-    const [shouldRecalculateColumns, setShouldRecalculateColumns] = useState(false);
     const [shouldTestColumns, setShouldTestColumns] = useState(false);
     const [resize, setResize] = useState({ from: 0, to: 0 });
 
-    useEffect(() => {
-        // We don't need to recalculate columns
-        if (!shouldRecalculateColumns) {
-            return;
-        }
-
-        // Remove already collapsed columns
-        // Sort the columns by priority
-        const sortedColumns = columns
-            .filter(c => !collapsedColumns.find(cc => cc.key === c.key))
-            .sort((a, b) => {
-                if (!a.priority) {
-                    return -1;
-                } else if (!b.priority) {
-                    return 1;
-                }
-
-                return b.priority - a.priority;
-            });
-
-        // Add the first of the sorted columns (worst priority) to the collapsed columns
-        setCollapsedColumns([...collapsedColumns, sortedColumns[0]]);
-    }, [shouldRecalculateColumns]);
-
-    useEffect(() => {
-        // We just collapsed a column, no need to continue collapsing until the checkParentWidth functions says so
-        setShouldRecalculateColumns(false);
-    }, [collapsedColumns]);
-
     const checkParentWidth = () => {
-        if (!ref.current || shouldRecalculateColumns) {
+        if (!ref.current) {
             return;
         }
 
-        // Check if the parent is narrower than the table
-        const isNarrower = hasNarrowerParent(ref.current);
+        // Check if the table is too wide
+        const isTooWide = nodeIsTooWide(ref.current);
 
         const columnsLeft = columns.length - collapsedColumns.length;
 
         if (
-            isNarrower &&
+            isTooWide &&
             (resize.from > resize.to || resize.from === resize.to) &&
             columnsLeft > 2
         ) {
             // The table is wider that the parent, and the user is making the window smaller
             // so we need to recalculate columns
-            setShouldRecalculateColumns(true);
-        } else if (!isNarrower && collapsedColumns.length && resize.from < resize.to) {
+            const columnToCollapse = getNextColumnToCollapse(columns, collapsedColumns);
+            setCollapsedColumns([...collapsedColumns, columnToCollapse]);
+        } else if (!isTooWide && collapsedColumns.length && resize.from < resize.to) {
             // The table is not wider than the parend, the user is making the window bigger
             // and we have collapsed a couple of columns
             // so we test if we can expand one column without while keeping the table narrower than the parent
@@ -174,9 +154,9 @@ export const useVisibleColumns = <T>(
         }
 
         // Lets test if it worked with one less expanded column
-        const isNarrower = hasNarrowerParent(ref.current);
+        const isTooWide = nodeIsTooWide(ref.current);
 
-        if (isNarrower) {
+        if (isTooWide) {
             // Nope!
             setTestCollapsedColumns([]);
         } else {
@@ -192,23 +172,31 @@ export const useVisibleColumns = <T>(
     useEffect(checkParentWidth, [
         columns,
         ref.current,
-        shouldRecalculateColumns,
         collapsedColumns,
         resize,
         ...deps,
     ]);
 
-    const onResize = () => {
+    // We can't rely on the window resize event since expanding/collapsing/resizing other elements on the page
+    // might affect the size of the table/it's parent. Therefore we use requestAnimationFrame to check periodically
+    const checkResize = () => {
         if (!ref.current) {
             return;
         }
 
-        const from = resize.to;
-        const to = window.innerWidth;
-        setResize({ from, to });
+        const width = ref.current.offsetWidth;
+        const didResize = width !== resize.to;
+
+        if (didResize) {
+            setResize({ from: resize.to, to: width });
+        } else {
+            window.requestAnimationFrame(checkResize);
+        }
     };
 
-    useEventListener(window, 'resize', onResize, [resize]);
+    useEffect(() => {
+        checkResize();
+    }, [resize, columns, ref.current, ...deps]);
 
     // Remove the collapsed columns, or the columns we're testing from all the columns before returning
     const visibleColumns = columns.filter(

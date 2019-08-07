@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
-import ErrorMessage, { ErrorTypes } from '../index';
+import ErrorMessage from '../index';
 
 const styles = {
     display: 'flex',
@@ -13,7 +13,7 @@ const ErrorMessageError = () => {
         <ErrorMessage
             message="Your error message describing how to resolve the problem"
             hasError
-            errorType={ErrorTypes.error}
+            errorType={'error'}
             action="Resolve the problem"
             onTakeAction={() => window.location.reload()}
         />
@@ -27,7 +27,7 @@ const ErrorMessageNoData = () => {
             hasError
             action="Resolve the problem"
             onTakeAction={() => window.location.reload()}
-            errorType={ErrorTypes.noData}
+            errorType={'noData'}
         />
     );
 };
@@ -36,7 +36,7 @@ const ErrorMessageNotFound = () => {
         <ErrorMessage
             message="Your error message describing how to resolve the problem"
             hasError
-            errorType={ErrorTypes.notFound}
+            errorType={'notFound'}
             resourceName="person"
         />
     );
@@ -46,7 +46,7 @@ const ErrorMessageNoAccess = () => {
         <ErrorMessage
             message="Your error message describing how to resolve the problem"
             hasError
-            errorType={ErrorTypes.accessDenied}
+            errorType={'accessDenied'}
             action="Resolve the problem"
         />
     );

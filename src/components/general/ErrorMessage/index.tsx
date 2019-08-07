@@ -5,12 +5,7 @@ import classNames from 'classnames';
 import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
-export enum ErrorTypes {
-    error = 'error',
-    accessDenied = 'accessDenied',
-    notFound = 'notFound',
-    noData = 'noData',
-}
+export type ErrorTypes = 'error' | 'accessDenied' | 'notFound' | 'noData';
 
 export type ErrorMessageProps = {
     hasError?: boolean;
@@ -26,7 +21,7 @@ export type ErrorMessageProps = {
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({
     hasError,
-    errorType = ErrorTypes.error,
+    errorType = 'error',
     message,
     resourceName,
     title,
@@ -44,17 +39,17 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
         };
 
         switch (errorType) {
-            case ErrorTypes.accessDenied:
+            case 'accessDenied':
                 return {
                     title: 'It seems like you don´t have access to this content',
                     icon: <BlockIcon {...iconProps} />,
                 };
-            case ErrorTypes.notFound:
+            case 'notFound':
                 return {
                     title: `The ${resourceName} could not be found`,
                     icon: <WarningIcon {...iconProps} outline />,
                 };
-            case ErrorTypes.noData:
+            case 'noData':
                 return {
                     title: `Unfortunately, we could not find any data for this component`,
                     icon: <SyncDisabledIcon {...iconProps} />,
@@ -72,7 +67,10 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     }
     const error = React.useMemo(() => getErrorMessageForType(errorType), [errorType]);
 
-    const messageContainerClasses = classNames(styles.messageContainer, useComponentDisplayClassNames(styles));
+    const messageContainerClasses = classNames(
+        styles.messageContainer,
+        useComponentDisplayClassNames(styles)
+    );
 
     return (
         <div className={styles.container}>
