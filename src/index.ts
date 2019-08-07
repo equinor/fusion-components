@@ -21,6 +21,7 @@ export { Switch, CheckBox, RadioButton } from "./components/general/SelectionCon
 export { default as Pagination, PaginationSkeleton, PaginationChangeHandler } from "./components/general/Pagination";
 export { default as FilterPane, FilterTypes, applyFilters, FilterTerm, FilterSection, Count, FilterCount } from "./components/general/FilterPane";
 export { ModalSideSheet } from "./components/general/SideSheet"
+export {default as Dropdown, DropdownOption} from "./components/general/Dropdown"
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -58,4 +59,7 @@ export { PaginationArrow, CloseIcon } from './components/icons/components/naviga
 
 // Styling
 export { default as styling } from "./styles/styling";
+
+// Utils
+export {default as RelativeOverlayPortal} from "./components/utils/RelativeOverlayPortal"
 
