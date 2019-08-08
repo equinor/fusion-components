@@ -13,6 +13,7 @@ export default (isVisible: Boolean, content: ReactNode): void => {
         if (!isVisible || !overlayContainer) {
             return;
         }
+        
         render(
             <Router history={fusionContext.history}>
                 <FusionContext.Provider value={fusionContext}>{content}</FusionContext.Provider>
