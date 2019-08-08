@@ -7,6 +7,7 @@ import {
     useElevationClassName,
     useOverlayContainer,
 } from '@equinor/fusion-components';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { createPortal } from 'react-dom';
 
 type ModalSideSheetProps = {
@@ -15,6 +16,7 @@ type ModalSideSheetProps = {
     show?: boolean;
     scrollable?: boolean;
     onClose?: () => void;
+    headerIcons?: ReactNode[];
 };
 
 const ModalSideSheet: FC<ModalSideSheetProps> = ({
@@ -23,8 +25,8 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
     show,
     scrollable,
     onClose,
+    headerIcons,
 }) => {
-
     const [isShowing, setIsShowing] = useState(false);
 
     useEffect(() => {
@@ -37,11 +39,14 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
         setIsShowing(false);
     }, []);
 
-    const modalSideSheetClassNames = classNames(styles.modalSideSheet, useElevationClassName(16));
+    const modalSideSheetClassNames = classNames(
+        styles.modalSideSheet,
+        useElevationClassName(16),
+        useComponentDisplayClassNames(styles)
+    );
 
     const containerClassName = classNames(styles.container, {
         [styles.show]: isShowing,
-        [styles.hasHeader]: header,
     });
     const content = useMemo(() => {
         if (!show) {
@@ -58,9 +63,9 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
 
         return <div className={styles.content}>{children}</div>;
     }, [children, scrollable, show]);
-    
+
     return (
-        <Overlay>
+        <Overlay show={show}>
             <div className={containerClassName} onClick={close}>
                 <div
                     className={modalSideSheetClassNames}
@@ -69,15 +74,17 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
                         !isShowing && onClose && onClose();
                     }}
                 >
-                    {onClose ? (
+                    <header className={styles.header}>
                         <div className={styles.closeButton}>
                             <IconButton onClick={close}>
                                 <CloseIcon />
                             </IconButton>
                         </div>
-                    ) : null}
-
-                    {header && <header className={styles.header}>{header}</header>}
+                        <div className={styles.headerContent}>
+                            <div className={styles.headerTitle}>{header}</div>
+                            <div className={styles.headerIcons}>{headerIcons}</div>
+                        </div>
+                    </header>
                     {content}
                 </div>
             </div>
@@ -85,18 +92,11 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
     );
 };
 
-const Overlay = ({ children }) => {
+const Overlay = ({ children, show }) => {
     const overlayContainer = useOverlayContainer();
-    const element = document.createElement('div');
-
-    useEffect(() => {
-        overlayContainer && overlayContainer.appendChild(element);
-
-        return () => {
-            overlayContainer && overlayContainer.removeChild(element);
-        };
-    }, []);
-
+    if (show == false || !overlayContainer) {
+        return null;
+    }
     return overlayContainer && createPortal(children, overlayContainer);
 };
 
