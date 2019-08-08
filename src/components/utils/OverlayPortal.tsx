@@ -12,6 +12,6 @@ const OverlayPortal: FC<OverlayPortalProps> = ({ children, show }) => {
     if (show == false || !overlayContainer) {
         return null;
     }
-    return overlayContainer && createPortal(children, overlayContainer);
+    return createPortal(children, overlayContainer);
 };
 export default OverlayPortal;
