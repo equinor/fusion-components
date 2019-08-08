@@ -5,16 +5,15 @@ import {
     IconButton,
     CloseIcon,
     useElevationClassName,
-    useOverlayContainer,
+    OverlayPortal,
+    Scrim,
 } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { createPortal } from 'react-dom';
 
 type ModalSideSheetProps = {
     children: ReactNode;
     header?: string;
     show?: boolean;
-    scrollable?: boolean;
     onClose?: () => void;
     headerIcons?: ReactNode[];
 };
@@ -23,7 +22,6 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
     children,
     header,
     show,
-    scrollable,
     onClose,
     headerIcons,
 }) => {
@@ -42,31 +40,22 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
     const modalSideSheetClassNames = classNames(
         styles.modalSideSheet,
         useElevationClassName(16),
-        useComponentDisplayClassNames(styles)
+        useComponentDisplayClassNames(styles),
+        {
+            [styles.show]: isShowing,
+        }
     );
 
-    const containerClassName = classNames(styles.container, {
-        [styles.show]: isShowing,
-    });
     const content = useMemo(() => {
         if (!show) {
             return null;
         }
-
-        if (scrollable) {
-            return (
-                <div className={styles.scrollContainer}>
-                    <div className={styles.content}>{children}</div>
-                </div>
-            );
-        }
-
         return <div className={styles.content}>{children}</div>;
-    }, [children, scrollable, show]);
+    }, [children, show]);
 
     return (
-        <Overlay show={show}>
-            <div className={containerClassName} onClick={close}>
+        <OverlayPortal show={show}>
+            <Scrim onClick={close} show={isShowing}>
                 <div
                     className={modalSideSheetClassNames}
                     onClick={e => e.stopPropagation()}
@@ -87,17 +76,9 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
                     </header>
                     {content}
                 </div>
-            </div>
-        </Overlay>
+            </Scrim>
+        </OverlayPortal>
     );
-};
-
-const Overlay = ({ children, show }) => {
-    const overlayContainer = useOverlayContainer();
-    if (show == false || !overlayContainer) {
-        return null;
-    }
-    return overlayContainer && createPortal(children, overlayContainer);
 };
 
 export default ModalSideSheet;

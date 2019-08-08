@@ -22,6 +22,7 @@ export { default as Pagination, PaginationSkeleton, PaginationChangeHandler } fr
 export { default as FilterPane, FilterTypes, applyFilters, FilterTerm, FilterSection, Count, FilterCount } from "./components/general/FilterPane";
 export { ModalSideSheet } from "./components/general/SideSheet"
 export {default as Dropdown, DropdownOption} from "./components/general/Dropdown"
+export {default as Scrim} from "./components/general/Scrim";
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -61,5 +62,6 @@ export { PaginationArrow, CloseIcon } from './components/icons/components/naviga
 export { default as styling } from "./styles/styling";
 
 // Utils
-export {default as RelativeOverlayPortal} from "./components/utils/RelativeOverlayPortal"
+export { default as RelativeOverlayPortal } from "./components/utils/RelativeOverlayPortal"
+export { default as OverlayPortal } from "./components/utils/OverlayPortal"
 
