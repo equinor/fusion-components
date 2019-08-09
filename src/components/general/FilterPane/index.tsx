@@ -15,7 +15,7 @@ import applyFilters, {
 import { applyCountAsync, Count, FilterCount } from './countFilters';
 
 export { default as FilterTypes } from './filterTypes';
-export { applyFilters, FilterTerm, FilterSection, Count, FilterCount };
+export { applyFilters, FilterTerm, FilterSection, Count, FilterCount, CollapseExpandButton };
 
 const FILTER_PANEL_COLLAPSED_KEY = 'FILTER_PANEL_COLLAPSED_KEY';
 const createPanelCollapsedKey = (key: string) => FILTER_PANEL_COLLAPSED_KEY + key;
