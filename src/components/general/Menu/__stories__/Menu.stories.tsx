@@ -1,6 +1,7 @@
 import * as React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
+import withFusionStory from "../../../../../.storybook/withFusionStory";
 import Menu from "../index";
 
 const MenuStory = () => {
@@ -42,4 +43,6 @@ const MenuStory = () => {
     );
 };
 
-storiesOf("General|Menu", module).add("Default", () => <MenuStory />);
+storiesOf("General|Menu", module)
+    .addDecorator(withFusionStory("Menu"))
+    .add("Default", () => <MenuStory />);

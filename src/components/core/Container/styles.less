@@ -6,8 +6,17 @@
     height: 100%;
     position: relative;
     display: grid;
-    grid-template-rows: max-content auto;
     grid-template-areas:
         "header"
         "content";
+
+    &.comfortable {
+        --header-height: calc((var(--grid-unit) * 10px) + 2px);
+        grid-template-rows: var(--header-height) calc(100% - var(--header-height));
+    }
+
+    &.compact {
+        --header-height: calc((var(--grid-unit) * 6px) + 2px);
+        grid-template-rows: var(--header-height) calc(100% - var(--header-height));
+    }
 }

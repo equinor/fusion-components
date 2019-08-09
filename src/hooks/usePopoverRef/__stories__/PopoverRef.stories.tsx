@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import withFusionStory from "../../../../.storybook/withFusionStory";
 import Button from '../../../components/general/Button';
 import usePopoverRef from '../index';
 
@@ -12,12 +13,14 @@ const PopoverStory = () => {
     });
 
     return (
-        <Button ref={popoverRef} primary contained>
+        <Button ref={popoverRef} contained>
             Click for popover
         </Button>
     );
 };
 
-storiesOf('Hooks|Popover', module).add('Default', () => {
-    return <PopoverStory />;
-});
+storiesOf('Hooks|Popover', module)
+    .addDecorator(withFusionStory("Popover"))
+    .add('Default', () => {
+        return <PopoverStory />;
+    });

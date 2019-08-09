@@ -4,21 +4,30 @@ export { default as FusionRoot } from './components/core/Root';
 export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
 export { default as ContextSelector } from './components/core/ContextSelector';
+export { default as AppWrapper } from './components/core/AppWrapper';
+
+// Data components
+export { default as DataTable, DataTableColumn } from "./components/data/DataTable";
 
 // General components
-export { default as Button } from './components/general/Button';
+export { default as Button, ButtonProps } from './components/general/Button';
 export { default as IconButton } from './components/general/IconButton';
 export { default as ErrorBoundary } from './components/general/ErrorBoundary';
 export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
 export { default as TextInput } from "./components/general/TextInput";
+export { Switch, CheckBox, RadioButton } from "./components/general/SelectionControls";
+export { default as Pagination, PaginationSkeleton, PaginationChangeHandler } from "./components/general/Pagination";
+export { default as FilterPane, FilterTypes, applyFilters, FilterTerm, FilterSection, Count, FilterCount } from "./components/general/FilterPane";
+export {default as Dropdown, DropdownOption} from "./components/general/Dropdown"
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
 export { default as Banner } from './components/feedback/Banner';
 export { Dialog, DialogActions, DialogContent, DialogTitle } from './components/feedback/Dialog';
 export { default as Snackbar } from './components/feedback/Snackbar';
+export { SkeletonBar, SkeletonButton } from "./components/feedback/Skeleton";
 
 // Hooks
 export { default as useElevationClassName, Elevation } from './hooks/useElevationClassName';
@@ -33,12 +42,22 @@ export { default as useOverlayContainer } from './hooks/useOverlayContainer';
 export { default as useOverlayPortal } from './hooks/useOverlayPortal';
 export { default as useRelativePortal } from './hooks/useRelativePortal';
 export { default as useRelativePositioning } from './hooks/useRelativePositioning';
+export { default as useBreakpoint } from './hooks/useBreakpoint';
+export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpoint';
+export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
+export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { BlockIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
-export { SearchIcon } from './components/icons/components/action';
+export { SearchIcon, DoneIcon, SortIcon, MinimizeIcon, DropdownArrow, CollapseIcon } from './components/icons/components/action';
+export { PaginationArrow } from './components/icons/components/navigation';
 
+// Styling
+export { default as styling } from "./styles/styling";
+
+// Utils
+export {default as RelativeOverlayPortal} from "./components/utils/RelativeOverlayPortal"
 

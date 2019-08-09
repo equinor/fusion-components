@@ -32,12 +32,34 @@ module.exports = merge(
                 commonjs2: 'react',
                 amd: 'react',
             },
+            'react-dom': {
+                commonjs: 'react-dom',
+                commonjs2: 'react-dom',
+                amd: 'react-dom',
+            },
             '@equinor/fusion': {
                 commonjs: '@equinor/fusion',
                 commonjs2: '@equinor/fusion',
                 amd: '@equinor/fusion',
             },
+            'react-router-dom': {
+                commonjs: 'react-router-dom',
+                commonjs2: 'react-router-dom',
+                amd: 'react-router-dom',
+            },
+            history: {
+                commonjs: 'history',
+                commonjs2: 'history',
+                amd: 'history',
+            },
         },
         mode: 'production',
+    },
+    {
+        resolve: {
+            alias: {
+                "@equinor/fusion-components": path.resolve(__dirname, 'src', 'index.ts'),
+            },
+        },
     }
 );

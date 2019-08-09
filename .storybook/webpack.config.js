@@ -1,3 +1,4 @@
+const path = require('path');
 const merge = require('webpack-merge');
 const styles = require('../build/style');
 const fonts = require('../build/fonts');
@@ -7,4 +8,10 @@ const resolve = require('../build/resolve');
 const typescript = require('../build/typescript');
 
 module.exports = ({ config }) =>
-    merge(config, styles, fonts, eslint, prettier, typescript('../'), resolve);
+    merge(config, styles, fonts, eslint, prettier, typescript('../'), resolve, {
+        resolve: {
+            alias: {
+                '@equinor/fusion-components': path.resolve(__dirname, '..', 'src', 'index.ts'),
+            },
+        },
+    });

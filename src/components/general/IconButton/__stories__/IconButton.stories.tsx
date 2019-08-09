@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
+import withFusionStory from "../../../../../.storybook/withFusionStory";
 import IconButton from '../index';
-import SearchIcon from '../../../icons/components/search';
+import { SearchIcon } from '../../../icons/components/action';
 
 const eventsFromNames = actions('onClick');
 
 storiesOf('General|Icon Button', module)
     .addParameters({ jest: ['IconButton.stories.jsx'] })
+    .addDecorator(withFusionStory("Icon Button"))
     .add('Default', () => (
         <div style={{ padding: 8 }}>
             <IconButton {...eventsFromNames}>

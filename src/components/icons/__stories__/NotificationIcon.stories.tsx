@@ -3,12 +3,15 @@ import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
 import { withKnobs, number, color } from '@storybook/addon-knobs';
 
+import withFusionStory from "../../../../.storybook/withFusionStory";
+
 import { SyncDisabledIcon } from '../components/notification';
 
 const eventsFromNames = actions('onClick');
 
 const stories = storiesOf('Icons|Notification', module);
 stories.addDecorator(withKnobs);
+stories.addDecorator(withFusionStory("Notification"));
 
 stories.add('SyncDisabled', () => (
     <SyncDisabledIcon

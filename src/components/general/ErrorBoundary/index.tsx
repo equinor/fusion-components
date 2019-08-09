@@ -3,7 +3,7 @@ import ErrorMessage, { ErrorMessageProps, ErrorTypes } from "../ErrorMessage";
 
 export default class ErrorBoundary extends React.Component<ErrorMessageProps> {
     static defaultProps = {
-        errorType: ErrorTypes.error,
+        errorType: 'error',
     };
 
     state = {
@@ -49,7 +49,7 @@ export default class ErrorBoundary extends React.Component<ErrorMessageProps> {
         return (
             <ErrorMessage
                 hasError={this.state.hasError || hasError}
-                errorType={errorType || ErrorTypes.error}
+                errorType={errorType || 'error'}
                 message={this.getErrorMessage()}
                 onTakeAction={this.takeAction}
                 action={action || "Retry"}

@@ -6,12 +6,12 @@ import {
     useRelativePositioning,
     useClickOutsideOverlayPortal,
     useOverlayPortal,
-} from 'index';
+} from '@equinor/fusion-components';
 
 export default <T extends HTMLElement>(
     content: React.ReactNode,
     props?: PopoverContainerProps
-): [React.MutableRefObject<T | null>, boolean] => {
+): [React.MutableRefObject<T | null>, boolean, React.Dispatch<React.SetStateAction<boolean>>] => {
     const popoverContentRef = React.useRef<HTMLDivElement | null>(null);
     const [isOpen, ref, setIsOpen] = useClickToggleController<T>();
     const rect = useRelativePositioning(ref);
@@ -36,5 +36,5 @@ export default <T extends HTMLElement>(
         </div>
     );
 
-    return [ref, isOpen];
+    return [ref, isOpen, setIsOpen];
 };

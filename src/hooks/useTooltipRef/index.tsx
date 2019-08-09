@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as styles from './styles.less';
 import Arrow from './Arrow';
 import classNames from 'classnames';
-import { useRelativePositioning, useHoverToggleController, useOverlayPortal } from 'index';
+import { useRelativePositioning, useHoverToggleController, useOverlayPortal } from '@equinor/fusion-components';
 
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 

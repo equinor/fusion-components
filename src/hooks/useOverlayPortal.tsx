@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { ReactNode, useRef, useEffect } from 'react';
-import * as ReactDOM from 'react-dom';
+import React, { ReactNode, useRef, useEffect } from 'react';
+import { render } from 'react-dom';
+import { Router } from 'react-router-dom';
 import { FusionContext, useFusionContext } from '@equinor/fusion';
-import { useOverlayContainer } from 'index';
+import { useOverlayContainer } from '@equinor/fusion-components';
 
 export default (isVisible: Boolean, content: ReactNode): void => {
     const fusionContext = useFusionContext();
@@ -14,11 +14,14 @@ export default (isVisible: Boolean, content: ReactNode): void => {
             return;
         }
 
-        ReactDOM.render(
-            <FusionContext.Provider value={fusionContext}>{content}</FusionContext.Provider>,
+        render(
+            <Router history={fusionContext.history}>
+                <FusionContext.Provider value={fusionContext}>{content}</FusionContext.Provider>
+            </Router>,
             ref.current
         );
-        overlayContainer.prepend(ref.current);
+        
+        overlayContainer.appendChild(ref.current);
 
         return () => {
             overlayContainer.removeChild(ref.current);

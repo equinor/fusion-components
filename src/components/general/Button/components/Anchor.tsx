@@ -1,6 +1,7 @@
 import React, { forwardRef, EventHandler, SyntheticEvent } from 'react';
 import Content from './Content';
 import getButtonClasses from '../buttonClasses';
+import { ComponentDisplayType } from '@equinor/fusion';
 
 type AnchorProps = {
     url: string;
@@ -9,7 +10,7 @@ type AnchorProps = {
     onClickCapture?: EventHandler<SyntheticEvent>;
     onMouseDown?: EventHandler<SyntheticEvent>;
     onMouseUp: EventHandler<SyntheticEvent>;
-    displayType: string;
+    displayType: ComponentDisplayType;
     mouseHasBeenDown: boolean;
 };
 

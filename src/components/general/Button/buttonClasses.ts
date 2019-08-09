@@ -1,42 +1,45 @@
 import classNames from 'classnames';
 import { ComponentDisplayType } from '@equinor/fusion';
 import styles from './styles/index.less';
+import { ButtonProps } from './index';
 
-const getLayoutClasses = ({ block, flex }) => ({
-    [styles.block]: block,
-    [styles.flex]: flex,
-});
+type ButtonClassesProps = ButtonProps & {
+    className?: string;
+    displayType: ComponentDisplayType;
+    mouseHasBeenDown: boolean;
+};
 
-const getMouseDownClasses = ({ mouseHasBeenDown }) => ({
+// const getLayoutClasses = ({ block, flex }: ButtonClassesProps) => ({
+//     [styles.block]: block,
+//     [styles.flex]: flex,
+// });
+
+const getMouseDownClasses = ({ mouseHasBeenDown }: ButtonClassesProps) => ({
     [styles.mouseHasBeenDown]: mouseHasBeenDown,
 });
 
-const getButtonVariantClasses = ({ contained, outlined, frameless }) => ({
+const getButtonVariantClasses = ({ contained, outlined, frameless }: ButtonClassesProps) => ({
     [styles.contained]: contained || (!outlined && !frameless), // Default to contained
     [styles.outlined]: outlined,
     [styles.frameless]: frameless,
 });
 
-const getButtonStyleClasses = ({ primary, signal }) => ({
-    [styles.primary]: primary,
-    [styles.signal]: signal,
+const getButtonStyleClasses = () => ({
+    [styles.primary]: true,
 });
 
-const getButtonSizeClasses = ({ compact, comfortable, displayType }) => ({
-    [styles.compact]: displayType === ComponentDisplayType.Compact || compact,
-    [styles.comfortable]:
-        (displayType === ComponentDisplayType.Comfortable &&
-            displayType !== ComponentDisplayType.Comfortable) ||
-        (comfortable && !compact),
+const getButtonSizeClasses = ({ displayType }: ButtonClassesProps) => ({
+    [styles.compact]: displayType === ComponentDisplayType.Compact,
+    [styles.comfortable]: displayType === ComponentDisplayType.Comfortable,
 });
 
-export default props =>
+export default (props: ButtonClassesProps) =>
     classNames(
         props.className,
         styles.container,
-        getLayoutClasses(props),
+        // getLayoutClasses(props),
         getMouseDownClasses(props),
         getButtonVariantClasses(props),
-        getButtonStyleClasses(props),
+        getButtonStyleClasses(),
         getButtonSizeClasses(props)
     );

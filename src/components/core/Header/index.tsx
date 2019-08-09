@@ -1,5 +1,10 @@
 import React from 'react';
-import { useComponentDisplayType, ComponentDisplayType, useAppContext } from '@equinor/fusion';
+import {
+    useComponentDisplayClassNames,
+    useCurrentApp,
+    combineUrls,
+} from '@equinor/fusion';
+import { NavLink } from 'react-router-dom';
 import FusionLogo from '../FusionLogo';
 
 import styles from './styles.less';
@@ -14,33 +19,32 @@ type FusionHeaderProps = {
 };
 
 const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) => {
-    const currentApp = useAppContext();
+    const currentApp = useCurrentApp();
 
-    const componentDisplayType = useComponentDisplayType();
-
-    const headerClassNames = classNames(styles.container, {
-        [styles.comfortable]: componentDisplayType === ComponentDisplayType.Comfortable,
-        [styles.compact]: componentDisplayType === ComponentDisplayType.Compact,
-    });
+    const headerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
     return (
         <header className={headerClassNames}>
-            <div className={styles.startContainer}>
-                {start}
-            </div>
-            <a href="/" className={styles.fusionTitleContainer}>
-                <span className={styles.fusionLogo}>
-                    <FusionLogo scale={0.7} />
-                </span>
-                <span className={styles.fusionTitle}>fusion</span>
-                {currentApp && currentApp.appKey && (
+            <div className={styles.startContainer}>{start}</div>
+            <div className={styles.fusionTitleContainer}>
+                <NavLink to="/">
+                    <span className={styles.fusionLogo}>
+                        <FusionLogo scale={0.7} />
+                    </span>
+                    <span className={styles.fusionTitle}>fusion</span>
+                </NavLink>
+                {currentApp && currentApp.key && (
                     <>
-                        <span>|</span>
-                        <a href={currentApp.appPath}>{currentApp.appKey}</a>
+                        <span className={styles.appNameDivider} />
+                        <NavLink
+                            to={combineUrls('/apps', currentApp.key)}
+                            className={styles.appNameLink}
+                        >
+                            {currentApp.name}
+                        </NavLink>
                     </>
                 )}
-            </a>
-
+            </div>
             <div className={styles.contentContainer}>{content}</div>
 
             <aside className={styles.asideContainer}>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useEventListener } from 'index';
+import { useEventListener } from '@equinor/fusion-components';
 
 const KEY_HANDLERS = {
     38: 'onUp',
@@ -21,7 +21,6 @@ export type KeyBoardEvents = {
 
 export default (keyBoardEvents: KeyBoardEvents, externalRef: HTMLElement | null = null) => {
     const [ref, setRef] = useState<HTMLElement | null>(externalRef);
-
     const handleKeyDown = e => {
         const keyCode = e.keyCode;
         const handler = keyBoardEvents[KEY_HANDLERS[keyCode]];

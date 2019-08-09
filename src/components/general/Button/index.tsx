@@ -3,7 +3,7 @@ import { useComponentDisplayType } from '@equinor/fusion';
 import ButtonComponent from './components/Button';
 import AnchorComponent from './components/Anchor';
 
-type ButtonProps = {
+export type ButtonProps = {
     disabled?: boolean;
 
     // Variants
@@ -13,18 +13,6 @@ type ButtonProps = {
     outlined?: boolean;
     /** Use the frameless variant */
     frameless?: boolean;
-
-    // Styles
-    /** Use the primary coloring */
-    primary?: boolean;
-    /** Use the signal coloring */
-    signal?: boolean;
-
-    // Sizes
-    /** Compact button */
-    compact?: boolean;
-    /** Comfortable button */
-    comfortable?: boolean;
 
     // Link
     /** Provide an url and the button wil use <a>-tag instead of <button>-tag */
@@ -99,10 +87,6 @@ Button.defaultProps = {
     contained: false,
     outlined: false,
     frameless: false,
-    primary: true,
-    signal: false,
-    compact: false,
-    comfortable: true,
     url: null,
     targetBlank: false,
     onMouseDown: () => {},

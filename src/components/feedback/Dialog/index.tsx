@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { useElevationClassName } from 'index';
+import { useElevationClassName } from '@equinor/fusion-components';
 
 type DialogProps = {
     children: any;

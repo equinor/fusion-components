@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentUser, useFusionContext } from '@equinor/fusion';
-import { IconProps, MenuSection, MenuItemType, Menu, usePopoverRef, useIcon, IconButton } from 'index';
+import { IconProps, MenuSection, MenuItemType, Menu, usePopoverRef, useIcon, IconButton } from '@equinor/fusion-components';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
