@@ -24,7 +24,7 @@ const Calendar: React.FC<CalendarProps> = ({
     const [year, setYear] = useState(initialYear);
     const [month, setMonth] = useState(initialMonth);
     const calendar = useMemo(() => createCalendar(year, month), [year, month]);
-    const isCurrentMonth = useMemo(() => !!calendar.dates.find(d => d.isToday), [calendar]);
+    const isCurrentMonth = useMemo(() => calendar.dates.some(d => d.isToday), [calendar]);
     const weekDays = useMemo(() => calendar.dates.slice(0, 7).map(d => d.weekDay), [calendar]);
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
