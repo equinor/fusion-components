@@ -41,6 +41,8 @@ export {
     default as SearchableDropdownWrapper,
     SearchableDropdownOption,
 } from './components/general/SearchableDropdown';
+export { ModalSideSheet } from './components/general/SideSheet';
+export { default as Scrim } from './components/general/Scrim';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -66,6 +68,7 @@ export { default as useBreakpoint } from './hooks/useBreakpoint';
 export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpoint';
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
+export { default as useRootContainer } from './hooks/useRootContainer';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
@@ -80,10 +83,11 @@ export {
     DropdownArrow,
     CollapseIcon,
 } from './components/icons/components/action';
-export { PaginationArrow } from './components/icons/components/navigation';
+export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
 
 // Styling
 export { default as styling } from './styles/styling';
 
 // Utils
 export { default as RelativeOverlayPortal } from './components/utils/RelativeOverlayPortal';
+export { default as OverlayPortal } from './components/utils/OverlayPortal';
