@@ -20,7 +20,9 @@ export { default as TextInput } from "./components/general/TextInput";
 export { Switch, CheckBox, RadioButton } from "./components/general/SelectionControls";
 export { default as Pagination, PaginationSkeleton, PaginationChangeHandler } from "./components/general/Pagination";
 export { default as FilterPane, FilterTypes, applyFilters, FilterTerm, FilterSection, Count, FilterCount } from "./components/general/FilterPane";
+export { ModalSideSheet } from "./components/general/SideSheet"
 export {default as Dropdown, DropdownOption} from "./components/general/Dropdown"
+export {default as Scrim} from "./components/general/Scrim";
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -46,6 +48,7 @@ export { default as useBreakpoint } from './hooks/useBreakpoint';
 export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpoint';
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
+export { default as useRootContainer} from './hooks/useRootContainer';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
@@ -53,11 +56,12 @@ export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { BlockIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
 export { SearchIcon, DoneIcon, SortIcon, MinimizeIcon, DropdownArrow, CollapseIcon } from './components/icons/components/action';
-export { PaginationArrow } from './components/icons/components/navigation';
+export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
 
 // Styling
 export { default as styling } from "./styles/styling";
 
 // Utils
-export {default as RelativeOverlayPortal} from "./components/utils/RelativeOverlayPortal"
+export { default as RelativeOverlayPortal } from "./components/utils/RelativeOverlayPortal"
+export { default as OverlayPortal } from "./components/utils/OverlayPortal"
 
