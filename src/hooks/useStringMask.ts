@@ -59,54 +59,47 @@ const maskTokens: StringMaskToken[] = [
 export const applyStringMask = (mask: string, value: string) => {
     const maskChars = mask.split('');
     let valueIndex = 0;
-    const output: string[] = [];
 
-    for (let i = 0; i < maskChars.length; i++) {
-        const maskChar = maskChars[i];
-        const token = maskTokens.find(t => t.mask === maskChar);
-
+    return maskChars.reduce((output, maskChar) => {
         if (valueIndex >= value.length) {
-            break;
+            return output;
         }
-
+        
+        const token = maskTokens.find(t => t.mask === maskChar);
         if (!token) {
-            output.push(maskChar);
-            continue;
+            return output + maskChar;
         }
 
         if (token.matchValue(value[valueIndex])) {
-            output.push(value[valueIndex++]);
+            return output + value[valueIndex++];
         }
-    }
 
-    return output.join('');
+        return output;
+    }, '');
 };
 
 export const unmaskString = (mask: string, value: string) => {
     const maskChars = mask.split('');
     let valueIndex = 0;
-    const output: string[] = [];
 
-    for (let i = 0; i < maskChars.length; i++) {
-        const maskChar = maskChars[i];
+    return maskChars.reduce((output, maskChar) => {
         const token = maskTokens.find(t => t.mask === maskChar);
 
         if (!token && value[valueIndex] === maskChar) {
-            output.push('');
             valueIndex++;
-            continue;
+            return output;
         }
 
         if (valueIndex >= value.length) {
-            break;
+            return output;
         }
 
         if (token && token.matchValue(value[valueIndex])) {
-            output.push(value[valueIndex++]);
+            return output + value[valueIndex++];
         }
-    }
 
-    return output.join('');
+        return output;
+    }, '');
 };
 
 export const maskedStringIsValid = (mask: string, maskedString: string) => {
