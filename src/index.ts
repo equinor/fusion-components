@@ -48,7 +48,8 @@ export { default as useBreakpoint } from './hooks/useBreakpoint';
 export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpoint';
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
-export { default as useRootContainer} from './hooks/useRootContainer';
+export { default as useRootContainer } from './hooks/useRootContainer';
+export { default as useStringMask, applyStringMask, unmaskString, StringMaskToken } from './hooks/useStringMask';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
