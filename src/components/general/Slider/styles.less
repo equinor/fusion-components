@@ -1,0 +1,89 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: calc(var(--grid-unit) * 6px);
+
+    --track-z-index: 1;
+    --slider-z-index: calc(var(--track-z-index) + 1);
+    --marker-z-index: calc(var(--slider-z-index) + 1);
+    --handle-z-index: calc(var(--marker-z-index) + 1);
+
+    button {
+        margin: 0;
+        padding: 0;
+        outline: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .track {
+        position: absolute;
+        z-index: var(--track-z-index);
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+        width: 100%;
+        background: var(--color-black-alt3);
+        height: calc(var(--grid-unit) * 0.5px);
+        border-radius: 4px;
+    }
+
+    .slider {
+        position: absolute;
+        z-index: var(--slider-z-index);
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        background: var(--color-primary);
+        height: calc(var(--grid-unit) * 0.5px);
+        border-radius: 4px;
+        transition: width .2s;
+    }
+
+    .dot {
+        background: var(--color-white);
+        border: 1px solid var(--color-primary);
+        border-radius: 50%;
+    }
+
+    .handle {
+        position: absolute;
+        z-index: var(--handle-z-index);
+        top: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        width: calc(var(--grid-unit) * 5px);
+        height: calc(var(--grid-unit) * 5px);
+        transition: left .2s;
+
+        .dot {
+            width: calc(var(--grid-unit) * 1.5px);
+            height: calc(var(--grid-unit) * 1.5px);
+        }
+    }
+
+    .marker {
+        position: absolute;
+        z-index: var(--marker-z-index);
+        top: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        width: calc(var(--grid-unit) * 5px);
+        height: calc(var(--grid-unit) * 5px);
+
+        .dot {
+            width: calc(var(--grid-unit) * 1px);
+            height: calc(var(--grid-unit) * 1px);
+        }
+
+        label {
+            position: absolute;
+            bottom: 0; 
+            white-space: nowrap;
+            font-size: 11px;
+            cursor: pointer;
+        }
+    }
+}
