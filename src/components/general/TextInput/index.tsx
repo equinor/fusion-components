@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { ErrorIcon } from '@equinor/fusion-components';
+import { ErrorIcon, styling } from '@equinor/fusion-components';
 
 type TextInputProps = {
     disabled?: boolean;
@@ -73,7 +73,7 @@ const TextInput = React.forwardRef<
             if (!error && !icon) {
                 return null;
             }
-            const inputIcon = error ? <ErrorIcon outline={false} color="#FF3B3B" /> : icon;
+            const inputIcon = error ? <ErrorIcon outline={false} color={styling.cssColors.red} /> : icon;
             return (
                 <div className={styles.icon} onClick={onIconAction}>
                     {inputIcon}
@@ -96,7 +96,7 @@ const TextInput = React.forwardRef<
                 return <div className={styles.helperText}>{helperText + optional}</div>;
             }
             return null;
-        }, [errorMessage, error, isOptional]);
+        }, [errorMessage, error, isOptional, helperText]);
 
         const inputContentClasses = classNames(styles.inputContent, {
             [styles.focus]: focus,
@@ -111,6 +111,10 @@ const TextInput = React.forwardRef<
             [styles.error]: error,
         });
 
+        const placeholderValue = React.useMemo(() => {
+            return placeholder && (focus || !label) ? placeholder : '';
+        }, [placeholder, focus, label]);
+
         return (
             <div className={styles.inputContainer}>
                 <div
@@ -124,7 +128,7 @@ const TextInput = React.forwardRef<
                         {inputLabel}
                         <input
                             ref={inputRef}
-                            placeholder={placeholder}
+                            placeholder={placeholderValue}
                             onBlur={handleBlur}
                             value={!disabled ? value : ''}
                             onChange={handleChange}
