@@ -27,7 +27,7 @@ const InteractiveCalendar = () => {
                 initialYear={initialYear}
                 initialMonth={initialMonth}
                 interactive
-                onClick={setSelecteDate}
+                onChange={setSelecteDate}
                 selectedDate={selectedDate}
             />
         </div>

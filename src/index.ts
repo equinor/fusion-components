@@ -43,6 +43,7 @@ export {
 } from './components/general/SearchableDropdown';
 export { ModalSideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
+export { default as Calendar } from './components/general/Calendar';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -83,6 +84,7 @@ export {
     MinimizeIcon,
     DropdownArrow,
     CollapseIcon,
+    CalendarIcon,
 } from './components/icons/components/action';
 export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
 
