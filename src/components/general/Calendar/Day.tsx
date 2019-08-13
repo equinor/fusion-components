@@ -8,7 +8,7 @@ import { IconButton } from '@equinor/fusion-components';
 type DayProps = {
     date: CalendarDate;
     interactive?: boolean;
-    selectedDate?: Date;
+    selectedDate?: Date | null;
     onClick?: (date: Date) => void;
 };
 
@@ -24,7 +24,7 @@ const Day: React.FC<DayProps> = ({ date, interactive, onClick, selectedDate }) =
         <span className={dayClassNames}>
             {interactive ? (
                 <IconButton
-                    active={isSelectedDate}
+                    active={!!isSelectedDate}
                     disabled={!date.isSelectedMonth}
                     toggler={date.isToday && !isSelectedDate}
                     onClick={() => onClick && onClick(date.date)}

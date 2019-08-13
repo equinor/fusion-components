@@ -4,3 +4,4 @@ export { default as MinimizeIcon } from './MinimizeIcon';
 export { default as SortIcon } from './SortIcon';
 export { default as DropdownArrow } from './DropdownArrow';
 export { default as CollapseIcon } from './CollapseIcon';
+export { default as CalendarIcon } from './CalendarIcon';

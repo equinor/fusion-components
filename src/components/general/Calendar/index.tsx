@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/fusion';
 
@@ -9,9 +9,9 @@ import styles from './styles.less';
 type CalendarProps = {
     initialYear: number;
     initialMonth: Month;
-    selectedDate?: Date;
+    selectedDate?: Date | null;
     interactive?: boolean;
-    onClick?: (date: Date) => void;
+    onChange?: (date: Date) => void;
 };
 
 const Calendar: React.FC<CalendarProps> = ({
@@ -19,7 +19,7 @@ const Calendar: React.FC<CalendarProps> = ({
     initialMonth,
     selectedDate,
     interactive,
-    onClick,
+    onChange,
 }) => {
     const [year, setYear] = useState(initialYear);
     const [month, setMonth] = useState(initialMonth);
@@ -61,6 +61,15 @@ const Calendar: React.FC<CalendarProps> = ({
         setYear(today.getFullYear());
     }, []);
 
+    useEffect(() => {
+        if(!selectedDate) {
+            return;
+        }
+
+        setYear(selectedDate.getFullYear());
+        setMonth(selectedDate.getMonth() as Month);
+    }, [selectedDate]);
+
     return (
         <div className={containerClassNames}>
             <header className={styles.header}>
@@ -87,7 +96,7 @@ const Calendar: React.FC<CalendarProps> = ({
                         date={d}
                         selectedDate={selectedDate}
                         interactive={interactive}
-                        onClick={onClick}
+                        onClick={onChange}
                     />
                 ))}
             </div>

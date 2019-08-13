@@ -17,6 +17,7 @@ type TextInputProps = {
     icon?: React.ReactElement;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 const TextInput = React.forwardRef<
@@ -38,6 +39,7 @@ const TextInput = React.forwardRef<
             onBlur,
             onIconAction,
             helperText = '',
+            onKeyUp,
             ...props
         },
         ref
@@ -133,6 +135,7 @@ const TextInput = React.forwardRef<
                             value={!disabled ? value : ''}
                             onChange={handleChange}
                             disabled={disabled}
+                            onKeyUp={onKeyUp}
                             {...props}
                         />
                     </div>
