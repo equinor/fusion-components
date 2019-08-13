@@ -1,13 +1,11 @@
 import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
-
+import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-
-export type SliderMarker = {
-    value: number;
-    label: string;
-};
+import { useEventListener } from '@equinor/fusion-components';
+import { createPositionCalculator, createValueCalculator, createMarkerFinder } from './utils';
+export { SliderMarker };
 
 type SliderProps = {
     value: number; // | [number, number];
@@ -15,48 +13,11 @@ type SliderProps = {
     onChange: (marker: SliderMarker) => void;
 };
 
-type SliderMarkerProps = {
-    marker: SliderMarker;
-    position: string;
-    onClick: (marker: SliderMarker) => void;
-};
-
-const Marker: React.FC<SliderMarkerProps> = ({ marker, position, onClick }) => {
-    const onClickHandler = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        onClick(marker);
-    }, [marker, onClick]);
-
-    return (
-        <button
-            className={styles.marker}
-            style={{ left: position }}
-            onClick={onClickHandler}
-        >
-            <div className={styles.dot} />
-            <label>{marker.label}</label>
-        </button>
-    );
-};
-
-const createPositionCalculator = (start: number, end: number) => {
-    const full = end - start;
-    console.log(end, start, full);
-
-    if (full <= 0) {
-        throw new Error('No range');
-    }
-
-    return (marker: number) => Math.max((marker / full) * 100, 0) + '%';
-};
-
-const createValueCalculator = (start: number, end: number) => {
-    const onePercent = (end - start) / 100;
-
-    return (percentage: number) => Math.max(percentage * onePercent, 0);
-};
-
 const Slider: React.FC<SliderProps> = ({ value, markers, onChange }) => {
+    const trackRef = useRef<HTMLDivElement | null>(null);
+    const [trackLeft, setTrackLeft] = useState(0);
+    const [trackWidth, setTrackWidth] = useState(0);
+
     const sortedMarkers = useMemo(() => markers.sort((a, b) => a.value - b.value), [markers]);
     const firstMarker = useMemo(() => sortedMarkers[0], [sortedMarkers]);
     const lastMarker = useMemo(() => sortedMarkers[sortedMarkers.length - 1], [sortedMarkers]);
@@ -68,10 +29,10 @@ const Slider: React.FC<SliderProps> = ({ value, markers, onChange }) => {
         () => createValueCalculator(firstMarker.value, lastMarker.value),
         [firstMarker, lastMarker]
     );
-
-    const trackRef = useRef<HTMLDivElement | null>(null);
-    const [trackLeft, setTrackLeft] = useState(0);
-    const [trackWidth, setTrackWidth] = useState(0);
+    const markerFinder = useMemo(
+        () => createMarkerFinder(trackLeft, trackWidth, markers, calculateValue),
+        [trackLeft, trackWidth, markers, calculateValue]
+    );
 
     useEffect(() => {
         if (!trackRef.current) {
@@ -85,19 +46,39 @@ const Slider: React.FC<SliderProps> = ({ value, markers, onChange }) => {
 
     const onTrackClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
-            const position = e.pageX - trackLeft;
-            const percentage = (position / trackWidth) * 100;
-            const newValue = calculateValue(percentage);
-            const marker = markers.find(m => m.value === newValue) || {
-                value: newValue,
-                label: newValue.toString(),
-            };
+            const marker = markerFinder(e.pageX);
             onChange(marker);
         },
         [trackLeft, trackWidth, calculateValue, onChange]
     );
 
-    const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
+    const [mouseIsDown, setMouseIsDown] = useState(false);
+    const onHandleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setMouseIsDown(true);
+    };
+
+    const handleMouseMove = (e: Event) => {
+        const mouseEvent = e as MouseEvent;
+        if (mouseIsDown) {
+            const marker = markerFinder(mouseEvent.pageX);
+            onChange(marker);
+        }
+    };
+
+    const handleMouseUp = useCallback(() => {
+        setMouseIsDown(false);
+    }, []);
+
+    useEventListener(window, 'mousemove', handleMouseMove, [mouseIsDown]);
+    useEventListener(window, 'mouseup', handleMouseUp, []);
+
+    const containerClassNames = classNames(
+        styles.container,
+        useComponentDisplayClassNames(styles),
+        {
+            [styles.mouseIsDown]: mouseIsDown,
+        }
+    );
 
     return (
         <div className={containerClassNames} onClick={onTrackClick}>
@@ -110,6 +91,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, onChange }) => {
             />
             <button
                 className={styles.handle}
+                onMouseDown={onHandleMouseDown}
                 style={{
                     left: calculatePosition(value),
                 }}

@@ -40,7 +40,7 @@ const SliderDateStory = () => {
     const markers = [
         {
             value: new Date(2019, 10, 15).getTime(),
-            label: 'Org char release',
+            label: 'Org chart release',
         },
         {
             value: new Date(1986, 3, 26).getTime(),
