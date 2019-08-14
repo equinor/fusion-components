@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-export default (
+export default <T extends EventListener>(
     node: HTMLElement | Window | null,
     eventType: string,
-    handler: EventListener,
+    handler: T,
     dependencies: any[],
     useCapture: boolean = false
 ) => {
