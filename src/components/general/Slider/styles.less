@@ -18,6 +18,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        &:active {
+            .dot {
+                border-color: var(--color-primary);
+                box-shadow: 0 0 0 calc(var(--grid-unit) * 1px) var(--color-primary-hover-alt1);
+            }
+        }
     }
 
     .track {
@@ -48,6 +55,7 @@
         background: var(--color-white);
         border: 1px solid var(--color-primary);
         border-radius: 50%;
+        box-sizing: border-box;
     }
 
     .handle {
@@ -62,6 +70,13 @@
         .dot {
             width: calc(var(--grid-unit) * 1.5px);
             height: calc(var(--grid-unit) * 1.5px);
+            border-width: 2px;
+        }
+
+        &:hover {
+            .dot {
+                border-color: var(--color-primary-hover);
+            }
         }
     }
 
@@ -76,6 +91,7 @@
         .dot {
             width: calc(var(--grid-unit) * 1px);
             height: calc(var(--grid-unit) * 1px);
+            border-color: var(--color-black-alt3);
         }
 
         label {
@@ -84,6 +100,12 @@
             white-space: nowrap;
             font-size: 11px;
             cursor: pointer;
+        }
+
+        &.isActive {
+            .dot {
+                border-color: var(--color-primary);
+            }
         }
     }
 

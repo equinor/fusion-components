@@ -102,6 +102,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, onChange }) => {
                 <Marker
                     key={marker.value}
                     marker={marker}
+                    isActive={value >= marker.value}
                     position={calculatePosition(marker.value)}
                     onClick={onChange}
                 />
