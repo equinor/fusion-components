@@ -1,0 +1,57 @@
+.container {
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--color-white);
+        height: var(--header-height);
+
+        h4 {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .todayButton {
+            margin-right: calc(var(--grid-unit) * 1px);
+        }
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+
+        header {
+            background: var(--color-black-alt4);
+        }
+
+        .day {
+            &.isToday {
+                font-weight: bold;
+            }
+
+            &.notSelectedMonth {
+                color: var(--color-black-alt3);
+            }
+        }
+
+        header, .day {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: var(--cell-size);
+            margin-bottom: var(--week-margin);
+        }
+    }
+
+    &.comfortable {
+        --header-height: calc(var(--grid-unit) * 8px);
+        --cell-size: calc(var(--grid-unit) * 6px);
+        --week-margin: calc(var(--grid-unit) * 1px);
+    }
+
+    &.compact {
+        --header-height: calc(var(--grid-unit) * 6px);
+        --cell-size: calc(var(--grid-unit) * 4px);
+        --week-margin: calc(var(--grid-unit) * 1px);
+    }
+}

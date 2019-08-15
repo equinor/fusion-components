@@ -1,13 +1,9 @@
-@import '~styles/mixins.less';
-
-.inputContainer {
-    max-width: .grid-unit(41px)[];
-}
-
-.menuContainer{
+.dropdownContainer {
     position: absolute;
     top: 100%;
     min-width: 100%;
-    margin-top: .grid-unit(0.5px)[];
+    margin-top: calc(var(--grid-unit) * 0.5px);
     pointer-events: all;
+    background: white;
+    border-radius: 4px;
 }
