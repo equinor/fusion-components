@@ -1,25 +1,28 @@
 import * as React from "react";
 import classNames from "classnames";
-import MenuItem, { MenuItemType } from "./MenuItem";
+import MenuItem, { MenuItemType, MenuItemComponentProps } from "./MenuItem";
 import styles from "./styles.less";
 import { useKeyboardNavigation, Elevation, useElevationClassName } from '@equinor/fusion-components';
 
-export type MenuSection = {
+export type MenuSection<TItem extends MenuItemType> = {
     key: string,
     title?: string,
-    items: MenuItemType[],
+    items: TItem[],
 };
 
-export type MenuProps = {
-    sections: MenuSection[],
+export type MenuProps<TItem extends MenuItemType> = {
+    sections: MenuSection<TItem>[],
     elevation?: Elevation,
-    onClick?: (item: MenuItemType) => void | Promise<void>,
+    onClick?: (item: TItem) => void | Promise<void>,
     keyboardNavigationRef?: HTMLElement | null,
+    onChange?: (items: MenuSection<TItem>[]) => void | Promise<void>;
+    itemComponent?: React.FC<MenuItemComponentProps<TItem>>;
+    asideComponent?: React.FC<MenuItemComponentProps<TItem>>;
 };
 
 export { MenuItemType };
 
-const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavigationRef }: MenuProps) => {
+function Menu<TItem extends MenuItemType = MenuItemType>({ sections, elevation, onClick, itemComponent: component, asideComponent, keyboardNavigationRef }: MenuProps<TItem>) {
     const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(null);
     const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(null);
 
@@ -62,7 +65,7 @@ const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavig
         setFocusedItemKey(keyboardNavigationRef && sections.length && sections[0].items.length ? sections[0].items[0].key : null);
     };
 
-    const onItemClick = item => {
+    const onItemClick = (item: TItem) => {
         if (onClick) {
             onClick(item);
         }
@@ -104,6 +107,8 @@ const Menu: React.FC<MenuProps> = ({ sections, elevation, onClick, keyboardNavig
                                 focusedSectionKey === section.key && focusedItemKey === item.key
                             }
                             item={item}
+                            itemComponent={component}
+                            asideComponent={asideComponent}
                             onClick={onItemClick}
                         />
                     ))}

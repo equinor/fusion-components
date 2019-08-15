@@ -15,6 +15,7 @@ import {
     useRelativePortal,
     useClickOutsideOverlayPortal,
 } from '@equinor/fusion-components';
+import { MenuItemType } from 'src/components/general/Menu';
 
 export default (
     inputRef: HTMLElement | null,
@@ -53,7 +54,7 @@ export default (
         isSelected: currentContext ? context.id === currentContext.id : false,
     });
 
-    const sections: MenuSection[] = [];
+    const sections: MenuSection<MenuItemType>[] = [];
 
     // Add context search result to results menu sections
     if (contexts.length && queryText.length) {
