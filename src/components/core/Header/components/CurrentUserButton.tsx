@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCurrentUser, useFusionContext } from '@equinor/fusion';
-import { IconProps, MenuSection, MenuItemType, Menu, usePopoverRef, useIcon, IconButton } from '@equinor/fusion-components';
+import { IconProps, MenuItemType, Menu, usePopoverRef, useIcon, IconButton } from '@equinor/fusion-components';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
@@ -23,7 +23,7 @@ const CurrentUserDropdown: React.FC = () => {
         return null;
     }
 
-    const sections: MenuSection[] = [
+    const sections = [
         {
             key: currentUser.id,
             title: `${currentUser.givenName} ${currentUser.familyName}`,

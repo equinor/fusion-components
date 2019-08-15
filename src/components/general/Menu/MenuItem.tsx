@@ -1,25 +1,31 @@
-import * as React from "react";
-import classNames from "classnames";
-import styles from "./styles.less";
+import * as React from 'react';
+import classNames from 'classnames';
+import styles from './styles.less';
+
+export type MenuItemComponentProps<TItem extends MenuItemType> = {
+    item: TItem;
+};
 
 export type MenuItemType = {
     key: string;
-    title: string;
-    aside?: string;
+    title: string | React.ReactNode;
+    aside?: string | React.ReactNode;
     isSelected?: boolean;
     isDisabled?: boolean;
 };
 
-type MenuItemProps = {
-    item: MenuItemType;
+type MenuItemProps<TItem extends MenuItemType> = {
+    item: TItem;
     index: number;
     isFocused: boolean;
-    onClick: (e: MenuItemType) => void;
+    onClick: (e: TItem) => void;
+    itemComponent?: React.FC<MenuItemComponentProps<TItem>>;
+    asideComponent?: React.FC<MenuItemComponentProps<TItem>>;
 };
 
-const MenuItem: React.FC<MenuItemProps> = props => {
+function MenuItem<TItem extends MenuItemType>(props: MenuItemProps<TItem>) {
     const ref = React.useRef<HTMLButtonElement>(null);
-    const onClick = e => {
+    const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (ref.current) {
             ref.current.blur();
         }
@@ -33,6 +39,33 @@ const MenuItem: React.FC<MenuItemProps> = props => {
         [styles.isFocused]: props.isFocused,
     });
 
+    const aside = () => {
+        if (props.asideComponent) {
+            const AsideComponent = props.asideComponent;
+            return (
+                <aside>
+                    <AsideComponent item={props.item} />
+                </aside>
+            );
+        }
+        if (props.item.aside) {
+            return <aside>{props.item.aside}</aside>;
+        }
+    };
+
+    const content = () => {
+        if (props.itemComponent) {
+            const Component = props.itemComponent;
+            return (
+                <span>
+                    <Component item={props.item} />
+                </span>
+            );
+        }
+
+        return <span>{props.item.title}</span>;
+    };
+
     return (
         <button
             className={className}
@@ -42,11 +75,11 @@ const MenuItem: React.FC<MenuItemProps> = props => {
             onClick={onClick}
         >
             <span>
-                <span>{props.item.title}</span>
-                {props.item.aside && <aside>{props.item.aside}</aside>}
+                {aside()}
+                {content()}
             </span>
         </button>
     );
-};
+}
 
 export default MenuItem;
