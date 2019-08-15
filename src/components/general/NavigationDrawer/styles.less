@@ -8,13 +8,16 @@
     overflow-y: auto;
     overflow-x: hidden;
     color: var(--color-primary-accent);
-    width: .grid-unit(40px)[];
+    width: calc(var(--grid-unit)* 40px + 2px);
     flex-shrink: 0;
 
     .collapseButtonContainer {
         width: .grid-unit(6px)[];
         height: .grid-unit(6px)[];
         border-bottom: 1px solid var(--color-black-alt4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     &.isCollapsed {

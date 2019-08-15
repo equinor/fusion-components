@@ -1,30 +1,51 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { NavigationComponentProps } from '..';
 
-type ChildProps = {
-    title: string;
-    key: string;
-    onClick?: () => void;
-    active?: boolean;
-};
-
-const Child: FC<ChildProps> = ({ title, key, onClick, active }) => {
+const Child: FC<NavigationComponentProps> = ({
+    title,
+    id,
+    onClick,
+    isActive,
+    onChange,
+    isCollapsed,
+    icon,
+}) => {
     const containerClassNames = classNames(
         styles.container,
         useComponentDisplayClassNames(styles),
         {
             [styles.menuChild]: true,
-            [styles.isActive]: active,
+            [styles.isActive]: isActive,
+            [styles.isCollapsed]: isCollapsed,
         }
     );
+    const change = useCallback(() => {
+        onChange && onChange(id, false, true);
+        onClick && onClick();
+    }, [onClick, id, isActive, onChange]);
+
+    const content = useMemo(() => {
+        if (isCollapsed) {
+            return (
+                <div className={styles.navigationIcon} onClick={change}>
+                    {icon}
+                </div>
+            );
+        }
+        return (
+            <div className={styles.linkContainer} onClick={change}>
+                {title}
+            </div>
+        );
+    }, [isCollapsed, icon, title, onChange, isActive]);
 
     return (
-        <div key={key} onClick={onClick} className={containerClassNames}>
-            <a className={styles.linkContainer}>
-                <div className={styles.title}>{title}</div>
-            </a>
+        <div className={containerClassNames}>
+            {content}
+            <div className={styles.visualOnClickContainer} />
         </div>
     );
 };

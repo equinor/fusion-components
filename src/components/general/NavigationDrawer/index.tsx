@@ -1,9 +1,11 @@
-import React, { FC, useState, useCallback } from 'react';
+import React, { FC, useState, useCallback, ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { CollapseExpandButton } from '@equinor/fusion-components';
 import styles from './styles.less';
-import {MenuChild} from "./components"
+import { NavigationChild, NavigationSection, NavigationGrouping } from './components';
+import { getNavigationComponentForItem, toggleOpenById, toggleActiveById } from './utils';
+export { NavigationChild, NavigationSection, NavigationGrouping };
 
 const NAVIGATION_DRAWER_COLLAPSED_KEY = 'NAVIGATION_DRAWER_COLLAPSED_KEY';
 const createDrawerCollapsedKey = (key: string) => NAVIGATION_DRAWER_COLLAPSED_KEY + key;
@@ -16,11 +18,29 @@ const persistCollapsedState = (key: string, isCollapsed: boolean) => {
     localStorage.setItem(createDrawerCollapsedKey(key), isCollapsed ? 'collapsed' : '');
 };
 
-type NavigationDrawerProps = {
-    id: string;
+export type NavigationComponentProps = NavigationStructure & {
+    onChange?: (id: string, toggleOpen: boolean, toggleActive: boolean) => void;
+    isCollapsed?: boolean;
 };
 
-const NavigationDrawer: FC<NavigationDrawerProps> = ({ id }) => {
+export type NavigationStructure = {
+    id: string;
+    type: 'child' | 'grouping' | 'label' | 'search' | 'section';
+    icon?: ReactNode;
+    title: string;
+    onClick?: () => void;
+    isActive?: boolean;
+    isOpen?: boolean;
+    navigationChildren?: NavigationStructure[];
+};
+
+type NavigationDrawerProps = {
+    id: string;
+    structure: NavigationStructure[];
+    onChange: (newStructure: NavigationStructure[]) => void;
+};
+
+const NavigationDrawer: FC<NavigationDrawerProps> = ({ id, structure, onChange }) => {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
 
     const toggleCollapsed = useCallback(() => {
@@ -35,15 +55,34 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({ id }) => {
             [styles.isCollapsed]: isCollapsed,
         }
     );
-
+    const navigationStructure = useMemo(
+        () =>
+            getNavigationComponentForItem(structure, {
+                onChange: (id: string, toggleOpen: boolean, toggleActive: boolean) => {
+                    const newStructure = structure.map(item => {
+                        if (toggleOpen && toggleActive) {
+                            return toggleActiveById(id, toggleOpenById(id, item));
+                        }
+                        if (toggleOpen) {
+                            return toggleOpenById(id, item);
+                        }
+                        if (toggleActive) {
+                            return toggleActiveById(id, item);
+                        }
+                        return item;
+                    });
+                    newStructure && onChange(newStructure);
+                },
+                isCollapsed: isCollapsed,
+            }),
+        [structure, onChange, isCollapsed]
+    );
     return (
         <div className={containerClassNames}>
             <div className={styles.collapseButtonContainer}>
                 <CollapseExpandButton isCollapsed={isCollapsed} onClick={toggleCollapsed} />
             </div>
-            <MenuChild title="Child" key="1child" onClick={() => console.log("CLICK")} active/>
-            <MenuChild title="Child2" key="13child" onClick={() => console.log("CLICK")} active={false}/>
-            <MenuChild title="Child3" key="14child" onClick={() => console.log("CLICK")} active={false}/>
+            {navigationStructure}
         </div>
     );
 };

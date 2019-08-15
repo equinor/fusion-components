@@ -1,31 +1,84 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { DropdownArrow } from '@equinor/fusion-components';
+import { NavigationComponentProps } from '..';
+import { getNavigationComponentForItem } from '../utils';
 
-type SectionProps = {
-    title: string;
-    key: string;
-    onClick?: () => void;
-    active?: boolean;
-};
-
-const Section: FC<SectionProps> = ({ title, key, onClick, active }) => {
+const Section: FC<NavigationComponentProps> = ({
+    title,
+    id,
+    onClick,
+    isActive,
+    navigationChildren,
+    isOpen,
+    onChange,
+    icon,
+    isCollapsed,
+}) => {
     const containerClassNames = classNames(
         styles.container,
         useComponentDisplayClassNames(styles),
         {
             [styles.menuSection]: true,
-            [styles.isActive]: active,
+            [styles.isActive]: isActive,
+            [styles.isCollapsed]: isCollapsed,
         }
     );
 
+    const navigationStructure = useMemo(
+        () =>
+            getNavigationComponentForItem(navigationChildren, {
+                onChange: onChange,
+                isCollapsed: isCollapsed,
+                icon: icon,
+            }),
+        [navigationChildren, onChange, isCollapsed, icon]
+    );
+
+    const change = useCallback(
+        isCollapsed => {
+            onChange && (isCollapsed ? onChange(id, false, true) : onChange(id, !isOpen, true));
+            onClick && onClick();
+        },
+        [onClick, id, isOpen, isCollapsed, onChange]
+    );
+
+    const getCollapsedIcon = useCallback(
+        () => (
+            <div className={styles.navigationIcon} onClick={() => change(true)}>
+                {icon}
+            </div>
+        ),
+        [icon, onChange]
+    );
+
+    const getNavigationContent = useCallback(
+        () => (
+            <>
+                <div className={styles.linkContainer} onClick={() => change(false)}>
+                    {title}
+                </div>
+                <div
+                    className={styles.toggleOpenContainer}
+                    onClick={() => onChange && onChange(id, true, true)}
+                >
+                    <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
+                </div>
+            </>
+        ),
+        [icon, title, isOpen, onChange]
+    );
+
     return (
-        <div key={key} onClick={onClick} className={containerClassNames}>
-            <a className={styles.linkContainer}>
-                <div className={styles.title}>{title}</div>
-            </a>
-        </div>
+        <>
+            <div className={containerClassNames}>
+                {isCollapsed ? getCollapsedIcon() : getNavigationContent()}
+                <div className={styles.visualOnClickContainer} />
+            </div>
+            {isOpen && navigationStructure}
+        </>
     );
 };
 

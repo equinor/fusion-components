@@ -7,27 +7,58 @@
     display: flex;
     cursor: pointer;
     color: var(--color-primary-accent);
-    flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+    position: relative;
+    font-size: 12px;
 
-    .linkContainer {
+    .navigationIcon{
+        height: .grid-unit(6px)[];
+        width: .grid-unit(6px)[];
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+    }
+
+    .linkContainer{ 
         display: flex;
         color: inherit;
-        width: .grid-unit(27px)[];
+        width: .grid-unit(34px)[];
         align-self: flex-end;
         height: 100%;
-        justify-content: center;
-        flex-direction: column;
+        align-items: center;
+        z-index: 1;
+        justify-content: space-between;
+        letter-spacing: 0.7;
+        font-weight: 600;
 
-        .title {
-            align-self: center;
-            height: .grid-unit(5px)[];
+        .linkText{
             width: .grid-unit(27px)[];
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            border-radius: 4px;
         }
+    
+    }
+    .toggleOpenContainer{
+        width: .grid-unit(6px)[];
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+
+    }
+    .visualOnClickContainer{
+        position: absolute;
+        z-index: 0;
+        top: 50%;
+        right: .grid-unit(.5px)[]; 
+        transform: translateY(-50%);
+        width: .grid-unit(39px)[];
+        height: .grid-unit(5px)[];
+        background-color: var(--color-primary-alt4);
+        border-radius: 4px;
+        opacity: 0;
+        align-self: center;
     }
 
     &:hover{
@@ -38,31 +69,74 @@
     
     &.isActive {
         color: var(--color-primary);
+        background-color: var(--color-primary-alt4);
+    }
+
+    &:active{
+        background-color: var(--color-white);
+
+        .visualOnClickContainer{
+            opacity: 1;
+        }
     }
 
     &.menuChild {
         .linkContainer{
-            width: .grid-unit(33px)[];
             box-shadow: -1px 0px 0px 0px var(--color-black-alt4);
-            .title {
-                width: .grid-unit(30px)[];
-                padding-left: .grid-unit(2px)[];
-            }
+            width: .grid-unit(31px)[];
+            padding-left: .grid-unit(2px)[];
+            letter-spacing: 0.9px;
+            font-weight: 400;
         }
+        .visualOnClickContainer{
+            width: .grid-unit(31px)[];
+        }
+
         &.isActive {
-            background-color: var(--color-primary-alt4);
             .linkContainer{
                 box-shadow: -13px 0px 0px -12px var(--color-primary), -1px 0px 0px 0px var(--color-black-alt4);
             }   
         }
-        &:active{
-            background-color: var(--color-white);
-            .linkContainer{
-                .title {
-                    background-color: var(--color-primary-alt4);
-                }
-               
-            }
+
+    }
+
+    &.menuSection{
+        .linkContainer{
+            width: .grid-unit(27px)[];
+            letter-spacing: 0.8px;
+            font-weight: 500;
+        }
+
+    }
+
+    &.isCollapsed{
+        .visualOnClickContainer{
+            width: .grid-unit(5px)[];
+            height: .grid-unit(5px)[];
+        }
+    }
+}
+
+.label{
+    width: 100%;
+    height: .grid-unit(6px)[];
+
+    .divider {
+        border-bottom: 1px solid var(--color-black-alt4);
+        padding-top: .grid-unit(2px)[];
+
+    }
+    .title {
+        position: relative;
+        padding: 0 .grid-unit(2px)[] .grid-unit(1px)[] .grid-unit(2px)[];
+        font-size: 11px;
+        line-height: .grid-unit(3px)[];
+        
+    }
+
+    &.isCollapsed{
+        .title{
+            text-align: center;
         }
     }
 }
