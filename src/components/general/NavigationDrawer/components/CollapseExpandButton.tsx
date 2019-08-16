@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTooltipRef, CollapseIcon, IconButton } from '@equinor/fusion-components';
-import styles from '../styles.less';
 
 type CollapseExpandButtonProps = {
     isCollapsed: boolean;
