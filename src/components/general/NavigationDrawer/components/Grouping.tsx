@@ -1,7 +1,6 @@
 import React, { FC, useMemo, useCallback } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
 import { NavigationComponentProps } from '..';
@@ -19,9 +18,8 @@ const Grouping: FC<NavigationComponentProps> = ({
 }) => {
     const containerClassNames = classNames(
         styles.container,
-        useComponentDisplayClassNames(styles),
+        styles.menuGrouping,
         {
-            [styles.menuGrouping]: true,
             [styles.isActive]: isActive,
             [styles.isCollapsed]: isCollapsed,
         }

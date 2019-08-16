@@ -1,9 +1,13 @@
 import React, { FC, useState, useCallback, ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { CollapseExpandButton } from '@equinor/fusion-components';
 import styles from './styles.less';
-import { NavigationChild, NavigationSection, NavigationGrouping } from './components';
+import {
+    NavigationChild,
+    NavigationSection,
+    NavigationGrouping,
+    CollapseExpandButton,
+} from './components';
 import { getNavigationComponentForItem, toggleOpenById, toggleActiveById } from './utils';
 export { NavigationChild, NavigationSection, NavigationGrouping };
 

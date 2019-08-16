@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useMemo } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { NavigationComponentProps } from '..';
 
 const Child: FC<NavigationComponentProps> = ({
@@ -15,9 +14,8 @@ const Child: FC<NavigationComponentProps> = ({
 }) => {
     const containerClassNames = classNames(
         styles.container,
-        useComponentDisplayClassNames(styles),
+        styles.menuChild,
         {
-            [styles.menuChild]: true,
             [styles.isActive]: isActive,
             [styles.isCollapsed]: isCollapsed,
         }
