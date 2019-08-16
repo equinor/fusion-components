@@ -2,6 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Accordion from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
+import AccordionItem from './AccordionItem';
 
 const AccordionStory = () => {
     const [isOpenFirst, setIsOpenFirst] = React.useState(false);
@@ -22,24 +23,27 @@ const AccordionStory = () => {
     );
     return (
         <div style={{ width: 500 }}>
-            <Accordion
-                isOpen={isOpenFirst}
-                onChange={() => setIsOpenFirst(!isOpenFirst)}
-                label="Accordion header"
-            >
-                {accordionContent}
+            <Accordion>
+                <AccordionItem
+                    isOpen={isOpenFirst}
+                    onChange={() => setIsOpenFirst(!isOpenFirst)}
+                    label="Accordion header"
+                >
+                    {accordionContent}
+                </AccordionItem>
+                <AccordionItem
+                    isOpen={isOpenSecond}
+                    onChange={() => setIsOpenSecond(!isOpenSecond)}
+                    label="Right Action"
+                    actionDirection="right"
+                >
+                    {accordionContent}
+                </AccordionItem>
+                <AccordionItem isOpen={false} disabled label="Disabled Accordion">
+                    <div>cant access me :(</div>
+                </AccordionItem>
             </Accordion>
-            <Accordion
-                isOpen={isOpenSecond}
-                onChange={() => setIsOpenSecond(!isOpenSecond)}
-                label="Right Action"
-                actionDirection="right"
-            >
-                {accordionContent}
-            </Accordion>
-            <Accordion isOpen={false} disabled label="Disabled Accordion">
-                <div>cant access me :(</div>
-            </Accordion>
+            
         </div>
     );
 };
