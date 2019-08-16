@@ -1,5 +1,7 @@
-import React, { FC, useRef, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import styles from './styles.less';
+import AccordionItem from './AccordionItem';
+export { AccordionItem };
 
 type AccordionProps = {
     children?: any;
