@@ -1,7 +1,8 @@
-import React, { FC, useRef, useMemo, useState, useEffect } from 'react';
+import React, { FC, useRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { SortIcon } from '@equinor/fusion-components';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type AccordionProps = {
     isOpen?: boolean;
@@ -20,7 +21,7 @@ const Accordion: FC<AccordionProps> = ({
     label,
     actionDirection,
 }) => {
-    const headerClassNames = classNames(styles.header, {
+    const headerClassNames = classNames(styles.header, useComponentDisplayClassNames(styles), {
         [styles.isOpen]: isOpen,
         [styles.disabled]: disabled,
         [styles.rightAction]: actionDirection && actionDirection === 'right',

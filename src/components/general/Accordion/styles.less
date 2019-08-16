@@ -7,7 +7,7 @@
     height: 100%;
 
     .header {
-        height: .grid-unit(6px)[];
+        height: var(--header-height);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -16,13 +16,13 @@
         cursor: pointer;
 
         .label {
-            font-size: .grid-unit(2px)[];
+            font-size: var(--header-font-size);
             line-height: .grid-unit(3px)[];
             padding: 0 .grid-unit(2px)[];
         }
         .collapseIcon {
-            height: .grid-unit(6px)[];
-            width: .grid-unit(6px)[];
+            height: var(--header-height);
+            width: var(--icon-width);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -50,6 +50,18 @@
             .collapseIcon{
                 color: var(--color-black-alt4)
             }
+        }
+
+        &.compact{
+            --header-height: .grid-unit(4px)[];
+            --icon-width: .grid-unit(4px)[];
+            --header-font-size: 14px;
+        }
+        &.comfortable{
+            --header-height: .grid-unit(6px)[];
+            --icon-width: .grid-unit(6px)[];
+            --header-font-size: .grid-unit(2px)[];
+            
         }
 
     }
