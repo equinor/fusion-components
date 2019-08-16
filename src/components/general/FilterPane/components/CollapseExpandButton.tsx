@@ -1,18 +1,24 @@
 import React from 'react';
 import { useTooltipRef, CollapseIcon, IconButton } from '@equinor/fusion-components';
-import styles from '../styles.less';
+import { useFilterPaneContext } from '../FilterPaneContext';
 
 type CollapseExpandButtonProps = {
-    isCollapsed: boolean;
     onClick: () => void;
 };
 
-const CollapseExpandButton: React.FC<CollapseExpandButtonProps> = ({ isCollapsed, onClick }) => {
-    const tooltipRef = useTooltipRef(isCollapsed ? 'Expand' : 'Collapse', 'right');
+const CollapseExpandButton: React.FC<CollapseExpandButtonProps> = ({ onClick }) => {
+    const filterPaneContext = useFilterPaneContext();
+    const tooltipRef = useTooltipRef(
+        filterPaneContext.paneIsCollapsed ? 'Expand' : 'Collapse',
+        filterPaneContext.tooltipPlacement
+    );
 
     return (
         <IconButton ref={tooltipRef} onClick={onClick}>
-            <CollapseIcon isCollapsed={isCollapsed} />
+            <CollapseIcon
+                isCollapsed={filterPaneContext.paneIsCollapsed}
+                screenPlacement={filterPaneContext.screenPlacement}
+            />
         </IconButton>
     );
 };

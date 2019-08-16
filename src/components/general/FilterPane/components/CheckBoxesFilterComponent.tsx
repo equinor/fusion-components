@@ -2,6 +2,7 @@ import React from 'react';
 import { useTooltipRef, CheckBox } from '@equinor/fusion-components';
 import { FilterTerm } from '../applyFilters';
 import { Count } from '../countFilters';
+import { useFilterPaneContext } from '../FilterPaneContext';
 
 type CheckBoxOption = {
     key: string;
@@ -16,7 +17,6 @@ type CheckBoxesFilterProps = {
     term?: FilterTerm;
     onChange: OnChangeHandler;
     filterCount: Count;
-    paneIsCollapsed: boolean;
 };
 
 type CheckBoxWrapperProps = {
@@ -24,7 +24,6 @@ type CheckBoxWrapperProps = {
     term: FilterTerm;
     filterCount: Count;
     onChange: OnChangeHandler;
-    paneIsCollapsed: boolean;
 };
 
 const getCountForOption = (option: CheckBoxOption, filterCount: Count) => {
@@ -46,7 +45,6 @@ const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
     term,
     filterCount,
     onChange,
-    paneIsCollapsed,
 }) => {
     const selectSingleOption = () => {
         let newValue: string[] | null = [option.key];
@@ -79,8 +77,8 @@ const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
 
     const count = getCountForOption(option, filterCount);
     const isChecked = term.value.indexOf(option.key) > -1;
-
-    const tooltipRef = useTooltipRef(`${option.label} (${count})`, 'right');
+    const filterPaneContext = useFilterPaneContext();
+    const tooltipRef = useTooltipRef(`${option.label} (${count})`, filterPaneContext.tooltipPlacement);
 
     if (count === 0 && !isChecked) {
         return null;
@@ -93,7 +91,7 @@ const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
                 color={option.color}
                 onChange={toggleOption}
             />
-            {!paneIsCollapsed && (
+            {!filterPaneContext.paneIsCollapsed && (
                 <label>
                     {option.label} ({count})
                 </label>
@@ -107,7 +105,6 @@ const CheckBoxesFilterComponent: React.FC<CheckBoxesFilterProps> = ({
     term,
     filterCount,
     onChange,
-    paneIsCollapsed,
 }) => {
     const ensuredTerm = term || { key: '', value: [] };
 
@@ -120,7 +117,6 @@ const CheckBoxesFilterComponent: React.FC<CheckBoxesFilterProps> = ({
                 term={ensuredTerm}
                 filterCount={filterCount}
                 onChange={onChange}
-                paneIsCollapsed={paneIsCollapsed}
             />
         ));
 

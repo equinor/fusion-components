@@ -4,9 +4,10 @@ import useIcon, { IconProps } from '../../../../hooks/useIcon';
 
 type CollapseIconProps = IconProps & {
     isCollapsed: boolean;
+    screenPlacement?: 'right' | 'left';
 };
 
-const Collapsed: React.FC = () => (
+const ArrowPointingRight: React.FC = () => (
     <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -15,7 +16,7 @@ const Collapsed: React.FC = () => (
     />
 );
 
-const Expanded: React.FC = () => (
+const ArrowPointingLeft: React.FC = () => (
     <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -24,7 +25,9 @@ const Expanded: React.FC = () => (
     />
 );
 
-const CollapseIcon = ({ isCollapsed, ...props }: CollapseIconProps) => {
+const CollapseIcon = ({ isCollapsed, screenPlacement: screenPosition = 'right', ...props }: CollapseIconProps) => {
+    const Collapsed = screenPosition === 'left' ? ArrowPointingRight : ArrowPointingLeft;
+    const Expanded = screenPosition === 'left' ? ArrowPointingLeft : ArrowPointingRight;
     const iconFactory = useIcon(isCollapsed ? <Collapsed /> : <Expanded />);
 
     return iconFactory(props);

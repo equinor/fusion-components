@@ -1,12 +1,17 @@
 .container {
     box-sizing: border-box;
     height: 100%;
-    border-right: 2px solid var(--color-black-alt4);
+    border-left: 2px solid var(--color-black-alt4);
     transition: width .1s;
     overflow: auto;
     color: var(--color-primary-accent);
     width: var(--filter-pane-width);
     flex-shrink: 0;
+
+    &.screenPlacementLeft {
+        border-left: none;
+        border-right: 2px solid var(--color-black-alt4);
+    }
 
     .collapseExpandButton {
         display: flex;
