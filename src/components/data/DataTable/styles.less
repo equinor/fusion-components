@@ -23,7 +23,8 @@
             padding: 0 calc(var(--grid-unit) * var(--cell-horizontal-padding-multiplier));
             z-index: 1;
 
-            &.expand:not(.isExpandable) {
+            &.expand:not(.isExpandable),
+            &.select:not(.isSelectable) {
                 padding: 0;
             }
 
@@ -38,9 +39,13 @@
             &.isHovering {
                 background: var(--color-black-alt5);
             }
+
+            &.isSelected {
+                background: var(--color-primary-alt4);
+            }
         }
 
-        .header {
+        .header, .header.isSelected {
             background: var(--color-black-alt5);
             position: sticky;
             top: 0;

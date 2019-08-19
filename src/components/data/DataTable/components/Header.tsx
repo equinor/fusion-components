@@ -3,7 +3,8 @@ import { DataTableHeaderProps, DataTableColumn } from '../dataTableTypes';
 import styles from '../styles.less';
 import classnames from 'classnames';
 import { SortDirection } from '@equinor/fusion';
-import { SortIcon } from '@equinor/fusion-components';
+import { SortIcon, useTooltipRef } from '@equinor/fusion-components';
+import SelectionCell from './SelectionCell';
 
 function getCellClassNames<T>(base: string, column: DataTableColumn<T>) {
     return classnames(base, {
@@ -14,12 +15,24 @@ function getCellClassNames<T>(base: string, column: DataTableColumn<T>) {
 type SortIndicatorProps = {
     isSortedBy: boolean;
     direction: SortDirection | null;
-}
+};
 const SortIndicator: React.FC<SortIndicatorProps> = ({ isSortedBy, direction }) => {
-    return <span className={styles.sortIndicator}><SortIcon direction={isSortedBy ? direction : null} /></span>;
+    return (
+        <span className={styles.sortIndicator}>
+            <SortIcon direction={isSortedBy ? direction : null} />
+        </span>
+    );
 };
 
-function DataTableHeader<T>({ columns, onSortChange, sortedBy }: DataTableHeaderProps<T>) {
+function DataTableHeader<T>({
+    columns,
+    onSortChange,
+    sortedBy,
+    isSelectable,
+    isAllSelected,
+    isSomeSelected,
+    onSelectAll,
+}: DataTableHeaderProps<T>) {
     const cellClassName = classnames(styles.cell, styles.header);
 
     const handleOnClick = (column: DataTableColumn<T>) => {
@@ -34,9 +47,19 @@ function DataTableHeader<T>({ columns, onSortChange, sortedBy }: DataTableHeader
         return !!sortedBy && column === sortedBy.column;
     };
 
+    const selectableTooltipRef = useTooltipRef(isAllSelected ? 'Unselect all' : 'Select all', 'above');
+
     return (
         <>
-            <div className={classnames(cellClassName, styles.expand)}></div>
+            <div className={classnames(cellClassName, styles.expand)} />
+            <SelectionCell
+                isSelectable={!!isSelectable}
+                isSelected={isAllSelected}
+                onChange={onSelectAll}
+                className={classnames(cellClassName)}
+                indeterminate={isSomeSelected}
+                ref={selectableTooltipRef}
+            />
             {columns.map(column => (
                 <div
                     key={column.key}

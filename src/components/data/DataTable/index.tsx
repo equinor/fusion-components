@@ -28,6 +28,9 @@ function DataTable<T>({
     isFetching,
     columns,
     data,
+    isSelectable,
+    onSelectionChange,
+    selectedItems,
     pagination,
     onPaginationChange,
     onSortChange,
@@ -62,6 +65,9 @@ function DataTable<T>({
                     rowIdentifier={rowIdentifier}
                     listComponent={listComponent}
                     listSkeleton={listSkeleton}
+                    isSelectable={isSelectable}
+                    onSelectionChange={onSelectionChange}
+                    selectedItems={selectedItems}
                 />
             ) : (
                 <Table
@@ -75,6 +81,9 @@ function DataTable<T>({
                     rowIdentifier={rowIdentifier}
                     isExpandable={isExpandable}
                     expandedComponent={expandedComponent}
+                    isSelectable={isSelectable}
+                    onSelectionChange={onSelectionChange}
+                    selectedItems={selectedItems}
                 />
             )}
         </div>
