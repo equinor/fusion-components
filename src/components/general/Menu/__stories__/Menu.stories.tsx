@@ -1,39 +1,40 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import withFusionStory from "../../../../../.storybook/withFusionStory";
-import Menu from "../index";
+import * as React from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import withFusionStory from '../../../../../.storybook/withFusionStory';
+import Menu from '../index';
+import { CheckBox, DoneIcon } from '@equinor/fusion-components';
 
 const MenuStory = () => {
     const [ref, setRef] = React.useState<HTMLElement | null>(null);
 
     return (
         <React.Fragment>
-        <input placeholder="Focus here to navigate" ref={setRef} />
+            <input placeholder="Focus here to navigate" ref={setRef} />
             <Menu
-                onClick={action("click")}
+                onClick={action('click')}
                 keyboardNavigationRef={ref}
                 sections={[
                     {
-                        key: "This is the only section, but I still need a key",
+                        key: 'This is the only section, but I still need a key',
                         items: [
                             {
-                                key: "1",
-                                title: "First",
+                                key: '1',
+                                title: 'First',
                             },
                             {
-                                key: "2",
-                                title: "Selected",
+                                key: '2',
+                                title: 'Selected',
                                 isSelected: true,
                             },
                             {
-                                key: "3",
-                                title: "Disabled",
+                                key: '3',
+                                title: 'Disabled',
                                 isDisabled: true,
                             },
                             {
-                                key: "4",
-                                title: "Last",
+                                key: '4',
+                                title: 'Last',
                             },
                         ],
                     },
@@ -43,6 +44,81 @@ const MenuStory = () => {
     );
 };
 
-storiesOf("General|Menu", module)
-    .addDecorator(withFusionStory("Menu"))
-    .add("Default", () => <MenuStory />);
+const CustomItemsMenuStory = () => {
+    type Item = {
+        key: string;
+        title: string | React.ReactNode;
+        isDisabled?: boolean;
+        isChecked?: boolean;
+    };
+
+    const [items, setItems] = React.useState<Item[]>([
+        {
+            key: '1',
+            title: 'Some option',
+        },
+        {
+            key: '2',
+            title: 'This is another option',
+        },
+        {
+            key: '3',
+            title: (<>You can check this one <DoneIcon /></>),
+        },
+        {
+            key: '4',
+            title: 'This one is disabled',
+            isDisabled: true,
+        },
+    ]);
+
+    const toggleItem = (item: Item) => {
+        setItems(
+            items.map(i =>
+                i.key === item.key
+                    ? {
+                          ...item,
+                          isChecked: !item.isChecked,
+                      }
+                    : i
+            )
+        );
+    };
+
+    const CheckboxWrapper = ({ item }) => {
+        return (
+            <CheckBox
+                selected={item.isChecked}
+                onChange={() => toggleItem(item)}
+                disabled={item.isDisabled}
+            />
+        );
+    };
+
+    const ItemComponent = ({ item }) => {
+        return (
+            <>
+                <strong>{item.key}</strong> - <em>{item.title}</em>
+            </>
+        );
+    };
+
+    return (
+        <Menu
+            asideComponent={CheckboxWrapper}
+            itemComponent={ItemComponent}
+            onClick={toggleItem}
+            sections={[
+                {
+                    key: 'This is the only section, but I still need a key',
+                    items,
+                },
+            ]}
+        />
+    );
+};
+
+storiesOf('General|Menu', module)
+    .addDecorator(withFusionStory('Menu'))
+    .add('Default', () => <MenuStory />)
+    .add('Custom items', () => <CustomItemsMenuStory />);
