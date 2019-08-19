@@ -6,16 +6,16 @@ import Filter from "./Filter";
 import styles from "../styles.less";
 import { FilterTerm, FilterSection, Filter as FilterType } from "../applyFilters";
 import { Count } from "../countFilters";
+import { useFilterPaneContext } from '../FilterPaneContext';
 
 type SectionProps<T> = {
     terms: FilterTerm[];
     filterCount: Count[];
     section: FilterSection<T>;
     onChange: (section: FilterSection<T>, filter: FilterType<T>, value: string | string[]) => void;
-    paneIsCollapsed: boolean;
 };
 
-function Section<T>({ terms, filterCount, section, onChange, paneIsCollapsed }: SectionProps<T>) {
+function Section<T>({ terms, filterCount, section, onChange }: SectionProps<T>) {
     const [isCollapsed, setIsCollapsed] = useState(section.isCollapsed);
 
     const handleOnFilterChange = useCallback(
@@ -43,24 +43,25 @@ function Section<T>({ terms, filterCount, section, onChange, paneIsCollapsed }: 
             term={terms.find(term => term.key === filter.key)}
             filterCount={filterCount}
             onChange={handleOnFilterChange}
-            paneIsCollapsed={paneIsCollapsed}
         />
     ));
 
     const hasFiltersVisibleWhenCollapsed =
         section.filters.filter(filter => filter.isVisibleWhenPaneIsCollapsed).length > 0;
 
+    const filterPaneContext = useFilterPaneContext();
+
     if (
         !renderedFilterComponents.filter(renderedFilterComponent => renderedFilterComponent)
             .length ||
-        (paneIsCollapsed && !hasFiltersVisibleWhenCollapsed)
+        (filterPaneContext.paneIsCollapsed && !hasFiltersVisibleWhenCollapsed)
     ) {
         return null;
     }
 
     return (
         <section className={sectionClassNames}>
-            {!paneIsCollapsed && (
+            {!filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
                     <h3>{section.title}</h3>
                     {section.isCollapsible && (
@@ -70,7 +71,7 @@ function Section<T>({ terms, filterCount, section, onChange, paneIsCollapsed }: 
                     )}
                 </header>
             )}
-            {(!isCollapsed || paneIsCollapsed) && <div>{renderedFilterComponents}</div>}
+            {(!isCollapsed || filterPaneContext.paneIsCollapsed) && <div>{renderedFilterComponents}</div>}
         </section>
     );
 };

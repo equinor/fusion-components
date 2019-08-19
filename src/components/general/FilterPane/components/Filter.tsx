@@ -8,6 +8,7 @@ import FilterTypes from '../filterTypes';
 import styles from '../styles.less';
 import { FilterTerm, Filter } from '../applyFilters';
 import { Count } from '../countFilters';
+import { useFilterPaneContext } from '../FilterPaneContext';
 
 const resolveFilterComponent = (type: FilterTypes): React.FC<any> | null => {
     switch (type) {
@@ -79,7 +80,6 @@ type FilterProps<T> = {
     term?: FilterTerm;
     filterCount: Count[];
     onChange: (filter: Filter<T>, term: FilterTerm | null) => void;
-    paneIsCollapsed: boolean;
 };
 
 function Filter<T>({
@@ -87,7 +87,6 @@ function Filter<T>({
     term: defaultTerm,
     filterCount,
     onChange,
-    paneIsCollapsed,
 }: FilterProps<T>) {
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
@@ -130,7 +129,8 @@ function Filter<T>({
         [isCollapsed]
     );
 
-    if (!FilterComponent || (paneIsCollapsed && !filter.isVisibleWhenPaneIsCollapsed)) {
+    const filterPaneContext = useFilterPaneContext();
+    if (!FilterComponent || (filterPaneContext.paneIsCollapsed && !filter.isVisibleWhenPaneIsCollapsed)) {
         return null;
     }
 
@@ -139,7 +139,6 @@ function Filter<T>({
         term,
         onChange: handleOnChange,
         filterCount: filterCount.find(fc => fc.key === filter.key),
-        paneIsCollapsed,
     });
 
     if (!renderedFilterComponent) {
@@ -148,7 +147,7 @@ function Filter<T>({
 
     return (
         <div className={containerClassNames}>
-            {filter.title && !paneIsCollapsed && (
+            {filter.title && !filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
                     <h4>
                         <FilterTitle filter={filter} term={term} />
@@ -165,7 +164,7 @@ function Filter<T>({
                     )}
                 </header>
             )}
-            {(!isCollapsed || paneIsCollapsed) && <div>{renderedFilterComponent}</div>}
+            {(!isCollapsed || filterPaneContext.paneIsCollapsed) && <div>{renderedFilterComponent}</div>}
         </div>
     );
 }
