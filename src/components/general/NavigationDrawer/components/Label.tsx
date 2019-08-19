@@ -3,7 +3,9 @@ import styles from './styles.less';
 import { NavigationComponentProps } from '..';
 import classNames from 'classnames';
 
-const Label: FC<NavigationComponentProps> = ({ id, title, isCollapsed }) => {
+const Label: FC<NavigationComponentProps> = ({ navigationItem, isCollapsed }) => {
+    const { id, title,  } = navigationItem;
+
     const labelTitle = isCollapsed ? title.charAt(0) : title;
 
     const labelClassNames = classNames(styles.label, {

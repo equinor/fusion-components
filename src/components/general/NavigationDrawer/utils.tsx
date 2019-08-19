@@ -7,7 +7,11 @@ import {
 } from './components';
 import { NavigationStructure } from '.';
 
-export const getNavigationComponentForItem = (structure?: NavigationStructure[], customProps?) => {
+export const getNavigationComponentForItem = (
+    structure?: NavigationStructure[],
+    customProps?,
+    updatedStructureProp?
+) => {
     if (!structure) {
         return null;
     }
@@ -15,22 +19,22 @@ export const getNavigationComponentForItem = (structure?: NavigationStructure[],
         const itemProps = {
             title: item.title,
             id: item.id,
-            key:item.id,
             onClick: item.onClick,
             isActive: item.isActive,
             isOpen: item.isOpen,
             icon: item.icon,
             navigationChildren: item.navigationChildren,
+            ...updatedStructureProp,
         };
         switch (item.type) {
             case 'child':
-                return <NavigationChild {...itemProps} {...customProps} />;
+                return <NavigationChild navigationItem={itemProps} {...customProps} key={item.id}/>;
             case 'section':
-                return <NavigationSection {...itemProps} {...customProps} />;
+                return <NavigationSection navigationItem={itemProps} {...customProps} key={item.id}/>;
             case 'grouping':
-                return <NavigationGrouping {...itemProps} {...customProps} />;
+                return <NavigationGrouping navigationItem={itemProps} {...customProps} key={item.id}/>;
             case 'label':
-                return <NavigationLabel {...itemProps} {...customProps} />;
+                return <NavigationLabel navigationItem={itemProps} {...customProps} key={item.id}/>;
             default:
                 return null;
         }
@@ -72,4 +76,34 @@ export const toggleActiveById = (
         ...structure,
         isActive: structure.id === id,
     };
+};
+
+export const toggleOpenByChildId = (
+    id: string,
+    structure: NavigationStructure
+): NavigationStructure => {
+    if (hasChildById(id, structure) && structure.navigationChildren) {
+        if(structure.id === id) {
+            return structure;
+        }
+        return {
+            ...structure,
+            isOpen: true,
+            navigationChildren: structure.navigationChildren.map(child =>
+                toggleOpenByChildId(id, child)
+            ),
+        };
+    }
+    return structure;
+};
+
+const hasChildById = (id: string, structure: NavigationStructure): boolean => {
+    if(structure.id === id){
+        return true;
+    }
+    if(structure.navigationChildren) {
+        const children = structure.navigationChildren.map(item => hasChildById(id, item));
+        return children.some(child => child);
+    }
+    return false;
 };

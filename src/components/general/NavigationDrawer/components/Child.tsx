@@ -3,23 +3,13 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import { NavigationComponentProps } from '..';
 
-const Child: FC<NavigationComponentProps> = ({
-    title,
-    id,
-    onClick,
-    isActive,
-    onChange,
-    isCollapsed,
-    icon,
-}) => {
-    const containerClassNames = classNames(
-        styles.container,
-        styles.menuChild,
-        {
-            [styles.isActive]: isActive,
-            [styles.isCollapsed]: isCollapsed,
-        }
-    );
+const Child: FC<NavigationComponentProps> = ({ navigationItem , onChange, isCollapsed}) => {
+    const { id, isActive, icon, title, onClick } = navigationItem;
+
+    const containerClassNames = classNames(styles.container, styles.menuChild, {
+        [styles.isActive]: isActive,
+        [styles.isCollapsed]: isCollapsed,
+    });
     const change = useCallback(() => {
         onChange && onChange(id, false, true);
         onClick && onClick();

@@ -5,32 +5,26 @@ import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
 import { NavigationComponentProps } from '..';
 
-const Grouping: FC<NavigationComponentProps> = ({
-    title,
-    id,
-    onClick,
-    isActive,
-    icon,
-    navigationChildren,
-    isOpen,
-    onChange,
-    isCollapsed,
-}) => {
-    const containerClassNames = classNames(
-        styles.container,
-        styles.menuGrouping,
-        {
-            [styles.isActive]: isActive,
-            [styles.isCollapsed]: isCollapsed,
-        }
-    );
+const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
+    const { id, icon, title, onClick, navigationChildren, isActive, isOpen } = navigationItem;
+
+    const containerClassNames = classNames(styles.container, styles.menuGrouping, {
+        [styles.isActive]: isActive,
+        [styles.isCollapsed]: isCollapsed,
+    });
+
     const navigationStructure = useMemo(
         () =>
-            getNavigationComponentForItem(navigationChildren, {
-                onChange: onChange,
-                icon: icon,
-                isCollapsed: isCollapsed,
-            }),
+            getNavigationComponentForItem(
+                navigationChildren,
+                {
+                    onChange: onChange,
+                    isCollapsed: isCollapsed,
+                },
+                {
+                    icon: icon,
+                }
+            ),
         [navigationChildren, onChange, isCollapsed, icon]
     );
 
@@ -60,7 +54,7 @@ const Grouping: FC<NavigationComponentProps> = ({
                 </div>
                 <div
                     className={styles.toggleOpenContainer}
-                    onClick={() => onChange && onChange(id, true, true)}
+                    onClick={() => onChange && onChange(id, true, false)}
                 >
                     <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
                 </div>

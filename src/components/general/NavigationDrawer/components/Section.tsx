@@ -5,33 +5,27 @@ import { DropdownArrow } from '@equinor/fusion-components';
 import { NavigationComponentProps } from '..';
 import { getNavigationComponentForItem } from '../utils';
 
-const Section: FC<NavigationComponentProps> = ({
-    title,
-    id,
-    onClick,
-    isActive,
-    navigationChildren,
-    isOpen,
-    onChange,
-    icon,
-    isCollapsed,
-}) => {
-    const containerClassNames = classNames(
-        styles.container,
-        styles.menuSection,
-        {
-            [styles.isActive]: isActive,
-            [styles.isCollapsed]: isCollapsed,
-        }
-    );
+const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
+    const { id, icon, isActive, title, onClick, navigationChildren, isOpen } = navigationItem;
+
+    const containerClassNames = classNames(styles.container, styles.menuSection, {
+        [styles.isActive]: isActive,
+        [styles.isCollapsed]: isCollapsed,
+    });
 
     const navigationStructure = useMemo(
         () =>
-            getNavigationComponentForItem(navigationChildren, {
-                onChange: onChange,
-                isCollapsed: isCollapsed,
-                icon: icon,
-            }),
+            getNavigationComponentForItem(
+                navigationChildren,
+                {
+                    onChange: onChange,
+                    isCollapsed: isCollapsed,
+                    icon: icon,
+                },
+                {
+                    icon: icon,
+                }
+            ),
         [navigationChildren, onChange, isCollapsed, icon]
     );
 
@@ -60,7 +54,7 @@ const Section: FC<NavigationComponentProps> = ({
                 </div>
                 <div
                     className={styles.toggleOpenContainer}
-                    onClick={() => onChange && onChange(id, true, true)}
+                    onClick={() => onChange && onChange(id, true, false)}
                 >
                     <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
                 </div>

@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, ReactNode, useMemo } from 'react';
+import React, { FC, useState, useCallback, ReactNode, useMemo, useEffect } from 'react';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import styles from './styles.less';
@@ -8,7 +8,12 @@ import {
     NavigationGrouping,
     CollapseExpandButton,
 } from './components';
-import { getNavigationComponentForItem, toggleOpenById, toggleActiveById } from './utils';
+import {
+    getNavigationComponentForItem,
+    toggleOpenById,
+    toggleActiveById,
+    toggleOpenByChildId,
+} from './utils';
 export { NavigationChild, NavigationSection, NavigationGrouping };
 
 const NAVIGATION_DRAWER_COLLAPSED_KEY = 'NAVIGATION_DRAWER_COLLAPSED_KEY';
@@ -22,9 +27,10 @@ const persistCollapsedState = (key: string, isCollapsed: boolean) => {
     localStorage.setItem(createDrawerCollapsedKey(key), isCollapsed ? 'collapsed' : '');
 };
 
-export type NavigationComponentProps = NavigationStructure & {
+export type NavigationComponentProps = {
     onChange?: (id: string, toggleOpen: boolean, toggleActive: boolean) => void;
     isCollapsed?: boolean;
+    navigationItem: NavigationStructure;
 };
 
 export type NavigationStructure = {
@@ -41,11 +47,29 @@ export type NavigationStructure = {
 type NavigationDrawerProps = {
     id: string;
     structure: NavigationStructure[];
-    onChange: (newStructure: NavigationStructure[]) => void;
+    onChangeStructure: (newStructure: NavigationStructure[]) => void;
+    selectedId?: string;
+    onChangeSelectedId?: (newSelected: string) => void;
 };
 
-const NavigationDrawer: FC<NavigationDrawerProps> = ({ id, structure, onChange }) => {
+const NavigationDrawer: FC<NavigationDrawerProps> = ({
+    id,
+    structure,
+    onChangeStructure,
+    onChangeSelectedId,
+    selectedId,
+}) => {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
+    const [internalStructure, setInternalStructure] = useState<NavigationStructure[]>();
+
+    useEffect(() => setInternalStructure(structure), [structure]);
+
+    useEffect(() => {
+        if (selectedId) {
+            const newStructure = structure.map(item => toggleActiveById(selectedId, item));
+            onChangeStructure(newStructure.map(item => toggleOpenByChildId(selectedId, item)));
+        }
+    }, [selectedId]);
 
     const toggleCollapsed = useCallback(() => {
         persistCollapsedState(id, !isCollapsed);
@@ -59,28 +83,26 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({ id, structure, onChange }
             [styles.isCollapsed]: isCollapsed,
         }
     );
+
     const navigationStructure = useMemo(
         () =>
-            getNavigationComponentForItem(structure, {
+            getNavigationComponentForItem(internalStructure, {
                 onChange: (id: string, toggleOpen: boolean, toggleActive: boolean) => {
-                    const newStructure = structure.map(item => {
-                        if (toggleOpen && toggleActive) {
-                            return toggleActiveById(id, toggleOpenById(id, item));
-                        }
-                        if (toggleOpen) {
-                            return toggleOpenById(id, item);
-                        }
-                        if (toggleActive) {
-                            return toggleActiveById(id, item);
-                        }
-                        return item;
-                    });
-                    newStructure && onChange(newStructure);
+                    if (toggleActive) {
+                        onChangeSelectedId && onChangeSelectedId(id);
+                    }
+                    if (toggleOpen) {
+                        const newStructure =
+                            internalStructure &&
+                            internalStructure.map(item => toggleOpenById(id, item));
+                        newStructure && onChangeStructure(newStructure);
+                    }
                 },
                 isCollapsed: isCollapsed,
             }),
-        [structure, onChange, isCollapsed]
+        [internalStructure, onChangeStructure, isCollapsed]
     );
+
     return (
         <div className={containerClassNames}>
             <div className={styles.collapseButtonContainer}>

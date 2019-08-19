@@ -81,12 +81,15 @@ const navStructure = [
 
 const NavigationDrawerStory = () => {
     const [structure, setStructure] = React.useState<NavigationStructure[]>(navStructure);
+    const [selected, setSelected] = React.useState<string>("child5");
     return (
         <>
             <NavigationDrawer
                 id="navigation-drawer-story"
                 structure={structure}
-                onChange={newStructure => {
+                selectedId={selected}
+                onChangeSelectedId={selectedItem => setSelected(selectedItem)}
+                onChangeStructure={newStructure => {
                     setStructure(newStructure);
                 }}
             />
