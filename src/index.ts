@@ -46,6 +46,7 @@ export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as DatePicker } from './components/general/DatePicker';
 export { default as Slider } from './components/general/Calendar';
+export {default as NavigationDrawer, NavigationStructure} from "./components/general/NavigationDrawer";
 export {default as Accordion,AccordionItem } from "./components/general/Accordion";
 
 // Feedback components
