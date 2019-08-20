@@ -13,6 +13,9 @@ function Table<T>({
     showSkeleton,
     columns,
     data,
+    isSelectable,
+    onSelectionChange,
+    selectedItems,
     pagination,
     onPaginationChange,
     onSortChange,
@@ -55,6 +58,22 @@ function Table<T>({
         [expandedItems]
     );
 
+    const onSelectAll = useCallback(() => {
+        if(!onSelectionChange) {
+            return;
+        }
+
+        onSelectionChange(selectedItems && selectedItems.length === data.length ? [] : data);
+    }, [data, onSelectionChange, selectedItems]);
+
+    const onSelect = useCallback((items: T[]) => {
+        if(!onSelectionChange) {
+          return;
+        }
+
+        onSelectionChange(items);
+    }, [onSelectionChange]);
+
     useEffect(() => {
         setExpandedItems([]);
     }, [data]);
@@ -70,6 +89,10 @@ function Table<T>({
                     columns={visibleColumns}
                     onSortChange={onSortChange}
                     sortedBy={sortedBy}
+                    isSelectable={isSelectable}
+                    onSelectAll={onSelectAll}
+                    isAllSelected={!!selectedItems && selectedItems.length === data.length}
+                    isSomeSelected={!!selectedItems && selectedItems.length > 0 && selectedItems.length !== data.length}
                 />
                 {showSkeleton ? (
                     <DataTableSkeleton columns={visibleColumns} rowCount={skeletonRows} />
@@ -83,6 +106,9 @@ function Table<T>({
                         expandedComponent={expandedComponent}
                         onExpand={handleOnExpand}
                         expandedItems={expandedItems}
+                        isSelectable={isSelectable}
+                        onSelectionChange={onSelect}
+                        selectedItems={selectedItems}
                     />
                 )}
             </div>

@@ -49,7 +49,7 @@ const toCssUnit = (value: number | string) => {
 };
 
 export const generateColumnTemplate = <T>(columns: DataTableColumn<T>[]) =>
-    'max-content ' +
+    'max-content max-content ' +
     columns.map(c => toCssUnit(`minmax(max-content, ${c.width || 'auto'})`)).join(' ');
 
 const rowTemplate = 'calc(var(--grid-unit) * var(--row-height-multiplier))';

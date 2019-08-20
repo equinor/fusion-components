@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import DataTable from '../index';
@@ -116,8 +116,56 @@ const WithoutSkeleton: React.FC = () => {
     );
 };
 
+const Selectable: React.FC = () => {
+    const [appSettings, setAppSetting] = useAppSettings();
+    const perPage = parseInt(appSettings['perPage'], 10) || 20;
+
+    const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
+    const { sortedData, setSortBy, sortBy, direction } = useSorting(data, null, null);
+    const { pagination, pagedData, setCurrentPage } = usePagination(
+        sortedData as DataItem[],
+        perPage
+    );
+
+    const onPaginationChange = useCallback((newPage: Page, perPage: number) => {
+        setCurrentPage(newPage.index, perPage);
+        setAppSetting('perPage', perPage);
+    }, []);
+
+    const onSortChange = useCallback(
+        (column: DataTableColumn<DataItem>) => {
+            setSortBy(column.accessor, null);
+        },
+        [sortBy, direction]
+    );
+
+    const sortedByColumn = columns.find(c => c.accessor === sortBy) || null;
+
+    return (
+        <DataTable
+            columns={columns}
+            data={pagedData}
+            pagination={pagination}
+            onPaginationChange={onPaginationChange}
+            isFetching={false}
+            rowIdentifier={'id'}
+            onSortChange={onSortChange}
+            sortedBy={{
+                column: sortedByColumn,
+                direction,
+            }}
+            expandedComponent={ExpandedItem}
+            listComponent={ExpandedItem}
+            isSelectable
+            onSelectionChange={setSelectedItems}
+            selectedItems={selectedItems}
+        />
+    );
+};
+
 storiesOf('Data|Data Table', module)
     .addParameters({ jest: ['DataTable.stories.jsx'] })
     .addDecorator(withFusionStory('Data Table'))
     .add('Default', () => <WithoutSkeleton />)
-    .add('With skeleton', () => <WithSkeleton />);
+    .add('With skeleton', () => <WithSkeleton />)
+    .add('Selectable', () => <Selectable />);
