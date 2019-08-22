@@ -30,7 +30,7 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
                 style={{ fill: 'none' }}
             />
             <foreignObject x={node.x} y={node.y} width={cardWidth} height={cardHeight}>
-                <Component item={node.data} />
+                {Component && <Component item={node.data} />}
             </foreignObject>
         </g>
     );

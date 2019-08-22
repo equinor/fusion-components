@@ -13,9 +13,7 @@ function Children<T>() {
         cardMargin,
         cardWidth,
         centerX,
-        updateChildrenRows,
         asideRows,
-        updateAsideRows,
     } = useContext<OrgChartContextType<T>>(OrgChartContext);
 
     const getRows = useCallback(

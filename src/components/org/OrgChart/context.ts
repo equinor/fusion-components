@@ -14,9 +14,6 @@ export type OrgChartContextType<T> = {
     component: React.FC<OrgChartItemProps<T>>
     asideRows: number;
     childrenRows: number;
-    updateAsideRows: (rows: number) => void;
-    updateChildrenRows: (rows: number) => void;
-    updatePosition: (node: OrgNode<T>, x: number, y: number) => void;
 };
 
 export const OrgChartContext: React.Context<OrgChartContextType<any>> = React.createContext<OrgChartContextType<any>>({} as OrgChartContextType<any>);
