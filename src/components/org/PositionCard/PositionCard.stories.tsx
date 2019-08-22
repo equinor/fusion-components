@@ -14,7 +14,7 @@ const position: Position = {
         name: 'Engineer',
         roleDescription: '',
     },
-    externalId: '2',
+    externalId: '800',
     instances: [
         {
             appliesFrom: new Date().toString(),
@@ -45,10 +45,24 @@ const positionWithMultipleInstances: Position = {
             appliesFrom: new Date().toString(),
             appliesTo: new Date(new Date().getFullYear() + 2, 0).toString(),
             location: {
-                code: '213',
+                code: '113',
                 country: 'Norway',
-                id: '214215',
+                id: '11331',
                 name: 'Bergen',
+            },
+            obs: 'obs',
+            percent: 100,
+            type: 'type',
+            properties: {},
+        },
+        {
+            appliesFrom: new Date().toString(),
+            appliesTo: new Date(new Date().getFullYear(), new Date().getMonth() + 4).toString(),
+            location: {
+                code: '616',
+                country: 'Norway',
+                id: '161216',
+                name: 'Oslo',
             },
             obs: 'obs',
             percent: 100,

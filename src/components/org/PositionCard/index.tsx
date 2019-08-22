@@ -39,16 +39,13 @@ const PositionCard: React.FC<PositionCardProps> = ({
     return (
         <div className={containerClassNames} onClick={onClick}>
             <PositionPhoto instances={position.instances} currentInstance={currentInstance} />
-            <div className={styles.positionDetails}>
-                <div className={styles.basePositionName}>{position.basePosition.name}</div>
-                <div className={styles.positionName}>{position.name}</div>
-                <PositionInstance
-                    instance={currentInstance}
-                    showLocation={showLocation}
-                    showDate={showDate}
-                />
-                {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
-            </div>
+            <PositionInstance
+                position={position}
+                instance={currentInstance}
+                showLocation={showLocation}
+                showDate={showDate}
+                showExternalId={showExternalId}
+            />
         </div>
     );
 };

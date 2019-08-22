@@ -5,6 +5,11 @@
     box-sizing: border-box;
     display: flex;
     cursor: pointer;
+    background-color: var(--color-white);
+
+    &:hover {
+        background-color: var(--color-black-alt5);
+    }
 
     .photoContainer {
         flex-shrink: 0;
@@ -39,7 +44,7 @@
         }
     }
 
-    .positionDetails {
+    .positionInstance {
         position: relative;
         flex-grow: 1;
         margin-left: var(--photo-and-details-spacing);
@@ -51,7 +56,6 @@
 
         .positionName {
             font-size: 16px;
-            line-height: 24px;
             margin-bottom: var(--position-name-spacing);
             color: var(--color-primary);
             text-decoration: underline;
@@ -59,7 +63,6 @@
 
         .assignedPersonName {
             font-size: 16px;
-            line-height: 24px;
             margin-bottom: var(--assigned-person-name-spacing);
         }
 
