@@ -6,7 +6,7 @@ export type OrgChartItemProps<T> = {
 
 export type OrgChartProps<T> = {
     structure: T[];
-    component: React.FC<OrgChartItemProps<T>>
+    component: React.FC<OrgChartItemProps<T>> | null
     cardWidth?: number;
     cardHeight?: number;
     cardMargin?: number;

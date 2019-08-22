@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 
-import { OrgChartContext, OrgChartContextType } from '../context';
+import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
 type CardProps<T> = {
@@ -10,13 +10,19 @@ type CardProps<T> = {
 };
 
 function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
-    const { cardWidth, cardHeight, updatePosition, component } = useContext<OrgChartContextType<T>>(
-        OrgChartContext
-    );
+    const {
+        state: { cardWidth, cardHeight, component },
+        dispatch,
+    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     useEffect(() => {
         if (node && (node.x !== x || node.y !== y)) {
-            updatePosition(node, x, y);
+            dispatch({
+                type: 'UPDATE_POSITION',
+                node,
+                x,
+                y,
+            });
         }
     }, [node, x, y]);
     const Component = component;

@@ -118,7 +118,7 @@ const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
 const OrgChartStory = () => {
     return (
         <div style={{ width: '100%', height: '100%' }}>
-            <OrgChart structure={positions} component={PositionCard} />
+            <OrgChart structure={positions} component={PositionCard}/>
         </div>
     );
 };

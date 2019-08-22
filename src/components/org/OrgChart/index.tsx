@@ -1,13 +1,21 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import useParentSize from './hooks/useParentSize';
-import { OrgChartContextType, OrgChartContext } from './context';
+import { OrgChartContext, OrgChartContextReducer, OrgChartContextProvider } from './store';
 import { OrgStructure, OrgChartProps, OrgNode } from './orgChartTypes';
 import Links from './components/Links';
 import Root from './components/Root';
 import Aside from './components/Aside';
 import Children from './components/Children';
 
-function OrgChart<T extends OrgStructure>({
+function OrgChart<T extends OrgStructure>(props: OrgChartProps<T>) {
+    return (
+        <OrgChartContextProvider>
+            <OrgChartContent {...props} />
+        </OrgChartContextProvider>
+    );
+}
+
+function OrgChartContent<T extends OrgStructure>({
     structure,
     cardWidth = 380,
     cardHeight = 132,
@@ -17,49 +25,8 @@ function OrgChart<T extends OrgStructure>({
 }: OrgChartProps<T>) {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
     const [parentHeight, parentWidth] = useParentSize(orgContainerRef);
+    const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
-    useEffect(() => {
-        setOrgChartState({
-            ...orgChartState,
-            height: parentHeight,
-            width: parentWidth,
-            centerX: parentWidth / 2,
-            centerY: parentHeight / 2,
-        });
-    }, [parentHeight, parentWidth]);
-
-    const updatePosition = (node: OrgNode<T>, x: number, y: number) => {
-        setOrgChartState(prevState => {
-            return {
-                ...prevState,
-                allNodes: prevState.allNodes.map(prevNode => {
-                    if (prevNode.id === node.id) {
-                        return {
-                            ...node,
-                            x,
-                            y,
-                        };
-                    } else {
-                        return prevNode;
-                    }
-                }),
-            };
-        });
-    };
-
-    const updateAsideRows = (asideRows: number) => {
-        setOrgChartState({
-            ...orgChartState,
-            asideRows:asideRows,
-        });
-    };
-
-    const updateChildrenRows = (rows: number) => {
-        setOrgChartState(prevState => ({
-            ...prevState,
-            childrenRows: rows,
-        }));
-    };
     const generateNodes = (structure: T[]): OrgNode<T>[] => {
         return structure.map(item => {
             return {
@@ -73,26 +40,52 @@ function OrgChart<T extends OrgStructure>({
         });
     };
 
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_SIZE',
+            height: parentHeight,
+            width: parentWidth,
+        });
+        dispatch({
+            type: 'UPDATE_CENTER',
+            x: parentWidth / 2,
+            y: parentWidth / 2,
+        });
+    }, [parentHeight, parentWidth]);
 
-    const [orgChartState, setOrgChartState] = useState<OrgChartContextType<T>>({
-        height: parentHeight,
-        width: parentWidth,
-        centerX: parentWidth / 2,
-        centerY: parentHeight / 2,
-        cardWidth,
-        cardHeight,
-        cardMargin,
-        rowMargin,
-        component,
-        asideRows: 0,
-        childrenRows: 0,
-        allNodes: generateNodes(structure),
-        updatePosition: (node, x, y) => updatePosition(node, x, y),
-        updateAsideRows: (rows: number) => updateAsideRows(rows),
-        updateChildrenRows: (rows: number) => updateChildrenRows(rows),
-    });
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_NODES',
+            nodes: generateNodes(structure),
+        });
+    }, [structure]);
+
+    useEffect(() => {
+        if (component) {
+            dispatch({
+                type: 'UPDATE_COMPONENT',
+                component: component,
+            });
+        }
+    }, [component]);
+
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_CARD_SIZE',
+            height: cardHeight,
+            width: cardWidth,
+            margin: cardMargin,
+        });
+    }, [cardHeight, cardWidth, cardMargin]);
+
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_ROW_MARGIN',
+            margin: rowMargin,
+        });
+    }, [rowMargin]);
+
     return (
-        <OrgChartContext.Provider value={orgChartState}>
             <svg
                 ref={orgContainerRef}
                 width={parentWidth}
@@ -105,7 +98,6 @@ function OrgChart<T extends OrgStructure>({
                 <Aside />
                 <Children />
             </svg>
-        </OrgChartContext.Provider>
     );
 }
 

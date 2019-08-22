@@ -1,19 +1,14 @@
 import React, { useEffect, useContext } from 'react';
 
 import Card from './Card';
-import { OrgChartContext, OrgChartContextType } from '../context';
+import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
 function Aside<T>() {
     const {
-        allNodes,
-        asideRows,
-        rowMargin,
-        cardMargin,
-        centerX,
-        cardWidth,
-        updateAsideRows,
-    } = useContext<OrgChartContextType<T>>(OrgChartContext);
+        state: { allNodes, asideRows, rowMargin, cardMargin, centerX, cardWidth },
+        dispatch,
+    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     const asideNodes = allNodes.filter(d => d.aside);
 
@@ -35,9 +30,12 @@ function Aside<T>() {
 
     useEffect(() => {
         if (rows.length !== asideRows) {
-            updateAsideRows(rows.length);
+            dispatch({
+                type: 'UPDATE_ASIDE_ROWS',
+                rows: rows.length,
+            });
         }
-    }, [asideRows]);
+    }, [asideRows, rows]);
 
     const renderRow = (cards: OrgNode<T>[], rowNo: number) => {
         const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
