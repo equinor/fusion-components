@@ -1,14 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import {
-    Position,
-    useComponentDisplayClassNames,
-    formatDate,
-    PositionInstance,
-} from '@equinor/fusion';
-import { useElevationClassName, PeopleIcon } from '@equinor/fusion-components';
+import { Position, useComponentDisplayClassNames } from '@equinor/fusion';
+import { useElevationClassName } from '@equinor/fusion-components';
 
 import styles from './styles.less';
+import PositionPhoto from './components/PositionPhoto';
+import PositionInstance from './components/PositionInstance';
 
 type PositionCardProps = {
     position: Position;
@@ -17,52 +14,6 @@ type PositionCardProps = {
     showLocation: boolean;
     showDate: boolean;
     onClick?: () => void;
-};
-
-type PositionInstanceProps = {
-    instance: PositionInstance;
-    showLocation: boolean;
-    showDate: boolean;
-};
-
-const PositionInstance: React.FC<PositionInstanceProps> = ({
-    instance,
-    showLocation,
-    showDate,
-}) => {
-    return (
-        <div className={styles.instance}>
-            <div className={styles.assignedPersonName}>Assigned person name</div>
-            {showLocation && <div className={styles.location}>{instance.location.name}</div>}
-            {showDate && (
-                <div className={styles.period}>
-                    {formatDate(new Date(instance.appliesFrom))} -{' '}
-                    {formatDate(new Date(instance.appliesTo))}
-                </div>
-            )}
-        </div>
-    );
-};
-
-type PositionPhotoProps = {
-    instances: PositionInstance[];
-    currentInstance: PositionInstance;
-};
-
-const PositionPhoto: React.FC<PositionPhotoProps> = ({ instances }) => {
-    const hasMultipleInstances = instances.length > 1;
-    return (
-        <div className={styles.photoContainer}>
-            {hasMultipleInstances ? (
-                <div className={styles.personIconContainer}>
-                    <PeopleIcon />
-                    <div className={styles.instanceCount}>{instances.length}</div>
-                </div>
-            ) : (
-                <div>Photo</div>
-            )}
-        </div>
-    );
 };
 
 const PositionCard: React.FC<PositionCardProps> = ({
