@@ -1,0 +1,97 @@
+.container {
+    width: var(--container-width);
+    // height: var(--container-height);
+    padding: var(--container-padding);
+    box-sizing: border-box;
+    display: flex;
+    cursor: pointer;
+
+    .photoContainer {
+        flex-shrink: 0;
+
+        .personIconContainer {
+            width: calc(var(--grid-unit) * 5px);
+            height: calc(var(--grid-unit) * 5px);
+            background: var(--color-black-alt4);
+            border-radius: 50%;
+            color: var(--color-black-alt2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+            .instanceCount {
+                position: absolute;
+                width: calc(var(--grid-unit) * 2.5px);
+                height: calc(var(--grid-unit) * 2.5px);
+                font-size: 12px;
+                font-weight: bold;
+                color: var(--color-white);
+                background-color: var(--color-red);
+                top: calc(var(--grid-unit) * .25px);
+                right: 0;
+                transform: translateX(50%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .positionDetails {
+        position: relative;
+        flex-grow: 1;
+        margin-left: var(--photo-and-details-spacing);
+
+        .basePositionName {
+            font-size: 11px;
+            line-height: 16px;
+        }
+
+        .positionName {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: var(--position-name-spacing);
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        .assignedPersonName {
+            font-size: 16px;
+            line-height: 24px;
+            margin-bottom: var(--assigned-person-name-spacing);
+        }
+
+        .location {
+            font-size: 11px;
+            line-height: 16px;
+        }
+
+        .period {
+            font-size: 11px;
+            line-height: 16px;
+        }
+
+        .externalId {
+            font-size: 11px;
+            line-height: 16px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
+
+    &.isSelected {
+        background-color: var(--color-primary-alt4);
+    }
+
+    &.comfortable {
+        --container-width: calc(var(--grid-unit) * 40px);
+        --container-height: calc(var(--grid-unit) * 14px);
+        --container-padding: calc(var(--grid-unit) * 1px);
+        --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
+        --position-name-spacing: calc(var(--grid-unit) * 1px);
+        --assigned-person-name-spacing: calc(var(--grid-unit) * 1px);
+    }
+}

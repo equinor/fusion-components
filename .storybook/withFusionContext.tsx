@@ -114,6 +114,7 @@ const serviceResolver: ServiceResolver = {
     getTasksBaseUrl: () => 'https://pro-s-tasks-ci.azurewebsites.net',
     getProjectsBaseUrl: () => 'https://pro-s-projects-ci.azurewebsites.net',
     getMeetingsBaseUrl: () => 'https://pro-s-meetingsv2-ci.azurewebsites.net',
+    getPeopleBaseUrl: () => 'https://pro-s-people-ci.azurewebsites.net',
 };
 
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';

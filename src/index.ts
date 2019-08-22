@@ -91,6 +91,7 @@ export {
     CalendarIcon,
 } from './components/icons/components/action';
 export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
+export { PeopleIcon } from './components/icons/components/social';
 
 // Styling
 export { default as styling } from './styles/styling';
