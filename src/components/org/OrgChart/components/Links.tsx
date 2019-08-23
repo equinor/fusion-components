@@ -17,7 +17,9 @@ const Links = <T extends OrgStructure>() => {
         allNodes,
     ]);
 
-    const allAside = useMemo(() => allNodes.filter(node => node.aside && node.parentId), []);
+    const allAside = useMemo(() => allNodes.filter(node => node.aside && node.parentId), [
+        allNodes,
+    ]);
 
     const getAsidePath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
@@ -29,10 +31,10 @@ const Links = <T extends OrgStructure>() => {
                     `;
             }
             return `
-            M ${node.x + cardWidth - 10} ${node.y + cardHeight / 2}
-            L ${centerX} ${node.y + cardHeight / 2}
-            L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
-        `;
+                M ${node.x + cardWidth - 10} ${node.y + cardHeight / 2}
+                L ${centerX} ${node.y + cardHeight / 2}
+                L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                `;
         },
         [centerX, cardHeight, cardWidth]
     );
@@ -43,50 +45,55 @@ const Links = <T extends OrgStructure>() => {
                 // Children row that will align left
                 const firstChild = allChildren[0];
                 return `
-                M ${node.x + cardWidth / 2} ${node.y + 10}
-                V ${node.y - 10}
-                H ${firstChild.x + cardWidth + cardMargin / 2}
-                V ${firstChild.y - 10}
-                H ${centerX}
-                L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
-            `;
+                    M ${node.x + cardWidth / 2} ${node.y + 10}
+                    V ${node.y - 10}
+                    H ${firstChild.x + cardWidth + cardMargin / 2}
+                    V ${firstChild.y - 10}
+                    H ${centerX}
+                    L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                    `;
             }
             return `
-            M ${node.x + cardWidth / 2} ${node.y + 10}
-            V ${node.y - 10}
-            H ${centerX}
-            L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
-        `;
+                M ${node.x + cardWidth / 2} ${node.y + 10}
+                V ${node.y - 10}
+                H ${centerX}
+                L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                `;
         },
         [centerX, cardHeight, cardWidth, numberOfCardsPerRow, allChildren]
     );
 
-    const renderLink = useCallback((node: OrgNode<T>, index: number) => {
-        if (!node.parentId) {
-            return null;
-        }
+    const renderLink = useCallback(
+        (node: OrgNode<T>, index: number) => {
+            if (!node.parentId) {
+                return null;
+            }
 
-        const parentId = node.parentId;
-        const parent = allNodes.find(d => d.id === parentId);
+            const parentId = node.parentId;
+            const parent = allNodes.find(d => d.id === parentId);
 
-        if (!parent) {
-            return null;
-        }
+            if (!parent) {
+                return null;
+            }
 
-        const path = node.aside ? getAsidePath(node, parent) : getChildPath(node, parent, index);
+            const path = node.aside
+                ? getAsidePath(node, parent)
+                : getChildPath(node, parent, index);
 
-        return (
-            <path
-                d={path}
-                style={{
-                    stroke: '#b9b9b8',
-                    strokeWidth: '1px',
-                    fill: 'none',
-                    shapeRendering: 'crispEdges',
-                }}
-            />
-        );
-    },[allNodes]);
+            return (
+                <path
+                    d={path}
+                    style={{
+                        stroke: '#b9b9b8',
+                        strokeWidth: '1px',
+                        fill: 'none',
+                        shapeRendering: 'crispEdges',
+                    }}
+                />
+            );
+        },
+        [allNodes]
+    );
 
     return (
         <g className="links">
