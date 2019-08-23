@@ -1,7 +1,12 @@
 import React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { useFusionContext, useComponentDisplayClassNames } from '@equinor/fusion';
+import {
+    useFusionContext,
+    useComponentDisplayClassNames,
+    useComponentDisplayType,
+    ComponentDisplayType,
+} from '@equinor/fusion';
 import ConsultantIcon from './icons/ConsultantIcon';
 import ExternalHireIcon from './icons/ExternalHireIcon';
 import AffiliateIcon from './icons/AffiliateIcon';
@@ -27,12 +32,12 @@ const friendlyAffiliationName = (affiliation: string) => {
     }
 };
 
-const iconSizes = {
-    xlarge: { width: 24, height: 24 },
-    large: { width: 16, height: 16 },
-    medium: { width: 16, height: 16 },
-    small: { width: 12, height: 12 },
-};
+const getIconSizes = isCompact => ({
+    xlarge: isCompact ? 16 : 24,
+    large: isCompact ? 8 : 16,
+    medium: isCompact ? 8 : 16,
+    small: isCompact ? 8 : 12,
+});
 
 export default ({ personId, affiliation, size, title }: PersonPhotoProps) => {
     const fusionContext = useFusionContext();
@@ -63,6 +68,9 @@ export default ({ personId, affiliation, size, title }: PersonPhotoProps) => {
         }
     );
 
+    const displayType = useComponentDisplayType();
+    const iconSizes = getIconSizes(displayType === ComponentDisplayType.Compact);
+
     return (
         <React.Fragment>
             <img className={photoClassNames} src="https://via.placeholder.com/150" />
@@ -75,22 +83,13 @@ export default ({ personId, affiliation, size, title }: PersonPhotoProps) => {
             >
                 <div className={iconClassNames} title={friendlyAffiliationName(affiliation)}>
                     {affiliation === 'consultant' && (
-                        <ConsultantIcon
-                            width={iconSizes[size].width}
-                            height={iconSizes[size].height}
-                        />
+                        <ConsultantIcon width={iconSizes[size]} height={iconSizes[size]} />
                     )}
                     {affiliation === 'externalhire' && (
-                        <ExternalHireIcon
-                            width={iconSizes[size].width}
-                            height={iconSizes[size].height}
-                        />
+                        <ExternalHireIcon width={iconSizes[size]} height={iconSizes[size]} />
                     )}
                     {affiliation === 'affiliate' && (
-                        <AffiliateIcon
-                            width={iconSizes[size].width}
-                            height={iconSizes[size].height}
-                        />
+                        <AffiliateIcon width={iconSizes[size]} height={iconSizes[size]} />
                     )}
                 </div>
             </div>

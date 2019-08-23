@@ -6,60 +6,54 @@
     background-position: center;
     background-repeat: no-repeat;
     position: absolute;
+    width: var(--photo-size);
+    height: var(--photo-size);
 
     &.xlarge {
         &.comfortable {
             // 56x56
-            width: calc(var(--grid-unit) * 7px);
-            height: calc(var(--grid-unit) * 7px);
+            --photo-size: calc(var(--grid-unit) * 7px);
         }
 
         &.compact {
             // 48x48
-            width: calc(var(--grid-unit) * 6px);
-            height: calc(var(--grid-unit) * 6px);
+            --photo-size: calc(var(--grid-unit) * 6px);
         }
     }
 
     &.large {
         &.comfortable {
             // 40x40
-            width: calc(var(--grid-unit) * 5px);
-            height: calc(var(--grid-unit) * 5px);
+            --photo-size: calc(var(--grid-unit) * 5px);
         }
 
         &.compact {
             // 32x32
-            width: calc(var(--grid-unit) * 4px);
-            height: calc(var(--grid-unit) * 4px);
+            --photo-size: calc(var(--grid-unit) * 4px);
         }
     }
 
     &.medium {
         &.comfortable {
             // 32x32
-            width: calc(var(--grid-unit) * 4px);
-            height: calc(var(--grid-unit) * 4px);
+            --photo-size: calc(var(--grid-unit) * 4px);
         }
 
         &.compact {
             // 24x24
-            width: calc(var(--grid-unit) * 3px);
-            height: calc(var(--grid-unit) * 3px);
+            --photo-size: calc(var(--grid-unit) * 3px);
         }
     }
 
     &.small {
         &.comfortable {
             // 24x24
-            width: calc(var(--grid-unit) * 3px);
-            height: calc(var(--grid-unit) * 3px);
+            --photo-size: calc(var(--grid-unit) * 3px);
         }
 
         &.compact {
             // 16x16
-            width: calc(var(--grid-unit) * 2px);
-            height: calc(var(--grid-unit) * 2px);
+            --photo-size: calc(var(--grid-unit) * 2px);
         }
     }
 
@@ -68,6 +62,8 @@
         position: absolute;
         bottom: 0;
         right: 0;
+        width: var(--iconContainerSize);
+        height: var(--iconContainerSize);
 
         &.affiliate {
             background: var(--color-secondary-alt2);
@@ -80,42 +76,36 @@
         &.xlarge {
             &.comfortable {
                 // 24x24
-                width: calc(var(--grid-unit) * 3px);
-                height: calc(var(--grid-unit) * 3px);
+                --iconContainerSize: calc(var(--grid-unit) * 3px);
             }
     
             &.compact {
                 // 16x16
-                width: calc(var(--grid-unit) * 2px);
-                height: calc(var(--grid-unit) * 2px);
+                --iconContainerSize: calc(var(--grid-unit) * 2px);
             }
         }
     
         &.large, &.medium {
             &.comfortable {
                 // 16x16
-                width: calc(var(--grid-unit) * 2px);
-                height: calc(var(--grid-unit) * 2px);
+                --iconContainerSize: calc(var(--grid-unit) * 2px);
             }
     
             &.compact {
                 // 8x8
-                width: calc(var(--grid-unit) * 1px);
-                height: calc(var(--grid-unit) * 1px);
+                --iconContainerSize: calc(var(--grid-unit) * 1px);
             }
         }
     
         &.small {
             &.comfortable {
                 // 12x12
-                width: calc(var(--grid-unit) * 1.5px);
-                height: calc(var(--grid-unit) * 1.5px);
+                --iconContainerSize: calc(var(--grid-unit) * 1.5px);
             }
     
             &.compact {
                 // 8x8
-                width: calc(var(--grid-unit) * 1px);
-                height: calc(var(--grid-unit) * 1px);
+                --iconContainerSize: calc(var(--grid-unit) * 1px);
             }
         }
     
