@@ -25,7 +25,9 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
             });
         }
     }, [node, x, y]);
+
     const Component = component;
+
     return (
         <g className="card">
             <rect

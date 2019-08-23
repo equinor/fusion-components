@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useMemo, useCallback } from 'react';
 
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
@@ -10,22 +10,26 @@ function Aside<T>() {
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
-    const asideNodes = allNodes.filter(d => d.aside);
+    const asideNodes = useMemo(() => allNodes.filter(d => d.aside), [allNodes]);
 
-    const rows = asideNodes.reduce(
-        (
-            prevValue: OrgNode<T>[][],
-            currentValue: OrgNode<T>,
-            currentIndex: number
-        ): OrgNode<T>[][] => {
-            const index = Math.floor(currentIndex / 2);
-            if (!prevValue[index]) {
-                prevValue[index] = [];
-            }
-            prevValue[index].push(currentValue);
-            return prevValue;
-        },
-        [] as OrgNode<T>[][]
+    const rows = useMemo(
+        () =>
+            asideNodes.reduce(
+                (
+                    prevValue: OrgNode<T>[][],
+                    currentValue: OrgNode<T>,
+                    currentIndex: number
+                ): OrgNode<T>[][] => {
+                    const index = Math.floor(currentIndex / 2);
+                    if (!prevValue[index]) {
+                        prevValue[index] = [];
+                    }
+                    prevValue[index].push(currentValue);
+                    return prevValue;
+                },
+                [] as OrgNode<T>[][]
+            ),
+        [asideNodes]
     );
 
     useEffect(() => {
@@ -37,19 +41,23 @@ function Aside<T>() {
         }
     }, [asideRows, rows]);
 
-    const renderRow = (cards: OrgNode<T>[], rowNo: number) => {
-        const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
-        const startX = centerX - totalWidth / 2;
+    const renderRow = useCallback(
+        (cards: OrgNode<T>[], rowNo: number) => {
+            const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
+            const startX = centerX - totalWidth / 2;
 
-        return cards.map((card, i) => (
-            <Card
-                key={card.id}
-                node={card}
-                x={startX + i * (cardWidth + cardMargin)}
-                y={(rowNo + 1) * rowMargin}
-            />
-        ));
-    };
+            return cards.map((card, i) => (
+                <Card
+                    key={card.id}
+                    node={card}
+                    x={startX + i * (cardWidth + cardMargin)}
+                    y={(rowNo + 1) * rowMargin}
+                />
+            ));
+        },
+        [centerX, cardWidth, cardMargin, rowMargin]
+    );
+
     return (
         <g className="aside">
             {rows.map((cards, rowNo) => (
