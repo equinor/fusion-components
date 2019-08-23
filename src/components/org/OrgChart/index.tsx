@@ -7,22 +7,20 @@ import Root from './components/Root';
 import Aside from './components/Aside';
 import Children from './components/Children';
 
-function OrgChart<T extends OrgStructure>(props: OrgChartProps<T>) {
-    return (
-        <OrgChartContextProvider>
-            <OrgChartContent {...props} />
-        </OrgChartContextProvider>
-    );
-}
+const OrgChart = <T extends OrgStructure>(props: OrgChartProps<T>) => (
+    <OrgChartContextProvider>
+        <OrgChartContent {...props} />
+    </OrgChartContextProvider>
+);
 
-function OrgChartContent<T extends OrgStructure>({
+const OrgChartContent = <T extends OrgStructure>({
     structure,
     cardWidth = 380,
     cardHeight = 132,
     cardMargin = 25,
     rowMargin = 175,
     component,
-}: OrgChartProps<T>) {
+}: OrgChartProps<T>) => {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
     const [parentHeight, parentWidth] = useParentSize(orgContainerRef);
     const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -86,19 +84,19 @@ function OrgChartContent<T extends OrgStructure>({
     }, [rowMargin]);
 
     return (
-            <svg
-                ref={orgContainerRef}
-                width={parentWidth}
-                height={parentHeight}
-                viewBox={`0 0 ${parentWidth} ${parentHeight}`}
-                overflow="auto"
-            >
-                <Links />
-                <Root />
-                <Aside />
-                <Children />
-            </svg>
+        <svg
+            ref={orgContainerRef}
+            width={parentWidth}
+            height={parentHeight}
+            viewBox={`0 0 ${parentWidth} ${parentHeight}`}
+            overflow="auto"
+        >
+            <Links />
+            <Root />
+            <Aside />
+            <Children />
+        </svg>
     );
-}
+};
 
 export default OrgChart;

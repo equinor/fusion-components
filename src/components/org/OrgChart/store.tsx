@@ -1,5 +1,6 @@
 import { OrgNode, OrgChartItemProps } from './orgChartTypes';
 import React, { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
+
 type Action<T> =
     | { type: 'UPDATE_SIZE'; width?: number; height?: number }
     | { type: 'UPDATE_CENTER'; x?: number; y?: number }
