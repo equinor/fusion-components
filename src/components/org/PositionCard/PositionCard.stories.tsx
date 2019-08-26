@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { useState, useCallback } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, boolean, select } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import PositionCard from './index';
 import { Position } from '@equinor/fusion';
@@ -77,6 +78,25 @@ const positions = {
     'Multiple assignments': positionWithMultipleInstances,
 };
 
+const InteractiveStory = () => {
+    const [isSelected, setIsSelected] = useState(false);
+
+    const toggleSelected = useCallback(() => {
+        setIsSelected(prev => !prev);
+    }, []);
+
+    return (
+        <PositionCard
+            onClick={toggleSelected}
+            position={select('Position', positions, position)}
+            showDate={boolean('Show date', true)}
+            showExternalId={boolean('Show Pims id', true)}
+            showLocation={boolean('Show location', true)}
+            isSelected={isSelected}
+        />
+    );
+};
+
 storiesOf('Pro org|Position Card', module)
     .addDecorator(withKnobs)
     .addDecorator(withFusionStory('Pro org position card'))
@@ -86,6 +106,7 @@ storiesOf('Pro org|Position Card', module)
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
-            isSelected={boolean('Is selected', false)}
+            isSelected={false}
         />
-    ));
+    ))
+    .add('Interactive', () => <InteractiveStory />);
