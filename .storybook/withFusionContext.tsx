@@ -50,7 +50,7 @@ class StorybookAuthContainer extends AuthContainer {
     }
 
     login(clientId: string): void {
-        super.login(clientId);
+        /*   super.login(clientId); */
     }
 
     async logoutAsync(clientId?: string): Promise<void> {
@@ -63,7 +63,7 @@ class StorybookAuthContainer extends AuthContainer {
             if (cachedUser) {
                 return cachedUser;
             }
-        } catch (e) {}
+        } catch (e) { }
 
         return AuthUser.fromJSON(mockUser);
     }
