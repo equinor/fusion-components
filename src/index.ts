@@ -89,8 +89,11 @@ export {
     DropdownArrow,
     CollapseIcon,
     CalendarIcon,
+    HistoryIcon,
+    InfoIcon,
 } from './components/icons/components/action';
 export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
+export { PlayIcon } from './components/icons/components/av';
 
 // Styling
 export { default as styling } from './styles/styling';
