@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { DataTableRowProps } from '../dataTableTypes';
 import Cell from './Cell';
 import ExpandCell from './ExpandCell';
 import ExpandedContent from './ExpandedContent';
+import SelectionCell from './SelectionCell';
+import classNames from 'classnames';
 import styles from '../styles.less';
 
 function DataTableRow<T>({
@@ -14,8 +16,18 @@ function DataTableRow<T>({
     isExpanded,
     onExpand,
     expandedComponent,
+    isSelectable,
+    isSelected,
+    onSelectionChange,
 }: DataTableRowProps<T>) {
     const [isHovering, setIsHovering] = useState(false);
+
+    const setIsHoveringTrue = useCallback(() => setIsHovering(true), []);
+    const setIsHoveringFalse = useCallback(() => setIsHovering(false), []);
+
+    const onSelect = useCallback(() => {
+        onSelectionChange(item);
+    }, [item, onSelectionChange]);
 
     return (
         <>
@@ -23,9 +35,20 @@ function DataTableRow<T>({
                 isExpandable={isExpandable}
                 isExpanded={isExpanded}
                 isHovering={isHovering}
-                onMouseOver={() => setIsHovering(true)}
-                onMouseOut={() => setIsHovering(false)}
+                isSelected={isSelected}
+                onMouseOver={setIsHoveringTrue}
+                onMouseOut={setIsHoveringFalse}
                 onClick={onExpand}
+                className={classNames(styles.cell)}
+            />
+            <SelectionCell
+                isSelectable={!!isSelectable}
+                isSelected={isSelected}
+                onChange={onSelect}
+                isHovering={isHovering}
+                onMouseOver={setIsHoveringTrue}
+                onMouseOut={setIsHoveringFalse}
+                className={classNames(styles.cell)}
             />
             {columns.map(column => (
                 <Cell
@@ -35,8 +58,9 @@ function DataTableRow<T>({
                     rowIndex={index}
                     isExpanded={isExpanded}
                     isHovering={isHovering}
-                    onMouseOver={() => setIsHovering(true)}
-                    onMouseOut={() => setIsHovering(false)}
+                    isSelected={isSelected}
+                    onMouseOver={setIsHoveringTrue}
+                    onMouseOut={setIsHoveringFalse}
                 />
             ))}
             <ExpandedContent

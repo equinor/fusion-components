@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useTooltipRef, RadioButton } from '@equinor/fusion-components';
 import { FilterTerm } from '../applyFilters';
 import { Count } from '../countFilters';
+import { useFilterPaneContext } from '../FilterPaneContext';
 
 type RadioOption = {
     key: string;
@@ -14,21 +15,20 @@ type RadioButtonProps = {
     option: RadioOption;
     onClick: () => void;
     isChecked: boolean;
-    paneIsCollapsed: boolean;
 };
 
 const RadioButtonWrapper: React.FC<RadioButtonProps> = ({
     option,
     onClick,
     isChecked,
-    paneIsCollapsed,
 }) => {
-    const tooltipRef = useTooltipRef(option.label, 'right');
+    const filterPaneContext = useFilterPaneContext();
+    const tooltipRef = useTooltipRef(option.label, filterPaneContext.tooltipPlacement);
 
     return (
         <li ref={tooltipRef} onClick={onClick}>
             <RadioButton selected={isChecked} color={option.color} />
-            {!paneIsCollapsed && <label>{option.label}</label>}
+            {!filterPaneContext.paneIsCollapsed && <label>{option.label}</label>}
         </li>
     );
 };
@@ -59,7 +59,6 @@ const RadioButtonsFilterComponent: React.FC<RadioButtonsFilterProps> = ({
                     option={option}
                     onClick={() => selectSingleOption(option)}
                     isChecked={(term && term.value) === option.key}
-                    paneIsCollapsed={paneIsCollapsed}
                 />
             ))}
         </ul>

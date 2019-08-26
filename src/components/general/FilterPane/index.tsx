@@ -13,9 +13,10 @@ import applyFilters, {
     FilterTerm,
 } from './applyFilters';
 import { applyCountAsync, Count, FilterCount } from './countFilters';
+import FilterPaneContext, { IFilterPaneContext } from './FilterPaneContext';
 
 export { default as FilterTypes } from './filterTypes';
-export { applyFilters, FilterTerm, FilterSection, Count, FilterCount };
+export { applyFilters, FilterTerm, FilterSection, Count, FilterCount, CollapseExpandButton };
 
 const FILTER_PANEL_COLLAPSED_KEY = 'FILTER_PANEL_COLLAPSED_KEY';
 const createPanelCollapsedKey = (key: string) => FILTER_PANEL_COLLAPSED_KEY + key;
@@ -34,9 +35,17 @@ export type FilterPaneProps<T> = {
     sectionDefinitions: FilterSection<T>[];
     terms: FilterTerm[];
     onChange: OnFilterChangeHandler<T>;
+    screenPlacement?: 'right' | 'left';
 };
 
-function FilterPane<T>({ id, data, sectionDefinitions, terms, onChange }: FilterPaneProps<T>) {
+function FilterPane<T>({
+    id,
+    data,
+    sectionDefinitions,
+    terms,
+    onChange,
+    screenPlacement = 'right',
+}: FilterPaneProps<T>) {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [filterCount, setFilterCount] = useState<Count[]>([]);
 
@@ -73,23 +82,35 @@ function FilterPane<T>({ id, data, sectionDefinitions, terms, onChange }: Filter
         useComponentDisplayClassNames(styles),
         {
             [styles.isCollapsed]: isCollapsed,
+            [styles.screenPlacementLeft]: screenPlacement === 'left',
         }
     );
 
+    const filterPaneContext = useMemo<IFilterPaneContext>(
+        () => ({
+            terms,
+            paneIsCollapsed: isCollapsed,
+            screenPlacement,
+            tooltipPlacement: screenPlacement === 'right' ? 'left' : 'right',
+        }),
+        [terms, screenPlacement, isCollapsed]
+    );
+
     return (
-        <div className={containerClassNames}>
-            <CollapseExpandButton isCollapsed={isCollapsed} onClick={toggleCollapsed} />
-            {sectionDefinitions.map(section => (
-                <Section
-                    key={section.key}
-                    section={section}
-                    terms={terms}
-                    filterCount={filterCount}
-                    onChange={handleOnSectionChange}
-                    paneIsCollapsed={isCollapsed}
-                />
-            ))}
-        </div>
+        <FilterPaneContext.Provider value={filterPaneContext}>
+            <div className={containerClassNames}>
+                <CollapseExpandButton onClick={toggleCollapsed} />
+                {sectionDefinitions.map(section => (
+                    <Section
+                        key={section.key}
+                        section={section}
+                        terms={terms}
+                        filterCount={filterCount}
+                        onChange={handleOnSectionChange}
+                    />
+                ))}
+            </div>
+        </FilterPaneContext.Provider>
     );
 }
 

@@ -24,6 +24,7 @@ function DataTableSkeleton<T>({ columns, rowCount }: DataTableSkeletonProps<T>) 
             {rows.map((row, rowIndex) => (
                 <React.Fragment key={rowIndex.toString()}>
                     <div />
+                    <div />
                     {columns.map(column => (
                         <div key={column.key} className={styles.cell}>
                             {renderSkeleton(column, rowIndex)}

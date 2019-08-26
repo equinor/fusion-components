@@ -11,15 +11,18 @@ const ExpandCell: React.FC<ExpandCellProps> = ({
     onClick,
     onMouseOut,
     onMouseOver,
+    className,
+    isSelected,
 }) => (
     <div
         onMouseLeave={onMouseOut}
         onMouseEnter={onMouseOver}
         onClick={() => isExpandable && onClick()}
-        className={classNames(styles.cell, styles.expand, {
+        className={classNames(className, styles.expand, {
             [styles.isExpandable]: isExpandable,
             [styles.isExpanded]: isExpanded,
             [styles.isHovering]: isHovering,
+            [styles.isSelected]: isSelected,
         })}
     >
         {isExpandable && <DropdownArrow isOpen={isExpanded} />}

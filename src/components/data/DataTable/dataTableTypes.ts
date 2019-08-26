@@ -10,6 +10,7 @@ export type DataItemSkeletonComponentProps = { rowIndex: number };
 export type DataItemComponentProps<T> = DataItemSkeletonComponentProps & { item: T };
 export type SortChangeHandler<T> = (column: DataTableColumn<T>) => void;
 export type OnDataTableRowClickHandler<T> = (item: T, rowIndex: number) => void;
+export type OnSelectionChange<T> = (selectedItems: T[]) => void;
 
 export type DataTableColumn<T> = {
     key: string;
@@ -40,6 +41,9 @@ export type DataTableProps<T> = {
     data: T[];
     rowIdentifier: DataItemPropertyAccessor<T>;
     isFetching: boolean;
+    isSelectable?: boolean;
+    onSelectionChange?: OnSelectionChange<T>;
+    selectedItems?: T[];
     pagination?: Pagination;
     onPaginationChange?: PaginationChangeHandler;
     onSortChange?: SortChangeHandler<T>;
@@ -58,6 +62,9 @@ export type DataTableTableProps<T> = {
     data: T[];
     rowIdentifier: DataItemPropertyAccessor<T>;
     showSkeleton: boolean;
+    isSelectable?: boolean;
+    onSelectionChange?: OnSelectionChange<T>;
+    selectedItems?: T[];
     pagination?: Pagination;
     onPaginationChange?: PaginationChangeHandler;
     onSortChange?: SortChangeHandler<T>;
@@ -73,6 +80,9 @@ export type DataTableListProps<T> = {
     rowIdentifier: DataItemPropertyAccessor<T>;
     showSkeleton: boolean;
     skeleton?: React.FC<DataItemSkeletonComponentProps>;
+    isSelectable?: boolean;
+    onSelectionChange?: OnSelectionChange<T>;
+    selectedItems?: T[];
     pagination?: Pagination;
     onPaginationChange?: PaginationChangeHandler;
     onSortChange?: SortChangeHandler<T>;
@@ -85,6 +95,10 @@ export type DataTableHeaderProps<T> = {
     columns: DataTableColumn<T>[];
     onSortChange?: SortChangeHandler<T>;
     sortedBy?: DataTableSortedBy<T>;
+    isSelectable?: boolean;
+    onSelectAll: () => void;
+    isAllSelected: boolean;
+    isSomeSelected: boolean;
 };
 
 export type DataTableBodyProps<T> = {
@@ -96,6 +110,9 @@ export type DataTableBodyProps<T> = {
     onExpand: (item: T, rowIndex: number) => void;
     expandedItems: T[];
     collapsedColumns: DataTableColumn<T>[];
+    isSelectable?: boolean;
+    onSelectionChange: OnSelectionChange<T>;
+    selectedItems?: T[];
 };
 
 export type DataTableRowProps<T> = {
@@ -107,6 +124,9 @@ export type DataTableRowProps<T> = {
     isExpanded: boolean;
     onExpand: () => void;
     collapsedColumns: DataTableColumn<T>[];
+    isSelectable?: boolean;
+    isSelected: boolean;
+    onSelectionChange: (item: T) => void;
 };
 
 export type DataTableCellProps<T> = {
@@ -115,6 +135,7 @@ export type DataTableCellProps<T> = {
     rowIndex: number;
     isExpanded: boolean;
     isHovering: boolean;
+    isSelected: boolean;
     onMouseOver: () => void;
     onMouseOut: () => void;
 };
@@ -130,8 +151,10 @@ export type ExpandCellProps = {
     isExpanded: boolean;
     onClick: () => void;
     isHovering: boolean;
+    isSelected: boolean;
     onMouseOver: () => void;
     onMouseOut: () => void;
+    className: string;
 };
 
 export type ExpandedContentProps<T> = {
@@ -140,4 +163,15 @@ export type ExpandedContentProps<T> = {
     isExpanded: boolean;
     expandedComponent?: React.FC<DataItemComponentProps<T>>;
     collapsedColumns: DataTableColumn<T>[];
+};
+
+export type SelectionCellProps = {
+    isSelectable: boolean;
+    isSelected: boolean;
+    onChange: () => void;
+    isHovering?: boolean;
+    onMouseOver?: () => void;
+    onMouseOut?: () => void;
+    className: string;
+    indeterminate?: boolean;
 };
