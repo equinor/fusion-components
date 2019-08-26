@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "0.0.42",
+    "version": "0.0.43",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -36,7 +36,7 @@
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
-        "@equinor/fusion": "^0.2.3",
+        "@equinor/fusion": "^0.3.0",
         "@storybook/addon-actions": "^5.1.9",
         "@storybook/addon-info": "^5.1.9",
         "@storybook/addon-jest": "^5.1.9",

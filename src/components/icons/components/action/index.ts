@@ -5,3 +5,5 @@ export { default as SortIcon } from './SortIcon';
 export { default as DropdownArrow } from './DropdownArrow';
 export { default as CollapseIcon } from './CollapseIcon';
 export { default as CalendarIcon } from './CalendarIcon';
+export { default as InfoIcon } from './InfoIcon';
+export { default as HistoryIcon } from './HistoryIcon';

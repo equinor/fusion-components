@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
-import { withKnobs, number, color, select, boolean } from '@storybook/addon-knobs';
+import { boolean, color, number, select, withKnobs } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import * as React from 'react';
 import withFusionStory from "../../../../.storybook/withFusionStory";
 
-import { SearchIcon, DoneIcon, SortIcon, MinimizeIcon, DropdownArrow } from '../components/action';
+import { DoneIcon, DropdownArrow, HistoryIcon, InfoIcon, MinimizeIcon, SearchIcon, SortIcon } from '../components/action';
 
 const eventsFromNames = actions('onClick');
 
@@ -15,27 +15,27 @@ stories.addDecorator(withFusionStory("Action"));
 stories.add('Search', () => (
     <SearchIcon
         {...eventsFromNames}
-        width={number('width', 24)}
-        height={number('height', 24)}
         color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
     />
 ));
 
 stories.add('Done', () => (
     <DoneIcon
         {...eventsFromNames}
-        width={number('width', 24)}
-        height={number('height', 24)}
         color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
     />
 ));
 
 stories.add('Minimize', () => (
     <MinimizeIcon
         {...eventsFromNames}
-        width={number('width', 24)}
-        height={number('height', 24)}
         color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
     />
 ));
 stories.add('Sort', () => (
@@ -52,5 +52,22 @@ stories.add('Dropdown', () => (
     <DropdownArrow
         {...eventsFromNames}
         isOpen={boolean('I sopen')}
+    />
+));
+stories.add('Info', () => (
+    <InfoIcon
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+        {...eventsFromNames}
+
+    />
+));
+stories.add('History', () => (
+    <HistoryIcon
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+        {...eventsFromNames}
     />
 ));
