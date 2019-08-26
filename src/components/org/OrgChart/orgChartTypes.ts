@@ -9,12 +9,15 @@ export type OrgChartProps<T> = {
     cardHeight?: number;
     cardMargin?: number;
     rowMargin?: number;
+    asideLabel?: string;
+    childrenLabel?: string;
 };
 
 export type OrgStructure = {
     id: string;
     parentId?: string;
     aside?: boolean;
+    parentLink?: React.FC
 }
 
 export type OrgNode<T> = OrgStructure & {

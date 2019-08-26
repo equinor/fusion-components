@@ -10,7 +10,8 @@ type Action<T> =
     | { type: 'UPDATE_COMPONENT'; component: FC<OrgChartItemProps<T>> }
     | { type: 'UPDATE_ASIDE_ROWS'; rows: number }
     | { type: 'UPDATE_CHILDREN_ROWS'; rows: number }
-    | { type: 'UPDATE_POSITION'; node: OrgNode<T>; x: number; y: number };
+    | { type: 'UPDATE_POSITION'; node: OrgNode<T>; x: number; y: number }
+    | { type: 'UPDATE_LABELS'; childrenLabel?: string; asideLabel?: string };
 
 export type OrgChartContextType<T> = {
     width: number;
@@ -25,6 +26,8 @@ export type OrgChartContextType<T> = {
     component: React.FC<OrgChartItemProps<T>> | null;
     asideRows: number;
     childrenRows: number;
+    childrenLabel: string | null;
+    asideLabel: string | null;
 };
 
 export type OrgChartContextReducer<T> = {
@@ -97,6 +100,12 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                     }
                 }),
             };
+        case 'UPDATE_LABELS':
+            return{
+                ...state,
+                childrenLabel: action.childrenLabel || state.childrenLabel,
+                asideLabel: action.asideLabel || state.asideLabel,
+            }
     }
 }
 
@@ -114,6 +123,8 @@ export function OrgChartContextProvider<T>({children}: any) {
         asideRows: 0,
         childrenRows: 0,
         component: null,
+        childrenLabel: null,
+        asideLabel: null,
     };
 
     const [state, dispatch] = useReducer<Reducer<OrgChartContextType<T>, Action<T>>>(

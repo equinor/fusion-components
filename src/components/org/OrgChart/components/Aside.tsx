@@ -51,7 +51,7 @@ function Aside<T>() {
                     key={card.id}
                     node={card}
                     x={startX + i * (cardWidth + cardMargin)}
-                    y={(rowNo + 1) * rowMargin}
+                    y={(rowNo + 1) * rowMargin + 20}
                 />
             ));
         },

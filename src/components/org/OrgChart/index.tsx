@@ -1,11 +1,14 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import useParentSize from './hooks/useParentSize';
 import { OrgChartContext, OrgChartContextReducer, OrgChartContextProvider } from './store';
-import { OrgStructure, OrgChartProps, OrgNode } from './orgChartTypes';
+import { OrgStructure, OrgChartProps, OrgNode, OrgChartItemProps } from './orgChartTypes';
 import Links from './components/Links';
 import Root from './components/Root';
 import Aside from './components/Aside';
 import Children from './components/Children';
+import Labels from './components/Labels';
+
+export { OrgStructure, OrgChartItemProps };
 
 const OrgChart = <T extends OrgStructure>(props: OrgChartProps<T>) => (
     <OrgChartContextProvider>
@@ -15,11 +18,13 @@ const OrgChart = <T extends OrgStructure>(props: OrgChartProps<T>) => (
 
 const OrgChartContent = <T extends OrgStructure>({
     structure,
-    cardWidth = 380,
-    cardHeight = 132,
-    cardMargin = 25,
-    rowMargin = 175,
+    cardWidth = 320,
+    cardHeight = 112,
+    cardMargin = 16,
+    rowMargin = 128,
     component,
+    childrenLabel,
+    asideLabel,
 }: OrgChartProps<T>) => {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
     const [parentHeight, parentWidth] = useParentSize(orgContainerRef);
@@ -37,6 +42,14 @@ const OrgChartContent = <T extends OrgStructure>({
             };
         });
     };
+
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_LABELS',
+            asideLabel: asideLabel,
+            childrenLabel: childrenLabel,
+        });
+    }, [asideLabel, childrenLabel]);
 
     useEffect(() => {
         dispatch({
@@ -95,6 +108,7 @@ const OrgChartContent = <T extends OrgStructure>({
             <Root />
             <Aside />
             <Children />
+            <Labels />
         </svg>
     );
 };

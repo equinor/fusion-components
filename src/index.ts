@@ -48,6 +48,9 @@ export { default as DatePicker } from './components/general/DatePicker';
 export { default as Slider } from './components/general/Calendar';
 export {default as Accordion,AccordionItem } from "./components/general/Accordion";
 
+//Org components 
+export {default as OrgChart, OrgStructure, OrgChartItemProps } from "./components/org/OrgChart";
+
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
 export { default as Banner } from './components/feedback/Banner';

@@ -48,7 +48,7 @@ function Children<T>() {
         [childrenNodes, numberOfCardsPerRow]
     );
 
-    const initialMargin = rowMargin * asideRows;
+    const initialMargin = rowMargin * asideRows + 60;
 
     useEffect(() => {
         if (rows.length !== childrenRows) {
