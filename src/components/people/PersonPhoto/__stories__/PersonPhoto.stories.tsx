@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonPhoto from '../index';
 
-storiesOf('General|PersonPhoto', module)
+storiesOf('People|PersonPhoto', module)
     .addParameters({ jest: ['PersonPhoto.stories.jsx'] })
     .addDecorator(withFusionStory('PersonPhoto'))
     .add('Affiliate (XLarge)', () => (

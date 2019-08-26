@@ -72,27 +72,24 @@ export default ({ personId, affiliation, size, title }: PersonPhotoProps) => {
     const iconSizes = getIconSizes(displayType === ComponentDisplayType.Compact);
 
     return (
-        <React.Fragment>
-            <img className={photoClassNames} src="https://via.placeholder.com/150" />
-            <div
-                title={title}
-                className={photoClassNames}
-                style={{
-                    backgroundImage: `url('${urlToPhoto}')`,
-                }}
-            >
-                <div className={iconClassNames} title={friendlyAffiliationName(affiliation)}>
-                    {affiliation === 'consultant' && (
-                        <ConsultantIcon width={iconSizes[size]} height={iconSizes[size]} />
-                    )}
-                    {affiliation === 'externalhire' && (
-                        <ExternalHireIcon width={iconSizes[size]} height={iconSizes[size]} />
-                    )}
-                    {affiliation === 'affiliate' && (
-                        <AffiliateIcon width={iconSizes[size]} height={iconSizes[size]} />
-                    )}
-                </div>
+        <div
+            title={title}
+            className={photoClassNames}
+            style={{
+                backgroundImage: `url('${urlToPhoto}')`,
+            }}
+        >
+            <div className={iconClassNames} title={friendlyAffiliationName(affiliation)}>
+                {affiliation === 'consultant' && (
+                    <ConsultantIcon width={iconSizes[size]} height={iconSizes[size]} />
+                )}
+                {affiliation === 'externalhire' && (
+                    <ExternalHireIcon width={iconSizes[size]} height={iconSizes[size]} />
+                )}
+                {affiliation === 'affiliate' && (
+                    <AffiliateIcon width={iconSizes[size]} height={iconSizes[size]} />
+                )}
             </div>
-        </React.Fragment>
+        </div>
     );
 };
