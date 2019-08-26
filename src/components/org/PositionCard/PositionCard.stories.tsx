@@ -29,6 +29,16 @@ const position: Position = {
             obs: 'obs',
             percent: 100,
             type: 'type',
+            assignedPerson: {
+                department: "department",
+                name: "Ola Nordmann",
+                id: "125125",
+                isAffiliateAccess: false,
+                jobTitle: "Job title",
+                mail: "olno@equinor.com",
+                mobilePhone: "12345678",
+                officeLocation: "Stavanger",
+            },
             properties: {},
         },
     ],
@@ -44,20 +54,6 @@ const positionWithMultipleInstances: Position = {
         ...position.instances,
         {
             appliesFrom: new Date().toString(),
-            appliesTo: new Date(new Date().getFullYear() + 2, 0).toString(),
-            location: {
-                code: '113',
-                country: 'Norway',
-                id: '11331',
-                name: 'Bergen',
-            },
-            obs: 'obs',
-            percent: 100,
-            type: 'type',
-            properties: {},
-        },
-        {
-            appliesFrom: new Date().toString(),
             appliesTo: new Date(new Date().getFullYear(), new Date().getMonth() + 4).toString(),
             location: {
                 code: '616',
@@ -68,6 +64,40 @@ const positionWithMultipleInstances: Position = {
             obs: 'obs',
             percent: 100,
             type: 'type',
+            assignedPerson: {
+                department: "department",
+                name: "Kari Nordmann",
+                id: "125125",
+                isAffiliateAccess: false,
+                jobTitle: "Job title",
+                mail: "kano@equinor.com",
+                mobilePhone: "12345678",
+                officeLocation: "Stavanger",
+            },
+            properties: {},
+        },
+        {
+            appliesFrom: new Date().toString(),
+            appliesTo: new Date(new Date().getFullYear() + 2, 0).toString(),
+            location: {
+                code: '113',
+                country: 'Norway',
+                id: '11331',
+                name: 'Bergen',
+            },
+            obs: 'obs',
+            percent: 100,
+            type: 'type',
+            assignedPerson: {
+                department: "department",
+                name: "Jim Jimsen",
+                id: "125125",
+                isAffiliateAccess: false,
+                jobTitle: "Job title",
+                mail: "jiji@equinor.com",
+                mobilePhone: "12345678",
+                officeLocation: "Stavanger",
+            },
             properties: {},
         },
     ],
@@ -81,7 +111,8 @@ const positions = {
 const InteractiveStory = () => {
     const [isSelected, setIsSelected] = useState(false);
 
-    const toggleSelected = useCallback(() => {
+    const toggleSelected = useCallback((position, instance) => {
+        action('click')(position, instance);
         setIsSelected(prev => !prev);
     }, []);
 

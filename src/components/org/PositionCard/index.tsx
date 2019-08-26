@@ -37,18 +37,21 @@ const PositionCard: React.FC<PositionCardProps> = ({
     // TODO: Get current instance somehow
     const currentInstance = position.instances[0];
     const onClickHandler = useCallback(() => {
-        onClick(position, currentInstance);
+        if(onClick) {
+            onClick(position, currentInstance);
+        }
     }, [position, currentInstance, onClick]);
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
-            <PositionPhoto position={position} currentInstance={currentInstance} />
+            <PositionPhoto position={position} currentInstance={currentInstance} onClick={onClick} />
             <PositionInstanceComponent
                 position={position}
                 instance={currentInstance}
                 showLocation={showLocation}
                 showDate={showDate}
                 showExternalId={showExternalId}
+                onClick={onClick}
             />
         </div>
     );

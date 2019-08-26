@@ -5,6 +5,7 @@ import {
     PeopleIcon,
     RelativeOverlayPortal,
     useClickOutsideOverlayPortal,
+    PersonPhoto,
 } from '@equinor/fusion-components';
 import PositionInstanceComponent from './PositionInstance';
 
@@ -13,9 +14,10 @@ import styles from '../styles.less';
 type PositionPhotoProps = {
     position: Position;
     currentInstance: PositionInstance;
+    onClick?: (position: Position, instance: PositionInstance) => void;
 };
 
-const PositionPhoto: React.FC<PositionPhotoProps> = ({ position }) => {
+const PositionPhoto: React.FC<PositionPhotoProps> = ({ position, currentInstance, onClick }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [showInstancePopover, setShowInstancePopover] = useState(false);
 
@@ -43,19 +45,31 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position }) => {
             {hasMultipleInstances ? (
                 <>
                     <div className={styles.personIconContainer} onClick={toggleInstancePopover}>
-                        <PeopleIcon />
+                        <PersonPhoto
+                            personId={currentInstance.assignedPerson.id}
+                            size={'large'}
+                            affiliation={'affiliate'}
+                        />
                         <div className={styles.instanceCount}>{position.instances.length}</div>
                     </div>
                     <RelativeOverlayPortal relativeRef={containerRef} show={showInstancePopover}>
                         <div className={popoverClassNames}>
                             {position.instances.map(instance => (
                                 <div className={styles.instanceWrapper} key={instance.obs}>
+                                    <div className={styles.personIconContainer}>
+                                        <PersonPhoto
+                                            personId={instance.assignedPerson.id}
+                                            size={'large'}
+                                            affiliation={'affiliate'}
+                                        />
+                                    </div>
                                     <PositionInstanceComponent
                                         instance={instance}
                                         position={position}
                                         showDate={false}
                                         showLocation={false}
                                         showExternalId
+                                        onClick={onClick}
                                     />
                                 </div>
                             ))}
@@ -63,7 +77,13 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position }) => {
                     </RelativeOverlayPortal>
                 </>
             ) : (
-                <div>Photo</div>
+                <div className={styles.personIconContainer}>
+                    <PersonPhoto
+                        personId={currentInstance.assignedPerson.id}
+                        size={'large'}
+                        affiliation={'affiliate'}
+                    />
+                </div>
             )}
         </div>
     );
