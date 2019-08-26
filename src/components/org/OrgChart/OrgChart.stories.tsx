@@ -147,8 +147,8 @@ const OrgChartStory = () => {
             <OrgChart
                 structure={positions}
                 component={PositionCard}
-                asideLabel="SUPPORT"
-                childrenLabel="EXECUTING ORGANIZATIONS"
+                asideLabel="ASIDE"
+                childrenLabel="CHILDREN"
             />
         </div>
     );
