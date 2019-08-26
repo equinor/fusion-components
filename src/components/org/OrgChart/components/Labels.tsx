@@ -2,6 +2,8 @@ import React, { useContext, useCallback, useMemo } from 'react';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
+import styles from './styles.less';
+
 const Labels = () => {
     const {
         state: { allNodes, rowMargin, cardWidth, asideLabel, childrenLabel, centerX },
@@ -38,20 +40,10 @@ const Labels = () => {
                         y={node.y}
                         width={cardWidth}
                         height={24}
-                        style={{ fill: 'none' }}
+                        className={styles.labelRect}
                     />
                     <foreignObject x={node.x} y={node.y} width={cardWidth} height={24}>
-                        <div
-                            style={{
-                                height: '100%',
-                                display: 'flex',
-                                flexDirection:"row-reverse",
-                                letterSpacing:"1.5px",
-                                fontSize:"14px"
-                            }}
-                        >
-                            {node.data}
-                        </div>
+                        <div className={styles.labelObject}>{node.data}</div>
                     </foreignObject>
                 </>
             );

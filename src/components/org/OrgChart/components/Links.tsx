@@ -3,6 +3,8 @@ import React, { useContext, useMemo, useCallback } from 'react';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgStructure, OrgNode } from '../orgChartTypes';
 
+import styles from './styles.less';
+
 const Links = <T extends OrgStructure>() => {
     const {
         state: { allNodes, cardWidth, cardHeight, centerX, width, cardMargin },
@@ -80,17 +82,7 @@ const Links = <T extends OrgStructure>() => {
                 ? getAsidePath(node, parent)
                 : getChildPath(node, parent, index);
 
-            return (
-                <path
-                    d={path}
-                    style={{
-                        stroke: '#b9b9b8',
-                        strokeWidth: '1px',
-                        fill: 'none',
-                        shapeRendering: 'crispEdges',
-                    }}
-                />
-            );
+            return <path d={path} className={styles.link} />;
         },
         [allNodes]
     );

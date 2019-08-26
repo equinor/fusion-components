@@ -3,6 +3,8 @@ import React, { useEffect, useContext } from 'react';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
+import styles from './styles.less';
+
 type CardProps<T> = {
     node: OrgNode<T>;
     x?: number;
@@ -35,7 +37,7 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
                 y={node.y}
                 width={cardWidth}
                 height={cardHeight}
-                style={{ fill: 'none' }}
+                className={styles.card}
             />
             <foreignObject x={node.x} y={node.y} width={cardWidth} height={cardHeight}>
                 {Component && <Component item={node.data} />}
