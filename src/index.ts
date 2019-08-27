@@ -46,9 +46,12 @@ export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as DatePicker } from './components/general/DatePicker';
 export { default as Slider } from './components/general/Calendar';
-export {default as NavigationDrawer, NavigationStructure} from "./components/general/NavigationDrawer";
-export {default as Accordion,AccordionItem } from "./components/general/Accordion";
-export {default as PersonPhoto } from "./components/general/PersonPhoto";
+export {
+    default as NavigationDrawer,
+    NavigationStructure,
+} from './components/general/NavigationDrawer';
+export { default as Accordion, AccordionItem } from './components/general/Accordion';
+export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -75,7 +78,12 @@ export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpo
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
 export { default as useRootContainer } from './hooks/useRootContainer';
-export { default as useStringMask, applyStringMask, unmaskString, StringMaskToken } from './hooks/useStringMask';
+export {
+    default as useStringMask,
+    applyStringMask,
+    unmaskString,
+    StringMaskToken,
+} from './hooks/useStringMask';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
