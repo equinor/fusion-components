@@ -15,7 +15,7 @@ const Labels = () => {
         return {
             data: childrenLabel,
             id: childrenLabel,
-            x: centerX - cardWidth - 15,
+            x: centerX - cardWidth - 25,
             y: firstChildNode && firstChildNode.y - 34,
         } as OrgNode<string>;
     }, [allNodes, centerX, childrenLabel]);

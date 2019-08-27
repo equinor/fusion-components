@@ -25,6 +25,7 @@ const OrgChartContent = <T extends OrgStructure>({
     component,
     childrenLabel,
     asideLabel,
+    breadCrumbComponent,
 }: OrgChartProps<T>) => {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
     const [parentHeight, parentWidth] = useParentSize(orgContainerRef);
@@ -39,6 +40,7 @@ const OrgChartContent = <T extends OrgStructure>({
                 y: 0,
                 data: item,
                 aside: item.aside,
+                breadCrumbs: item.breadCrumbs,
             };
         });
     };
@@ -72,13 +74,14 @@ const OrgChartContent = <T extends OrgStructure>({
     }, [structure]);
 
     useEffect(() => {
-        if (component) {
+        if (component || breadCrumbComponent) {
             dispatch({
-                type: 'UPDATE_COMPONENT',
-                component: component,
+                type: 'UPDATE_COMPONENTS',
+                component: component || undefined,
+                breadCrumbComponent: breadCrumbComponent || undefined,
             });
         }
-    }, [component]);
+    }, [component, breadCrumbComponent]);
 
     useEffect(() => {
         dispatch({

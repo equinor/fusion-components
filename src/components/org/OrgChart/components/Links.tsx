@@ -43,7 +43,7 @@ const Links = <T extends OrgStructure>() => {
 
     const getChildPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>, index: number) => {
-            if (index !== 0 && index / numberOfCardsPerRow >= 1) {
+            if ((index !== 0 && index / numberOfCardsPerRow >= 1) && numberOfCardsPerRow % 2 !== 0) {
                 // Children row that will align left
                 const firstChild = allChildren[0];
                 return `
