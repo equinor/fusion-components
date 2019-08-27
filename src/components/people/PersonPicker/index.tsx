@@ -56,19 +56,36 @@ const usePersonQuery = (): [Error | null, boolean, PersonDetails[], (query: stri
     return [error, isQuerying, people, search];
 };
 
+const filterPeople = (people: PersonDetails[], includedAccountTypes: string[]) => {
+    return people.reduce((acc: PersonDetails[], curr: PersonDetails) => {
+        const include = includedAccountTypes.indexOf(curr.accountType) !== -1;
+
+        if (include) {
+            acc.push(curr);
+        }
+
+        return acc;
+    }, []);
+};
+
 export default ({ onSelect }: PersonPickerProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [inputValue, setInputValue] = useState('');
-    const [dropdownOptions, setDropdownOptions] = useState<PersonPickerOption[]>([]);
+    const [primaryPeople, setPrimaryPeople] = useState<PersonDetails[]>([]);
+    const [secondaryPeople, setSecondaryPeople] = useState<PersonDetails[]>([]);
 
     const [error, isQuerying, people, search] = usePersonQuery();
-    
-    const filterSearch = useCallback(inputValue => {
-        // search for people
-        console.log(inputValue);
-    }, []);
 
-    useEffect(() => filterSearch(inputValue), [inputValue]);
+    useEffect(() => {
+        if (people.length > 0) {
+            setPrimaryPeople(filterPeople(people, ['consultant', 'employee']));
+            setSecondaryPeople(filterPeople(people, ['external']));
+        }
+    }, [isQuerying, people]);
+
+    useEffect(() => {
+        search(inputValue);
+    }, [inputValue]);
 
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => {
         const value = useMemo(() => {
@@ -106,7 +123,8 @@ export default ({ onSelect }: PersonPickerProps) => {
                 setIsOpen(false);
                 setInputValue('');
 
-                console.log(item);
+                const personId = item.key;
+                console.log(personId);
             }
         },
         [isOpen, onSelect]
@@ -122,31 +140,47 @@ export default ({ onSelect }: PersonPickerProps) => {
                     onClick={select}
                     sections={[
                         {
-                            key: 'DropdownSelection',
+                            key: 'NormalHits',
+                            title: 'Employees and consultants',
                             items: [
                                 {
                                     title: (
                                         <PersonCard
-                                            affiliation="consultant"
                                             email="msal@equinor.com"
                                             personId="e92c631b-94ae-4670-8f1e-60cdc2122edc"
                                             personName="Morten Salte"
                                             photoSize="medium"
                                         />
                                     ),
-                                    key: 'bla',
+                                    key: 'personId1',
                                 },
                                 {
                                     title: (
                                         <PersonCard
-                                            affiliation="affiliate"
                                             email="msal@equinor.com"
                                             personId="bla2"
                                             photoSize="medium"
                                             personName="Morten Salte"
                                         />
                                     ),
-                                    key: 'bla2',
+                                    key: 'personId2',
+                                },
+                            ],
+                        },
+                        {
+                            key: 'External',
+                            title: 'External hire',
+                            items: [
+                                {
+                                    title: (
+                                        <PersonCard
+                                            email="msal@equinor.com"
+                                            personId="bla2"
+                                            photoSize="medium"
+                                            personName="Morten Salte"
+                                        />
+                                    ),
+                                    key: 'personId3',
                                 },
                             ],
                         },

@@ -49,8 +49,8 @@ class StorybookAuthContainer extends AuthContainer {
         return await super.registerAppAsync(clientId, resources);
     }
 
-    login(clientId: string): void {
-        super.login(clientId);
+    async login(clientId: string): Promise<void> {
+        await super.loginAsync(clientId);
     }
 
     async logoutAsync(clientId?: string): Promise<void> {

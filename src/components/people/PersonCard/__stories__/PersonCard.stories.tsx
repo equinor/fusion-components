@@ -9,7 +9,6 @@ storiesOf('People|PersonCard', module)
     .add('Default', () => (
         <PersonCard
             personId="e92c631b-94ae-4670-8f1e-60cdc2122edc"
-            affiliation="consultant"
             personName="Morten Salte"
             email="msal@equinor.com"
             photoSize="large"
