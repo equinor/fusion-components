@@ -46,8 +46,8 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position, currentInstance
                 <>
                     <div className={styles.personIconContainer} onClick={toggleInstancePopover}>
                         <PersonPhoto
-                            personId={currentInstance.assignedPerson.id}
-                            size={'large'}
+                            personId={currentInstance.assignedPerson.azureUniqueId}
+                            size='large'
                             affiliation={'affiliate'}
                         />
                         <div className={styles.instanceCount}>{position.instances.length}</div>
@@ -58,8 +58,8 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position, currentInstance
                                 <div className={styles.instanceWrapper} key={instance.obs}>
                                     <div className={styles.personIconContainer}>
                                         <PersonPhoto
-                                            personId={instance.assignedPerson.id}
-                                            size={'large'}
+                                            personId={instance.assignedPerson.azureUniqueId}
+                                            size='large'
                                             affiliation={'affiliate'}
                                         />
                                     </div>
@@ -79,8 +79,8 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position, currentInstance
             ) : (
                 <div className={styles.personIconContainer}>
                     <PersonPhoto
-                        personId={currentInstance.assignedPerson.id}
-                        size={'large'}
+                        personId={currentInstance.assignedPerson.azureUniqueId}
+                        size='large'
                         affiliation={'affiliate'}
                     />
                 </div>

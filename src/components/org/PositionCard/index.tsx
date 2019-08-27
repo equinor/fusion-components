@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
 
@@ -15,6 +15,17 @@ type PositionCardProps = {
     onClick?: (position: Position, instance: PositionInstance) => void;
 };
 
+const getCurrentInstance = (position: Position) => {
+    const now = new Date().getTime();
+    return (
+        position.instances.find(instance => {
+            const from = new Date(instance.appliesFrom).getTime();
+            const to = new Date(instance.appliesTo).getTime();
+            return now >= from && to >= now;
+        }) || position.instances[0]
+    );
+};
+
 const PositionCard: React.FC<PositionCardProps> = ({
     position,
     isSelected,
@@ -23,6 +34,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showDate,
     onClick,
 }) => {
+    const currentInstance = useMemo(() => getCurrentInstance(position), [position]);
+
     const containerClassNames = classNames(
         styles.context,
         styles.container,
@@ -35,16 +48,19 @@ const PositionCard: React.FC<PositionCardProps> = ({
     );
 
     // TODO: Get current instance somehow
-    const currentInstance = position.instances[0];
     const onClickHandler = useCallback(() => {
-        if(onClick) {
+        if (onClick) {
             onClick(position, currentInstance);
         }
     }, [position, currentInstance, onClick]);
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
-            <PositionPhoto position={position} currentInstance={currentInstance} onClick={onClick} />
+            <PositionPhoto
+                position={position}
+                currentInstance={currentInstance}
+                onClick={onClick}
+            />
             <PositionInstanceComponent
                 position={position}
                 instance={currentInstance}
