@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
@@ -12,8 +12,9 @@ import {
 import ConsultantIcon from './icons/ConsultantIcon';
 import ExternalHireIcon from './icons/ExternalHireIcon';
 import AffiliateIcon from './icons/AffiliateIcon';
+import FallbackIcon from './icons/FallbackIcon';
+
 import { useTooltipRef } from '@equinor/fusion-components';
-import { Spinner } from '@equinor/fusion-components';
 
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -21,6 +22,7 @@ export type PersonPhotoProps = {
     personId?: string;
     person?: PersonDetails;
     size?: PhotoSize;
+    hideTooltip?: boolean;
 };
 
 const getIconSizes = (isCompact: boolean) => ({
@@ -28,6 +30,13 @@ const getIconSizes = (isCompact: boolean) => ({
     large: isCompact ? 8 : 16,
     medium: isCompact ? 8 : 16,
     small: isCompact ? 8 : 12,
+});
+
+const getFallbackImageSizes = (isCompact: boolean) => ({
+    xlarge: isCompact ? 48 : 56,
+    large: isCompact ? 32 : 40,
+    medium: isCompact ? 24 : 32,
+    small: isCompact ? 16 : 24,
 });
 
 const getDefaultPerson = (): PersonDetails => ({
@@ -43,34 +52,91 @@ const getDefaultPerson = (): PersonDetails => ({
     company: { id: 'id', name: 'name' },
 });
 
-const fallbackPhotoUrl = () => 'https://via.placeholder.com/150';
+type FallbackImageProps = {
+    size: PhotoSize;
+};
 
-export default ({ personId, person, size = 'medium' }: PersonPhotoProps) => {
+const FallbackImage = ({ size }: FallbackImageProps) => {
+    const displayType = useComponentDisplayType();
+    const sizes = getFallbackImageSizes(displayType === ComponentDisplayType.Compact);
+
+    return (
+        <FallbackIcon
+            width={sizes[size]}
+            height={sizes[size]}
+            {...{
+                viewBox: `0 0 ${sizes.xlarge} ${sizes.xlarge} `,
+            }}
+        />
+    );
+};
+
+type AccountTypeIconProps = {
+    size: PhotoSize;
+    currentPerson: PersonDetails;
+    hideTooltip?: boolean;
+};
+
+const AccountTypeIcon = ({ size, currentPerson, hideTooltip }: AccountTypeIconProps) => {
+    const isExternalHire =
+        currentPerson.jobTitle !== null && currentPerson.jobTitle.toLowerCase().startsWith('ext');
+    const isExternal = currentPerson.accountType === 'external';
+    const isConsultant = currentPerson.accountType === 'consultant';
+    const isEmployee = currentPerson.accountType === 'employee';
+
+    const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
+        [styles.xlarge]: size === 'xlarge',
+        [styles.large]: size === 'large',
+        [styles.medium]: size === 'medium',
+        [styles.small]: size === 'small',
+        [styles.externalHire]: isExternalHire,
+        [styles.consultant]: isConsultant,
+        [styles.affiliate]: isExternal,
+    });
+
+    const displayType = useComponentDisplayType();
+    const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
+    const accountTypeTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.accountType);
+
+    if (isEmployee) {
+        return null;
+    }
+
+    return (
+        <div className={iconClassNames} ref={accountTypeTooltipRef}>
+            {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
+            {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
+            {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
+        </div>
+    );
+};
+
+export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
+    if (!personId && !person) {
+        throw new Error('You must specify at least one of personId and person');
+    }
+
     const fusionContext = useFusionContext();
-    const [urlToPhoto, setUrlToPhoto] = useState(fallbackPhotoUrl());
-    const [currentPerson, setCurrentperson] = useState<PersonDetails>(person || getDefaultPerson());
+    const [isFallbackImage, setIsFallbackImage] = useState(false);
+    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
 
-    useEffect(() => {
+    const urlToPhoto = useMemo(() => {
         const peopleUrls = fusionContext.http.resourceCollections.people;
 
         if (person) {
-            const url = peopleUrls.getPersonPhoto(person.azureUniqueId);
-            setUrlToPhoto(url);
+            return peopleUrls.getPersonPhoto(person.azureUniqueId);
         } else if (personId) {
-            const url = peopleUrls.getPersonPhoto(personId);
-            setUrlToPhoto(url);
+            return peopleUrls.getPersonPhoto(personId);
         }
     }, [personId, person, fusionContext]);
 
-    const [error, isFetching, personDetails] = personId
-        ? usePersonDetails(personId)
-        : [null, false, null];
+    const [error, _, personDetails] = personId ? usePersonDetails(personId) : [null, false, person];
 
     useEffect(() => {
-        if (!error && personDetails !== null) {
-            setCurrentperson(personDetails);
+        if (!error && personDetails) {
+            setCurrentPerson(personDetails);
         } else if (error) {
-            setCurrentperson(getDefaultPerson());
+            setCurrentPerson(getDefaultPerson());
         }
     }, [error, personDetails]);
 
@@ -85,42 +151,21 @@ export default ({ personId, person, size = 'medium' }: PersonPhotoProps) => {
         }
     );
 
-    const accountType = currentPerson.accountType.toLowerCase();
+    const image = new Image();
+    image.onerror = () => setIsFallbackImage(true);
+    image.src = `${urlToPhoto}`;
 
-    const isExternalHire =
-        currentPerson.jobTitle !== null && currentPerson.jobTitle.toLowerCase().startsWith('ext');
-    const isExternal = accountType === 'external';
-    const isConsultant = accountType === 'consultant';
-
-    const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
-        [styles.xlarge]: size === 'xlarge',
-        [styles.large]: size === 'large',
-        [styles.medium]: size === 'medium',
-        [styles.small]: size === 'small',
-        [styles.externalHire]: isExternalHire,
-        [styles.consultant]: isConsultant,
-        [styles.affiliate]: isExternal,
-    });
-
-    const displayType = useComponentDisplayType();
-    const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
-
-    const nameTooltipRef = useTooltipRef(currentPerson.name);
-    const accountTypeTooltipRef = useTooltipRef(currentPerson.accountType);
+    const imageStyle = !isFallbackImage ? { backgroundImage: `url(${urlToPhoto})` } : {};
+    const nameTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.name);
 
     return (
-        <>
-            {isFetching && <Spinner />}
-            {!isFetching && (
-                <div ref={nameTooltipRef} className={photoClassNames}>
-                    <img src={urlToPhoto} onError={() => setUrlToPhoto(fallbackPhotoUrl())} />
-                    <div className={iconClassNames} ref={accountTypeTooltipRef}>
-                        {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
-                        {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
-                        {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
-                    </div>
-                </div>
-            )}
-        </>
+        <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
+            {isFallbackImage && <FallbackImage size={size} />}
+            <AccountTypeIcon
+                currentPerson={personDetails || getDefaultPerson()}
+                size={size}
+                hideTooltip={hideTooltip}
+            />
+        </div>
     );
 };

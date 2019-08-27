@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonPhoto from '../index';
-import { withKnobs, select } from '@storybook/addon-knobs';
+import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 
 const stories = storiesOf('People|PersonPhoto', module);
 stories.addDecorator(withKnobs);
@@ -17,7 +17,7 @@ const personIds = {
 
 const sizes = {
     xlarge: 'xlarge',
-    arge: 'large',
+    large: 'large',
     medium: 'medium',
     small: 'small',
 };
@@ -26,7 +26,9 @@ const PersonPhotoStory = () => {
     const personId = select('Account type', personIds, personIds.Consultant);
     const size = select('Size', sizes, sizes.xlarge);
 
-    return <PersonPhoto personId={personId} size={size} />;
+    return (
+        <PersonPhoto hideTooltip={boolean('Hide tooltip', false)} personId={personId} size={size} />
+    );
 };
 
 stories.add('Default', () => <PersonPhotoStory />);
