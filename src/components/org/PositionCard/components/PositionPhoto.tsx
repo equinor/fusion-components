@@ -2,7 +2,6 @@ import React, { useRef, useState, useCallback } from 'react';
 import classNames from 'classnames';
 import { Position, PositionInstance, useComponentDisplayClassNames } from '@equinor/fusion';
 import {
-    PeopleIcon,
     RelativeOverlayPortal,
     useClickOutsideOverlayPortal,
     PersonPhoto,
@@ -46,9 +45,8 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position, currentInstance
                 <>
                     <div className={styles.personIconContainer} onClick={toggleInstancePopover}>
                         <PersonPhoto
-                            personId={currentInstance.assignedPerson.azureUniqueId}
+                            person={currentInstance.assignedPerson}
                             size='large'
-                            affiliation={'affiliate'}
                         />
                         <div className={styles.instanceCount}>{position.instances.length}</div>
                     </div>
@@ -58,9 +56,8 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position, currentInstance
                                 <div className={styles.instanceWrapper} key={instance.obs}>
                                     <div className={styles.personIconContainer}>
                                         <PersonPhoto
-                                            personId={instance.assignedPerson.azureUniqueId}
+                                            person={instance.assignedPerson}
                                             size='large'
-                                            affiliation={'affiliate'}
                                         />
                                     </div>
                                     <PositionInstanceComponent
@@ -79,9 +76,8 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ position, currentInstance
             ) : (
                 <div className={styles.personIconContainer}>
                     <PersonPhoto
-                        personId={currentInstance.assignedPerson.azureUniqueId}
+                        person={currentInstance.assignedPerson}
                         size='large'
-                        affiliation={'affiliate'}
                     />
                 </div>
             )}

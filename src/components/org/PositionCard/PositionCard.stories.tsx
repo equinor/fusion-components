@@ -12,7 +12,7 @@ const position: Position = {
         department: 'Department',
         discipline: 'Engineering',
         id: '3',
-        name: 'Engineer',
+        name: 'engineer',
         roleDescription: '',
     },
     externalId: '800',
@@ -31,7 +31,7 @@ const position: Position = {
             type: 'type',
             assignedPerson: {
                 accountType: 'employee',
-                azureUniqueId: 'g0qghqHWHH',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
                 company: {
                     id: '3etgwg',
                     name: "Equinor"
@@ -39,11 +39,11 @@ const position: Position = {
                 contracts: [],
                 positions: [],
                 roles: [],
-                upn: 'kano@equinor.com',
+                upn: 'egsag@equinor.com',
                 department: 'department',
-                name: 'Ola Nordmann',
+                name: 'Egil Sagstad',
                 jobTitle: 'Job title',
-                mail: 'olno@equinor.com',
+                mail: 'egsag@equinor.com',
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
@@ -74,7 +74,7 @@ const positionWithMultipleInstances: Position = {
             type: 'type',
             assignedPerson: {
                 accountType: 'consultant',
-                azureUniqueId: 'g0qghqHWHH',
+                azureUniqueId: 'e92c631b-94ae-4670-8f1e-60cdc2122edc',
                 company: {
                     id: '8/4150ega',
                     name: "Bouvet"
@@ -82,11 +82,11 @@ const positionWithMultipleInstances: Position = {
                 contracts: [],
                 positions: [],
                 roles: [],
-                upn: 'kano@equinor.com',
+                upn: 'msal@equinor.com',
                 department: 'department',
-                name: 'Kari Nordmann',
+                name: 'Morten Salte',
                 jobTitle: 'Job title',
-                mail: 'kano@equinor.com',
+                mail: 'msal@equinor.com',
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
