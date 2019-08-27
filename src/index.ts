@@ -85,6 +85,9 @@ export {
     StringMaskToken,
 } from './hooks/useStringMask';
 
+// Org
+export { default as PositionCard } from './components/org/PositionCard';
+
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';

@@ -47,7 +47,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
     );
 
-    // TODO: Get current instance somehow
     const onClickHandler = useCallback(() => {
         if (onClick) {
             onClick(position, currentInstance);
