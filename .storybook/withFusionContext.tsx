@@ -49,10 +49,11 @@ class StorybookAuthContainer extends AuthContainer {
         return await super.registerAppAsync(clientId, resources);
     }
 
-    async login(clientId: string): Promise<void> {
-        await super.loginAsync(clientId);
+    async loginAsync(clientId: string): Promise<void> {
+        console.log("No login for you");
+        /*   super.login(clientId); */
     }
-
+    
     async logoutAsync(clientId?: string): Promise<void> {
         await super.logoutAsync(clientId);
     }
@@ -63,7 +64,7 @@ class StorybookAuthContainer extends AuthContainer {
             if (cachedUser) {
                 return cachedUser;
             }
-        } catch (e) {}
+        } catch (e) { }
 
         return AuthUser.fromJSON(mockUser);
     }
