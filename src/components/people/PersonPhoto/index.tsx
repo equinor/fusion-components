@@ -18,11 +18,12 @@ import { Spinner } from '@equinor/fusion-components';
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 export type PersonPhotoProps = {
-    personId: string;
+    personId?: string;
+    person?: PersonDetails;
     size?: PhotoSize;
 };
 
-const getIconSizes = isCompact => ({
+const getIconSizes = (isCompact: boolean) => ({
     xlarge: isCompact ? 16 : 24,
     large: isCompact ? 8 : 16,
     medium: isCompact ? 8 : 16,
@@ -38,22 +39,38 @@ const getDefaultPerson = (): PersonDetails => ({
     mobilePhone: 'string',
     officeLocation: 'string',
     upn: 'string',
-    accountType: 'employee',
+    accountType: 'consultant',
     company: { id: 'id', name: 'name' },
 });
 
-export default ({ personId, size = 'medium' }: PersonPhotoProps) => {
-    const fusionContext = useFusionContext();
-    const urlToPhoto = fusionContext.http.resourceCollections.people.getPersonPhoto(personId);
-    const [error, isFetching, personDetails] = usePersonDetails(personId);
+const fallbackPhotoUrl = () => 'https://via.placeholder.com/150';
 
-    const [person, setPerson] = useState<PersonDetails>(getDefaultPerson());
+export default ({ personId, person, size = 'medium' }: PersonPhotoProps) => {
+    const fusionContext = useFusionContext();
+    const [urlToPhoto, setUrlToPhoto] = useState(fallbackPhotoUrl());
+    const [currentPerson, setCurrentperson] = useState<PersonDetails>(person || getDefaultPerson());
+
+    useEffect(() => {
+        const peopleUrls = fusionContext.http.resourceCollections.people;
+
+        if (person) {
+            const url = peopleUrls.getPersonPhoto(person.azureUniqueId);
+            setUrlToPhoto(url);
+        } else if (personId) {
+            const url = peopleUrls.getPersonPhoto(personId);
+            setUrlToPhoto(url);
+        }
+    }, [personId, person, fusionContext]);
+
+    const [error, isFetching, personDetails] = personId
+        ? usePersonDetails(personId)
+        : [null, false, null];
 
     useEffect(() => {
         if (!error && personDetails !== null) {
-            setPerson(personDetails);
+            setCurrentperson(personDetails);
         } else if (error) {
-            setPerson(getDefaultPerson());
+            setCurrentperson(getDefaultPerson());
         }
     }, [error, personDetails]);
 
@@ -68,53 +85,39 @@ export default ({ personId, size = 'medium' }: PersonPhotoProps) => {
         }
     );
 
-    const accountType = person.accountType.toLowerCase();
+    const accountType = currentPerson.accountType.toLowerCase();
 
-    const isExternalHire = person.jobTitle.toLowerCase().startsWith('ext');
+    const isExternalHire =
+        currentPerson.jobTitle !== null && currentPerson.jobTitle.toLowerCase().startsWith('ext');
     const isExternal = accountType === 'external';
     const isConsultant = accountType === 'consultant';
 
-    const iconClassNames = classNames(
-        styles.affiliationContainer,
-        useComponentDisplayClassNames(styles),
-        {
-            [styles.xlarge]: size === 'xlarge',
-            [styles.large]: size === 'large',
-            [styles.medium]: size === 'medium',
-            [styles.small]: size === 'small',
-            [styles.externalHire]: isExternalHire,
-            [styles.consultant]: isConsultant,
-            [styles.affiliate]: isExternal,
-        }
-    );
+    const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
+        [styles.xlarge]: size === 'xlarge',
+        [styles.large]: size === 'large',
+        [styles.medium]: size === 'medium',
+        [styles.small]: size === 'small',
+        [styles.externalHire]: isExternalHire,
+        [styles.consultant]: isConsultant,
+        [styles.affiliate]: isExternal,
+    });
 
     const displayType = useComponentDisplayType();
-    const iconSizes = getIconSizes(displayType === ComponentDisplayType.Compact);
+    const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
 
-    const nameTooltipRef = useTooltipRef(person.name);
-    const accountTypeTooltipRef = useTooltipRef(person.accountType);
+    const nameTooltipRef = useTooltipRef(currentPerson.name);
+    const accountTypeTooltipRef = useTooltipRef(currentPerson.accountType);
 
     return (
         <>
             {isFetching && <Spinner />}
             {!isFetching && (
-                <div
-                    ref={nameTooltipRef}
-                    className={photoClassNames}
-                    style={{
-                        backgroundImage: `url('${urlToPhoto}')`,
-                    }}
-                >
+                <div ref={nameTooltipRef} className={photoClassNames}>
+                    <img src={urlToPhoto} onError={() => setUrlToPhoto(fallbackPhotoUrl())} />
                     <div className={iconClassNames} ref={accountTypeTooltipRef}>
-                        {isConsultant && (
-                            <ConsultantIcon width={iconSizes[size]} height={iconSizes[size]} />
-                        )}
-                        {isExternalHire && (
-                            <ExternalHireIcon width={iconSizes[size]} height={iconSizes[size]} />
-                        )}
-                        {isExternal && (
-                            <AffiliateIcon width={iconSizes[size]} height={iconSizes[size]} />
-                        )}
+                        {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
+                        {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
+                        {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
                     </div>
                 </div>
             )}
