@@ -4,17 +4,13 @@ import classNames from 'classnames';
 import {
     useFusionContext,
     useComponentDisplayClassNames,
-    useComponentDisplayType,
-    ComponentDisplayType,
     usePersonDetails,
     PersonDetails,
 } from '@equinor/fusion';
-import ConsultantIcon from './icons/ConsultantIcon';
-import ExternalHireIcon from './icons/ExternalHireIcon';
-import AffiliateIcon from './icons/AffiliateIcon';
-import FallbackIcon from './icons/FallbackIcon';
 
 import { useTooltipRef } from '@equinor/fusion-components';
+import FallbackImage from './FallbackImage';
+import AccountTypeBadge from './AccountTypeBadge';
 
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -24,20 +20,6 @@ export type PersonPhotoProps = {
     size?: PhotoSize;
     hideTooltip?: boolean;
 };
-
-const getIconSizes = (isCompact: boolean) => ({
-    xlarge: isCompact ? 16 : 24,
-    large: isCompact ? 8 : 16,
-    medium: isCompact ? 8 : 16,
-    small: isCompact ? 8 : 12,
-});
-
-const getFallbackImageSizes = (isCompact: boolean) => ({
-    xlarge: isCompact ? 48 : 56,
-    large: isCompact ? 32 : 40,
-    medium: isCompact ? 24 : 32,
-    small: isCompact ? 16 : 24,
-});
 
 const getDefaultPerson = (): PersonDetails => ({
     azureUniqueId: 'string',
@@ -51,65 +33,6 @@ const getDefaultPerson = (): PersonDetails => ({
     accountType: 'consultant',
     company: { id: 'id', name: 'name' },
 });
-
-type FallbackImageProps = {
-    size: PhotoSize;
-};
-
-const FallbackImage = ({ size }: FallbackImageProps) => {
-    const displayType = useComponentDisplayType();
-    const sizes = getFallbackImageSizes(displayType === ComponentDisplayType.Compact);
-
-    return (
-        <FallbackIcon
-            width={sizes[size]}
-            height={sizes[size]}
-            {...{
-                viewBox: `0 0 ${sizes.xlarge} ${sizes.xlarge} `,
-            }}
-        />
-    );
-};
-
-type AccountTypeIconProps = {
-    size: PhotoSize;
-    currentPerson: PersonDetails;
-    hideTooltip?: boolean;
-};
-
-const AccountTypeIcon = ({ size, currentPerson, hideTooltip }: AccountTypeIconProps) => {
-    const isExternalHire =
-        currentPerson.jobTitle !== null && currentPerson.jobTitle.toLowerCase().startsWith('ext');
-    const isExternal = currentPerson.accountType === 'external';
-    const isConsultant = currentPerson.accountType === 'consultant';
-    const isEmployee = currentPerson.accountType === 'employee';
-
-    const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
-        [styles.xlarge]: size === 'xlarge',
-        [styles.large]: size === 'large',
-        [styles.medium]: size === 'medium',
-        [styles.small]: size === 'small',
-        [styles.externalHire]: isExternalHire,
-        [styles.consultant]: isConsultant,
-        [styles.affiliate]: isExternal,
-    });
-
-    const displayType = useComponentDisplayType();
-    const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
-    const accountTypeTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.accountType);
-
-    if (isEmployee) {
-        return null;
-    }
-
-    return (
-        <div className={iconClassNames} ref={accountTypeTooltipRef}>
-            {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
-            {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
-            {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
-        </div>
-    );
-};
 
 export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
     if (!personId && !person) {
@@ -161,7 +84,7 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
             {isFallbackImage && <FallbackImage size={size} />}
-            <AccountTypeIcon
+            <AccountTypeBadge
                 currentPerson={personDetails || getDefaultPerson()}
                 size={size}
                 hideTooltip={hideTooltip}
