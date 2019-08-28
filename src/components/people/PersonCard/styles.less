@@ -1,19 +1,45 @@
 .container {
-    padding: calc(var(--grid-unit) * 1px);
     display: flex;
     align-items: center;
+
+    &.compact {
+        padding: calc(var(--grid-unit) * .5px);
+    }
+
+    &.comfortable {
+        padding: calc(var(--grid-unit) * 1px);
+    }
 
     .details {
         display: flex;
         flex-direction: column;
-        padding-left: calc(var(--grid-unit) * 2px); 
+
+        &.compact {
+            padding-left: calc(var(--grid-unit) * 1px);
+        }
+
+        &.comfortable {
+            padding-left: calc(var(--grid-unit) * 2px);
+        }
 
         .name {
-            padding-bottom: calc(var(--grid-unit) * .5px);
+            &.compact {
+                padding-bottom: 0;
+            }
+
+            &.comfortable {
+                padding-bottom: calc(var(--grid-unit) * .5px);
+            }
         }
 
         .email {
-            padding-top: calc(var(--grid-unit) * .5px);
+            &.compact {
+                padding-top: 0;
+            }
+
+            &.comfortable {
+                padding-top: calc(var(--grid-unit) * .5px);
+            }
         }
     }
 }
