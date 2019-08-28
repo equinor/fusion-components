@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 type Size = {
     height: number;
@@ -6,27 +6,32 @@ type Size = {
 };
 
 export default (ref?: React.MutableRefObject<SVGElement | null>): Size => {
-    const [size, setSize] = useState<Size>({ height: 0, width: 0 });
+    const [resize, setResize] = useState({ fromWidth: 0, toWidth: 0, fromHeight: 0, toHeight: 0 });
 
-    const handleResize = () => {
-        if (ref && ref.current && ref.current.parentElement) {
-            const parent = ref.current.parentElement;
-            setSize({ height: parent.offsetHeight, width: parent.offsetWidth });
+    const checkResize = () => {
+        if (!(ref && ref.current && ref.current.parentElement)) {
+            return;
+        }
+
+        const width = ref.current.parentElement.offsetWidth;
+        const height = ref.current.parentElement.offsetHeight;
+        const didResize = width !== resize.toWidth || height !== resize.toHeight;
+
+        if (didResize) {
+            setResize({
+                fromWidth: resize.toWidth,
+                toWidth: width,
+                fromHeight: resize.fromHeight,
+                toHeight: height,
+            });
+        } else {
+            window.requestAnimationFrame(checkResize);
         }
     };
-    useEffect(() => {
-        handleResize();
-        let timeoutId;
-        window.addEventListener('resize', () => {
-            clearTimeout(timeoutId);
-            timeoutId = setTimeout(handleResize, 500);
-        });
-
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    checkResize();
 
     return {
-        height: size.height,
-        width: size.width,
+        height: resize.toHeight,
+        width: resize.toWidth,
     };
 };
