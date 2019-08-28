@@ -2,12 +2,6 @@ export type OrgChartItemProps<T> = {
     item: T;
 };
 
-export type BreadCrumbProps = {
-    label: string;
-    childId?: string;
-    id?: string;
-};
-
 export type OrgChartProps<T> = {
     structure: T[];
     component: React.FC<OrgChartItemProps<T>> | null;
@@ -17,14 +11,14 @@ export type OrgChartProps<T> = {
     rowMargin?: number;
     asideLabel?: string;
     childrenLabel?: string;
-    breadCrumbComponent?: React.FC<BreadCrumbProps>
+    breadCrumbComponent?: React.FC<BreadCrumb>
+    breadCrumbs?: BreadCrumb[]
 };
 
 export type OrgStructure = {
     id: string;
     parentId?: string;
     aside?: boolean;
-    breadCrumbs?: BreadCrumb[];
 };
 
 export type OrgNode<T> = OrgStructure & {
@@ -35,7 +29,6 @@ export type OrgNode<T> = OrgStructure & {
 
 export type BreadCrumb = {
     childId: string;
-    label: string;
-    onClick?: any;
-    id: string;
+    label?: string;
+    id?: string;
 };

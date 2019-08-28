@@ -3,15 +3,33 @@ import { OrgChartContextReducer, OrgChartContext } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
 import styles from './styles.less';
+import classNames from 'classnames';
 
 const Labels = () => {
     const {
-        state: { allNodes, rowMargin, cardWidth, asideLabel, childrenLabel, centerX },
+        state: { allNodes, rowMargin, cardWidth, asideLabel, childrenLabel, centerX, numberOfCardsPerRow },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
+
+    const labelRectClassnames = classNames(styles.labelObject, {
+        [styles.oneCardRow]: numberOfCardsPerRow === 1
+    });
+
+    const getOneCardRowNode = useCallback((label: string, firstNode: OrgNode<any>) => {
+        return {
+            data:label,
+            id:label,
+            x: firstNode.x + 10,
+            y: firstNode.y - 18,
+        } as OrgNode<string>
+    } ,[])
 
     const childLabelNode = useMemo(() => {
         const childNodes = allNodes.filter(node => !node.aside && node.parentId);
         const firstChildNode = childNodes.length && childNodes[0];
+
+        if(firstChildNode && childrenLabel && numberOfCardsPerRow === 1){
+            return getOneCardRowNode(childrenLabel, firstChildNode);
+        }
         return {
             data: childrenLabel,
             id: childrenLabel,
@@ -23,6 +41,10 @@ const Labels = () => {
     const asideLabelNode = useMemo(() => {
         const asideNodes = allNodes.filter(node => node.aside && node.parentId);
         const firstAsideNode = asideNodes.length && asideNodes[0];
+
+        if(firstAsideNode && asideLabel && numberOfCardsPerRow === 1){
+            return getOneCardRowNode(asideLabel, firstAsideNode);
+        }
         return {
             data: asideLabel,
             id: asideLabel,
@@ -43,12 +65,12 @@ const Labels = () => {
                         className={styles.labelRect}
                     />
                     <foreignObject x={node.x} y={node.y} width={cardWidth} height={24}>
-                        <div className={styles.labelObject}>{node.data}</div>
+                        <div className={labelRectClassnames}>{node.data}</div>
                     </foreignObject>
                 </>
             );
         },
-        [cardWidth, rowMargin]
+        [cardWidth, rowMargin, labelRectClassnames]
     );
 
     return (

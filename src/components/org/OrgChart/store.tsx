@@ -1,4 +1,4 @@
-import { OrgNode, OrgChartItemProps, BreadCrumb, BreadCrumbProps } from './orgChartTypes';
+import { OrgNode, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 import React, { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
 
 type Action<T> =
@@ -7,11 +7,17 @@ type Action<T> =
     | { type: 'UPDATE_CARD_SIZE'; width?: number; height?: number; margin?: number }
     | { type: 'UPDATE_ROW_MARGIN'; margin: number }
     | { type: 'UPDATE_NODES'; nodes: OrgNode<T>[] }
-    | { type: 'UPDATE_COMPONENTS'; component?: FC<OrgChartItemProps<T>>, breadCrumbComponent?:FC<BreadCrumbProps> }
+    | {
+          type: 'UPDATE_COMPONENTS';
+          component?: FC<OrgChartItemProps<T>>;
+          breadCrumbComponent?: FC<BreadCrumb>;
+      }
     | { type: 'UPDATE_ASIDE_ROWS'; rows: number }
     | { type: 'UPDATE_CHILDREN_ROWS'; rows: number }
     | { type: 'UPDATE_POSITION'; node: OrgNode<T>; x: number; y: number }
     | { type: 'UPDATE_LABELS'; childrenLabel?: string; asideLabel?: string }
+    | { type: 'UPDATE_BREADCRUMBS'; breadcrumbs: BreadCrumb[] }
+    | { type: 'UPDATE_NUMBER_OF_CARDS_PER_ROW'; numberOfCardsPerRow: number };
 
 export type OrgChartContextType<T> = {
     width: number;
@@ -29,7 +35,8 @@ export type OrgChartContextType<T> = {
     childrenLabel: string | null;
     asideLabel: string | null;
     breadCrumbs: BreadCrumb[] | null;
-    breadCrumbComponent: React.FC<BreadCrumbProps> | null;
+    breadCrumbComponent: React.FC<BreadCrumb> | null;
+    numberOfCardsPerRow: number;
 };
 
 export type OrgChartContextReducer<T> = {
@@ -109,6 +116,16 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                 childrenLabel: action.childrenLabel || state.childrenLabel,
                 asideLabel: action.asideLabel || state.asideLabel,
             };
+        case 'UPDATE_BREADCRUMBS':
+            return {
+                ...state,
+                breadCrumbs: action.breadcrumbs,
+            };
+        case 'UPDATE_NUMBER_OF_CARDS_PER_ROW':
+            return {
+                ...state,
+                numberOfCardsPerRow: action.numberOfCardsPerRow,
+            };
     }
 }
 
@@ -130,6 +147,7 @@ export function OrgChartContextProvider<T>({ children }: any) {
         asideLabel: null,
         breadCrumbs: null,
         breadCrumbComponent: null,
+        numberOfCardsPerRow: 0,
     };
 
     const [state, dispatch] = useReducer<Reducer<OrgChartContextType<T>, Action<T>>>(

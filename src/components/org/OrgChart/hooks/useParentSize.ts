@@ -5,7 +5,7 @@ type Size = {
     width: number;
 };
 
-export default (ref?: React.MutableRefObject<SVGElement | null>): [number, number] => {
+export default (ref?: React.MutableRefObject<SVGElement | null>): Size => {
     const [size, setSize] = useState<Size>({ height: 0, width: 0 });
 
     const handleResize = () => {
@@ -25,5 +25,8 @@ export default (ref?: React.MutableRefObject<SVGElement | null>): [number, numbe
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    return [size.height, size.width];
+    return {
+        height: size.height,
+        width: size.width,
+    };
 };

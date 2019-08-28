@@ -4,24 +4,20 @@ import { BreadCrumb } from '../orgChartTypes';
 import styles from './styles.less';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
 
-type BreadCrumbsProps = {
-    breadCrumbs: BreadCrumb[];
-    x: number;
-    y: number;
-};
-
-const BreadCrumbs = ({ breadCrumbs, x, y }: BreadCrumbsProps) => {
+const BreadCrumbs = () => {
     const {
-        state: { breadCrumbComponent },
+        state: { breadCrumbComponent, breadCrumbs, centerX, cardWidth, numberOfCardsPerRow },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
 
     const componentWidth = 194;
     const componentHeight = 52;
+    const x = centerX - cardWidth / 2;
+    const y = 0;
 
     const renderLink = useCallback(
         (index: number) => {
             const path = `
-            M ${ x - componentWidth * (index + 1) } ${y + componentHeight / 2}
+            M ${x - componentWidth * (index + 1)} ${y + componentHeight / 2}
             L ${x + 10} ${y + componentHeight / 2}
             `;
             return <path d={path} className={styles.link} />;
@@ -31,7 +27,7 @@ const BreadCrumbs = ({ breadCrumbs, x, y }: BreadCrumbsProps) => {
 
     const renderComponent = useCallback(
         (breadCrumb: BreadCrumb, index: number) => {
-            const componentX = x - (componentWidth + 10) * (index + 1) ;
+            const componentX = x - (componentWidth + 10) * (index + 1);
             const componentY = y;
 
             const BreadCrumbComponent = breadCrumbComponent;
@@ -63,6 +59,10 @@ const BreadCrumbs = ({ breadCrumbs, x, y }: BreadCrumbsProps) => {
         },
         [breadCrumbs, x, y, breadCrumbComponent]
     );
+
+    if (!breadCrumbs || numberOfCardsPerRow === 1) {
+        return null;
+    }
 
     return (
         <g className="bread-crumbs">

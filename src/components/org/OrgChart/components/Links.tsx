@@ -7,13 +7,8 @@ import styles from './styles.less';
 
 const Links = <T extends OrgStructure>() => {
     const {
-        state: { allNodes, cardWidth, cardHeight, centerX, width, cardMargin },
+        state: { allNodes, cardWidth, cardHeight, centerX, cardMargin, numberOfCardsPerRow },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
-
-    const numberOfCardsPerRow = useMemo(
-        () => Math.floor((width + cardMargin) / (cardWidth + cardMargin)),
-        [width, cardMargin, cardWidth]
-    );
 
     const allChildren = useMemo(() => allNodes.filter(node => !node.aside && node.parentId), [
         allNodes,
@@ -43,7 +38,7 @@ const Links = <T extends OrgStructure>() => {
 
     const getChildPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>, index: number) => {
-            if ((index !== 0 && index / numberOfCardsPerRow >= 1) && numberOfCardsPerRow % 2 !== 0) {
+            if (index !== 0 && index / numberOfCardsPerRow >= 1 && numberOfCardsPerRow % 2 !== 0) {
                 // Children row that will align left
                 const firstChild = allChildren[0];
                 return `
@@ -65,6 +60,17 @@ const Links = <T extends OrgStructure>() => {
         [centerX, cardHeight, cardWidth, numberOfCardsPerRow, allChildren]
     );
 
+    const getSingleCardRowPath = useCallback(
+        (node: OrgNode<T>, parent: OrgNode<T>) => {
+            return `
+                M ${node.x + 10} ${node.y + cardHeight / 4}
+                H ${node.x - 10}
+                L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                `;
+        },
+        [allChildren, cardHeight, cardWidth]
+    );
+
     const renderLink = useCallback(
         (node: OrgNode<T>, index: number) => {
             if (!node.parentId) {
@@ -78,9 +84,12 @@ const Links = <T extends OrgStructure>() => {
                 return null;
             }
 
-            const path = node.aside
-                ? getAsidePath(node, parent)
-                : getChildPath(node, parent, index);
+            const path =
+                numberOfCardsPerRow === 1
+                    ? getSingleCardRowPath(node, parent)
+                    : node.aside
+                    ? getAsidePath(node, parent)
+                    : getChildPath(node, parent, index);
 
             return <path d={path} className={styles.link} />;
         },

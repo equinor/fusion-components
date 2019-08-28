@@ -10,19 +10,14 @@ function Children<T>() {
             allNodes,
             childrenRows,
             asideRows,
-            width,
             rowMargin,
             cardMargin,
             cardWidth,
             centerX,
+            numberOfCardsPerRow,
         },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
-
-    const numberOfCardsPerRow = useMemo(
-        () => Math.floor((width + cardMargin) / (cardWidth + cardMargin)),
-        [width, cardMargin, cardWidth]
-    );
 
     const childrenNodes = useMemo(() => allNodes.filter(d => !d.aside && d.parentId), [allNodes]);
 
@@ -48,7 +43,7 @@ function Children<T>() {
         [childrenNodes, numberOfCardsPerRow]
     );
 
-    const initialMargin = rowMargin * asideRows + 60;
+    const initialMargin = rowMargin * asideRows + (numberOfCardsPerRow === 1 ? 50 : 60);
 
     useEffect(() => {
         if (rows.length !== childrenRows) {
@@ -59,12 +54,19 @@ function Children<T>() {
         }
     }, [childrenRows, rows]);
 
+    const getStartXPosition = (cards: OrgNode<T>[], rowNo: number) => {
+        if (numberOfCardsPerRow === 1) {
+            return cardWidth / 2 + 10;
+        }
+        const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
+        const totalWidthFirstRow = rows[0].length * cardWidth + (rows[0].length - 1) * cardMargin;
+        return rowNo >= 1 ? centerX - totalWidthFirstRow / 2 : centerX - totalWidth / 2;
+    };
+
     const renderRow = useCallback(
         (cards: OrgNode<T>[], rowNo: number) => {
-            const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
-            const totalWidthFirstRow =
-                rows[0].length * cardWidth + (rows[0].length - 1) * cardMargin;
-            const startX = rowNo >= 1 ? centerX - totalWidthFirstRow / 2 : centerX - totalWidth / 2;
+
+            const startX = getStartXPosition(cards, rowNo);
 
             return cards.map((card, i) => (
                 <React.Fragment key={card.id}>

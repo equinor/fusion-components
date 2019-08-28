@@ -1,12 +1,14 @@
-import React, { useRef, useEffect, useContext } from 'react';
+import React, { useRef, useMemo, useContext } from 'react';
 import useParentSize from './hooks/useParentSize';
-import { OrgChartContext, OrgChartContextReducer, OrgChartContextProvider } from './store';
-import { OrgStructure, OrgChartProps, OrgNode, OrgChartItemProps } from './orgChartTypes';
+import { OrgChartContextProvider, OrgChartContextReducer, OrgChartContext } from './store';
+import { OrgStructure, OrgChartProps, OrgChartItemProps } from './orgChartTypes';
 import Links from './components/Links';
 import Root from './components/Root';
 import Aside from './components/Aside';
 import Children from './components/Children';
 import Labels from './components/Labels';
+import useOrgChartActions from './actions';
+import BreadCrumbs from './components/BreadCrumbs';
 
 export { OrgStructure, OrgChartItemProps };
 
@@ -16,102 +18,37 @@ const OrgChart = <T extends OrgStructure>(props: OrgChartProps<T>) => (
     </OrgChartContextProvider>
 );
 
-const OrgChartContent = <T extends OrgStructure>({
-    structure,
-    cardWidth = 320,
-    cardHeight = 112,
-    cardMargin = 16,
-    rowMargin = 128,
-    component,
-    childrenLabel,
-    asideLabel,
-    breadCrumbComponent,
-}: OrgChartProps<T>) => {
+const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
-    const [parentHeight, parentWidth] = useParentSize(orgContainerRef);
-    const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    const { height, width } = useParentSize(orgContainerRef);
 
-    const generateNodes = (structure: T[]): OrgNode<T>[] => {
-        return structure.map(item => {
-            return {
-                id: item.id,
-                parentId: item.parentId,
-                x: 0,
-                y: 0,
-                data: item,
-                aside: item.aside,
-                breadCrumbs: item.breadCrumbs,
-            };
-        });
-    };
+    useOrgChartActions({ ...props, parentHeight: height, parentWidth: width });
 
-    useEffect(() => {
-        dispatch({
-            type: 'UPDATE_LABELS',
-            asideLabel: asideLabel,
-            childrenLabel: childrenLabel,
-        });
-    }, [asideLabel, childrenLabel]);
+    const {
+        state: { rowMargin, asideRows, childrenRows },
+    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
-    useEffect(() => {
-        dispatch({
-            type: 'UPDATE_SIZE',
-            height: parentHeight,
-            width: parentWidth,
-        });
-        dispatch({
-            type: 'UPDATE_CENTER',
-            x: parentWidth / 2,
-            y: parentWidth / 2,
-        });
-    }, [parentHeight, parentWidth]);
-
-    useEffect(() => {
-        dispatch({
-            type: 'UPDATE_NODES',
-            nodes: generateNodes(structure),
-        });
-    }, [structure]);
-
-    useEffect(() => {
-        if (component || breadCrumbComponent) {
-            dispatch({
-                type: 'UPDATE_COMPONENTS',
-                component: component || undefined,
-                breadCrumbComponent: breadCrumbComponent || undefined,
-            });
-        }
-    }, [component, breadCrumbComponent]);
-
-    useEffect(() => {
-        dispatch({
-            type: 'UPDATE_CARD_SIZE',
-            height: cardHeight,
-            width: cardWidth,
-            margin: cardMargin,
-        });
-    }, [cardHeight, cardWidth, cardMargin]);
-
-    useEffect(() => {
-        dispatch({
-            type: 'UPDATE_ROW_MARGIN',
-            margin: rowMargin,
-        });
-    }, [rowMargin]);
+    const svgHeight = useMemo(() => {
+        const rootMargin = rowMargin;
+        const labelMargin = 60;
+        const asideMargin = rowMargin * asideRows;
+        const childrenMargin = rowMargin * childrenRows;
+        return asideMargin + childrenMargin + rootMargin + labelMargin;
+    }, [rowMargin, asideRows, childrenRows]);
 
     return (
         <svg
             ref={orgContainerRef}
-            width={parentWidth}
-            height={parentHeight}
-            viewBox={`0 0 ${parentWidth} ${parentHeight}`}
-            overflow="auto"
+            width={width}
+            height={svgHeight}
+            viewBox={`0 0 ${width} ${svgHeight}`}
         >
             <Links />
             <Root />
             <Aside />
             <Children />
             <Labels />
+            <BreadCrumbs />
         </svg>
     );
 };

@@ -6,7 +6,15 @@ import { OrgNode } from '../orgChartTypes';
 
 function Aside<T>() {
     const {
-        state: { allNodes, asideRows, rowMargin, cardMargin, centerX, cardWidth },
+        state: {
+            allNodes,
+            asideRows,
+            rowMargin,
+            cardMargin,
+            centerX,
+            cardWidth,
+            numberOfCardsPerRow,
+        },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
@@ -20,7 +28,7 @@ function Aside<T>() {
                     currentValue: OrgNode<T>,
                     currentIndex: number
                 ): OrgNode<T>[][] => {
-                    const index = Math.floor(currentIndex / 2);
+                    const index = Math.floor(currentIndex / (numberOfCardsPerRow === 1 ? 1 : 2));
                     if (!prevValue[index]) {
                         prevValue[index] = [];
                     }
@@ -29,7 +37,7 @@ function Aside<T>() {
                 },
                 [] as OrgNode<T>[][]
             ),
-        [asideNodes]
+        [asideNodes, numberOfCardsPerRow]
     );
 
     useEffect(() => {
@@ -44,7 +52,8 @@ function Aside<T>() {
     const renderRow = useCallback(
         (cards: OrgNode<T>[], rowNo: number) => {
             const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
-            const startX = centerX - totalWidth / 2;
+            const startX =
+                numberOfCardsPerRow === 1 ? cardWidth / 2 + 10 : centerX - totalWidth / 2;
 
             return cards.map((card, i) => (
                 <Card
@@ -55,7 +64,7 @@ function Aside<T>() {
                 />
             ));
         },
-        [centerX, cardWidth, cardMargin, rowMargin]
+        [centerX, cardWidth, cardMargin, rowMargin, numberOfCardsPerRow]
     );
 
     return (

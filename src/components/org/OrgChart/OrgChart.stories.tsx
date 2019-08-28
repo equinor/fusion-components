@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
-import { OrgStructure, OrgChartItemProps, BreadCrumbProps } from './orgChartTypes';
+import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 
 type Position = OrgStructure & {
     name?: string;
@@ -16,18 +16,6 @@ const positions: Position[] = [
         name: 'Offshore Worker',
         positionId: '123',
         personName: 'James Test',
-        breadCrumbs: [
-            {
-                childId: '1',
-                label: 'Boss',
-                id: '101',
-            },
-            {
-                childId: '101',
-                label: 'Bosses Boss',
-                id: '102',
-            },
-        ],
     },
     {
         id: '2',
@@ -140,7 +128,7 @@ const cardStyle = {
     height: 'calc(100% - 20px)',
 } as React.CSSProperties;
 
-const BreadCrumb: React.FC<BreadCrumbProps> = ({ label }) => {
+const BreadCrumb: React.FC<BreadCrumb> = ({ label }) => {
     return <div style={{...cardStyle, cursor:"pointer"}}>{label}</div>;
 };
 
@@ -154,6 +142,19 @@ const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
     );
 };
 
+const breadCrumbs: BreadCrumb[] = [
+        {
+            childId: '1',
+            label: 'Boss',
+            id: '101',
+        },
+        {
+            childId: '101',
+            label: 'Bosses Boss',
+            id: '102',
+        },
+]
+
 const OrgChartStory = () => {
     return (
         <div style={{ width: '100%', height: '100%' }}>
@@ -161,6 +162,7 @@ const OrgChartStory = () => {
                 structure={positions}
                 component={PositionCard}
                 breadCrumbComponent={BreadCrumb}
+                breadCrumbs={breadCrumbs}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
             />
