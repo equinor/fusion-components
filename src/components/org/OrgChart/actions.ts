@@ -67,6 +67,7 @@ const useOrgChartActions = <T extends OrgStructure>({
             height: cardHeight,
             width: cardWidth,
             margin: cardMargin,
+            initialWidth: cardWidth,
         });
     }, [cardHeight, cardWidth, cardMargin]);
 

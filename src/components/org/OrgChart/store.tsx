@@ -4,7 +4,7 @@ import React, { FC, useReducer, Reducer, Context, createContext, Dispatch } from
 type Action<T> =
     | { type: 'UPDATE_SIZE'; width?: number; height?: number }
     | { type: 'UPDATE_CENTER'; x?: number; y?: number }
-    | { type: 'UPDATE_CARD_SIZE'; width?: number; height?: number; margin?: number }
+    | { type: 'UPDATE_CARD_SIZE'; width?: number; height?: number; margin?: number, initialWidth?: number }
     | { type: 'UPDATE_ROW_MARGIN'; margin: number }
     | { type: 'UPDATE_NODES'; nodes: OrgNode<T>[] }
     | {
@@ -27,6 +27,7 @@ export type OrgChartContextType<T> = {
     cardWidth: number;
     cardHeight: number;
     cardMargin: number;
+    initialCardWidth: number;
     rowMargin: number;
     allNodes: OrgNode<T>[];
     component: React.FC<OrgChartItemProps<T>> | null;
@@ -68,6 +69,7 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                 cardWidth: action.width || state.cardWidth,
                 cardHeight: action.height || state.cardHeight,
                 cardMargin: action.margin || state.cardMargin,
+                initialCardWidth: action.initialWidth || state.initialCardWidth
             };
         case 'UPDATE_ROW_MARGIN':
             return {
@@ -138,6 +140,7 @@ export function OrgChartContextProvider<T>({ children }: any) {
         cardWidth: 0,
         cardHeight: 0,
         cardMargin: 0,
+        initialCardWidth: 0,
         rowMargin: 0,
         allNodes: [],
         asideRows: 0,

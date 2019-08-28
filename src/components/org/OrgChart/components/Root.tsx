@@ -5,7 +5,7 @@ import { OrgChartContext, OrgChartContextReducer } from '../store';
 
 function Root<T>() {
     const {
-        state: { allNodes, cardWidth, centerX, width, cardMargin, numberOfCardsPerRow },
+        state: { allNodes, cardWidth, centerX, width, cardMargin, numberOfCardsPerRow, initialCardWidth },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
@@ -22,7 +22,16 @@ function Root<T>() {
             });
         }
     });
-    
+
+    useEffect(() => {
+        if(width <= initialCardWidth + 30){
+            dispatch({
+                type: 'UPDATE_CARD_SIZE',
+                width: width - 30
+            });
+        }
+    },[width])
+
     const root = allNodes.find(n => !n.parentId);
     const x = cardsPerRow !== 1 ? centerX - cardWidth / 2 : 0;
     return <g className="root">{root && <Card node={root} x={x} />}</g>;
