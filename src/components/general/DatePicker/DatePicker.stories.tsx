@@ -9,8 +9,8 @@ const DatePickerStory = () => {
 
     return (
         <div style={{ width: 200 }}>
-            <DatePicker selectedDate={selectedDate} onChange={setSelecteDate} />
-            Selected date: {selectedDate ? formatDate(selectedDate) : null}
+            <DatePicker label="Select date" selectedDate={selectedDate} onChange={setSelecteDate} />
+
         </div>
     );
 };

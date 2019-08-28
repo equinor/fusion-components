@@ -1,13 +1,15 @@
 
 .photoContainer {
     display: flex;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     position: relative;
     width: var(--photo-size);
     height: var(--photo-size);
+
+    > img {
+        border-radius: 50%;
+        width: var(--photo-size);
+        height: var(--photo-size);
+    }
 
     &.xlarge {
         &.comfortable {
@@ -57,7 +59,7 @@
         }
     }
 
-    .affiliationContainer {
+    .iconContainer {
         border-radius: 50%;
         position: absolute;
         bottom: 0;

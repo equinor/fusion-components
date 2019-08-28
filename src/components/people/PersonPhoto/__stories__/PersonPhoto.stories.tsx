@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonPhoto from '../index';
-import { withKnobs, number, color, select } from '@storybook/addon-knobs';
+import { withKnobs, select } from '@storybook/addon-knobs';
 
 const stories = storiesOf('People|PersonPhoto', module);
 stories.addDecorator(withKnobs);
@@ -16,15 +16,15 @@ const personIds = {
 };
 
 const sizes = {
-    XLarge: 'xlarge',
-    Large: 'large',
-    Medium: 'medium',
-    Small: 'small',
+    xlarge: 'xlarge',
+    arge: 'large',
+    medium: 'medium',
+    small: 'small',
 };
 
 const PersonPhotoStory = () => {
-    const personId = select('Person type', personIds, 'e');
-    const size = select('Size', sizes, 'xlarge');
+    const personId = select('Account type', personIds, personIds.Consultant);
+    const size = select('Size', sizes, sizes.xlarge);
 
     return <PersonPhoto personId={personId} size={size} />;
 };
