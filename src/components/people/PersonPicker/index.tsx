@@ -1,5 +1,4 @@
 import React, { useMemo, useState, FC, useRef, useCallback, useEffect } from 'react';
-import classNames from 'classnames';
 import {
     DropdownArrow,
     TextInput,
