@@ -93,12 +93,10 @@ const useOrgChartActions = <T extends OrgStructure>({
     }, [parentHeight, parentWidth]);
 
     useEffect(() => {
-        if (breadCrumbs) {
             dispatch({
                 type: 'UPDATE_BREADCRUMBS',
-                breadcrumbs: breadCrumbs,
+                breadcrumbs: breadCrumbs || null,
             });
-        }
     }, [breadCrumbs]);
 };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type Size = {
     height: number;
@@ -28,7 +28,8 @@ export default (ref?: React.MutableRefObject<SVGElement | null>): Size => {
             window.requestAnimationFrame(checkResize);
         }
     };
-    checkResize();
+    useEffect(() => checkResize(), [ref, resize])
+    
 
     return {
         height: resize.toHeight,

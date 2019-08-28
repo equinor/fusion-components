@@ -14,6 +14,7 @@ function Aside<T>() {
             centerX,
             cardWidth,
             numberOfCardsPerRow,
+            width,
         },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -49,12 +50,20 @@ function Aside<T>() {
         }
     }, [asideRows, rows]);
 
+    const getStartXPosition = (cards: OrgNode<T>[]) => {
+        if (numberOfCardsPerRow === 1) {
+            if (width < cardWidth * 1.5 + 10) {
+                return width - cardWidth ;
+            }
+            return cardWidth / 2 + 10;
+        }
+        const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
+        return centerX - totalWidth / 2;
+    };
+
     const renderRow = useCallback(
         (cards: OrgNode<T>[], rowNo: number) => {
-            const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
-            const startX =
-                numberOfCardsPerRow === 1 ? cardWidth / 2 + 10 : centerX - totalWidth / 2;
-
+            const startX = getStartXPosition(cards);
             return cards.map((card, i) => (
                 <Card
                     key={card.id}

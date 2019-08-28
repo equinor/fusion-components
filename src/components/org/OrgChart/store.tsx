@@ -16,7 +16,7 @@ type Action<T> =
     | { type: 'UPDATE_CHILDREN_ROWS'; rows: number }
     | { type: 'UPDATE_POSITION'; node: OrgNode<T>; x: number; y: number }
     | { type: 'UPDATE_LABELS'; childrenLabel?: string; asideLabel?: string }
-    | { type: 'UPDATE_BREADCRUMBS'; breadcrumbs: BreadCrumb[] }
+    | { type: 'UPDATE_BREADCRUMBS'; breadcrumbs: BreadCrumb[]  | null}
     | { type: 'UPDATE_NUMBER_OF_CARDS_PER_ROW'; numberOfCardsPerRow: number };
 
 export type OrgChartContextType<T> = {

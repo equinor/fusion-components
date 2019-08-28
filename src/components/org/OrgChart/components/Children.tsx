@@ -15,6 +15,7 @@ function Children<T>() {
             cardWidth,
             centerX,
             numberOfCardsPerRow,
+            width
         },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -56,6 +57,9 @@ function Children<T>() {
 
     const getStartXPosition = (cards: OrgNode<T>[], rowNo: number) => {
         if (numberOfCardsPerRow === 1) {
+            if(width < cardWidth * 1.5 + 10){
+               return width - cardWidth
+            }
             return cardWidth / 2 + 10;
         }
         const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
@@ -78,7 +82,7 @@ function Children<T>() {
                 </React.Fragment>
             ));
         },
-        [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows]
+        [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows, width]
     );
 
     return (

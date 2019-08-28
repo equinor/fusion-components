@@ -7,7 +7,7 @@ import styles from './styles.less';
 
 const Links = <T extends OrgStructure>() => {
     const {
-        state: { allNodes, cardWidth, cardHeight, centerX, cardMargin, numberOfCardsPerRow },
+        state: { allNodes, cardWidth, cardHeight, centerX, cardMargin, numberOfCardsPerRow, width },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     const allChildren = useMemo(() => allNodes.filter(node => !node.aside && node.parentId), [
@@ -62,13 +62,28 @@ const Links = <T extends OrgStructure>() => {
 
     const getSingleCardRowPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
+            if(width < cardWidth + 30) {
+                return `
+                    M ${node.x + 10} ${node.y + cardHeight / 4}
+                    H ${node.x - 10}
+                    L ${parent.x + 20} ${parent.y + cardHeight - 10}
+                    `;
+            }
+            if(width < cardWidth * 1.5 + 10){
+                const range = width - cardWidth - 10;
+                return `
+                    M ${node.x + 10} ${node.y + cardHeight / 4}
+                    H ${node.x - 10}
+                    L ${parent.x + range} ${parent.y + cardHeight - 10}
+                    `;
+            }
             return `
                 M ${node.x + 10} ${node.y + cardHeight / 4}
                 H ${node.x - 10}
                 L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
                 `;
         },
-        [allChildren, cardHeight, cardWidth]
+        [allChildren, cardHeight, cardWidth ,width]
     );
 
     const renderLink = useCallback(
@@ -93,7 +108,7 @@ const Links = <T extends OrgStructure>() => {
 
             return <path d={path} className={styles.link} />;
         },
-        [allNodes]
+        [allNodes, width]
     );
 
     return (
