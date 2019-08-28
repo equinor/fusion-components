@@ -30,7 +30,7 @@ const getDefaultPerson = (): PersonDetails => ({
     mobilePhone: 'string',
     officeLocation: 'string',
     upn: 'string',
-    accountType: 'consultant',
+    accountType: 'Consultant',
     company: { id: 'id', name: 'name' },
 });
 
