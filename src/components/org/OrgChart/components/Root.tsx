@@ -30,6 +30,12 @@ function Root<T>() {
                 width: width - 30
             });
         }
+        else if(width !== initialCardWidth){
+            dispatch({
+                type:'UPDATE_CARD_SIZE',
+                width: initialCardWidth
+            })
+        }
     },[width])
 
     const root = allNodes.find(n => !n.parentId);
