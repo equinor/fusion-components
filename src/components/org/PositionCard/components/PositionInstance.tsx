@@ -30,7 +30,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             e.stopPropagation();
         }
     }, [position, instance, onClick]);
-
+    
     return (
         <div className={styles.positionInstance} onClick={onClickHandler}>
             <div className={styles.basePositionName}>{position.basePosition.name}</div>
@@ -43,8 +43,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showLocation && <div className={styles.location}>{instance.location.name}</div>}
             {showDate && (
                 <div className={styles.period}>
-                    {formatDate(new Date(instance.appliesFrom))} -{' '}
-                    {formatDate(new Date(instance.appliesTo))} ({instance.percent}%)
+                    {formatDate(instance.appliesFrom)} -{' '}
+                    {formatDate(instance.appliesTo)} ({instance.percent}%)
                 </div>
             )}
             {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
