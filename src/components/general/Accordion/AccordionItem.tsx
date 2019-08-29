@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, useEffect } from 'react';
+import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { SortIcon } from '@equinor/fusion-components';
@@ -27,13 +27,17 @@ const AccordionItem: FC<AccordionItemProps> = ({
         [styles.rightAction]: actionDirection && actionDirection === 'right',
     });
     const contentRef = useRef<HTMLDivElement>(null);
+    const currentContentHeight =
+        contentRef && contentRef.current
+            ? contentRef.current.offsetHeight + contentRef.current.scrollHeight
+            : 0;
     const [contentHeight, setContentHeight] = useState<number>(0);
 
     useEffect(() => {
         if (contentRef && contentRef.current) {
             setContentHeight(contentRef.current.offsetHeight + contentRef.current.scrollHeight);
         }
-    }, [contentRef]);
+    }, [contentRef, currentContentHeight]);
 
     return (
         <div className={styles.accordion}>
