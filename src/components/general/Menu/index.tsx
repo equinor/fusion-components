@@ -1,20 +1,24 @@
-import * as React from "react";
-import classNames from "classnames";
-import MenuItem, { MenuItemType, MenuItemComponentProps } from "./MenuItem";
-import styles from "./styles.less";
-import { useKeyboardNavigation, Elevation, useElevationClassName } from '@equinor/fusion-components';
+import * as React from 'react';
+import classNames from 'classnames';
+import MenuItem, { MenuItemType, MenuItemComponentProps } from './MenuItem';
+import styles from './styles.less';
+import {
+    useKeyboardNavigation,
+    Elevation,
+    useElevationClassName,
+} from '@equinor/fusion-components';
 
 export type MenuSection<TItem extends MenuItemType> = {
-    key: string,
-    title?: string,
-    items: TItem[],
+    key: string;
+    title?: string;
+    items: TItem[];
 };
 
 export type MenuProps<TItem extends MenuItemType> = {
-    sections: MenuSection<TItem>[],
-    elevation?: Elevation,
-    onClick?: (item: TItem) => void | Promise<void>,
-    keyboardNavigationRef?: HTMLElement | null,
+    sections: MenuSection<TItem>[];
+    elevation?: Elevation;
+    onClick?: (item: TItem) => void | Promise<void>;
+    keyboardNavigationRef?: HTMLElement | null;
     onChange?: (items: MenuSection<TItem>[]) => void | Promise<void>;
     itemComponent?: React.FC<MenuItemComponentProps<TItem>>;
     asideComponent?: React.FC<MenuItemComponentProps<TItem>>;
@@ -22,73 +26,103 @@ export type MenuProps<TItem extends MenuItemType> = {
 
 export { MenuItemType };
 
-function Menu<TItem extends MenuItemType = MenuItemType>({ sections, elevation, onClick, itemComponent: component, asideComponent, keyboardNavigationRef }: MenuProps<TItem>) {
+function Menu<TItem extends MenuItemType = MenuItemType>({
+    sections,
+    elevation,
+    onClick,
+    itemComponent: component,
+    asideComponent,
+    keyboardNavigationRef,
+}: MenuProps<TItem>) {
     const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(null);
     const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(null);
+    const [skipDirection, setSkipDirection] = React.useState<number>(0);
 
-    const nextOrPrev = (direction: number) => {
-        const sectionIndex = sections.findIndex(section => section.key === focusedSectionKey);
-        let nextSectionIndex = sectionIndex;
+    const nextOrPrev = React.useCallback(
+        (direction: number) => {
+            const sectionIndex = sections.findIndex(section => section.key === focusedSectionKey);
+            let nextSectionIndex = sectionIndex;
 
-        if (sectionIndex === -1) {
-            nextSectionIndex = direction === -1 ? sections.length - 1 : 0;
-        }
-
-        const items = sections[nextSectionIndex].items;
-
-        const itemIndex = items.findIndex(item => item.key === focusedItemKey);
-        let nextItemIndex = itemIndex;
-
-        if (nextItemIndex === -1) {
-            nextSectionIndex = direction === -1 ? sections.length - 1 : 0;
-            nextItemIndex = direction === -1 ? sections[nextSectionIndex].items.length - 1 : 0;
-        } else if (nextItemIndex === 0 && direction === -1) {
-            nextSectionIndex += (sectionIndex + sections.length - 1) % sections.length;
-        } else if (nextItemIndex === items.length - 1 && direction === 1) {
-            nextSectionIndex += (sectionIndex + sections.length + 1) % sections.length;
-        } else {
-            nextItemIndex += direction;
-        }
-
-        const nextSection = sections[nextSectionIndex];
-
-        setFocusedSectionKey(nextSection.key);
-        setFocusedItemKey(nextSection.items[nextItemIndex].key);
-
-        if(nextSection.items[nextItemIndex].isDisabled) {
-            nextOrPrev(direction);
-        }
-    };
-
-    const reset = () => {
-        setFocusedSectionKey(keyboardNavigationRef && sections.length ? sections[0].key : null);
-        setFocusedItemKey(keyboardNavigationRef && sections.length && sections[0].items.length ? sections[0].items[0].key : null);
-    };
-
-    const onItemClick = (item: TItem) => {
-        if (onClick) {
-            onClick(item);
-        }
-    };
-
-    useKeyboardNavigation({
-        onUp: () => nextOrPrev(-1),
-        onDown: () => nextOrPrev(+1),
-        onEnter: () => {
-            const section = sections.find(section => section.key === focusedSectionKey);
-            if (!section) {
-                return;
+            if (sectionIndex === -1) {
+                nextSectionIndex = direction === -1 ? sections.length - 1 : 0;
             }
 
-            const item = section.items.find(item => item.key === focusedItemKey);
-            if (!item) {
-                return;
+            const items = sections[nextSectionIndex].items;
+
+            const itemIndex = items.findIndex(item => item.key === focusedItemKey);
+            let nextItemIndex = itemIndex;
+
+            if (nextItemIndex === -1) {
+                nextSectionIndex = direction === -1 ? sections.length - 1 : 0;
+                nextItemIndex = direction === -1 ? sections[nextSectionIndex].items.length - 1 : 0;
+            } else if (nextItemIndex === 0 && direction === -1) {
+                nextSectionIndex = (sectionIndex + sections.length - 1) % sections.length;
+                nextItemIndex = sections[nextSectionIndex].items.length - 1;
+            } else if (nextItemIndex === items.length - 1 && direction === 1) {
+                nextSectionIndex = (sectionIndex + sections.length + 1) % sections.length;
+                nextItemIndex = 0;
+            } else {
+                nextItemIndex += direction;
             }
 
-            onItemClick(item);
+            const nextSection = sections[nextSectionIndex];
+
+            setFocusedSectionKey(nextSection.key);
+            setFocusedItemKey(nextSection.items[nextItemIndex].key);
+
+            if (nextSection.items[nextItemIndex].isDisabled) {
+                setSkipDirection(direction);
+            }
         },
-        onEscape: reset,
-    }, keyboardNavigationRef);
+        [sections, focusedItemKey, focusedSectionKey]
+    );
+
+    React.useEffect(() => {
+        if (skipDirection !== 0) {
+            nextOrPrev(skipDirection);
+        }
+        setSkipDirection(0);
+    }, [skipDirection]);
+
+    const reset = React.useCallback(() => {
+        setFocusedSectionKey(keyboardNavigationRef && sections.length ? sections[0].key : null);
+        setFocusedItemKey(
+            keyboardNavigationRef && sections.length && sections[0].items.length
+                ? sections[0].items[0].key
+                : null
+        );
+    }, [sections]);
+
+    const onItemClick = React.useCallback(
+        (item: TItem) => {
+            if (onClick) {
+                onClick(item);
+            }
+        },
+        [onClick]
+    );
+
+    useKeyboardNavigation(
+        {
+            onUp: () => nextOrPrev(-1),
+            onDown: () => nextOrPrev(+1),
+            onEnter: () => {
+                const section = sections.find(section => section.key === focusedSectionKey);
+                if (!section) {
+                    return;
+                }
+
+                const item = section.items.find(item => item.key === focusedItemKey);
+                if (!item) {
+                    return;
+                }
+
+                onItemClick(item);
+            },
+            onEscape: reset,
+        },
+        keyboardNavigationRef
+    );
 
     React.useEffect(reset, [sections]);
 
@@ -116,7 +150,7 @@ function Menu<TItem extends MenuItemType = MenuItemType>({ sections, elevation, 
             ))}
         </div>
     );
-};
+}
 
 Menu.defaultProps = {
     sections: [],
