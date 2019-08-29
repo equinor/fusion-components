@@ -1,7 +1,7 @@
 import React, { useRef, useMemo, useContext } from 'react';
-import useParentSize from './hooks/useParentSize';
+import {useParentSize} from '@equinor/fusion-components';
 import { OrgChartContextProvider, OrgChartContextReducer, OrgChartContext } from './store';
-import { OrgStructure, OrgChartProps, OrgChartItemProps } from './orgChartTypes';
+import { OrgStructure, OrgChartProps, OrgChartItemProps, OrgNode } from './orgChartTypes';
 import Links from './components/Links';
 import Root from './components/Root';
 import Aside from './components/Aside';
@@ -10,7 +10,7 @@ import Labels from './components/Labels';
 import useOrgChartActions from './actions';
 import BreadCrumbs from './components/BreadCrumbs';
 
-export { OrgStructure, OrgChartItemProps };
+export { OrgStructure, OrgChartItemProps, OrgNode };
 
 const OrgChart = <T extends OrgStructure>(props: OrgChartProps<T>) => (
     <OrgChartContextProvider>
