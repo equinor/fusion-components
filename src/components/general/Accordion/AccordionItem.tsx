@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, useEffect, useCallback } from 'react';
+import React, { FC, useRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { SortIcon } from '@equinor/fusion-components';
