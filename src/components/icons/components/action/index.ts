@@ -7,3 +7,4 @@ export { default as CollapseIcon } from './CollapseIcon';
 export { default as CalendarIcon } from './CalendarIcon';
 export { default as InfoIcon } from './InfoIcon';
 export { default as HistoryIcon } from './HistoryIcon';
+export { default as OpenInNewIcon } from './OpenInNewIcon';
