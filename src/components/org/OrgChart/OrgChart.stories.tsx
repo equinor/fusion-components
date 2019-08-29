@@ -13,14 +13,14 @@ type Position = OrgStructure & {
 const positions: Position[] = [
     {
         id: '1',
-        name: 'Offshore Worker',
+        name: 'Leader',
         positionId: '123',
         personName: 'James Test',
     },
     {
         id: '2',
         parentId: '1',
-        name: 'Engineer',
+        name: 'Accountant',
         positionId: '123',
         personName: 'Sam Test',
         aside: true,
@@ -36,7 +36,7 @@ const positions: Position[] = [
     {
         id: '2132',
         parentId: '1',
-        name: 'Engineer',
+        name: 'Accountant',
         positionId: '123',
         personName: 'Sam Test',
         aside: true,
@@ -52,14 +52,14 @@ const positions: Position[] = [
     {
         id: '3',
         parentId: '1',
-        name: 'Offshore Worker',
+        name: 'Engineer',
         positionId: '3',
         personName: 'Jane Test',
     },
     {
         id: '32',
         parentId: '1',
-        name: 'Offshore Worker',
+        name: 'Engineer',
         positionId: '3',
         personName: 'Test 123',
     },
@@ -73,28 +73,28 @@ const positions: Position[] = [
     {
         id: '3123',
         parentId: '1',
-        name: 'Offshore Worker',
+        name: 'Engineer',
         positionId: '3',
         personName: 'Jane Test',
     },
     {
         id: '3232',
         parentId: '1',
-        name: 'Offshore Worker',
+        name: 'Developer',
         positionId: '3',
         personName: 'Test 123',
     },
     {
         id: '44312',
         parentId: '1',
-        name: 'Test worker 1',
+        name: 'Developer',
         positionId: '4',
         personName: 'Test Test',
     },
     {
         id: '312123',
         parentId: '1',
-        name: 'Offshore Worker',
+        name: 'Developer',
         positionId: '3',
         personName: 'Jane Test',
     },
@@ -108,7 +108,7 @@ const positions: Position[] = [
     {
         id: '4431212',
         parentId: '1',
-        name: 'Test worker 1',
+        name: 'Developer',
         positionId: '4',
         personName: 'Test Test',
     },
@@ -150,7 +150,7 @@ const breadCrumbs: BreadCrumb[] = [
         },
         {
             childId: '101',
-            label: 'Bosses Boss',
+            label: 'Director',
             id: '102',
         },
 ]
