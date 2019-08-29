@@ -18,8 +18,8 @@ const position: Position = {
     externalId: '800',
     instances: [
         {
-            appliesFrom: new Date().toString(),
-            appliesTo: new Date(new Date().getFullYear() + 1, 0).toString(),
+            appliesFrom: new Date(),
+            appliesTo: new Date(new Date().getFullYear() + 1, 0),
             location: {
                 code: '213',
                 country: 'Norway',
@@ -30,11 +30,11 @@ const position: Position = {
             percent: 100,
             type: 'type',
             assignedPerson: {
-                accountType: 'employee',
+                accountType: 'Employee',
                 azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
                 company: {
                     id: '3etgwg',
-                    name: "Equinor"
+                    name: 'Equinor',
                 },
                 contracts: [],
                 positions: [],
@@ -61,8 +61,8 @@ const positionWithMultipleInstances: Position = {
     instances: [
         ...position.instances,
         {
-            appliesFrom: new Date().toString(),
-            appliesTo: new Date(new Date().getFullYear(), new Date().getMonth() + 4).toString(),
+            appliesFrom: new Date(),
+            appliesTo: new Date(new Date().getFullYear(), new Date().getMonth() + 4),
             location: {
                 code: '616',
                 country: 'Norway',
@@ -73,11 +73,11 @@ const positionWithMultipleInstances: Position = {
             percent: 100,
             type: 'type',
             assignedPerson: {
-                accountType: 'consultant',
+                accountType: 'Consultant',
                 azureUniqueId: 'e92c631b-94ae-4670-8f1e-60cdc2122edc',
                 company: {
                     id: '8/4150ega',
-                    name: "Bouvet"
+                    name: 'Bouvet',
                 },
                 contracts: [],
                 positions: [],
@@ -93,8 +93,8 @@ const positionWithMultipleInstances: Position = {
             properties: {},
         },
         {
-            appliesFrom: new Date().toString(),
-            appliesTo: new Date(new Date().getFullYear() + 2, 0).toString(),
+            appliesFrom: new Date(),
+            appliesTo: new Date(new Date().getFullYear() + 2, 0),
             location: {
                 code: '113',
                 country: 'Norway',
@@ -105,11 +105,11 @@ const positionWithMultipleInstances: Position = {
             percent: 100,
             type: 'type',
             assignedPerson: {
-                accountType: 'external',
+                accountType: 'External',
                 azureUniqueId: '3tgweafgw<fwedgw',
                 company: {
                     id: '984018gwsedgw3gh',
-                    name: "External Company"
+                    name: 'External Company',
                 },
                 contracts: [],
                 positions: [],

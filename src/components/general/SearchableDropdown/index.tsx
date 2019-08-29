@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, FC, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import {
     TextInput,
     DropdownArrow,
@@ -15,31 +15,75 @@ export type SearchableDropdownOption = {
     isDisabled?: boolean;
 };
 
-type SearchableDropdownProps = {
-    label?: string;
-    options: SearchableDropdownOption[];
-    onSelect?: (item: SearchableDropdownOption) => void;
+export type SearchableDropdownSection = {
+    key: string;
+    title?: string;
+    items: SearchableDropdownOption[];
 };
 
-const SearchableDropdown: FC<SearchableDropdownProps> = ({ options, label, onSelect }) => {
+type SearchableDropdownProps = {
+    label?: string;
+    options?: SearchableDropdownOption[];
+    sections?: SearchableDropdownSection[];
+    itemComponent?: any;
+    asideComponent?: any;
+    onSelect?: (item: SearchableDropdownOption) => void;
+    onSearchAsync?: (query: string) => void;
+};
+
+const createSingleSectionFromOptions = (
+    options: SearchableDropdownOption[]
+): SearchableDropdownSection[] => [{ key: 'DropdownSection', items: options }];
+
+const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
+    sections.reduce(
+        (acc: SearchableDropdownOption[], curr: SearchableDropdownSection) =>
+            acc.concat(curr.items),
+        []
+    );
+
+const SearchableDropdown = ({
+    options,
+    sections,
+    label,
+    onSelect,
+    onSearchAsync,
+    itemComponent,
+    asideComponent,
+}: SearchableDropdownProps) => {
+    if ((!options && !sections) || (options && sections)) {
+        throw new Error("You must supply only one of 'options', 'sections' props");
+    }
+
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [inputValue, setInputValue] = useState('');
 
-    const [dropdownOptions, setDropdownOptions] = useState<SearchableDropdownOption[]>([]);
+    const [dropdownSections, setDropdownSections] = useState<SearchableDropdownSection[]>([]);
+    const [selectedItem, setSelectedItem] = useState();
 
     useEffect(() => {
-        setDropdownOptions(options);
-    }, [options]);
+        if (sections) {
+            setDropdownSections(sections);
+        } else if (options) {
+            setDropdownSections(createSingleSectionFromOptions(options));
+        }
+    }, [options, sections]);
 
     const filterSearch = useCallback(
         inputValue => {
-            setDropdownOptions(
-                options.filter(option =>
-                    option.title.toLowerCase().includes(inputValue.toLowerCase())
-                )
-            );
+            if (onSearchAsync) {
+                onSearchAsync(inputValue);
+            } else {
+                if (options) {
+                    const newOptions = options.filter(option =>
+                        option.title.toLowerCase().includes(inputValue.toLowerCase())
+                    );
+                    setDropdownSections(createSingleSectionFromOptions(newOptions));
+                }
+                // TODO: handle sections
+            }
         },
-        [options]
+        [options, sections, onSearchAsync]
     );
 
     useEffect(() => filterSearch(inputValue), [inputValue]);
@@ -49,9 +93,25 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options, label, onSel
             if (isOpen) {
                 return inputValue;
             }
-            const selectedItem = options.find(option => option.isSelected === true);
+
+            const mergedItems = mergeDropdownSectionItems(dropdownSections);
+            const selectedItem = mergedItems.find(option => option.isSelected === true);
+
             return selectedItem ? selectedItem.title : '';
-        }, [isOpen, inputValue, options]);
+        }, [isOpen, inputValue, options, dropdownSections]);
+
+        const aside = useMemo(() => {
+            if (asideComponent && selectedItem && !isOpen) {
+                const AsideComponent = asideComponent;
+                return (
+                    <aside>
+                        <AsideComponent item={selectedItem} />
+                    </aside>
+                );
+            }
+
+            return null;
+        }, [selectedItem, isOpen, asideComponent]);
 
         return (
             <TextInput
@@ -62,6 +122,8 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options, label, onSel
                     }
                     setInputValue(value);
                 }}
+                asideComponent={aside}
+                placeholder="Type to search..."
                 label={label}
                 icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
                 onIconAction={() => isOpen && setIsOpen(false)}
@@ -81,6 +143,8 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options, label, onSel
                 setIsOpen(false);
                 setInputValue('');
             }
+
+            setSelectedItem(item);
         },
         [isOpen, onSelect]
     );
@@ -93,12 +157,9 @@ const SearchableDropdown: FC<SearchableDropdownProps> = ({ options, label, onSel
                     elevation={0}
                     onClick={select}
                     keyboardNavigationRef={inputRef.current}
-                    sections={[
-                        {
-                            key: 'DropdownSelection',
-                            items: dropdownOptions,
-                        },
-                    ]}
+                    sections={dropdownSections}
+                    itemComponent={itemComponent}
+                    asideComponent={asideComponent}
                 />
             </Dropdown>
         </div>

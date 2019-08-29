@@ -40,6 +40,7 @@ export {
 export {
     default as SearchableDropdownWrapper,
     SearchableDropdownOption,
+    SearchableDropdownSection,
 } from './components/general/SearchableDropdown';
 export { ModalSideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
