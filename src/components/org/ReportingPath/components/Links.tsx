@@ -12,15 +12,12 @@ const Links = <T extends OrgStructure>() => {
 
     const allChildren = useMemo(() => allNodes.filter(node => node.parentId), [allNodes]);
 
-    const getSingleCardRowPath = useCallback(
-        (node: OrgNode<T>, parent: OrgNode<T>) => {
-            return `
+    const getPath = useCallback(
+        (node: OrgNode<T>, parent: OrgNode<T>) => `
                     M ${node.x + cardMargin * 2} ${node.y + cardHeight / 2}
                     L ${parent.x + cardMargin * 2} ${parent.y + cardHeight / 2}
-                    `;
-        },
-
-        [cardHeight]
+                    `,
+        [cardHeight, cardMargin]
     );
 
     const renderLink = useCallback(
@@ -36,7 +33,7 @@ const Links = <T extends OrgStructure>() => {
                 return null;
             }
 
-            const path = getSingleCardRowPath(node, parent);
+            const path = getPath(node, parent);
 
             return <path d={path} className={styles.link} />;
         },
