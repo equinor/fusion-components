@@ -30,7 +30,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             e.stopPropagation();
         }
     }, [position, instance, onClick]);
-    console.log(instance.appliesFrom)
+    
     return (
         <div className={styles.positionInstance} onClick={onClickHandler}>
             <div className={styles.basePositionName}>{position.basePosition.name}</div>
