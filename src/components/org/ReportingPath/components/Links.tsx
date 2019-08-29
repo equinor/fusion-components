@@ -7,18 +7,16 @@ import styles from './styles.less';
 
 const Links = <T extends OrgStructure>() => {
     const {
-        state: { allNodes,  cardHeight, width },
+        state: { allNodes, cardHeight, width, cardMargin },
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
-    const allChildren = useMemo(() => allNodes.filter(node => node.parentId), [
-        allNodes,
-    ]);
+    const allChildren = useMemo(() => allNodes.filter(node => node.parentId), [allNodes]);
 
     const getSingleCardRowPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
             return `
-                    M ${node.x + 20} ${node.y+ 20}
-                    L ${parent.x + 20} ${parent.y + cardHeight - 10}
+                    M ${node.x + cardMargin * 2} ${node.y + cardHeight / 2}
+                    L ${parent.x + cardMargin * 2} ${parent.y + cardHeight / 2}
                     `;
         },
 
@@ -38,8 +36,8 @@ const Links = <T extends OrgStructure>() => {
                 return null;
             }
 
-            const path = getSingleCardRowPath(node, parent)
-                    
+            const path = getSingleCardRowPath(node, parent);
+
             return <path d={path} className={styles.link} />;
         },
         [allNodes, width]

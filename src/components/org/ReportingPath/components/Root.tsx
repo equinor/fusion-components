@@ -9,21 +9,19 @@ function Root<T>() {
         dispatch,
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
-
     useEffect(() => {
-        if(width <= initialCardWidth + 30){
+        if (width <= initialCardWidth + 30) {
             dispatch({
                 type: 'UPDATE_CARD_SIZE',
-                width: width - 30
+                width: width - 30,
+            });
+        } else if (width !== initialCardWidth) {
+            dispatch({
+                type: 'UPDATE_CARD_SIZE',
+                width: initialCardWidth,
             });
         }
-        else if(width !== initialCardWidth){
-            dispatch({
-                type:'UPDATE_CARD_SIZE',
-                width: initialCardWidth
-            })
-        }
-    },[width])
+    }, [width]);
 
     const root = allNodes.find(n => !n.parentId);
     const x = 0;

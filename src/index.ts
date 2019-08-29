@@ -53,9 +53,14 @@ export {
 export { default as Accordion, AccordionItem } from './components/general/Accordion';
 export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
 
-//Org components 
-export {default as OrgChart, OrgStructure, OrgChartItemProps, OrgNode } from "./components/org/OrgChart";
-export {default as ReportingPath} from "./components/org/ReportingPath";
+//Org components
+export {
+    default as OrgChart,
+    OrgStructure,
+    OrgChartItemProps,
+    OrgNode,
+} from './components/org/OrgChart';
+export { default as ReportingPath } from './components/org/ReportingPath';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -88,7 +93,7 @@ export {
     unmaskString,
     StringMaskToken,
 } from './hooks/useStringMask';
-export { default as useParentSize } from "./hooks/useParentSize";
+export { default as useParentSize } from './hooks/useParentSize';
 
 // Org
 export { default as PositionCard } from './components/org/PositionCard';

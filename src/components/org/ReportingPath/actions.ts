@@ -11,10 +11,10 @@ type ReportingPathActionProps<T> = ReportingPathProps<T> & {
 
 const useReportingPathActions = <T extends OrgStructure>({
     structure,
-    cardWidth = 320,
-    cardHeight = 112,
+    cardWidth = 340,
+    cardHeight = 132,
     cardMargin = 16,
-    rowMargin = 128,
+    rowMargin = 140,
     component,
     parentHeight,
     parentWidth,

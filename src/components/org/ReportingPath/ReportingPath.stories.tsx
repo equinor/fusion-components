@@ -41,11 +41,11 @@ const cardStyle = {
     backgroundColor: 'white',
     boxShadow:
         '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
-    margin: '10px',
+    margin: '8px',
     boxSizing: 'border-box',
     flex: '1',
     fontSize: '16px',
-    height: 'calc(100% - 20px)',
+    height: 'calc(100% - 16px)',
 } as React.CSSProperties;
 
 const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {

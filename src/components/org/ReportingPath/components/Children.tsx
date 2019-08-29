@@ -25,7 +25,11 @@ function Children<T>() {
         (card: OrgNode<T>, rowNo: number) => {
             return (
                 <React.Fragment key={card.id}>
-                    <Card node={card} x={0} y={(rowNo + 1) * rowMargin} />
+                    <Card
+                        node={card}
+                        x={0}
+                        y={(rowNo + 1) * (rowMargin)}
+                    />
                 </React.Fragment>
             );
         },
