@@ -20,7 +20,7 @@ export default (
 
     const tooltipClassName = classNames(styles.tooltip, styles[placement.toLocaleLowerCase()]);
 
-    if (content === '') return ref;
+    if (!content || content === '') return ref;
 
     useOverlayPortal(
         isOpen,
