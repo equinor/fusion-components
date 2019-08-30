@@ -7,7 +7,7 @@ export const createPositionCalculator = (start: number, end: number) => {
         throw new Error('No range');
     }
 
-    return (marker: number) => Math.min(Math.max((marker / full) * 100, 0), 100) + '%';
+    return (marker: number) => Math.min(Math.max(((marker - start) / full) * 100, 0), 100) + '%';
 };
 
 export const createValueCalculator = (start: number, end: number) => {
@@ -34,3 +34,5 @@ export const createMarkerFinder = (
         );
     };
 };
+
+// ((marker - full) / full) * 100
