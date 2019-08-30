@@ -49,14 +49,14 @@ const TextInputStory = () => {
             <TextInput
                 onChange={value => setValue(value)}
                 value={value}
-                label="Text Input"
+                label="Label text"
                 isOptional
-                helperText="Input text"
+                helperText="Helper text"
             />
             <br />
             <TextInput
                 error
-                label="Error input"
+                label="Error text"
                 errorMessage="An error occurred"
                 onChange={value => setValue(value)}
                 value={value}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Slider from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
-import { DatePicker } from "@equinor/fusion-components";
+import { DatePicker } from '@equinor/fusion-components';
 
 const SliderPercentageStory = () => {
     const [value, setValue] = React.useState(75);
@@ -57,10 +57,14 @@ const SliderDateStory = () => {
     ];
 
     return (
-        <div style={{ width: 800, margin: '0 auto'}}>
-            <div style={{ display: "flex" }}>
+        <div style={{ width: 800, margin: '0 auto' }}>
+            <div style={{ display: 'flex' }}>
                 <div style={{ width: 200, marginRight: 48, flexShrink: 0 }}>
-                <DatePicker selectedDate={value} onChange={date => date && setValue(date)} />
+                    <DatePicker
+                        label="Select date"
+                        selectedDate={value}
+                        onChange={date => date && setValue(date)}
+                    />
                 </div>
                 <Slider
                     value={value.getTime()}
