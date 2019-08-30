@@ -23,6 +23,9 @@ export { NavigationChild, NavigationSection, NavigationGrouping };
 const NAVIGATION_DRAWER_COLLAPSED_KEY = 'NAVIGATION_DRAWER_COLLAPSED_KEY';
 const createDrawerCollapsedKey = (key: string) => NAVIGATION_DRAWER_COLLAPSED_KEY + key;
 const getDefaultCollapsed = (key: string) => {
+    if (useComponentDisplayType() === ComponentDisplayType.Compact) {
+        return true;
+    }
     const value = localStorage.getItem(createDrawerCollapsedKey(key));
     return Boolean(value);
 };
