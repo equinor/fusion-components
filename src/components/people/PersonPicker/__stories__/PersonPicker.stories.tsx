@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonPicker from '../index';
 import { useFusionContext, PersonDetails } from '@equinor/fusion';
+import { getDefaultPerson } from '../../utils';
 
 const stories = storiesOf('People|PersonPicker', module);
 stories.addDecorator(withFusionStory('PersonPicker'));
@@ -19,7 +20,7 @@ const PreSelectedStory = () => {
             );
             setPerson(p.data);
         } catch {
-            // ignore in this story
+            setPerson(getDefaultPerson());
         }
     };
 
