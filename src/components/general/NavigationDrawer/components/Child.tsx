@@ -2,8 +2,9 @@ import React, { FC, useCallback, useMemo } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { NavigationComponentProps } from '..';
+import CollapsedIcon from './CollapsedIcon';
 
-const Child: FC<NavigationComponentProps> = ({ navigationItem , onChange, isCollapsed}) => {
+const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, isActive, icon, title, onClick } = navigationItem;
 
     const containerClassNames = classNames(styles.container, styles.menuChild, {
@@ -18,9 +19,9 @@ const Child: FC<NavigationComponentProps> = ({ navigationItem , onChange, isColl
     const content = useMemo(() => {
         if (isCollapsed) {
             return (
-                <div className={styles.navigationIcon} onClick={change}>
+                <CollapsedIcon onClick={change} title={title}>
                     {icon}
-                </div>
+                </CollapsedIcon>
             );
         }
         return (
