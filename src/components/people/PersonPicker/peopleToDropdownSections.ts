@@ -1,11 +1,15 @@
 import { PersonDetails, PersonAccountType } from '@equinor/fusion';
 import { SearchableDropdownSection } from '@equinor/fusion-components';
 
-const filterPeople = (people: PersonDetails[], includedAccountTypes: PersonAccountType[]) => {
-    return people.reduce((acc: PersonDetails[], curr: PersonDetails) => {
-        const include = includedAccountTypes.indexOf(curr.accountType) !== -1;
+const isPersonAccountTypeIn = (person: PersonDetails, accountTypes: PersonAccountType[]) =>
+    accountTypes.indexOf(person.accountType) !== -1;
 
-        if (include) {
+const filterPeopleByAccountType = (
+    people: PersonDetails[],
+    includedAccountTypes: PersonAccountType[]
+) => {
+    return people.reduce((acc: PersonDetails[], curr: PersonDetails) => {
+        if (isPersonAccountTypeIn(curr, includedAccountTypes)) {
             acc.push(curr);
         }
 
@@ -13,58 +17,81 @@ const filterPeople = (people: PersonDetails[], includedAccountTypes: PersonAccou
     }, []);
 };
 
+const getPrimarySection = items => ({
+    key: 'primary',
+    title: 'Employees and consultants',
+    items,
+});
+
+const getSecondarySection = items => ({
+    key: 'secondary',
+    title: 'External',
+    items,
+});
+
+const getEmptySection = (isQuerying: boolean) => ({
+    key: 'empty',
+    items: [
+        {
+            key: 'empty',
+            title: isQuerying ? 'Searching...' : 'No results.',
+            isDisabled: true,
+        },
+    ],
+});
+
+export function singlePersonToDropdownSection(person: PersonDetails): SearchableDropdownSection[] {
+    const items = [person].map(p => ({
+        key: p.azureUniqueId,
+        title: p.name,
+        person: p,
+        isSelected: true,
+    }));
+
+    if (isPersonAccountTypeIn(person, ['Consultant', 'Employee'])) {
+        return [getPrimarySection(items)];
+    } else {
+        return [getSecondarySection(items)];
+    }
+}
+
 export default function(
     people: PersonDetails[],
     selectedId: string,
     searchQuery: string,
     isQuerying: boolean
 ): SearchableDropdownSection[] {
-    const primary = filterPeople(people, ['Consultant', 'Employee']);
-    const secondary = filterPeople(people, ['External']);
+    const primary = filterPeopleByAccountType(people, ['Consultant', 'Employee']);
+    const secondary = filterPeopleByAccountType(people, ['External']);
 
     const isNoMatches = primary.length === 0 && secondary.length === 0;
 
     if ((isNoMatches && searchQuery !== '') || isQuerying) {
-        return [
-            {
-                key: 'nomatches',
-                items: [
-                    {
-                        key: 'empty',
-                        title: isQuerying ? 'Searching...' : 'No results.',
-                        isDisabled: true,
-                    },
-                ],
-            },
-        ];
+        return [getEmptySection(isQuerying)];
     }
 
     const sections: SearchableDropdownSection[] = [];
 
     if (primary.length > 0) {
-        sections.push({
-            key: 'primary',
-            title: 'Employees and consultants',
-            items: primary.map((p: PersonDetails) => ({
-                key: p.azureUniqueId,
-                title: p.name,
-                person: p,
-                isSelected: p.azureUniqueId === selectedId,
-            })),
-        });
+        const items = primary.map((p: PersonDetails) => ({
+            key: p.azureUniqueId,
+            title: p.name,
+            person: p,
+            isSelected: p.azureUniqueId === selectedId,
+        }));
+
+        sections.push(getPrimarySection(items));
     }
 
     if (secondary.length > 0) {
-        sections.push({
-            key: 'secondary',
-            title: 'External',
-            items: secondary.map((p: PersonDetails) => ({
-                key: p.azureUniqueId,
-                title: p.name,
-                person: p,
-                isSelected: p.azureUniqueId === selectedId,
-            })),
-        });
+        const items = secondary.map((p: PersonDetails) => ({
+            key: p.azureUniqueId,
+            title: p.name,
+            person: p,
+            isSelected: p.azureUniqueId === selectedId,
+        }));
+
+        sections.push(getSecondarySection(items));
     }
 
     return sections;

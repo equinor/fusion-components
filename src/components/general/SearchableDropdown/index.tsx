@@ -35,6 +35,28 @@ const createSingleSectionFromOptions = (
     options: SearchableDropdownOption[]
 ): SearchableDropdownSection[] => [{ key: 'DropdownSection', items: options }];
 
+const filterMultipleSections = (
+    sections: SearchableDropdownSection[],
+    query: string
+): SearchableDropdownSection[] => {
+    const newSections = sections.reduce(
+        (acc: SearchableDropdownSection[], curr: SearchableDropdownSection) => {
+            const items = curr.items.filter(option =>
+                option.title.toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (!items.length) return acc;
+
+            const newSection = { ...curr, items };
+            acc.push(newSection);
+            return acc;
+        },
+        []
+    );
+
+    return newSections;
+};
+
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
         (acc: SearchableDropdownOption[], curr: SearchableDropdownSection) =>
@@ -57,9 +79,7 @@ const SearchableDropdown = ({
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [inputValue, setInputValue] = useState('');
-
     const [dropdownSections, setDropdownSections] = useState<SearchableDropdownSection[]>([]);
-    const [selectedItem, setSelectedItem] = useState();
 
     useEffect(() => {
         if (sections) {
@@ -79,29 +99,34 @@ const SearchableDropdown = ({
                         option.title.toLowerCase().includes(inputValue.toLowerCase())
                     );
                     setDropdownSections(createSingleSectionFromOptions(newOptions));
+                } else if (sections) {
+                    setDropdownSections(filterMultipleSections(sections, inputValue));
                 }
-                // TODO: handle sections
             }
         },
-        [options, sections, onSearchAsync]
+        [options, onSearchAsync, sections]
     );
 
     useEffect(() => filterSearch(inputValue), [inputValue]);
 
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => {
-        const value = useMemo(() => {
-            if (isOpen) {
-                return inputValue;
-            }
-
+        const selectedItem = useMemo(() => {
             const mergedItems = mergeDropdownSectionItems(dropdownSections);
             const selectedItem = mergedItems.find(option => option.isSelected === true);
+            return selectedItem;
+        }, [dropdownSections]);
 
-            return selectedItem ? selectedItem.title : '';
-        }, [isOpen, inputValue, options, dropdownSections]);
+        const selectedValue = useMemo(() => {
+            if (isOpen) {
+                return inputValue;
+            } else if (selectedItem) {
+                return selectedItem.title;
+            }
+            return '';
+        }, [isOpen, inputValue, selectedItem]);
 
         const aside = useMemo(() => {
-            if (asideComponent && selectedItem && !isOpen) {
+            if (asideComponent && !isOpen && selectedItem) {
                 const AsideComponent = asideComponent;
                 return (
                     <aside>
@@ -111,7 +136,7 @@ const SearchableDropdown = ({
             }
 
             return null;
-        }, [selectedItem, isOpen, asideComponent]);
+        }, [isOpen, asideComponent, selectedItem]);
 
         return (
             <TextInput
@@ -128,7 +153,7 @@ const SearchableDropdown = ({
                 icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
                 onIconAction={() => isOpen && setIsOpen(false)}
                 onClick={() => !isOpen && setIsOpen(true)}
-                value={value}
+                value={selectedValue}
                 ref={inputRef}
             />
         );
@@ -143,8 +168,6 @@ const SearchableDropdown = ({
                 setIsOpen(false);
                 setInputValue('');
             }
-
-            setSelectedItem(item);
         },
         [isOpen, onSelect]
     );

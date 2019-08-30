@@ -8,7 +8,7 @@ import {
 
 import { PersonDetails } from '@equinor/fusion';
 import usePersonQuery from '../usePersonQuery';
-import peopleToSections from './peopleToDropdownSections';
+import peopleToSections, { singlePersonToDropdownSection } from './peopleToDropdownSections';
 
 export type PersonPickerOption = {
     title: string;
@@ -18,7 +18,8 @@ export type PersonPickerOption = {
 };
 
 type PersonPickerProps = {
-    onSelect?: (item: PersonPickerOption) => void;
+    initialPerson?: PersonDetails;
+    onSelect?: (person: PersonDetails) => void;
 };
 
 const ItemComponent = ({ item }) => {
@@ -39,12 +40,19 @@ const AsideComponent = ({ item }) => {
     return <PersonPhoto person={item.person} size="medium" hideTooltip />;
 };
 
-export default ({ onSelect }: PersonPickerProps) => {
+export default ({ initialPerson, onSelect }: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
     const [searchQuery, setSearchQuery] = useState('');
     const [peopleMatch, setPeopleMatch] = useState<PersonDetails[]>([]);
     const [selectedPersonId, setSelectedPersonId] = useState('');
+    const [isInitialized, setInitialized] = useState(false);
+
+    useEffect(() => {
+        if (initialPerson && !isInitialized) {
+            setSections(singlePersonToDropdownSection(initialPerson));
+        }
+    }, [isInitialized, initialPerson]);
 
     useEffect(() => {
         search(searchQuery);
@@ -55,14 +63,18 @@ export default ({ onSelect }: PersonPickerProps) => {
     }, [people]);
 
     useEffect(() => {
-        setSections(peopleToSections(peopleMatch, selectedPersonId, searchQuery, isQuerying));
+        if (isInitialized) {
+            setSections(peopleToSections(peopleMatch, selectedPersonId, searchQuery, isQuerying));
+        } else {
+            setInitialized(searchQuery !== '');
+        }
     }, [peopleMatch, searchQuery, selectedPersonId, isQuerying]);
 
     const handleSelect = useCallback(item => {
         setSelectedPersonId(item.key);
 
         if (onSelect) {
-            onSelect(item);
+            onSelect(item.person);
         }
     }, []);
 

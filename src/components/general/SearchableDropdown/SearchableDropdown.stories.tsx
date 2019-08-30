@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import SearchableDropdownWrapper, { SearchableDropdownOption } from './index';
+import SearchableDropdownWrapper, {
+    SearchableDropdownOption,
+    SearchableDropdownSection,
+} from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 
 const dropdownOptions = [
@@ -24,16 +27,71 @@ const dropdownOptions = [
     },
 ];
 
+const dropdownSections: SearchableDropdownSection[] = [
+    {
+        key: 'level1',
+        title: 'Good food',
+        items: [
+            {
+                key: '1',
+                title: 'Pasta',
+            },
+            {
+                key: '2',
+                title: 'Pesto',
+            },
+        ],
+    },
+    {
+        key: 'level2',
+        title: 'Bad food',
+        items: [
+            {
+                key: '10',
+                title: 'Fish',
+            },
+            {
+                key: '11',
+                title: 'Blue cheese',
+            },
+            {
+                key: '12',
+                title: 'Shrimp',
+            },
+        ],
+    },
+];
+
 const DropdownStory = () => {
     const [options, setOptions] = React.useState<SearchableDropdownOption[]>(dropdownOptions);
     const [optionsNoLAbel, setOptionsNoLabel] = React.useState<SearchableDropdownOption[]>(
         dropdownOptions
     );
 
+    const [sections, setSections] = React.useState<SearchableDropdownSection[]>(dropdownSections);
+
     const updateOptions = item =>
         options.map(option => {
             return { ...option, isSelected: item.key === option.key };
         });
+
+    const updateSections = (item: SearchableDropdownOption) => {
+        const newSections = sections.reduce(
+            (acc: SearchableDropdownSection[], curr: SearchableDropdownSection) => {
+                const items = curr.items.map(option => ({
+                    ...option,
+                    isSelected: option.key === item.key,
+                }));
+
+                const newSection = { ...curr, items };
+                acc.push(newSection);
+                return acc;
+            },
+            []
+        );
+
+        setSections(newSections);
+    };
 
     return (
         <div style={{ margin: '8px' }}>
@@ -46,6 +104,12 @@ const DropdownStory = () => {
             <SearchableDropdownWrapper
                 options={optionsNoLAbel}
                 onSelect={item => setOptionsNoLabel(updateOptions(item))}
+            />
+            <br />
+            <SearchableDropdownWrapper
+                label="Select food"
+                onSelect={item => updateSections(item)}
+                sections={sections}
             />
         </div>
     );
