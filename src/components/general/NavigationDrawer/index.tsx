@@ -1,6 +1,10 @@
 import React, { FC, useState, useCallback, ReactNode, useMemo, useEffect } from 'react';
 import classNames from 'classnames';
-import { useComponentDisplayClassNames } from '@equinor/fusion';
+import {
+    useComponentDisplayClassNames,
+    useComponentDisplayType,
+    ComponentDisplayType,
+} from '@equinor/fusion';
 import styles from './styles.less';
 import {
     NavigationChild,
@@ -61,6 +65,13 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
 }) => {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [internalStructure, setInternalStructure] = useState<NavigationStructure[]>();
+    const displayType = useComponentDisplayType();
+
+    useEffect(() => {
+        if (displayType === ComponentDisplayType.Compact) {
+            setIsCollapsed(true);
+        }
+    }, [displayType]);
 
     useEffect(() => setInternalStructure(structure), [structure]);
 
