@@ -3,13 +3,12 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonPicker from '../index';
 import { useFusionContext, PersonDetails } from '@equinor/fusion';
-import { getDefaultPerson } from '../../utils';
 
 const stories = storiesOf('People|PersonPicker', module);
 stories.addDecorator(withFusionStory('PersonPicker'));
 
 const PreSelectedStory = () => {
-    const [person, setPerson] = useState<PersonDetails>(getDefaultPerson());
+    const [person, setPerson] = useState<PersonDetails>();
 
     const context = useFusionContext();
 
