@@ -45,7 +45,7 @@ export { ModalSideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as DatePicker } from './components/general/DatePicker';
-export { default as Slider } from './components/general/Calendar';
+export { default as Slider } from './components/general/Slider';
 export {
     default as NavigationDrawer,
     NavigationStructure,
@@ -111,6 +111,7 @@ export {
     CalendarIcon,
     HistoryIcon,
     InfoIcon,
+    OpenInNewIcon,
 } from './components/icons/components/action';
 export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
