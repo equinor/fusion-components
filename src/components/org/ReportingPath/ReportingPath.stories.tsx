@@ -62,6 +62,6 @@ const ReportingPathStory = () => {
     return <ReportingPath structure={positions} component={PositionCard} />;
 };
 
-storiesOf('Org|Reporting Path', module)
+storiesOf('Pro org|Reporting Path', module)
     .addDecorator(withFusionStory('Reporting Path'))
     .add('Default', () => <ReportingPathStory />);

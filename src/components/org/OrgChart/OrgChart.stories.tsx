@@ -170,6 +170,6 @@ const OrgChartStory = () => {
     );
 };
 
-storiesOf('Org|Org Chart', module)
+storiesOf('Pro org|Org Chart', module)
     .addDecorator(withFusionStory('Org Chart'))
     .add('Default', () => <OrgChartStory />);
