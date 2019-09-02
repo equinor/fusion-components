@@ -12,7 +12,7 @@ const position: Position = {
         department: 'Department',
         discipline: 'Engineering',
         id: '3',
-        name: 'engineer',
+        name: 'Engineer',
         roleDescription: '',
     },
     externalId: '800',

@@ -27,13 +27,17 @@ const AccordionItem: FC<AccordionItemProps> = ({
         [styles.rightAction]: actionDirection && actionDirection === 'right',
     });
     const contentRef = useRef<HTMLDivElement>(null);
+    const currentContentHeight =
+        contentRef && contentRef.current
+            ? contentRef.current.offsetHeight + contentRef.current.scrollHeight
+            : 0;
     const [contentHeight, setContentHeight] = useState<number>(0);
 
     useEffect(() => {
         if (contentRef && contentRef.current) {
             setContentHeight(contentRef.current.offsetHeight + contentRef.current.scrollHeight);
         }
-    }, [contentRef]);
+    }, [contentRef, currentContentHeight]);
 
     return (
         <div className={styles.accordion}>

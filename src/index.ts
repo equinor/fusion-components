@@ -46,7 +46,7 @@ export { ModalSideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as DatePicker } from './components/general/DatePicker';
-export { default as Slider } from './components/general/Calendar';
+export { default as Slider } from './components/general/Slider';
 export {
     default as NavigationDrawer,
     NavigationStructure,
@@ -86,9 +86,17 @@ export {
     unmaskString,
     StringMaskToken,
 } from './hooks/useStringMask';
+export { default as useParentSize } from './hooks/useParentSize';
 
 // Org
 export { default as PositionCard } from './components/org/PositionCard';
+export {
+    default as OrgChart,
+    OrgStructure,
+    OrgChartItemProps,
+    OrgNode,
+} from './components/org/OrgChart';
+export { default as ReportingPath } from './components/org/ReportingPath';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
@@ -105,6 +113,7 @@ export {
     CalendarIcon,
     HistoryIcon,
     InfoIcon,
+    OpenInNewIcon,
 } from './components/icons/components/action';
 export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';

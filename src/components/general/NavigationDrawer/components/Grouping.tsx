@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
 import { NavigationComponentProps } from '..';
+import CollapsedIcon from './CollapsedIcon';
 
 const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, icon, title, onClick, navigationChildren, isActive, isOpen } = navigationItem;
@@ -38,11 +39,11 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
 
     const getCollapsedIcon = useCallback(
         () => (
-            <div className={styles.navigationIcon} onClick={() => change(true)}>
+            <CollapsedIcon onClick={() => change} title={title}>
                 {icon}
-            </div>
+            </CollapsedIcon>
         ),
-        [icon, onChange]
+        [icon, onChange, title]
     );
 
     const getNavigationContent = useCallback(

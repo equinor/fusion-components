@@ -27,7 +27,7 @@ const getIconSizes = (isCompact: boolean) => ({
 
 const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageProps) => {
     const isExternalHire =
-        currentPerson.jobTitle !== null && currentPerson.jobTitle.toLowerCase().startsWith('ext');
+        currentPerson.jobTitle && currentPerson.jobTitle.toLowerCase().startsWith('ext');
     const isExternal = currentPerson.accountType === 'External';
     const isConsultant = currentPerson.accountType === 'Consultant';
     const isEmployee = currentPerson.accountType === 'Employee';
