@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 const Labels = () => {
     const {
-        state: { allNodes, rowMargin, cardWidth, asideLabel, childrenLabel, centerX, numberOfCardsPerRow },
+        state: { allNodes, rowMargin, cardWidth, asideLabel, childrenLabel, centerX, numberOfCardsPerRow, asideRows, childrenRows },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
 
     const labelRectClassnames = classNames(styles.labelObject, {
@@ -79,8 +79,8 @@ const Labels = () => {
 
     return (
         <g className="label">
-            {asideLabelNode && renderLabel(asideLabelNode)}
-            {childLabelNode && renderLabel(childLabelNode)}
+            {asideLabelNode && asideRows && renderLabel(asideLabelNode)}
+            {childLabelNode && childrenRows && renderLabel(childLabelNode)}
         </g>
     );
 };
