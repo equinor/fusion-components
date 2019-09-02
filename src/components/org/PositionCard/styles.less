@@ -50,7 +50,6 @@
         .personIconContainer {
             width: calc(var(--grid-unit) * 5px);
             height: calc(var(--grid-unit) * 5px);
-            background: var(--color-black-alt4);
             border-radius: 50%;
             color: var(--color-black-alt2);
             display: flex;
@@ -122,6 +121,12 @@
             top: 0;
             right: 0;
         }
+
+        .expandButton {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
     }
 
     &.instancesPopover {
@@ -157,6 +162,15 @@
     }
 
     &.comfortable {
+        --container-width: calc(var(--grid-unit) * 40px);
+        --container-height: calc(var(--grid-unit) * 14px);
+        --container-padding: calc(var(--grid-unit) * 1px);
+        --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
+        --position-name-spacing: calc(var(--grid-unit) * 1px);
+        --assigned-person-name-spacing: calc(var(--grid-unit) * 1px);
+    }
+
+    &.compact {
         --container-width: calc(var(--grid-unit) * 40px);
         --container-height: calc(var(--grid-unit) * 14px);
         --container-padding: calc(var(--grid-unit) * 1px);
