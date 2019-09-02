@@ -11,9 +11,9 @@ export const createPositionCalculator = (start: number, end: number) => {
 };
 
 export const createValueCalculator = (start: number, end: number) => {
-    const onePercent = (end - start) / 100;
+    const onePercent = end - start;
 
-    return (percentage: number) => Math.max(percentage * onePercent, 0);
+    return (percentage: number) => Math.max((onePercent * (percentage / 100)) + start, 0);
 };
 
 export const createMarkerFinder = (
