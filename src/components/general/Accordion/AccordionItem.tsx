@@ -49,10 +49,11 @@ const AccordionItem: FC<AccordionItemProps> = ({
             </div>
             <div
                 className={styles.contentContainer}
-                ref={contentRef}
                 style={{ maxHeight: isOpen ? contentHeight : 0 }}
             >
-                <div className={styles.content}>{children}</div>
+                <div ref={contentRef} className={styles.content}>
+                    {children}
+                </div>
             </div>
         </div>
     );
