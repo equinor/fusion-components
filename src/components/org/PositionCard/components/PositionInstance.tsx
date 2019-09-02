@@ -6,12 +6,12 @@ import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-compo
 
 type PositionInstanceProps = {
     position: Position;
-    instance: PositionInstance;
+    instance?: PositionInstance;
     showLocation: boolean;
     showDate: boolean;
     showExternalId: boolean;
-    onClick?: (position: Position, instance: PositionInstance) => void;
-    onExpand?: (position: Position, instance: PositionInstance) => void;
+    onClick?: (position: Position, instance?: PositionInstance) => void;
+    onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
 
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
@@ -24,7 +24,12 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     onExpand,
 }) => {
     const positionNameTooltipRef = useTooltipRef(position.name, 'below');
-    const assignedPersonNameTooltipRef = useTooltipRef(instance.assignedPerson.name, 'below');
+
+    const assignedPersonName = instance ? instance.assignedPerson.name : 'TBN';
+    const locationName = instance ? instance.location.name : 'TBN';
+
+    const assignedPersonNameTooltipRef = useTooltipRef(assignedPersonName, 'below');
+    const directChildrenTooltipRef = useTooltipRef(position.directChildCount + ' children', 'above');
 
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -53,20 +58,19 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                 <span ref={positionNameTooltipRef}>{position.name}</span>
             </div>
             <div className={styles.assignedPersonName}>
-                <span ref={assignedPersonNameTooltipRef}>{instance.assignedPerson.name}</span>
+                <span ref={assignedPersonNameTooltipRef}>{assignedPersonName}</span>
             </div>
-            {showLocation && <div className={styles.location}>{instance.location.name}</div>}
-            {showDate && (
+            {showLocation && <div className={styles.location}>{locationName}</div>}
+            {showDate && instance && (
                 <div className={styles.period}>
                     {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
                     {instance.percent}%)
                 </div>
             )}
             {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
-            {onExpand && (
+            {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
-                    {/* Child count */}
-                    <IconButton onClick={onExpandHandler}>
+                    <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
                         <ExpandMoreIcon isExpanded={false} />
                     </IconButton>
                 </div>

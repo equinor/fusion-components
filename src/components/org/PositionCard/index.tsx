@@ -13,13 +13,13 @@ import PositionInstanceComponent from './components/PositionInstance';
 
 type PositionCardProps = {
     position: Position;
-    instance: PositionInstance;
+    instance?: PositionInstance;
     isSelected?: boolean;
     showExternalId: boolean;
     showLocation: boolean;
     showDate: boolean;
-    onClick?: (position: Position, instance: PositionInstance) => void;
-    onExpand?: (position: Position, instance: PositionInstance) => void;
+    onClick?: (position: Position, instance?: PositionInstance) => void;
+    onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
 
 const PositionCard: React.FC<PositionCardProps> = ({

@@ -50,9 +50,42 @@ const position: Position = {
             properties: {},
         },
     ],
-    isSupport: false,
+    contractId: null,
+    directChildCount: 2,
+    totalChildCount: 18,
+    projectId: '',
+    properties: {
+        isSupport: false,
+    },
     name: 'Drilling Engineer',
     parentPositionId: '0',
+};
+
+const tbnPosition: Position = {
+    id: '1',
+    basePosition: {
+        department: 'Department',
+        discipline: 'Engineering',
+        id: '3',
+        name: 'Engineer',
+        roleDescription: '',
+    },
+    externalId: '800',
+    instances: [],
+    contractId: null,
+    directChildCount: 2,
+    totalChildCount: 18,
+    projectId: '',
+    properties: {
+        isSupport: false,
+    },
+    name: 'Drilling Engineer',
+    parentPositionId: '0',
+};
+
+const positions = {
+    Standard: position,
+    TBN: tbnPosition,
 };
 
 const InteractiveStory = () => {
@@ -63,11 +96,13 @@ const InteractiveStory = () => {
         setIsSelected(prev => !prev);
     }, []);
 
+    const selecetPosition = select('position', positions, position);
+
     return (
         <PositionCard
             onClick={toggleSelected}
-            position={position}
-            instance={position.instances[0]}
+            position={selecetPosition}
+            instance={selecetPosition.instances[0]}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
@@ -77,19 +112,25 @@ const InteractiveStory = () => {
     );
 };
 
-storiesOf('Pro org|Position Card', module)
-    .addDecorator(withKnobs)
-    .addDecorator(withFusionStory('Pro org position card'))
-    .add('Default', () => (
+const DefaultStory = () => {
+    const selecetPosition = select('position', positions, position);
+
+    return (
         <PositionCard
-            position={position}
-            instance={position.instances[0]}
+            position={selecetPosition}
+            instance={selecetPosition.instances[0]}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
             isSelected={false}
         />
-    ))
+    );
+};
+
+storiesOf('Pro org|Position Card', module)
+    .addDecorator(withKnobs)
+    .addDecorator(withFusionStory('Pro org position card'))
+    .add('Default', () => <DefaultStory />)
     .add('Interactive', () => <InteractiveStory />);
 
 // const positionWithMultipleInstances: Position = {
