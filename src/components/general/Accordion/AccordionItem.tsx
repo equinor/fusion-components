@@ -27,18 +27,28 @@ const AccordionItem: FC<AccordionItemProps> = ({
         [styles.rightAction]: actionDirection && actionDirection === 'right',
     });
     const contentRef = useRef<HTMLDivElement>(null);
-    const currentContentHeight =
-        contentRef && contentRef.current
-            ? contentRef.current.offsetHeight + contentRef.current.scrollHeight
-            : 0;
 
     const [contentHeight, setContentHeight] = useState<number>(0);
 
     useEffect(() => {
-        if (contentRef && contentRef.current) {
-            setContentHeight(contentRef.current.offsetHeight + contentRef.current.scrollHeight);
-        }
-    }, [currentContentHeight]);
+        let animationFrame = 0;
+
+        const checkHeight = () => {
+            if (contentRef.current) {
+                const height = contentRef.current.getBoundingClientRect().height;
+
+                if (height !== contentHeight) {
+                    setContentHeight(height);
+                }
+            }
+
+            animationFrame = window.requestAnimationFrame(checkHeight);
+        };
+
+        checkHeight();
+
+        return () => window.cancelAnimationFrame(animationFrame);
+    }, [contentRef.current, contentHeight]);
 
     return (
         <div className={styles.accordion}>
@@ -51,9 +61,10 @@ const AccordionItem: FC<AccordionItemProps> = ({
             <div
                 className={styles.contentContainer}
                 style={{ maxHeight: isOpen ? contentHeight : 0 }}
-                ref={contentRef}
             >
-                <div className={styles.content}>{children}</div>
+                <div ref={contentRef} className={styles.content}>
+                    {children}
+                </div>
             </div>
         </div>
     );
