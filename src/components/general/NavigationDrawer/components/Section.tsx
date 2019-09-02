@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useMemo, useState, useRef } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { DropdownArrow } from '@equinor/fusion-components';
+import { DropdownArrow, RelativeOverlayPortal } from '@equinor/fusion-components';
 import { NavigationComponentProps } from '..';
 import { getNavigationComponentForItem } from '../utils';
 import CollapsedIcon from './CollapsedIcon';
@@ -13,6 +13,9 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
         [styles.isActive]: isActive,
         [styles.isCollapsed]: isCollapsed,
     });
+
+    const [showNavigationPopover, setShowNavigationPopover] = useState(false);
+    const popoverRef = useRef(null);
 
     const navigationStructure = useMemo(
         () =>
@@ -40,9 +43,14 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
 
     const getCollapsedIcon = useCallback(
         () => (
-            <CollapsedIcon onClick={() => change(true)} title={title}>
+            <>
+            <CollapsedIcon onClick={() => setShowNavigationPopover(!showNavigationPopover)} title={title}>
                 {icon}
             </CollapsedIcon>
+            <RelativeOverlayPortal relativeRef={controllerRef} show={showNavigationPopover}>
+            <div style={{position: "absolute", left:"100%", minWidth:"100%", }}>{getNavigationContent}</div>
+        </RelativeOverlayPortal>
+        </>
         ),
         [icon, onChange, title]
     );
