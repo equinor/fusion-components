@@ -34,7 +34,7 @@ const position: Position = {
                 azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
                 company: {
                     id: '3etgwg',
-                    name: "Equinor"
+                    name: 'Equinor',
                 },
                 contracts: [],
                 positions: [],
@@ -77,7 +77,7 @@ const positionWithMultipleInstances: Position = {
                 azureUniqueId: 'e92c631b-94ae-4670-8f1e-60cdc2122edc',
                 company: {
                     id: '8/4150ega',
-                    name: "Bouvet"
+                    name: 'Bouvet',
                 },
                 contracts: [],
                 positions: [],
@@ -109,7 +109,7 @@ const positionWithMultipleInstances: Position = {
                 azureUniqueId: '3tgweafgw<fwedgw',
                 company: {
                     id: '984018gwsedgw3gh',
-                    name: "External Company"
+                    name: 'External Company',
                 },
                 contracts: [],
                 positions: [],

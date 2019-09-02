@@ -16,6 +16,12 @@
         padding: .grid-unit(1px)[] .grid-unit(2px)[];
         border-radius: 4px 4px 0 0;
         
+        > aside {
+            padding-right: .grid-unit(2px)[];
+            display: flex;
+            align-items: center;
+        }
+
         &:hover {
             cursor: text;
         }
@@ -105,11 +111,12 @@
                 }
             }
         }
+        
         .icon {
             align-self: center;
             padding-left: .grid-unit(2px)[];
 
-            svg{
+            svg {
                 width: .grid-unit(3px)[];
                 height: .grid-unit(3px)[];
             }

@@ -10,6 +10,7 @@ type TextInputProps = {
     isOptional?: boolean;
     placeholder?: string;
     label?: string;
+    asideComponent?: any;
     helperText?: string;
     onChange: (newValue: string) => void;
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
@@ -32,6 +33,7 @@ const TextInput = React.forwardRef<
             isOptional = false,
             placeholder = '',
             label,
+            asideComponent,
             onChange,
             onClick,
             value = '',
@@ -126,6 +128,7 @@ const TextInput = React.forwardRef<
                         onClick && onClick(e);
                     }}
                 >
+                    {asideComponent}
                     <div className={inputTextContentClasses}>
                         {inputLabel}
                         <input
