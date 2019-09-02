@@ -115,7 +115,7 @@ export {
     InfoIcon,
     OpenInNewIcon,
 } from './components/icons/components/action';
-export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
+export { PaginationArrow, CloseIcon, ExpandMoreIcon } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
 
