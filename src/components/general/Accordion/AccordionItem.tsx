@@ -31,13 +31,14 @@ const AccordionItem: FC<AccordionItemProps> = ({
         contentRef && contentRef.current
             ? contentRef.current.offsetHeight + contentRef.current.scrollHeight
             : 0;
+
     const [contentHeight, setContentHeight] = useState<number>(0);
 
     useEffect(() => {
         if (contentRef && contentRef.current) {
             setContentHeight(contentRef.current.offsetHeight + contentRef.current.scrollHeight);
         }
-    }, [contentRef, currentContentHeight]);
+    }, [currentContentHeight]);
 
     return (
         <div className={styles.accordion}>
@@ -49,8 +50,8 @@ const AccordionItem: FC<AccordionItemProps> = ({
             </div>
             <div
                 className={styles.contentContainer}
-                ref={contentRef}
                 style={{ maxHeight: isOpen ? contentHeight : 0 }}
+                ref={contentRef}
             >
                 <div className={styles.content}>{children}</div>
             </div>
