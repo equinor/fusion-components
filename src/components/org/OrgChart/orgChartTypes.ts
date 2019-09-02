@@ -22,8 +22,8 @@ export type OrgStructure = {
 };
 
 export type OrgNode<T> = OrgStructure & {
-    x: number;
-    y: number;
+    x: number | null;
+    y: number | null;
     data: T;
 };
 

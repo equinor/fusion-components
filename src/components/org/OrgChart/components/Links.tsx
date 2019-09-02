@@ -20,6 +20,10 @@ const Links = <T extends OrgStructure>() => {
 
     const getAsidePath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
+            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+                return '';
+            }
+
             if (node.x > centerX) {
                 return `
                     M ${node.x + 10} ${node.y + cardHeight / 2}
@@ -38,9 +42,18 @@ const Links = <T extends OrgStructure>() => {
 
     const getChildPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>, index: number) => {
+            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+                return '';
+            }
+
             if (index !== 0 && index / numberOfCardsPerRow >= 1 && numberOfCardsPerRow % 2 !== 0) {
                 // Children row that will align left
                 const firstChild = allChildren[0];
+
+                if(firstChild.x === null || firstChild.y === null) {
+                    return '';
+                }
+
                 return `
                     M ${node.x + cardWidth / 2} ${node.y + 10}
                     V ${node.y - 10}
@@ -62,6 +75,10 @@ const Links = <T extends OrgStructure>() => {
 
     const getSingleCardRowPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
+            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+                return '';
+            }
+            
             if(width < cardWidth + 30) {
                 return `
                     M ${node.x + 10} ${node.y + cardHeight / 4}

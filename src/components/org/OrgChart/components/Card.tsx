@@ -30,6 +30,10 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
 
     const Component = component;
 
+    if(node.x === null || node.y == null) {
+        return null;
+    }
+
     return (
         <g className="card">
             <rect

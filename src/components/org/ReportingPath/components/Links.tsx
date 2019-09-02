@@ -13,16 +13,23 @@ const Links = <T extends OrgStructure>() => {
     const allChildren = useMemo(() => allNodes.filter(node => node.parentId), [allNodes]);
 
     const getPath = useCallback(
-        (node: OrgNode<T>, parent: OrgNode<T>) => `
+        (node: OrgNode<T>, parent: OrgNode<T>) => {
+            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+                return '';
+            }
+
+
+            return `
                     M ${node.x + cardMargin * 2} ${node.y + cardHeight / 2}
                     L ${parent.x + cardMargin * 2} ${parent.y + cardHeight / 2}
-                    `,
+                    `;
+        },
         [cardHeight, cardMargin]
     );
 
     const renderLink = useCallback(
         (node: OrgNode<T>) => {
-            if (!node.parentId) {
+            if (!node.parentId || node.x === null || node.y === null) {
                 return null;
             }
 

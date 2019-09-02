@@ -18,8 +18,8 @@ const Labels = () => {
         return {
             data:label,
             id:label,
-            x: firstNode.x + 10,
-            y: firstNode.y - 18,
+            x: firstNode.x === null ? null : firstNode.x + 10,
+            y: firstNode.y === null ? null : firstNode.y - 18,
         } as OrgNode<string>
     } ,[])
 
@@ -34,7 +34,7 @@ const Labels = () => {
             data: childrenLabel,
             id: childrenLabel,
             x: centerX - cardWidth - 25,
-            y: firstChildNode && firstChildNode.y - 34,
+            y: firstChildNode && firstChildNode.y !== null && firstChildNode.y - 34,
         } as OrgNode<string>;
     }, [allNodes, centerX, childrenLabel]);
 
@@ -48,13 +48,17 @@ const Labels = () => {
         return {
             data: asideLabel,
             id: asideLabel,
-            x: firstAsideNode && firstAsideNode.x - 15,
-            y: firstAsideNode && firstAsideNode.y - 18,
+            x: firstAsideNode && firstAsideNode.x !== null && firstAsideNode.x - 15,
+            y: firstAsideNode && firstAsideNode.y !== null && firstAsideNode.y - 18,
         } as OrgNode<string>;
     }, [allNodes, asideLabel]);
 
     const renderLabel = useCallback(
         (node: OrgNode<any>) => {
+            if(node.x === null || node.y === null) {
+                return null;
+            }
+            
             return (
                 <>
                     <rect
