@@ -24,6 +24,10 @@ function Root<T>() {
     });
 
     useEffect(() => {
+        if(width === 0) {
+            return;
+        }
+        
         if(width <= initialCardWidth + 30){
             dispatch({
                 type: 'UPDATE_CARD_SIZE',

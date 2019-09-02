@@ -36,10 +36,6 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
         return asideMargin + childrenMargin + rootMargin + labelMargin;
     }, [rowMargin, asideRows, childrenRows]);
 
-    if(allNodes.every(n => n.x === null && n.y === null)) {
-        return null;
-    }
-
     return (
         <svg
             ref={orgContainerRef}
