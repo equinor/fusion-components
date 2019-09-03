@@ -32,6 +32,16 @@ const PositionCard: React.FC<PositionCardProps> = ({
     onClick,
     onExpand,
 }) => {
+    const isExternalHire =
+        instance &&
+        instance.assignedPerson &&
+        instance.assignedPerson.jobTitle &&
+        instance.assignedPerson.jobTitle.toLowerCase().startsWith('ext');
+    const isExternal =
+        instance && instance.assignedPerson && instance.assignedPerson.accountType === 'External';
+    const isConsultant =
+        instance && instance.assignedPerson && instance.assignedPerson.accountType === 'Consultant';
+
     const containerClassNames = classNames(
         styles.context,
         styles.container,
@@ -39,7 +49,9 @@ const PositionCard: React.FC<PositionCardProps> = ({
         {
             [styles.isSelected]: isSelected,
             [styles.isClickable]: !!onClick,
-            [styles.multipleAssignments]: position.instances.length > 1,
+            [styles.isExternal]: isExternal,
+            [styles.isConsultant]: isConsultant,
+            [styles.isExternalHire]: isExternalHire,
         }
     );
 

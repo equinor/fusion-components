@@ -9,6 +9,26 @@
         border-radius: 4px;
         position: relative;
         transition: box-shadow .15s;
+        
+        &.isExternal, &.isConsultant, &.isExternalHire {
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: calc(var(--grid-unit) * .5px);
+            }
+        }
+        &.isExternal::before {
+            background-color: var(--color-secondary-alt2);
+        }
+
+        &.isConsultant, &.isExternalHire {
+            &::before {
+                background-color: var(--color-red);
+            }
+        }
 
         &.isClickable {
             cursor: pointer;
