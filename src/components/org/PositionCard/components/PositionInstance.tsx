@@ -25,7 +25,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
 }) => {
     const positionNameTooltipRef = useTooltipRef(position.name, 'below');
 
-    const assignedPersonName = instance ? instance.assignedPerson.name : 'TBN';
+    const assignedPersonName = instance && instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const locationName = instance ? instance.location.name : 'TBN';
 
     const assignedPersonNameTooltipRef = useTooltipRef(assignedPersonName, 'below');
