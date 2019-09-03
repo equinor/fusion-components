@@ -4,7 +4,7 @@ import { NavigationComponentProps } from '..';
 import classNames from 'classnames';
 
 const Label: FC<NavigationComponentProps> = ({ navigationItem, isCollapsed }) => {
-    const { id, title,  } = navigationItem;
+    const { id, title } = navigationItem;
 
     const labelTitle = isCollapsed ? title.charAt(0) : title;
 
