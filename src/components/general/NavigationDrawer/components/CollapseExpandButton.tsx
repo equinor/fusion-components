@@ -11,7 +11,7 @@ const CollapseExpandButton: React.FC<CollapseExpandButtonProps> = ({ isCollapsed
 
     return (
         <IconButton ref={tooltipRef} onClick={onClick}>
-            <CollapseIcon isCollapsed={isCollapsed} screenPlacement="left"/>
+            <CollapseIcon isCollapsed={isCollapsed} screenPlacement="left" />
         </IconButton>
     );
 };
