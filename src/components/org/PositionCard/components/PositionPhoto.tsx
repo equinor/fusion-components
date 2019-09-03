@@ -8,7 +8,7 @@ import styles from '../styles.less';
 
 type PositionPhotoProps = {
     position: Position;
-    currentInstance: PositionInstance;
+    currentInstance?: PositionInstance;
     onClick?: (position: Position, instance: PositionInstance) => void;
 };
 
@@ -19,7 +19,7 @@ const PositionPhoto: React.FC<PositionPhotoProps> = ({ currentInstance }) => {
         <div className={styles.photoContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
                 <PersonPhoto
-                    person={currentInstance.assignedPerson}
+                    person={currentInstance ? currentInstance.assignedPerson : undefined}
                     size='large'
                 />
             </div>

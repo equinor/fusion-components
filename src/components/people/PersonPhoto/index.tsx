@@ -30,15 +30,11 @@ const getDefaultPerson = (): PersonDetails => ({
     mobilePhone: 'string',
     officeLocation: 'string',
     upn: 'string',
-    accountType: 'Consultant',
+    accountType: 'Employee',
     company: { id: 'id', name: 'name' },
 });
 
 export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
-    if (!personId && !person) {
-        throw new Error('You must specify at least one of personId and person');
-    }
-
     const fusionContext = useFusionContext();
     const [isFallbackImage, setIsFallbackImage] = useState(false);
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
@@ -74,9 +70,13 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
         }
     );
 
-    const image = new Image();
-    image.onerror = () => setIsFallbackImage(true);
-    image.src = `${urlToPhoto}`;
+    useEffect(() => {
+        setIsFallbackImage(false);
+        
+        const image = new Image();
+        image.onerror = () => setIsFallbackImage(true);
+        image.src = `${urlToPhoto}`;
+    }, [urlToPhoto]);
 
     const imageStyle = !isFallbackImage ? { backgroundImage: `url(${urlToPhoto})` } : {};
     const nameTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.name);

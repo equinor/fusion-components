@@ -80,11 +80,14 @@
         position: relative;
         flex-grow: 1;
         margin-left: var(--photo-and-details-spacing);
+        width: 1px;
 
-        .assignedPersonName, .basePositionName, .positionName {
+        .assignedPersonName span, .basePositionName, .positionName span {
+            display: inline-block;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 100%;
         }
 
         .basePositionName {
@@ -96,12 +99,16 @@
             font-size: 16px;
             margin-bottom: var(--position-name-spacing);
             color: var(--color-primary);
-            text-decoration: underline;
+
+            span {            
+                text-decoration: underline;
+            }
         }
 
         .assignedPersonName {
             font-size: 16px;
             margin-bottom: var(--assigned-person-name-spacing);
+            margin-right: calc(var(--grid-unit) * 6px);
         }
 
         .location {

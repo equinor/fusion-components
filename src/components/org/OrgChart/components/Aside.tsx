@@ -50,20 +50,20 @@ function Aside<T>() {
         }
     }, [asideRows, rows]);
 
-    const getStartXPosition = (cards: OrgNode<T>[]) => {
+    const getStartXPosition = () => {
         if (numberOfCardsPerRow === 1) {
             if (width < cardWidth * 1.5 + 10) {
                 return width - cardWidth ;
             }
             return cardWidth / 2 + 10;
         }
-        const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
-        return centerX - totalWidth / 2;
+        const totalWidth = 2 * cardWidth + cardMargin;
+        return  centerX - totalWidth / 2;
     };
 
     const renderRow = useCallback(
         (cards: OrgNode<T>[], rowNo: number) => {
-            const startX = getStartXPosition(cards);
+            const startX = getStartXPosition();
             return cards.map((card, i) => (
                 <Card
                     key={card.id}
