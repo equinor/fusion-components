@@ -28,8 +28,8 @@ const useOrgChartActions = <T extends OrgStructure>({
             return {
                 id: item.id,
                 parentId: item.parentId,
-                x: 0,
-                y: 0,
+                x: null,
+                y: null,
                 data: item,
                 aside: item.aside,
             };

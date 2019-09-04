@@ -18,6 +18,9 @@ const Links = <T extends OrgStructure>() => {
         allNodes,
     ]);
 
+    const centerHeight = cardHeight / 2;
+    const centerWidth = cardWidth / 2;
+    
     const getAsidePath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
             if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
@@ -26,15 +29,15 @@ const Links = <T extends OrgStructure>() => {
 
             if (node.x > centerX) {
                 return `
-                    M ${node.x + 10} ${node.y + cardHeight / 2}
-                    L ${centerX} ${node.y + cardHeight / 2}
-                    L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                    M ${node.x + centerWidth} ${node.y + centerHeight}
+                    L ${centerX} ${node.y + centerHeight}
+                    L ${parent.x + centerWidth} ${parent.y + centerHeight}
                     `;
             }
             return `
-                M ${node.x + cardWidth - 10} ${node.y + cardHeight / 2}
-                L ${centerX} ${node.y + cardHeight / 2}
-                L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                M ${node.x + centerWidth} ${node.y + centerHeight}
+                L ${centerX} ${node.y + centerHeight}
+                L ${parent.x + centerWidth} ${parent.y + centerHeight}
                 `;
         },
         [centerX, cardHeight, cardWidth]
@@ -55,19 +58,19 @@ const Links = <T extends OrgStructure>() => {
                 }
 
                 return `
-                    M ${node.x + cardWidth / 2} ${node.y + 10}
+                    M ${node.x + centerWidth} ${node.y + centerHeight}
                     V ${node.y - 10}
                     H ${firstChild.x + cardWidth + cardMargin / 2}
                     V ${firstChild.y - 10}
                     H ${centerX}
-                    L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                    L ${parent.x + centerWidth} ${parent.y + centerHeight}
                     `;
             }
             return `
-                M ${node.x + cardWidth / 2} ${node.y + 10}
+                M ${node.x + centerWidth} ${node.y + centerHeight}
                 V ${node.y - 10}
                 H ${centerX}
-                L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                L ${parent.x + centerWidth} ${parent.y + centerHeight}
                 `;
         },
         [centerX, cardHeight, cardWidth, numberOfCardsPerRow, allChildren]
@@ -81,23 +84,23 @@ const Links = <T extends OrgStructure>() => {
             
             if(width < cardWidth + 30) {
                 return `
-                    M ${node.x + 10} ${node.y + cardHeight / 4}
+                    M ${node.x + centerWidth} ${node.y + cardHeight / 4}
                     H ${node.x - 10}
-                    L ${parent.x + 20} ${parent.y + cardHeight - 10}
+                    L ${parent.x + 20} ${parent.y + centerHeight}
                     `;
             }
             if(width < cardWidth * 1.5 + 10){
                 const range = width - cardWidth - 10;
                 return `
-                    M ${node.x + 10} ${node.y + cardHeight / 4}
+                    M ${node.x + centerWidth} ${node.y + cardHeight / 4}
                     H ${node.x - 10}
-                    L ${parent.x + range} ${parent.y + cardHeight - 10}
+                    L ${parent.x + range} ${parent.y + centerHeight}
                     `;
             }
             return `
-                M ${node.x + 10} ${node.y + cardHeight / 4}
+                M ${node.x + centerWidth} ${node.y + cardHeight / 4}
                 H ${node.x - 10}
-                L ${parent.x + cardWidth / 2} ${parent.y + cardHeight - 10}
+                L ${parent.x + centerWidth} ${parent.y + centerHeight}
                 `;
         },
         [allChildren, cardHeight, cardWidth ,width]
