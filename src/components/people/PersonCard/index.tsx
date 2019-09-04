@@ -26,16 +26,13 @@ export default ({ personId, person, photoSize = 'xlarge' }: PersonCardProps) => 
     }, [error, personDetails]);
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
-    const detailsClassNames = classNames(styles.details, useComponentDisplayClassNames(styles));
-    const nameClassNames = classNames(styles.name, useComponentDisplayClassNames(styles));
-    const emailClassNames = classNames(styles.email, useComponentDisplayClassNames(styles));
 
     return (
         <div className={containerClassNames}>
             <PersonPhoto personId={currentPerson.azureUniqueId} size={photoSize} />
-            <div className={detailsClassNames}>
-                <div className={nameClassNames}>{currentPerson.name}</div>
-                <div className={emailClassNames}>
+            <div className={styles.details}>
+                <div className={styles.name}>{currentPerson.name}</div>
+                <div className={styles.email}>
                     <a href={`mailto:${currentPerson.mail}`}>{currentPerson.mail}</a>
                 </div>
             </div>
