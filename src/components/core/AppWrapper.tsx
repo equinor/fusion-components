@@ -95,13 +95,21 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     }
 
     if (!currentApp) {
-        return <ErrorMessage errorType="notFound" title="Unable to find the selected app" message="" />;
+        return (
+            <ErrorMessage
+                hasError
+                errorType="notFound"
+                title="Unable to find the selected app"
+                message=""
+            />
+        );
     }
 
     const AppComponent = currentApp.AppComponent;
     if (!AppComponent) {
         return (
             <ErrorMessage
+                hasError
                 errorType="error"
                 title="There seems to be something wrong with this app"
                 message=""
