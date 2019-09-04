@@ -6,28 +6,26 @@ import { OrgChartContextReducer, OrgChartContext } from '../store';
 
 const BreadCrumbs = () => {
     const {
-        state: { breadCrumbComponent, breadCrumbs, centerX, cardWidth, numberOfCardsPerRow },
+        state: { breadCrumbComponent, breadCrumbs, centerX, cardWidth, numberOfCardsPerRow, breadCrumbWidth, breadCrumbHeight, breadCrumbMargin },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
 
-    const componentWidth = 194;
-    const componentHeight = 52;
     const x = centerX - cardWidth / 2;
-    const y = 0;
+    const y = 0
 
     const renderLink = useCallback(
         (index: number) => {
             const path = `
-            M ${x - componentWidth * (index + 1)} ${y + componentHeight / 2}
-            L ${x + 10} ${y + componentHeight / 2}
+            M ${x - breadCrumbWidth * (index + 1)} ${y + breadCrumbHeight / 2}
+            L ${x + cardWidth / 2} ${y + breadCrumbHeight / 2}
             `;
             return <path d={path} className={styles.link} />;
         },
-        [componentHeight, componentWidth, x, y]
+        [breadCrumbHeight, breadCrumbWidth, x, y]
     );
 
     const renderComponent = useCallback(
         (breadCrumb: BreadCrumb, index: number) => {
-            const componentX = x - (componentWidth + 10) * (index + 1);
+            const componentX = x - (breadCrumbWidth + breadCrumbMargin) * (index + 1);
             const componentY = y;
 
             const BreadCrumbComponent = breadCrumbComponent;
@@ -36,15 +34,15 @@ const BreadCrumbs = () => {
                     <rect
                         x={componentX}
                         y={componentY}
-                        width={componentWidth}
-                        height={componentHeight}
+                        width={breadCrumbWidth}
+                        height={breadCrumbHeight}
                         className={styles.breadCrumbRect}
                     />
                     <foreignObject
                         x={componentX}
                         y={componentY}
-                        width={componentWidth}
-                        height={componentHeight}
+                        width={breadCrumbWidth}
+                        height={breadCrumbHeight}
                     >
                         {BreadCrumbComponent && (
                             <BreadCrumbComponent
@@ -66,7 +64,7 @@ const BreadCrumbs = () => {
 
     return (
         <g className="bread-crumbs">
-            {breadCrumbs.map((crumb, index) => {
+            {breadCrumbs.map((_, index) => {
                 return renderLink(index);
             })}
             {breadCrumbs.map((crumb, index) => {

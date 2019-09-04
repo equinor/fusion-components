@@ -17,6 +17,7 @@ type Action<T> =
     | { type: 'UPDATE_POSITION'; node: OrgNode<T>; x: number; y: number }
     | { type: 'UPDATE_LABELS'; childrenLabel?: string; asideLabel?: string }
     | { type: 'UPDATE_BREADCRUMBS'; breadcrumbs: BreadCrumb[]  | null}
+    | { type: 'UPDATE_BREADCRUMBS_SIZE'; height?: number; width?: number; margin?: number}
     | { type: 'UPDATE_NUMBER_OF_CARDS_PER_ROW'; numberOfCardsPerRow: number };
 
 export type OrgChartContextType<T> = {
@@ -38,6 +39,9 @@ export type OrgChartContextType<T> = {
     breadCrumbs: BreadCrumb[] | null;
     breadCrumbComponent: React.FC<BreadCrumb> | null;
     numberOfCardsPerRow: number;
+    breadCrumbWidth: number;
+    breadCrumbHeight: number;
+    breadCrumbMargin: number;
 };
 
 export type OrgChartContextReducer<T> = {
@@ -123,6 +127,13 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                 ...state,
                 breadCrumbs: action.breadcrumbs,
             };
+        case 'UPDATE_BREADCRUMBS_SIZE':
+                return{
+                    ...state,
+                    breadCrumbWidth: action.width || state.breadCrumbWidth,
+                    breadCrumbHeight: action.height || state.breadCrumbHeight,
+                    breadCrumbMargin: action.margin || state.breadCrumbMargin,
+                }
         case 'UPDATE_NUMBER_OF_CARDS_PER_ROW':
             return {
                 ...state,
@@ -151,6 +162,9 @@ export function OrgChartContextProvider<T>({ children }: any) {
         breadCrumbs: null,
         breadCrumbComponent: null,
         numberOfCardsPerRow: 0,
+        breadCrumbWidth: 0,
+        breadCrumbHeight: 0,
+        breadCrumbMargin: 0,
     };
 
     const [state, dispatch] = useReducer<Reducer<OrgChartContextType<T>, Action<T>>>(

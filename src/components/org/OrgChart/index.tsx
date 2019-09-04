@@ -25,7 +25,7 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
     useOrgChartActions({ ...props, parentHeight: height, parentWidth: width });
 
     const {
-        state: { rowMargin, asideRows, childrenRows, allNodes },
+        state: { rowMargin, asideRows, childrenRows },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     const svgHeight = useMemo(() => {
@@ -44,11 +44,11 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
             viewBox={`0 0 ${width} ${svgHeight}`}
         >
             <Links />
-            <Root />
             <Aside />
+            <BreadCrumbs />
+            <Root />
             <Children />
             <Labels />
-            <BreadCrumbs />
         </svg>
     );
 };
