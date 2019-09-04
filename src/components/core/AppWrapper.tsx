@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Router } from 'react-router-dom';
 import { History, Path, LocationState, LocationDescriptorObject, createPath } from 'history';
 import { useFusionContext, combineUrls, HistoryContext } from '@equinor/fusion';
+import { Spinner, ErrorMessage, ErrorBoundary } from '@equinor/fusion-components';
 
 const hasBasename = (path: string, prefix: string) => {
     return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
@@ -15,7 +16,7 @@ const createAppHistory = (history: History, appKey?: string): History => {
     const basename = combineUrls('/apps', appKey || '');
 
     const ensurePathBaseName = (path: Path | LocationDescriptorObject<LocationState>) => {
-        if (typeof path === "string") {
+        if (typeof path === 'string') {
             return combineUrls(basename, path.toString());
         }
 
@@ -58,7 +59,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     } = useFusionContext();
     const [isFetching, setIsFetching] = useState(false);
 
-    const currentApp = appContainer.get(appKey || null);
+    const currentApp = appContainer.currentApp;
 
     const setCurrentApp = async () => {
         setIsFetching(true);
@@ -90,24 +91,32 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     const appHistory = useMemo(() => createAppHistory(history, appKey), [appKey]);
 
     if (currentApp === null && isFetching) {
-        return <div>Is fetching</div>;
+        return <Spinner centered floating />;
     }
 
     if (!currentApp) {
-        return <div>Unable to find app</div>;
+        return <ErrorMessage errorType="notFound" title="Unable to find the selected app" message="" />;
     }
 
     const AppComponent = currentApp.AppComponent;
     if (!AppComponent) {
-        return null;
+        return (
+            <ErrorMessage
+                errorType="error"
+                title="There seems to be something wrong with this app"
+                message=""
+            />
+        );
     }
 
     return (
-        <HistoryContext.Provider value={{ history: appHistory }}>
-            <Router history={appHistory}>
-                <AppComponent />
-            </Router>
-        </HistoryContext.Provider>
+        <ErrorBoundary>
+            <HistoryContext.Provider value={{ history: appHistory }}>
+                <Router history={appHistory}>
+                    <AppComponent />
+                </Router>
+            </HistoryContext.Provider>
+        </ErrorBoundary>
     );
 };
 
