@@ -7,9 +7,10 @@ type NavigationItemProps = {
     isActive?: boolean;
     isCollapsed?: boolean;
     type: 'child' | 'section' | 'grouping';
+    onClick?: () => void;
 };
 
-const NavigationItem = ({ children, isActive, isCollapsed, type }: NavigationItemProps) => {
+const NavigationItem = ({ children, isActive, isCollapsed, type, onClick }: NavigationItemProps) => {
     const containerClassNames = classNames(styles.container, {
         [styles.isActive]: isActive,
         [styles.isCollapsed]: isCollapsed,
@@ -19,7 +20,7 @@ const NavigationItem = ({ children, isActive, isCollapsed, type }: NavigationIte
     });
 
     return (
-        <div className={containerClassNames}>
+        <div className={containerClassNames} onClick={onClick}>
             {children}
             <div className={styles.visualOnClickContainer} />
         </div>
