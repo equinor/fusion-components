@@ -31,20 +31,23 @@ const createAppHistory = (history: History, appKey?: string): History => {
             pathname: stripBasename(history.location.pathname, basename),
         },
         createHref: location => basename + history.createHref(location),
-        push: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) =>
-            history.push(ensurePathBaseName(path), state),
+        push: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) => {
+            console.log('HISTORY PUSH', path, ensurePathBaseName(path), state);
+            history.push(ensurePathBaseName(path), state);
+        },
         replace: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) =>
             history.replace(ensurePathBaseName(path), state),
         listen: func =>
-            history.listen((location, action) =>
+            history.listen((location, action) => {
+                console.log("HISTORY CHANGED", location, stripBasename(location.pathname, basename));
                 func(
                     {
                         ...location,
                         pathname: stripBasename(location.pathname, basename),
                     },
                     action
-                )
-            ),
+                );
+            }),
     };
 };
 
