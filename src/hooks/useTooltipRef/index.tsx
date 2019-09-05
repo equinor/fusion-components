@@ -20,10 +20,8 @@ export default (
 
     const tooltipClassName = classNames(styles.tooltip, styles[placement.toLocaleLowerCase()]);
 
-    if (!content || content === '') return ref;
-
     useOverlayPortal(
-        isOpen,
+        isOpen && content !== '',
         <div
             className={styles.container}
             style={{

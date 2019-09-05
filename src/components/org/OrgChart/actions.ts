@@ -20,6 +20,9 @@ const useOrgChartActions = <T extends OrgStructure>({
     parentHeight,
     parentWidth,
     breadCrumbs,
+    breadCrumbWidth = 194,
+    breadCrumbHeight = 52,
+    breadCrumbMargin = 16,
 }: OrgChartActionProps<T>) => {
     const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
@@ -99,6 +102,15 @@ const useOrgChartActions = <T extends OrgStructure>({
                 breadcrumbs: breadCrumbs || null,
             });
     }, [breadCrumbs]);
+
+    useEffect(() =>{
+        dispatch({
+            type:'UPDATE_BREADCRUMBS_SIZE',
+            width: breadCrumbWidth,
+            height: breadCrumbHeight,
+            margin: breadCrumbMargin,
+        });
+    }, [breadCrumbHeight, breadCrumbMargin, breadCrumbWidth]);
 };
 
 export default useOrgChartActions;
