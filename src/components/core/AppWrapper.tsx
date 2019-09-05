@@ -32,14 +32,12 @@ const createAppHistory = (history: History, appKey?: string): History => {
         },
         createHref: location => basename + history.createHref(location),
         push: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) => {
-            console.log('HISTORY PUSH', path, ensurePathBaseName(path), state);
             history.push(ensurePathBaseName(path), state);
         },
         replace: (path: Path | LocationDescriptorObject<LocationState>, state?: LocationState) =>
             history.replace(ensurePathBaseName(path), state),
         listen: func =>
             history.listen((location, action) => {
-                console.log("HISTORY CHANGED", location, stripBasename(location.pathname, basename));
                 func(
                     {
                         ...location,
@@ -91,7 +89,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
         });
     }, [appKey]);
 
-    const appHistory = useMemo(() => createAppHistory(history, appKey), [appKey]);
+    const appHistory = useMemo(() => createAppHistory(history, appKey), [appKey, history, history.location]);
 
     if (currentApp === null && isFetching) {
         return <Spinner centered floating />;
