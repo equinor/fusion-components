@@ -34,8 +34,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             if (onClick) {
-                onClick(position, instance);
                 e.stopPropagation();
+                onClick(position, instance);
             }
         },
         [position, instance, onClick]
@@ -44,8 +44,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const onExpandHandler = useCallback(
         (e: React.MouseEvent<HTMLButtonElement>) => {
             if (onExpand) {
-                onExpand(position, instance);
                 e.stopPropagation();
+                onExpand(position, instance);
             }
         },
         [position, instance, onExpand]
