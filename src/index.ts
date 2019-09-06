@@ -101,7 +101,7 @@ export { default as ReportingPath } from './components/org/ReportingPath';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
-export { BlockIcon } from './components/icons/components/content';
+export { BlockIcon, SaveIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
@@ -123,6 +123,7 @@ export {
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
+export { EditIcon } from './components/icons/components/image';
 
 // Styling
 export { default as styling } from './styles/styling';
