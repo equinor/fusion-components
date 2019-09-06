@@ -18,6 +18,7 @@ const position: Position = {
     externalId: '800',
     instances: [
         {
+            id: '1234567890',
             appliesFrom: new Date(new Date().getFullYear() - 1, 0),
             appliesTo: new Date(new Date().getFullYear() + 1, 0),
             location: {
@@ -28,7 +29,7 @@ const position: Position = {
             },
             obs: 'obs',
             percent: 100,
-            type: 'type',
+            type: 'Normal',
             assignedPerson: {
                 accountType: 'Employee',
                 azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
