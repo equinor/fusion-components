@@ -1,5 +1,6 @@
 // Core components
 export { default as FusionHeader } from './components/core/Header';
+export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
 export { default as FusionRoot } from './components/core/Root';
 export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
