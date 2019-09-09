@@ -7,7 +7,7 @@ const HeaderContentPortal: React.FC = ({ children }) => {
         refs: { headerContent },
     } = useFusionContext();
 
-    if (headerContent.current === null) {
+    if (!headerContent.current) {
         return null;
     }
 
