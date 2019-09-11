@@ -100,6 +100,7 @@ export {
     OrgNode,
 } from './components/org/OrgChart';
 export { default as ReportingPath } from './components/org/ReportingPath';
+export { default as PositionPicker } from './components/org/PositionPicker';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
