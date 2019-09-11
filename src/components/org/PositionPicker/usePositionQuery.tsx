@@ -16,6 +16,7 @@ const usePositionQuery = (
 
     const fetchPosition = useCallback(async (projectId: string) => {
         setPositions([]);
+        setIsFetching(true);
         try {
             const response = await fusionContext.http.apiClients.org.getPositionsAsync(projectId);
             setPositions(response.data);
@@ -30,13 +31,25 @@ const usePositionQuery = (
     useDebouncedAbortable(fetchPosition, projectId);
 
     const search = (query: string) => {
+        query = query.toLowerCase();
         setQuery(query);
 
         if (canQuery(query)) {
+            const now = Date.now();
             setFilteredPositions(
-                positions.filter(position =>
-                    position.name.toLowerCase().includes(query.toLowerCase())
-                )
+                positions
+                    .filter(
+                        position =>
+                            position.name.toLowerCase().includes(query) ||
+                            position.instances.some(
+                                i =>
+                                    now >= i.appliesFrom.getTime() &&
+                                    now <= i.appliesTo.getTime() &&
+                                    i.assignedPerson &&
+                                    i.assignedPerson.name.toLowerCase().includes(query)
+                            )
+                    )
+                    .slice(0, 10)
             );
         }
     };

@@ -1,9 +1,7 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import { actions } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { Position } from '@equinor/fusion';
-import { boolean, select } from '@storybook/addon-knobs';
 import PositionPicker from './index';
 
 const position: Position = {
@@ -63,10 +61,13 @@ const position: Position = {
 };
 
 const DefaultStory = () => {
+    const [selectedPosition, setSelectedPosition] = useState<Position | null>(null);
     return (
         <PositionPicker
             initialPosition={position}
             projectId="5e905893-26b3-41c9-be54-00f4f397493d"
+            selectedPosition={selectedPosition}
+            onSelect={setSelectedPosition}
         />
     );
 };
