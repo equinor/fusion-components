@@ -14,6 +14,10 @@ export const positionsToDropdownOption = (
     positions: Position[],
     selectedPosition: Position | null
 ): SearchableDropdownOption[] => {
+    if(selectedPosition !== null && !positions.find(p => p.id === selectedPosition.id)) {
+        positions = [selectedPosition, ...positions];
+    }
+
     if (positions.length === 0) {
         return [
             {
