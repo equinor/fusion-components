@@ -17,13 +17,18 @@ type PositionPickerProps = {
     onSelect?: (position: Position) => void;
     projectId: string;
     selectedPosition: Position | null;
+    label?: string;
 };
 
 type ItemComponentProps = {
-    item: { key: string, position: Position };
+    item: { key: string; title: string; position: Position };
 };
 
 const ItemComponent: React.FC<ItemComponentProps> = ({ item }) => {
+    if (item.key === 'empty') {
+        return <div>{item.title}</div>;
+    }
+
     const now = Date.now();
     const activeInstance = item.position.instances.find(
         i => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
@@ -51,32 +56,37 @@ const AsideComponent: React.FC<ItemComponentProps> = ({ item }) => {
         i => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
     );
 
-    return <PersonPhoto person={activeInstance ? activeInstance.assignedPerson : undefined} size="medium" />;
+    return (
+        <PersonPhoto
+            person={activeInstance ? activeInstance.assignedPerson : undefined}
+            size="medium"
+        />
+    );
 };
 
-
-const PositionPicker = ({ initialPosition, selectedPosition, onSelect, projectId }: PositionPickerProps) => {
+const PositionPicker = ({
+    initialPosition,
+    selectedPosition,
+    onSelect,
+    projectId,
+    label,
+}: PositionPickerProps) => {
     const [options, setOptions] = useState<SearchableDropdownOption[]>([]);
     const [error, isFetching, filteredPositions, search] = usePositionQuery(projectId);
     const [searchQuery, setSearchQuery] = useState('');
-    const [isInitialized, setInitialized] = useState(false);
 
     useEffect(() => {
-        if (initialPosition && !isInitialized) {
-            setOptions(singlePositionToDropdownOption(initialPosition, selectedPosition));
+        if (initialPosition) {
+            setOptions(singlePositionToDropdownOption(searchQuery, initialPosition, selectedPosition));
         }
-    }, [isInitialized, initialPosition, selectedPosition]);
+    }, [initialPosition, selectedPosition]);
 
     useEffect(() => {
         search(searchQuery);
-    }, [searchQuery]);
+    }, [searchQuery, isFetching]);
 
     useEffect(() => {
-        if (isInitialized) {
-            setOptions(positionsToDropdownOption(filteredPositions, selectedPosition));
-        } else {
-            setInitialized(searchQuery !== '');
-        }
+        setOptions(positionsToDropdownOption(searchQuery, filteredPositions, selectedPosition));
     }, [filteredPositions, isFetching, selectedPosition]);
 
     const handleSelect = useCallback(
@@ -95,7 +105,7 @@ const PositionPicker = ({ initialPosition, selectedPosition, onSelect, projectId
             itemComponent={ItemComponent}
             asideComponent={AsideComponent}
             onSearchAsync={setSearchQuery}
-            label="Select position"
+            label={label || 'Select position'}
         />
     );
 };
