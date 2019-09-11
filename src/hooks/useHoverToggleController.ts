@@ -1,5 +1,6 @@
 import { useRef, useState, MutableRefObject, useCallback } from 'react';
 import { useEventListener } from '@equinor/fusion-components';
+import { Recoverable } from 'repl';
 
 let showTimeout: NodeJS.Timeout;
 export default (delay: number = 300): [Boolean, MutableRefObject<any>] => {
@@ -16,8 +17,26 @@ export default (delay: number = 300): [Boolean, MutableRefObject<any>] => {
         setIsHovering(false);
     };
 
+    const checkShouldShow = useCallback(
+        (e: Event) => {
+            if (!ref.current || !e.target) {
+                return;
+            }
+
+            const target = e.target as Node;
+            const isWithinRef = ref.current.contains(target) || ref.current.isSameNode(target);
+            if (isWithinRef && !isHovering) {
+                show();
+            } else if (!isWithinRef && isHovering) {
+                hide();
+            }
+        },
+        [show, ref.current]
+    );
+
     useEventListener(ref.current, 'mouseenter', show, [ref.current]);
     useEventListener(ref.current, 'mouseleave', hide, [ref.current]);
+    useEventListener(window, 'mousemove', checkShouldShow, []);
 
     return [isHovering, ref];
 };

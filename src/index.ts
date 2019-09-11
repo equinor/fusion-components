@@ -1,5 +1,6 @@
 // Core components
 export { default as FusionHeader } from './components/core/Header';
+export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
 export { default as FusionRoot } from './components/core/Root';
 export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
@@ -55,6 +56,8 @@ export { default as Accordion, AccordionItem } from './components/general/Accord
 export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
 
+export { default as MarkdownViewer } from './components/general/MarkdownViewer';
+
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
 export { default as Banner } from './components/feedback/Banner';
@@ -101,7 +104,7 @@ export { default as ReportingPath } from './components/org/ReportingPath';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
-export { BlockIcon } from './components/icons/components/content';
+export { BlockIcon, SaveIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
@@ -123,6 +126,7 @@ export {
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
+export { EditIcon } from './components/icons/components/image';
 
 // Styling
 export { default as styling } from './styles/styling';

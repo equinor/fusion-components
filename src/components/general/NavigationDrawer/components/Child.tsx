@@ -11,17 +11,11 @@ const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
         onClick && onClick();
     }, [onClick, id, isActive, onChange]);
 
-    const content = useMemo(() => {
-        return (
-            <div className={styles.linkContainer} onClick={change}>
+    return (
+        <NavigationItem type="child" isActive={isActive} onClick={change}>
+             <div className={styles.linkContainer}>
                 {title}
             </div>
-        );
-    }, [, title, onChange, isActive]);
-
-    return (
-        <NavigationItem type="child" isActive={isActive}>
-            {content}
         </NavigationItem>
     );
 };

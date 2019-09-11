@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
 import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
+import { useComponentDisplayType } from '@equinor/fusion';
 
 type Position = OrgStructure & {
     name?: string;
@@ -156,6 +157,11 @@ const breadCrumbs: BreadCrumb[] = [
 ]
 
 const OrgChartStory = () => {
+    const componentDisplayType = useComponentDisplayType();
+    const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
+    const rowMargin = componentDisplayType === 'Compact' ? 120 : 164;
+    const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
+
     return (
         <div style={{ width: '100%', height: '100%' }}>
             <OrgChart
@@ -163,6 +169,11 @@ const OrgChartStory = () => {
                 component={PositionCard}
                 breadCrumbComponent={BreadCrumb}
                 breadCrumbs={breadCrumbs}
+                cardWidth={340}
+                cardHeight={cardHeight}
+                rowMargin={rowMargin}
+                cardMargin={cardMargin}
+                breadCrumbMargin={10}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
             />

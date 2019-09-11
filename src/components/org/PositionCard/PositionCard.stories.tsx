@@ -18,7 +18,7 @@ const position: Position = {
     externalId: '800',
     instances: [
         {
-            id: 'tr',
+            id: '1234567890',
             appliesFrom: new Date(new Date().getFullYear() - 1, 0),
             appliesTo: new Date(new Date().getFullYear() + 1, 0),
             location: {

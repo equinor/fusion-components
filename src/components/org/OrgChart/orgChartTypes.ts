@@ -13,6 +13,9 @@ export type OrgChartProps<T> = {
     childrenLabel?: string;
     breadCrumbComponent?: React.FC<BreadCrumb>
     breadCrumbs?: BreadCrumb[]
+    breadCrumbWidth?: number;
+    breadCrumbHeight?: number;
+    breadCrumbMargin?: number;
 };
 
 export type OrgStructure = {
