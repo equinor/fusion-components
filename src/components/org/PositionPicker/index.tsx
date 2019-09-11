@@ -2,11 +2,9 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {
     SearchableDropdownWrapper,
     SearchableDropdownOption,
-    useTooltipRef,
-    PositionCard,
     PersonPhoto,
 } from '@equinor/fusion-components';
-import { Position, PositionInstance } from '@equinor/fusion';
+import { Position } from '@equinor/fusion';
 import {
     singlePositionToDropdownOption,
     positionsToDropdownOption,
@@ -33,13 +31,11 @@ const ItemComponent: React.FC<ItemComponentProps> = ({ item }) => {
 
     return (
         <div className={styles.cardContainer}>
-            <div className={styles.positionDetails}>
-                <div className={styles.positionName}>{item.position.name}</div>
-                <div className={styles.assignedPersonName}>
-                    {activeInstance && activeInstance.assignedPerson
-                        ? activeInstance.assignedPerson.name
-                        : 'TNB'}
-                </div>
+            <div className={styles.positionName}>{item.position.name}</div>
+            <div className={styles.assignedPersonName}>
+                {activeInstance && activeInstance.assignedPerson
+                    ? activeInstance.assignedPerson.name
+                    : 'TNB'}
             </div>
         </div>
     );
