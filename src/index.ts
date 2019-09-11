@@ -56,6 +56,8 @@ export { default as Accordion, AccordionItem } from './components/general/Accord
 export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
 
+export { default as MarkdownViewer } from './components/general/MarkdownViewer';
+
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
 export { default as Banner } from './components/feedback/Banner';
