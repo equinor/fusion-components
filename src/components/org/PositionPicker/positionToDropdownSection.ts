@@ -5,6 +5,16 @@ export const singlePositionToDropdownOption = (position: Position): SearchableDr
     const items = [position].map(p => ({
         key: p.id,
         title: p.name,
+        position: p,
+    }));
+    return items;
+};
+
+export const positionsToDropdownOption = (positions: Position[]): SearchableDropdownOption[] => {
+    const items = positions.map(p => ({
+        key: p.id,
+        title: p.name,
+        position: p,
     }));
     return items;
 };
