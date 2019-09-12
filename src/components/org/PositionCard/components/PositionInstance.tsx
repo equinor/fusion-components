@@ -56,6 +56,21 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         [position, instance, onExpand]
     );
 
+    const instances = position ? position.instances : [];
+    const instancesByFrom = React.useMemo(
+        () => [...instances].sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime()),
+        [instances]
+    );
+    const instancesByTo = React.useMemo(
+        () => [...instances].sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime()),
+        [instances]
+    );
+
+    const firstInstance = React.useMemo(() => instancesByFrom[0], [instancesByFrom]);
+    const lastInstance = React.useMemo(() => instancesByTo.find(i => i.appliesTo.getTime), [
+        instancesByTo,
+    ]);
+
     return (
         <div className={styles.positionInstance} onClick={onClickHandler}>
             <div className={styles.basePositionName}>{position.basePosition.name}</div>
@@ -68,8 +83,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showLocation && <div className={styles.location}>{locationName}</div>}
             {showDate && instance && (
                 <div className={styles.period}>
-                    {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
-                    {instance.percent}%)
+                    {formatDate(firstInstance.appliesFrom)} - {formatDate((lastInstance || firstInstance).appliesTo)} (
+                    {instance.workload}%)
                 </div>
             )}
             {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
