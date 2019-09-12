@@ -118,6 +118,10 @@ export {
     HistoryIcon,
     InfoIcon,
     OpenInNewIcon,
+    SettingsIcon,
+    HelpIcon,
+    PrintIcon,
+    DeleteIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
