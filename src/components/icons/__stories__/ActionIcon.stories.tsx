@@ -13,6 +13,10 @@ import {
     SearchIcon,
     SortIcon,
     OpenInNewIcon,
+    SettingsIcon,
+    HelpIcon,
+    PrintIcon,
+    DeleteIcon,
 } from '../components/action';
 
 const eventsFromNames = actions('onClick');
@@ -77,6 +81,38 @@ stories.add('History', () => (
 
 stories.add('Open In New', () => (
     <OpenInNewIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+stories.add('Settings', () => (
+    <SettingsIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+stories.add('Help', () => (
+    <HelpIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+stories.add('Print', () => (
+    <PrintIcon 
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+stories.add('Delete', () => (
+    <DeleteIcon 
         {...eventsFromNames}
         color={color('color', '#000')}
         height={number('height', 24)}
