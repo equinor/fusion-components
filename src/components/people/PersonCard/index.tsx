@@ -15,7 +15,7 @@ export type PersonCardProps = {
 
 export default ({ personId, person, photoSize = 'xlarge' }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
-    const [error, _, personDetails] = personId ? usePersonDetails(personId) : [null, false, person];
+    const { error, personDetails } = personId ? usePersonDetails(personId) : { error: null, personDetails: person };
 
     useEffect(() => {
         if (!error && personDetails) {

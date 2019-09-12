@@ -67,7 +67,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const firstInstance = React.useMemo(() => instancesByFrom[0], [instancesByFrom]);
-    const lastInstance = React.useMemo(() => instancesByTo.find(i => i.appliesTo.getTime), [
+    const lastInstance = React.useMemo(() => instancesByTo.find(i => i.appliesTo.getTime !== undefined), [
         instancesByTo,
     ]);
 
