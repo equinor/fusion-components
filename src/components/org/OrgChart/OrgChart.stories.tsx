@@ -117,20 +117,42 @@ const positions: Position[] = [
 
 const cardStyle = {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'left',
     alignItems: 'center',
     backgroundColor: 'white',
     boxShadow:
         '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
     margin: '10px',
+    paddingLeft: '16px',
+    paddingRight: '16px',
+    paddingTop: '16px',
+    paddingBottom: '8px',
     boxSizing: 'border-box',
     flex: '1',
     fontSize: '16px',
     height: 'calc(100% - 20px)',
 } as React.CSSProperties;
 
+const breadCrumbStyle = {
+    display: 'flex',
+    justifyContent: 'left',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    boxShadow:
+        '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
+    margin: '10px',
+    paddingLeft: '16px',
+    paddingRight: '16px',
+    paddingTop: '8px',
+    paddingBottom: '8px',
+    boxSizing: 'border-box',
+    flex: '1',
+    fontSize: '16px',
+    height: '32px',
+} as React.CSSProperties;
+
 const BreadCrumb: React.FC<BreadCrumb> = ({ label }) => {
-    return <div style={{...cardStyle, cursor:"pointer"}}>{label}</div>;
+    return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
 };
 
 const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
@@ -144,23 +166,23 @@ const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
 };
 
 const breadCrumbs: BreadCrumb[] = [
-        {
-            childId: '1',
-            label: 'Boss',
-            id: '101',
-        },
-        {
-            childId: '101',
-            label: 'Director',
-            id: '102',
-        },
-]
+    {
+        childId: '1',
+        label: 'Boss',
+        id: '101',
+    },
+    {
+        childId: '101',
+        label: 'Director',
+        id: '102',
+    },
+];
 
 const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
     const rowMargin = componentDisplayType === 'Compact' ? 120 : 164;
-    const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
+    const cardMargin = componentDisplayType === 'Compact' ? 24 : 16;
 
     return (
         <div style={{ width: '100%', height: '100%' }}>

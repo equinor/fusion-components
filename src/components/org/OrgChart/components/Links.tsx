@@ -20,23 +20,23 @@ const Links = <T extends OrgStructure>() => {
 
     const centerHeight = cardHeight / 2;
     const centerWidth = cardWidth / 2;
-    
+
     const getAsidePath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
-            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+            if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
 
             if (node.x > centerX) {
                 return `
-                    M ${node.x + centerWidth} ${node.y + centerHeight}
-                    L ${centerX} ${node.y + centerHeight}
+                    M ${node.x + centerWidth} ${node.y + (cardMargin + 16)}
+                    L ${centerX} ${node.y + (cardMargin + 16)}
                     L ${parent.x + centerWidth} ${parent.y + centerHeight}
                     `;
             }
             return `
-                M ${node.x + centerWidth} ${node.y + centerHeight}
-                L ${centerX} ${node.y + centerHeight}
+                M ${node.x + centerWidth} ${node.y + (cardMargin + 16)}
+                L ${centerX} ${node.y + (cardMargin + 16)}
                 L ${parent.x + centerWidth} ${parent.y + centerHeight}
                 `;
         },
@@ -45,7 +45,7 @@ const Links = <T extends OrgStructure>() => {
 
     const getChildPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>, index: number) => {
-            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+            if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
 
@@ -53,7 +53,7 @@ const Links = <T extends OrgStructure>() => {
                 // Children row that will align left
                 const firstChild = allChildren[0];
 
-                if(firstChild.x === null || firstChild.y === null) {
+                if (firstChild.x === null || firstChild.y === null) {
                     return '';
                 }
 
@@ -78,18 +78,18 @@ const Links = <T extends OrgStructure>() => {
 
     const getSingleCardRowPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
-            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+            if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
-            
-            if(width < cardWidth + 30) {
+
+            if (width < cardWidth + 30) {
                 return `
                     M ${node.x + centerWidth} ${node.y + cardHeight / 4}
                     H ${node.x - 10}
                     L ${parent.x + 20} ${parent.y + centerHeight}
                     `;
             }
-            if(width < cardWidth * 1.5 + 10){
+            if (width < cardWidth * 1.5 + 10) {
                 const range = width - cardWidth - 10;
                 return `
                     M ${node.x + centerWidth} ${node.y + cardHeight / 4}
@@ -103,7 +103,7 @@ const Links = <T extends OrgStructure>() => {
                 L ${parent.x + centerWidth} ${parent.y + centerHeight}
                 `;
         },
-        [allChildren, cardHeight, cardWidth ,width]
+        [allChildren, cardHeight, cardWidth, width]
     );
 
     const renderLink = useCallback(

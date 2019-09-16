@@ -53,12 +53,12 @@ function Aside<T>() {
     const getStartXPosition = () => {
         if (numberOfCardsPerRow === 1) {
             if (width < cardWidth * 1.5 + 10) {
-                return width - cardWidth ;
+                return width - cardWidth;
             }
             return cardWidth / 2 + 10;
         }
         const totalWidth = 2 * cardWidth + cardMargin;
-        return  centerX - totalWidth / 2;
+        return centerX - totalWidth / 2;
     };
 
     const renderRow = useCallback(
@@ -69,7 +69,7 @@ function Aside<T>() {
                     key={card.id}
                     node={card}
                     x={startX + i * (cardWidth + cardMargin)}
-                    y={(rowNo + 1) * rowMargin + 20}
+                    y={(rowNo + 1) * rowMargin + 24}
                 />
             ));
         },
