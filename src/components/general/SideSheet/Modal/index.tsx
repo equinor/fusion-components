@@ -10,12 +10,15 @@ import {
 } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
+export type SideSheetSize = 'large' | 'medium' | 'small';
+
 type ModalSideSheetProps = {
     children: ReactNode;
     header?: string;
     show?: boolean;
     onClose?: () => void;
     headerIcons?: ReactNode[];
+    size?: SideSheetSize;
 };
 
 const ModalSideSheet: FC<ModalSideSheetProps> = ({
@@ -24,6 +27,7 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
     show,
     onClose,
     headerIcons,
+    size,
 }) => {
     const [isShowing, setIsShowing] = useState(false);
 
@@ -43,6 +47,9 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
         useComponentDisplayClassNames(styles),
         {
             [styles.show]: isShowing,
+            [styles.large]: size === 'large',
+            [styles.medium]: size === 'medium',
+            [styles.small]: size === 'small',
         }
     );
 
