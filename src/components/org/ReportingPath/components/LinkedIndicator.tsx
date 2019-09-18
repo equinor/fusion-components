@@ -18,14 +18,14 @@ function LinkedIndicator<T>() {
         return (
             <>
                 <rect
-                    x={node.x - cardMargin}
-                    y={node.y + cardMargin / 2}
-                    width={24}
-                    height={24}
+                    x={node.x - cardMargin }
+                    y={node.y + cardMargin}
+                    width={16}
+                    height={16}
                     className={styles.linkedIndicator}
                 />
-                <foreignObject x={node.x - cardMargin} y={node.y + cardMargin / 2} width={24} height={24}>
-                    <LinkIcon color={styling.colors.blackAlt2}/>
+                <foreignObject x={node.x - cardMargin } y={node.y + cardMargin } width={16} height={16}>
+                    <LinkIcon color={styling.colors.blackAlt2} height={16} width={16}/>
                 </foreignObject>
             </>
         );
