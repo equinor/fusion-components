@@ -22,6 +22,7 @@ export type OrgStructure = {
     id: string;
     parentId?: string;
     aside?: boolean;
+    linked?: boolean;
 };
 
 export type OrgNode<T> = OrgStructure & {

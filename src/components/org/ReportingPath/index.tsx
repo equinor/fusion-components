@@ -1,6 +1,5 @@
 import React, { FC, useRef, useMemo, useContext } from 'react';
 import { OrgStructure, OrgChartItemProps, useParentSize } from '@equinor/fusion-components';
-import Root from './components/Root';
 import useReportingPathActions from './actions';
 import {
     ReportingPathContextProvider,
@@ -31,25 +30,26 @@ const ReportingPathContent = <T extends OrgStructure>(props: ReportingPathProps<
     useReportingPathActions({ ...props, parentHeight: height, parentWidth: width});
 
     const {
-        state: { rowMargin, childrenRows, cardWidth },
+        state: { rowMargin, childrenRows, cardWidth,allNodes },
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
     const svgHeight = useMemo(() => {
-        const rootMargin = rowMargin;
 
         const childrenMargin = rowMargin * childrenRows;
-        return childrenMargin + rootMargin;
-    }, [rowMargin, childrenRows]);
+        const linkedRows = allNodes.filter(node => node.linked);
+        const linkedMargin = linkedRows.length ? linkedRows.length * rowMargin : 0;
+
+        return childrenMargin  + linkedMargin;
+    }, [rowMargin, childrenRows, allNodes]);
 
     return (
         <svg
             ref={orgContainerRef}
-            width={cardWidth}
+            width={cardWidth * 1.4}
             height={svgHeight}
             viewBox={`0 0 ${cardWidth} ${svgHeight}`}
         >
             <Links />
-            <Root />
             <Children />
         </svg>
     );

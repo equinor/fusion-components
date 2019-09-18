@@ -32,6 +32,57 @@ const positions: Position[] = [
         personName: 'Sam Test',
         aside: true,
     },
+    {
+        id: '9',
+        parentId: '5',
+        name: 'Worker',
+        positionId: '3',
+        personName: 'Sam Test',
+        aside: true,
+    },
+    
+    {
+        id: '40',
+        parentId: '2',
+        name: 'Worker',
+        positionId: '3',
+        personName: 'Sam Test',
+        linked:true,
+    },
+    {
+        id: '50',
+        parentId: '9',
+        name: 'Worker',
+        positionId: '3',
+        personName: 'Sam Test',
+        linked:true,
+    },
+    {
+        id: '501',
+        parentId: '9',
+        name: 'Worker',
+        positionId: '3',
+        personName: 'Sam Test',
+        linked:true,
+    },
+    
+    {
+        id: '502',
+        parentId: '1',
+        name: 'Worker',
+        positionId: '3',
+        personName: 'Sam Test',
+        linked:true,
+    },
+    
+    {
+        id: '50321',
+        parentId: '1',
+        name: 'Worker',
+        positionId: '3',
+        personName: 'Sam Test',
+        linked:true,
+    },
 ];
 
 const cardStyle = {
