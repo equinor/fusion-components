@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import ReportingPath from '.';
 import { OrgStructure, OrgChartItemProps } from '@equinor/fusion-components';
+import { useComponentDisplayType } from '@equinor/fusion';
 
 type Position = OrgStructure & {
     name?: string;
@@ -66,23 +67,6 @@ const positions: Position[] = [
         linked:true,
     },
     
-    {
-        id: '502',
-        parentId: '1',
-        name: 'Worker',
-        positionId: '3',
-        personName: 'Sam Test',
-        linked:true,
-    },
-    
-    {
-        id: '50321',
-        parentId: '1',
-        name: 'Worker',
-        positionId: '3',
-        personName: 'Sam Test',
-        linked:true,
-    },
 ];
 
 const cardStyle = {
@@ -110,7 +94,12 @@ const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
 };
 
 const ReportingPathStory = () => {
-    return <ReportingPath structure={positions} component={PositionCard} />;
+    const componentDisplayType = useComponentDisplayType();
+    const cardHeight = componentDisplayType === "Compact" ? 110 : 142;
+    const rowMargin = componentDisplayType === "Compact" ? 120 : 154;
+    const cardMargin = componentDisplayType === "Compact" ? 16 : 16;
+    
+    return <ReportingPath structure={positions} component={PositionCard} cardHeight={cardHeight} rowMargin={rowMargin} cardMargin={cardMargin} />;
 };
 
 storiesOf('Pro org|Reporting Path', module)

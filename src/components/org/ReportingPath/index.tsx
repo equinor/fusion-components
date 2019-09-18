@@ -8,6 +8,7 @@ import {
 } from './store';
 import Children from './components/Children';
 import Links from './components/Links';
+import LinkedIndicator from './components/LinkedIndicator';
 
 export type ReportingPathProps<T> = {
     structure: T[];
@@ -51,6 +52,7 @@ const ReportingPathContent = <T extends OrgStructure>(props: ReportingPathProps<
         >
             <Links />
             <Children />
+            <LinkedIndicator />
         </svg>
     );
 };
