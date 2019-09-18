@@ -4,30 +4,41 @@ import { OrgNode } from '../orgChartTypes';
 
 import styles from './styles.less';
 import classNames from 'classnames';
+import { LinkIcon } from 'src/components/icons/components/wysiwyg';
 
 const Labels = () => {
     const {
-        state: { allNodes, rowMargin, cardWidth, asideLabel, childrenLabel, centerX, numberOfCardsPerRow, asideRows, childrenRows },
+        state: {
+            allNodes,
+            rowMargin,
+            cardWidth,
+            asideLabel,
+            childrenLabel,
+            centerX,
+            numberOfCardsPerRow,
+            asideRows,
+            childrenRows,
+        },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
 
     const labelRectClassnames = classNames(styles.labelObject, {
-        [styles.oneCardRow]: numberOfCardsPerRow === 1
+        [styles.oneCardRow]: numberOfCardsPerRow === 1,
     });
 
     const getOneCardRowNode = useCallback((label: string, firstNode: OrgNode<any>) => {
         return {
-            data:label,
-            id:label,
+            data: label,
+            id: label,
             x: firstNode.x === null ? null : firstNode.x + 10,
             y: firstNode.y === null ? null : firstNode.y - 18,
-        } as OrgNode<string>
-    } ,[])
+        } as OrgNode<string>;
+    }, []);
 
     const childLabelNode = useMemo(() => {
         const childNodes = allNodes.filter(node => !node.aside && node.parentId);
         const firstChildNode = childNodes.length && childNodes[0];
 
-        if(firstChildNode && childrenLabel && numberOfCardsPerRow === 1){
+        if (firstChildNode && childrenLabel && numberOfCardsPerRow === 1) {
             return getOneCardRowNode(childrenLabel, firstChildNode);
         }
         return {
@@ -42,7 +53,7 @@ const Labels = () => {
         const asideNodes = allNodes.filter(node => node.aside && node.parentId);
         const firstAsideNode = asideNodes.length && asideNodes[0];
 
-        if(firstAsideNode && asideLabel && numberOfCardsPerRow === 1){
+        if (firstAsideNode && asideLabel && numberOfCardsPerRow === 1) {
             return getOneCardRowNode(asideLabel, firstAsideNode);
         }
         return {
@@ -55,10 +66,10 @@ const Labels = () => {
 
     const renderLabel = useCallback(
         (node: OrgNode<any>) => {
-            if(node.x === null || node.y === null) {
+            if (node.x === null || node.y === null) {
                 return null;
             }
-            
+
             return (
                 <>
                     <rect
