@@ -30,6 +30,7 @@ const useReportingPathActions = <T extends OrgStructure>({
                 y: 0,
                 data: item,
                 aside: item.aside,
+                linked: item.linked,
             };
         });
     };

@@ -4,7 +4,6 @@ import { OrgNode } from '../orgChartTypes';
 
 import styles from './styles.less';
 import classNames from 'classnames';
-import { LinkIcon } from 'src/components/icons/components/wysiwyg';
 
 const Labels = () => {
     const {

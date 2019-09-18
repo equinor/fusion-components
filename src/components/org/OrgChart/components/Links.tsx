@@ -30,14 +30,14 @@ const Links = <T extends OrgStructure>() => {
 
             if (node.x > centerX) {
                 return `
-                    M ${node.x + centerWidth} ${node.y + centerHeight}
-                    L ${centerX} ${node.y + centerHeight}
+                    M ${node.x + centerWidth} ${node.y + (cardMargin)}
+                    L ${centerX} ${node.y + (cardMargin)}
                     L ${parent.x + centerWidth} ${parent.y + centerHeight}
                     `;
             }
             return `
-                M ${node.x + centerWidth} ${node.y + centerHeight}
-                L ${centerX} ${node.y + centerHeight}
+                M ${node.x + centerWidth} ${node.y + (cardMargin)}
+                L ${centerX} ${node.y + (cardMargin)}
                 L ${parent.x + centerWidth} ${parent.y + centerHeight}
                 `;
         },
