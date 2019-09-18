@@ -10,7 +10,7 @@ import {
 } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
-export type SideSheetSize = 'large' | 'medium' | 'small';
+export type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 type ModalSideSheetProps = {
     children: ReactNode;
@@ -21,14 +21,14 @@ type ModalSideSheetProps = {
     size?: SideSheetSize;
 };
 
-const ModalSideSheet: FC<ModalSideSheetProps> = ({
+export default ({
     children,
     header,
     show,
     onClose,
     headerIcons,
-    size,
-}) => {
+    size = 'medium',
+}: ModalSideSheetProps) => {
     const [isShowing, setIsShowing] = useState(false);
 
     useEffect(() => {
@@ -47,6 +47,7 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
         useComponentDisplayClassNames(styles),
         {
             [styles.show]: isShowing,
+            [styles.xlarge]: size === 'xlarge',
             [styles.large]: size === 'large',
             [styles.medium]: size === 'medium',
             [styles.small]: size === 'small',
@@ -87,5 +88,3 @@ const ModalSideSheet: FC<ModalSideSheetProps> = ({
         </OverlayPortal>
     );
 };
-
-export default ModalSideSheet;

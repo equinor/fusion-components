@@ -21,16 +21,20 @@
         transition: transform .1s ease-out;
     }
 
+    &.xlarge {
+        --modal-size: calc(var(--grid-unit) * 80px);
+    }
+
     &.large{
-        --modal-size: calc(var(--grid-unit) * 100px);
+        --modal-size: calc(var(--grid-unit) * 60px);
     }
 
     &.medium{
-
+        --modal-size: calc(var(--grid-unit) * 40px);
     }
 
     &.small{
-
+        --modal-size: calc(var(--grid-unit) * 30px);
     }
 
     .content {
