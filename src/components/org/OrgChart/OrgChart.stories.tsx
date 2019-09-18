@@ -4,7 +4,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
 import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 import { useComponentDisplayType } from '@equinor/fusion';
-import { LinkIcon } from './../../../components/icons/components/wysiwyg/index';
+import { LinkIcon } from '@equinor/fusion-components';
 
 type Position = OrgStructure & {
     name?: string;

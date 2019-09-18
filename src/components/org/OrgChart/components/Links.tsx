@@ -124,8 +124,6 @@ const Links = <T extends OrgStructure>() => {
                 [styles.isLinked]: node.linked,
             });
 
-            console.log(node.linked);
-
             const path =
                 numberOfCardsPerRow === 1
                     ? getSingleCardRowPath(node, parent)
