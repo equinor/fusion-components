@@ -132,6 +132,7 @@ export {
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
+export { LinkIcon } from './components/icons/components/wysiwyg';
 
 // Styling
 export { default as styling } from './styles/styling';
