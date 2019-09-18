@@ -28,7 +28,7 @@ const position: Position = {
                 name: 'Stavanger',
             },
             obs: 'obs',
-            percent: 100,
+            workload: 100,
             type: 'Normal',
             assignedPerson: {
                 accountType: 'Employee',
