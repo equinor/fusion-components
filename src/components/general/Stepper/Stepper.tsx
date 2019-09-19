@@ -1,25 +1,15 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
+import StepPane from './StepPane';
+import StepContent from './StepContent';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;
     children: any;
-    forceOrder: boolean;
-    initialStepKey?: string;
-};
-
-type StepPaneProps = {
-    onChange: (stepKey: string) => void;
-    children: any;
-    activeStepKey: string;
-    activeStepPosition: number;
-    forceOrder: boolean;
-};
-
-type StepContentProps = {
-    children: any;
-    activeStepKey: string;
+    forceOrder?: boolean;
+    startStep?: number;
+    maxStep?: number;
 };
 
 type StepKey = {
@@ -30,75 +20,13 @@ type StepKey = {
 
 type StepDirection = 'next' | 'prev';
 
-const StepContent: React.FC<StepContentProps> = ({ children, activeStepKey }) => {
-    const active = React.Children.toArray(children).find(
-        child => child.props.stepKey === activeStepKey
-    );
-
-    if (!active) {
-        return null;
-    }
-
-    const clonedChildren = React.Children.map(active.props.children, child =>
-        React.cloneElement(child)
-    );
-
-    return <div>{clonedChildren}</div>;
-};
-
-const StepPane: React.FC<StepPaneProps> = ({
+const Stepper: React.FC<StepperProps> = ({
     children,
-    onChange,
-    activeStepKey,
-    activeStepPosition,
+    startStep,
     forceOrder,
+    onChange,
+    maxStep,
 }) => {
-    const stepPaneRef = React.useRef<HTMLDivElement | null>(null);
-    const activeStepRef = React.useRef<HTMLElement | null>(null);
-
-    const scrollToStep = (stepRef: HTMLElement | null) => {
-        if (!stepPaneRef.current || !stepRef) {
-            return;
-        }
-
-        const pane = stepPaneRef.current;
-
-        if (pane.scrollWidth === pane.offsetWidth) {
-            return;
-        }
-
-        pane.scrollTo(stepRef.offsetLeft - pane.offsetWidth / 2 + stepRef.offsetWidth / 2, 0);
-    };
-
-    React.useEffect(() => scrollToStep(activeStepRef.current), [activeStepKey]);
-
-    const clonedChildren = React.Children.map(children, (child, index) => {
-        const { title, stepKey } = child.props;
-
-        if (!title || !stepKey) {
-            return null;
-        }
-
-        return React.cloneElement(child, {
-            onChange: (ref: HTMLElement) => {
-                activeStepRef.current = ref;
-                onChange(stepKey);
-            },
-            isCurrent: stepKey === activeStepKey,
-            position: index + 1,
-            isClickable: !forceOrder,
-            done: activeStepPosition > index + 1,
-        });
-    });
-
-    return (
-        <div className={styles.stepPane} ref={stepPaneRef}>
-            {clonedChildren}
-        </div>
-    );
-};
-
-const Stepper: React.FC<StepperProps> = ({ children, initialStepKey, forceOrder, onChange }) => {
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
     const [activeStepKey, setActiveStepKey] = React.useState();
     const [activeStepPosition, setActiveStepPosition] = React.useState();
@@ -114,8 +42,11 @@ const Stepper: React.FC<StepperProps> = ({ children, initialStepKey, forceOrder,
         }));
 
         setStepKeys(steps);
-        setActiveStepKey(initialStepKey || steps[0].key);
-    }, []);
+
+        const startIndex = startStep && startStep > 0 ? startStep - 1 : 0;
+
+        setActiveStepKey(steps[startIndex].key);
+    }, [startStep]);
 
     React.useEffect(() => {
         if (onChange && activeStepKey) {
@@ -132,10 +63,15 @@ const Stepper: React.FC<StepperProps> = ({ children, initialStepKey, forceOrder,
             const next = stepKeys.find(sk => sk.position === current.position + 1);
             const prev = stepKeys.find(sk => sk.position === current.position - 1);
 
-            setCanNext(next !== undefined && !next.disabled);
+            if (maxStep) {
+                setCanNext(next !== undefined && !next.disabled && next.position <= maxStep);
+            } else {
+                setCanNext(next !== undefined && !next.disabled);
+            }
+
             setCanPrev(prev !== undefined && !prev.disabled);
         }
-    }, [stepKeys, activeStepKey]);
+    }, [stepKeys, activeStepKey, maxStep]);
 
     const findStepKey = React.useCallback(
         (direction: StepDirection) => {
@@ -174,10 +110,16 @@ const Stepper: React.FC<StepperProps> = ({ children, initialStepKey, forceOrder,
     const handleChange = React.useCallback(
         (stepKey: string) => {
             if (!forceOrder) {
+                const newStep = stepKeys.find(s => s.key === stepKey);
+
+                if (newStep && maxStep && newStep.position > maxStep) {
+                    return;
+                }
+
                 setActiveStepKey(stepKey);
             }
         },
-        [forceOrder]
+        [forceOrder, maxStep, stepKeys]
     );
 
     return (
@@ -190,11 +132,12 @@ const Stepper: React.FC<StepperProps> = ({ children, initialStepKey, forceOrder,
                     <ArrowForwardIcon />
                 </IconButton>
                 <StepPane
-                    forceOrder={forceOrder}
+                    forceOrder={forceOrder || false}
                     children={children}
                     activeStepKey={activeStepKey}
                     activeStepPosition={activeStepPosition}
                     onChange={handleChange}
+                    maxStep={maxStep}
                 />
             </div>
             <StepContent children={children} activeStepKey={activeStepKey} />

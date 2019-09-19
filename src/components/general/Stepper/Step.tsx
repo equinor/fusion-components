@@ -51,13 +51,11 @@ const Step: React.FC<StepProps> = ({
         [styles.disabled]: disabled,
     });
 
-    const titleClasses = classNames(styles.title);
-
     if (disabled) {
         return (
             <span className={stepClasses}>
                 <Badge position={position} active={isCurrent} done={done} />
-                <div className={titleClasses}>
+                <div className={styles.title}>
                     <span>{title}</span>
                 </div>
             </span>
@@ -71,7 +69,7 @@ const Step: React.FC<StepProps> = ({
             className={stepClasses}
         >
             <Badge position={position} active={isCurrent} done={done} />
-            <div className={titleClasses}>
+            <div className={styles.title}>
                 <span>{title}</span>
             </div>
         </a>

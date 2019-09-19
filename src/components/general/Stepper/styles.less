@@ -33,7 +33,7 @@
             }
     
             .title {
-                width: 250px;
+                width: calc(var(--grid-unit) * 32px);
                 overflow: hidden;
 
                 > span {
@@ -41,13 +41,13 @@
                     position: relative;
 
                     &::after {
-                        content: " ";
+                        content: "";
                         position: absolute;
                         height: calc(var(--grid-unit) * 1px);
                         border-bottom: 1px solid var(--line-color);
                         margin-left: calc(var(--grid-unit) * 2px);
                         top: 0;
-                        width: 250px;
+                        width: calc(var(--grid-unit) * 32px);
                         left: 100%;
                     }
                 }
