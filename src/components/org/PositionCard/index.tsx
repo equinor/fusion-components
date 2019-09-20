@@ -54,6 +54,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
             [styles.isExternal]: isExternal,
             [styles.isConsultant]: isConsultant,
             [styles.isExternalHire]: isExternalHire,
+            [styles.isLinked]: isLinked
         }
     );
 
