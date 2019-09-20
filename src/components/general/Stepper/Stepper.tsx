@@ -46,7 +46,7 @@ const Stepper: React.FC<StepperProps> = ({
         const startIndex = startStep && startStep > 0 ? startStep - 1 : 0;
 
         setActiveStepKey(steps[startIndex].key);
-    }, [startStep]);
+    }, [startStep, children]);
 
     React.useEffect(() => {
         if (onChange && activeStepKey) {
