@@ -1,0 +1,81 @@
+.stepper {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: calc(var(--grid-unit) * 2px) 0;
+
+    .stepPane {
+        display:flex;
+        flex-direction: row;
+        
+        .step {
+            padding: calc(var(--grid-unit) * 2px);
+            color: var(--color-black);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            --line-color: var(--color-primary);
+
+            &.isClickable {
+                cursor: pointer;
+            }
+
+            &.disabled {
+                cursor: not-allowed;
+                color: var(--color-black-alt3) !important;
+                --line-color: #ccc;
+            }
+    
+            &.current {
+                font-weight: 500;
+            }
+    
+            .title {
+                width: calc(var(--grid-unit) * 32px);
+                overflow: hidden;
+
+                > span {
+                    display: inline-block;
+                    position: relative;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        height: calc(var(--grid-unit) * 1px);
+                        border-bottom: 1px solid var(--line-color);
+                        margin-left: calc(var(--grid-unit) * 2px);
+                        top: 0;
+                        width: calc(var(--grid-unit) * 32px);
+                        left: 100%;
+                    }
+                }
+            }
+
+            .badge {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 26px;
+                width: 26px;
+                font-weight: 500;
+                border: 1px solid #dcdcdc;
+                border-radius: 50%;
+                margin-right: calc(var(--grid-unit) * 1px);
+
+                &.active {
+                    border:0;
+                    background: var(--color-primary);
+                    color: #fff;
+                }
+
+                &.done {
+                    border: 1px solid var(--color-primary);
+                    color: var(--color-primary);
+                }
+            }
+        }
+    }
+
+}
