@@ -124,7 +124,6 @@ const DefaultStory = () => {
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
             isSelected={false}
-            isLinked={true}
         />
     );
 };
