@@ -10,10 +10,15 @@ export { SliderMarker };
 type SliderProps = {
     value: number; // | [number, number];
     markers: SliderMarker[];
+    disabled?: boolean;
     onChange: (marker: SliderMarker) => void;
 };
 
-const Slider: React.FC<SliderProps> = ({ value, markers, onChange }) => {
+const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) => {
+    const sliderClassNames = classNames(styles.container, useComponentDisplayClassNames(styles), {
+        [styles.isDisabled]: disabled,
+    });
+
     const trackRef = useRef<HTMLDivElement | null>(null);
     const [trackLeft, setTrackLeft] = useState(0);
     const [trackWidth, setTrackWidth] = useState(0);
