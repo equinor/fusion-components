@@ -15,10 +15,6 @@ type SliderProps = {
 };
 
 const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) => {
-    const sliderClassNames = classNames(styles.container, useComponentDisplayClassNames(styles), {
-        [styles.isDisabled]: disabled,
-    });
-
     const trackRef = useRef<HTMLDivElement | null>(null);
     const [trackLeft, setTrackLeft] = useState(0);
     const [trackWidth, setTrackWidth] = useState(0);
@@ -51,10 +47,12 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
 
     const onTrackClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
-            const marker = markerFinder(e.pageX);
-            onChange(marker);
+            if (!disabled) {
+                const marker = markerFinder(e.pageX);
+                onChange(marker);
+            }
         },
-        [trackLeft, trackWidth, calculateValue, onChange]
+        [trackLeft, trackWidth, calculateValue, onChange, disabled]
     );
 
     const [mouseIsDown, setMouseIsDown] = useState(false);
@@ -64,15 +62,17 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
 
     const handleMouseMove = (e: Event) => {
         const mouseEvent = e as MouseEvent;
-        if (mouseIsDown) {
+        if (mouseIsDown && !disabled) {
             const marker = markerFinder(mouseEvent.pageX);
             onChange(marker);
         }
     };
 
     const handleMouseUp = useCallback(() => {
-        setMouseIsDown(false);
-    }, []);
+        if (!disabled) {
+            setMouseIsDown(false);
+        }
+    }, [disabled]);
 
     useEventListener(window, 'mousemove', handleMouseMove, [mouseIsDown]);
     useEventListener(window, 'mouseup', handleMouseUp, []);
@@ -82,6 +82,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
         useComponentDisplayClassNames(styles),
         {
             [styles.mouseIsDown]: mouseIsDown,
+            [styles.isDisabled]: disabled,
         }
     );
 
@@ -107,6 +108,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
                 <Marker
                     key={marker.value}
                     marker={marker}
+                    disabled={disabled}
                     isActive={value >= marker.value}
                     position={calculatePosition(marker.value)}
                     onClick={onChange}

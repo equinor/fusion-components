@@ -11,11 +11,12 @@ export type SliderMarker = {
 type SliderMarkerProps = {
     marker: SliderMarker;
     isActive: boolean;
+    disabled?: boolean;
     position: string;
     onClick: (marker: SliderMarker) => void;
 };
 
-const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, position, onClick }) => {
+const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, disabled, position, onClick }) => {
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
@@ -26,10 +27,15 @@ const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, position, onCli
 
     const markerClassNames = classNames(styles.marker, {
         [styles.isActive]: isActive,
-    })
+        [styles.isDisabled]: disabled,
+    });
 
     return (
-        <button className={markerClassNames} style={{ left: position }} onClick={onClickHandler}>
+        <button
+            className={markerClassNames}
+            style={{ left: position }}
+            onClick={e => !disabled && onClickHandler(e)}
+        >
             <div className={styles.dot} />
             <label>{marker.label}</label>
         </button>

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Slider from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
-import { DatePicker } from "@equinor/fusion-components";
+import { DatePicker } from '@equinor/fusion-components';
 
 const SliderPercentageStory = () => {
     const [value, setValue] = React.useState(75);
@@ -28,7 +28,12 @@ const SliderPercentageStory = () => {
 
     return (
         <div style={{ width: 400, margin: '0 auto' }}>
-            <Slider value={value} markers={markers} onChange={marker => setValue(marker.value)} />
+            <Slider
+                value={value}
+                disabled
+                markers={markers}
+                onChange={marker => setValue(marker.value)}
+            />
             <p>Value: {Math.ceil(value)}%</p>
         </div>
     );
@@ -57,13 +62,14 @@ const SliderDateStory = () => {
     ];
 
     return (
-        <div style={{ width: 800, margin: '0 auto'}}>
-            <div style={{ display: "flex" }}>
+        <div style={{ width: 800, margin: '0 auto' }}>
+            <div style={{ display: 'flex' }}>
                 <div style={{ width: 200, marginRight: 48, flexShrink: 0 }}>
-                <DatePicker selectedDate={value} onChange={date => date && setValue(date)} />
+                    <DatePicker selectedDate={value} onChange={date => date && setValue(date)} />
                 </div>
                 <Slider
                     value={value.getTime()}
+                    disabled
                     markers={markers}
                     onChange={marker => setValue(new Date(marker.value))}
                 />
