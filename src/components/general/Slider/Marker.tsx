@@ -27,7 +27,6 @@ const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, disabled, posit
 
     const markerClassNames = classNames(styles.marker, {
         [styles.isActive]: isActive,
-        [styles.isDisabled]: disabled,
     });
 
     return (

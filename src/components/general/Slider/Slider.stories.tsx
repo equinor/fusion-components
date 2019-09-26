@@ -28,13 +28,14 @@ const SliderPercentageStory = () => {
 
     return (
         <div style={{ width: 400, margin: '0 auto' }}>
+            <Slider value={value} markers={markers} onChange={marker => setValue(marker.value)} />
+            <p>Value: {Math.ceil(value)}%</p>
             <Slider
                 value={value}
                 disabled
                 markers={markers}
                 onChange={marker => setValue(marker.value)}
             />
-            <p>Value: {Math.ceil(value)}%</p>
         </div>
     );
 };
@@ -69,7 +70,6 @@ const SliderDateStory = () => {
                 </div>
                 <Slider
                     value={value.getTime()}
-                    disabled
                     markers={markers}
                     onChange={marker => setValue(new Date(marker.value))}
                 />
