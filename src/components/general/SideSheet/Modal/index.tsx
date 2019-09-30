@@ -27,7 +27,7 @@ export default ({
     show,
     onClose,
     headerIcons,
-    size = 'medium',
+    size = 'xlarge',
 }: ModalSideSheetProps) => {
     const [isShowing, setIsShowing] = useState(false);
 
