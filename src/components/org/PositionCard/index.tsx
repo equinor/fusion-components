@@ -18,7 +18,8 @@ type PositionCardProps = {
     showExternalId: boolean;
     showLocation: boolean;
     showDate: boolean;
-    isLinked?: boolean
+    showObs: boolean;
+    isLinked?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -30,6 +31,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showExternalId,
     showLocation,
     showDate,
+    showObs,
     onClick,
     onExpand,
     isLinked,
@@ -75,6 +77,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 showLocation={showLocation && componentDisplayType !== 'Compact'}
                 showDate={showDate && componentDisplayType !== 'Compact'}
                 showExternalId={showExternalId}
+                showObs={showObs}
                 onClick={onClick}
                 onExpand={onExpand}
                 isLinked={isLinked}
