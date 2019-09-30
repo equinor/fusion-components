@@ -12,4 +12,3 @@ export { default as SettingsIcon } from './SettingsIcon';
 export { default as HelpIcon } from './HelpIcon';
 export { default as PrintIcon } from './PrintIcon';
 export { default as DeleteIcon } from './DeleteIcon';
-

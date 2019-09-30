@@ -6,11 +6,11 @@ import { OrgNode } from '@equinor/fusion-components';
 
 function Children<T>() {
     const {
-        state: { allNodes, childrenRows, rowMargin },
+        state: { allNodes, childrenRows, rowMargin, width, initialCardWidth },
         dispatch,
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
-    const childrenNodes = useMemo(() => allNodes.filter(d => d.parentId), [allNodes]);
+    const childrenNodes = useMemo(() => allNodes.filter(d =>!d.linked), [allNodes]);
 
     useEffect(() => {
         if (childrenNodes.length !== childrenRows) {
@@ -21,26 +21,52 @@ function Children<T>() {
         }
     }, [childrenRows, childrenNodes]);
 
-    const renderRow = useCallback(
-        (card: OrgNode<T>, rowNo: number) => {
-            return (
-                <React.Fragment key={card.id}>
-                    <Card
-                        node={card}
-                        x={0}
-                        y={(rowNo + 1) * (rowMargin)}
-                    />
-                </React.Fragment>
-            );
-        },
+    const renderCard = useCallback(
+        (card: OrgNode<T>, rowNo: number): React.ReactNode => (
+            <React.Fragment key={card.id}>
+                <Card node={card} x={card.linked ? 72 : 0} y={(rowNo)* rowMargin} />
+            </React.Fragment>
+        ),
         [rowMargin]
+    );
+    useEffect(() => {
+        if (width <= initialCardWidth + 30) {
+            dispatch({
+                type: 'UPDATE_CARD_SIZE',
+                width: width - 30,
+            });
+        } else if (width !== initialCardWidth) {
+            dispatch({
+                type: 'UPDATE_CARD_SIZE',
+                width: initialCardWidth,
+            });
+        }
+    }, [width]);
+
+    const children = childrenNodes.reduce(
+        (previousChildren, currentChild) => {
+            const linkedNodes = allNodes.filter(node => node.parentId === currentChild.id && node.linked);
+            const linkedNodesComponents = linkedNodes.length
+                ? linkedNodes.map((node, index) => renderCard(node, previousChildren.length + index))
+                : null;
+
+            if (linkedNodesComponents) {
+                previousChildren.push(...linkedNodesComponents);
+            }
+            const childComponent = renderCard(
+                currentChild,
+                previousChildren.length
+            );
+            previousChildren.push(childComponent);
+
+            return previousChildren;
+        },
+        [] as React.ReactNode[]
     );
 
     return (
         <g className="children">
-            {childrenNodes.map((cards, rowNo) => (
-                <React.Fragment key={rowNo}>{renderRow(cards, rowNo)}</React.Fragment>
-            ))}
+            {children}
         </g>
     );
 }

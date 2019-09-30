@@ -4,6 +4,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
 import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 import { useComponentDisplayType } from '@equinor/fusion';
+import { LinkIcon } from '@equinor/fusion-components';
 
 type Position = OrgStructure & {
     name?: string;
@@ -25,6 +26,7 @@ const positions: Position[] = [
         positionId: '123',
         personName: 'Sam Test',
         aside: true,
+        linked: true,
     },
     {
         id: '5',
@@ -33,6 +35,7 @@ const positions: Position[] = [
         positionId: '3',
         personName: 'Sam Test',
         aside: true,
+        linked: true,
     },
     {
         id: '2132',
@@ -41,6 +44,7 @@ const positions: Position[] = [
         positionId: '123',
         personName: 'Sam Test',
         aside: true,
+        linked: true,
     },
     {
         id: '51245123',
@@ -70,13 +74,15 @@ const positions: Position[] = [
         name: 'Test worker 1',
         positionId: '4',
         personName: 'Test Test',
+        linked: true,
     },
     {
         id: '3123',
         parentId: '1',
         name: 'Engineer',
         positionId: '3',
-        personName: 'Jane Test',
+        personName: 'Jane Test 2',
+        linked: true,
     },
     {
         id: '3232',
@@ -105,6 +111,7 @@ const positions: Position[] = [
         name: 'Offshore Worker',
         positionId: '3',
         personName: 'Test 123',
+        linked: true,
     },
     {
         id: '4431212',
@@ -122,39 +129,44 @@ const cardStyle = {
     backgroundColor: 'white',
     boxShadow:
         '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
-    margin: '10px',
+    margin: '12px',
     boxSizing: 'border-box',
     flex: '1',
     fontSize: '16px',
-    height: 'calc(100% - 20px)',
+    height: 'calc(100% - 24px)',
 } as React.CSSProperties;
 
 const BreadCrumb: React.FC<BreadCrumb> = ({ label }) => {
-    return <div style={{...cardStyle, cursor:"pointer"}}>{label}</div>;
+    return <div style={{ ...cardStyle, cursor: 'pointer' }}>{label}</div>;
 };
 
 const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
+    const linkedStyling = item.linked
+        ? ({ border: '1px dashed #b9b9b8' } as React.CSSProperties)
+        : {};
+    const linkIcon = item.linked ? <LinkIcon /> : null;
     return (
-        <div style={cardStyle}>
+        <div style={{ ...cardStyle, ...linkedStyling }}>
             Position : {item.name}
             <br />
             Person : {item.personName}
+            <div style={{ position: 'relative', top: -45, right: '-15%' }}>{linkIcon}</div>
         </div>
     );
 };
 
 const breadCrumbs: BreadCrumb[] = [
-        {
-            childId: '1',
-            label: 'Boss',
-            id: '101',
-        },
-        {
-            childId: '101',
-            label: 'Director',
-            id: '102',
-        },
-]
+    {
+        childId: '1',
+        label: 'Boss',
+        id: '101',
+    },
+    {
+        childId: '101',
+        label: 'Director',
+        id: '102',
+    },
+];
 
 const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();

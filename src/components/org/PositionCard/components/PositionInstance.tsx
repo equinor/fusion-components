@@ -2,7 +2,13 @@ import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 
 import styles from '../styles.less';
-import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
+import {
+    useTooltipRef,
+    ExpandMoreIcon,
+    IconButton,
+    LinkIcon,
+    styling,
+} from '@equinor/fusion-components';
 
 type PositionInstanceProps = {
     position: Position;
@@ -11,6 +17,7 @@ type PositionInstanceProps = {
     showDate: boolean;
     showObs: boolean;
     showExternalId: boolean;
+    isLinked?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -22,6 +29,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showDate,
     showExternalId,
     showObs,
+    isLinked,
     onClick,
     onExpand,
 }) => {
@@ -92,7 +100,11 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}%)
                 </div>
             )}
-            {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
+            <div className={styles.additionalInfo}>
+                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />}
+                {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
+            </div>
+
             {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>

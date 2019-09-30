@@ -35,6 +35,7 @@ const useOrgChartActions = <T extends OrgStructure>({
                 y: null,
                 data: item,
                 aside: item.aside,
+                linked: item.linked,
             };
         });
     };
@@ -97,15 +98,15 @@ const useOrgChartActions = <T extends OrgStructure>({
     }, [parentHeight, parentWidth]);
 
     useEffect(() => {
-            dispatch({
-                type: 'UPDATE_BREADCRUMBS',
-                breadcrumbs: breadCrumbs || null,
-            });
+        dispatch({
+            type: 'UPDATE_BREADCRUMBS',
+            breadcrumbs: breadCrumbs || null,
+        });
     }, [breadCrumbs]);
 
-    useEffect(() =>{
+    useEffect(() => {
         dispatch({
-            type:'UPDATE_BREADCRUMBS_SIZE',
+            type: 'UPDATE_BREADCRUMBS_SIZE',
             width: breadCrumbWidth,
             height: breadCrumbHeight,
             margin: breadCrumbMargin,

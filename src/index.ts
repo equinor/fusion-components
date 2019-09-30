@@ -17,6 +17,7 @@ export { default as ErrorBoundary } from './components/general/ErrorBoundary';
 export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
+export { Stepper, Step } from './components/general/Stepper';
 export { default as TextInput } from './components/general/TextInput';
 export { Switch, CheckBox, RadioButton } from './components/general/SelectionControls';
 export {
@@ -128,10 +129,12 @@ export {
     CloseIcon,
     ExpandMoreIcon,
     ArrowBackIcon,
+    ArrowForwardIcon,
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
+export { LinkIcon } from './components/icons/components/wysiwyg';
 
 // Styling
 export { default as styling } from './styles/styling';
