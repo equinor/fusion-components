@@ -5,7 +5,7 @@
     position: fixed;
     top: 0; bottom: 0;
     right: 0;
-    width: .grid-unit(80px)[];
+    width: var(--modal-size);
     transform: translateX(calc(var(--grid-unit)* 80px));
     background: var(--color-white);
     overflow: hidden;
@@ -19,6 +19,22 @@
         width: 100%;
         left: 0;
         transition: transform .1s ease-out;
+    }
+
+    &.xlarge {
+        --modal-size: calc(var(--grid-unit) * 80px);
+    }
+
+    &.large{
+        --modal-size: calc(var(--grid-unit) * 60px);
+    }
+
+    &.medium{
+        --modal-size: calc(var(--grid-unit) * 40px);
+    }
+
+    &.small{
+        --modal-size: calc(var(--grid-unit) * 30px);
     }
 
     .content {

@@ -24,7 +24,7 @@ const ModalSideSheetStory = () => {
                 }}
                 headerIcons={[
                     <IconButton key="Icon1">
-                        <WarningIcon outline/>
+                        <WarningIcon outline />
                     </IconButton>,
                     <IconButton key="Icon2">
                         <DoneIcon />
