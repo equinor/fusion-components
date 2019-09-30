@@ -13,9 +13,11 @@ export type DropdownController = {
     node: React.ReactNode;
     controllerRef: React.MutableRefObject<HTMLElement | null>;
 };
+type DropdownJustification = 'left' | 'right';
 
 type DropdownProps = {
     controller: DropdownController;
+    justification?: DropdownJustification;
 };
 
 export const useDropdownController = (
@@ -36,7 +38,7 @@ export const useDropdownController = (
     };
 };
 
-const Dropdown: FC<DropdownProps> = ({ controller, children }) => {
+const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) => {
     const { isOpen, setIsOpen, node, controllerRef } = controller;
 
     const close = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
@@ -44,7 +46,10 @@ const Dropdown: FC<DropdownProps> = ({ controller, children }) => {
 
     const dropdownContainerClassNames = classNames(
         styles.dropdownContainer,
-        useElevationClassName(2)
+        useElevationClassName(2),{
+            [styles.justifyLeft]: justification === 'left',
+            [styles.justifyRight]: justification === 'right',
+        }
     );
 
     return (

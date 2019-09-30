@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import withFusionStory from "../../../../../.storybook/withFusionStory";
+import withFusionStory from '../../../../../.storybook/withFusionStory';
 import { Tabs, Tab } from '../index';
 import { Item } from './TabContent';
 
@@ -55,5 +55,5 @@ const TabsStory = () => {
 };
 storiesOf('General|Tabs', module)
     .addParameters({ jest: ['Tabs.stories.jsx'] })
-    .addDecorator(withFusionStory("Tabs"))
+    .addDecorator(withFusionStory('Tabs'))
     .add('Default', () => <TabsStory />);

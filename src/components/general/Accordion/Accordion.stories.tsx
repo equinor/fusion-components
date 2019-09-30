@@ -5,8 +5,8 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import AccordionItem from './AccordionItem';
 
 const AccordionStory = () => {
-    const [isOpenFirst, setIsOpenFirst] = React.useState(false);
-    const [isOpenSecond, setIsOpenSecond] = React.useState(false);
+    const [isOpenFirst, setIsOpenFirst] = React.useState(true);
+    const [isOpenSecond, setIsOpenSecond] = React.useState(true);
 
     const accordionContent = (
         <div>
@@ -21,6 +21,7 @@ const AccordionStory = () => {
             blandit tortor.
         </div>
     );
+
     return (
         <div style={{ width: 500 }}>
             <Accordion>
@@ -43,7 +44,6 @@ const AccordionStory = () => {
                     <div>cant access me :(</div>
                 </AccordionItem>
             </Accordion>
-            
         </div>
     );
 };

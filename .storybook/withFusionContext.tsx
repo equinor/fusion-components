@@ -49,10 +49,11 @@ class StorybookAuthContainer extends AuthContainer {
         return await super.registerAppAsync(clientId, resources);
     }
 
-    login(clientId: string): void {
+    async loginAsync(clientId: string): Promise<void> {
+        console.log("No login for you");
         /*   super.login(clientId); */
     }
-
+    
     async logoutAsync(clientId?: string): Promise<void> {
         await super.logoutAsync(clientId);
     }

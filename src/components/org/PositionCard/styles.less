@@ -1,0 +1,218 @@
+.context {
+    &.container {
+        width: var(--container-width);
+        padding: var(--container-padding);
+        box-sizing: border-box;
+        display: flex;
+        background-color: var(--color-white);
+        border: 1px solid var(--color-black-alt4);
+        border-radius: 4px;
+        position: relative;
+        transition: box-shadow .15s;
+        
+        &.isExternal, &.isConsultant, &.isExternalHire {
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: calc(var(--grid-unit) * .5px);
+            }
+        }
+        &.isExternal::before {
+            background-color: var(--color-secondary-alt2);
+        }
+
+        &.isConsultant, &.isExternalHire {
+            &::before {
+                background-color: var(--color-red);
+            }
+        }
+
+        &.isClickable {
+            cursor: pointer;
+
+            &:hover, &.isSelected {
+                box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+            }
+
+            &.isSelected {
+                background-color: var(--color-primary-alt4);
+                border-color: var(--color-primary-alt4);
+            }
+        }
+
+        &.multipleAssignments {
+            &::before {
+                content: "";
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: -2px;
+                background-color: var(--color-primary-alt4);
+                z-index: -1;
+                border-radius: 4px;
+                border-color: white;
+            }
+
+            .photoContainer {
+                cursor: pointer;
+            }
+        }
+
+        &.isLinked {
+            border: 1px dashed var(--color-black-alt3);
+        }
+    }
+
+    .photoContainer {
+        user-select: none;
+        flex-shrink: 0;
+
+        .personIconContainer {
+            width: calc(var(--grid-unit) * 5px);
+            height: calc(var(--grid-unit) * 5px);
+            border-radius: 50%;
+            color: var(--color-black-alt2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+            .instanceCount {
+                position: absolute;
+                width: calc(var(--grid-unit) * 2.5px);
+                height: calc(var(--grid-unit) * 2.5px);
+                font-size: 12px;
+                font-weight: bold;
+                color: var(--color-white);
+                background-color: var(--color-red);
+                top: calc(var(--grid-unit) * .25px);
+                right: 0;
+                transform: translateX(50%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .positionInstance {
+        position: relative;
+        flex-grow: 1;
+        margin-left: var(--photo-and-details-spacing);
+        width: 1px;
+
+        .assignedPersonName span, .basePositionName, .positionName span {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .basePositionName {
+            font-size: 11px;
+            line-height: 16px;
+        }
+
+        .positionName {
+            font-size: 16px;
+            margin-bottom: var(--position-name-spacing);
+            color: var(--color-primary);
+
+            span {            
+                text-decoration: underline;
+            }
+        }
+
+        .assignedPersonName {
+            font-size: 16px;
+            margin-bottom: var(--assigned-person-name-spacing);
+            margin-right: calc(var(--grid-unit) * 6px);
+        }
+
+        .location {
+            font-size: 11px;
+            line-height: 16px;
+        }
+
+        .period {
+            font-size: 11px;
+            line-height: 16px;
+        }
+
+        .additionalInfo {
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            line-height: 16px;
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            .externalId{
+                padding-left: calc(var(--grid-unit) * .5px);
+            }
+        }
+
+        .expandButton {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+    }
+
+    &.instancesPopover {
+        pointer-events: all;
+        position: absolute;
+        left: calc(100% + (var(--grid-unit) * 2px));
+        background: white;
+        border: 1px solid var(--color-black-alt4);
+        border-radius: 4px;
+        overflow: visible;;
+    
+        .instanceWrapper {
+            display: flex;
+            width: var(--container-width);
+            border-bottom: 1px solid var(--color-black-alt4);
+            padding: var(--container-padding);
+            box-sizing: border-box;
+            transition: box-shadow .15s;
+
+            &:hover {
+                box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+            }
+
+            &:first-child {
+                border-radius: 4px 4px 0 0;
+            }
+
+            &:last-child {
+                border: none;
+                border-radius: 0 0 4px 4px;
+            }
+        }
+    }
+
+    &.comfortable {
+        --container-width: calc(var(--grid-unit) * 40px);
+        --container-height: calc(var(--grid-unit) * 14px);
+        --container-padding: calc(var(--grid-unit) * 1px);
+        --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
+        --position-name-spacing: calc(var(--grid-unit) * 1px);
+        --assigned-person-name-spacing: calc(var(--grid-unit) * 1px);
+    }
+
+    &.compact {
+        --container-width: calc(var(--grid-unit) * 40px);
+        --container-height: calc(var(--grid-unit) * 14px);
+        --container-padding: calc(var(--grid-unit) * 1px);
+        --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
+        --position-name-spacing: calc(var(--grid-unit) * 1px);
+        --assigned-person-name-spacing: calc(var(--grid-unit) * 1px);
+    }
+}

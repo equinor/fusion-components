@@ -36,6 +36,7 @@ export type FilterPaneProps<T> = {
     terms: FilterTerm[];
     onChange: OnFilterChangeHandler<T>;
     screenPlacement?: 'right' | 'left';
+    onToggleCollapse?:(isCollapsed: boolean) => void;
 };
 
 function FilterPane<T>({
@@ -45,6 +46,7 @@ function FilterPane<T>({
     terms,
     onChange,
     screenPlacement = 'right',
+    onToggleCollapse
 }: FilterPaneProps<T>) {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [filterCount, setFilterCount] = useState<Count[]>([]);
@@ -52,6 +54,7 @@ function FilterPane<T>({
     const toggleCollapsed = useCallback(() => {
         persistCollapsedState(id, !isCollapsed);
         setIsCollapsed(!isCollapsed);
+        onToggleCollapse && onToggleCollapse(!isCollapsed);
     }, [isCollapsed]);
 
     const handleOnSectionChange = useCallback(

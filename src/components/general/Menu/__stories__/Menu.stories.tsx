@@ -63,7 +63,7 @@ const CustomItemsMenuStory = () => {
         },
         {
             key: '3',
-            title: (<>You can check this one <DoneIcon /></>),
+            title: <>You can check this one </>,
         },
         {
             key: '4',

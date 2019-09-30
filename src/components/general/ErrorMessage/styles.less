@@ -61,3 +61,26 @@
         }
     }
 }
+
+:global(.react-grid-layout){ //PDP tile styling
+    .messageContainer.comfortable, .messageContainer.compact{
+        margin-top: 0;
+        top: 50%;
+        transform: translateY(-50%);
+                
+        .title {
+            padding-top: calc(var(--grid-unit)* 5px);
+            font-size: 16px;
+            height: calc(var(--grid-unit)* 3px);
+            font-weight: 600;
+        }
+
+        .message {
+            font-size: 16px;
+            height: calc(var(--grid-unit)* 2px);
+            padding-bottom: calc(var(--grid-unit) * 4px);
+            padding-top: calc(var(--grid-unit)* 1px);
+
+        }
+    }
+}

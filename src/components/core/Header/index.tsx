@@ -3,6 +3,7 @@ import {
     useComponentDisplayClassNames,
     useCurrentApp,
     combineUrls,
+    useFusionContext,
 } from '@equinor/fusion';
 import { NavLink } from 'react-router-dom';
 import FusionLogo from '../FusionLogo';
@@ -19,6 +20,9 @@ type FusionHeaderProps = {
 };
 
 const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) => {
+    const {
+        refs: { headerContent },
+    } = useFusionContext();
     const currentApp = useCurrentApp();
 
     const headerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
@@ -45,7 +49,12 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
                     </>
                 )}
             </div>
-            <div className={styles.contentContainer}>{content}</div>
+            <div
+                className={styles.contentContainer}
+                ref={headerContent as React.MutableRefObject<HTMLDivElement | null>}
+            >
+                {content}
+            </div>
 
             <aside className={styles.asideContainer}>
                 <ComponentDisplayToggleButton />

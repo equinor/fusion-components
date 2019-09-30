@@ -1,17 +1,13 @@
 import React, { FC, useMemo, useCallback } from 'react';
 import styles from './styles.less';
-import classNames from 'classnames';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
 import { NavigationComponentProps } from '..';
+import NavigationPopover from './NavigationPopover';
+import NavigationItem from './NavigationItem';
 
 const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, icon, title, onClick, navigationChildren, isActive, isOpen } = navigationItem;
-
-    const containerClassNames = classNames(styles.container, styles.menuGrouping, {
-        [styles.isActive]: isActive,
-        [styles.isCollapsed]: isCollapsed,
-    });
 
     const navigationStructure = useMemo(
         () =>
@@ -20,35 +16,20 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                 {
                     onChange: onChange,
                     isCollapsed: isCollapsed,
-                },
-                {
-                    icon: icon,
                 }
             ),
-        [navigationChildren, onChange, isCollapsed, icon]
+        [navigationChildren, onChange, isCollapsed]
     );
 
-    const change = useCallback(
-        isCollapsed => {
-            onChange && (isCollapsed ? onChange(id, false, true) : onChange(id, !isOpen, true));
-            onClick && onClick();
-        },
-        [onClick, id, isOpen, onChange]
-    );
-
-    const getCollapsedIcon = useCallback(
-        () => (
-            <div className={styles.navigationIcon} onClick={() => change(true)}>
-                {icon}
-            </div>
-        ),
-        [icon, onChange]
-    );
+    const change = useCallback(() => {
+        onChange && onChange(id, !isOpen, true);
+        onClick && onClick();
+    }, [onClick, id, isOpen, onChange]);
 
     const getNavigationContent = useCallback(
         () => (
             <>
-                <div className={styles.linkContainer} onClick={() => change(false)}>
+                <div className={styles.linkContainer} onClick={change}>
                     <div className={styles.navigationIcon}>{icon}</div>
                     <div className={styles.linkText}>{title}</div>
                 </div>
@@ -56,19 +37,35 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                     className={styles.toggleOpenContainer}
                     onClick={() => onChange && onChange(id, true, false)}
                 >
-                    <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
+                    {!isCollapsed && <DropdownArrow cursor="pointer" isOpen={isOpen || false} />}
                 </div>
             </>
         ),
         [icon, title, isOpen, onChange]
     );
 
+    const getCollapsedContent = useCallback(
+        () => (
+            <NavigationPopover
+                icon={icon}
+                navigationStructure={navigationStructure}
+                navigationChildren={navigationChildren}
+                groupingComponent={getNavigationContent}
+                isActive={isActive}
+            />
+        ),
+        [icon, navigationStructure, getNavigationContent, navigationChildren, isActive]
+    );
+
+    if (isCollapsed) {
+        return getCollapsedContent();
+    }
+
     return (
         <>
-            <div className={containerClassNames}>
-                {isCollapsed ? getCollapsedIcon() : getNavigationContent()}
-                <div className={styles.visualOnClickContainer} />
-            </div>
+            <NavigationItem isActive={isActive} type="grouping" isCollapsed={isCollapsed}>
+                {getNavigationContent()}
+            </NavigationItem>
             {isOpen && navigationStructure}
         </>
     );

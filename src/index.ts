@@ -1,5 +1,6 @@
 // Core components
 export { default as FusionHeader } from './components/core/Header';
+export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
 export { default as FusionRoot } from './components/core/Root';
 export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
@@ -16,6 +17,7 @@ export { default as ErrorBoundary } from './components/general/ErrorBoundary';
 export { default as ErrorMessage } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
+export { Stepper, Step } from './components/general/Stepper';
 export { default as TextInput } from './components/general/TextInput';
 export { Switch, CheckBox, RadioButton } from './components/general/SelectionControls';
 export {
@@ -40,14 +42,22 @@ export {
 export {
     default as SearchableDropdownWrapper,
     SearchableDropdownOption,
+    SearchableDropdownSection,
 } from './components/general/SearchableDropdown';
 export { ModalSideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as DatePicker } from './components/general/DatePicker';
-export { default as Slider } from './components/general/Calendar';
-export {default as NavigationDrawer, NavigationStructure} from "./components/general/NavigationDrawer";
-export {default as Accordion,AccordionItem } from "./components/general/Accordion";
+export { default as Slider } from './components/general/Slider';
+export {
+    default as NavigationDrawer,
+    NavigationStructure,
+} from './components/general/NavigationDrawer';
+export { default as Accordion, AccordionItem } from './components/general/Accordion';
+export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
+export { default as PersonCard } from './components/people/PersonCard';
+
+export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -74,12 +84,29 @@ export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpo
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
 export { default as useRootContainer } from './hooks/useRootContainer';
-export { default as useStringMask, applyStringMask, unmaskString, StringMaskToken } from './hooks/useStringMask';
+export {
+    default as useStringMask,
+    applyStringMask,
+    unmaskString,
+    StringMaskToken,
+} from './hooks/useStringMask';
+export { default as useParentSize } from './hooks/useParentSize';
+
+// Org
+export { default as PositionCard } from './components/org/PositionCard';
+export {
+    default as OrgChart,
+    OrgStructure,
+    OrgChartItemProps,
+    OrgNode,
+} from './components/org/OrgChart';
+export { default as ReportingPath } from './components/org/ReportingPath';
+export { default as PositionPicker } from './components/org/PositionPicker';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
-export { BlockIcon } from './components/icons/components/content';
+export { BlockIcon, SaveIcon } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
@@ -89,8 +116,25 @@ export {
     DropdownArrow,
     CollapseIcon,
     CalendarIcon,
+    HistoryIcon,
+    InfoIcon,
+    OpenInNewIcon,
+    SettingsIcon,
+    HelpIcon,
+    PrintIcon,
+    DeleteIcon,
 } from './components/icons/components/action';
-export { PaginationArrow, CloseIcon } from './components/icons/components/navigation';
+export {
+    PaginationArrow,
+    CloseIcon,
+    ExpandMoreIcon,
+    ArrowBackIcon,
+    ArrowForwardIcon,
+} from './components/icons/components/navigation';
+export { PeopleIcon } from './components/icons/components/social';
+export { PlayIcon } from './components/icons/components/av';
+export { EditIcon } from './components/icons/components/image';
+export { LinkIcon } from './components/icons/components/wysiwyg';
 
 // Styling
 export { default as styling } from './styles/styling';
