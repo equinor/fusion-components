@@ -6,6 +6,7 @@ import {
     useComponentDisplayClassNames,
     usePersonDetails,
     PersonDetails,
+    usePersonImageUrl,
 } from '@equinor/fusion';
 
 import { useTooltipRef } from '@equinor/fusion-components';
@@ -35,21 +36,11 @@ const getDefaultPerson = (): PersonDetails => ({
 });
 
 export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
-    const fusionContext = useFusionContext();
-    const [isFallbackImage, setIsFallbackImage] = useState(false);
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
 
-    const urlToPhoto = useMemo(() => {
-        const peopleUrls = fusionContext.http.resourceCollections.people;
+    const { imageUrl, error: imageError } = usePersonImageUrl(person ? person.azureUniqueId : personId || "");
 
-        if (person) {
-            return peopleUrls.getPersonPhoto(person.azureUniqueId);
-        } else if (personId) {
-            return peopleUrls.getPersonPhoto(personId);
-        }
-    }, [personId, person, fusionContext]);
-
-    const [error, _, personDetails] = personId ? usePersonDetails(personId) : [null, false, person];
+    const { error, personDetails } = personId ? usePersonDetails(personId) : { error: null, personDetails: person };
 
     useEffect(() => {
         if (!error && personDetails) {
@@ -70,20 +61,12 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
         }
     );
 
-    useEffect(() => {
-        setIsFallbackImage(false);
-        
-        const image = new Image();
-        image.onerror = () => setIsFallbackImage(true);
-        image.src = `${urlToPhoto}`;
-    }, [urlToPhoto]);
-
-    const imageStyle = !isFallbackImage ? { backgroundImage: `url(${urlToPhoto})` } : {};
+    const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
     const nameTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.name);
 
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
-            {isFallbackImage && <FallbackImage size={size} />}
+            {imageError !== null && <FallbackImage size={size} />}
             <AccountTypeBadge
                 currentPerson={personDetails || getDefaultPerson()}
                 size={size}

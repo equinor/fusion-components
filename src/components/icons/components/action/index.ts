@@ -8,3 +8,7 @@ export { default as CalendarIcon } from './CalendarIcon';
 export { default as InfoIcon } from './InfoIcon';
 export { default as HistoryIcon } from './HistoryIcon';
 export { default as OpenInNewIcon } from './OpenInNewIcon';
+export { default as SettingsIcon } from './SettingsIcon';
+export { default as HelpIcon } from './HelpIcon';
+export { default as PrintIcon } from './PrintIcon';
+export { default as DeleteIcon } from './DeleteIcon';

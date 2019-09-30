@@ -1406,10 +1406,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.3.tgz#dfa0c92efe44a1d1a7974fb49ffeb40ef2da5a27"
   integrity sha512-zVgvPwGK7c1aVdUVc9Qv7SqepOGRDrqCw7KZPSZziWGxSlbII3gmvGLPzLX4d0n0BMbamBacUrN22zOMyFFEkQ==
 
-"@equinor/fusion@^0.4.17":
-  version "0.4.17"
-  resolved "https://registry.yarnpkg.com/@equinor/fusion/-/fusion-0.4.17.tgz#c1d158f59170c5887cfcd295cb920b54434d4c6a"
-  integrity sha512-VFTmVnNBfyOEBerF66zavKCriXpJU1iG45DyhP+YeDc+dpz5EUBWG0OVfXhjou1HBs/7QMAOmfAzqTtSxPBzBQ==
+"@equinor/fusion@^0.4.27":
+  version "0.4.28"
+  resolved "https://registry.yarnpkg.com/@equinor/fusion/-/fusion-0.4.28.tgz#8b48a0ec15fe92bb43f2bc858406d89c445ab83e"
+  integrity sha512-cY2pDj6bVwKboyENZzhthcegq1OEb2J9smkSlOh+h10IvnFwxUpF3/RZOgaqBw19glyTZR280DZGiZSnub5a1g==
   dependencies:
     odata-query "^5.7.0"
     uuid "^3.3.3"

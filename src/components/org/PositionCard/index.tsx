@@ -18,6 +18,7 @@ type PositionCardProps = {
     showExternalId: boolean;
     showLocation: boolean;
     showDate: boolean;
+    isLinked?: boolean
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -31,6 +32,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showDate,
     onClick,
     onExpand,
+    isLinked,
 }) => {
     const isExternalHire =
         instance &&
@@ -52,6 +54,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
             [styles.isExternal]: isExternal,
             [styles.isConsultant]: isConsultant,
             [styles.isExternalHire]: isExternalHire,
+            [styles.isLinked]: isLinked,
         }
     );
 
@@ -74,6 +77,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 showExternalId={showExternalId}
                 onClick={onClick}
                 onExpand={onExpand}
+                isLinked={isLinked}
             />
         </div>
     );

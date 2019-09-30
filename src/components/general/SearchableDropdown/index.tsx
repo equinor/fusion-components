@@ -155,6 +155,7 @@ const SearchableDropdown = ({
                 onClick={() => !isOpen && setIsOpen(true)}
                 value={selectedValue}
                 ref={inputRef}
+                onKeyUp={e => e.keyCode === 27 && setIsOpen(false)}
             />
         );
     });

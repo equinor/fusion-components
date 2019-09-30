@@ -14,8 +14,8 @@ export type PersonCardProps = {
 };
 
 export default ({ personId, person, photoSize = 'xlarge' }: PersonCardProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
-    const [error, _, personDetails] = personId ? usePersonDetails(personId) : [null, false, person];
+    const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
+    const { error, personDetails } = personId ? usePersonDetails(personId) : { error: null, personDetails: person };
 
     useEffect(() => {
         if (!error && personDetails) {
@@ -28,14 +28,18 @@ export default ({ personId, person, photoSize = 'xlarge' }: PersonCardProps) => 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
     return (
-        <div className={containerClassNames}>
-            <PersonPhoto personId={currentPerson.azureUniqueId} size={photoSize} />
-            <div className={styles.details}>
-                <div className={styles.name}>{currentPerson.name}</div>
-                <div className={styles.email}>
-                    <a href={`mailto:${currentPerson.mail}`}>{currentPerson.mail}</a>
+        <>
+            {currentPerson && (
+                <div className={containerClassNames}>
+                    <PersonPhoto person={currentPerson} size={photoSize} />
+                    <div className={styles.details}>
+                        <div className={styles.name}>{currentPerson.name}</div>
+                        <div className={styles.email}>
+                            <a href={`mailto:${currentPerson.mail}`}>{currentPerson.mail}</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 };

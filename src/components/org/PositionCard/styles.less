@@ -61,6 +61,10 @@
                 cursor: pointer;
             }
         }
+
+        &.isLinked {
+            border: 1px dashed var(--color-black-alt3);
+        }
     }
 
     .photoContainer {
@@ -141,12 +145,18 @@
             line-height: 16px;
         }
 
-        .externalId {
+        .additionalInfo {
+            display: flex;
+            align-items: center;
             font-size: 11px;
             line-height: 16px;
             position: absolute;
             top: 0;
             right: 0;
+
+            .externalId{
+                padding-left: calc(var(--grid-unit) * .5px);
+            }
         }
 
         .expandButton {

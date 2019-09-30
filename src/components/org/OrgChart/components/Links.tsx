@@ -4,6 +4,7 @@ import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgStructure, OrgNode } from '../orgChartTypes';
 
 import styles from './styles.less';
+import classNames from 'classnames';
 
 const Links = <T extends OrgStructure>() => {
     const {
@@ -119,6 +120,10 @@ const Links = <T extends OrgStructure>() => {
                 return null;
             }
 
+            const linkClassnames = classNames(styles.link, {
+                [styles.isLinked]: node.linked,
+            });
+
             const path =
                 numberOfCardsPerRow === 1
                     ? getSingleCardRowPath(node, parent)
@@ -126,7 +131,7 @@ const Links = <T extends OrgStructure>() => {
                     ? getAsidePath(node, parent)
                     : getChildPath(node, parent, index);
 
-            return <path d={path} className={styles.link} />;
+            return <path d={path} className={linkClassnames} />;
         },
         [allNodes, width]
     );
