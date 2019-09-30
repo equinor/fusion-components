@@ -24,7 +24,8 @@ export default (delay: number = 300): [Boolean, MutableRefObject<any>] => {
             }
 
             const target = e.target as Node;
-            const isWithinRef = ref.current.contains(target) || ref.current.isSameNode(target);
+            const isWithinRef = ref.current.isSameNode(target);
+
             if (isWithinRef && !isHovering) {
                 show();
             } else if (!isWithinRef && isHovering) {
