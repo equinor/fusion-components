@@ -31,7 +31,7 @@
             &.current {
                 font-weight: 500;
             }
-    
+            
             .title {
                 width: calc(var(--grid-unit) * 32px);
                 overflow: hidden;
@@ -51,6 +51,14 @@
                         left: 100%;
                     }
                 }
+
+                &.isLastStep {
+                    > span {
+                        &::after {
+                            border: 0;
+                        }
+                    }
+                }
             }
 
             .badge {
@@ -65,7 +73,7 @@
                 margin-right: calc(var(--grid-unit) * 1px);
 
                 &.active {
-                    border:0;
+                    border: 1px solid transparent;
                     background: var(--color-primary);
                     color: #fff;
                 }

@@ -38,7 +38,7 @@ const StepPane: React.FC<StepPaneProps> = ({
     React.useEffect(() => scrollToStep(activeStepRef.current), [activeStepKey]);
 
     const clonedChildren = React.Children.map(children, (child, index) => {
-        const { title, stepKey } = child.props;
+        const { title, stepKey, disabled } = child.props;
 
         if (!title || !stepKey) {
             return null;
@@ -55,7 +55,8 @@ const StepPane: React.FC<StepPaneProps> = ({
             position,
             isClickable: !forceOrder,
             done: activeStepPosition > position,
-            disabled: maxStep && position > maxStep,
+            disabled: disabled === true || (maxStep && position > maxStep),
+            isLastStep: index === children.length - 1,
         });
     });
 
