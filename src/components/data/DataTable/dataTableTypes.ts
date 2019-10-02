@@ -7,7 +7,7 @@ export type DataItemPropertyAccessor<T> = keyof T | DataItemPropertyAccessorFunc
 export type DataItemBooleanAccessorFunction<T> = (item: T) => boolean;
 export type DataItemBooleanAccessor<T> = boolean | DataItemBooleanAccessorFunction<T>;
 export type DataItemSkeletonComponentProps = { rowIndex: number };
-export type DataItemComponentProps<T> = DataItemSkeletonComponentProps & { item: T };
+export type DataItemComponentProps<T> = DataItemSkeletonComponentProps & { item: T, collapsedColumns?: DataTableColumn<T>[] };
 export type SortChangeHandler<T> = (column: DataTableColumn<T>) => void;
 export type OnDataTableRowClickHandler<T> = (item: T, rowIndex: number) => void;
 export type OnSelectionChange<T> = (selectedItems: T[]) => void;
