@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as styles from './styles.less';
 
 type StepContentProps = {
     children: any;
@@ -19,7 +18,7 @@ const StepContent: React.FC<StepContentProps> = ({ children, activeStepKey }) =>
         React.cloneElement(child)
     );
 
-    return <div>{clonedChildren}</div>;
+    return <>{clonedChildren}</>;
 };
 
 export default StepContent;
