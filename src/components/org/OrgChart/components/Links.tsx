@@ -21,6 +21,7 @@ const Links = <T extends OrgStructure>() => {
 
     const centerHeight = cardHeight / 2;
     const centerWidth = cardWidth / 2;
+    const pixelPusher = 0.5 //Needed for overlapping svg paths in Edge
 
     const getAsidePath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
@@ -31,17 +32,17 @@ const Links = <T extends OrgStructure>() => {
             if (node.x > centerX) {
                 return `
                     M ${node.x + centerWidth} ${node.y + (cardMargin)}
-                    L ${centerX} ${node.y + (cardMargin)}
-                    L ${parent.x + centerWidth} ${parent.y + centerHeight}
+                    L ${centerX + pixelPusher} ${node.y + (cardMargin)}
+                    L ${parent.x + centerWidth + pixelPusher} ${parent.y + centerHeight}
                     `;
             }
             return `
                 M ${node.x + centerWidth} ${node.y + (cardMargin)}
-                L ${centerX} ${node.y + (cardMargin)}
-                L ${parent.x + centerWidth} ${parent.y + centerHeight}
+                L ${centerX + pixelPusher} ${node.y + (cardMargin)}
+                L ${parent.x + centerWidth + pixelPusher} ${parent.y + centerHeight}
                 `;
         },
-        [centerX, cardHeight, cardWidth]
+        [centerX, cardHeight, cardWidth, pixelPusher]
     );
 
     const getChildPath = useCallback(
@@ -59,22 +60,22 @@ const Links = <T extends OrgStructure>() => {
                 }
 
                 return `
-                    M ${node.x + centerWidth} ${node.y + centerHeight}
-                    V ${node.y - 10}
-                    H ${firstChild.x + cardWidth + cardMargin / 2}
-                    V ${firstChild.y - 10}
-                    H ${centerX}
-                    L ${parent.x + centerWidth} ${parent.y + centerHeight}
+                    M ${node.x + centerWidth+ pixelPusher} ${node.y + centerHeight+ pixelPusher}
+                    V ${node.y - 10 + pixelPusher}
+                    H ${firstChild.x + pixelPusher + cardWidth + cardMargin / 2}
+                    V ${firstChild.y - 10 + pixelPusher}
+                    H ${centerX + pixelPusher}
+                    V ${parent.y + centerHeight + pixelPusher}
                     `;
             }
             return `
-                M ${node.x + centerWidth} ${node.y + centerHeight}
-                V ${node.y - 10}
-                H ${centerX}
-                L ${parent.x + centerWidth} ${parent.y + centerHeight}
+                M ${node.x + centerWidth+ pixelPusher} ${node.y + centerHeight+ pixelPusher}
+                V ${node.y - 10 + pixelPusher}
+                H ${centerX + pixelPusher}
+                V ${parent.y + centerHeight + pixelPusher}
                 `;
         },
-        [centerX, cardHeight, cardWidth, numberOfCardsPerRow, allChildren]
+        [centerX, cardHeight, cardWidth, numberOfCardsPerRow, allChildren ,pixelPusher]
     );
 
     const getSingleCardRowPath = useCallback(
@@ -86,25 +87,25 @@ const Links = <T extends OrgStructure>() => {
             if (width < cardWidth + 30) {
                 return `
                     M ${node.x + centerWidth} ${node.y + cardHeight / 4}
-                    H ${node.x - 10}
-                    L ${parent.x + 20} ${parent.y + centerHeight}
+                    H ${node.x - 10 + pixelPusher}
+                    L ${parent.x + 20 + pixelPusher} ${parent.y + centerHeight}
                     `;
             }
             if (width < cardWidth * 1.5 + 10) {
                 const range = width - cardWidth - 10;
                 return `
                     M ${node.x + centerWidth} ${node.y + cardHeight / 4}
-                    H ${node.x - 10}
-                    L ${parent.x + range} ${parent.y + centerHeight}
+                    H ${node.x - 10 + pixelPusher}
+                    L ${parent.x + range + pixelPusher} ${parent.y + centerHeight}
                     `;
             }
             return `
                 M ${node.x + centerWidth} ${node.y + cardHeight / 4}
-                H ${node.x - 10}
-                L ${parent.x + centerWidth} ${parent.y + centerHeight}
+                H ${node.x - 10 + pixelPusher}
+                L ${parent.x + centerWidth + pixelPusher} ${parent.y + centerHeight}
                 `;
         },
-        [allChildren, cardHeight, cardWidth, width]
+        [allChildren, cardHeight, cardWidth, width, pixelPusher]
     );
 
     const renderLink = useCallback(
