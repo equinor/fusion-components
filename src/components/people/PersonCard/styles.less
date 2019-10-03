@@ -11,6 +11,10 @@
         .name {
             font-size: 16px;
             margin-bottom: var(--name-spacing);
+
+            &.noMargin {
+                margin: 0px;
+            }
         }
 
         .email {
@@ -25,6 +29,6 @@
 
     &.compact {
         --details-spacing: calc(var(--grid-unit) * 1px);
-        --name-spacing: calc(var(--grid-unit) * .25px);
+        --name-spacing: calc(var(--grid-unit) * .1px);
     }
 }

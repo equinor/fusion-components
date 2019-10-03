@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonCard from '../index';
-import { withKnobs, select } from '@storybook/addon-knobs';
+import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { PersonDetails } from '@equinor/fusion';
 
 const stories = storiesOf('People|PersonCard', module);
@@ -68,7 +68,7 @@ const PersonCardStory = () => {
 
     const size = select('Photo size', sizes, sizes.xlarge);
 
-    return <PersonCard person={person} photoSize={size} />;
+    return <PersonCard person={person} photoSize={size} inline={boolean('Inline', false)} />;
 };
 
 stories.add('Default', () => <PersonCardStory />);
