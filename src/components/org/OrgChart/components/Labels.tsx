@@ -36,7 +36,7 @@ const Labels = () => {
     const childLabelNode = useMemo(() => {
         const childNodes = allNodes.filter(node => !node.aside && node.parentId);
         const firstChildNode = childNodes.length && childNodes[0];
-        const marginY = childNodes.length === 1 ? 8 : 34
+        const marginY = childNodes.length === 1 ? 8 : 28
         if (firstChildNode && childrenLabel && numberOfCardsPerRow === 1) {
             return getOneCardRowNode(childrenLabel, firstChildNode);
         }
