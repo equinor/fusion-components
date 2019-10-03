@@ -67,6 +67,6 @@ function LinkedIndicator<T>() {
         [cardMargin, centerX, cardWidth, numberOfCardsPerRow, ]
     );
 
-    return <g className="children">{likedNodes.map(node => renderLinkedIndicator(node))}</g>;
+    return <g className="linked-indicator">{likedNodes.map(node => renderLinkedIndicator(node))}</g>;
 }
 export default LinkedIndicator;

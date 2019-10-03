@@ -15,8 +15,8 @@ const BreadCrumbs = () => {
     const renderLink = useCallback(
         (index: number) => {
             const path = `
-            M ${x - breadCrumbWidth * (index + 1)} ${y + breadCrumbHeight / 2}
-            L ${x + cardWidth / 2} ${y + breadCrumbHeight / 2}
+            M ${x - breadCrumbWidth * (index + 1)} ${y + breadCrumbHeight / 2 + 0.5}
+            H ${x + cardWidth / 2}
             `;
             return <path d={path} className={styles.link} />;
         },
