@@ -21,25 +21,17 @@ const Links = <T extends OrgStructure>() => {
 
     const centerHeight = cardHeight / 2;
     const centerWidth = cardWidth / 2;
-    const pixelPusher = 0.5 //Needed for overlapping svg paths in Edge
+    const pixelPusher = 0.5; //Needed for overlapping svg paths in Edge
 
     const getAsidePath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
             if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
-
-            if (node.x > centerX) {
-                return `
-                    M ${node.x + centerWidth} ${node.y + (cardMargin)}
-                    L ${centerX + pixelPusher} ${node.y + (cardMargin)}
-                    L ${parent.x + centerWidth + pixelPusher} ${parent.y + centerHeight}
-                    `;
-            }
             return `
-                M ${node.x + centerWidth} ${node.y + (cardMargin)}
-                L ${centerX + pixelPusher} ${node.y + (cardMargin)}
-                L ${parent.x + centerWidth + pixelPusher} ${parent.y + centerHeight}
+                M ${node.x + centerWidth} ${node.y + cardMargin + pixelPusher}
+                H ${Math.floor(centerX) + pixelPusher}
+                V ${parent.y + centerHeight + pixelPusher}
                 `;
         },
         [centerX, cardHeight, cardWidth, pixelPusher]
@@ -58,24 +50,23 @@ const Links = <T extends OrgStructure>() => {
                 if (firstChild.x === null || firstChild.y === null) {
                     return '';
                 }
-
                 return `
-                    M ${node.x + centerWidth+ pixelPusher} ${node.y + centerHeight+ pixelPusher}
+                    M ${Math.floor(node.x + centerWidth) + pixelPusher} ${node.y + centerHeight}
                     V ${node.y - 10 + pixelPusher}
-                    H ${firstChild.x + pixelPusher + cardWidth + cardMargin / 2}
+                    H ${Math.floor(firstChild.x + cardWidth + cardMargin / 2) + pixelPusher}
                     V ${firstChild.y - 10 + pixelPusher}
-                    H ${centerX + pixelPusher}
+                    H ${Math.floor(centerX) + pixelPusher}
                     V ${parent.y + centerHeight + pixelPusher}
                     `;
             }
             return `
-                M ${node.x + centerWidth+ pixelPusher} ${node.y + centerHeight+ pixelPusher}
+                M ${Math.floor(node.x + centerWidth) + pixelPusher} ${node.y + centerHeight}
                 V ${node.y - 10 + pixelPusher}
-                H ${centerX + pixelPusher}
+                H ${Math.floor(centerX) + pixelPusher}
                 V ${parent.y + centerHeight + pixelPusher}
                 `;
         },
-        [centerX, cardHeight, cardWidth, numberOfCardsPerRow, allChildren ,pixelPusher]
+        [centerX, cardHeight, cardWidth, numberOfCardsPerRow, allChildren, pixelPusher]
     );
 
     const getSingleCardRowPath = useCallback(
