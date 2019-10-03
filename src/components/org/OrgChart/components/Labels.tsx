@@ -36,7 +36,7 @@ const Labels = () => {
     const childLabelNode = useMemo(() => {
         const childNodes = allNodes.filter(node => !node.aside && node.parentId);
         const firstChildNode = childNodes.length && childNodes[0];
-
+        const marginY = childNodes.length === 1 ? 8 : 34
         if (firstChildNode && childrenLabel && numberOfCardsPerRow === 1) {
             return getOneCardRowNode(childrenLabel, firstChildNode);
         }
@@ -44,7 +44,7 @@ const Labels = () => {
             data: childrenLabel,
             id: childrenLabel,
             x: centerX - cardWidth - 25,
-            y: firstChildNode && firstChildNode.y !== null && firstChildNode.y - 34,
+            y: firstChildNode && firstChildNode.y !== null && firstChildNode.y - marginY ,
         } as OrgNode<string>;
     }, [allNodes, centerX, childrenLabel]);
 
@@ -59,7 +59,7 @@ const Labels = () => {
             data: asideLabel,
             id: asideLabel,
             x: firstAsideNode && firstAsideNode.x !== null && firstAsideNode.x - 15,
-            y: firstAsideNode && firstAsideNode.y !== null && firstAsideNode.y - 18,
+            y: firstAsideNode && firstAsideNode.y !== null && firstAsideNode.y - 8,
         } as OrgNode<string>;
     }, [allNodes, asideLabel]);
 

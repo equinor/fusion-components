@@ -32,7 +32,7 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
     const svgHeight = useMemo(() => {
         const rootMargin = rowMargin;
         const labelMargin = 60;
-        const asideMargin = rowMargin * asideRows;
+        const asideMargin = (rowMargin - 20) * asideRows;
         const childrenMargin = rowMargin * childrenRows;
         return asideMargin + childrenMargin + rootMargin + labelMargin;
     }, [rowMargin, asideRows, childrenRows]);
