@@ -40,7 +40,7 @@ export {
     DropdownController,
 } from './components/general/Dropdown';
 export {
-    default as SearchableDropdownWrapper,
+    default as SearchableDropdown,
     SearchableDropdownOption,
     SearchableDropdownSection,
 } from './components/general/SearchableDropdown';

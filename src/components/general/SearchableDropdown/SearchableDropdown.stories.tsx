@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import SearchableDropdownWrapper, {
+import SearchableDropdown, {
     SearchableDropdownOption,
     SearchableDropdownSection,
 } from './index';
@@ -95,18 +95,18 @@ const DropdownStory = () => {
 
     return (
         <div style={{ margin: '8px' }}>
-            <SearchableDropdownWrapper
+            <SearchableDropdown
                 options={options}
                 label="Dropdown"
                 onSelect={item => setOptions(updateOptions(item))}
             />
             <br />
-            <SearchableDropdownWrapper
+            <SearchableDropdown
                 options={optionsNoLAbel}
                 onSelect={item => setOptionsNoLabel(updateOptions(item))}
             />
             <br />
-            <SearchableDropdownWrapper
+            <SearchableDropdown
                 label="Select food"
                 onSelect={item => updateSections(item)}
                 sections={sections}

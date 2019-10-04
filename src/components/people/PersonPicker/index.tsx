@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
     PersonPhoto,
-    SearchableDropdownWrapper,
+    SearchableDropdown,
     SearchableDropdownSection,
     useTooltipRef,
 } from '@equinor/fusion-components';
@@ -79,7 +79,7 @@ export default ({ initialPerson, onSelect }: PersonPickerProps) => {
     }, []);
 
     return (
-        <SearchableDropdownWrapper
+        <SearchableDropdown
             sections={sections}
             onSelect={handleSelect}
             onSearchAsync={query => setSearchQuery(query)}
