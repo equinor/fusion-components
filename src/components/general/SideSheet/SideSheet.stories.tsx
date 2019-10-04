@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
-import { ModalSideSheet } from './index';
+import { ModalSideSheet, SideSheet } from './index';
 import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
 
 const ModalSideSheetStory = () => {
@@ -37,6 +37,27 @@ const ModalSideSheetStory = () => {
     );
 };
 
+const StandardSideSheetStory = () => {
+    const [isOpen, setIsOpen] = React.useState(false);
+
+    return (
+        <div style={{ display: 'flex', height: '100%', width: '100%' }}>
+            <div style={{ width: '100%' }} />
+            <SideSheet
+                isOpen={isOpen}
+                onOpenChange={isOpen => {
+                    setIsOpen(isOpen);
+                }}
+                id="story"
+                title="This is a title"
+            >
+                <div style={{ paddingTop: 8, paddingLeft: 8 }} />
+            </SideSheet>
+        </div>
+    );
+};
+
 storiesOf('General|SideSheet', module)
     .addDecorator(withFusionStory('Side Sheet'))
-    .add('Modal', () => <ModalSideSheetStory />);
+    .add('Modal', () => <ModalSideSheetStory />)
+    .add('Standard', () => <StandardSideSheetStory />);
