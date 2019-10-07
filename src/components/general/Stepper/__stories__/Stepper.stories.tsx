@@ -48,7 +48,9 @@ const InteractiveStory = () => {
             <Step title="Select workspace" stepKey="step1">
                 <Item>
                     <div>Press the button to enable navigation to next step.</div>
-                    <Button onClick={() => setProgress([...progress, 1])}>Do work</Button>
+                    <div>
+                        <Button onClick={() => setProgress([...progress, 1])}>Do work</Button>
+                    </div>
                 </Item>
             </Step>
             <Step
@@ -58,7 +60,9 @@ const InteractiveStory = () => {
             >
                 <Item>
                     <div>Press the button to enable navigation to next step.</div>
-                    <Button onClick={() => setProgress([...progress, 2])}>Continue</Button>
+                    <div>
+                        <Button onClick={() => setProgress([...progress, 2])}>Continue</Button>
+                    </div>
                 </Item>
             </Step>
             <Step title="Fill in details" stepKey="step3" disabled={progress.indexOf(2) === -1}>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import { DoneIcon } from '@equinor/fusion-components';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type StepProps = {
     title: string;
@@ -22,7 +23,7 @@ type BadgeProps = {
 };
 
 const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
-    const badgeClasses = classNames(styles.badge, {
+    const badgeClasses = classNames(styles.badge, useComponentDisplayClassNames(styles), {
         [styles.active]: active,
         [styles.done]: done,
     });
@@ -47,13 +48,13 @@ const Step: React.FC<StepProps> = ({
 }) => {
     const stepRef = React.useRef<HTMLAnchorElement>(null);
 
-    const stepClasses = classNames(styles.step, {
+    const stepClasses = classNames(styles.step, useComponentDisplayClassNames(styles), {
         [styles.current]: isCurrent,
         [styles.isClickable]: isClickable,
         [styles.disabled]: disabled,
     });
 
-    const titleClasses = classNames(styles.title, {
+    const titleClasses = classNames(styles.title, useComponentDisplayClassNames(styles), {
         [styles.isLastStep]: isLastStep,
     });
 

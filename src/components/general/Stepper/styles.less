@@ -8,6 +8,7 @@
     .stepPane {
         display:flex;
         flex-direction: row;
+        flex-wrap: wrap;
         
         .step {
             padding: calc(var(--grid-unit) * 2px);
@@ -17,6 +18,10 @@
             align-items: center;
 
             --line-color: var(--color-primary);
+
+            &.compact {
+                padding: calc(var(--grid-unit) * .5px);
+            }
 
             &.isClickable {
                 cursor: pointer;
@@ -36,6 +41,10 @@
                 width: calc(var(--grid-unit) * 32px);
                 overflow: hidden;
 
+                &.compact {
+                    width: calc(var(--grid-unit) * 24px);
+                }
+
                 > span {
                     display: inline-block;
                     position: relative;
@@ -47,7 +56,7 @@
                         border-bottom: 1px solid var(--line-color);
                         margin-left: calc(var(--grid-unit) * 2px);
                         top: 0;
-                        width: calc(var(--grid-unit) * 32px);
+                        width: calc(var(--grid-unit) * 24px);
                         left: 100%;
                     }
                 }
@@ -71,6 +80,11 @@
                 border: 1px solid #dcdcdc;
                 border-radius: 50%;
                 margin-right: calc(var(--grid-unit) * 1px);
+
+                &.compact {
+                    height: 20px;
+                    width: 20px;
+                }
 
                 &.active {
                     border: 1px solid transparent;
