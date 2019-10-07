@@ -107,6 +107,7 @@ const InteractiveStory = () => {
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
+            showObs={boolean('Show obs', true)}
             isSelected={isSelected}
             onExpand={action('onExpand')}
         />
@@ -123,6 +124,7 @@ const DefaultStory = () => {
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
+            showObs={boolean('Show obs', true)}
             isSelected={false}
         />
     );

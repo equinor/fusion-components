@@ -107,4 +107,38 @@
             transition: none;
         }
     }
+
+    &.isDisabled {
+
+         .dot {
+            border-color: var(--color-black-alt3);
+        }
+
+        &:active {
+            .dot {
+                    border-color: var(--color-black-alt3);
+                    box-shadow: none;
+            }
+        }
+
+        .marker{
+            box-shadow: none;
+        }
+
+        .handle {
+            .dot{
+                border-color: var(--color-black-alt3);
+            }
+
+            &.hover {
+                .dot {
+                border-color: var(--color-black-alt3);
+                }
+            }
+        }
+
+        .slider {
+            color: var(--color-primary);
+        }
+    }
 }

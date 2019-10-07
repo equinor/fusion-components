@@ -44,7 +44,7 @@ function Children<T>() {
         [childrenNodes, numberOfCardsPerRow]
     );
 
-    const initialMargin = rowMargin * asideRows + (numberOfCardsPerRow === 1 ? 50 : 60);
+    const initialMargin = (rowMargin - 20) * asideRows + (numberOfCardsPerRow === 1 ? 40 : 50);
 
     useEffect(() => {
         if (rows.length !== childrenRows) {
@@ -77,7 +77,7 @@ function Children<T>() {
                     <Card
                         node={card}
                         x={startX + i * (cardWidth + cardMargin)}
-                        y={initialMargin + (rowNo + 1) * rowMargin}
+                        y={initialMargin + (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)}
                     />
                 </React.Fragment>
             ));

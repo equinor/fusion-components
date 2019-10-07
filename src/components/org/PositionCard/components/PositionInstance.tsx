@@ -2,13 +2,20 @@ import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 
 import styles from '../styles.less';
-import { useTooltipRef, ExpandMoreIcon, IconButton, LinkIcon, styling } from '@equinor/fusion-components';
+import {
+    useTooltipRef,
+    ExpandMoreIcon,
+    IconButton,
+    LinkIcon,
+    styling,
+} from '@equinor/fusion-components';
 
 type PositionInstanceProps = {
     position: Position;
     instance?: PositionInstance;
     showLocation: boolean;
     showDate: boolean;
+    showObs: boolean;
     showExternalId: boolean;
     isLinked?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
@@ -21,6 +28,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showLocation,
     showDate,
     showExternalId,
+    showObs,
     isLinked,
     onClick,
     onExpand,
@@ -69,31 +77,34 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const firstInstance = React.useMemo(() => instancesByFrom[0], [instancesByFrom]);
-    const lastInstance = React.useMemo(() => instancesByTo.find(i => i.appliesTo.getTime !== undefined), [
-        instancesByTo,
-    ]);
+    const lastInstance = React.useMemo(
+        () => instancesByTo.find(i => i.appliesTo.getTime !== undefined),
+        [instancesByTo]
+    );
 
     return (
         <div className={styles.positionInstance} onClick={onClickHandler}>
-            <div className={styles.basePositionName}>{position.basePosition.name}</div>
+            {showObs && <div className={styles.basePositionName}>{position.basePosition.name}</div>}
+
             <div className={styles.positionName}>
                 <span ref={positionNameTooltipRef}>{position.name}</span>
             </div>
+
             <div className={styles.assignedPersonName}>
                 <span ref={assignedPersonNameTooltipRef}>{assignedPersonName}</span>
             </div>
             {showLocation && <div className={styles.location}>{locationName}</div>}
             {showDate && instance && (
                 <div className={styles.period}>
-                    {formatDate(firstInstance.appliesFrom)} - {formatDate((lastInstance || firstInstance).appliesTo)} (
-                    {instance.workload}%)
+                    {formatDate(firstInstance.appliesFrom)} -{' '}
+                    {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}%)
                 </div>
             )}
             <div className={styles.additionalInfo}>
-                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16}/>}
+                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />}
                 {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
             </div>
-            
+
             {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>

@@ -12,6 +12,7 @@ type StepProps = {
     onChange?: (ref: HTMLElement) => void;
     isClickable?: boolean;
     done?: boolean;
+    isLastStep?: boolean;
 };
 
 type BadgeProps = {
@@ -42,6 +43,7 @@ const Step: React.FC<StepProps> = ({
     onChange,
     isClickable,
     done,
+    isLastStep,
 }) => {
     const stepRef = React.useRef<HTMLAnchorElement>(null);
 
@@ -51,11 +53,15 @@ const Step: React.FC<StepProps> = ({
         [styles.disabled]: disabled,
     });
 
+    const titleClasses = classNames(styles.title, {
+        [styles.isLastStep]: isLastStep,
+    });
+
     if (disabled) {
         return (
             <span className={stepClasses}>
                 <Badge position={position} active={isCurrent} done={done} />
-                <div className={styles.title}>
+                <div className={titleClasses}>
                     <span>{title}</span>
                 </div>
             </span>
@@ -69,7 +75,7 @@ const Step: React.FC<StepProps> = ({
             className={stepClasses}
         >
             <Badge position={position} active={isCurrent} done={done} />
-            <div className={styles.title}>
+            <div className={titleClasses}>
                 <span>{title}</span>
             </div>
         </a>
