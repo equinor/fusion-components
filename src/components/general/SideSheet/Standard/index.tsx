@@ -92,11 +92,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     );
 
     if (isOpen && windowWidth < parseInt(mobileWidth)) {
-        return (
-            <OverlayPortal show={isOpen}>
-                <Scrim show={isOpen}>{sideSheet}</Scrim>
-            </OverlayPortal>
-        );
+        return <OverlayPortal show={isOpen}>{sideSheet}</OverlayPortal>;
     }
 
     return sideSheet;
