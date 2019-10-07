@@ -232,7 +232,7 @@ const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
     const rowMargin = componentDisplayType === 'Compact' ? 120 : 164;
-    const cardMargin = componentDisplayType === 'Compact' ? 24 : 16;
+    const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
 
     return (
         <div style={{ width: '100%', height: '100%' }}>
