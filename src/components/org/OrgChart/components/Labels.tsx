@@ -59,7 +59,7 @@ const Labels = () => {
             data: asideLabel,
             id: asideLabel,
             x: firstAsideNode && firstAsideNode.x !== null && firstAsideNode.x - 15,
-            y: firstAsideNode && firstAsideNode.y !== null && firstAsideNode.y - 16,
+            y: firstAsideNode && firstAsideNode.y !== null && firstAsideNode.y - 8,
         } as OrgNode<string>;
     }, [allNodes, asideLabel]);
 

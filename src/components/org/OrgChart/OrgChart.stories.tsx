@@ -177,23 +177,6 @@ const position: Position = {
     name: 'Drilling Engineer',
     parentPositionId: '0',
 };
-const cardStyle = {
-    display: 'flex',
-    justifyContent: 'left',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    boxShadow:
-        '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
-    margin: '10px',
-    paddingLeft: '16px',
-    paddingRight: '16px',
-    paddingTop: '16px',
-    paddingBottom: '8px',
-    boxSizing: 'border-box',
-    flex: '1',
-    fontSize: '16px',
-    height: 'calc(100% - 24px)',
-} as React.CSSProperties;
 
 const breadCrumbStyle = {
     display: 'flex',
@@ -227,7 +210,6 @@ const PositionCardComponent: React.FC<OrgChartItemProps<PositionStructure>> = ({
                 isSelected={false}
                 onExpand={() => {}}
                 isLinked={item.linked}
-                
             />
         </div>
     );
