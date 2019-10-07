@@ -44,7 +44,7 @@ export {
     SearchableDropdownOption,
     SearchableDropdownSection,
 } from './components/general/SearchableDropdown';
-export { ModalSideSheet } from './components/general/SideSheet';
+export { ModalSideSheet, SideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as DatePicker } from './components/general/DatePicker';
