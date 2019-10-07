@@ -1,7 +1,7 @@
 .tabs{
     display: flex;
     flex-direction: column;
-    overflow: auto;
+    overflow: hidden;
     height: 100%;
 
     .tabsPane {
@@ -101,6 +101,8 @@
     .tabContent {
         width: 100%;
         flex-grow: 1;
+        height: 100%;
+        overflow: auto;
     }
     
 }
