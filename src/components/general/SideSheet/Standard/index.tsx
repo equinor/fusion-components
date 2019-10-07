@@ -46,7 +46,7 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
                         screenPlacement={screenPlacement}
                     />
                 </div>
-                {isOpen && title && <div>{title}</div>}
+                {isOpen && title && <div className={styles.title}>{title}</div>}
             </div>
             {isOpen && <div>{children}</div>}
         </div>
@@ -85,23 +85,21 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
         '--mobile-max-width'
     );
 
-    if (isOpen && windowWidth < parseInt(mobileWidth)) {
-        return (
-            <OverlayPortal show={isOpen}>
-                <Scrim show={isOpen}>
-                    <SideSheet id={id} title={title} isOpen={isOpen} onOpenChange={onOpenChange}>
-                        {children}
-                    </SideSheet>
-                </Scrim>
-            </OverlayPortal>
-        );
-    }
-
-    return (
+    const sideSheet = (
         <SideSheet id={id} title={title} isOpen={isOpen} onOpenChange={onOpenChange}>
             {children}
         </SideSheet>
     );
+
+    if (isOpen && windowWidth < parseInt(mobileWidth)) {
+        return (
+            <OverlayPortal show={isOpen}>
+                <Scrim show={isOpen}>{sideSheet}</Scrim>
+            </OverlayPortal>
+        );
+    }
+
+    return sideSheet;
 };
 
 export default StandardSideSheet;

@@ -27,23 +27,18 @@
         bottom: 0;
         right: 0;
         transition: transform .1s ease-out;
-     
         pointer-events: all;
+    }
 
-        /* &.isCollapsed {
-            
-        } */
+    .content {
+       display: flex;
+       flex-direction: column;
     }
 
     .header{
         display: flex;
         align-items: center;
         overflow: hidden;
-    }
-
-    .content {
-       display: flex;
-       flex-direction: column;
     }
 
     .collapseButtonContainer {
@@ -53,6 +48,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    
+    .title {
+        font-size: var(--header-font-size);
+        line-height: var(--header-line-height);
+        padding-left: calc(var(--grid-unit) * 2px);
     }
 
     &.isCollapsed {
