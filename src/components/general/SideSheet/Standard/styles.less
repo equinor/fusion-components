@@ -24,17 +24,13 @@
         height: 100%;
         transition: transform .1s ease-out;
 
-        &.isOpen {
+        &:not(.isCollapsed) {
             left: 0;
             top: 0;
             bottom: 0;
             right: 0;
             position: fixed;
             pointer-events: all;
-        }
-
-        &.isCollapsed{
-            position: relative;
         }
     }
 
