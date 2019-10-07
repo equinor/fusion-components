@@ -107,7 +107,7 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
-export { BlockIcon, SaveIcon } from './components/icons/components/content';
+export { AddIcon, BlockIcon, SaveIcon  } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
