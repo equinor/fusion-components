@@ -13,7 +13,7 @@ const CollapseExpandButton: React.FC<CollapseExpandButtonProps> = ({
     screenPlacement,
 }) => {
     const tooltipRef = useTooltipRef(
-        isOpen ? 'Expand' : 'Collapse',
+        isOpen ? 'Collapse' : 'Expand',
         screenPlacement === 'right' ? 'left' : 'right'
     );
 
