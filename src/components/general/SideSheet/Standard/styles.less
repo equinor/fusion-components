@@ -22,13 +22,20 @@
     @media (max-width: @mobile-max-width) {
         width: 100%;
         height: 100%;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        position: fixed;
         transition: transform .1s ease-out;
-        pointer-events: all;
+
+        &.isOpen {
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            position: fixed;
+            pointer-events: all;
+        }
+
+        &.isCollapsed{
+            position: relative;
+        }
     }
 
     .content {
@@ -52,8 +59,7 @@
     }
 
     .title {
-        font-size: var(--header-font-size);
-        line-height: var(--header-line-height);
+        font-size: calc(var(--grid-unit) * 3px);
         padding-left: calc(var(--grid-unit) * 2px);
     }
 

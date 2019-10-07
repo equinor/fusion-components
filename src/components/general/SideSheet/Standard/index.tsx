@@ -32,6 +32,7 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
         useComponentDisplayClassNames(styles),
         {
             [styles.isCollapsed]: !isOpen,
+            [styles.isOpen]: isOpen,
             [styles.screenPlacementLeft]: screenPlacement === 'left',
         }
     );
