@@ -148,10 +148,7 @@ const breadCrumbStyle = {
     boxShadow:
         '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
     margin: '10px',
-    paddingLeft: '16px',
-    paddingRight: '16px',
-    paddingTop: '8px',
-    paddingBottom: '8px',
+    padding: '16px',
     boxSizing: 'border-box',
     flex: '1',
     fontSize: '16px',
