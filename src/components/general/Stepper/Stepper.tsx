@@ -125,12 +125,14 @@ const Stepper: React.FC<StepperProps> = ({
     return (
         <>
             <div className={styles.stepper}>
-                <IconButton onClick={handleClickPrev} disabled={!canPrev}>
-                    <ArrowBackIcon />
-                </IconButton>
-                <IconButton onClick={handleClickNext} disabled={!canNext}>
-                    <ArrowForwardIcon />
-                </IconButton>
+                <div className={styles.navigation}>
+                    <IconButton onClick={handleClickPrev} disabled={!canPrev}>
+                        <ArrowBackIcon />
+                    </IconButton>
+                    <IconButton onClick={handleClickNext} disabled={!canNext}>
+                        <ArrowForwardIcon />
+                    </IconButton>
+                </div>
                 <StepPane
                     forceOrder={forceOrder || false}
                     children={children}

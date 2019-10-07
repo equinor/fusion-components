@@ -5,11 +5,17 @@
     border-bottom: 1px solid #ccc;
     padding: calc(var(--grid-unit) * 2px) 0;
 
+    .navigation {
+        display: flex;
+        flex-direction: row;
+        flex-shrink: 0;
+    }
+
     .stepPane {
         display:flex;
         flex-direction: row;
-        flex-wrap: wrap;
-        
+        overflow-x: auto;
+
         .step {
             padding: calc(var(--grid-unit) * 2px);
             color: var(--color-black);
@@ -62,6 +68,8 @@
                 }
 
                 &.isLastStep {
+                    width: inherit;
+                    
                     > span {
                         &::after {
                             border: 0;
@@ -74,16 +82,16 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 26px;
-                width: 26px;
+                height: calc(var(--grid-unit) * 3px);
+                width: calc(var(--grid-unit) * 3px);
                 font-weight: 500;
                 border: 1px solid #dcdcdc;
                 border-radius: 50%;
                 margin-right: calc(var(--grid-unit) * 1px);
 
                 &.compact {
-                    height: 20px;
-                    width: 20px;
+                    height: calc(var(--grid-unit) * 2px);
+                    width: calc(var(--grid-unit) * 2px);
                 }
 
                 &.active {

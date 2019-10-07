@@ -57,6 +57,12 @@ const Step: React.FC<StepProps> = ({
     const titleClasses = classNames(styles.title, useComponentDisplayClassNames(styles), {
         [styles.isLastStep]: isLastStep,
     });
+    
+    React.useEffect(() => {
+        if (isCurrent && onChange && stepRef.current) {
+            onChange(stepRef.current);
+        }
+    }, [isCurrent, onChange, stepRef]);
 
     if (disabled) {
         return (
@@ -67,7 +73,7 @@ const Step: React.FC<StepProps> = ({
                 </div>
             </span>
         );
-    }
+    } 
 
     return (
         <a
