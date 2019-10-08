@@ -82,7 +82,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     return (
         <ErrorBoundary>
             <HistoryContext.Provider value={{ history: appHistory }}>
-                <Router history={appHistory}>
+                <Router key={appKey} history={appHistory}>
                     <AppComponent />
                 </Router>
             </HistoryContext.Provider>
