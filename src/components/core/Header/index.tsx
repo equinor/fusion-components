@@ -12,6 +12,23 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import ComponentDisplayToggleButton from './components/ComponentDisplayToggleButton';
 import CurrentUserButton from './components/CurrentUserButton';
+import { useHorizontalBreakpoint } from '@equinor/fusion-components';
+
+enum Breakpoints {
+    medium = 'medium',
+    small = 'small',
+}
+
+const breakpoints = [
+    {
+        key: Breakpoints.medium,
+        width: 767,
+    },
+    {
+        key: Breakpoints.small,
+        width: 0,
+    },
+];
 
 type FusionHeaderProps = {
     start: React.ReactElement | null;
@@ -26,14 +43,23 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
     const currentApp = useCurrentApp();
 
     const headerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
+    const [breakpointRef, breakpointKey] = useHorizontalBreakpoint(breakpoints);
+
+    if (!breakpointKey) {
+        return <div className={headerClassNames} ref={breakpointRef} />;
+    }
 
     return (
-        <header className={headerClassNames}>
+        <header className={headerClassNames} ref={breakpointRef}>
             <div className={styles.startContainer}>{start}</div>
             <div className={styles.fusionTitleContainer}>
                 <NavLink to="/">
                     <span className={styles.fusionLogo}>
-                        <FusionLogo scale={0.7} />
+                        {breakpointKey === 'small' ? (
+                            <FusionLogo scale={0.5} />
+                        ) : (
+                            <FusionLogo scale={0.7} />
+                        )}
                     </span>
                     <span className={styles.fusionTitle}>fusion</span>
                 </NavLink>
