@@ -3,11 +3,13 @@ import {
     RelativeOverlayPortal,
     useClickOutsideOverlayPortal,
     NavigationStructure,
+    useElevationClassName,
 } from '@equinor/fusion-components';
 import styles from './styles.less';
 import CollapsedIcon from './CollapsedIcon';
 import NavigationItem from './NavigationItem';
 import { hasActive } from '../utils';
+import classNames from 'classnames';
 
 type NavigationPopoverProps = {
     icon?: ReactNode;
@@ -27,6 +29,8 @@ const NavigationPopover = ({
     const [isOpen, setIsOpen] = useState(false);
     const iconRef = useRef<HTMLDivElement | null>(null);
 
+    const popoverClassNames = classNames(styles.popover, useElevationClassName(2));
+
     const close = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
     useClickOutsideOverlayPortal(close, iconRef.current);
     const hasActiveChild =
@@ -42,7 +46,7 @@ const NavigationPopover = ({
             </NavigationItem>
 
             <RelativeOverlayPortal relativeRef={iconRef} show={isOpen}>
-                <div className={styles.popover}>
+                <div className={popoverClassNames} onClick={close}>
                     <NavigationItem type="grouping" isActive={isActive} isCollapsed={false}>
                         {groupingComponent && groupingComponent()}
                     </NavigationItem>

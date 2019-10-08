@@ -230,8 +230,9 @@ const breadCrumbs: BreadCrumb[] = [
 const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
-    const rowMargin = componentDisplayType === 'Compact' ? 120 : 164;
+    const rowMargin = componentDisplayType === 'Compact' ? 138 : 164;
     const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
+    const cardWidth = componentDisplayType === 'Compact' ?  300: 340 ;
 
     return (
         <div style={{ width: '100%', height: '100%' }}>
@@ -240,7 +241,7 @@ const OrgChartStory = () => {
                 component={PositionCardComponent}
                 breadCrumbComponent={BreadCrumb}
                 breadCrumbs={breadCrumbs}
-                cardWidth={340}
+                cardWidth={cardWidth}
                 cardHeight={cardHeight}
                 rowMargin={rowMargin}
                 cardMargin={cardMargin}
