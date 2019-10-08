@@ -14,14 +14,16 @@
     .stepPane {
         display:flex;
         flex-direction: row;
-        overflow-x: auto;
-
+        scroll-behavior: smooth;
+        overflow: hidden;
+        
         .step {
             padding: calc(var(--grid-unit) * 2px);
             color: var(--color-black);
             display: flex;
             flex-direction: row;
             align-items: center;
+            
 
             --line-color: var(--color-primary);
 
