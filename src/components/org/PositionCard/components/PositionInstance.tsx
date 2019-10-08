@@ -33,16 +33,21 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     onClick,
     onExpand,
 }) => {
-    const positionNameTooltipRef = useTooltipRef(position.name, 'below');
+    const obsTooltipRef = useTooltipRef('OBS: ' + position.basePosition.name, 'below');
+
+    const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
 
     const assignedPersonName =
         instance && instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
 
-    const assignedPersonNameTooltipRef = useTooltipRef(assignedPersonName, 'below');
+    const assignedPersonNameTooltipRef = useTooltipRef('Person assigned for this period ', 'below');
+
+    const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
+
     const directChildrenTooltipRef = useTooltipRef(
-        position.directChildCount + ' children',
+        position.directChildCount + ' positions',
         'above'
     );
 
@@ -84,7 +89,11 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
 
     return (
         <div className={styles.positionInstance} onClick={onClickHandler}>
-            {showObs && <div className={styles.basePositionName}>{position.basePosition.name}</div>}
+            {showObs && (
+                <div className={styles.basePositionName}>
+                    <span ref={obsTooltipRef}>{position.basePosition.name}</span>
+                </div>
+            )}
 
             <div className={styles.positionName}>
                 <span ref={positionNameTooltipRef}>{position.name}</span>
@@ -96,8 +105,11 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showLocation && <div className={styles.location}>{locationName}</div>}
             {showDate && instance && (
                 <div className={styles.period}>
-                    {formatDate(firstInstance.appliesFrom)} -{' '}
-                    {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}%)
+                    <span ref={currentPeriodTooltipRef}>
+                        {formatDate(firstInstance.appliesFrom)} -{' '}
+                        {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}
+                        %)
+                    </span>
                 </div>
             )}
             <div className={styles.additionalInfo}>
