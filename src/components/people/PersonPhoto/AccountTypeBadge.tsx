@@ -52,6 +52,7 @@ const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageP
         [styles.consultant]: isConsultant,
         [styles.affiliate]: isExternal,
         [styles.local]: isLocal,
+        [styles.employee]: isEmployee,
     });
 
     const displayType = useComponentDisplayType();
