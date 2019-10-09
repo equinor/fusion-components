@@ -32,7 +32,7 @@ const StepPane: React.FC<StepPaneProps> = ({
             return;
         }
 
-        pane.scrollTo(stepRef.offsetLeft - pane.offsetWidth / 2 + stepRef.offsetWidth / 2, 0);
+        pane.scrollTo(stepRef.offsetLeft - stepRef.offsetWidth, 0);
     };
 
     React.useEffect(() => scrollToStep(activeStepRef.current), [activeStepKey]);

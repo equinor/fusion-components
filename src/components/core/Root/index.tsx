@@ -4,6 +4,8 @@ import styles from './styles.less';
 import FusionContainer from '../Container';
 import NotificationSnacks from '../NotificationSnacks';
 import NotificationDialog from '../NotificationDialog';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
+import classNames from 'classnames';
 
 type FusionRootProps = {
     rootRef: React.MutableRefObject<HTMLElement | null>;
@@ -11,7 +13,7 @@ type FusionRootProps = {
 };
 
 const FusionRoot: React.FC<FusionRootProps> = ({ children, rootRef, overlayRef }) => (
-    <div className={styles.container}>
+    <div className={classNames(styles.container, useComponentDisplayClassNames(styles))}>
         <FusionContainer ref={rootRef as React.MutableRefObject<HTMLDivElement>}>
             {children}
         </FusionContainer>

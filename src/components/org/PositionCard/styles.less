@@ -9,26 +9,6 @@
         border-radius: 4px;
         position: relative;
         transition: box-shadow .15s;
-        
-        &.isExternal, &.isConsultant, &.isExternalHire {
-            &::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: calc(var(--grid-unit) * .5px);
-            }
-        }
-        &.isExternal::before {
-            background-color: var(--color-secondary-alt2);
-        }
-
-        &.isConsultant, &.isExternalHire {
-            &::before {
-                background-color: var(--color-red);
-            }
-        }
 
         &.isClickable {
             cursor: pointer;
@@ -105,6 +85,7 @@
         flex-grow: 1;
         margin-left: var(--photo-and-details-spacing);
         width: 1px;
+        height: var(--instance-height);
 
         .assignedPersonName span, .basePositionName, .positionName span {
             display: inline-block;
@@ -114,16 +95,21 @@
             max-width: 100%;
         }
 
-        .basePositionName {
-            font-size: 11px;
-            line-height: 16px;
+        .basePositionName, .location, .period {
+            font-size: var(--small-section-font-size);
+            line-height: var(--small-section-line-height);
+        }
+
+        .period {
+            padding-bottom: 8px;
         }
 
         .positionName {
-            font-size: 16px;
+            font-size: var(--big-section-font-size);
             margin-bottom: var(--position-name-spacing);
-            line-height: 16px;
+            line-height: var(--big-section-line-height);
             color: var(--color-primary);
+            display: flex;
 
             span {            
                 text-decoration: underline;
@@ -131,27 +117,19 @@
         }
 
         .assignedPersonName {
-            font-size: 16px;
-            line-height: 16px;
-            margin-bottom: var(--assigned-person-name-spacing);
+            font-size: var(--big-section-font-size);
+            line-height: var(--big-section-line-height);
             margin-right: calc(var(--grid-unit) * 6px);
-        }
+            display: flex;
 
-        .location {
-            font-size: 11px;
-            line-height: 16px;
-        }
 
-        .period {
-            font-size: 11px;
-            line-height: 16px;
         }
 
         .additionalInfo {
             display: flex;
             align-items: center;
-            font-size: 11px;
-            line-height: 16px;
+            font-size: var(--small-section-font-size);
+            line-height: var(--small-section-line-height);
             position: absolute;
             top: 0;
             right: 0;
@@ -206,15 +184,27 @@
         --container-padding: calc(var(--grid-unit) * 1px);
         --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
         --position-name-spacing: calc(var(--grid-unit) * 1px);
-        --assigned-person-name-spacing: calc(var(--grid-unit) * 1px);
+        --instance-height: calc(var(--grid-unit) * 12px);
+
+        --small-section-font-size: 11px;
+        --small-section-line-height: 16px;
+
+        --big-section-line-height: 16px;
+        --big-section-font-size: 16px;
     }
 
     &.compact {
-        --container-width: calc(var(--grid-unit) * 40px);
-        --container-height: calc(var(--grid-unit) * 14px);
+        --container-width: calc(var(--grid-unit) * 35px);
+        --container-height: calc(var(--grid-unit) * 12px);
         --container-padding: calc(var(--grid-unit) * 1px);
-        --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
-        --position-name-spacing: calc(var(--grid-unit) * 1px);
-        --assigned-person-name-spacing: calc(var(--grid-unit) * 1px);
+        --photo-and-details-spacing: calc(var(--grid-unit) * 1px);
+        --position-name-spacing: calc(var(--grid-unit) * .5px);
+        --instance-height: calc(var(--grid-unit) * 10px);
+
+        --small-section-font-size: 10px;
+        --small-section-line-height: 12px;
+
+        --big-section-line-height: 16px;
+        --big-section-font-size: 14px;
     }
 }

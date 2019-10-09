@@ -19,6 +19,7 @@ function DataTableRow<T>({
     isSelectable,
     isSelected,
     onSelectionChange,
+    onClick,
 }: DataTableRowProps<T>) {
     const [isHovering, setIsHovering] = useState(false);
 
@@ -61,6 +62,7 @@ function DataTableRow<T>({
                     isSelected={isSelected}
                     onMouseOver={setIsHoveringTrue}
                     onMouseOut={setIsHoveringFalse}
+                    onClick={onClick}
                 />
             ))}
             <ExpandedContent

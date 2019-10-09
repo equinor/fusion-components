@@ -65,4 +65,33 @@ const columns: DataTableColumn<DataItem>[] = [
     },
 ];
 
+export const simpleColumns: DataTableColumn<DataItem>[] = [
+    {
+        key: 'id',
+        accessor: 'id',
+        label: 'Id',
+        sortable: true,
+        width: styling.grid(5),
+    },
+    {
+        key: 'firstName',
+        accessor: 'firstName',
+        label: 'First name',
+        sortable: true,
+    },
+    {
+        key: 'lastName',
+        accessor: 'lastName',
+        label: 'Last name',
+        sortable: true,
+    },
+    {
+        key: 'email',
+        accessor: 'email',
+        label: 'Email',
+        priority: 4,
+        sortable: true,
+    },
+];
+
 export default columns;

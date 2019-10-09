@@ -1,10 +1,9 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
 import {
     Position,
     useComponentDisplayClassNames,
     PositionInstance,
-    useComponentDisplayType,
 } from '@equinor/fusion';
 
 import styles from './styles.less';
@@ -66,16 +65,14 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
     }, [position, instance, onClick]);
 
-    const componentDisplayType = useComponentDisplayType();
-
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
             <PositionPhoto position={position} currentInstance={instance} onClick={onClick} />
             <PositionInstanceComponent
                 position={position}
                 instance={instance}
-                showLocation={showLocation && componentDisplayType !== 'Compact'}
-                showDate={showDate && componentDisplayType !== 'Compact'}
+                showLocation={showLocation}
+                showDate={showDate}
                 showExternalId={showExternalId}
                 showObs={showObs}
                 onClick={onClick}
