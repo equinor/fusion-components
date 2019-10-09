@@ -42,7 +42,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
 
-    const assignedPersonNameTooltipRef = useTooltipRef('Person assigned for this period ', 'below');
+    const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
 
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
 
