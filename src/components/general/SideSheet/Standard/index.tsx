@@ -1,16 +1,15 @@
 import React, { FC, useState, useCallback, useRef, useEffect, ReactNode } from 'react';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { useEventListener } from '@equinor/fusion-components';
 import styles from './styles.less';
 import CollapseExpandButton from './CollapseExpandButton';
-import { OverlayPortal, Scrim } from '@equinor/fusion-components';
+import { OverlayPortal, styling } from '@equinor/fusion-components';
 
 export type StandardSideSheetProps = {
     id: string;
     title?: string;
     isOpen: boolean;
-    onOpenChange: (isOpen: boolean) => void;
+    onClose: (isOpen: boolean) => void;
     screenPlacement?: 'right' | 'left';
     children: ReactNode;
 };
@@ -19,12 +18,12 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
     id,
     title,
     isOpen,
-    onOpenChange,
+    onClose,
     children,
     screenPlacement = 'right',
 }) => {
     const toggleOpen = useCallback(() => {
-        onOpenChange(!isOpen);
+        onClose(!isOpen);
     }, [isOpen]);
 
     const containerClassNames = classNames(
@@ -57,7 +56,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     id,
     title,
     isOpen,
-    onOpenChange,
+    onClose,
     children,
 }) => {
     const [windowWidth, setWindowWidth] = useState<Number>(0);
@@ -81,17 +80,15 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
         return () => window.cancelAnimationFrame(animationFrame);
     }, [rootElement, windowWidth]);
 
-    const mobileWidth = getComputedStyle(document.documentElement).getPropertyValue(
-        '--mobile-max-width'
-    );
-
     const sideSheet = (
-        <SideSheet id={id} title={title} isOpen={isOpen} onOpenChange={onOpenChange}>
+        <SideSheet id={id} title={title} isOpen={isOpen} onClose={onClose}>
             {children}
         </SideSheet>
     );
 
-    if (isOpen && windowWidth < parseInt(mobileWidth)) {
+    const mobileMaxWidth = styling.mobileWidth();
+
+    if (isOpen && windowWidth < parseInt(mobileMaxWidth)) {
         return <OverlayPortal show={isOpen}>{sideSheet}</OverlayPortal>;
     }
 

@@ -1,6 +1,9 @@
 export default {
     grid: (value: number) => `calc(var(--grid-unit) * ${value}px)`,
 
+    mobileWidth: () =>
+        getComputedStyle(document.documentElement).getPropertyValue('--mobile-max-width'),
+
     // Colors
     cssColors: {
         // Primary color and alternatives
