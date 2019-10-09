@@ -1,30 +1,32 @@
 import React, { useRef } from 'react';
 import { Position, PositionInstance } from '@equinor/fusion';
-import {
-    PersonPhoto,
-} from '@equinor/fusion-components';
+import { PersonPhoto, LinkIcon, styling } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
 
-type PositionPhotoProps = {
+type PositionPhotoIconProps = {
     position: Position;
     currentInstance?: PositionInstance;
+    isLinked?: boolean;
     onClick?: (position: Position, instance: PositionInstance) => void;
 };
 
-const PositionPhoto: React.FC<PositionPhotoProps> = ({ currentInstance }) => {
+const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({ currentInstance, isLinked }) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div className={styles.photoContainer} ref={containerRef}>
+        <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
                 <PersonPhoto
                     person={currentInstance ? currentInstance.assignedPerson : undefined}
-                    size='large'
+                    size="large"
                 />
+            </div>
+            <div className={styles.linkedIcon}>
+                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />}
             </div>
         </div>
     );
 };
 
-export default PositionPhoto;
+export default PositionPhotoIcon;

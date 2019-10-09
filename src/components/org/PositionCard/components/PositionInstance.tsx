@@ -17,7 +17,6 @@ type PositionInstanceProps = {
     showDate: boolean;
     showObs: boolean;
     showExternalId: boolean;
-    isLinked?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -29,7 +28,6 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showDate,
     showExternalId,
     showObs,
-    isLinked,
     onClick,
     onExpand,
 }) => {
@@ -100,11 +98,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}%)
                 </div>
             )}
-            <div className={styles.additionalInfo}>
-                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />}
-                {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
-            </div>
-
+            {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
             {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>

@@ -1,13 +1,9 @@
 import React, { useCallback } from 'react';
 import classNames from 'classnames';
-import {
-    Position,
-    useComponentDisplayClassNames,
-    PositionInstance,
-} from '@equinor/fusion';
+import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
 
 import styles from './styles.less';
-import PositionPhoto from './components/PositionPhoto';
+import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
 
 type PositionCardProps = {
@@ -67,7 +63,12 @@ const PositionCard: React.FC<PositionCardProps> = ({
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
-            <PositionPhoto position={position} currentInstance={instance} onClick={onClick} />
+            <PositionIconPhoto
+                position={position}
+                currentInstance={instance}
+                isLinked={isLinked}
+                onClick={onClick}
+            />
             <PositionInstanceComponent
                 position={position}
                 instance={instance}
@@ -77,7 +78,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 showObs={showObs}
                 onClick={onClick}
                 onExpand={onExpand}
-                isLinked={isLinked}
             />
         </div>
     );

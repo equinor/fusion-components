@@ -47,7 +47,7 @@
         }
     }
 
-    .photoContainer {
+    .photoIconContainer {
         user-select: none;
         flex-shrink: 0;
 
@@ -77,6 +77,12 @@
                 align-items: center;
                 justify-content: center;
             }
+        }
+
+        .linkedIcon{
+                
+           position: relative;
+            display: flex;
         }
     }
 
@@ -120,23 +126,19 @@
             line-height: var(--big-section-line-height);
             margin-right: calc(var(--grid-unit) * 6px);
             display: flex;
-
-
         }
-
-        .additionalInfo {
-            display: flex;
-            align-items: center;
-            font-size: var(--small-section-font-size);
-            line-height: var(--small-section-line-height);
-            position: absolute;
-            top: 0;
-            right: 0;
-
-            .externalId{
+    
+        .externalId {
                 padding-left: calc(var(--grid-unit) * .5px);
-            }
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                font-size: var(--small-section-font-size);
+                line-height: var(--small-section-line-height);
         }
+       
 
         .expandButton {
             position: absolute;
