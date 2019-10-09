@@ -1,3 +1,5 @@
+@import '~styles/variables.less';
+
 .container {
     display: flex;
     align-items: center;
@@ -30,6 +32,11 @@
     color: var(--color-primary-accent);
     background: none;
     box-sizing: border-box; 
+   
+    @media (max-width: @mobile-max-width) {
+        max-width: 100%;
+        min-width: 0;
+    }
 
     &::placeholder {
         color: var(--color-primary-accent);
