@@ -7,7 +7,10 @@ export type DataItemPropertyAccessor<T> = keyof T | DataItemPropertyAccessorFunc
 export type DataItemBooleanAccessorFunction<T> = (item: T) => boolean;
 export type DataItemBooleanAccessor<T> = boolean | DataItemBooleanAccessorFunction<T>;
 export type DataItemSkeletonComponentProps = { rowIndex: number };
-export type DataItemComponentProps<T> = DataItemSkeletonComponentProps & { item: T, collapsedColumns?: DataTableColumn<T>[] };
+export type DataItemComponentProps<T> = DataItemSkeletonComponentProps & {
+    item: T;
+    collapsedColumns?: DataTableColumn<T>[];
+};
 export type SortChangeHandler<T> = (column: DataTableColumn<T>) => void;
 export type OnDataTableRowClickHandler<T> = (item: T, rowIndex: number) => void;
 export type OnSelectionChange<T> = (selectedItems: T[]) => void;
@@ -113,6 +116,7 @@ export type DataTableBodyProps<T> = {
     isSelectable?: boolean;
     onSelectionChange: OnSelectionChange<T>;
     selectedItems?: T[];
+    onRowClick?: OnDataTableRowClickHandler<T>;
 };
 
 export type DataTableRowProps<T> = {
@@ -127,6 +131,7 @@ export type DataTableRowProps<T> = {
     isSelectable?: boolean;
     isSelected: boolean;
     onSelectionChange: (item: T) => void;
+    onClick?: OnDataTableRowClickHandler<T>;
 };
 
 export type DataTableCellProps<T> = {
@@ -138,6 +143,7 @@ export type DataTableCellProps<T> = {
     isSelected: boolean;
     onMouseOver: () => void;
     onMouseOut: () => void;
+    onClick?: OnDataTableRowClickHandler<T>;
 };
 
 export type DataTablePaginationProps = {
