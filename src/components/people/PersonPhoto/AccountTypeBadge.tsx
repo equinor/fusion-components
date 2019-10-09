@@ -21,9 +21,9 @@ type AccountTypeBageProps = {
 };
 
 const getIconSizes = (isCompact: boolean) => ({
-    xlarge: isCompact ? 16 : 24,
-    large: isCompact ? 8 : 16,
-    medium: isCompact ? 8 : 16,
+    xlarge: isCompact ? 24 : 24,
+    large: isCompact ? 16 : 16,
+    medium: isCompact ? 12 : 16,
     small: isCompact ? 8 : 12,
 });
 
