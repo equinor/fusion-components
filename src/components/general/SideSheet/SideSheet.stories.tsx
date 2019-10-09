@@ -45,7 +45,7 @@ const StandardSideSheetStory = () => {
             <div style={{ width: '100%' }} />
             <SideSheet
                 isOpen={isOpen}
-                onOpenChange={isOpen => {
+                onClose={isOpen => {
                     setIsOpen(isOpen);
                 }}
                 id="story"
