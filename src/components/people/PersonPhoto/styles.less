@@ -86,26 +86,28 @@
         }
     
         &.xlarge {
-            &.comfortable {
+            &.comfortable, &.compact {
                 // 24x24
                 --iconContainerSize: calc(var(--grid-unit) * 3px);
             }
+        }
     
-            &.compact {
+        &.large {
+            &.comfortable, &.compact {
                 // 16x16
                 --iconContainerSize: calc(var(--grid-unit) * 2px);
             }
         }
-    
-        &.large, &.medium {
+
+        &.medium {
             &.comfortable {
                 // 16x16
                 --iconContainerSize: calc(var(--grid-unit) * 2px);
             }
-    
+
             &.compact {
-                // 8x8
-                --iconContainerSize: calc(var(--grid-unit) * 1px);
+                // 12x12
+                --iconContainerSize: calc(var(--grid-unit) * 1.5px);
             }
         }
     
@@ -120,6 +122,5 @@
                 --iconContainerSize: calc(var(--grid-unit) * 1px);
             }
         }
-    
     }
 }

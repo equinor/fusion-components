@@ -12,6 +12,7 @@ import ConsultantIcon from './icons/ConsultantIcon';
 import ExternalHireIcon from './icons/ExternalHireIcon';
 import AffiliateIcon from './icons/AffiliateIcon';
 import LockedIcon from './icons/LockedIcon';
+import EmployeeIcon from './icons/EmployeeIcon';
 
 type AccountTypeBageProps = {
     size: PhotoSize;
@@ -61,16 +62,13 @@ const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageP
         hideTooltip ? '' : resolveTooltip(currentPerson.accountType)
     );
 
-    if (isEmployee) {
-        return null;
-    }
-
     return (
         <div className={iconClassNames} ref={accountTypeTooltipRef}>
             {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
             {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
             {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
             {isLocal && <LockedIcon width={iconSize} height={iconSize} />}
+            {isEmployee && <EmployeeIcon width={iconSize} height={iconSize} />}
         </div>
     );
 };
