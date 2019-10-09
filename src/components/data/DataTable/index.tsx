@@ -40,6 +40,7 @@ function DataTable<T>({
     expandedComponent,
     listComponent,
     listSkeleton,
+    onRowClick,
 }: DataTableProps<T>) {
     const showSkeleton = isFetching && !data.length;
 
@@ -84,6 +85,7 @@ function DataTable<T>({
                     isSelectable={isSelectable}
                     onSelectionChange={onSelectionChange}
                     selectedItems={selectedItems}
+                    onRowClick={onRowClick}
                 />
             )}
         </div>
