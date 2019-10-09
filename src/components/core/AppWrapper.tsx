@@ -52,7 +52,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
 
     const appHistory = useMemo(() => createAppHistory(appKey), [appKey]);
 
-    if (currentApp === null && isFetching) {
+    if ((currentApp === null) && isFetching) {
         return <Spinner centered floating />;
     }
 
