@@ -13,7 +13,7 @@ type PositionPhotoIconProps = {
 
 const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({ currentInstance, isLinked }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const linkedRef = useTooltipRef("Additional task manager", "below");
+    const linkedRef = useTooltipRef("Linked", "below");
 
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
