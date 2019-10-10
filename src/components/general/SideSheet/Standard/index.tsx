@@ -1,6 +1,6 @@
 import React, { FC, useState, useCallback, useRef, useEffect, ReactNode } from 'react';
 import classNames from 'classnames';
-import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
 import styles from './styles.less';
 import CollapseExpandButton from './CollapseExpandButton';
 import { OverlayPortal, styling } from '@equinor/fusion-components';
@@ -60,14 +60,15 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     children,
 }) => {
     const [windowWidth, setWindowWidth] = useState<Number>(0);
-    const rootElement = document.getElementById('root');
+    const fusionContext = useFusionContext();
+    const rootElement = fusionContext.refs.root;
 
     useEffect(() => {
         let animationFrame = 0;
 
         const checkResize = () => {
-            if (rootElement) {
-                const width = rootElement.clientWidth;
+            if (rootElement && rootElement.current) {
+                const width = rootElement.current.clientWidth;
 
                 if (width != windowWidth) {
                     setWindowWidth(width);
