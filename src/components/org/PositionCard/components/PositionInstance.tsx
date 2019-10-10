@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
-
+import classNames from 'classnames';
 import styles from '../styles.less';
 import {
     useTooltipRef,
@@ -46,6 +46,10 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         'above'
     );
 
+    const positionInstanceClasses = classNames(styles.positionInstance, {
+        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
+    });
+
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             if (onClick) {
@@ -83,8 +87,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     return (
-        <div className={styles.positionInstance} onClick={onClickHandler}>
-            {showObs && <div className={styles.basePositionName}>{position.basePosition.name}</div>}
+        <div className={positionInstanceClasses} onClick={onClickHandler}>
+            {showObs && <div className={styles.basePositionName}><span>{position.basePosition.name}</span></div>}
 
             <div className={styles.positionName}>
                 <span ref={positionNameTooltipRef}>{position.name}</span>
