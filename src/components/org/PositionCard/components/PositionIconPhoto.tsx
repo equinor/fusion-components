@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Position, PositionInstance } from '@equinor/fusion';
-import { PersonPhoto, LinkIcon, styling } from '@equinor/fusion-components';
+import { PersonPhoto, LinkIcon, styling, useTooltipRef } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
 
@@ -13,6 +13,7 @@ type PositionPhotoIconProps = {
 
 const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({ currentInstance, isLinked }) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const linkedRef = useTooltipRef("Additional task manager", "below");
 
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
@@ -22,9 +23,11 @@ const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({ currentInstance, 
                     size="large"
                 />
             </div>
-            <div className={styles.linkedIcon}>
-                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />}
-            </div>
+            {isLinked && (
+                <div className={styles.linkedIcon} ref={linkedRef}>
+                    <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />
+                </div>
+            )}
         </div>
     );
 };
