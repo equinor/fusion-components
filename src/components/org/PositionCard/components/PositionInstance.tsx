@@ -44,7 +44,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         position.directChildCount + ' positions',
         'above'
     );
-    const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId);
+    const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
         [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
@@ -111,7 +111,11 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </span>
                 </div>
             )}
-            {showExternalId && <div className={styles.externalId} ref={externalIdTooltipRef}>{position.externalId}</div>}
+            {showExternalId && (
+                <div className={styles.externalId} ref={externalIdTooltipRef}>
+                    {position.externalId}
+                </div>
+            )}
             {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
