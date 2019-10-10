@@ -10,7 +10,6 @@
         "storybook": "start-storybook -p 9001 -c .storybook",
         "start": "start-storybook -p 9001 -c .storybook",
         "build:storybook": "build-storybook -c .storybook -o ./docs",
-        "prepublish": "yarn test",
         "prebuild": "rm -rf dist",
         "build": "webpack",
         "postbuild": "tsc --emitDeclarationOnly true"
