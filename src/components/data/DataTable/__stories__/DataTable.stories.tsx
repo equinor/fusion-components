@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import DataTable from '../index';
 import data, { fakeFetchAsync, DataItem } from './storyData';
-import columns, { DataItemProps } from './columns';
+import columns, { simpleColumns, DataItemProps } from './columns';
 import {
     Page,
     usePagination,
@@ -163,9 +163,67 @@ const Selectable: React.FC = () => {
     );
 };
 
+const SingleSelectable: React.FC = () => {
+    const [appSettings, setAppSetting] = useAppSettings();
+    const perPage = parseInt(appSettings['perPage'], 10) || 20;
+
+    const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
+    const { sortedData, setSortBy, sortBy, direction } = useSorting(data, null, null);
+    const { pagination, pagedData, setCurrentPage } = usePagination(
+        sortedData as DataItem[],
+        perPage
+    );
+
+    const onPaginationChange = useCallback((newPage: Page, perPage: number) => {
+        setCurrentPage(newPage.index, perPage);
+        setAppSetting('perPage', perPage);
+    }, []);
+
+    const onSortChange = useCallback(
+        (column: DataTableColumn<DataItem>) => {
+            setSortBy(column.accessor, null);
+        },
+        [sortBy, direction]
+    );
+
+    const sortedByColumn = simpleColumns.find(c => c.accessor === sortBy) || null;
+
+    const handleClick = React.useCallback(
+        item => {
+            if (selectedItems.findIndex(i => i.id === item.id) !== -1) {
+                setSelectedItems([]);
+            } else {
+                setSelectedItems([item]);
+            }
+        },
+        [selectedItems]
+    );
+
+    return (
+        <DataTable
+            columns={simpleColumns}
+            data={pagedData}
+            pagination={pagination}
+            onPaginationChange={onPaginationChange}
+            isFetching={false}
+            rowIdentifier={'id'}
+            onSortChange={onSortChange}
+            sortedBy={{
+                column: sortedByColumn,
+                direction,
+            }}
+            expandedComponent={ExpandedItem}
+            listComponent={ExpandedItem}
+            onRowClick={handleClick}
+            selectedItems={selectedItems}
+        />
+    );
+};
+
 storiesOf('Data|Data Table', module)
     .addParameters({ jest: ['DataTable.stories.jsx'] })
     .addDecorator(withFusionStory('Data Table'))
     .add('Default', () => <WithoutSkeleton />)
     .add('With skeleton', () => <WithSkeleton />)
-    .add('Selectable', () => <Selectable />);
+    .add('Single selectable', () => <SingleSelectable />)
+    .add('Multi selectable', () => <Selectable />);

@@ -21,34 +21,63 @@
     }
 
     h1 {
-        font-size: 32px;
-        line-height: calc(var(--grid-unit) * 6px);
+        font-size: var(--h1-font-size);
+        line-height: var(--h1-line-height);
     }
 
     h2 {
-        font-size: 28px;
-        line-height: calc(var(--grid-unit) * 5px);
+        font-size: var(--h2-font-size);
+        line-height: var(--h2-line-height)
     }
 
     h3 {
-        font-size: 24px;
-        line-height: calc(var(--grid-unit) * 5px);
+        font-size: var(--h3-font-size);
+        line-height: var(--h3-line-height)
     }
 
     h4 {
-        font-size: 20px;
-        line-height: calc(var(--grid-unit) * 4px);
+        font-size: var(--h4-font-size);
+        line-height: var(--h4-line-height);
     }
 
     h5 {
-        font-size: 16px;
-        line-height: calc(var(--grid-unit) * 3px);
+        font-size: var(--h5-font-size);
+        line-height: var(--h5-line-height);
         font-weight: 500;
     }
 
     --overlay-z-index: 9991;
     --snacks-z-index: 9992;
     --dialog-z-index: 9993;
+
+    &.compact {
+        --h1-font-size: 28px;
+        --h2-font-size: 24px;
+        --h3-font-size: 20px;
+        --h4-font-size: 16px;
+        --h5-font-size: 14px;
+
+        --h1-line-height: calc(var(--grid-unit) * 5px);
+        --h2-line-height: calc(var(--grid-unit) * 5px);
+        --h3-line-height: calc(var(--grid-unit) * 4px);
+        --h4-line-height: calc(var(--grid-unit) * 3px);
+        --h5-line-height: calc(var(--grid-unit) * 3px);
+    }
+
+    &.comfortable {
+        --h1-font-size: 32px;
+        --h2-font-size: 28px;
+        --h3-font-size: 24px;
+        --h4-font-size: 20px;
+        --h5-font-size: 16px;
+
+        --h1-line-height: calc(var(--grid-unit) * 6px);
+        --h2-line-height: calc(var(--grid-unit) * 5px);
+        --h3-line-height: calc(var(--grid-unit) * 5px);
+        --h4-line-height: calc(var(--grid-unit) * 4px);
+        --h5-line-height: calc(var(--grid-unit) * 3px);
+    }
+
 }
 
 .overlay {

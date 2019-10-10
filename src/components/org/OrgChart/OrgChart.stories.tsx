@@ -177,22 +177,24 @@ const position: Position = {
     name: 'Drilling Engineer',
     parentPositionId: '0',
 };
-const cardStyle = {
+
+const breadCrumbStyle = {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'left',
     alignItems: 'center',
     backgroundColor: 'white',
     boxShadow:
         '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
-    margin: '12px',
+    margin: '10px',
+    padding: '16px',
     boxSizing: 'border-box',
     flex: '1',
     fontSize: '16px',
-    height: 'calc(100% - 24px)',
+    height: '32px',
 } as React.CSSProperties;
 
 const BreadCrumb: React.FC<BreadCrumb> = ({ label }) => {
-    return <div style={{ ...cardStyle, cursor: 'pointer' }}>{label}</div>;
+    return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
 };
 
 const PositionCardComponent: React.FC<OrgChartItemProps<PositionStructure>> = ({ item }) => {
@@ -208,7 +210,6 @@ const PositionCardComponent: React.FC<OrgChartItemProps<PositionStructure>> = ({
                 isSelected={false}
                 onExpand={() => {}}
                 isLinked={item.linked}
-                
             />
         </div>
     );
@@ -230,8 +231,9 @@ const breadCrumbs: BreadCrumb[] = [
 const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
-    const rowMargin = componentDisplayType === 'Compact' ? 120 : 164;
+    const rowMargin = componentDisplayType === 'Compact' ? 138 : 164;
     const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
+    const cardWidth = componentDisplayType === 'Compact' ?  300: 340 ;
 
     return (
         <div style={{ width: '100%', height: '100%' }}>
@@ -240,7 +242,7 @@ const OrgChartStory = () => {
                 component={PositionCardComponent}
                 breadCrumbComponent={BreadCrumb}
                 breadCrumbs={breadCrumbs}
-                cardWidth={340}
+                cardWidth={cardWidth}
                 cardHeight={cardHeight}
                 rowMargin={rowMargin}
                 cardMargin={cardMargin}

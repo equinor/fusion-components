@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
     PersonPhoto,
-    SearchableDropdownWrapper,
+    SearchableDropdown,
     SearchableDropdownSection,
     useTooltipRef,
 } from '@equinor/fusion-components';
@@ -18,6 +18,8 @@ export type PersonPickerOption = {
 };
 
 type PersonPickerProps = {
+    label?: string;
+    placeholder?: string;
     initialPerson?: PersonDetails;
     onSelect?: (person: PersonDetails) => void;
 };
@@ -40,7 +42,7 @@ const AsideComponent = ({ item }) => {
     return <PersonPhoto person={item.person} size="medium" hideTooltip />;
 };
 
-export default ({ initialPerson, onSelect }: PersonPickerProps) => {
+export default ({ initialPerson, onSelect, label, placeholder }: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
     const [searchQuery, setSearchQuery] = useState('');
@@ -79,13 +81,14 @@ export default ({ initialPerson, onSelect }: PersonPickerProps) => {
     }, []);
 
     return (
-        <SearchableDropdownWrapper
+        <SearchableDropdown
             sections={sections}
             onSelect={handleSelect}
             onSearchAsync={query => setSearchQuery(query)}
             itemComponent={ItemComponent}
             asideComponent={AsideComponent}
-            label="Select person"
+            label={label}
+            placeholder={placeholder}
         />
     );
 };

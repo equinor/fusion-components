@@ -20,6 +20,7 @@ const DefaultStory = () => {
             forceOrder={boolean('Force order', false)}
             activeStepKey={select('Active step', stepKeys, 'step1')}
             maxStep={select('Max step', steps, 4)}
+            hideNavButtons={boolean('Hide nav buttons', false)}
         >
             <Step title="Select workspace" stepKey="step1">
                 <Item>Select workspace</Item>
@@ -44,11 +45,18 @@ const InteractiveStory = () => {
     const [progress, setProgress] = React.useState<number[]>([]);
 
     return (
-        <Stepper forceOrder={boolean('Force order', true)} activeStepKey="step1" maxStep={4}>
+        <Stepper
+            forceOrder={boolean('Force order', true)}
+            activeStepKey="step1"
+            maxStep={4}
+            hideNavButtons={boolean('Hide nav buttons', false)}
+        >
             <Step title="Select workspace" stepKey="step1">
                 <Item>
                     <div>Press the button to enable navigation to next step.</div>
-                    <Button onClick={() => setProgress([...progress, 1])}>Do work</Button>
+                    <div>
+                        <Button onClick={() => setProgress([...progress, 1])}>Do work</Button>
+                    </div>
                 </Item>
             </Step>
             <Step
@@ -58,7 +66,9 @@ const InteractiveStory = () => {
             >
                 <Item>
                     <div>Press the button to enable navigation to next step.</div>
-                    <Button onClick={() => setProgress([...progress, 2])}>Continue</Button>
+                    <div>
+                        <Button onClick={() => setProgress([...progress, 2])}>Continue</Button>
+                    </div>
                 </Item>
             </Step>
             <Step title="Fill in details" stepKey="step3" disabled={progress.indexOf(2) === -1}>

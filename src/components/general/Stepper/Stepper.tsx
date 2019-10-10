@@ -10,6 +10,7 @@ type StepperProps = {
     forceOrder?: boolean;
     activeStepKey: string;
     maxStep?: number;
+    hideNavButtons?: boolean;
 };
 
 type StepKey = {
@@ -26,6 +27,7 @@ const Stepper: React.FC<StepperProps> = ({
     forceOrder,
     onChange,
     maxStep,
+    hideNavButtons,
 }) => {
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
     const [currentStepKey, setCurrentStepKey] = React.useState();
@@ -125,12 +127,16 @@ const Stepper: React.FC<StepperProps> = ({
     return (
         <>
             <div className={styles.stepper}>
-                <IconButton onClick={handleClickPrev} disabled={!canPrev}>
-                    <ArrowBackIcon />
-                </IconButton>
-                <IconButton onClick={handleClickNext} disabled={!canNext}>
-                    <ArrowForwardIcon />
-                </IconButton>
+                {!hideNavButtons && (
+                    <div className={styles.navigation}>
+                        <IconButton onClick={handleClickPrev} disabled={!canPrev}>
+                            <ArrowBackIcon />
+                        </IconButton>
+                        <IconButton onClick={handleClickNext} disabled={!canNext}>
+                            <ArrowForwardIcon />
+                        </IconButton>
+                    </div>
+                )}
                 <StepPane
                     forceOrder={forceOrder || false}
                     children={children}

@@ -12,6 +12,7 @@ import ConsultantIcon from './icons/ConsultantIcon';
 import ExternalHireIcon from './icons/ExternalHireIcon';
 import AffiliateIcon from './icons/AffiliateIcon';
 import LockedIcon from './icons/LockedIcon';
+import EmployeeIcon from './icons/EmployeeIcon';
 
 type AccountTypeBageProps = {
     size: PhotoSize;
@@ -20,9 +21,9 @@ type AccountTypeBageProps = {
 };
 
 const getIconSizes = (isCompact: boolean) => ({
-    xlarge: isCompact ? 16 : 24,
-    large: isCompact ? 8 : 16,
-    medium: isCompact ? 8 : 16,
+    xlarge: isCompact ? 24 : 24,
+    large: isCompact ? 16 : 16,
+    medium: isCompact ? 12 : 16,
     small: isCompact ? 8 : 12,
 });
 
@@ -52,6 +53,7 @@ const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageP
         [styles.consultant]: isConsultant,
         [styles.affiliate]: isExternal,
         [styles.local]: isLocal,
+        [styles.employee]: isEmployee,
     });
 
     const displayType = useComponentDisplayType();
@@ -60,16 +62,13 @@ const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageP
         hideTooltip ? '' : resolveTooltip(currentPerson.accountType)
     );
 
-    if (isEmployee) {
-        return null;
-    }
-
     return (
         <div className={iconClassNames} ref={accountTypeTooltipRef}>
             {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
             {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
             {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
             {isLocal && <LockedIcon width={iconSize} height={iconSize} />}
+            {isEmployee && <EmployeeIcon width={iconSize} height={iconSize} />}
         </div>
     );
 };

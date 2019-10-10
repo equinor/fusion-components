@@ -23,6 +23,10 @@
             padding: 0 calc(var(--grid-unit) * var(--cell-horizontal-padding-multiplier));
             z-index: 1;
 
+            &.isClickable {
+                cursor: pointer;
+            }
+
             &.expand:not(.isExpandable),
             &.select:not(.isSelectable) {
                 padding: 0;

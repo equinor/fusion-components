@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
-
+import classNames from 'classnames';
 import styles from '../styles.less';
 import {
     useTooltipRef,
@@ -17,7 +17,6 @@ type PositionInstanceProps = {
     showDate: boolean;
     showObs: boolean;
     showExternalId: boolean;
-    isLinked?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -29,7 +28,6 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showDate,
     showExternalId,
     showObs,
-    isLinked,
     onClick,
     onExpand,
 }) => {
@@ -50,6 +48,10 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         position.directChildCount + ' positions',
         'above'
     );
+
+    const positionInstanceClasses = classNames(styles.positionInstance, {
+        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
+    });
 
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -88,7 +90,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     return (
-        <div className={styles.positionInstance} onClick={onClickHandler}>
+        <div className={positionInstanceClasses} onClick={onClickHandler}>
             {showObs && (
                 <div className={styles.basePositionName}>
                     <span ref={obsTooltipRef}>{position.basePosition.name}</span>
@@ -112,11 +114,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </span>
                 </div>
             )}
-            <div className={styles.additionalInfo}>
-                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />}
-                {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
-            </div>
-
+            {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
             {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>

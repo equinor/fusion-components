@@ -28,8 +28,8 @@ const PreSelectedStory = () => {
         getPersonAsync();
     }, []);
 
-    return <PersonPicker initialPerson={person} />;
+    return <PersonPicker initialPerson={person} label="Selected person" />;
 };
 
-stories.add('Default', () => <PersonPicker />);
+stories.add('Default', () => <PersonPicker placeholder="Find person" />);
 stories.add('Pre Selected', () => <PreSelectedStory />);
