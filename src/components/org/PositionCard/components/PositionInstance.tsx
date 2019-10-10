@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
-
+import classNames from 'classnames';
 import styles from '../styles.less';
 import {
     useTooltipRef,
@@ -46,6 +46,10 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         'above'
     );
 
+    const positionClassNames = classNames(styles.positionName, {
+        [styles.positionNameOwerflow]: !showObs,
+    });
+
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             if (onClick) {
@@ -87,7 +91,9 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showObs && <div className={styles.basePositionName}>{position.basePosition.name}</div>}
 
             <div className={styles.positionName}>
-                <span ref={positionNameTooltipRef}>{position.name}</span>
+                <div className={positionClassNames}>
+                    <span ref={positionNameTooltipRef}>{position.name}</span>
+                </div>
             </div>
 
             <div className={styles.assignedPersonName}>
@@ -97,7 +103,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showDate && instance && (
                 <div className={styles.period}>
                     {formatDate(firstInstance.appliesFrom)} -{' '}
-                    {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}%)
+                    {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}
+                    %)
                 </div>
             )}
             <div className={styles.additionalInfo}>
