@@ -85,8 +85,9 @@
         flex-grow: 1;
         margin-left: var(--photo-and-details-spacing);
         width: 1px;
+        min-height: calc(var(--grid-unit)* 7px);
 
-        .assignedPersonName span, .basePositionName, .positionName span {
+        .assignedPersonName span, .basePositionName span, .positionName span {
             display: inline-block;
             white-space: nowrap;
             overflow: hidden;
@@ -94,21 +95,13 @@
             max-width: 100%;
         }
 
-        .basePositionName {
-            max-width: 70%;
-        }
-
         .basePositionName, .location, .period {
             font-size: var(--small-section-font-size);
             line-height: var(--small-section-line-height);
         }
 
-        .positionNameOwerflow {
-            max-width: 70%;
-        }
-
         .period {
-            padding-bottom: 8px;
+            padding-bottom: calc(var(--grid-unit) * 1px);
         }
 
         .positionName {
@@ -129,7 +122,10 @@
             margin-right: calc(var(--grid-unit) * 6px);
             display: flex;
 
-
+        }
+        .basePositionName{
+            display: flex;
+            margin-right: calc(var(--grid-unit) * 6px);
         }
 
         .additionalInfo {
@@ -150,6 +146,12 @@
             position: absolute;
             right: 0;
             bottom: 0;
+        }
+        
+        &.cropPositionName{
+            .positionName span{
+                margin-right: calc(var(--grid-unit) * 6px);
+            }
         }
     }
 

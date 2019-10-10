@@ -46,8 +46,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         'above'
     );
 
-    const positionClassNames = classNames(styles.positionName, {
-        [styles.positionNameOwerflow]: !showObs,
+    const positionInstanceClasses = classNames(styles.positionInstance, {
+        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
     });
 
     const onClickHandler = useCallback(
@@ -87,13 +87,11 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     return (
-        <div className={styles.positionInstance} onClick={onClickHandler}>
-            {showObs && <div className={styles.basePositionName}>{position.basePosition.name}</div>}
+        <div className={positionInstanceClasses} onClick={onClickHandler}>
+            {showObs && <div className={styles.basePositionName}><span>{position.basePosition.name}</span></div>}
 
             <div className={styles.positionName}>
-                <div className={positionClassNames}>
-                    <span ref={positionNameTooltipRef}>{position.name}</span>
-                </div>
+                <span ref={positionNameTooltipRef}>{position.name}</span>
             </div>
 
             <div className={styles.assignedPersonName}>
@@ -103,8 +101,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showDate && instance && (
                 <div className={styles.period}>
                     {formatDate(firstInstance.appliesFrom)} -{' '}
-                    {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}
-                    %)
+                    {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}%)
                 </div>
             )}
             <div className={styles.additionalInfo}>
