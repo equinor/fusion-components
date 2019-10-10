@@ -31,18 +31,20 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     onClick,
     onExpand,
 }) => {
-    const positionNameTooltipRef = useTooltipRef(position.name, 'below');
-
     const assignedPersonName =
         instance && instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
 
-    const assignedPersonNameTooltipRef = useTooltipRef(assignedPersonName, 'below');
+    const obsTooltipRef = useTooltipRef('OBS: ' + position.basePosition.name, 'below');
+    const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
+    const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
+    const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
     const directChildrenTooltipRef = useTooltipRef(
-        position.directChildCount + ' children',
+        position.directChildCount + ' positions',
         'above'
     );
+    const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
         [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
@@ -86,7 +88,11 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
 
     return (
         <div className={positionInstanceClasses} onClick={onClickHandler}>
-            {showObs && <div className={styles.basePositionName}><span>{position.basePosition.name}</span></div>}
+            {showObs && (
+                <div className={styles.basePositionName}>
+                    <span ref={obsTooltipRef}>{position.basePosition.name}</span>
+                </div>
+            )}
 
             <div className={styles.positionName}>
                 <span ref={positionNameTooltipRef}>{position.name}</span>
@@ -98,11 +104,18 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showLocation && <div className={styles.location}>{locationName}</div>}
             {showDate && instance && (
                 <div className={styles.period}>
-                    {formatDate(firstInstance.appliesFrom)} -{' '}
-                    {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}%)
+                    <span ref={currentPeriodTooltipRef}>
+                        {formatDate(firstInstance.appliesFrom)} -{' '}
+                        {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}
+                        %)
+                    </span>
                 </div>
             )}
-            {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
+            {showExternalId && (
+                <div className={styles.externalId} ref={externalIdTooltipRef}>
+                    {position.externalId}
+                </div>
+            )}
             {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
