@@ -22,8 +22,14 @@ const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
             }
         );
 
+        const handleOnChange = React.useCallback(() => {
+            if (!disabled && onChange) {
+                onChange();
+            }
+        }, [disabled, onChange]);
+
         return (
-            <div className={containerClassNames} onClick={onChange}>
+            <div className={containerClassNames} onClick={handleOnChange}>
                 <input
                     type="radio"
                     checked={selected}
