@@ -27,18 +27,26 @@ const getIconSizes = (isCompact: boolean) => ({
     small: isCompact ? 8 : 12,
 });
 
-const resolveTooltip = (accountType: string) => {
+const resolveTooltip = (accountType: string, isExternalHire: boolean) => {
     switch (accountType) {
         case 'Local':
             return 'No affiliate access account. User cannot log in to Fusion';
+        case 'Employee':
+            if (isExternalHire) {
+                return 'External Hire';
+            }
+            return 'Equinor Employee';
+        case 'External':
+            return 'Joint venture/Affiliate access';
         default:
             return accountType;
     }
 };
 
 const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageProps) => {
-    const isExternalHire =
-        currentPerson.jobTitle && currentPerson.jobTitle.toLowerCase().startsWith('ext');
+    const isExternalHire = !!(
+        currentPerson.jobTitle && currentPerson.jobTitle.toLowerCase().startsWith('ext')
+    );
     const isExternal = currentPerson.accountType === 'External';
     const isConsultant = currentPerson.accountType === 'Consultant';
     const isEmployee = currentPerson.accountType === 'Employee';
@@ -59,7 +67,7 @@ const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageP
     const displayType = useComponentDisplayType();
     const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
     const accountTypeTooltipRef = useTooltipRef(
-        hideTooltip ? '' : resolveTooltip(currentPerson.accountType)
+        hideTooltip ? '' : resolveTooltip(currentPerson.accountType, isExternalHire)
     );
 
     return (
@@ -68,7 +76,7 @@ const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageP
             {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
             {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
             {isLocal && <LockedIcon width={iconSize} height={iconSize} />}
-            {isEmployee && <EmployeeIcon width={iconSize} height={iconSize} />}
+            {isEmployee && !isExternalHire && <EmployeeIcon width={iconSize} height={iconSize} />}
         </div>
     );
 };
