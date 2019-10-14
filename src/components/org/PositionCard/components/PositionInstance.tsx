@@ -2,13 +2,7 @@ import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
-import {
-    useTooltipRef,
-    ExpandMoreIcon,
-    IconButton,
-    LinkIcon,
-    styling,
-} from '@equinor/fusion-components';
+import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
 
 type PositionInstanceProps = {
     position: Position;
@@ -88,9 +82,9 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
 
     return (
         <div className={positionInstanceClasses} onClick={onClickHandler}>
-            {showObs && (
+            {showObs && instance && (
                 <div className={styles.basePositionName}>
-                    <span ref={obsTooltipRef}>{position.basePosition.name}</span>
+                    <span ref={obsTooltipRef}>{instance.obs}</span>
                 </div>
             )}
 
