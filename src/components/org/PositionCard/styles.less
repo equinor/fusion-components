@@ -109,7 +109,7 @@
         }
 
         .period {
-            padding-bottom: calc(var(--grid-unit) * 1px);
+            padding-bottom: calc(var(--grid-unit) * 1px - 3px);
         }
 
         .positionName {
@@ -157,6 +157,36 @@
         &.cropPositionName{
             .positionName span{
                 margin-right: calc(var(--grid-unit) * 6px);
+            }
+        }
+
+        .instanceTimeline {
+            position: relative;
+            height: calc(var(--grid-unit) * .5px);
+            border-radius: 4px;
+            overflow: hidden;
+            width: calc(var(--grid-unit) * 23px);
+
+            .instance {
+                top: 0;
+                position: absolute;
+                height: calc(var(--grid-unit) * .5px - 2px);
+                display: flex;
+                align-items: center;
+                background: var(--color-primary-alt1);
+                box-sizing: border-box;
+                padding: 0 calc(var(--grid-unit) * 1px) 0 calc(var(--grid-unit) * 2px);
+                display: flex;
+
+                
+            }
+            .dot {
+                background: var(--color-primary-alt1);
+                border-radius: 50%;
+                box-sizing: border-box;
+                height: calc(var(--grid-unit) * .5px);
+                width: calc(var(--grid-unit) * .5px);
+
             }
         }
     }

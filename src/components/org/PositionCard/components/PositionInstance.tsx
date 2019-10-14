@@ -9,6 +9,7 @@ import {
     LinkIcon,
     styling,
 } from '@equinor/fusion-components';
+import TimelineInstance from './TimelineInstance';
 
 type PositionInstanceProps = {
     position: Position;
@@ -21,6 +22,15 @@ type PositionInstanceProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
 
+const createPositionCalculator = (start: number, end: number) => {
+    const full = end - start;
+
+    if (full <= 0) {
+        throw new Error("No range");
+    }
+
+    return (time: number) => Math.floor(Math.min(Math.max(((time - start) / full) * 100, 0), 100));
+};
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     position,
     instance,
@@ -85,6 +95,10 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         () => instancesByTo.find(i => i.appliesTo.getTime !== undefined),
         [instancesByTo]
     );
+    const calculator = createPositionCalculator(
+        firstInstance.appliesFrom.getTime(),
+        (lastInstance || firstInstance).appliesTo.getTime()
+    );
 
     return (
         <div className={positionInstanceClasses} onClick={onClickHandler}>
@@ -123,6 +137,15 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </IconButton>
                 </div>
             )}
+            <div className={styles.instanceTimeline}>
+                {instancesByFrom.map(instance => (
+                    <TimelineInstance
+                        key={instance.id}
+                        instance={instance}
+                        calculator={calculator}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
