@@ -137,12 +137,13 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </IconButton>
                 </div>
             )}
-            <div className={styles.instanceTimeline}>
-                {instancesByFrom.map(instance => (
+            <div className={styles.instanceTimelineContainer}>
+                {instancesByFrom.map(instanceByFrom => (
                     <TimelineInstance
-                        key={instance.id}
-                        instance={instance}
+                        key={instanceByFrom.id}
+                        instance={instanceByFrom}
                         calculator={calculator}
+                        currentInstance={instance || null}
                     />
                 ))}
             </div>
