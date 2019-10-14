@@ -2,13 +2,7 @@ import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
-import {
-    useTooltipRef,
-    ExpandMoreIcon,
-    IconButton,
-    LinkIcon,
-    styling,
-} from '@equinor/fusion-components';
+import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
 
 type PositionInstanceProps = {
     position: Position;
@@ -119,7 +113,10 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {onExpand && position.totalChildCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
-                        <ExpandMoreIcon isExpanded={false} />
+                        <div className={styles.childPositionCount}>
+                            {position.directChildCount}
+                            <ExpandMoreIcon height={16} isExpanded={false} />
+                        </div>
                     </IconButton>
                 </div>
             )}

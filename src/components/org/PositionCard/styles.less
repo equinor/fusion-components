@@ -146,14 +146,24 @@
                 font-size: var(--small-section-font-size);
                 line-height: var(--small-section-line-height);
         }
-       
+
+        .childPositionCount {
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                right: 0;
+                top: 0;
+                width: 100%;
+                align-items: center;
+                padding-top: 8px;
+        } 
 
         .expandButton {
             position: absolute;
             right: 0;
             bottom: 0;
         }
-        
+
         &.cropPositionName{
             .positionName span{
                 margin-right: calc(var(--grid-unit) * 6px);
