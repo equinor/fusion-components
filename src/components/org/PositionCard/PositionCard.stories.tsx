@@ -27,7 +27,7 @@ const position: Position = {
                 id: '214215',
                 name: 'Stavanger',
             },
-            obs: 'obs',
+            obs: 'Engineer',
             workload: 100,
             type: 'Normal',
             assignedPerson: {
