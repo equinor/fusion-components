@@ -84,7 +84,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         <div className={positionInstanceClasses} onClick={onClickHandler}>
             {showObs && instance && (
                 <div className={styles.basePositionName}>
-                    <span ref={obsTooltipRef}>{instance.obs}</span>
+                    <span ref={obsTooltipRef}>{instance.obs || ''}</span>
                 </div>
             )}
 
