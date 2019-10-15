@@ -31,7 +31,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
 
-    const obsTooltipRef = useTooltipRef('OBS: ' + obs, 'below');
+    const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
