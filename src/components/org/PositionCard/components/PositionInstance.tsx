@@ -26,7 +26,7 @@ const createPositionCalculator = (start: number, end: number) => {
     const full = end - start;
 
     if (full <= 0) {
-        throw new Error("No range");
+        throw new Error('No range');
     }
 
     return (time: number) => Math.floor(Math.min(Math.max(((time - start) / full) * 100, 0), 100));
@@ -144,6 +144,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                         instance={instanceByFrom}
                         calculator={calculator}
                         currentInstance={instance || null}
+                        allInstances={instancesByFrom}
                     />
                 ))}
             </div>
