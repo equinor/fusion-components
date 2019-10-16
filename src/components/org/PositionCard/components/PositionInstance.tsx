@@ -2,14 +2,8 @@ import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
-import {
-    useTooltipRef,
-    ExpandMoreIcon,
-    IconButton,
-    LinkIcon,
-    styling,
-} from '@equinor/fusion-components';
-import TimelineInstance from './TimelineInstance';
+import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
+import TimelineInstance from "./TimelineInstance";
 
 type PositionInstanceProps = {
     position: Position;
@@ -45,8 +39,9 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
         instance && instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
+    const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
 
-    const obsTooltipRef = useTooltipRef('OBS: ' + position.basePosition.name, 'below');
+    const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
@@ -57,7 +52,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
-        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
+        [styles.cropPositionName]:
+            !showObs || (showObs && !showLocation && !showDate),
     });
 
     const onClickHandler = useCallback(
@@ -102,9 +98,9 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
 
     return (
         <div className={positionInstanceClasses} onClick={onClickHandler}>
-            {showObs && (
+            {showObs && instance && (
                 <div className={styles.basePositionName}>
-                    <span ref={obsTooltipRef}>{position.basePosition.name}</span>
+                    <span ref={obsTooltipRef}>{obs}</span>
                 </div>
             )}
 
