@@ -38,15 +38,11 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const directChildrenTooltipRef = useTooltipRef(
-        childCount + ' positions',
-        'above'
-    );
+    const directChildrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
-        [styles.cropPositionName]:
-            !showObs || (showObs && !showLocation && !showDate),
+        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
     });
 
     const onClickHandler = useCallback(
