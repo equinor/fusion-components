@@ -83,6 +83,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
         {
             [styles.mouseIsDown]: mouseIsDown,
             [styles.isDisabled]: disabled,
+            [styles.isLowered]: markers.some(marker => !!marker.lowered),
         }
     );
 
