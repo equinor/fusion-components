@@ -5,7 +5,7 @@ import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 
 type PositionTimelineProps = {
-    currentInstance: PositionInstance | null;
+    activeInstance: PositionInstance | null;
     allInstances: PositionInstance[];
     firstInstance: PositionInstance;
     lastInstance: PositionInstance | undefined;
@@ -13,7 +13,7 @@ type PositionTimelineProps = {
 
 type TimelineInstanceProps = {
     instance: PositionInstance;
-    currentInstance: PositionInstance | null;
+    activeInstance: PositionInstance | null;
     allInstances: PositionInstance[];
     calculator: (time: number) => number;
 };
@@ -36,7 +36,7 @@ const addDaysToDate = (date: Date, days: number): Date => {
 
 const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     instance,
-    currentInstance,
+    activeInstance,
     allInstances,
     calculator,
 }) => {
@@ -44,8 +44,8 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     const assignedPersonTooltipRef = useTooltipRef(assignedPersonName, 'above');
 
     const timelineInstanceClasses = classNames(styles.instance, {
-        [styles.isCurrent]: currentInstance && currentInstance.id === instance.id,
-        [styles.isAfter]: currentInstance && currentInstance.appliesTo < instance.appliesFrom,
+        [styles.isCurrent]: activeInstance && activeInstance.id === instance.id,
+        [styles.isAfter]: activeInstance && activeInstance.appliesTo < instance.appliesFrom,
     });
 
     const className = classNames(styles.instanceLine, {
@@ -57,7 +57,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
         if (currentIndex + 1 === allInstances.length) {
             return true;
         }
-        if (currentInstance && currentInstance.id === instance.id) {
+        if (activeInstance && activeInstance.id === instance.id) {
             return true;
         }
         if (
@@ -72,19 +72,19 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
 
     const shouldRenderLeftDot = useMemo(() => {
         const currentIndex = allInstances.findIndex(i => i.id === instance.id);
-        if (!allInstances[currentIndex - 1] || !currentInstance) {
+        if (!allInstances[currentIndex - 1] || !activeInstance) {
             return true;
         }
-        if (currentInstance.id === allInstances[currentIndex - 1].id) {
+        if (activeInstance.id === allInstances[currentIndex - 1].id) {
             if (
-                addDaysToDate(currentInstance.appliesTo, 3).valueOf() >
+                addDaysToDate(activeInstance.appliesTo, 3).valueOf() >
                 instance.appliesFrom.valueOf()
             ) {
                 return false;
             }
         }
         return true;
-    }, [allInstances, instance, currentInstance]);
+    }, [allInstances, instance, activeInstance]);
 
     return (
         <div
@@ -102,7 +102,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
 };
 
 const PositionTimeline: React.FC<PositionTimelineProps> = ({
-    currentInstance,
+    activeInstance,
     allInstances,
     firstInstance,
     lastInstance,
@@ -117,7 +117,7 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
                 <TimelineInstance
                     key={instanceByFrom.id}
                     instance={instanceByFrom}
-                    currentInstance={currentInstance || null}
+                    activeInstance={activeInstance || null}
                     allInstances={allInstances}
                     calculator={calculator}
                 />

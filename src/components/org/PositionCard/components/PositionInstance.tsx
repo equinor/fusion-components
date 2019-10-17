@@ -121,7 +121,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             )}
             <PositionTimeline
                 allInstances={instancesByFrom}
-                currentInstance={instance || null}
+                activeInstance={instance || null}
                 firstInstance={firstInstance}
                 lastInstance={lastInstance}
             />
