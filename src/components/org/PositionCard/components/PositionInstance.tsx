@@ -11,6 +11,7 @@ type PositionInstanceProps = {
     showDate: boolean;
     showObs: boolean;
     showExternalId: boolean;
+    linkedCount?: number;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -23,6 +24,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showExternalId,
     showObs,
     onClick,
+    linkedCount,
     onExpand,
 }) => {
     const assignedPersonName =
@@ -30,20 +32,17 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
+    const childCount = position.directChildCount + (linkedCount || 0);
 
     const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const directChildrenTooltipRef = useTooltipRef(
-        position.directChildCount + ' positions',
-        'above'
-    );
+    const directChildrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
-        [styles.cropPositionName]:
-            !showObs || (showObs && !showLocation && !showDate),
+        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
     });
 
     const onClickHandler = useCallback(
@@ -112,7 +111,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     {position.externalId}
                 </div>
             )}
-            {onExpand && position.totalChildCount > 0 && (
+            {onExpand && childCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
                         <ExpandMoreIcon isExpanded={false} />
