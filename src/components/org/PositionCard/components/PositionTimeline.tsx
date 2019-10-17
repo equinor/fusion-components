@@ -4,11 +4,28 @@ import { PositionInstance } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 
+type PositionTimelineProps = {
+    currentInstance: PositionInstance | null;
+    allInstances: PositionInstance[];
+    firstInstance: PositionInstance;
+    lastInstance: PositionInstance | undefined;
+};
+
 type TimelineInstanceProps = {
     instance: PositionInstance;
     currentInstance: PositionInstance | null;
-    calculator: (time: number) => number;
     allInstances: PositionInstance[];
+    calculator: (time: number) => number;
+};
+
+const createPositionCalculator = (start: number, end: number) => {
+    const full = end - start;
+
+    if (full <= 0) {
+        throw new Error('No range');
+    }
+
+    return (time: number) => Math.floor(Math.min(Math.max(((time - start) / full) * 100, 0), 100));
 };
 
 const addDaysToDate = (date: Date, days: number): Date => {
@@ -20,8 +37,8 @@ const addDaysToDate = (date: Date, days: number): Date => {
 const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     instance,
     currentInstance,
-    calculator,
     allInstances,
+    calculator,
 }) => {
     const assignedPersonName = instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const assignedPersonTooltipRef = useTooltipRef(assignedPersonName, 'above');
@@ -84,4 +101,29 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     );
 };
 
-export default TimelineInstance;
+const PositionTimeline: React.FC<PositionTimelineProps> = ({
+    currentInstance,
+    allInstances,
+    firstInstance,
+    lastInstance,
+}) => {
+    const calculator = createPositionCalculator(
+        firstInstance.appliesFrom.getTime(),
+        (lastInstance || firstInstance).appliesTo.getTime()
+    );
+    return (
+        <div className={styles.instanceTimelineContainer}>
+            {allInstances.map(instanceByFrom => (
+                <TimelineInstance
+                    key={instanceByFrom.id}
+                    instance={instanceByFrom}
+                    currentInstance={currentInstance || null}
+                    allInstances={allInstances}
+                    calculator={calculator}
+                />
+            ))}
+        </div>
+    );
+};
+
+export default PositionTimeline;

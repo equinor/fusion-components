@@ -3,7 +3,7 @@ import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
 import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
-import TimelineInstance from "./TimelineInstance";
+import PositionTimeline from './PositionTimeline';
 
 type PositionInstanceProps = {
     position: Position;
@@ -16,15 +16,6 @@ type PositionInstanceProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
 
-const createPositionCalculator = (start: number, end: number) => {
-    const full = end - start;
-
-    if (full <= 0) {
-        throw new Error('No range');
-    }
-
-    return (time: number) => Math.floor(Math.min(Math.max(((time - start) / full) * 100, 0), 100));
-};
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     position,
     instance,
@@ -52,8 +43,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
-        [styles.cropPositionName]:
-            !showObs || (showObs && !showLocation && !showDate),
+        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
     });
 
     const onClickHandler = useCallback(
@@ -90,10 +80,6 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const lastInstance = React.useMemo(
         () => instancesByTo.find(i => i.appliesTo.getTime !== undefined),
         [instancesByTo]
-    );
-    const calculator = createPositionCalculator(
-        firstInstance.appliesFrom.getTime(),
-        (lastInstance || firstInstance).appliesTo.getTime()
     );
 
     return (
@@ -133,17 +119,12 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </IconButton>
                 </div>
             )}
-            <div className={styles.instanceTimelineContainer}>
-                {instancesByFrom.map(instanceByFrom => (
-                    <TimelineInstance
-                        key={instanceByFrom.id}
-                        instance={instanceByFrom}
-                        calculator={calculator}
-                        currentInstance={instance || null}
-                        allInstances={instancesByFrom}
-                    />
-                ))}
-            </div>
+            <PositionTimeline
+                allInstances={instancesByFrom}
+                currentInstance={instance || null}
+                firstInstance={firstInstance}
+                lastInstance={lastInstance}
+            />
         </div>
     );
 };
