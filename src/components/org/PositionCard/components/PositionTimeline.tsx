@@ -5,16 +5,24 @@ import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 
 type PositionTimelineProps = {
+    /** The instance that is currently active/shown */
     activeInstance: PositionInstance | null;
+    /** All instances to the position */
     allInstances: PositionInstance[];
+    /** Fist instance sorted by appliesFrom time */
     firstInstance: PositionInstance;
+    /** Last instance sorted by appliesTo time */
     lastInstance: PositionInstance | undefined;
 };
 
 type TimelineInstanceProps = {
+    /** Mapped instance from allInstances */
     instance: PositionInstance;
+    /** The instance that is currently active/shown */
     activeInstance: PositionInstance | null;
+    /** All instances to the position */
     allInstances: PositionInstance[];
+    /** Position range calculator */
     calculator: (time: number) => number;
 };
 
