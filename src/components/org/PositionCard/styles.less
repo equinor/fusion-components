@@ -108,10 +108,6 @@
             line-height: var(--small-section-line-height);
         }
 
-        .period {
-            padding-bottom: calc(var(--grid-unit) * 1px);
-        }
-
         .positionName {
             font-size: var(--big-section-font-size);
             margin-bottom: var(--position-name-spacing);
@@ -158,6 +154,76 @@
             .positionName span{
                 margin-right: calc(var(--grid-unit) * 6px);
             }
+        }
+
+        .instanceTimelineContainer {
+            position: relative;
+            height: calc(var(--grid-unit) * .5px);
+            border-radius: 4px;
+            overflow: hidden;
+            width: calc(var(--grid-unit) * 23px);
+            margin-top: calc(var(--grid-unit) * .5px);
+
+            .instance{
+                height: 100%;
+                position: absolute;
+
+                .instanceLine {
+                    left: 0;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    position: absolute;
+                    height: calc(var(--grid-unit) * .5px - 2px);
+                    display: flex;
+                    align-items: center;
+                    background: var(--color-primary-alt1);
+                    box-sizing: border-box;
+                    padding: 0 calc(var(--grid-unit) * 1px) 0 calc(var(--grid-unit) * 2px);
+    
+                    
+                }
+                .dot {
+                    background: var(--color-primary-alt1);
+                    border-radius: 50%;
+                    box-sizing: border-box;
+                    height: calc(var(--grid-unit) * .5px);
+                    width: calc(var(--grid-unit) * .5px);
+                    position: absolute;
+
+                    &.right{
+                        right: 0;
+                    }
+    
+                }
+
+                &.isCurrent {
+                    .instanceLine, .dot{
+                        background: var(--color-primary)
+                    }
+                }
+
+                &.hasUnAssignedPerson {
+                    .instanceLine, .dot{
+                        background: var(--color-black-alt3)
+                    }
+
+                }
+                
+                &.isAfter{
+                    .instanceLine{
+                        background: repeating-linear-gradient(
+                            to right,
+                            var(--color-primary-alt1),
+                            var(--color-primary-alt1) calc(var(--grid-unit) * 1px),
+                            var(--color-white) calc(var(--grid-unit) * 1px),
+                            var(--color-white) calc(var(--grid-unit) * 1.5px)
+                          );
+                    }
+                   
+                }
+            }
+           
         }
     }
 

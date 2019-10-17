@@ -3,6 +3,7 @@ import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
 import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
+import PositionTimeline from './PositionTimeline';
 
 type PositionInstanceProps = {
     position: Position;
@@ -118,6 +119,12 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </IconButton>
                 </div>
             )}
+            <PositionTimeline
+                allInstances={instancesByFrom}
+                activeInstance={instance || null}
+                firstInstance={firstInstance}
+                lastInstance={lastInstance}
+            />
         </div>
     );
 };
