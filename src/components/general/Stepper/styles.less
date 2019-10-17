@@ -1,9 +1,16 @@
+@import '~styles/variables.less';
+
 .stepper {
     display:flex;
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #ccc;
     padding: calc(var(--grid-unit) * 2px) 0;
+
+    @media (max-width: @mobile-max-width) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
     .navigation {
         display: flex;
@@ -12,10 +19,14 @@
     }
 
     .stepPane {
-        display:flex;
+        display: flex;
         flex-direction: row;
         scroll-behavior: smooth;
         overflow: hidden;
+
+        @media (max-width: @mobile-max-width) {
+            flex-direction: column;
+        }
         
         .step {
             padding: calc(var(--grid-unit) * 2px);
@@ -24,7 +35,6 @@
             flex-direction: row;
             align-items: center;
             
-
             --line-color: var(--color-primary);
 
             &.compact {
@@ -54,7 +64,7 @@
                 }
 
                 > span {
-                    display: inline-block;
+                    display: inline;
                     position: relative;
 
                     &::after {
@@ -66,8 +76,13 @@
                         top: 0;
                         width: calc(var(--grid-unit) * 24px);
                         left: 100%;
+
+                        @media (max-width: @mobile-max-width) {
+                        display: none;
+                        }
                     }
                 }
+            }
 
                 &.isLastStep {
                     width: inherit;
@@ -109,5 +124,3 @@
             }
         }
     }
-
-}
