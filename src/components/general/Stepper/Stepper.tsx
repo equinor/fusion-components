@@ -137,7 +137,7 @@ const Stepper: React.FC<StepperProps> = ({
                         onChange={handleChange}
                         maxStep={maxStep}
                     />
-                    <StepContent children={children} activeStepKey={currentStepKey} />
+
                     <div className={styles.navigation}>
                         <IconButton onClick={handleClickPrev} disabled={!canPrev}>
                             <ArrowBackIcon />
@@ -145,6 +145,7 @@ const Stepper: React.FC<StepperProps> = ({
                         <IconButton onClick={handleClickNext} disabled={!canNext}>
                             <ArrowForwardIcon />
                         </IconButton>
+                        <StepContent children={children} activeStepKey={currentStepKey} />
                     </div>
                 </div>
             ) : (

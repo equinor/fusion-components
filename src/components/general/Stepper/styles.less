@@ -10,12 +10,13 @@
     @media (max-width: @mobile-max-width) {
         flex-direction: column;
         align-items: flex-start;
+        border: none;
     }
 
     .navigation {
-        display: flex;
+    /*     display: flex;
         flex-direction: row;
-        flex-shrink: 0;
+        flex-shrink: 0; */
     }
 
     .stepPane {
@@ -29,11 +30,13 @@
         }
         
         .step {
-            padding: calc(var(--grid-unit) * 2px);
+            padding: calc(var(--grid-unit) * 1px);
+            padding-left: calc(var(--grid-unit) * 2px);
+            padding-right: calc(var(--grid-unit) * 2px);
             color: var(--color-black);
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            flex-direction: column;
+           /*  align-items: center; */
             
             --line-color: var(--color-primary);
 
@@ -54,10 +57,13 @@
             &.current {
                 font-weight: 500;
             }
-            
+
             .title {
+                display: flex;
+                flex-direction: column;
                 width: calc(var(--grid-unit) * 32px);
                 overflow: hidden;
+                justify-content: center;
 
                 &.compact {
                     width: calc(var(--grid-unit) * 24px);
@@ -99,6 +105,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                top: 0;
                 height: calc(var(--grid-unit) * 3px);
                 width: calc(var(--grid-unit) * 3px);
                 font-weight: 500;
@@ -123,4 +130,14 @@
                 }
             }
         }
+    }
+    .description {
+        color: var(--color-black-alt3);
+    }
+
+    .badgeLink {
+        content: " ";
+        
+        width: 26px;
+        margin-right: 8px;
     }

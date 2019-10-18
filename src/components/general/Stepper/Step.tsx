@@ -7,6 +7,7 @@ import { useComponentDisplayClassNames } from '@equinor/fusion';
 type StepProps = {
     title: string;
     stepKey: string;
+    description?: string;
     disabled?: boolean;
     isCurrent?: boolean;
     position?: number;
@@ -38,6 +39,7 @@ const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
 
 const Step: React.FC<StepProps> = ({
     title,
+    description,
     isCurrent,
     disabled,
     position,
@@ -57,7 +59,7 @@ const Step: React.FC<StepProps> = ({
     const titleClasses = classNames(styles.title, useComponentDisplayClassNames(styles), {
         [styles.isLastStep]: isLastStep,
     });
-    
+
     React.useEffect(() => {
         if (isCurrent && onChange && stepRef.current) {
             onChange(stepRef.current);
@@ -73,19 +75,30 @@ const Step: React.FC<StepProps> = ({
                 </div>
             </span>
         );
-    } 
+    }
 
     return (
-        <a
-            onClick={() => !disabled && onChange && stepRef.current && onChange(stepRef.current)}
-            ref={stepRef}
-            className={stepClasses}
-        >
-            <Badge position={position} active={isCurrent} done={done} />
-            <div className={titleClasses}>
-                <span>{title}</span>
-            </div>
-        </a>
+        <>
+            <a
+                onClick={() =>
+                    !disabled && onChange && stepRef.current && onChange(stepRef.current)
+                }
+                ref={stepRef}
+                className={stepClasses}
+            >
+                <div style={{ display: 'flex', flexDirection: 'row', paddingBottom: 8 }}>
+                    <Badge position={position} active={isCurrent} done={done} />
+                    <div className={titleClasses}>
+                        <span>{title}</span>
+                    </div>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <span className={styles.badgeLink}> </span>
+                    <span className={styles.description}>{description}</span>
+                </div>
+            </a>
+        </>
     );
 };
 

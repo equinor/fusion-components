@@ -22,10 +22,18 @@ const DefaultStory = () => {
             maxStep={select('Max step', steps, 4)}
             hideNavButtons={boolean('Hide nav buttons', false)}
         >
-            <Step title="Select workspace" stepKey="step1">
+            <Step
+                title="Select workspace"
+                description="Dette er vel en eller annen beskrivelse, som kanskje kan være ganske lang"
+                stepKey="step1"
+            >
                 <Item>Select workspace</Item>
             </Step>
-            <Step title="Select report/dashboard" stepKey="step2">
+            <Step
+                title="Select report/dashboard"
+                description="Her er det en beskrivelse"
+                stepKey="step2"
+            >
                 <Item>Select a report or dashboard</Item>
             </Step>
             <Step title="Fill in details" stepKey="step3">
