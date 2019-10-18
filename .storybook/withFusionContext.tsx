@@ -11,7 +11,6 @@ import { HashRouter } from 'react-router-dom';
 import FusionRoot from '../src/components/core/Root';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
-import { resolveSoa } from 'dns';
 
 const mockUser = {
     id: '1337',
@@ -129,19 +128,6 @@ const FusionWrapper: React.FC = ({ children }) => {
     const overlay = React.useRef<HTMLElement | null>(null);
     const root = React.useRef<HTMLElement | null>(null);
     const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root });
-    React.useEffect(() => {
-        const unregister = fusionContext.userMenuSectionsContainer.registerSection({
-            key: 'roles',
-            items: [
-                {
-                    key: '',
-                    title: '',
-                    onClick: () => console.log('ke det går i'),
-                },
-            ],
-        });
-        return () => unregister();
-    }, []);
 
     return (
         <FusionContext.Provider value={fusionContext}>

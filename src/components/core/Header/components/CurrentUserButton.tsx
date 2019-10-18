@@ -9,6 +9,7 @@ import {
     IconButton,
 } from '@equinor/fusion-components';
 import { useEventEmitterValue } from '@equinor/fusion/lib/utils/EventEmitter';
+import { UserMenuSectionItem } from '@equinor/fusion/lib/core/UserMenuContainer';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
@@ -30,7 +31,7 @@ const CurrentUserDropdown: React.FC = () => {
         userMenuSectionsContainer,
         'change',
         undefined,
-        []
+        userMenuSectionsContainer.sections
     );
 
     if (!currentUser) {
@@ -47,10 +48,10 @@ const CurrentUserDropdown: React.FC = () => {
                     title: 'Sign out',
                 },
             ],
-            ...customSections,
             // TODO: Allow core and apps to add custom buttons like "Preview features" etc.
             // Should be provided through the fusion context, not props
         },
+        ...(customSections || []),
     ];
 
     const onClick = async (item: MenuItemType) => {
@@ -58,6 +59,9 @@ const CurrentUserDropdown: React.FC = () => {
             case 'logout':
                 await auth.container.logoutAsync();
                 break;
+            default:
+                const clickedItem = item as UserMenuSectionItem;
+                clickedItem.onClick && clickedItem.onClick(clickedItem);
         }
     };
 
