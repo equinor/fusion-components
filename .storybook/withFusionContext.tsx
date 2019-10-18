@@ -11,6 +11,7 @@ import { HashRouter } from 'react-router-dom';
 import FusionRoot from '../src/components/core/Root';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
+import { resolveSoa } from 'dns';
 
 const mockUser = {
     id: '1337',
@@ -50,10 +51,10 @@ class StorybookAuthContainer extends AuthContainer {
     }
 
     async loginAsync(clientId: string): Promise<void> {
-        console.log("No login for you");
+        console.log('No login for you');
         /*   super.login(clientId); */
     }
-    
+
     async logoutAsync(clientId?: string): Promise<void> {
         await super.logoutAsync(clientId);
     }
@@ -64,7 +65,7 @@ class StorybookAuthContainer extends AuthContainer {
             if (cachedUser) {
                 return cachedUser;
             }
-        } catch (e) { }
+        } catch (e) {}
 
         return AuthUser.fromJSON(mockUser);
     }
@@ -128,6 +129,19 @@ const FusionWrapper: React.FC = ({ children }) => {
     const overlay = React.useRef<HTMLElement | null>(null);
     const root = React.useRef<HTMLElement | null>(null);
     const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root });
+    React.useEffect(() => {
+        const unregister = fusionContext.userMenuSectionsContainer.registerSection({
+            key: 'roles',
+            items: [
+                {
+                    key: '',
+                    title: '',
+                    onClick: () => console.log('ke det går i'),
+                },
+            ],
+        });
+        return () => unregister();
+    }, []);
 
     return (
         <FusionContext.Provider value={fusionContext}>
