@@ -101,8 +101,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showDate && instance && (
                 <div className={styles.period}>
                     <span ref={currentPeriodTooltipRef}>
-                        {formatDate(firstInstance.appliesFrom)} -{' '}
-                        {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}
+                        {formatDate(instance.appliesFrom)} -{' '}
+                        {formatDate(instance.appliesTo)} ({instance.workload}
                         %)
                     </span>
                 </div>

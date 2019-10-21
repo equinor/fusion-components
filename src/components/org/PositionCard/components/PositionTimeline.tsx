@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import styles from '../styles.less';
-import { PositionInstance } from '@equinor/fusion';
+import { PositionInstance, formatDate } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 
@@ -49,7 +49,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     calculator,
 }) => {
     const assignedPersonName = instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
-    const assignedPersonTooltipRef = useTooltipRef(assignedPersonName, 'above');
+    const assignedPersonTooltipRef = useTooltipRef(<span>{assignedPersonName}<br/> {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)}</span>, 'above');
 
     const timelineInstanceClasses = classNames(styles.instance, {
         [styles.isCurrent]: activeInstance && activeInstance.id === instance.id,
@@ -97,13 +97,14 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     return (
         <div
             className={timelineInstanceClasses}
+            ref={assignedPersonTooltipRef}
             style={{
                 left: calculator(instance.appliesFrom.getTime()) + '%',
                 right: 100 - calculator(instance.appliesTo.getTime()) + '%',
             }}
         >
             {shouldRenderLeftDot && <div className={styles.dot} />}
-            <div className={className} ref={assignedPersonTooltipRef} />
+            <div className={className} />
             {shouldRenderRightDot && <div className={classNames(styles.dot, styles.right)} />}
         </div>
     );
