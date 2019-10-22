@@ -15,7 +15,7 @@ type PositionCardProps = {
     showDate: boolean;
     showObs: boolean;
     isLinked?: boolean;
-    linkedCount?: number;
+    childCount?: number;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -31,7 +31,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     onClick,
     onExpand,
     isLinked,
-    linkedCount,
+    childCount,
 }) => {
     const isExternalHire =
         instance &&
@@ -80,7 +80,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 showObs={showObs}
                 onClick={onClick}
                 onExpand={onExpand}
-                linkedCount={linkedCount}
+                childCount={childCount}
             />
         </div>
     );

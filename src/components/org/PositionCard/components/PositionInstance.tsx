@@ -12,9 +12,9 @@ type PositionInstanceProps = {
     showDate: boolean;
     showObs: boolean;
     showExternalId: boolean;
-    linkedCount?: number;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
+    childCount?: number;
 };
 
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
@@ -25,15 +25,14 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showExternalId,
     showObs,
     onClick,
-    linkedCount,
     onExpand,
+    childCount,
 }) => {
     const assignedPersonName =
         instance && instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
-    const childCount = position.directChildCount + (linkedCount || 0);
 
     const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
@@ -101,8 +100,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showDate && instance && (
                 <div className={styles.period}>
                     <span ref={currentPeriodTooltipRef}>
-                        {formatDate(instance.appliesFrom)} -{' '}
-                        {formatDate(instance.appliesTo)} ({instance.workload}
+                        {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
+                        {instance.workload}
                         %)
                     </span>
                 </div>
@@ -112,7 +111,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     {position.externalId}
                 </div>
             )}
-            {onExpand && childCount > 0 && (
+            {onExpand && childCount && childCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
                         <ExpandMoreIcon isExpanded={false} />
