@@ -121,7 +121,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </IconButton>
                 </div>
             )}
-            {showTimeline && (
+            {showTimeline && instances.length > 0 && (
                 <PositionTimeline
                     allInstances={instancesByFrom}
                     activeInstance={instance || null}
