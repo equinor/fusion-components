@@ -55,7 +55,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
             <br /> {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
             {instance.workload}%)
         </span>,
-        'above'
+        'below'
     );
 
     const timelineInstanceClasses = classNames(styles.instance, {

@@ -158,11 +158,10 @@
 
         .instanceTimelineContainer {
             position: relative;
-            height: calc(var(--grid-unit) * .5px);
+            height: calc(var(--grid-unit) * 1px);
             border-radius: 4px;
             overflow: hidden;
             width: calc(var(--grid-unit) * 23px);
-            margin-top: calc(var(--grid-unit) * .5px);
 
             .instance{
                 height: 100%;
@@ -186,6 +185,8 @@
                 .dot {
                     background: var(--instance-color);
                     border-radius: 50%;
+                    top: 50%;
+                    transform: translateY(-50%);
                     box-sizing: border-box;
                     height: calc(var(--grid-unit) * .5px);
                     width: calc(var(--grid-unit) * .5px);

@@ -11,6 +11,7 @@ type PositionInstanceProps = {
     showLocation: boolean;
     showDate: boolean;
     showObs: boolean;
+    showTimeline: boolean;
     showExternalId: boolean;
     linkedCount?: number;
     onClick?: (position: Position, instance?: PositionInstance) => void;
@@ -24,6 +25,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showDate,
     showExternalId,
     showObs,
+    showTimeline,
     onClick,
     linkedCount,
     onExpand,
@@ -101,8 +103,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showDate && instance && (
                 <div className={styles.period}>
                     <span ref={currentPeriodTooltipRef}>
-                        {formatDate(instance.appliesFrom)} -{' '}
-                        {formatDate(instance.appliesTo)} ({instance.workload}
+                        {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
+                        {instance.workload}
                         %)
                     </span>
                 </div>
@@ -119,12 +121,14 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </IconButton>
                 </div>
             )}
-            <PositionTimeline
-                allInstances={instancesByFrom}
-                activeInstance={instance || null}
-                firstInstance={firstInstance}
-                lastInstance={lastInstance}
-            />
+            {showTimeline && (
+                <PositionTimeline
+                    allInstances={instancesByFrom}
+                    activeInstance={instance || null}
+                    firstInstance={firstInstance}
+                    lastInstance={lastInstance}
+                />
+            )}
         </div>
     );
 };
