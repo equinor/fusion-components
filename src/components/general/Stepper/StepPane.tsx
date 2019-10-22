@@ -1,5 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as styles from './styles.less';
+import { useFusionContext } from '@equinor/fusion';
+import { styling } from '@equinor/fusion-components';
+import useWindowWidth from './useWindowWidth';
 
 type StepPaneProps = {
     onChange: (stepKey: string) => void;
@@ -20,6 +23,8 @@ const StepPane: React.FC<StepPaneProps> = ({
 }) => {
     const stepPaneRef = React.useRef<HTMLDivElement | null>(null);
     const activeStepRef = React.useRef<HTMLElement | null>(null);
+
+    const windowWidth = useWindowWidth();
 
     const scrollToStep = (stepRef: HTMLElement | null) => {
         if (!stepPaneRef.current || !stepRef) {
@@ -44,6 +49,12 @@ const StepPane: React.FC<StepPaneProps> = ({
             return null;
         }
 
+        const mobileMaxWidth = styling.mobileWidth();
+
+        if (!(stepKey === activeStepKey) && parseInt(mobileMaxWidth) > windowWidth) {
+            return null;
+        }
+
         const position = index + 1;
 
         return React.cloneElement(child, {
@@ -51,6 +62,7 @@ const StepPane: React.FC<StepPaneProps> = ({
                 activeStepRef.current = ref;
                 onChange(stepKey);
             },
+            maxStep,
             isCurrent: stepKey === activeStepKey,
             position,
             isClickable: !forceOrder,

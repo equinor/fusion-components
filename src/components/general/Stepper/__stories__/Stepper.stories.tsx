@@ -23,7 +23,7 @@ const DefaultStory = () => {
             hideNavButtons={boolean('Hide nav buttons', false)}
         >
             <Step
-                title="Select workspace"
+                title="Select workspace and do some other work"
                 description="Dette er vel en eller annen beskrivelse, som kanskje kan være ganske lang"
                 stepKey="step1"
             >

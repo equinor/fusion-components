@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as styles from './styles.less';
-import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
+import { useFusionContext } from '@equinor/fusion';
+import { IconButton, ArrowBackIcon, ArrowForwardIcon, styling } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';
+import useWindowWidth from './useWindowWidth';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;
@@ -32,7 +34,7 @@ const Stepper: React.FC<StepperProps> = ({
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
     const [currentStepKey, setCurrentStepKey] = React.useState();
     const [activeStepPosition, setActiveStepPosition] = React.useState();
-    const [showSmallScreenStepper, setSmallScreenStepper] = React.useState(true);
+    const [showSmallScreenStepper, setSmallScreenStepper] = React.useState(false);
 
     const [canNext, setCanNext] = React.useState(true);
     const [canPrev, setCanPrev] = React.useState(false);
@@ -125,54 +127,70 @@ const Stepper: React.FC<StepperProps> = ({
         [forceOrder, maxStep, stepKeys]
     );
 
-    return (
-        <div className={styles.stepper}>
-            {showSmallScreenStepper ? (
-                <div>
-                    <StepPane
-                        forceOrder={forceOrder || false}
-                        children={children}
-                        activeStepKey={currentStepKey}
-                        activeStepPosition={activeStepPosition}
-                        onChange={handleChange}
-                        maxStep={maxStep}
-                    />
+    const windowWidth = useWindowWidth();
 
-                    <div className={styles.navigation}>
-                        <IconButton onClick={handleClickPrev} disabled={!canPrev}>
-                            <ArrowBackIcon />
-                        </IconButton>
-                        <IconButton onClick={handleClickNext} disabled={!canNext}>
-                            <ArrowForwardIcon />
-                        </IconButton>
-                        <StepContent children={children} activeStepKey={currentStepKey} />
-                    </div>
-                </div>
-            ) : (
+    useEffect(() => {
+        const mobileMaxWidth = styling.mobileWidth();
+
+        if (windowWidth < parseInt(mobileMaxWidth) && !showSmallScreenStepper) {
+            setSmallScreenStepper(true);
+        } else if (windowWidth > parseInt(mobileMaxWidth) && showSmallScreenStepper) {
+            setSmallScreenStepper(false);
+        }
+    }, [windowWidth]);
+
+    return (
+        <>
+            {showSmallScreenStepper ? (
                 <>
-                    {!hideNavButtons && (
+                    <div className={styles.stepper}>
                         <div className={styles.navigation}>
                             <IconButton onClick={handleClickPrev} disabled={!canPrev}>
                                 <ArrowBackIcon />
                             </IconButton>
+                        </div>
+                        <StepPane
+                            forceOrder={forceOrder || false}
+                            children={children}
+                            activeStepKey={currentStepKey}
+                            activeStepPosition={activeStepPosition}
+                            onChange={handleChange}
+                            maxStep={maxStep}
+                        />
+                        <div className={styles.navigation}>
                             <IconButton onClick={handleClickNext} disabled={!canNext}>
                                 <ArrowForwardIcon />
                             </IconButton>
                         </div>
-                    )}
-                    <StepPane
-                        forceOrder={forceOrder || false}
-                        children={children}
-                        activeStepKey={currentStepKey}
-                        activeStepPosition={activeStepPosition}
-                        onChange={handleChange}
-                        maxStep={maxStep}
-                    />
-
+                    </div>
+                    <StepContent children={children} activeStepKey={currentStepKey} />
+                </>
+            ) : (
+                <>
+                    <div className={styles.stepper}>
+                        {!hideNavButtons && (
+                            <div className={styles.navigation}>
+                                <IconButton onClick={handleClickPrev} disabled={!canPrev}>
+                                    <ArrowBackIcon />
+                                </IconButton>
+                                <IconButton onClick={handleClickNext} disabled={!canNext}>
+                                    <ArrowForwardIcon />
+                                </IconButton>
+                            </div>
+                        )}
+                        <StepPane
+                            forceOrder={forceOrder || false}
+                            children={children}
+                            activeStepKey={currentStepKey}
+                            activeStepPosition={activeStepPosition}
+                            onChange={handleChange}
+                            maxStep={maxStep}
+                        />
+                    </div>
                     <StepContent children={children} activeStepKey={currentStepKey} />
                 </>
             )}
-        </div>
+        </>
     );
 };
 

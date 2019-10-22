@@ -1,22 +1,25 @@
 @import '~styles/variables.less';
 
 .stepper {
-    display:flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     border-bottom: 1px solid #ccc;
     padding: calc(var(--grid-unit) * 2px) 0;
 
     @media (max-width: @mobile-max-width) {
-        flex-direction: column;
-        align-items: flex-start;
+        padding: 0;
         border: none;
     }
 
     .navigation {
-    /*     display: flex;
+        display: flex;
         flex-direction: row;
-        flex-shrink: 0; */
+        flex-shrink: 0;
+
+        @media (max-width: @mobile-max-width) {
+            align-self: flex-start;
+        }
     }
 
     .stepPane {
@@ -24,10 +27,7 @@
         flex-direction: row;
         scroll-behavior: smooth;
         overflow: hidden;
-
-        @media (max-width: @mobile-max-width) {
-            flex-direction: column;
-        }
+        flex-grow: 1;
         
         .step {
             padding: calc(var(--grid-unit) * 1px);
@@ -36,9 +36,14 @@
             color: var(--color-black);
             display: flex;
             flex-direction: column;
-           /*  align-items: center; */
             
             --line-color: var(--color-primary);
+
+            @media (max-width: @mobile-max-width) {
+              padding: calc(var(--grid-unit) * 1px);
+              padding-left: 0;
+              padding-right:0;
+            }
 
             &.compact {
                 padding: calc(var(--grid-unit) * .5px);
@@ -59,11 +64,13 @@
             }
 
             .title {
-                display: flex;
-                flex-direction: column;
-                width: calc(var(--grid-unit) * 32px);
+
                 overflow: hidden;
-                justify-content: center;
+  
+
+                @media (max-width: @mobile-max-width) {
+                    width: 80%;
+                }
 
                 &.compact {
                     width: calc(var(--grid-unit) * 24px);
@@ -72,21 +79,6 @@
                 > span {
                     display: inline;
                     position: relative;
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        height: calc(var(--grid-unit) * 1px);
-                        border-bottom: 1px solid var(--line-color);
-                        margin-left: calc(var(--grid-unit) * 2px);
-                        top: 0;
-                        width: calc(var(--grid-unit) * 24px);
-                        left: 100%;
-
-                        @media (max-width: @mobile-max-width) {
-                        display: none;
-                        }
-                    }
                 }
             }
 
@@ -112,6 +104,8 @@
                 border: 1px solid #dcdcdc;
                 border-radius: 50%;
                 margin-right: calc(var(--grid-unit) * 1px);
+                flex-shrink: 0;
+                
 
                 &.compact {
                     height: calc(var(--grid-unit) * 2px);
@@ -131,13 +125,41 @@
             }
         }
     }
+    
     .description {
-        color: var(--color-black-alt3);
+        color: var(--color-black-alt2);
+        
     }
 
-    .badgeLink {
+    .content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stepCount {
+        color: var(--color-black-alt2);
+        font-weight: 300;
+
+        @media (max-width: @mobile-max-width) {
+            font-size: 12px;
+            width: 32px; 
+            padding-right: calc(var(--grid-unit) * 1px);
+            white-space: nowrap;
+        }
+    }
+
+    .stepperLine {
+        min-width: calc(var(--gri-unit) * 1px );
         content: " ";
-        
-        width: 26px;
-        margin-right: 8px;
+        flex-grow: 0;
+        height: calc(var(--grid-unit) * 1px);
+        border-bottom: 1px solid var(--line-color);
+        margin-left: calc(var(--grid-unit) * 2px);
+      
+        width: calc(var(--grid-unit) * 24px);
+
+
+        @media (max-width: @mobile-max-width) {
+        display: none;
+        }
     }

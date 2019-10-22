@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import { DoneIcon } from '@equinor/fusion-components';
-import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { DoneIcon, styling } from '@equinor/fusion-components';
+import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
+import useWindowWidth from './useWindowWidth';
 
 type StepProps = {
     title: string;
@@ -15,6 +16,7 @@ type StepProps = {
     isClickable?: boolean;
     done?: boolean;
     isLastStep?: boolean;
+    maxStep?: string;
 };
 
 type BadgeProps = {
@@ -47,8 +49,10 @@ const Step: React.FC<StepProps> = ({
     isClickable,
     done,
     isLastStep,
+    maxStep,
 }) => {
     const stepRef = React.useRef<HTMLAnchorElement>(null);
+    const [showStepCount, setShowStepCount] = React.useState(false);
 
     const stepClasses = classNames(styles.step, useComponentDisplayClassNames(styles), {
         [styles.current]: isCurrent,
@@ -59,6 +63,18 @@ const Step: React.FC<StepProps> = ({
     const titleClasses = classNames(styles.title, useComponentDisplayClassNames(styles), {
         [styles.isLastStep]: isLastStep,
     });
+
+    const windowWidth = useWindowWidth();
+
+    useEffect(() => {
+        const mobileMaxWidth = styling.mobileWidth();
+
+        if (windowWidth < parseInt(mobileMaxWidth) && !showStepCount) {
+            setShowStepCount(true);
+        } else if (windowWidth > parseInt(mobileMaxWidth) && showStepCount) {
+            setShowStepCount(false);
+        }
+    }, [windowWidth]);
 
     React.useEffect(() => {
         if (isCurrent && onChange && stepRef.current) {
@@ -91,11 +107,23 @@ const Step: React.FC<StepProps> = ({
                     <div className={titleClasses}>
                         <span>{title}</span>
                     </div>
+                    <span className={styles.stepperLine} />
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    <span className={styles.badgeLink}> </span>
-                    <span className={styles.description}>{description}</span>
+                    {showStepCount ? (
+                        <>
+                            <span className={styles.stepCount}>
+                                {position} of {maxStep && maxStep + 1}
+                            </span>
+                            <span className={styles.description}>{description}</span>
+                        </>
+                    ) : (
+                        <>
+                            <span className={styles.stepCount} />
+                            <span className={styles.description}>{description}</span>
+                        </>
+                    )}
                 </div>
             </a>
         </>
