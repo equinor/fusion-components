@@ -111,7 +111,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     {position.externalId}
                 </div>
             )}
-            {onExpand && childCount && childCount > 0 && (
+            {onExpand && childCount !== undefined && childCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
                         <ExpandMoreIcon isExpanded={false} />

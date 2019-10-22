@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, boolean, select } from '@storybook/addon-knobs';
+import { withKnobs, boolean, select, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import PositionCard from './index';
@@ -19,8 +19,8 @@ const position: Position = {
     instances: [
         {
             id: '1234567123890',
-            appliesFrom: new Date("2019-01-01T00:00:00"),
-            appliesTo: new Date("2019-05-30T00:00:00"),
+            appliesFrom: new Date('2019-01-01T00:00:00'),
+            appliesTo: new Date('2019-05-30T00:00:00'),
             location: {
                 code: '213',
                 country: 'Norway',
@@ -52,8 +52,8 @@ const position: Position = {
         },
         {
             id: '1234567890',
-            appliesFrom: new Date("2019-06-01T00:00:00"),
-            appliesTo: new Date("2020-12-30T00:00:00"),
+            appliesFrom: new Date('2019-06-01T00:00:00'),
+            appliesTo: new Date('2020-12-30T00:00:00'),
             location: {
                 code: '213',
                 country: 'Norway',
@@ -82,11 +82,12 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
-        }, {
+        },
+        {
             id: '1234567812390',
-            appliesFrom: new Date("2020-12-31T00:00:00"),
-            appliesTo: new Date("2021-12-31T00:00:00"),
-        
+            appliesFrom: new Date('2020-12-31T00:00:00'),
+            appliesTo: new Date('2021-12-31T00:00:00'),
+
             location: {
                 code: '213',
                 country: 'Norway',
@@ -176,6 +177,7 @@ const InteractiveStory = () => {
             showObs={boolean('Show obs', true)}
             isSelected={isSelected}
             onExpand={action('onExpand')}
+            childCount={number('Child count', 2)}
         />
     );
 };
