@@ -116,7 +116,10 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {onExpand && childCount !== undefined && childCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
-                        <ExpandMoreIcon isExpanded={false} />
+                        <div className={styles.childPositionCount}>
+                            {childCount}
+                            <ExpandMoreIcon height={16} isExpanded={false} />
+                        </div>
                     </IconButton>
                 </div>
             )}
