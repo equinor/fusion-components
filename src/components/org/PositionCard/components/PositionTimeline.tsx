@@ -49,14 +49,17 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     calculator,
 }) => {
     const assignedPersonName = instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
-    const assignedPersonTooltipRef = useTooltipRef(<span>{assignedPersonName}<br/> {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)}</span>, 'above');
+    const assignedPersonTooltipRef = useTooltipRef(
+        <span>
+            {assignedPersonName}
+            <br /> {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
+            {instance.workload}%)
+        </span>,
+        'below'
+    );
 
     const timelineInstanceClasses = classNames(styles.instance, {
         [styles.isCurrent]: activeInstance && activeInstance.id === instance.id,
-        [styles.isAfter]: activeInstance && activeInstance.appliesTo < instance.appliesFrom,
-    });
-
-    const className = classNames(styles.instanceLine, {
         [styles.hasUnAssignedPerson]: instance.assignedPerson === null,
     });
 
@@ -104,7 +107,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
             }}
         >
             {shouldRenderLeftDot && <div className={styles.dot} />}
-            <div className={className} />
+            <div className={styles.instanceLine} />
             {shouldRenderRightDot && <div className={classNames(styles.dot, styles.right)} />}
         </div>
     );

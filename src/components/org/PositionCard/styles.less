@@ -158,11 +158,10 @@
 
         .instanceTimelineContainer {
             position: relative;
-            height: calc(var(--grid-unit) * .5px);
+            height: calc(var(--grid-unit) * 1px);
             border-radius: 4px;
             overflow: hidden;
             width: calc(var(--grid-unit) * 23px);
-            margin-top: calc(var(--grid-unit) * .5px);
 
             .instance{
                 height: 100%;
@@ -177,15 +176,17 @@
                     height: calc(var(--grid-unit) * .5px - 2px);
                     display: flex;
                     align-items: center;
-                    background: var(--color-primary-alt1);
+                    background: var(--instance-color);
                     box-sizing: border-box;
                     padding: 0 calc(var(--grid-unit) * 1px) 0 calc(var(--grid-unit) * 2px);
     
                     
                 }
                 .dot {
-                    background: var(--color-primary-alt1);
+                    background: var(--instance-color);
                     border-radius: 50%;
+                    top: 50%;
+                    transform: translateY(-50%);
                     box-sizing: border-box;
                     height: calc(var(--grid-unit) * .5px);
                     width: calc(var(--grid-unit) * .5px);
@@ -198,30 +199,25 @@
                 }
 
                 &.isCurrent {
-                    .instanceLine, .dot{
-                        background: var(--color-primary)
-                    }
+                    --instance-color: var(--color-primary);
+                }
+                &:not(.isCurrent){
+                    --instance-color: var(--color-primary-alt1);
                 }
 
                 &.hasUnAssignedPerson {
-                    .instanceLine, .dot{
-                        background: var(--color-black-alt3)
-                    }
-
-                }
-                
-                &.isAfter{
                     .instanceLine{
                         background: repeating-linear-gradient(
                             to right,
-                            var(--color-primary-alt1),
-                            var(--color-primary-alt1) calc(var(--grid-unit) * 1px),
-                            var(--color-white) calc(var(--grid-unit) * 1px),
-                            var(--color-white) calc(var(--grid-unit) * 1.5px)
+                            var(--instance-color),
+                            var(--instance-color) calc(var(--grid-unit) * 1px),
+                            rgba(0,0,0,0) calc(var(--grid-unit) * 1px),
+                            rgba(0,0,0,0) calc(var(--grid-unit) * 1.5px)
                           );
                     }
-                   
+
                 }
+ 
             }
            
         }

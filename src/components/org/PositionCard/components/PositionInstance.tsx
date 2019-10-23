@@ -11,6 +11,7 @@ type PositionInstanceProps = {
     showLocation: boolean;
     showDate: boolean;
     showObs: boolean;
+    showTimeline: boolean;
     showExternalId: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
@@ -24,6 +25,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showDate,
     showExternalId,
     showObs,
+    showTimeline,
     onClick,
     onExpand,
     childCount,
@@ -118,12 +120,14 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     </IconButton>
                 </div>
             )}
-            <PositionTimeline
-                allInstances={instancesByFrom}
-                activeInstance={instance || null}
-                firstInstance={firstInstance}
-                lastInstance={lastInstance}
-            />
+            {showTimeline && instances.length > 0 && (
+                <PositionTimeline
+                    allInstances={instancesByFrom}
+                    activeInstance={instance || null}
+                    firstInstance={firstInstance}
+                    lastInstance={lastInstance}
+                />
+            )}
         </div>
     );
 };

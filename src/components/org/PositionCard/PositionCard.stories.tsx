@@ -174,6 +174,7 @@ const InteractiveStory = () => {
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
             showObs={boolean('Show obs', true)}
+            showTimeline={boolean('Show timeline', true)}
             isSelected={isSelected}
             onExpand={action('onExpand')}
         />
@@ -191,6 +192,7 @@ const DefaultStory = () => {
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
             showObs={boolean('Show obs', true)}
+            showTimeline={boolean('Show timeline', true)}
             isSelected={false}
         />
     );
