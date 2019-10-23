@@ -1,15 +1,26 @@
 @import '~styles/variables.less';
 
 .stepper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    display: grid;
+    grid-template-columns: max-content max-content auto;
+    grid-template-areas: "prev next stepPane";
+
     border-bottom: 1px solid #ccc;
     padding: calc(var(--grid-unit) * 2px) 0;
 
     @media (max-width: @mobile-max-width) {
+        grid-template-columns: max-content auto max-content;
+        grid-template-areas: "prev stepPane next";
         padding: 0;
         border: none;
+    }
+
+    .prev {
+        grid-area: prev;
+    }
+
+    .next {
+        grid-area: next;
     }
 
     .navigation {
@@ -23,6 +34,7 @@
     }
 
     .stepPane {
+        grid-area: stepPane;
         display: flex;
         flex-direction: row;
         scroll-behavior: smooth;

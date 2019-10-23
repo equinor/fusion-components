@@ -10,7 +10,6 @@ type StepPaneProps = {
     activeStepKey: string;
     activeStepPosition: number;
     forceOrder: boolean;
-    maxStep?: number;
 };
 
 const StepPane: React.FC<StepPaneProps> = ({
@@ -19,7 +18,6 @@ const StepPane: React.FC<StepPaneProps> = ({
     activeStepKey,
     activeStepPosition,
     forceOrder,
-    maxStep,
 }) => {
     const stepPaneRef = React.useRef<HTMLDivElement | null>(null);
     const activeStepRef = React.useRef<HTMLElement | null>(null);
@@ -62,13 +60,13 @@ const StepPane: React.FC<StepPaneProps> = ({
                 activeStepRef.current = ref;
                 onChange(stepKey);
             },
-            maxStep,
             isCurrent: stepKey === activeStepKey,
             position,
             isClickable: !forceOrder,
             done: activeStepPosition > position,
-            disabled: disabled === true || (maxStep && position > maxStep),
+            disabled: disabled === true,
             isLastStep: index === children.length - 1,
+            stepCount: children.length,
         });
     });
 

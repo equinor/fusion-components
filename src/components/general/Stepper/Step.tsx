@@ -16,7 +16,7 @@ type StepProps = {
     isClickable?: boolean;
     done?: boolean;
     isLastStep?: boolean;
-    maxStep?: string;
+    stepCount?: number;
 };
 
 type BadgeProps = {
@@ -49,7 +49,7 @@ const Step: React.FC<StepProps> = ({
     isClickable,
     done,
     isLastStep,
-    maxStep,
+    stepCount,
 }) => {
     const stepRef = React.useRef<HTMLAnchorElement>(null);
     const [showStepCount, setShowStepCount] = React.useState(false);
@@ -114,7 +114,7 @@ const Step: React.FC<StepProps> = ({
                     {showStepCount ? (
                         <>
                             <span className={styles.stepCount}>
-                                {position} of {maxStep && maxStep + 1}
+                                {position} of {stepCount}
                             </span>
                             <span className={styles.description}>{description}</span>
                         </>

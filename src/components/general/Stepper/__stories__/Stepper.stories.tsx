@@ -12,14 +12,12 @@ const Item = ({ children }) => {
 };
 
 const stepKeys = ['step1', 'step2', 'step3', 'step4', 'step5'];
-const steps = [1, 2, 3, 4, 5];
 
 const DefaultStory = () => {
     return (
         <Stepper
             forceOrder={boolean('Force order', false)}
             activeStepKey={select('Active step', stepKeys, 'step1')}
-            maxStep={select('Max step', steps, 4)}
             hideNavButtons={boolean('Hide nav buttons', false)}
         >
             <Step
@@ -56,7 +54,6 @@ const InteractiveStory = () => {
         <Stepper
             forceOrder={boolean('Force order', true)}
             activeStepKey="step1"
-            maxStep={4}
             hideNavButtons={boolean('Hide nav buttons', false)}
         >
             <Step title="Select workspace" stepKey="step1">
@@ -83,13 +80,18 @@ const InteractiveStory = () => {
                 <Item>You can continue immediately by navigating to the next step.</Item>
             </Step>
             <Step
+                description="test"
                 title="Summary"
                 stepKey="step4"
                 disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}
             >
                 <Item>You can't go any further since maxStep is 4 in this example.</Item>
             </Step>
-            <Step title="Publish" stepKey="step5">
+            <Step
+                title="Publish"
+                stepKey="step5"
+                disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}
+            >
                 <Item>Publish button</Item>
             </Step>
         </Stepper>
