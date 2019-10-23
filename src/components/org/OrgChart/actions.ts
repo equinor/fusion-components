@@ -37,7 +37,7 @@ const useOrgChartActions = <T extends OrgStructure>({
                 aside: item.aside,
                 linked: item.linked,
             };
-        });
+        }).filter((node, index, allNodes) => allNodes.findIndex(n => n.id === node.id) === index);
     };
 
     useEffect(() => {

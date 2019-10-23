@@ -69,7 +69,7 @@ const positions: PositionStructure[] = [
         personName: 'Test 123',
     },
     {
-        id: '44',
+        id: '44312',
         parentId: '1',
         name: 'Test worker 1',
         positionId: '4',
@@ -77,7 +77,7 @@ const positions: PositionStructure[] = [
         linked: true,
     },
     {
-        id: '3123',
+        id: '44312',
         parentId: '1',
         name: 'Engineer',
         positionId: '3',
@@ -85,7 +85,7 @@ const positions: PositionStructure[] = [
         linked: true,
     },
     {
-        id: '3232',
+        id: '44312',
         parentId: '1',
         name: 'Developer',
         positionId: '3',
