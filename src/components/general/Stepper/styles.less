@@ -46,15 +46,23 @@
             padding-left: calc(var(--grid-unit) * 2px);
             padding-right: calc(var(--grid-unit) * 2px);
             color: var(--color-black);
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: max-content max-content;
+            grid-template-areas: "badge title"
+                                 " . description";
+            grid-template-rows: auto auto;
             
             --line-color: var(--color-primary);
 
             @media (max-width: @mobile-max-width) {
-              padding: calc(var(--grid-unit) * 1px);
-              padding-left: 0;
-              padding-right:0;
+
+                grid-template-columns: max-content max-content;
+                grid-template-areas: "badge title"
+                                     "progress description";
+                grid-template-rows: auto auto;
+                padding: calc(var(--grid-unit) * 1px);
+                padding-left: 0;
+                padding-right:0;
             }
 
             &.compact {
@@ -76,7 +84,7 @@
             }
 
             .title {
-
+                grid-area: title;
                 overflow: hidden;
   
 
@@ -106,6 +114,7 @@
             }
 
             .badge {
+                grid-area: badge;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -139,6 +148,7 @@
     }
     
     .description {
+        grid-area: description;
         color: var(--color-black-alt2);
         
     }
@@ -148,11 +158,13 @@
         flex-direction: column;
     }
 
-    .stepCount {
+    .progress {
+        
         color: var(--color-black-alt2);
         font-weight: 300;
 
         @media (max-width: @mobile-max-width) {
+            grid-area: progress;
             font-size: 12px;
             width: 32px; 
             padding-right: calc(var(--grid-unit) * 1px);

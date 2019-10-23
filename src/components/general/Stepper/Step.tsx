@@ -102,29 +102,17 @@ const Step: React.FC<StepProps> = ({
                 ref={stepRef}
                 className={stepClasses}
             >
-                <div style={{ display: 'flex', flexDirection: 'row', paddingBottom: 8 }}>
+                <div className={styles.badge}>
                     <Badge position={position} active={isCurrent} done={done} />
-                    <div className={titleClasses}>
-                        <span>{title}</span>
-                    </div>
+                </div>
+                <div className={titleClasses}>
+                    <span>{title}</span>
                     <span className={styles.stepperLine} />
                 </div>
-
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    {showStepCount ? (
-                        <>
-                            <span className={styles.stepCount}>
-                                {position} of {stepCount}
-                            </span>
-                            <span className={styles.description}>{description}</span>
-                        </>
-                    ) : (
-                        <>
-                            <span className={styles.stepCount} />
-                            <span className={styles.description}>{description}</span>
-                        </>
-                    )}
-                </div>
+                <span className={classNames(styles.progress)}>
+                    {position} of {stepCount}
+                </span>
+                <span className={styles.description}>{description}</span>
             </a>
         </>
     );
