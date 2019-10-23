@@ -151,10 +151,12 @@
                 top: 0;
                 width: 100%;
                 align-items: center;
-                padding-top: calc(var(--grid-unit) * 1px)
+                padding-top: var(--child-position-padding);
+                font-size: var(--small-section-font-size);
         } 
 
         .expandButton {
+            height: var(--child-position-height); 
             position: absolute;
             right: 0;
             bottom: 0;
@@ -272,6 +274,9 @@
         --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
         --position-name-spacing: calc(var(--grid-unit) * 1px);
 
+        --child-position-padding: calc(var(--grid-unit) * 1px);
+        --child-position-height: calc(var(--grid-unit) * 6px - 2px);
+
         --small-section-font-size: 11px;
         --small-section-line-height: 16px;
 
@@ -285,6 +290,9 @@
         --container-padding: calc(var(--grid-unit) * 1px);
         --photo-and-details-spacing: calc(var(--grid-unit) * 1px);
         --position-name-spacing: calc(var(--grid-unit) * .5px);
+
+        --child-position-padding: calc(var(--grid-unit) * 0.5px);
+        --child-position-height: calc(var(--grid-unit) * 4px);
 
         --small-section-font-size: 10px;
         --small-section-line-height: 12px;
