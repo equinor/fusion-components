@@ -1,6 +1,15 @@
 import React from 'react';
 import { useCurrentUser, useFusionContext } from '@equinor/fusion';
-import { IconProps, MenuItemType, Menu, usePopoverRef, useIcon, IconButton } from '@equinor/fusion-components';
+import {
+    IconProps,
+    MenuItemType,
+    Menu,
+    usePopoverRef,
+    useIcon,
+    IconButton,
+} from '@equinor/fusion-components';
+import { useEventEmitterValue } from '@equinor/fusion/lib/utils/EventEmitter';
+import { UserMenuSectionItem } from '@equinor/fusion/lib/core/UserMenuContainer';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
@@ -16,8 +25,14 @@ const CurrentUserIcon = (props: IconProps) => {
 };
 
 const CurrentUserDropdown: React.FC = () => {
-    const { auth } = useFusionContext();
+    const { auth, userMenuSectionsContainer } = useFusionContext();
     const currentUser = useCurrentUser();
+    const [customSections] = useEventEmitterValue(
+        userMenuSectionsContainer,
+        'change',
+        undefined,
+        userMenuSectionsContainer.sections
+    );
 
     if (!currentUser) {
         return null;
@@ -36,6 +51,7 @@ const CurrentUserDropdown: React.FC = () => {
             // TODO: Allow core and apps to add custom buttons like "Preview features" etc.
             // Should be provided through the fusion context, not props
         },
+        ...(customSections || []),
     ];
 
     const onClick = async (item: MenuItemType) => {
@@ -43,6 +59,9 @@ const CurrentUserDropdown: React.FC = () => {
             case 'logout':
                 await auth.container.logoutAsync();
                 break;
+            default:
+                const clickedItem = item as UserMenuSectionItem;
+                clickedItem.onClick && clickedItem.onClick(clickedItem);
         }
     };
 

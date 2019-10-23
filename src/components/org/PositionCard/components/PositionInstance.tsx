@@ -3,6 +3,7 @@ import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
 import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
+import PositionTimeline from './PositionTimeline';
 
 type PositionInstanceProps = {
     position: Position;
@@ -10,9 +11,11 @@ type PositionInstanceProps = {
     showLocation: boolean;
     showDate: boolean;
     showObs: boolean;
+    showTimeline: boolean;
     showExternalId: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
+    childCount?: number;
 };
 
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
@@ -22,22 +25,22 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showDate,
     showExternalId,
     showObs,
+    showTimeline,
     onClick,
     onExpand,
+    childCount,
 }) => {
     const assignedPersonName =
         instance && instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
+    const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
 
-    const obsTooltipRef = useTooltipRef('OBS: ' + position.basePosition.name, 'below');
+    const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const directChildrenTooltipRef = useTooltipRef(
-        position.directChildCount + ' positions',
-        'above'
-    );
+    const directChildrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
@@ -82,9 +85,9 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
 
     return (
         <div className={positionInstanceClasses} onClick={onClickHandler}>
-            {showObs && (
+            {showObs && instance && (
                 <div className={styles.basePositionName}>
-                    <span ref={obsTooltipRef}>{position.basePosition.name}</span>
+                    <span ref={obsTooltipRef}>{obs}</span>
                 </div>
             )}
 
@@ -99,8 +102,8 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             {showDate && instance && (
                 <div className={styles.period}>
                     <span ref={currentPeriodTooltipRef}>
-                        {formatDate(firstInstance.appliesFrom)} -{' '}
-                        {formatDate((lastInstance || firstInstance).appliesTo)} ({instance.workload}
+                        {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
+                        {instance.workload}
                         %)
                     </span>
                 </div>
@@ -110,7 +113,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     {position.externalId}
                 </div>
             )}
-            {onExpand && position.totalChildCount > 0 && (
+            {onExpand && childCount !== undefined && childCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>
@@ -119,6 +122,14 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                         </div>
                     </IconButton>
                 </div>
+            )}
+            {showTimeline && instances.length > 0 && (
+                <PositionTimeline
+                    allInstances={instancesByFrom}
+                    activeInstance={instance || null}
+                    firstInstance={firstInstance}
+                    lastInstance={lastInstance}
+                />
             )}
         </div>
     );

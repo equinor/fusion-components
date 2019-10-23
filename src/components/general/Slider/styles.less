@@ -3,6 +3,10 @@
     width: 100%;
     height: calc(var(--grid-unit) * 6px);
 
+    &.isLowered{
+        height: calc(var(--grid-unit) * 8px);
+    }
+
     --track-z-index: 1;
     --slider-z-index: calc(var(--track-z-index) + 1);
     --marker-z-index: calc(var(--slider-z-index) + 1);
@@ -99,6 +103,10 @@
             white-space: nowrap;
             font-size: 11px;
             cursor: pointer;
+        }
+
+        &.isLowered {
+           height: calc(var(--grid-unit) * 8px);
         }
     }
 

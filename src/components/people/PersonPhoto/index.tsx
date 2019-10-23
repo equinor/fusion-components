@@ -24,7 +24,7 @@ export type PersonPhotoProps = {
 
 const getDefaultPerson = (): PersonDetails => ({
     azureUniqueId: 'string',
-    name: 'No name',
+    name: 'No person assigned',
     mail: 'noname@equinor.com',
     jobTitle: 'www',
     department: 'string',
@@ -38,9 +38,13 @@ const getDefaultPerson = (): PersonDetails => ({
 export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
 
-    const { imageUrl, error: imageError } = usePersonImageUrl(person ? person.azureUniqueId : personId || "");
+    const { imageUrl, error: imageError } = usePersonImageUrl(
+        person ? person.azureUniqueId : personId || ''
+    );
 
-    const { error, personDetails } = personId ? usePersonDetails(personId) : { error: null, personDetails: person };
+    const { error, personDetails } = personId
+        ? usePersonDetails(personId)
+        : { error: null, personDetails: person };
 
     useEffect(() => {
         if (!error && personDetails) {

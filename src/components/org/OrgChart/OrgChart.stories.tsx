@@ -208,6 +208,7 @@ const PositionCardComponent: React.FC<OrgChartItemProps<PositionStructure>> = ({
                 showLocation={true}
                 showObs={true}
                 isSelected={false}
+                showTimeline
                 onExpand={() => {}}
                 isLinked={item.linked}
             />
