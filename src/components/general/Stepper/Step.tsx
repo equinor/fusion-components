@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import { DoneIcon, styling } from '@equinor/fusion-components';
-import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 import useWindowWidth from './useWindowWidth';
 
 type StepProps = {
@@ -85,7 +85,9 @@ const Step: React.FC<StepProps> = ({
     if (disabled) {
         return (
             <span className={stepClasses}>
-                <Badge position={position} active={isCurrent} done={done} />
+                <div className={styles.badge}>
+                    <Badge position={position} active={isCurrent} done={done} />
+                </div>
                 <div className={titleClasses}>
                     <span>{title}</span>
                 </div>
@@ -106,12 +108,16 @@ const Step: React.FC<StepProps> = ({
                     <Badge position={position} active={isCurrent} done={done} />
                 </div>
                 <div className={titleClasses}>
-                    <span>{title}</span>
+                    <span className={styles.text}> {title}</span>
                     <span className={styles.stepperLine} />
                 </div>
-                <span className={classNames(styles.progress)}>
-                    {position} of {stepCount}
-                </span>
+                {showStepCount ? (
+                    <span className={classNames(styles.progress)}>
+                        {position} of {stepCount}
+                    </span>
+                ) : (
+                    <span />
+                )}
                 <span className={styles.description}>{description}</span>
             </a>
         </>

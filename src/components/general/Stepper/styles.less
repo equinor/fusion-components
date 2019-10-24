@@ -4,7 +4,6 @@
     display: grid;
     grid-template-columns: max-content max-content auto;
     grid-template-areas: "prev next stepPane";
-
     border-bottom: 1px solid #ccc;
     padding: calc(var(--grid-unit) * 2px) 0;
 
@@ -25,7 +24,6 @@
 
     .navigation {
         display: flex;
-        flex-direction: row;
         flex-shrink: 0;
 
         @media (max-width: @mobile-max-width) {
@@ -33,12 +31,14 @@
         }
     }
 
-    .stepPane {
+    .stepPaneWrapper {
         grid-area: stepPane;
-        display: flex;
-        flex-direction: row;
         scroll-behavior: smooth;
         overflow: hidden;
+    }
+
+    .stepPane {
+        display: flex;
         flex-grow: 1;
         
         .step {
@@ -47,20 +47,22 @@
             padding-right: calc(var(--grid-unit) * 2px);
             color: var(--color-black);
             display: grid;
-            grid-template-columns: max-content max-content;
+            flex-grow: 1;
+            grid-template-columns: calc(var(--grid-unit) * 6px) minmax(max-content, auto);
             grid-template-areas: "badge title"
                                  " . description";
-            grid-template-rows: auto auto;
+
+            grid-template-rows: minmax(calc(var(--grid-unit) * 3px), auto) 
+                                minmax(calc(var(--grid-unit) * 3px), auto);
+            grid-row-gap: calc(var(--grid-unit) * 1px);
             
             --line-color: var(--color-primary);
 
             @media (max-width: @mobile-max-width) {
 
-                grid-template-columns: max-content max-content;
                 grid-template-areas: "badge title"
                                      "progress description";
-                grid-template-rows: auto auto;
-                padding: calc(var(--grid-unit) * 1px);
+                grid-template-columns: calc(var(--grid-unit) * 6px) auto;
                 padding-left: 0;
                 padding-right:0;
             }
@@ -86,19 +88,16 @@
             .title {
                 grid-area: title;
                 overflow: hidden;
-  
-
-                @media (max-width: @mobile-max-width) {
-                    width: 80%;
-                }
+                padding-left: calc(var(--grid-unit) * 1px);
+                align-self: center;
+                display: flex;
 
                 &.compact {
                     width: calc(var(--grid-unit) * 24px);
                 }
 
-                > span {
-                    display: inline;
-                    position: relative;
+                > .text {
+                    display: block;
                 }
             }
 
@@ -124,7 +123,6 @@
                 font-weight: 500;
                 border: 1px solid #dcdcdc;
                 border-radius: 50%;
-                margin-right: calc(var(--grid-unit) * 1px);
                 flex-shrink: 0;
                 
 
@@ -150,16 +148,14 @@
     .description {
         grid-area: description;
         color: var(--color-black-alt2);
-        
+        padding-left: calc(var(--grid-unit) * 1px);
     }
 
     .content {
         display: flex;
-        flex-direction: column;
     }
 
     .progress {
-        
         color: var(--color-black-alt2);
         font-weight: 300;
 
@@ -167,23 +163,19 @@
             grid-area: progress;
             font-size: 12px;
             width: 32px; 
-            padding-right: calc(var(--grid-unit) * 1px);
             white-space: nowrap;
         }
     }
 
     .stepperLine {
-        min-width: calc(var(--gri-unit) * 1px );
+        min-width: calc(var(--grid-unit) * 3px);
         content: " ";
-        flex-grow: 0;
+        flex-grow: 1;
         height: calc(var(--grid-unit) * 1px);
         border-bottom: 1px solid var(--line-color);
         margin-left: calc(var(--grid-unit) * 2px);
-      
-        width: calc(var(--grid-unit) * 24px);
-
 
         @media (max-width: @mobile-max-width) {
-        display: none;
+            display: none;
         }
     }

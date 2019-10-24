@@ -22,16 +22,12 @@ const DefaultStory = () => {
         >
             <Step
                 title="Select workspace and do some other work"
-                description="Dette er vel en eller annen beskrivelse, som kanskje kan være ganske lang"
+                description="This is a description text"
                 stepKey="step1"
             >
                 <Item>Select workspace</Item>
             </Step>
-            <Step
-                title="Select report/dashboard"
-                description="Her er det en beskrivelse"
-                stepKey="step2"
-            >
+            <Step title="Select report/dashboard" description="Description" stepKey="step2">
                 <Item>Select a report or dashboard</Item>
             </Step>
             <Step title="Fill in details" stepKey="step3">
@@ -65,6 +61,7 @@ const InteractiveStory = () => {
                 </Item>
             </Step>
             <Step
+                description="Description"
                 title="Select report/dashboard"
                 stepKey="step2"
                 disabled={progress.indexOf(1) === -1}
@@ -80,7 +77,6 @@ const InteractiveStory = () => {
                 <Item>You can continue immediately by navigating to the next step.</Item>
             </Step>
             <Step
-                description="test"
                 title="Summary"
                 stepKey="step4"
                 disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}

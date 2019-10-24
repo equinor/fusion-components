@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import * as styles from './styles.less';
-import { IconButton, ArrowBackIcon, ArrowForwardIcon, styling } from '@equinor/fusion-components';
+import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';
-import useWindowWidth from './useWindowWidth';
 import classNames from 'classnames';
 
 type StepperProps = {
@@ -32,7 +31,6 @@ const Stepper: React.FC<StepperProps> = ({
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
     const [currentStepKey, setCurrentStepKey] = React.useState();
     const [activeStepPosition, setActiveStepPosition] = React.useState();
-    const [showSmallScreenStepper, setSmallScreenStepper] = React.useState(false);
 
     const [canNext, setCanNext] = React.useState(true);
     const [canPrev, setCanPrev] = React.useState(false);
@@ -113,18 +111,6 @@ const Stepper: React.FC<StepperProps> = ({
         },
         [forceOrder, stepKeys]
     );
-
-    const windowWidth = useWindowWidth();
-
-    useEffect(() => {
-        const mobileMaxWidth = styling.mobileWidth();
-
-        if (windowWidth < parseInt(mobileMaxWidth) && !showSmallScreenStepper) {
-            setSmallScreenStepper(true);
-        } else if (windowWidth > parseInt(mobileMaxWidth) && showSmallScreenStepper) {
-            setSmallScreenStepper(false);
-        }
-    }, [windowWidth]);
 
     return (
         <>

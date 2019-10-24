@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as styles from './styles.less';
-import { useFusionContext } from '@equinor/fusion';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
 
@@ -71,8 +70,8 @@ const StepPane: React.FC<StepPaneProps> = ({
     });
 
     return (
-        <div className={styles.stepPane} ref={stepPaneRef}>
-            {clonedChildren}
+        <div className={styles.stepPaneWrapper} ref={stepPaneRef}>
+            <div className={styles.stepPane}>{clonedChildren}</div>
         </div>
     );
 };
