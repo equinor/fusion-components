@@ -103,11 +103,20 @@
             white-space: nowrap;
             font-size: 11px;
             cursor: pointer;
+            
+         
         }
 
         &.isLowered {
            height: calc(var(--grid-unit) * 8px);
         }
+
+         &.isElevated {
+             label{
+                top: 0;
+             }
+        }
+        
     }
 
     &.mouseIsDown {
