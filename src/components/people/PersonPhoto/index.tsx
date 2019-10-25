@@ -71,11 +71,13 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
             {imageError !== null && <FallbackImage size={size} />}
-            <AccountTypeBadge
-                currentPerson={personDetails || getDefaultPerson()}
-                size={size}
-                hideTooltip={hideTooltip}
-            />
+            {personDetails && (
+                <AccountTypeBadge
+                    currentPerson={personDetails}
+                    size={size}
+                    hideTooltip={hideTooltip}
+                />
+            )}
         </div>
     );
 };
