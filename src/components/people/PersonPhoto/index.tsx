@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
-    useFusionContext,
     useComponentDisplayClassNames,
     usePersonDetails,
     PersonDetails,
@@ -38,9 +37,7 @@ const getDefaultPerson = (): PersonDetails => ({
 export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
 
-    const { imageUrl, error: imageError } = usePersonImageUrl(
-        person ? person.azureUniqueId : personId || ''
-    );
+    const { imageUrl } = usePersonImageUrl(person ? person.azureUniqueId : personId || '');
 
     const { error, personDetails } = personId
         ? usePersonDetails(personId)
@@ -65,12 +62,11 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
         }
     );
 
-    const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
+    const imageStyle = personId || person ? { backgroundImage: `url(${imageUrl})` } : {};
     const nameTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.name);
-
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
-            {imageError !== null && <FallbackImage size={size} />}
+            {(!personId && !person) && <FallbackImage size={size} />}
             {personDetails && (
                 <AccountTypeBadge
                     currentPerson={personDetails}
