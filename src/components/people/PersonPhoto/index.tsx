@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
-    useFusionContext,
     useComponentDisplayClassNames,
     usePersonDetails,
     PersonDetails,
@@ -67,7 +66,6 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
 
     const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
     const nameTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.name);
-
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
             {imageError !== null && <FallbackImage size={size} />}
