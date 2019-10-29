@@ -1,14 +1,9 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import classNames from 'classnames';
-import {
-    Position,
-    useComponentDisplayClassNames,
-    PositionInstance,
-    useComponentDisplayType,
-} from '@equinor/fusion';
+import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
 
 import styles from './styles.less';
-import PositionPhoto from './components/PositionPhoto';
+import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
 
 type PositionCardProps = {
@@ -18,7 +13,10 @@ type PositionCardProps = {
     showExternalId: boolean;
     showLocation: boolean;
     showDate: boolean;
-    isLinked?: boolean
+    showObs: boolean;
+    showTimeline: boolean;
+    isLinked?: boolean;
+    childCount?: number;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -30,9 +28,12 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showExternalId,
     showLocation,
     showDate,
+    showObs,
+    showTimeline,
     onClick,
     onExpand,
     isLinked,
+    childCount,
 }) => {
     const isExternalHire =
         instance &&
@@ -64,20 +65,25 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
     }, [position, instance, onClick]);
 
-    const componentDisplayType = useComponentDisplayType();
-
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
-            <PositionPhoto position={position} currentInstance={instance} onClick={onClick} />
+            <PositionIconPhoto
+                position={position}
+                currentInstance={instance}
+                isLinked={isLinked}
+                onClick={onClick}
+            />
             <PositionInstanceComponent
                 position={position}
                 instance={instance}
-                showLocation={showLocation && componentDisplayType !== 'Compact'}
-                showDate={showDate && componentDisplayType !== 'Compact'}
+                showLocation={showLocation}
+                showDate={showDate}
                 showExternalId={showExternalId}
+                showObs={showObs}
+                showTimeline={showTimeline}
                 onClick={onClick}
                 onExpand={onExpand}
-                isLinked={isLinked}
+                childCount={childCount}
             />
         </div>
     );

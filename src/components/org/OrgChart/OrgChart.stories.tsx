@@ -3,16 +3,16 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
 import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
-import { useComponentDisplayType } from '@equinor/fusion';
-import { LinkIcon } from '@equinor/fusion-components';
+import { useComponentDisplayType, Position } from '@equinor/fusion';
+import { PositionCard } from '@equinor/fusion-components';
 
-type Position = OrgStructure & {
+type PositionStructure = OrgStructure & {
     name?: string;
     positionId?: string;
     personName?: string;
 };
 
-const positions: Position[] = [
+const positions: PositionStructure[] = [
     {
         id: '1',
         name: 'Leader',
@@ -122,35 +122,96 @@ const positions: Position[] = [
     },
 ];
 
-const cardStyle = {
+const position: Position = {
+    id: '1',
+    basePosition: {
+        department: 'Department',
+        discipline: 'Engineering',
+        id: '3',
+        name: 'Engineer',
+        roleDescription: '',
+    },
+    externalId: '800',
+    instances: [
+        {
+            id: '1234567890',
+            appliesFrom: new Date(new Date().getFullYear() - 1, 0),
+            appliesTo: new Date(new Date().getFullYear() + 1, 0),
+            location: {
+                code: '213',
+                country: 'Norway',
+                id: '214215',
+                name: 'Stavanger',
+            },
+            obs: 'obs',
+            workload: 100,
+            type: 'Normal',
+            assignedPerson: {
+                accountType: 'Employee',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
+                company: {
+                    id: '3etgwg',
+                    name: 'Equinor',
+                },
+                contracts: [],
+                positions: [],
+                roles: [],
+                upn: 'egsag@equinor.com',
+                department: 'department',
+                name: 'Egil Sagstad',
+                jobTitle: 'Job title',
+                mail: 'egsag@equinor.com',
+                mobilePhone: '12345678',
+                officeLocation: 'Stavanger',
+            },
+            properties: {},
+        },
+    ],
+    contractId: null,
+    directChildCount: 2,
+    totalChildCount: 18,
+    projectId: '',
+    properties: {
+        isSupport: false,
+    },
+    name: 'Drilling Engineer',
+    parentPositionId: '0',
+};
+
+const breadCrumbStyle = {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'left',
     alignItems: 'center',
     backgroundColor: 'white',
     boxShadow:
         '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
-    margin: '12px',
+    margin: '10px',
+    padding: '16px',
     boxSizing: 'border-box',
     flex: '1',
     fontSize: '16px',
-    height: 'calc(100% - 24px)',
+    height: '32px',
 } as React.CSSProperties;
 
 const BreadCrumb: React.FC<BreadCrumb> = ({ label }) => {
-    return <div style={{ ...cardStyle, cursor: 'pointer' }}>{label}</div>;
+    return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
 };
 
-const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
-    const linkedStyling = item.linked
-        ? ({ border: '1px dashed #b9b9b8' } as React.CSSProperties)
-        : {};
-    const linkIcon = item.linked ? <LinkIcon /> : null;
+const PositionCardComponent: React.FC<OrgChartItemProps<PositionStructure>> = ({ item }) => {
     return (
-        <div style={{ ...cardStyle, ...linkedStyling }}>
-            Position : {item.name}
-            <br />
-            Person : {item.personName}
-            <div style={{ position: 'relative', top: -45, right: '-15%' }}>{linkIcon}</div>
+        <div style={{ margin: '12px' }}>
+            <PositionCard
+                position={position}
+                instance={position.instances[0]}
+                showDate={true}
+                showExternalId={true}
+                showLocation={true}
+                showObs={true}
+                isSelected={false}
+                showTimeline
+                onExpand={() => {}}
+                isLinked={item.linked}
+            />
         </div>
     );
 };
@@ -171,17 +232,18 @@ const breadCrumbs: BreadCrumb[] = [
 const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
-    const rowMargin = componentDisplayType === 'Compact' ? 120 : 164;
+    const rowMargin = componentDisplayType === 'Compact' ? 138 : 164;
     const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
+    const cardWidth = componentDisplayType === 'Compact' ?  300: 340 ;
 
     return (
         <div style={{ width: '100%', height: '100%' }}>
             <OrgChart
                 structure={positions}
-                component={PositionCard}
+                component={PositionCardComponent}
                 breadCrumbComponent={BreadCrumb}
                 breadCrumbs={breadCrumbs}
-                cardWidth={340}
+                cardWidth={cardWidth}
                 cardHeight={cardHeight}
                 rowMargin={rowMargin}
                 cardMargin={cardMargin}

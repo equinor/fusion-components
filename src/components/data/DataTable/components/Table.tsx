@@ -23,6 +23,7 @@ function Table<T>({
     rowIdentifier,
     isExpandable,
     expandedComponent,
+    onRowClick,
 }: DataTableTableProps<T>) {
     const tableRef = useRef<HTMLDivElement>(null);
     const skeletonRows = pagination ? pagination.perPage : 10;
@@ -59,20 +60,23 @@ function Table<T>({
     );
 
     const onSelectAll = useCallback(() => {
-        if(!onSelectionChange) {
+        if (!onSelectionChange) {
             return;
         }
 
         onSelectionChange(selectedItems && selectedItems.length === data.length ? [] : data);
     }, [data, onSelectionChange, selectedItems]);
 
-    const onSelect = useCallback((items: T[]) => {
-        if(!onSelectionChange) {
-          return;
-        }
+    const onSelect = useCallback(
+        (items: T[]) => {
+            if (!onSelectionChange) {
+                return;
+            }
 
-        onSelectionChange(items);
-    }, [onSelectionChange]);
+            onSelectionChange(items);
+        },
+        [onSelectionChange]
+    );
 
     useEffect(() => {
         setExpandedItems([]);
@@ -92,7 +96,11 @@ function Table<T>({
                     isSelectable={isSelectable}
                     onSelectAll={onSelectAll}
                     isAllSelected={!!selectedItems && selectedItems.length === data.length}
-                    isSomeSelected={!!selectedItems && selectedItems.length > 0 && selectedItems.length !== data.length}
+                    isSomeSelected={
+                        !!selectedItems &&
+                        selectedItems.length > 0 &&
+                        selectedItems.length !== data.length
+                    }
                 />
                 {showSkeleton ? (
                     <DataTableSkeleton columns={visibleColumns} rowCount={skeletonRows} />
@@ -109,6 +117,7 @@ function Table<T>({
                         isSelectable={isSelectable}
                         onSelectionChange={onSelect}
                         selectedItems={selectedItems}
+                        onRowClick={onRowClick}
                     />
                 )}
             </div>

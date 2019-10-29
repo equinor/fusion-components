@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { DataTableBodyProps } from '../dataTableTypes';
 import Row from './Row';
 import { getString, getBoolean } from '../utils';
@@ -14,15 +14,19 @@ function DataTableBody<T>({
     expandedItems,
     isSelectable,
     onSelectionChange,
-    selectedItems
+    selectedItems,
+    onRowClick,
 }: DataTableBodyProps<T>) {
-    const toggleSelection = useCallback((item: T) => {
-        if(selectedItems && selectedItems.some(i => i === item)) {
-            onSelectionChange(selectedItems.filter(i => i !== item));
-        } else {
-            onSelectionChange([...(selectedItems || []), item]);
-        }
-    }, [selectedItems]);
+    const toggleSelection = useCallback(
+        (item: T) => {
+            if (selectedItems && selectedItems.some(i => i === item)) {
+                onSelectionChange(selectedItems.filter(i => i !== item));
+            } else {
+                onSelectionChange([...(selectedItems || []), item]);
+            }
+        },
+        [selectedItems]
+    );
 
     return (
         <>
@@ -40,6 +44,7 @@ function DataTableBody<T>({
                     isSelectable={isSelectable}
                     onSelectionChange={toggleSelection}
                     isSelected={!!selectedItems && selectedItems.some(i => i === item)}
+                    onClick={onRowClick}
                 />
             ))}
         </>

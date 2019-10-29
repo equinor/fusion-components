@@ -30,8 +30,8 @@
     }
 
     .display-type(@size-multiplier) {
-        width: calc(var(--grid-unit) * @size-multiplier);
-        height: calc(var(--grid-unit) * @size-multiplier);
+        width: calc((var(--grid-unit) * @size-multiplier) - 2px);
+        height: calc((var(--grid-unit) * @size-multiplier) - 2px);
     }
 
     &.comfortable {
@@ -120,7 +120,6 @@
         .iconContainer {
             background-color: var(--color-primary-alt4);
             border-color: var(--color-primary-alt4);
-            box-shadow: 0 0 0 2px var(--color-primary-alt4);
             color: var(--color-primary) !important;
         }
         
@@ -131,7 +130,6 @@
                 height: calc(var(--grid-unit) * 4px);
                 border-radius: 4px;
                 background-color: var(--color-primary-alt3);
-                box-shadow: 0 0 0 2px var(--color-primary-alt3);
                 border-color: var(--color-primary-alt3);
             }
         }

@@ -6,3 +6,6 @@
 # Fusion components
 
 Common react components used by fusion core and fusion apps
+
+Online storybook:
+https://equinor.github.io/fusion-components

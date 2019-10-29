@@ -40,11 +40,11 @@ export {
     DropdownController,
 } from './components/general/Dropdown';
 export {
-    default as SearchableDropdownWrapper,
+    default as SearchableDropdown,
     SearchableDropdownOption,
     SearchableDropdownSection,
 } from './components/general/SearchableDropdown';
-export { ModalSideSheet } from './components/general/SideSheet';
+export { ModalSideSheet, SideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as DatePicker } from './components/general/DatePicker';
@@ -56,6 +56,7 @@ export {
 export { default as Accordion, AccordionItem } from './components/general/Accordion';
 export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
+export { default as PersonPicker } from './components/people/PersonPicker';
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 
@@ -106,7 +107,7 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
-export { BlockIcon, SaveIcon } from './components/icons/components/content';
+export { AddIcon, BlockIcon, SaveIcon  } from './components/icons/components/content';
 export { SyncDisabledIcon } from './components/icons/components/notification';
 export {
     SearchIcon,

@@ -1,18 +1,21 @@
 import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
-
+import classNames from 'classnames';
 import styles from '../styles.less';
-import { useTooltipRef, ExpandMoreIcon, IconButton, LinkIcon, styling } from '@equinor/fusion-components';
+import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
+import PositionTimeline from './PositionTimeline';
 
 type PositionInstanceProps = {
     position: Position;
     instance?: PositionInstance;
     showLocation: boolean;
     showDate: boolean;
+    showObs: boolean;
+    showTimeline: boolean;
     showExternalId: boolean;
-    isLinked?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
+    childCount?: number;
 };
 
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
@@ -21,22 +24,28 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     showLocation,
     showDate,
     showExternalId,
-    isLinked,
+    showObs,
+    showTimeline,
     onClick,
     onExpand,
+    childCount,
 }) => {
-    const positionNameTooltipRef = useTooltipRef(position.name, 'below');
-
     const assignedPersonName =
         instance && instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
+    const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
 
-    const assignedPersonNameTooltipRef = useTooltipRef(assignedPersonName, 'below');
-    const directChildrenTooltipRef = useTooltipRef(
-        position.directChildCount + ' children',
-        'above'
-    );
+    const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
+    const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
+    const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
+    const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
+    const directChildrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
+    const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
+
+    const positionInstanceClasses = classNames(styles.positionInstance, {
+        [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
+    });
 
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -69,37 +78,58 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const firstInstance = React.useMemo(() => instancesByFrom[0], [instancesByFrom]);
-    const lastInstance = React.useMemo(() => instancesByTo.find(i => i.appliesTo.getTime !== undefined), [
-        instancesByTo,
-    ]);
+    const lastInstance = React.useMemo(
+        () => instancesByTo.find(i => i.appliesTo.getTime !== undefined),
+        [instancesByTo]
+    );
 
     return (
-        <div className={styles.positionInstance} onClick={onClickHandler}>
-            <div className={styles.basePositionName}>{position.basePosition.name}</div>
+        <div className={positionInstanceClasses} onClick={onClickHandler}>
+            {showObs && instance && (
+                <div className={styles.basePositionName}>
+                    <span ref={obsTooltipRef}>{obs}</span>
+                </div>
+            )}
+
             <div className={styles.positionName}>
                 <span ref={positionNameTooltipRef}>{position.name}</span>
             </div>
+
             <div className={styles.assignedPersonName}>
                 <span ref={assignedPersonNameTooltipRef}>{assignedPersonName}</span>
             </div>
             {showLocation && <div className={styles.location}>{locationName}</div>}
             {showDate && instance && (
                 <div className={styles.period}>
-                    {formatDate(firstInstance.appliesFrom)} - {formatDate((lastInstance || firstInstance).appliesTo)} (
-                    {instance.workload}%)
+                    <span ref={currentPeriodTooltipRef}>
+                        {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
+                        {instance.workload}
+                        %)
+                    </span>
                 </div>
             )}
-            <div className={styles.additionalInfo}>
-                {isLinked && <LinkIcon color={styling.colors.blackAlt2} height={16} width={16}/>}
-                {showExternalId && <div className={styles.externalId}>{position.externalId}</div>}
-            </div>
-            
-            {onExpand && position.totalChildCount > 0 && (
+            {showExternalId && (
+                <div className={styles.externalId} ref={externalIdTooltipRef}>
+                    {position.externalId}
+                </div>
+            )}
+            {onExpand && childCount !== undefined && childCount > 0 && (
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
-                        <ExpandMoreIcon isExpanded={false} />
+                        <div className={styles.childPositionCount}>
+                            {childCount}
+                            <ExpandMoreIcon height={16} isExpanded={false} />
+                        </div>
                     </IconButton>
                 </div>
+            )}
+            {showTimeline && instances.length > 0 && (
+                <PositionTimeline
+                    allInstances={instancesByFrom}
+                    activeInstance={instance || null}
+                    firstInstance={firstInstance}
+                    lastInstance={lastInstance}
+                />
             )}
         </div>
     );

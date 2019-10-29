@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-    SearchableDropdownWrapper,
+    SearchableDropdown,
     SearchableDropdownOption,
     PersonPhoto,
 } from '@equinor/fusion-components';
@@ -77,7 +77,9 @@ const PositionPicker = ({
 
     useEffect(() => {
         if (initialPosition) {
-            setOptions(singlePositionToDropdownOption(searchQuery, initialPosition, selectedPosition));
+            setOptions(
+                singlePositionToDropdownOption(searchQuery, initialPosition, selectedPosition)
+            );
         }
     }, [initialPosition, selectedPosition]);
 
@@ -99,7 +101,7 @@ const PositionPicker = ({
     );
 
     return (
-        <SearchableDropdownWrapper
+        <SearchableDropdown
             options={options}
             onSelect={handleSelect}
             itemComponent={ItemComponent}

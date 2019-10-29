@@ -6,6 +6,8 @@ import classNames from 'classnames';
 export type SliderMarker = {
     value: number;
     label: string;
+    lowered?: boolean;
+    elevated?: boolean;
 };
 
 type SliderMarkerProps = {
@@ -27,6 +29,8 @@ const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, disabled, posit
 
     const markerClassNames = classNames(styles.marker, {
         [styles.isActive]: isActive,
+        [styles.isLowered]: marker.lowered,
+        [styles.isElevated]: marker.elevated,
     });
 
     return (

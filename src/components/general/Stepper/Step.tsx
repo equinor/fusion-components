@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import { DoneIcon } from '@equinor/fusion-components';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type StepProps = {
     title: string;
@@ -12,6 +13,7 @@ type StepProps = {
     onChange?: (ref: HTMLElement) => void;
     isClickable?: boolean;
     done?: boolean;
+    isLastStep?: boolean;
 };
 
 type BadgeProps = {
@@ -21,7 +23,7 @@ type BadgeProps = {
 };
 
 const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
-    const badgeClasses = classNames(styles.badge, {
+    const badgeClasses = classNames(styles.badge, useComponentDisplayClassNames(styles), {
         [styles.active]: active,
         [styles.done]: done,
     });
@@ -42,25 +44,36 @@ const Step: React.FC<StepProps> = ({
     onChange,
     isClickable,
     done,
+    isLastStep,
 }) => {
     const stepRef = React.useRef<HTMLAnchorElement>(null);
 
-    const stepClasses = classNames(styles.step, {
+    const stepClasses = classNames(styles.step, useComponentDisplayClassNames(styles), {
         [styles.current]: isCurrent,
         [styles.isClickable]: isClickable,
         [styles.disabled]: disabled,
     });
 
+    const titleClasses = classNames(styles.title, useComponentDisplayClassNames(styles), {
+        [styles.isLastStep]: isLastStep,
+    });
+    
+    React.useEffect(() => {
+        if (isCurrent && onChange && stepRef.current) {
+            onChange(stepRef.current);
+        }
+    }, [isCurrent, onChange, stepRef]);
+
     if (disabled) {
         return (
             <span className={stepClasses}>
                 <Badge position={position} active={isCurrent} done={done} />
-                <div className={styles.title}>
+                <div className={titleClasses}>
                     <span>{title}</span>
                 </div>
             </span>
         );
-    }
+    } 
 
     return (
         <a
@@ -69,7 +82,7 @@ const Step: React.FC<StepProps> = ({
             className={stepClasses}
         >
             <Badge position={position} active={isCurrent} done={done} />
-            <div className={styles.title}>
+            <div className={titleClasses}>
                 <span>{title}</span>
             </div>
         </a>

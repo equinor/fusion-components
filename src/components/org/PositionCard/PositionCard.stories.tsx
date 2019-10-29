@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, boolean, select } from '@storybook/addon-knobs';
+import { withKnobs, boolean, select, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import PositionCard from './index';
@@ -18,9 +18,9 @@ const position: Position = {
     externalId: '800',
     instances: [
         {
-            id: '1234567890',
-            appliesFrom: new Date(new Date().getFullYear() - 1, 0),
-            appliesTo: new Date(new Date().getFullYear() + 1, 0),
+            id: '1234567123890',
+            appliesFrom: new Date('2019-01-01T00:00:00'),
+            appliesTo: new Date('2019-05-30T00:00:00'),
             location: {
                 code: '213',
                 country: 'Norway',
@@ -28,6 +28,73 @@ const position: Position = {
                 name: 'Stavanger',
             },
             obs: 'obs',
+            workload: 100,
+            type: 'Normal',
+            assignedPerson: {
+                accountType: 'Employee',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
+                company: {
+                    id: '3etgwg',
+                    name: 'Equinor',
+                },
+                contracts: [],
+                positions: [],
+                roles: [],
+                upn: 'egsag@equinor.com',
+                department: 'department',
+                name: 'Egil Sagstad',
+                jobTitle: 'Job title',
+                mail: 'egsag@equinor.com',
+                mobilePhone: '12345678',
+                officeLocation: 'Stavanger',
+            },
+            properties: {},
+        },
+        {
+            id: '1234567890',
+            appliesFrom: new Date('2019-06-01T00:00:00'),
+            appliesTo: new Date('2020-12-30T00:00:00'),
+            location: {
+                code: '213',
+                country: 'Norway',
+                id: '214215',
+                name: 'Stavanger',
+            },
+            obs: 'obs',
+            workload: 100,
+            type: 'Normal',
+            assignedPerson: {
+                accountType: 'Employee',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
+                company: {
+                    id: '3etgwg',
+                    name: 'Equinor',
+                },
+                contracts: [],
+                positions: [],
+                roles: [],
+                upn: 'egsag@equinor.com',
+                department: 'department',
+                name: 'Egil Sagstad',
+                jobTitle: 'Job title',
+                mail: 'egsag@equinor.com',
+                mobilePhone: '12345678',
+                officeLocation: 'Stavanger',
+            },
+            properties: {},
+        },
+        {
+            id: '1234567812390',
+            appliesFrom: new Date('2020-12-31T00:00:00'),
+            appliesTo: new Date('2021-12-31T00:00:00'),
+
+            location: {
+                code: '213',
+                country: 'Norway',
+                id: '214215',
+                name: 'Stavanger',
+            },
+            obs: 'Engineer',
             workload: 100,
             type: 'Normal',
             assignedPerson: {
@@ -107,8 +174,11 @@ const InteractiveStory = () => {
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
+            showObs={boolean('Show obs', true)}
+            showTimeline={boolean('Show timeline', true)}
             isSelected={isSelected}
             onExpand={action('onExpand')}
+            childCount={number('Child count', 2)}
         />
     );
 };
@@ -119,10 +189,12 @@ const DefaultStory = () => {
     return (
         <PositionCard
             position={selecetPosition}
-            instance={selecetPosition.instances[0]}
+            instance={selecetPosition.instances[1]}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
+            showObs={boolean('Show obs', true)}
+            showTimeline={boolean('Show timeline', true)}
             isSelected={false}
         />
     );

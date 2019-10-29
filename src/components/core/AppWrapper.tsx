@@ -52,7 +52,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
 
     const appHistory = useMemo(() => createAppHistory(appKey), [appKey]);
 
-    if (currentApp === null && isFetching) {
+    if ((currentApp === null) && isFetching) {
         return <Spinner centered floating />;
     }
 
@@ -82,7 +82,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
     return (
         <ErrorBoundary>
             <HistoryContext.Provider value={{ history: appHistory }}>
-                <Router history={appHistory}>
+                <Router key={appKey} history={appHistory}>
                     <AppComponent />
                 </Router>
             </HistoryContext.Provider>

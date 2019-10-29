@@ -15,9 +15,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid var(--color-black-alt4);
-            border-top: none;
+            border-bottom: 1px solid var(--color-black-alt4);
             cursor: pointer;
+            &.isOpen{
+                border: none;
+            }
 
             .label {
                 font-size: var(--header-font-size);
@@ -73,11 +75,10 @@
             border: none;
             max-height: 0;
             overflow: hidden;
-            transition: max-height .3s ease;
-
+            
             .content{
                 height: 100%;
-                border: 1px solid var(--color-black-alt4);
+                border-bottom: 1px solid var(--color-black-alt4);
                 border-top: none;
                 padding: .grid-unit(2px)[];
             }

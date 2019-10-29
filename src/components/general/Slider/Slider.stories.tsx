@@ -17,8 +17,9 @@ const SliderPercentageStory = () => {
             label: '100%',
         },
         {
-            value: 50,
-            label: '50%',
+            value: 29,
+            label: '29%',
+            lowered: true,
         },
         {
             value: 28,

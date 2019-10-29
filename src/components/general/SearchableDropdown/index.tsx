@@ -23,6 +23,7 @@ export type SearchableDropdownSection = {
 
 type SearchableDropdownProps = {
     label?: string;
+    placeholder?: string;
     options?: SearchableDropdownOption[];
     sections?: SearchableDropdownSection[];
     itemComponent?: any;
@@ -68,6 +69,7 @@ const SearchableDropdown = ({
     options,
     sections,
     label,
+    placeholder,
     onSelect,
     onSearchAsync,
     itemComponent,
@@ -143,12 +145,11 @@ const SearchableDropdown = ({
                 onChange={value => {
                     if (!isOpen) {
                         setIsOpen(true);
-                        return;
                     }
                     setInputValue(value);
                 }}
                 asideComponent={aside}
-                placeholder="Type to search..."
+                placeholder={placeholder || 'Type to search...'}
                 label={label}
                 icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
                 onIconAction={() => isOpen && setIsOpen(false)}

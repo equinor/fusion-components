@@ -62,7 +62,7 @@ const Calendar: React.FC<CalendarProps> = ({
     }, []);
 
     useEffect(() => {
-        if(!selectedDate) {
+        if (!selectedDate) {
             return;
         }
 

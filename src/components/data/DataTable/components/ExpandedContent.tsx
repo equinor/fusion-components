@@ -17,7 +17,7 @@ function DataTableExpandedContent<T>({
     const renderExpandedContent = () => {
         const ExpandedComponent = expandedComponent;
         if (ExpandedComponent) {
-            return <ExpandedComponent item={item} rowIndex={rowIndex} />;
+            return <ExpandedComponent item={item} rowIndex={rowIndex} collapsedColumns={collapsedColumns}/>;
         }
 
         return (

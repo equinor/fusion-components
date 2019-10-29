@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "0.1.31",
+    "version": "0.1.55",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -10,7 +10,6 @@
         "storybook": "start-storybook -p 9001 -c .storybook",
         "start": "start-storybook -p 9001 -c .storybook",
         "build:storybook": "build-storybook -c .storybook -o ./docs",
-        "prepublish": "yarn test",
         "prebuild": "rm -rf dist",
         "build": "webpack",
         "postbuild": "tsc --emitDeclarationOnly true"
@@ -36,7 +35,7 @@
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
-        "@equinor/fusion": "^0.4.35",
+        "@equinor/fusion": "^0.4.48",
         "@storybook/addon-actions": "^5.1.9",
         "@storybook/addon-info": "^5.1.9",
         "@storybook/addon-jest": "^5.1.9",

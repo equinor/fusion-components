@@ -11,9 +11,9 @@ import {
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 
 export default (
-    content: String,
+    content: String | React.ReactNode,
     placement: TooltipPlacement = 'below',
-    delay?: number
+    delay?: number,
 ): React.MutableRefObject<any> => {
     const [isOpen, ref] = useHoverToggleController(delay);
     const rect = useRelativePositioning(ref);

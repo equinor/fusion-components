@@ -8,8 +8,9 @@ type StepperProps = {
     onChange?: (stepKey: string) => void;
     children: any;
     forceOrder?: boolean;
-    startStep?: number;
+    activeStepKey: string;
     maxStep?: number;
+    hideNavButtons?: boolean;
 };
 
 type StepKey = {
@@ -22,13 +23,14 @@ type StepDirection = 'next' | 'prev';
 
 const Stepper: React.FC<StepperProps> = ({
     children,
-    startStep,
+    activeStepKey,
     forceOrder,
     onChange,
     maxStep,
+    hideNavButtons,
 }) => {
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
-    const [activeStepKey, setActiveStepKey] = React.useState();
+    const [currentStepKey, setCurrentStepKey] = React.useState();
     const [activeStepPosition, setActiveStepPosition] = React.useState();
 
     const [canNext, setCanNext] = React.useState(true);
@@ -42,20 +44,20 @@ const Stepper: React.FC<StepperProps> = ({
         }));
 
         setStepKeys(steps);
-
-        const startIndex = startStep && startStep > 0 ? startStep - 1 : 0;
-
-        setActiveStepKey(steps[startIndex].key);
-    }, [startStep]);
+    }, [children]);
 
     React.useEffect(() => {
-        if (onChange && activeStepKey) {
-            onChange(activeStepKey);
+        setCurrentStepKey(activeStepKey);
+    }, [activeStepKey]);
+
+    React.useEffect(() => {
+        if (onChange && currentStepKey) {
+            onChange(currentStepKey);
         }
-    }, [onChange, activeStepKey]);
+    }, [onChange, currentStepKey]);
 
     React.useEffect(() => {
-        const current = stepKeys.find(sk => sk.key === activeStepKey);
+        const current = stepKeys.find(sk => sk.key === currentStepKey);
 
         if (current) {
             setActiveStepPosition(current.position);
@@ -71,11 +73,11 @@ const Stepper: React.FC<StepperProps> = ({
 
             setCanPrev(prev !== undefined && !prev.disabled);
         }
-    }, [stepKeys, activeStepKey, maxStep]);
+    }, [stepKeys, currentStepKey, maxStep]);
 
     const findStepKey = React.useCallback(
         (direction: StepDirection) => {
-            const current = stepKeys.find(sk => sk.key === activeStepKey);
+            const current = stepKeys.find(sk => sk.key === currentStepKey);
 
             if (!current) {
                 return;
@@ -85,7 +87,7 @@ const Stepper: React.FC<StepperProps> = ({
             const prevOrNext = stepKeys.find(sk => sk.position === newPosition);
             return prevOrNext;
         },
-        [activeStepKey, stepKeys]
+        [currentStepKey, stepKeys]
     );
 
     const handleClickPrev = React.useCallback(() => {
@@ -94,8 +96,8 @@ const Stepper: React.FC<StepperProps> = ({
             return;
         }
 
-        setActiveStepKey(prevKey.key);
-    }, [activeStepKey, stepKeys]);
+        setCurrentStepKey(prevKey.key);
+    }, [currentStepKey, stepKeys]);
 
     const handleClickNext = React.useCallback(() => {
         const nextKey = findStepKey('next');
@@ -104,8 +106,8 @@ const Stepper: React.FC<StepperProps> = ({
             return;
         }
 
-        setActiveStepKey(nextKey.key);
-    }, [activeStepKey, stepKeys]);
+        setCurrentStepKey(nextKey.key);
+    }, [currentStepKey, stepKeys]);
 
     const handleChange = React.useCallback(
         (stepKey: string) => {
@@ -116,7 +118,7 @@ const Stepper: React.FC<StepperProps> = ({
                     return;
                 }
 
-                setActiveStepKey(stepKey);
+                setCurrentStepKey(stepKey);
             }
         },
         [forceOrder, maxStep, stepKeys]
@@ -125,22 +127,26 @@ const Stepper: React.FC<StepperProps> = ({
     return (
         <>
             <div className={styles.stepper}>
-                <IconButton onClick={handleClickPrev} disabled={!canPrev}>
-                    <ArrowBackIcon />
-                </IconButton>
-                <IconButton onClick={handleClickNext} disabled={!canNext}>
-                    <ArrowForwardIcon />
-                </IconButton>
+                {!hideNavButtons && (
+                    <div className={styles.navigation}>
+                        <IconButton onClick={handleClickPrev} disabled={!canPrev}>
+                            <ArrowBackIcon />
+                        </IconButton>
+                        <IconButton onClick={handleClickNext} disabled={!canNext}>
+                            <ArrowForwardIcon />
+                        </IconButton>
+                    </div>
+                )}
                 <StepPane
                     forceOrder={forceOrder || false}
                     children={children}
-                    activeStepKey={activeStepKey}
+                    activeStepKey={currentStepKey}
                     activeStepPosition={activeStepPosition}
                     onChange={handleChange}
                     maxStep={maxStep}
                 />
             </div>
-            <StepContent children={children} activeStepKey={activeStepKey} />
+            <StepContent children={children} activeStepKey={currentStepKey} />
         </>
     );
 };

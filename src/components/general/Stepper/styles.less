@@ -5,9 +5,17 @@
     border-bottom: 1px solid #ccc;
     padding: calc(var(--grid-unit) * 2px) 0;
 
+    .navigation {
+        display: flex;
+        flex-direction: row;
+        flex-shrink: 0;
+    }
+
     .stepPane {
         display:flex;
         flex-direction: row;
+        scroll-behavior: smooth;
+        overflow: hidden;
         
         .step {
             padding: calc(var(--grid-unit) * 2px);
@@ -15,8 +23,13 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+            
 
             --line-color: var(--color-primary);
+
+            &.compact {
+                padding: calc(var(--grid-unit) * .5px);
+            }
 
             &.isClickable {
                 cursor: pointer;
@@ -31,10 +44,14 @@
             &.current {
                 font-weight: 500;
             }
-    
+            
             .title {
                 width: calc(var(--grid-unit) * 32px);
                 overflow: hidden;
+
+                &.compact {
+                    width: calc(var(--grid-unit) * 24px);
+                }
 
                 > span {
                     display: inline-block;
@@ -47,8 +64,18 @@
                         border-bottom: 1px solid var(--line-color);
                         margin-left: calc(var(--grid-unit) * 2px);
                         top: 0;
-                        width: calc(var(--grid-unit) * 32px);
+                        width: calc(var(--grid-unit) * 24px);
                         left: 100%;
+                    }
+                }
+
+                &.isLastStep {
+                    width: inherit;
+                    
+                    > span {
+                        &::after {
+                            border: 0;
+                        }
                     }
                 }
             }
@@ -57,15 +84,20 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                height: 26px;
-                width: 26px;
+                height: calc(var(--grid-unit) * 3px);
+                width: calc(var(--grid-unit) * 3px);
                 font-weight: 500;
                 border: 1px solid #dcdcdc;
                 border-radius: 50%;
                 margin-right: calc(var(--grid-unit) * 1px);
 
+                &.compact {
+                    height: calc(var(--grid-unit) * 2px);
+                    width: calc(var(--grid-unit) * 2px);
+                }
+
                 &.active {
-                    border:0;
+                    border: 1px solid transparent;
                     background: var(--color-primary);
                     color: #fff;
                 }
