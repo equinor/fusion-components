@@ -37,7 +37,9 @@ const getDefaultPerson = (): PersonDetails => ({
 export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
 
-    const { imageUrl } = usePersonImageUrl(person ? person.azureUniqueId : personId || '');
+    const { imageUrl, error: imageError } = usePersonImageUrl(
+        person ? person.azureUniqueId : personId || ''
+    );
 
     const { error, personDetails } = personId
         ? usePersonDetails(personId)
@@ -62,11 +64,11 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
         }
     );
 
-    const imageStyle = personId || person ? { backgroundImage: `url(${imageUrl})` } : {};
+    const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
     const nameTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.name);
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
-            {(!personId && !person) && <FallbackImage size={size} />}
+            {imageError !== null && <FallbackImage size={size} />}
             {personDetails && (
                 <AccountTypeBadge
                     currentPerson={personDetails}
