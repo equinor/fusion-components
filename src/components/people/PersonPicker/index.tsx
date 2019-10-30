@@ -28,10 +28,26 @@ const ItemComponent = ({ item }) => {
     const tooltipRef = useTooltipRef(item.person ? item.person.mail : '');
 
     if (item.person) {
-        return <div ref={tooltipRef}>{item.title}</div>;
+        return (
+            <div ref={tooltipRef}>
+                {item.title} <br />
+                {item.person.mail}
+            </div>
+        );
     }
-
     return item.title;
+};
+
+const SelectedItemComponent = ({ item }) => {
+    if (item && item.person) {
+        return (
+            <div>
+                {item.title} <br />
+                {item.person.mail}
+            </div>
+        );
+    }
+    return null;
 };
 
 const AsideComponent = ({ item }) => {
@@ -87,6 +103,7 @@ export default ({ initialPerson, onSelect, label, placeholder }: PersonPickerPro
             onSearchAsync={query => setSearchQuery(query)}
             itemComponent={ItemComponent}
             asideComponent={AsideComponent}
+            selectedComponent={SelectedItemComponent}
             label={label}
             placeholder={placeholder}
         />
