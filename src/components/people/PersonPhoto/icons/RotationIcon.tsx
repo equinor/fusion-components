@@ -1,7 +1,8 @@
 import React from 'react';
 import { IconProps, useIcon } from '@equinor/fusion-components';
 
-const FallbackIcon = (props: IconProps) => {
+
+const RotationIcon = (props: IconProps) => {
     const iconFactory = useIcon(
         <>
             <circle cx="28" cy="28" r="28" fill="#EAEAEA" />
@@ -17,4 +18,4 @@ const FallbackIcon = (props: IconProps) => {
     return iconFactory(props);
 };
 
-export default FallbackIcon;
+export default RotationIcon;
