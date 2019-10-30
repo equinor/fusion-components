@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonPhoto from '../index';
 import { withKnobs, select, boolean } from '@storybook/addon-knobs';
-import { PersonDetails } from '@equinor/fusion';
 
 const stories = storiesOf('People|PersonPhoto', module);
 stories.addDecorator(withKnobs);
@@ -21,51 +20,13 @@ const sizes = {
     medium: 'medium',
     small: 'small',
 };
-const basePersons: PersonDetails[] = [
-    {
-        company: { id: '', name: '' },
-        jobTitle: '',
-        mobilePhone: '',
-        officeLocation: '',
-        upn: '',
-        department: '',
-        azureUniqueId: 'e92c631b-94ae-4670-8f1e-60cdc2122edc',
-        accountType: 'Consultant',
-        name: 'Morten Salte',
-        mail: 'msal@equinor.com',
-    },
-    {
-        company: { id: '', name: '' },
-        jobTitle: '',
-        mobilePhone: '',
-        officeLocation: '',
-        upn: '',
-        department: '',
-        azureUniqueId: 'e92c631b-94ae-4670-8f1e-60cdc2122edc',
-        accountType: 'Consultant',
-        name: 'Morten Salte',
-        mail: 'msal@equinor.com',
-    },
-];
-const basePerson: PersonDetails =  {
-        company: { id: '', name: '' },
-        jobTitle: '',
-        mobilePhone: '',
-        officeLocation: '',
-        upn: '',
-        department: '',
-        azureUniqueId: 'e92c631b-94ae-4670-8f1e-60cdc2122edc',
-        accountType: 'Consultant',
-        name: 'Morten Salte',
-        mail: 'msal@equinor.com',
-    }
 
 const PersonPhotoStory = () => {
     const personId = select('Account type', personIds, personIds.Consultant);
     const size = select('Size', sizes, sizes.xlarge);
 
     return (
-        <PersonPhoto hideTooltip={boolean('Hide tooltip', false)} person={basePerson} size={size} />
+        <PersonPhoto hideTooltip={boolean('Hide tooltip', false)} personId={personId} size={size} />
     );
 };
 
