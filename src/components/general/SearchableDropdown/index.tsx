@@ -176,7 +176,7 @@ const SearchableDropdown = ({
 
     const containerRef = dropdownController.controllerRef as React.MutableRefObject<HTMLDivElement | null>;
     return (
-        <div className={styles.inputContainer} ref={containerRef}>
+        <div ref={containerRef}>
             <Dropdown controller={dropdownController}>
                 <Menu
                     elevation={0}

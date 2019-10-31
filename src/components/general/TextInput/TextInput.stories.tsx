@@ -45,7 +45,7 @@ const TextInputStory = () => {
     );
 
     return (
-        <div style={{ display: 'flex', padding: '8px', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', padding: '8px', flexDirection: 'column', maxWidth: '328px' }}>
             <TextInput
                 onChange={value => setValue(value)}
                 value={value}
