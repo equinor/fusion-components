@@ -9,19 +9,27 @@ type PositionPhotoIconProps = {
     currentInstance?: PositionInstance;
     isLinked?: boolean;
     onClick?: (position: Position, instance: PositionInstance) => void;
+    rotationInstances: PositionInstance[];
 };
 
-const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({ currentInstance, isLinked }) => {
+const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
+    currentInstance,
+    isLinked,
+    rotationInstances,
+}) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const linkedRef = useTooltipRef("Linked", "below");
+    const linkedRef = useTooltipRef('Linked', 'below');
+    
+    const personsDetails = currentInstance
+        ? rotationInstances.length > 0
+            ? [currentInstance.assignedPerson, ...rotationInstances.map(i => i.assignedPerson)]
+            : currentInstance.assignedPerson
+        : undefined;
 
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
-                <PersonPhoto
-                    person={currentInstance ? currentInstance.assignedPerson : undefined}
-                    size="large"
-                />
+                <PersonPhoto person={personsDetails} size="large" />
             </div>
             {isLinked && (
                 <div className={styles.linkedIcon} ref={linkedRef}>

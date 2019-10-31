@@ -123,6 +123,28 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
         firstInstance.appliesFrom.getTime(),
         (lastInstance || firstInstance).appliesTo.getTime()
     );
+    const allRotationInstances = useMemo(() => {
+        return allInstances.reduce(
+            (instances: PositionInstance[][], rotationInstance: PositionInstance) => {
+                const correlatingInstances = allInstances.filter(
+                    i =>
+                        rotationInstance.appliesFrom.getTime() >= i.appliesFrom.getTime() &&
+                        rotationInstance.appliesTo.getTime() <= i.appliesTo.getTime() &&
+                        i.type === 'Rotation' &&
+                        rotationInstance.type === 'Rotation' &&
+                        i.id !== rotationInstance.id
+                );
+                if (correlatingInstances.length > 0) {
+                    return [...instances, correlatingInstances];
+                }
+                return instances;
+            },
+            []
+        );
+    }, [allInstances]);
+
+    console.log(allRotationInstances);
+
     return (
         <div className={styles.instanceTimelineContainer}>
             {allInstances.map(instanceByFrom => (

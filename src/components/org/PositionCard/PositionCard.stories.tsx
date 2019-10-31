@@ -29,7 +29,7 @@ const position: Position = {
             },
             obs: 'obs',
             workload: 100,
-            type: 'Normal',
+            type: 'Rotation',
             assignedPerson: {
                 accountType: 'Employee',
                 azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
@@ -42,7 +42,40 @@ const position: Position = {
                 roles: [],
                 upn: 'egsag@equinor.com',
                 department: 'department',
-                name: 'Egil Sagstad',
+                name: 'Egil Sagstad rotation',
+                jobTitle: 'Job title',
+                mail: 'egsag@equinor.com',
+                mobilePhone: '12345678',
+                officeLocation: 'Stavanger',
+            },
+            properties: {},
+        },
+        {
+            id: '1234567123890',
+            appliesFrom: new Date('2019-01-01T00:00:00'),
+            appliesTo: new Date('2019-05-30T00:00:00'),
+            location: {
+                code: '213',
+                country: 'Norway',
+                id: '214215',
+                name: 'Stavanger',
+            },
+            obs: 'obs',
+            workload: 100,
+            type: 'Rotation',
+            assignedPerson: {
+                accountType: 'Employee',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
+                company: {
+                    id: '3etgwg',
+                    name: 'Equinor',
+                },
+                contracts: [],
+                positions: [],
+                roles: [],
+                upn: 'egsag@equinor.com',
+                department: 'department',
+                name: 'Rotation pos',
                 jobTitle: 'Job title',
                 mail: 'egsag@equinor.com',
                 mobilePhone: '12345678',
@@ -96,7 +129,7 @@ const position: Position = {
             },
             obs: 'Engineer',
             workload: 100,
-            type: 'Normal',
+            type: 'Rotation',
             assignedPerson: {
                 accountType: 'Employee',
                 azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
@@ -109,7 +142,41 @@ const position: Position = {
                 roles: [],
                 upn: 'egsag@equinor.com',
                 department: 'department',
-                name: 'Egil Sagstad',
+                name: 'Rotation pos 1',
+                jobTitle: 'Job title',
+                mail: 'egsag@equinor.com',
+                mobilePhone: '12345678',
+                officeLocation: 'Stavanger',
+            },
+            properties: {},
+        },
+        {
+            id: '13213123123',
+            appliesFrom: new Date('2020-12-31T00:00:00'),
+            appliesTo: new Date('2021-12-31T00:00:00'),
+
+            location: {
+                code: '213',
+                country: 'Norway',
+                id: '214215',
+                name: 'Stavanger',
+            },
+            obs: 'Engineer',
+            workload: 100,
+            type: 'Rotation',
+            assignedPerson: {
+                accountType: 'Employee',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
+                company: {
+                    id: '3etgwg',
+                    name: 'Equinor',
+                },
+                contracts: [],
+                positions: [],
+                roles: [],
+                upn: 'egsag@equinor.com',
+                department: 'department',
+                name: 'Rotation pos 2',
                 jobTitle: 'Job title',
                 mail: 'egsag@equinor.com',
                 mobilePhone: '12345678',
@@ -189,7 +256,7 @@ const DefaultStory = () => {
     return (
         <PositionCard
             position={selecetPosition}
-            instance={selecetPosition.instances[1]}
+            instance={selecetPosition.instances[3]}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}

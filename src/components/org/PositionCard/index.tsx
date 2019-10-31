@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
 
@@ -65,6 +65,20 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
     }, [position, instance, onClick]);
 
+    const rotationInstances = useMemo(() => {
+        const allInstances = position.instances || [];
+        if (!instance) {
+            return [];
+        }
+        return allInstances.filter(
+            i =>
+                instance.appliesFrom.getTime() >= i.appliesFrom.getTime() &&
+                instance.appliesTo.getTime() <= i.appliesTo.getTime() &&
+                i.type === 'Rotation' && instance.type === "Rotation"
+                && i.id !== instance.id
+        );
+    }, [position, instance]);
+
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
             <PositionIconPhoto
@@ -72,6 +86,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 currentInstance={instance}
                 isLinked={isLinked}
                 onClick={onClick}
+                rotationInstances={rotationInstances}
             />
             <PositionInstanceComponent
                 position={position}
@@ -84,6 +99,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 onClick={onClick}
                 onExpand={onExpand}
                 childCount={childCount}
+                rotationInstances={rotationInstances}
             />
         </div>
     );
