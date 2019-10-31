@@ -4,7 +4,7 @@
     display: grid;
     grid-template-columns: max-content max-content auto;
     grid-template-areas: "prev next stepPane";
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--color-black-alt3);
     padding: calc(var(--grid-unit) * 2px) 0;
 
     @media (max-width: @mobile-max-width) {
@@ -78,7 +78,7 @@
             &.disabled {
                 cursor: not-allowed;
                 color: var(--color-black-alt3) !important;
-                --line-color: #ccc;
+                --line-color: var(--color-black-alt3);
             }
     
             &.current {
@@ -121,11 +121,10 @@
                 height: calc(var(--grid-unit) * 3px);
                 width: calc(var(--grid-unit) * 3px);
                 font-weight: 500;
-                border: 1px solid #dcdcdc;
+                border: 1px solid var(--color-black-alt3);
                 border-radius: 50%;
                 flex-shrink: 0;
                 
-
                 &.compact {
                     height: calc(var(--grid-unit) * 2px);
                     width: calc(var(--grid-unit) * 2px);
@@ -134,7 +133,7 @@
                 &.active {
                     border: 1px solid transparent;
                     background: var(--color-primary);
-                    color: #fff;
+                    color: var(--color-white);
                 }
 
                 &.done {
@@ -162,7 +161,7 @@
         @media (max-width: @mobile-max-width) {
             grid-area: progress;
             font-size: 12px;
-            width: 32px; 
+            width: calc(var(--grid-unit) * 4px);
             white-space: nowrap;
         }
     }
