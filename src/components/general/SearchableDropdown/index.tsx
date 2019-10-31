@@ -28,6 +28,7 @@ type SearchableDropdownProps = {
     sections?: SearchableDropdownSection[];
     itemComponent?: any;
     asideComponent?: any;
+    selectedComponent?: any;
     onSelect?: (item: SearchableDropdownOption) => void;
     onSearchAsync?: (query: string) => void;
 };
@@ -74,6 +75,7 @@ const SearchableDropdown = ({
     onSearchAsync,
     itemComponent,
     asideComponent,
+    selectedComponent,
 }: SearchableDropdownProps) => {
     if ((!options && !sections) || (options && sections)) {
         throw new Error("You must supply only one of 'options', 'sections' props");
@@ -140,24 +142,47 @@ const SearchableDropdown = ({
             return null;
         }, [isOpen, asideComponent, selectedItem]);
 
+        const selected = useMemo(() => {
+            if (selectedComponent && !isOpen) {
+                const SelectedComponent = selectedComponent;
+                return (
+                    <div className={styles.buttonContainer}>
+                        <div onClick={() => setIsOpen(!isOpen)} className={styles.buttonContent}>
+                            {aside}
+                            <div className={styles.selectedItem}>
+                                <SelectedComponent item={selectedItem} />
+                            </div>
+                            <DropdownArrow cursor="pointer" isOpen={isOpen} />
+                        </div>
+                    </div>
+                );
+            }
+        }, [isOpen, selectedComponent, selectedItem, setIsOpen, aside]);
+
         return (
-            <TextInput
-                onChange={value => {
-                    if (!isOpen) {
-                        setIsOpen(true);
-                    }
-                    setInputValue(value);
-                }}
-                asideComponent={aside}
-                placeholder={placeholder || 'Type to search...'}
-                label={label}
-                icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
-                onIconAction={() => isOpen && setIsOpen(false)}
-                onClick={() => !isOpen && setIsOpen(true)}
-                value={selectedValue}
-                ref={inputRef}
-                onKeyUp={e => e.keyCode === 27 && setIsOpen(false)}
-            />
+            <>
+                {!isOpen && selectedComponent && selectedItem ? (
+                    selected
+                ) : (
+                    <TextInput
+                        onChange={value => {
+                            if (!isOpen) {
+                                setIsOpen(true);
+                            }
+                            setInputValue(value);
+                        }}
+                        asideComponent={aside}
+                        placeholder={placeholder || 'Type to search...'}
+                        label={label}
+                        icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
+                        onIconAction={() => isOpen && setIsOpen(false)}
+                        onClick={() => !isOpen && setIsOpen(true)}
+                        value={selectedValue}
+                        ref={inputRef}
+                        onKeyUp={e => e.keyCode === 27 && setIsOpen(false)}
+                    />
+                )}
+            </>
         );
     });
 
