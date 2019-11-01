@@ -8,7 +8,7 @@
     .textAreaContent {
         display: flex;
         justify-content: space-between;
-        min-height: .grid-unit(10px)[];
+        min-height: .grid-unit(7px)[];
         background-color: var(--color-black-alt5);
         border-bottom: 1px solid var(--color-primary-accent);
         caret-color: var(--color-primary);
@@ -78,7 +78,7 @@
                 background-color: var(--color-black-alt5);
                 border: none;
                 resize: none; 
-                padding-top: 8px;
+                padding-top: calc(var(--grid-unit) * 1px);
 
                 &::placeholder {
                     color: var(--color-primary-accent);
