@@ -54,6 +54,7 @@ const TextAreaStory = () => {
                 isOptional
                 helperText="Helper text"
             />
+
             <br />
             <TextArea
                 error
