@@ -94,7 +94,7 @@ const DropdownStory = () => {
     };
 
     return (
-        <div style={{ margin: '8px', maxWidth: '328px' }}>
+        <div style={{ margin: '8px' }}>
             <SearchableDropdown
                 options={options}
                 label="Dropdown"

@@ -45,7 +45,7 @@ const TextInputStory = () => {
     );
 
     return (
-        <div style={{ display: 'flex', padding: '8px', flexDirection: 'column', maxWidth: '328px' }}>
+        <div style={{ display: 'flex', padding: '8px', flexDirection: 'column' }}>
             <TextInput
                 onChange={value => setValue(value)}
                 value={value}
@@ -76,8 +76,8 @@ const TextInputStory = () => {
                     !loading ? (
                         <SearchIcon color="#666666" cursor="pointer" />
                     ) : (
-                        <Spinner inline primary />
-                    )
+                            <Spinner inline primary />
+                        )
                 }
                 onIconAction={simulateLoad}
                 error={hasError}
