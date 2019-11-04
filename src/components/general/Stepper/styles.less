@@ -1,31 +1,71 @@
+@import '~styles/variables.less';
+
 .stepper {
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    border-bottom: 1px solid #ccc;
+    display: grid;
+    grid-template-columns: max-content max-content auto;
+    grid-template-areas: "prev next stepPane";
+    border-bottom: 1px solid var(--color-black-alt3);
     padding: calc(var(--grid-unit) * 2px) 0;
+
+    @media (max-width: @mobile-max-width) {
+        grid-template-columns: max-content auto max-content;
+        grid-template-areas: "prev stepPane next";
+        padding: 0;
+        border: none;
+    }
+
+    .prev {
+        grid-area: prev;
+    }
+
+    .next {
+        grid-area: next;
+    }
 
     .navigation {
         display: flex;
-        flex-direction: row;
         flex-shrink: 0;
+
+        @media (max-width: @mobile-max-width) {
+            align-self: flex-start;
+        }
+    }
+
+    .stepPaneWrapper {
+        grid-area: stepPane;
+        scroll-behavior: smooth;
+        overflow: hidden;
     }
 
     .stepPane {
-        display:flex;
-        flex-direction: row;
-        scroll-behavior: smooth;
-        overflow: hidden;
+        display: flex;
+        flex-grow: 1;
         
         .step {
-            padding: calc(var(--grid-unit) * 2px);
+            padding: calc(var(--grid-unit) * 1px);
+            padding-left: calc(var(--grid-unit) * 2px);
+            padding-right: calc(var(--grid-unit) * 2px);
             color: var(--color-black);
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            
+            display: grid;
+            flex-grow: 1;
+            grid-template-columns: calc(var(--grid-unit) * 6px) minmax(max-content, auto);
+            grid-template-areas: "badge title"
+                                 " . description";
 
+            grid-template-rows: minmax(calc(var(--grid-unit) * 3px), auto) 
+                                minmax(calc(var(--grid-unit) * 3px), auto);
+            grid-row-gap: calc(var(--grid-unit) * 1px);
+            
             --line-color: var(--color-primary);
+
+            @media (max-width: @mobile-max-width) {
+
+                grid-template-areas: "badge title"
+                                     "progress description";
+                grid-template-columns: calc(var(--grid-unit) * 6px) auto;
+                padding-left: 0;
+                padding-right:0;
+            }
 
             &.compact {
                 padding: calc(var(--grid-unit) * .5px);
@@ -38,36 +78,28 @@
             &.disabled {
                 cursor: not-allowed;
                 color: var(--color-black-alt3) !important;
-                --line-color: #ccc;
+                --line-color: var(--color-black-alt3);
             }
     
             &.current {
                 font-weight: 500;
             }
-            
+
             .title {
-                width: calc(var(--grid-unit) * 32px);
+                grid-area: title;
                 overflow: hidden;
+                padding-left: calc(var(--grid-unit) * 1px);
+                align-self: center;
+                display: flex;
 
                 &.compact {
                     width: calc(var(--grid-unit) * 24px);
                 }
 
-                > span {
-                    display: inline-block;
-                    position: relative;
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        height: calc(var(--grid-unit) * 1px);
-                        border-bottom: 1px solid var(--line-color);
-                        margin-left: calc(var(--grid-unit) * 2px);
-                        top: 0;
-                        width: calc(var(--grid-unit) * 24px);
-                        left: 100%;
-                    }
+                > .text {
+                    display: block;
                 }
+            }
 
                 &.isLastStep {
                     width: inherit;
@@ -81,16 +113,18 @@
             }
 
             .badge {
+                grid-area: badge;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                top: 0;
                 height: calc(var(--grid-unit) * 3px);
                 width: calc(var(--grid-unit) * 3px);
                 font-weight: 500;
-                border: 1px solid #dcdcdc;
+                border: 1px solid var(--color-black-alt3);
                 border-radius: 50%;
-                margin-right: calc(var(--grid-unit) * 1px);
-
+                flex-shrink: 0;
+                
                 &.compact {
                     height: calc(var(--grid-unit) * 2px);
                     width: calc(var(--grid-unit) * 2px);
@@ -99,7 +133,7 @@
                 &.active {
                     border: 1px solid transparent;
                     background: var(--color-primary);
-                    color: #fff;
+                    color: var(--color-white);
                 }
 
                 &.done {
@@ -109,5 +143,38 @@
             }
         }
     }
+    
+    .description {
+        grid-area: description;
+        color: var(--color-black-alt2);
+        padding-left: calc(var(--grid-unit) * 1px);
+    }
 
-}
+    .content {
+        display: flex;
+    }
+
+    .progress {
+        color: var(--color-black-alt2);
+        font-weight: 300;
+
+        @media (max-width: @mobile-max-width) {
+            grid-area: progress;
+            font-size: 12px;
+            width: calc(var(--grid-unit) * 4px);
+            white-space: nowrap;
+        }
+    }
+
+    .stepperLine {
+        min-width: calc(var(--grid-unit) * 3px);
+        content: " ";
+        flex-grow: 1;
+        height: calc(var(--grid-unit) * 1px);
+        border-bottom: 1px solid var(--line-color);
+        margin-left: calc(var(--grid-unit) * 2px);
+
+        @media (max-width: @mobile-max-width) {
+            display: none;
+        }
+    }

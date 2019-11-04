@@ -12,20 +12,22 @@ const Item = ({ children }) => {
 };
 
 const stepKeys = ['step1', 'step2', 'step3', 'step4', 'step5'];
-const steps = [1, 2, 3, 4, 5];
 
 const DefaultStory = () => {
     return (
         <Stepper
             forceOrder={boolean('Force order', false)}
             activeStepKey={select('Active step', stepKeys, 'step1')}
-            maxStep={select('Max step', steps, 4)}
             hideNavButtons={boolean('Hide nav buttons', false)}
         >
-            <Step title="Select workspace" stepKey="step1">
+            <Step
+                title="Select workspace and do some other work"
+                description="This is a description text"
+                stepKey="step1"
+            >
                 <Item>Select workspace</Item>
             </Step>
-            <Step title="Select report/dashboard" stepKey="step2">
+            <Step title="Select report/dashboard" description="Description" stepKey="step2">
                 <Item>Select a report or dashboard</Item>
             </Step>
             <Step title="Fill in details" stepKey="step3">
@@ -48,7 +50,6 @@ const InteractiveStory = () => {
         <Stepper
             forceOrder={boolean('Force order', true)}
             activeStepKey="step1"
-            maxStep={4}
             hideNavButtons={boolean('Hide nav buttons', false)}
         >
             <Step title="Select workspace" stepKey="step1">
@@ -60,6 +61,7 @@ const InteractiveStory = () => {
                 </Item>
             </Step>
             <Step
+                description="Description"
                 title="Select report/dashboard"
                 stepKey="step2"
                 disabled={progress.indexOf(1) === -1}
@@ -81,7 +83,11 @@ const InteractiveStory = () => {
             >
                 <Item>You can't go any further since maxStep is 4 in this example.</Item>
             </Step>
-            <Step title="Publish" stepKey="step5">
+            <Step
+                title="Publish"
+                stepKey="step5"
+                disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}
+            >
                 <Item>Publish button</Item>
             </Step>
         </Stepper>
