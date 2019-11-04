@@ -76,8 +76,8 @@ const TextInputStory = () => {
                     !loading ? (
                         <SearchIcon color="#666666" cursor="pointer" />
                     ) : (
-                        <Spinner inline primary />
-                    )
+                            <Spinner inline primary />
+                        )
                 }
                 onIconAction={simulateLoad}
                 error={hasError}
