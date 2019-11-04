@@ -108,7 +108,7 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
 export { AddIcon, BlockIcon, SaveIcon  } from './components/icons/components/content';
-export { SyncDisabledIcon } from './components/icons/components/notification';
+export { SyncDisabledIcon, SyncIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
     DoneIcon,
@@ -131,6 +131,9 @@ export {
     ExpandMoreIcon,
     ArrowBackIcon,
     ArrowForwardIcon,
+    ArrowDownwardIcon,
+    ArrowUpwardIcon,
+    MoreIcon,
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
