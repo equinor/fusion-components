@@ -19,6 +19,7 @@ export { default as Menu, MenuItemType, MenuSection } from './components/general
 export { Tabs, Tab } from './components/general/Tabs';
 export { Stepper, Step } from './components/general/Stepper';
 export { default as TextInput } from './components/general/TextInput';
+export { default as TextArea } from './components/general/TextArea';
 export { Switch, CheckBox, RadioButton } from './components/general/SelectionControls';
 export {
     default as Pagination,
