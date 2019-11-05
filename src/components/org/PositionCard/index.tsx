@@ -90,8 +90,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 onClick={onClick}
                 onExpand={onExpand}
                 childCount={childCount}
-                isFuture
-                isPast
             />
         </div>
     );

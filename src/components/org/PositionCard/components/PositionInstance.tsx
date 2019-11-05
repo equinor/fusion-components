@@ -8,8 +8,6 @@ import PositionTimeline from './PositionTimeline';
 type PositionInstanceProps = {
     position: Position;
     instance?: PositionInstance;
-    isFuture?: boolean;
-    isPast?: boolean;
     showLocation: boolean;
     showDate: boolean;
     showObs: boolean;
@@ -23,8 +21,6 @@ type PositionInstanceProps = {
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     position,
     instance,
-    isFuture,
-    isPast,
     showLocation,
     showDate,
     showExternalId,
@@ -47,7 +43,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const directChildrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
-    const positionInstanceClasses = classNames(styles.positionInstance, styles.content, {
+    const positionInstanceClasses = classNames(styles.positionInstance, {
         [styles.cropPositionName]: !showObs || (showObs && !showLocation && !showDate),
     });
 
