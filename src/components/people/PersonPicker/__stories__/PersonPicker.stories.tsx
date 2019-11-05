@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
+import { withKnobs, boolean, select, number } from '@storybook/addon-knobs';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonPicker from '../index';
 import { useFusionContext, PersonDetails } from '@equinor/fusion';
 import { getDefaultPerson } from '../../utils';
 
 const stories = storiesOf('People|PersonPicker', module);
+stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('PersonPicker'));
 
 const PreSelectedStory = () => {
@@ -31,5 +33,13 @@ const PreSelectedStory = () => {
     return <PersonPicker initialPerson={person} label="Selected person" />;
 };
 
-stories.add('Default', () => <PersonPicker placeholder="Find person" />);
+stories.add('Default', () => (
+    <>
+        <PersonPicker
+            placeholder="Find person"
+            hasError={boolean('Show error', false)}
+            errorMessage="Required"
+        />
+    </>
+));
 stories.add('Pre Selected', () => <PreSelectedStory />);
