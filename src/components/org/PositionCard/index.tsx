@@ -15,6 +15,8 @@ type PositionCardProps = {
     showDate: boolean;
     showObs: boolean;
     showTimeline: boolean;
+    isFuture?: boolean;
+    isPast?: boolean;
     isLinked?: boolean;
     childCount?: number;
     onClick?: (position: Position, instance?: PositionInstance) => void;
@@ -32,6 +34,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showTimeline,
     onClick,
     onExpand,
+    isFuture,
+    isPast,
     isLinked,
     childCount,
 }) => {
@@ -56,6 +60,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
             [styles.isConsultant]: isConsultant,
             [styles.isExternalHire]: isExternalHire,
             [styles.isLinked]: isLinked,
+            [styles.futurePosition]: isFuture,
+            [styles.pastPosition]: isPast,
         }
     );
 
@@ -84,6 +90,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 onClick={onClick}
                 onExpand={onExpand}
                 childCount={childCount}
+                isFuture
+                isPast
             />
         </div>
     );

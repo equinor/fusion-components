@@ -179,6 +179,8 @@ const InteractiveStory = () => {
             isSelected={isSelected}
             onExpand={action('onExpand')}
             childCount={number('Child count', 2)}
+            isFuture={boolean('Show as future position', false)}
+            isPast={boolean('Show as past position', false)}
         />
     );
 };
@@ -196,6 +198,8 @@ const DefaultStory = () => {
             showObs={boolean('Show obs', true)}
             showTimeline={boolean('Show timeline', true)}
             isSelected={false}
+            isFuture={boolean('Show as future position', false)}
+            isPast={boolean('Show as past position', false)}
         />
     );
 };
