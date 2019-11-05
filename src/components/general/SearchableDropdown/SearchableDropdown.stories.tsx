@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import SearchableDropdown, {
-    SearchableDropdownOption,
-    SearchableDropdownSection,
-} from './index';
+import SearchableDropdown, { SearchableDropdownOption, SearchableDropdownSection } from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 
 const dropdownOptions = [
@@ -96,6 +93,8 @@ const DropdownStory = () => {
     return (
         <div style={{ margin: '8px' }}>
             <SearchableDropdown
+                error
+                errorMessage="required"
                 options={options}
                 label="Dropdown"
                 onSelect={item => setOptions(updateOptions(item))}
