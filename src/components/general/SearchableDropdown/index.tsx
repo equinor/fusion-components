@@ -5,6 +5,7 @@ import {
     Menu,
     Dropdown,
     useDropdownController,
+    ErrorMessage,
 } from '@equinor/fusion-components';
 import styles from './styles.less';
 
@@ -26,6 +27,8 @@ type SearchableDropdownProps = {
     placeholder?: string;
     options?: SearchableDropdownOption[];
     sections?: SearchableDropdownSection[];
+    error?: boolean;
+    errorMessage?: string;
     itemComponent?: any;
     asideComponent?: any;
     selectedComponent?: any;
@@ -72,6 +75,8 @@ const SearchableDropdown = ({
     label,
     placeholder,
     onSelect,
+    error,
+    errorMessage,
     onSearchAsync,
     itemComponent,
     asideComponent,
@@ -171,6 +176,8 @@ const SearchableDropdown = ({
                             }
                             setInputValue(value);
                         }}
+                        error={error && !isOpen}
+                        errorMessage={errorMessage}
                         asideComponent={aside}
                         placeholder={placeholder || 'Type to search...'}
                         label={label}
