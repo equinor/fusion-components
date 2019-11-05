@@ -85,9 +85,7 @@ const Step: React.FC<StepProps> = ({
     if (disabled) {
         return (
             <span className={stepClasses}>
-                {/*     <div className={styles.badge}> */}
                 <Badge position={position} active={isCurrent} done={done} />
-                {/*    </div> */}
                 <div className={titleClasses}>
                     <span>{title}</span>
                 </div>
@@ -104,9 +102,7 @@ const Step: React.FC<StepProps> = ({
                 ref={stepRef}
                 className={stepClasses}
             >
-                {/*   <div className={styles.badge}> */}
                 <Badge position={position} active={isCurrent} done={done} />
-                {/*  </div> */}
                 <div className={titleClasses}>
                     <span className={styles.text}> {title}</span>
                     <span className={styles.stepperLine} />
