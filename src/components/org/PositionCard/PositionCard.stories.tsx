@@ -156,6 +156,11 @@ const positions = {
     TBN: tbnPosition,
 };
 
+const positionKeys = {
+    Standard: 'Standard',
+    TBN: 'TBN',
+};
+
 const InteractiveStory = () => {
     const [isSelected, setIsSelected] = useState(false);
 
@@ -164,13 +169,14 @@ const InteractiveStory = () => {
         setIsSelected(prev => !prev);
     }, []);
 
-    const selecetPosition = select('position', positions, position);
+    const selecetPositionKey = select('position', positionKeys, positionKeys.Standard);
+    const selectedPosition = positions[selecetPositionKey];
 
     return (
         <PositionCard
             onClick={toggleSelected}
-            position={selecetPosition}
-            instance={selecetPosition.instances[0]}
+            position={selectedPosition}
+            instance={selectedPosition.instances[0]}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
@@ -186,12 +192,13 @@ const InteractiveStory = () => {
 };
 
 const DefaultStory = () => {
-    const selecetPosition = select('position', positions, position);
+    const selecetPositionKey = select('position', positionKeys, positionKeys.Standard);
+    const selectedPosition = positions[selecetPositionKey];
 
     return (
         <PositionCard
-            position={selecetPosition}
-            instance={selecetPosition.instances[1]}
+            position={selectedPosition}
+            instance={selectedPosition.instances[1]}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}

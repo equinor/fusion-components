@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
-import PersonCard from '../index';
+import PersonCard, { PhotoSize } from '../index';
 import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { PersonDetails } from '@equinor/fusion';
 
@@ -56,6 +56,13 @@ const persons: PersonDictionary = {
     },
 };
 
+const personKeys = {
+    Consultant: 'Consultant',
+    Employee: 'Employee',
+    External: 'External',
+    Local: 'Local',
+};
+
 const sizes = {
     xlarge: 'xlarge',
     large: 'large',
@@ -64,9 +71,10 @@ const sizes = {
 };
 
 const PersonCardStory = () => {
-    const person: PersonDetails = select('Account type', persons, persons.Consultant);
+    const personKey = select('Account type', personKeys, personKeys.Consultant);
+    const person = persons[personKey];
 
-    const size = select('Photo size', sizes, sizes.xlarge);
+    const size = select('Photo size', sizes, sizes.xlarge) as PhotoSize;
 
     return <PersonCard person={person} photoSize={size} inline={boolean('Inline', false)} />;
 };
