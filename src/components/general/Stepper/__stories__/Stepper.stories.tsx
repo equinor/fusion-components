@@ -36,7 +36,7 @@ const DefaultStory = () => {
             <Step title="Summary" stepKey="step4">
                 <Item>Summary</Item>
             </Step>
-            <Step title="Publish" stepKey="step5">
+            <Step title="Publish" stepKey="step5" disabled>
                 <Item>Publish button</Item>
             </Step>
         </Stepper>
