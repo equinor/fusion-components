@@ -140,34 +140,33 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
     );
     const allInstancesWithRotation = useMemo(() => {
         return allInstances
-            .reduce((instances: PositionInstanceRotation[], rotationInstance: PositionInstance) => {
+            .reduce((instances: PositionInstanceRotation[], instance: PositionInstance) => {
                 const correlatingInstances = allInstances.filter(
                     i =>
-                        rotationInstance.appliesFrom.getTime() <= i.appliesTo.getTime() &&
+                        instance.appliesFrom.getTime() <= i.appliesTo.getTime() &&
                         i.type === 'Rotation' &&
-                        rotationInstance.type === 'Rotation' &&
-                        rotationInstance.id !== i.id
+                        instance.type === 'Rotation' &&
+                        instance.id !== i.id
                 );
                 if (correlatingInstances.length > 0) {
                     const uniqueTimeInstances = !instances.some(
-                        i => rotationInstance.appliesFrom.getTime() === i.appliesFrom.getTime()
+                        i => instance.appliesFrom.getTime() === i.appliesFrom.getTime()
                     );
 
                     if (uniqueTimeInstances) {
                         return [
                             ...instances,
-                            { ...rotationInstance, rotatingInstances: correlatingInstances },
+                            { ...instance, rotatingInstances: correlatingInstances },
                         ];
                     }
                     return instances;
                 }
 
-                return [...instances, rotationInstance];
+                return [...instances, instance];
             }, [])
             .sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime());
     }, [allInstances]);
 
-    console.log(allInstancesWithRotation);
     const active =
         (activeInstance &&
             allInstancesWithRotation.find(
