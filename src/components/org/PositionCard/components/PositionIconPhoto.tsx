@@ -29,15 +29,15 @@ const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
 
     const isRotating = rotationInstances.length > 0;
 
-    const personsDetails = currentInstance
-        ? isRotating
-            ? [currentInstance.assignedPerson, ...rotationInstances.map(i => i.assignedPerson)]
-            : currentInstance.assignedPerson
-        : undefined;
+  
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
-                <PersonPhoto person={personsDetails} size="large" />
+                <PersonPhoto
+                    person={currentInstance && currentInstance.assignedPerson}
+                    additionalPersons={rotationInstances.map(instance => instance.assignedPerson)}
+                    size="large"
+                />
             </div>
             {(isLinked || isRotating) && (
                 <div className={styles.stateIcon}>

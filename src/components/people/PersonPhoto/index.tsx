@@ -17,9 +17,10 @@ export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 export type PersonPhotoProps = {
     personId?: string;
-    person?: PersonDetails | PersonDetails[];
+    person?: PersonDetails;
     size?: PhotoSize;
     hideTooltip?: boolean;
+    additionalPersons?: PersonDetails[];
 };
 
 const getDefaultPerson = (): PersonDetails => ({
@@ -37,13 +38,17 @@ const getDefaultPerson = (): PersonDetails => ({
 
 const hasMultiplePersons = (person: any): person is any[] => Array.isArray(person);
 
-export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails | PersonDetails[]>(
-        getDefaultPerson()
-    );
+export default ({
+    personId,
+    person,
+    hideTooltip,
+    size = 'medium',
+    additionalPersons,
+}: PersonPhotoProps) => {
+    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
 
     const { imageUrl, error: imageError } = usePersonImageUrl(
-        person && !hasMultiplePersons(person) ? person.azureUniqueId : personId || ''
+        person && !additionalPersons ? person.azureUniqueId : personId || ''
     );
 
     const { error, personDetails } = personId
@@ -72,35 +77,35 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
     const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
     const toolTipContent = hideTooltip ? (
         ''
-    ) : !hasMultiplePersons(currentPerson) ? (
-        currentPerson.name
-    ) : (
+    ) : additionalPersons ? (
         <div>
-            {currentPerson.map(person => (
+            {[...additionalPersons, currentPerson].map(person => (
                 <>
                     <span>{person.name}</span>
                     <br />
                 </>
             ))}
         </div>
+    ) : (
+        currentPerson.name
     );
     const nameTooltipRef = useTooltipRef(toolTipContent);
 
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
-            {(imageError !== null || hasMultiplePersons(personDetails)) && (
-                <FallbackImage size={size} rotation={hasMultiplePersons(personDetails)} />
+            {(imageError !== null || additionalPersons) && (
+                <FallbackImage size={size} rotation={!!additionalPersons} />
             )}
-            {personDetails && !hasMultiplePersons(personDetails) && (
+            {personDetails && !additionalPersons && (
                 <AccountTypeBadge
                     currentPerson={personDetails}
                     size={size}
                     hideTooltip={hideTooltip}
                 />
             )}
-            {hasMultiplePersons(personDetails) && (
+            {additionalPersons && (
                 <RotationBadge
-                    numberOfPersons={personDetails.length}
+                    numberOfPersons={additionalPersons.length + 1}
                     size={size}
                     hideTooltip={hideTooltip}
                 />
