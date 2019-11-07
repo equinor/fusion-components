@@ -169,9 +169,9 @@ const InteractiveStory = () => {
         setIsSelected(prev => !prev);
     }, []);
 
-    const selecetPositionKey = select('position', positionKeys, positionKeys.Standard);
+    const selectedPositionKey = select('position', positionKeys, positionKeys.Standard);
 
-    const selectedPosition: Position = positions[selecetPositionKey];
+    const selectedPosition: Position = positions[selectedPositionKey];
 
     const instanceKeys = selectedPosition.instances.reduce(
         (allInstanceIds, instance: PositionInstance) => {
@@ -179,10 +179,13 @@ const InteractiveStory = () => {
                 ...allInstanceIds,
                 [instance.id]: instance.id,
             };
-        },{}
+        },
+        {}
     );
     const selectedPositionInstanceId = select('instance', instanceKeys, '1');
-    const selectedPositionsInstance = selectedPosition.instances.find(i => i.id === selectedPositionInstanceId)
+    const selectedPositionsInstance = selectedPosition.instances.find(
+        i => i.id === selectedPositionInstanceId
+    );
     return (
         <PositionCard
             onClick={toggleSelected}
@@ -203,8 +206,8 @@ const InteractiveStory = () => {
 };
 
 const DefaultStory = () => {
-    const selecetPositionKey = select('position', positionKeys, positionKeys.Standard);
-    const selectedPosition: Position = positions[selecetPositionKey];
+    const selectedPositionKey = select('position', positionKeys, positionKeys.Standard);
+    const selectedPosition: Position = positions[selectedPositionKey];
 
     const instanceKeys = selectedPosition.instances.reduce(
         (allInstanceIds, instance: PositionInstance) => {
@@ -212,10 +215,13 @@ const DefaultStory = () => {
                 ...allInstanceIds,
                 [instance.id]: instance.id,
             };
-        },{}
+        },
+        {}
     );
     const selectedPositionInstanceId = select('instance', instanceKeys, '1');
-    const selectedPositionsInstance = selectedPosition.instances.find(i => i.id === selectedPositionInstanceId)
+    const selectedPositionsInstance = selectedPosition.instances.find(
+        i => i.id === selectedPositionInstanceId
+    );
     return (
         <PositionCard
             position={selectedPosition}
