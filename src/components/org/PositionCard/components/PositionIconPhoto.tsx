@@ -1,6 +1,12 @@
 import React, { useRef } from 'react';
 import { Position, PositionInstance } from '@equinor/fusion';
-import { PersonPhoto, LinkIcon, styling, useTooltipRef } from '@equinor/fusion-components';
+import {
+    PersonPhoto,
+    LinkIcon,
+    styling,
+    useTooltipRef,
+    PlatformIcon,
+} from '@equinor/fusion-components';
 
 import styles from '../styles.less';
 
@@ -19,21 +25,32 @@ const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const linkedRef = useTooltipRef('Linked', 'below');
-    
+    const rotatingRef = useTooltipRef('Rotating', 'below');
+
+    const isRotating = rotationInstances.length > 0;
+
     const personsDetails = currentInstance
-        ? rotationInstances.length > 0
+        ? isRotating
             ? [currentInstance.assignedPerson, ...rotationInstances.map(i => i.assignedPerson)]
             : currentInstance.assignedPerson
         : undefined;
-
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
                 <PersonPhoto person={personsDetails} size="large" />
             </div>
-            {isLinked && (
-                <div className={styles.linkedIcon} ref={linkedRef}>
-                    <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />
+            {(isLinked || isRotating) && (
+                <div className={styles.stateIcon}>
+                    {isLinked && (
+                        <span ref={linkedRef}>
+                            <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />
+                        </span>
+                    )}
+                    {isRotating && (
+                        <span ref={rotatingRef}>
+                            <PlatformIcon color={styling.colors.blackAlt2} height={16} width={16} />{' '}
+                        </span>
+                    )}
                 </div>
             )}
         </div>

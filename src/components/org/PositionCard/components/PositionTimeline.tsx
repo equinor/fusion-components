@@ -1,27 +1,31 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 
+type PositionInstanceRotation = PositionInstance & {
+    rotatingInstances?: PositionInstance[];
+};
+
 type PositionTimelineProps = {
     /** The instance that is currently active/shown */
-    activeInstance: PositionInstance | null;
+    activeInstance: PositionInstanceRotation | null;
     /** All instances to the position */
-    allInstances: PositionInstance[];
+    allInstances: PositionInstanceRotation[];
     /** Fist instance sorted by appliesFrom time */
-    firstInstance: PositionInstance;
+    firstInstance: PositionInstanceRotation;
     /** Last instance sorted by appliesTo time */
-    lastInstance: PositionInstance | undefined;
+    lastInstance: PositionInstanceRotation | undefined;
 };
 
 type TimelineInstanceProps = {
     /** Mapped instance from allInstances */
-    instance: PositionInstance;
+    instance: PositionInstanceRotation;
     /** The instance that is currently active/shown */
-    activeInstance: PositionInstance | null;
+    activeInstance: PositionInstanceRotation | null;
     /** All instances to the position */
-    allInstances: PositionInstance[];
+    allInstances: PositionInstanceRotation[];
     /** Position range calculator */
     calculator: (time: number) => number;
 };
@@ -48,13 +52,24 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     allInstances,
     calculator,
 }) => {
-    const assignedPersonName = instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
+    const getName = useCallback(
+        (instance: PositionInstanceRotation) =>
+            instance.assignedPerson ? instance.assignedPerson.name : 'TBN',
+        []
+    );
+    const rotationInstances = instance.rotatingInstances || [];
+    const assignedPersons = [instance, ...rotationInstances];
+
     const assignedPersonTooltipRef = useTooltipRef(
-        <span>
-            {assignedPersonName}
-            <br /> {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
-            {instance.workload}%)
-        </span>,
+        assignedPersons.map(i => (
+            <>
+                <span>
+                    {getName(i)}
+                    <br /> {formatDate(i.appliesFrom)} - {formatDate(i.appliesTo)} ({i.workload}%)
+                </span>
+                <br />
+            </>
+        )),
         'below'
     );
 
@@ -123,36 +138,55 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
         firstInstance.appliesFrom.getTime(),
         (lastInstance || firstInstance).appliesTo.getTime()
     );
-    const allRotationInstances = useMemo(() => {
-        return allInstances.reduce(
-            (instances: PositionInstance[][], rotationInstance: PositionInstance) => {
+    const allInstancesWithRotation = useMemo(() => {
+        return allInstances
+            .reduce((instances: PositionInstanceRotation[], rotationInstance: PositionInstance) => {
                 const correlatingInstances = allInstances.filter(
                     i =>
-                        rotationInstance.appliesFrom.getTime() >= i.appliesFrom.getTime() &&
-                        rotationInstance.appliesTo.getTime() <= i.appliesTo.getTime() &&
+                        rotationInstance.appliesFrom.getTime() <= i.appliesTo.getTime() &&
                         i.type === 'Rotation' &&
                         rotationInstance.type === 'Rotation' &&
-                        i.id !== rotationInstance.id
+                        rotationInstance.id !== i.id
                 );
                 if (correlatingInstances.length > 0) {
-                    return [...instances, correlatingInstances];
+                    const uniqueTimeInstances = !instances.some(
+                        i => rotationInstance.appliesFrom.getTime() === i.appliesFrom.getTime()
+                    );
+
+                    if (uniqueTimeInstances) {
+                        return [
+                            ...instances,
+                            { ...rotationInstance, rotatingInstances: correlatingInstances },
+                        ];
+                    }
+                    return instances;
                 }
-                return instances;
-            },
-            []
-        );
+
+                return [...instances, rotationInstance];
+            }, [])
+            .sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime());
     }, [allInstances]);
 
-    console.log(allRotationInstances);
+    console.log(allInstancesWithRotation);
+    const active =
+        (activeInstance &&
+            allInstancesWithRotation.find(
+                i =>
+                    i.id === activeInstance.id ||
+                    (i.rotatingInstances &&
+                        i.rotatingInstances.some(rotation => rotation.id === activeInstance.id)) ||
+                    false
+            )) ||
+        null;
 
     return (
         <div className={styles.instanceTimelineContainer}>
-            {allInstances.map(instanceByFrom => (
+            {allInstancesWithRotation.map(instanceByFrom => (
                 <TimelineInstance
                     key={instanceByFrom.id}
                     instance={instanceByFrom}
-                    activeInstance={activeInstance || null}
-                    allInstances={allInstances}
+                    activeInstance={active}
+                    allInstances={allInstancesWithRotation}
                     calculator={calculator}
                 />
             ))}
