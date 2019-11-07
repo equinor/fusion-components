@@ -1,20 +1,21 @@
 @import '~styles/mixins.less';
 
-.inputContainer{
-    display: flex;
+.textAreaContainer {
+   display: flex;
     flex-direction: column;
-    
-    .inputContent {
+    height: 100%;
+
+    .textAreaContent {
         display: flex;
         justify-content: space-between;
-        min-height: .grid-unit(5px)[];
-        max-height: .grid-unit(7px)[];
+        min-height: .grid-unit(7px)[];
         background-color: var(--color-black-alt5);
         border-bottom: 1px solid var(--color-primary-accent);
         caret-color: var(--color-primary);
         padding: .grid-unit(1px)[] .grid-unit(2px)[];
         border-radius: 4px 4px 0 0;
-        
+        height: 100%;
+
         > aside {
             padding-right: .grid-unit(2px)[];
             display: flex;
@@ -47,35 +48,38 @@
         &.labelLess {
             padding-top: 0;
             padding-bottom: 0;
-        }
+        } 
 
         .inputTextContent {
             display: flex;
             flex-direction: column;
-            width: 100%;
-            justify-content: center;
             position: relative;
+            width: 100%;
+            height: 100%;
 
             label {
-                position: absolute;
+                display: flex;
+                position: relative;
                 color: var(--color-primary-accent);
                 opacity: 0.6;
                 font-size: 16px;
                 transition: top ease .2s, font-size .2s;
-                top: 50%;
+                top: calc(var(--grid-unit) * 2px);
                 -ms-transform: translateY(-50%);
                 transform: translateY(-50%);
             }
 
-            input {
+            textarea {
                 font-size: 16px;
                 line-height: .grid-unit(2px)[];
-                height: .grid-unit(3px)[];
                 width: 100%;
+                height: 100%;
                 outline: none;
                 background-color: var(--color-black-alt5);
-                border:none;
-     
+                border: none;
+                resize: none; 
+                padding-top: calc(var(--grid-unit) * 1px);
+
                 &::placeholder {
                     color: var(--color-primary-accent);
                     opacity: 0.6;
@@ -110,26 +114,35 @@
                 }
             }
         }
-        
-        .icon {
-            align-self: center;
-            padding-left: .grid-unit(2px)[];
-
-            svg {
-                width: .grid-unit(3px)[];
-                height: .grid-unit(3px)[];
-            }
-        }
     }
 
-    .helperText {
-        padding: 0 .grid-unit(2px)[];
-        font-size: 11px;
-        line-height: .grid-unit(2px)[];
-        color: var(--color-black-alt1);
+    .helperIconText{
+        display: flex;
+        padding-left: .grid-unit(1px)[];
+        padding-top: .grid-unit(0.5px)[];
 
-        &.error {
-            color: var(--color-red);
+        .helperText {
+            display: flex;
+            position: relative;
+            font-size: 11px;
+            padding-left: .grid-unit(1px)[];
+            line-height: .grid-unit(2px)[];
+            color: var(--color-black-alt2);
+
+            &.error {
+                color: var(--color-red);
+            }
+        }
+
+        .icon {
+            display: flex;
+            padding-left: .grid-unit(1px)[];
+            height: 100%;
+        
+            svg {
+                width: .grid-unit(2px)[];
+                height: .grid-unit(2px)[];
+            }
         }
     }
 }

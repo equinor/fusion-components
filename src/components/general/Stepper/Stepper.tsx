@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React from 'react';
 import * as styles from './styles.less';
 import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';
+import classNames from 'classnames';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;
     children: any;
     forceOrder?: boolean;
     activeStepKey: string;
-    maxStep?: number;
     hideNavButtons?: boolean;
 };
 
@@ -26,7 +26,6 @@ const Stepper: React.FC<StepperProps> = ({
     activeStepKey,
     forceOrder,
     onChange,
-    maxStep,
     hideNavButtons,
 }) => {
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
@@ -65,15 +64,10 @@ const Stepper: React.FC<StepperProps> = ({
             const next = stepKeys.find(sk => sk.position === current.position + 1);
             const prev = stepKeys.find(sk => sk.position === current.position - 1);
 
-            if (maxStep) {
-                setCanNext(next !== undefined && !next.disabled && next.position <= maxStep);
-            } else {
-                setCanNext(next !== undefined && !next.disabled);
-            }
-
+            setCanNext(next !== undefined && !next.disabled);
             setCanPrev(prev !== undefined && !prev.disabled);
         }
-    }, [stepKeys, currentStepKey, maxStep]);
+    }, [stepKeys, currentStepKey]);
 
     const findStepKey = React.useCallback(
         (direction: StepDirection) => {
@@ -112,30 +106,28 @@ const Stepper: React.FC<StepperProps> = ({
     const handleChange = React.useCallback(
         (stepKey: string) => {
             if (!forceOrder) {
-                const newStep = stepKeys.find(s => s.key === stepKey);
-
-                if (newStep && maxStep && newStep.position > maxStep) {
-                    return;
-                }
-
                 setCurrentStepKey(stepKey);
             }
         },
-        [forceOrder, maxStep, stepKeys]
+        [forceOrder, stepKeys]
     );
 
     return (
         <>
             <div className={styles.stepper}>
                 {!hideNavButtons && (
-                    <div className={styles.navigation}>
-                        <IconButton onClick={handleClickPrev} disabled={!canPrev}>
-                            <ArrowBackIcon />
-                        </IconButton>
-                        <IconButton onClick={handleClickNext} disabled={!canNext}>
-                            <ArrowForwardIcon />
-                        </IconButton>
-                    </div>
+                    <>
+                        <div className={classNames(styles.navigation, styles.prev)}>
+                            <IconButton onClick={handleClickPrev} disabled={!canPrev}>
+                                <ArrowBackIcon />
+                            </IconButton>
+                        </div>
+                        <div className={classNames(styles.navigation, styles.next)}>
+                            <IconButton onClick={handleClickNext} disabled={!canNext}>
+                                <ArrowForwardIcon />
+                            </IconButton>
+                        </div>
+                    </>
                 )}
                 <StepPane
                     forceOrder={forceOrder || false}
@@ -143,7 +135,6 @@ const Stepper: React.FC<StepperProps> = ({
                     activeStepKey={currentStepKey}
                     activeStepPosition={activeStepPosition}
                     onChange={handleChange}
-                    maxStep={maxStep}
                 />
             </div>
             <StepContent children={children} activeStepKey={currentStepKey} />
