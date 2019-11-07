@@ -10,13 +10,13 @@ type PositionInstanceRotation = PositionInstance & {
 
 type PositionTimelineProps = {
     /** The instance that is currently active/shown */
-    activeInstance: PositionInstanceRotation | null;
+    activeInstance: PositionInstance | null;
     /** All instances to the position */
-    allInstances: PositionInstanceRotation[];
+    allInstances: PositionInstance[];
     /** Fist instance sorted by appliesFrom time */
-    firstInstance: PositionInstanceRotation;
+    firstInstance: PositionInstance;
     /** Last instance sorted by appliesTo time */
-    lastInstance: PositionInstanceRotation | undefined;
+    lastInstance: PositionInstance | undefined;
 };
 
 type TimelineInstanceProps = {
