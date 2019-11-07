@@ -36,19 +36,16 @@ const getDefaultPerson = (): PersonDetails => ({
     company: { id: 'id', name: 'name' },
 });
 
-const hasMultiplePersons = (person: any): person is any[] => Array.isArray(person);
-
 export default ({
     personId,
     person,
     hideTooltip,
     size = 'medium',
-    additionalPersons,
+    additionalPersons = [],
 }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
-
     const { imageUrl, error: imageError } = usePersonImageUrl(
-        person && !additionalPersons ? person.azureUniqueId : personId || ''
+        person && additionalPersons.length === 0 ? person.azureUniqueId : personId || ''
     );
 
     const { error, personDetails } = personId
@@ -77,7 +74,7 @@ export default ({
     const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
     const toolTipContent = hideTooltip ? (
         ''
-    ) : additionalPersons ? (
+    ) : additionalPersons.length > 0 ? (
         <div>
             {[...additionalPersons, currentPerson].map(person => (
                 <>
@@ -90,20 +87,19 @@ export default ({
         currentPerson.name
     );
     const nameTooltipRef = useTooltipRef(toolTipContent);
-
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
-            {(imageError !== null || additionalPersons) && (
-                <FallbackImage size={size} rotation={!!additionalPersons} />
+            {(imageError !== null || additionalPersons.length > 0) && (
+                <FallbackImage size={size} rotation={additionalPersons.length > 0} />
             )}
-            {personDetails && !additionalPersons && (
+            {personDetails && additionalPersons.length === 0 && (
                 <AccountTypeBadge
                     currentPerson={personDetails}
                     size={size}
                     hideTooltip={hideTooltip}
                 />
             )}
-            {additionalPersons && (
+            {additionalPersons.length > 0 && (
                 <RotationBadge
                     numberOfPersons={additionalPersons.length + 1}
                     size={size}

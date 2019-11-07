@@ -4,7 +4,7 @@ import { withKnobs, boolean, select, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import PositionCard from './index';
-import { Position } from '@equinor/fusion';
+import { Position, PositionInstance } from '@equinor/fusion';
 
 const position: Position = {
     id: '1',
@@ -83,7 +83,7 @@ const position: Position = {
             },
             properties: {},
         },
-       
+
         {
             id: '3',
             appliesFrom: new Date('2019-06-01T00:00:00'),
@@ -117,7 +117,6 @@ const position: Position = {
             },
             properties: {},
         },
-
     ],
     contractId: null,
     directChildCount: 2,
@@ -171,13 +170,24 @@ const InteractiveStory = () => {
     }, []);
 
     const selecetPositionKey = select('position', positionKeys, positionKeys.Standard);
-    const selectedPosition = positions[selecetPositionKey];
 
+    const selectedPosition: Position = positions[selecetPositionKey];
+
+    const instanceKeys = selectedPosition.instances.reduce(
+        (allInstanceIds, instance: PositionInstance) => {
+            return {
+                ...allInstanceIds,
+                [instance.id]: instance.id,
+            };
+        },{}
+    );
+    const selectedPositionInstanceId = select('instance', instanceKeys, '1');
+    const selectedPositionsInstance = selectedPosition.instances.find(i => i.id === selectedPositionInstanceId)
     return (
         <PositionCard
             onClick={toggleSelected}
             position={selectedPosition}
-            instance={selectedPosition.instances[0]}
+            instance={selectedPositionsInstance}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
@@ -194,12 +204,22 @@ const InteractiveStory = () => {
 
 const DefaultStory = () => {
     const selecetPositionKey = select('position', positionKeys, positionKeys.Standard);
-    const selectedPosition = positions[selecetPositionKey];
+    const selectedPosition: Position = positions[selecetPositionKey];
 
+    const instanceKeys = selectedPosition.instances.reduce(
+        (allInstanceIds, instance: PositionInstance) => {
+            return {
+                ...allInstanceIds,
+                [instance.id]: instance.id,
+            };
+        },{}
+    );
+    const selectedPositionInstanceId = select('instance', instanceKeys, '1');
+    const selectedPositionsInstance = selectedPosition.instances.find(i => i.id === selectedPositionInstanceId)
     return (
         <PositionCard
             position={selectedPosition}
-            instance={selectedPosition.instances[1]}
+            instance={selectedPositionsInstance}
             showDate={boolean('Show date', true)}
             showExternalId={boolean('Show Pims id', true)}
             showLocation={boolean('Show location', true)}
@@ -217,4 +237,3 @@ storiesOf('Pro org|Position Card', module)
     .addDecorator(withFusionStory('Pro org position card'))
     .add('Default', () => <DefaultStory />)
     .add('Interactive', () => <InteractiveStory />);
-

@@ -37,6 +37,7 @@ const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
                     person={currentInstance && currentInstance.assignedPerson}
                     additionalPersons={rotationInstances.map(instance => instance.assignedPerson)}
                     size="large"
+                    key={currentInstance ? currentInstance.id : (+new Date()).toString()}
                 />
             </div>
             {(isLinked || isRotating) && (
