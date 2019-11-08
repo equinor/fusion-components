@@ -9,7 +9,6 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import RotationNumberIcon from './icons/RotationNumberIcon';
 
-
 type RotationBadgeProps = {
     size: PhotoSize;
     numberOfPersons: number;
@@ -23,9 +22,7 @@ const getIconSizes = (isCompact: boolean) => ({
     small: isCompact ? 8 : 12,
 });
 
-
 const RotationBadge = ({ size, numberOfPersons, hideTooltip }: RotationBadgeProps) => {
-
     const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
         [styles.xlarge]: size === 'xlarge',
         [styles.large]: size === 'large',
@@ -35,13 +32,14 @@ const RotationBadge = ({ size, numberOfPersons, hideTooltip }: RotationBadgeProp
 
     const displayType = useComponentDisplayType();
     const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
-    const rotationTooltipRef = useTooltipRef(
-        hideTooltip ? '' : numberOfPersons
-    );
 
     return (
-        <div className={iconClassNames} ref={rotationTooltipRef}>
-            <RotationNumberIcon width={iconSize} height={iconSize} numberOfPersons={numberOfPersons} />
+        <div className={iconClassNames}>
+            <RotationNumberIcon
+                width={iconSize}
+                height={iconSize}
+                numberOfPersons={numberOfPersons}
+            />
         </div>
     );
 };

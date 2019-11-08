@@ -1,7 +1,6 @@
 import React from 'react';
 import { IconProps, useIcon } from '@equinor/fusion-components';
 
-
 const RotationIcon = (props: IconProps) => {
     const iconFactory = useIcon(
         <>

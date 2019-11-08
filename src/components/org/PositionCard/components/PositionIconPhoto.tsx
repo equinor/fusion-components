@@ -29,7 +29,6 @@ const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
 
     const isRotating = rotationInstances.length > 0;
 
-  
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>

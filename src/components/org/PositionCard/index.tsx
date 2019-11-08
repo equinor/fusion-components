@@ -80,8 +80,9 @@ const PositionCard: React.FC<PositionCardProps> = ({
             i =>
                 instance.appliesFrom.getTime() >= i.appliesFrom.getTime() &&
                 instance.appliesTo.getTime() <= i.appliesTo.getTime() &&
-                i.type === 'Rotation' && instance.type === "Rotation"
-                && i.id !== instance.id
+                i.type === 'Rotation' &&
+                instance.type === 'Rotation' &&
+                i.id !== instance.id
         );
     }, [position, instance]);
 
