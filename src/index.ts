@@ -108,7 +108,7 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
-export { AddIcon, BlockIcon, SaveIcon  } from './components/icons/components/content';
+export { AddIcon, BlockIcon, SaveIcon } from './components/icons/components/content';
 export { SyncDisabledIcon, SyncIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
@@ -139,7 +139,7 @@ export {
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
-export { LinkIcon, TitleIcon, FormatBoldIcon, FormatItalicsIcon } from './components/icons/components/wysiwyg';
+export { FormatBoldIcon, FormatBulletedListIcon, FormatItalicsIcon, FormatNumberedListIcon, LinkIcon, TitleIcon } from './components/icons/components/wysiwyg';
 export { PlatformIcon } from './components/icons/components/uncategorized';
 
 // Styling
