@@ -46,6 +46,7 @@ const position: Position = {
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
+            rotationId:null,
             properties: {},
         },
     ],

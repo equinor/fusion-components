@@ -165,6 +165,7 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
+            rotationId:null,
         },
     ],
     contractId: null,

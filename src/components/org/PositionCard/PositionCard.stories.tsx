@@ -48,6 +48,7 @@ const position: Position = {
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
+            rotationId:'R1',
             properties: {},
         },
         {
@@ -82,6 +83,7 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
+            rotationId:'R2',
         },
 
         {
@@ -116,6 +118,7 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
+            rotationId:null,
         },
     ],
     contractId: null,
