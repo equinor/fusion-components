@@ -17,6 +17,7 @@ type PositionInstanceProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     childCount?: number;
     rotationInstances: PositionInstance[];
+    selectedDate?: Date,
 };
 
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
@@ -31,6 +32,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     onExpand,
     childCount,
     rotationInstances,
+    selectedDate,
 }) => {
     const assignedPersonName =
         instance && instance.assignedPerson
@@ -135,6 +137,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     activeInstance={instance || null}
                     firstInstance={firstInstance}
                     lastInstance={lastInstance}
+                    selectedDate={selectedDate}
                 />
             )}
         </div>
