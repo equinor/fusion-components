@@ -19,8 +19,8 @@ const position: Position = {
     instances: [
         {
             id: '1',
-            appliesFrom: new Date('2019-01-01T00:00:00'),
-            appliesTo: new Date('2019-05-30T00:00:00'),
+            appliesFrom: new Date('2021-09-27T00:00:00'),
+            appliesTo: new Date('2022-09-26T00:00:00'),
             location: {
                 code: '213',
                 country: 'Norway',
@@ -42,7 +42,7 @@ const position: Position = {
                 roles: [],
                 upn: 'egsag@equinor.com',
                 department: 'department',
-                name: 'Egil Sagstad rotation',
+                name: 'Rotation 1',
                 jobTitle: 'Job title',
                 mail: 'egsag@equinor.com',
                 mobilePhone: '12345678',
@@ -53,8 +53,8 @@ const position: Position = {
         },
         {
             id: '2',
-            appliesFrom: new Date('2019-01-01T00:00:00'),
-            appliesTo: new Date('2019-05-30T00:00:00'),
+            appliesFrom: new Date('2022-01-27T00:00:00'),
+            appliesTo: new Date('2022-09-26T00:00:00'),
             location: {
                 code: '213',
                 country: 'Norway',
@@ -76,20 +76,20 @@ const position: Position = {
                 roles: [],
                 upn: 'egsag@equinor.com',
                 department: 'department',
-                name: 'Rotation pos',
+                name: 'Rotation 2',
                 jobTitle: 'Job title',
                 mail: 'egsag@equinor.com',
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
             properties: {},
-            rotationId:'R2',
+            rotationId:'R3',
         },
 
         {
             id: '3',
-            appliesFrom: new Date('2019-06-01T00:00:00'),
-            appliesTo: new Date('2020-12-30T00:00:00'),
+            appliesFrom: new Date('2018-01-01T00:00:00'),
+            appliesTo: new Date('2021-09-26T00:00:00'),
             location: {
                 code: '213',
                 country: 'Norway',
@@ -120,6 +120,74 @@ const position: Position = {
             properties: {},
             rotationId:null,
         },
+        {
+            id: '5',
+            appliesFrom: new Date('2021-09-27T00:00:00'),
+            appliesTo: new Date('2022-09-26T00:00:00'),
+            location: {
+                code: '213',
+                country: 'Norway',
+                id: '214215',
+                name: 'Stavanger',
+            },
+            obs: 'obs',
+            workload: 100,
+            type: 'Rotation',
+            assignedPerson: {
+                accountType: 'Employee',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
+                company: {
+                    id: '3etgwg',
+                    name: 'Equinor',
+                },
+                contracts: [],
+                positions: [],
+                roles: [],
+                upn: 'egsag@equinor.com',
+                department: 'department',
+                name: 'Rotation 3',
+                jobTitle: 'Job title',
+                mail: 'egsag@equinor.com',
+                mobilePhone: '12345678',
+                officeLocation: 'Stavanger',
+            },
+            rotationId:'R2',
+            properties: {},
+        },
+        {
+            id: '6',
+            appliesFrom: new Date('2021-09-27T00:00:00'),
+            appliesTo: new Date('2022-01-26T00:00:00'),
+            location: {
+                code: '213',
+                country: 'Norway',
+                id: '214215',
+                name: 'Stavanger',
+            },
+            obs: 'obs',
+            workload: 100,
+            type: 'Rotation',
+            assignedPerson: {
+                accountType: 'Employee',
+                azureUniqueId: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
+                company: {
+                    id: '3etgwg',
+                    name: 'Equinor',
+                },
+                contracts: [],
+                positions: [],
+                roles: [],
+                upn: 'egsag@equinor.com',
+                department: 'department',
+                name: 'Rotation 4',
+                jobTitle: 'Job title',
+                mail: 'egsag@equinor.com',
+                mobilePhone: '12345678',
+                officeLocation: 'Stavanger',
+            },
+            properties: {},
+            rotationId:'R3',
+        },
     ],
     contractId: null,
     directChildCount: 2,
@@ -131,6 +199,7 @@ const position: Position = {
     name: 'Drilling Engineer',
     parentPositionId: '0',
 };
+
 
 const tbnPosition: Position = {
     id: '1',
@@ -163,6 +232,7 @@ const positionKeys = {
     Standard: 'Standard',
     TBN: 'TBN',
 };
+
 
 const InteractiveStory = () => {
     const [isSelected, setIsSelected] = useState(false);
@@ -204,6 +274,7 @@ const InteractiveStory = () => {
             childCount={number('Child count', 2)}
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
+            selectedDate={new Date('2022-09-25T00:00:00')}
         />
     );
 };

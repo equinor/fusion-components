@@ -19,6 +19,7 @@ type PositionCardProps = {
     isPast?: boolean;
     isLinked?: boolean;
     childCount?: number;
+    selectedDate?: Date;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -38,6 +39,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     isPast,
     isLinked,
     childCount,
+    selectedDate,
 }) => {
     const isExternalHire =
         instance &&
@@ -78,13 +80,15 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
         return allInstances.filter(
             i =>
-                instance.appliesFrom.getTime() >= i.appliesFrom.getTime() &&
-                instance.appliesTo.getTime() <= i.appliesTo.getTime() &&
+                instance.appliesFrom.getTime() <= i.appliesTo.getTime() &&
                 i.type === 'Rotation' &&
                 instance.type === 'Rotation' &&
-                i.id !== instance.id
+                i.id !== instance.id &&
+                (selectedDate ?  
+                selectedDate.getTime() >= i.appliesFrom.getTime() &&
+                selectedDate.getTime() <= i.appliesTo.getTime():  true)
         );
-    }, [position, instance]);
+    }, [position, instance, selectedDate]);
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
@@ -107,6 +111,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 onExpand={onExpand}
                 childCount={childCount}
                 rotationInstances={rotationInstances}
+                selectedDate={selectedDate}
             />
         </div>
     );

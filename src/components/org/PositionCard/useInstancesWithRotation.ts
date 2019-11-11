@@ -22,10 +22,18 @@ export default (allInstances: PositionInstance[]) =>
                             i => instance.appliesFrom.getTime() === i.appliesFrom.getTime()
                         );
 
-                        if (uniqueTimeInstances) {
+                        const shortestInstance = [instance, ...correlatingInstances].sort(
+                            (a, b) => a.appliesTo.getTime() - b.appliesTo.getTime()
+                        );
+                        const isShortestInstance = shortestInstance[0].id === instance.id;
+
+                        if (uniqueTimeInstances && isShortestInstance) {
                             return [
                                 ...instances,
-                                { ...instance, rotatingInstances: correlatingInstances },
+                                {
+                                    ...instance,
+                                    rotatingInstances: correlatingInstances,
+                                },
                             ];
                         }
                         return instances;
