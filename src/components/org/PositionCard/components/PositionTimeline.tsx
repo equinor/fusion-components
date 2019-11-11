@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
+import useInstancesWithRotation, { PositionInstanceRotation } from '../useInstancesWithRotation';
 
 type PositionTimelineProps = {
     /** The instance that is currently active/shown */
@@ -17,11 +18,11 @@ type PositionTimelineProps = {
 
 type TimelineInstanceProps = {
     /** Mapped instance from allInstances */
-    instance: PositionInstance;
+    instance: PositionInstanceRotation;
     /** The instance that is currently active/shown */
-    activeInstance: PositionInstance | null;
+    activeInstance: PositionInstanceRotation | null;
     /** All instances to the position */
-    allInstances: PositionInstance[];
+    allInstances: PositionInstanceRotation[];
     /** Position range calculator */
     calculator: (time: number) => number;
 };
@@ -48,13 +49,24 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     allInstances,
     calculator,
 }) => {
-    const assignedPersonName = instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
+    const getName = useCallback(
+        (instance: PositionInstanceRotation) =>
+            instance.assignedPerson ? instance.assignedPerson.name : 'TBN',
+        []
+    );
+    const rotationInstances = instance.rotatingInstances || [];
+    const assignedPersons = [instance, ...rotationInstances];
+
     const assignedPersonTooltipRef = useTooltipRef(
-        <span>
-            {assignedPersonName}
-            <br /> {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
-            {instance.workload}%)
-        </span>,
+        assignedPersons.map(i => (
+            <>
+                <span>
+                    {getName(i)}
+                    <br /> {formatDate(i.appliesFrom)} - {formatDate(i.appliesTo)} ({i.workload}%)
+                </span>
+                <br />
+            </>
+        )),
         'below'
     );
 
@@ -123,14 +135,27 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
         firstInstance.appliesFrom.getTime(),
         (lastInstance || firstInstance).appliesTo.getTime()
     );
+    const allInstancesWithRotation = useInstancesWithRotation(allInstances);
+
+    const active =
+        (activeInstance &&
+            allInstancesWithRotation.find(
+                i =>
+                    i.id === activeInstance.id ||
+                    (i.rotatingInstances &&
+                        i.rotatingInstances.some(rotation => rotation.id === activeInstance.id)) ||
+                    false
+            )) ||
+        null;
+
     return (
         <div className={styles.instanceTimelineContainer}>
-            {allInstances.map(instanceByFrom => (
+            {allInstancesWithRotation.map(instanceByFrom => (
                 <TimelineInstance
                     key={instanceByFrom.id}
                     instance={instanceByFrom}
-                    activeInstance={activeInstance || null}
-                    allInstances={allInstances}
+                    activeInstance={active}
+                    allInstances={allInstancesWithRotation}
                     calculator={calculator}
                 />
             ))}

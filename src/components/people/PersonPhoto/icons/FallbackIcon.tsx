@@ -4,7 +4,7 @@ import { IconProps, useIcon } from '@equinor/fusion-components';
 const FallbackIcon = (props: IconProps) => {
     const iconFactory = useIcon(
         <>
-            <circle cx="28" cy="28" r="28" fill="#F7F7F7" />
+            <circle cx="28" cy="28" r="28" fill="#EAEAEA" />
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"

@@ -11,6 +11,7 @@ import {
 import { useTooltipRef } from '@equinor/fusion-components';
 import FallbackImage from './FallbackImage';
 import AccountTypeBadge from './AccountTypeBadge';
+import RotationBadge from './RotationBadge';
 
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -19,6 +20,7 @@ export type PersonPhotoProps = {
     person?: PersonDetails;
     size?: PhotoSize;
     hideTooltip?: boolean;
+    additionalPersons?: PersonDetails[];
 };
 
 const getDefaultPerson = (): PersonDetails => ({
@@ -34,11 +36,16 @@ const getDefaultPerson = (): PersonDetails => ({
     company: { id: 'id', name: 'name' },
 });
 
-export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoProps) => {
+export default ({
+    personId,
+    person,
+    hideTooltip,
+    size = 'medium',
+    additionalPersons = [],
+}: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
-
     const { imageUrl, error: imageError } = usePersonImageUrl(
-        person ? person.azureUniqueId : personId || ''
+        person && additionalPersons.length === 0 ? person.azureUniqueId : personId || ''
     );
 
     const { error, personDetails } = personId
@@ -65,13 +72,36 @@ export default ({ personId, person, hideTooltip, size = 'medium' }: PersonPhotoP
     );
 
     const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
-    const nameTooltipRef = useTooltipRef(hideTooltip ? '' : currentPerson.name);
+    const toolTipContent = hideTooltip ? (
+        ''
+    ) : additionalPersons.length > 0 ? (
+        <div>
+            {[...additionalPersons, currentPerson].map(person => (
+                <>
+                    <span>{person.name}</span>
+                    <br />
+                </>
+            ))}
+        </div>
+    ) : (
+        currentPerson.name
+    );
+    const nameTooltipRef = useTooltipRef(toolTipContent);
     return (
         <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
-            {imageError !== null && <FallbackImage size={size} />}
-            {personDetails && (
+            {(imageError !== null || additionalPersons.length > 0) && (
+                <FallbackImage size={size} rotation={additionalPersons.length > 0} />
+            )}
+            {personDetails && additionalPersons.length === 0 && (
                 <AccountTypeBadge
                     currentPerson={personDetails}
+                    size={size}
+                    hideTooltip={hideTooltip}
+                />
+            )}
+            {additionalPersons.length > 0 && (
+                <RotationBadge
+                    numberOfPersons={additionalPersons.length + 1}
                     size={size}
                     hideTooltip={hideTooltip}
                 />
