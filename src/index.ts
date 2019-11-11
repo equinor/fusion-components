@@ -139,7 +139,7 @@ export {
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
-export { FormatBoldIcon, FormatBulletListIcon, FormatItalicsIcon, FormatNumberedListIcon, LinkIcon, TitleIcon } from './components/icons/components/wysiwyg';
+export { FormatBoldIcon, FormatBulletedListIcon, FormatItalicsIcon, FormatNumberedListIcon, LinkIcon, TitleIcon } from './components/icons/components/wysiwyg';
 export { PlatformIcon } from './components/icons/components/uncategorized';
 
 // Styling

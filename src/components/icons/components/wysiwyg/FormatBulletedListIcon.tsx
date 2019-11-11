@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 
-const FormatBulletListIcon = (props: IconProps) => {
+const FormatBulletedListIcon = (props: IconProps) => {
     const iconFactory = useIcon(
         <path
             fillRule="evenodd"
@@ -17,4 +17,4 @@ const FormatBulletListIcon = (props: IconProps) => {
     return iconFactory(props);
 };
 
-export default FormatBulletListIcon;
+export default FormatBulletedListIcon;
