@@ -5,14 +5,15 @@ export type PositionInstanceRotation = PositionInstance & {
     rotatingInstances?: PositionInstance[];
 };
 
-export default (allInstances: PositionInstance[]) =>
+export const useInstancesWithRotation = (allInstances: PositionInstance[]) =>
     useMemo(
         () =>
             allInstances
                 .reduce((instances: PositionInstanceRotation[], instance: PositionInstance) => {
                     const correlatingInstances = allInstances.filter(
                         i =>
-                            instance.appliesFrom.getTime() <= i.appliesTo.getTime() &&
+                            i.appliesFrom.getTime() <= instance.appliesTo.getTime() &&
+                            i.appliesTo.getTime() >= instance.appliesFrom.getTime() &&
                             i.type === 'Rotation' &&
                             instance.type === 'Rotation' &&
                             instance.id !== i.id
@@ -26,7 +27,6 @@ export default (allInstances: PositionInstance[]) =>
                             (a, b) => a.appliesTo.getTime() - b.appliesTo.getTime()
                         );
                         const isShortestInstance = shortestInstance[0].id === instance.id;
-
                         if (uniqueTimeInstances && isShortestInstance) {
                             return [
                                 ...instances,
@@ -44,3 +44,27 @@ export default (allInstances: PositionInstance[]) =>
                 .sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime()),
         [allInstances]
     );
+
+export const useCurrentInstance = (
+    allInstances: PositionInstance[],
+    activeInstance: PositionInstance | undefined,
+    selectedDate: Date | undefined
+) => {
+    const instancesWithRotation = useInstancesWithRotation(allInstances);
+    const currentInstance =
+        (activeInstance &&
+            instancesWithRotation.find(
+                i =>
+                    i.id === activeInstance.id ||
+                    (i.rotatingInstances &&
+                        i.rotatingInstances.some(rotation => rotation.id === activeInstance.id) &&
+                        (selectedDate
+                            ? selectedDate.getTime() >= i.appliesFrom.getTime() &&
+                              selectedDate.getTime() <= i.appliesTo.getTime()
+                            : true)) ||
+                    false
+            )) ||
+        null;
+
+    return currentInstance;
+};

@@ -3,7 +3,7 @@ import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import useInstancesWithRotation, { PositionInstanceRotation } from '../useInstancesWithRotation';
+import  {useInstancesWithRotation, PositionInstanceRotation } from '../hooks';
 
 type PositionTimelineProps = {
     /** The instance that is currently active/shown */
@@ -151,24 +151,13 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
     );
     const allInstancesWithRotation = useInstancesWithRotation(allInstances);
 
-    const active =
-        (activeInstance &&
-            allInstancesWithRotation.find(
-                i =>
-                    i.id === activeInstance.id ||
-                    (i.rotatingInstances &&
-                        i.rotatingInstances.some(rotation => rotation.id === activeInstance.id)) ||
-                    false
-            )) ||
-        null;
-
     return (
         <div className={styles.instanceTimelineContainer}>
             {allInstancesWithRotation.map(instanceByFrom => (
                 <TimelineInstance
                     key={instanceByFrom.id}
                     instance={instanceByFrom}
-                    activeInstance={active}
+                    activeInstance={activeInstance}
                     allInstances={allInstancesWithRotation}
                     calculator={calculator}
                     selectedDate={selectedDate}

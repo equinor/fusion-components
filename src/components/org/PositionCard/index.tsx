@@ -5,6 +5,7 @@ import { Position, useComponentDisplayClassNames, PositionInstance } from '@equi
 import styles from './styles.less';
 import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
+import { useCurrentInstance } from './hooks';
 
 type PositionCardProps = {
     position: Position;
@@ -73,35 +74,26 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
     }, [position, instance, onClick]);
 
-    const rotationInstances = useMemo(() => {
-        const allInstances = position.instances || [];
-        if (!instance) {
-            return [];
-        }
-        return allInstances.filter(
-            i =>
-                instance.appliesFrom.getTime() <= i.appliesTo.getTime() &&
-                i.type === 'Rotation' &&
-                instance.type === 'Rotation' &&
-                i.id !== instance.id &&
-                (selectedDate ?  
-                selectedDate.getTime() >= i.appliesFrom.getTime() &&
-                selectedDate.getTime() <= i.appliesTo.getTime():  true)
-        );
-    }, [position, instance, selectedDate]);
+    const currentInstance = useCurrentInstance(position.instances || [], instance, selectedDate);
+
+    const current: PositionInstance | undefined = currentInstance || undefined;
+    const rotatingInstances: PositionInstance[] =
+        currentInstance && currentInstance.rotatingInstances
+            ? currentInstance.rotatingInstances
+            : [];
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
             <PositionIconPhoto
                 position={position}
-                currentInstance={instance}
+                currentInstance={current}
                 isLinked={isLinked}
                 onClick={onClick}
-                rotationInstances={rotationInstances}
+                rotationInstances={rotatingInstances}
             />
             <PositionInstanceComponent
                 position={position}
-                instance={instance}
+                instance={current}
                 showLocation={showLocation}
                 showDate={showDate}
                 showExternalId={showExternalId}
@@ -110,7 +102,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 onClick={onClick}
                 onExpand={onExpand}
                 childCount={childCount}
-                rotationInstances={rotationInstances}
+                rotationInstances={rotatingInstances}
                 selectedDate={selectedDate}
             />
         </div>
