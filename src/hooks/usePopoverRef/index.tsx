@@ -7,6 +7,9 @@ import {
     useClickOutsideOverlayPortal,
     useOverlayPortal,
 } from '@equinor/fusion-components';
+import useHoverPopoverRef from './useHoverPopoverRef';
+
+export { useHoverPopoverRef };
 
 export default <T extends HTMLElement>(
     content: React.ReactNode,

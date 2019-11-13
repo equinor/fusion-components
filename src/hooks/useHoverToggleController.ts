@@ -3,9 +3,11 @@ import { useEventListener } from '@equinor/fusion-components';
 import { Recoverable } from 'repl';
 
 let showTimeout: NodeJS.Timeout;
-export default (delay: number = 300): [Boolean, MutableRefObject<any>] => {
+export default <T extends HTMLElement>(
+    delay: number = 300
+): [Boolean, MutableRefObject<T | null>] => {
     const [isHovering, setIsHovering] = useState<Boolean>(false);
-    const ref = useRef<HTMLElement | null>(null);
+    const ref = useRef<T | null>(null);
 
     const show = useCallback(() => {
         clearTimeout(showTimeout);

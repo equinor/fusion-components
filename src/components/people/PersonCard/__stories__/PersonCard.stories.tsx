@@ -33,6 +33,10 @@ const persons: PersonDictionary = {
         accountType: 'Consultant',
         name: 'Morten Salte',
         mail: 'msal@equinor.com',
+        jobTitle: 'X-Bouvet AS,Stavanger (PX)',
+        department: 'CFO GBS IT PLA LIFE CYCLE INFORMATION',
+        mobilePhone: '+47 47804137',
+        officeLocation: 'Stavanger',
     },
     Employee: {
         ...basePerson,

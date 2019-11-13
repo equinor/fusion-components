@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PersonPhoto, PhotoSize } from '@equinor/fusion-components';
+import { PersonPhoto, PhotoSize, useHoverPopoverRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
 import {
@@ -10,6 +10,7 @@ import {
     ComponentDisplayType,
 } from '@equinor/fusion';
 import { getDefaultPerson } from '../utils';
+import PersonDetail from '../PersonDetail';
 
 export { PhotoSize };
 
@@ -18,9 +19,16 @@ export type PersonCardProps = {
     person?: PersonDetails;
     photoSize?: PhotoSize;
     inline?: boolean;
+    hidePopover?: boolean;
 };
 
-export default ({ personId, person, inline, photoSize = 'xlarge' }: PersonCardProps) => {
+export default ({
+    personId,
+    person,
+    inline,
+    photoSize = 'xlarge',
+    hidePopover,
+}: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
     const { error, personDetails } = personId
         ? usePersonDetails(personId)
@@ -45,11 +53,19 @@ export default ({ personId, person, inline, photoSize = 'xlarge' }: PersonCardPr
         [styles.noMargin]: !shouldDisplayEmail,
     });
 
+    const [isOpen, popoverRef] = useHoverPopoverRef<HTMLDivElement>(
+        <PersonDetail person={currentPerson} />,
+        {
+            justify: 'start', // start = "left" | middle = "center" | end = "right"
+            placement: 'below', // start = "top" | middle = "center" | end = "bottom"
+        }
+    );
+
     return (
-        <>
+        <div ref={hidePopover ? undefined : popoverRef}>
             {currentPerson && (
                 <div className={containerClassNames}>
-                    <PersonPhoto person={currentPerson} size={photoSize} />
+                    <PersonPhoto person={currentPerson} size={photoSize} hidePopover />
                     <div className={styles.details}>
                         <div className={nameClassNames}>{currentPerson.name}</div>
                         {shouldDisplayEmail && (
@@ -60,6 +76,6 @@ export default ({ personId, person, inline, photoSize = 'xlarge' }: PersonCardPr
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
