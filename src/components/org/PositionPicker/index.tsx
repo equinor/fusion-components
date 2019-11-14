@@ -36,7 +36,7 @@ const ItemComponent: React.FC<ItemComponentProps> = ({ item }) => {
 
     return (
         <div className={styles.cardContainer}>
-            <div className={styles.positionName}>{item.position.name}</div>
+            <div className={styles.positionName}>{item.position.externalId} - {item.position.name}</div>
             <div className={styles.assignedPersonName}>
                 {activeInstance && activeInstance.assignedPerson
                     ? activeInstance.assignedPerson.name
