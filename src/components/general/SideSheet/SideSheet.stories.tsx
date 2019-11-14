@@ -55,7 +55,6 @@ const StandardSideSheetStory = () => {
         'Medium': 'medium',
         'Small': 'small',
     }, 'medium');
-    console.log(size);
 
     return (
         <div style={{ display: 'flex', height: '100%', width: '100%' }}>
