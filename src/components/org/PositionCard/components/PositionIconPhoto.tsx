@@ -5,7 +5,7 @@ import {
     LinkIcon,
     styling,
     useTooltipRef,
-    PlatformIcon,
+    SyncIcon
 } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
@@ -48,7 +48,7 @@ const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
                     )}
                     {isRotating && (
                         <span ref={rotatingRef}>
-                            <PlatformIcon color={styling.colors.blackAlt2} height={16} width={16} />{' '}
+                            <SyncIcon color={styling.colors.blackAlt2} height={16} width={16} />
                         </span>
                     )}
                 </div>
