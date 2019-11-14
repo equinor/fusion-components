@@ -19,6 +19,7 @@ type TextAreaProps = {
     icon?: React.ReactElement;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+    onKeyUp?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
 const TextArea = React.forwardRef<
     HTMLTextAreaElement | null,

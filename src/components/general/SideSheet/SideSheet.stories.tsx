@@ -1,11 +1,19 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
+import { withKnobs, select } from '@storybook/addon-knobs';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
 import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
 
 const ModalSideSheetStory = () => {
     const [isOpen, setIsOpen] = React.useState(false);
+
+    const size = select('Size', {
+        'Extra large': 'xlarge',
+        'Large': 'large',
+        'Medium': 'medium',
+        'Small': 'small',
+    }, 'medium');
 
     return (
         <div>
@@ -19,6 +27,7 @@ const ModalSideSheetStory = () => {
             <ModalSideSheet
                 header="This is the modal side sheet header "
                 show={isOpen}
+                size={size}
                 onClose={() => {
                     setIsOpen(false);
                 }}
@@ -40,11 +49,19 @@ const ModalSideSheetStory = () => {
 const StandardSideSheetStory = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
+    const size = select('Size', {
+        'Extra large': 'xlarge',
+        'Large': 'large',
+        'Medium': 'medium',
+        'Small': 'small',
+    }, 'medium');
+
     return (
         <div style={{ display: 'flex', height: '100%', width: '100%' }}>
-            <div style={{ width: '100%' }} />
+            <div style={{ flexGrow: 1 }} />
             <SideSheet
                 isOpen={isOpen}
+                size={size}
                 onClose={isOpen => {
                     setIsOpen(isOpen);
                 }}
@@ -58,6 +75,7 @@ const StandardSideSheetStory = () => {
 };
 
 storiesOf('General|SideSheet', module)
+    .addDecorator(withKnobs)
     .addDecorator(withFusionStory('Side Sheet'))
     .add('Modal', () => <ModalSideSheetStory />)
     .add('Standard', () => <StandardSideSheetStory />);

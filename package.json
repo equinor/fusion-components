@@ -37,7 +37,7 @@
         "@babel/preset-typescript": "^7.3.3",
         "@equinor/fusion": "^0.4.56",
         "@storybook/addon-actions": "^5.2.5",
-        "@storybook/addon-info": "^5.2.5",
+        "@storybook/addon-info": "^5.2.6",
         "@storybook/addon-jest": "^5.2.5",
         "@storybook/addon-knobs": "^5.2.5",
         "@storybook/addon-options": "^5.2.5",
