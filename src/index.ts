@@ -135,6 +135,8 @@ export {
     ArrowDownwardIcon,
     ArrowUpwardIcon,
     MoreIcon,
+    SubdirectoryArrowRightIcon, 
+    SubdirectoryArrowLeftIcon, 
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';

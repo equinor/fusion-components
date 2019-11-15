@@ -6,3 +6,5 @@ export { default as ArrowForwardIcon } from './ArrowForwardIcon';
 export { default as ArrowUpwardIcon } from './ArrowUpwardIcon';
 export { default as ArrowDownwardIcon } from './ArrowDownwardIcon';
 export { default as MoreIcon } from './MoreIcon';
+export { default as SubdirectoryArrowRightIcon } from './SubdirectoryArrowRightIcon';
+export { default as SubdirectoryArrowLeftIcon } from './SubdirectoryArrowLeftIcon';
