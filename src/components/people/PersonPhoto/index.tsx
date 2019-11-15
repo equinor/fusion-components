@@ -8,7 +8,7 @@ import {
     usePersonImageUrl,
 } from '@equinor/fusion';
 
-import { useTooltipRef, useHoverPopoverRef } from '@equinor/fusion-components';
+import { useTooltipRef, usePopoverRef } from '@equinor/fusion-components';
 import FallbackImage from './FallbackImage';
 import AccountTypeBadge from './AccountTypeBadge';
 import RotationBadge from './RotationBadge';
@@ -111,10 +111,14 @@ export default ({
         </>
     );
 
-    const [isOpen, popoverRef] = useHoverPopoverRef<HTMLDivElement>(<PopoverContent />, {
-        justify: 'start', // start = "left" | middle = "center" | end = "right"
-        placement: 'below', // start = "top" | middle = "center" | end = "bottom"
-    });
+    const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
+        <PopoverContent />,
+        {
+            justify: 'start', // start = "left" | middle = "center" | end = "right"
+            placement: 'below', // start = "top" | middle = "center" | end = "bottom"
+        },
+        true
+    );
 
     return (
         <div

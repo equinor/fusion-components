@@ -70,7 +70,7 @@ export { SkeletonBar, SkeletonButton } from './components/feedback/Skeleton';
 
 // Hooks
 export { default as useElevationClassName, Elevation } from './hooks/useElevationClassName';
-export { default as usePopoverRef, useHoverPopoverRef } from './hooks/usePopoverRef';
+export { default as usePopoverRef } from './hooks/usePopoverRef';
 export { default as useTooltipRef } from './hooks/useTooltipRef';
 export { default as useClickOutsideOverlayPortal } from './hooks/useClickOutsideOverlayPortal';
 export { default as useClickToggleController } from './hooks/useClickToggleController';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PersonPhoto, PhotoSize, useHoverPopoverRef } from '@equinor/fusion-components';
+import { PersonPhoto, PhotoSize, usePopoverRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
 import {
@@ -53,12 +53,13 @@ export default ({
         [styles.noMargin]: !shouldDisplayEmail,
     });
 
-    const [isOpen, popoverRef] = useHoverPopoverRef<HTMLDivElement>(
+    const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
         <PersonDetail person={currentPerson} />,
         {
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
-        }
+        },
+        true
     );
 
     return (

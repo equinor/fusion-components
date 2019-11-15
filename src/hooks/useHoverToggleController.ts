@@ -5,8 +5,8 @@ import { Recoverable } from 'repl';
 let showTimeout: NodeJS.Timeout;
 export default <T extends HTMLElement>(
     delay: number = 300
-): [Boolean, MutableRefObject<T | null>] => {
-    const [isHovering, setIsHovering] = useState<Boolean>(false);
+): [boolean, MutableRefObject<T | null>] => {
+    const [isHovering, setIsHovering] = useState<boolean>(false);
     const ref = useRef<T | null>(null);
 
     const show = useCallback(() => {
