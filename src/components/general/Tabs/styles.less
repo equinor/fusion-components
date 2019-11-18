@@ -12,13 +12,41 @@
         scroll-behavior: smooth;
         flex-shrink: 0;
 
+        .gradientLeft, .gradientRight{
+            height: calc(var(--grid-unit) * 8px);
+            width: calc(var(--grid-unit) * 8px);
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gradientRight{
+            right: 0;
+        }
+
         &::-webkit-scrollbar { 
             display: none; 
         }
 
+        &.showGradientLeft{
+            .gradientLeft{
+                opacity: 1;
+                background: linear-gradient(90deg, #FFF 23.44%, rgba(255, 255, 255, 0) 100%);
+            }
+           
+        }
+
+        &.showGradientRight{
+            .gradientRight{
+                opacity: 1;
+                background: linear-gradient(270deg, #FFF 23.44%, rgba(255, 255, 255, 0) 100%);
+            }
+            
+        }
+
         .tab {
             cursor: pointer;
-            height: calc(var(--grid-unit)* 5px);
+            height: calc(var(--grid-unit)* 6px);
             display: flex;
             align-items: center;
             justify-content: center;

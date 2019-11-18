@@ -8,6 +8,9 @@
     overflow: visible;
 
     .iconContainer {
+        border:none;
+        border-radius: 0;
+        border-style: solid;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -67,11 +70,34 @@
             }
             &:not(.isActive){
                 .iconContainer {
-                    background-color: var(--color-black-alt5);
+                    background-color: var(--color-primary-hover-alt1);
                 }
             }
         }
         
+    }
+
+    &:focus { 
+        .iconContainer {
+            border: 1px;
+            border-radius: 50%; 
+            border-style: dashed;
+            border-color: var(--color-primary);
+        }
+
+        &.isToggler{
+            .iconContainer{
+                border: none;
+                background-color: var(--color-primary-hover-alt1);
+            }
+
+            &.isActive{ 
+                .iconContainer{
+                    background-color: var(--color-primary);
+                }
+            }
+
+        }
     }
 
     &.isActive {
