@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
-import SkeletonBar from './Bar';
-import { Button, ButtonProps } from '@equinor/fusion-components';
+import React from 'react';
+import { ButtonProps } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
