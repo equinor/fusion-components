@@ -10,7 +10,7 @@ import {
 } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
-export type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
+type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 type ModalSideSheetProps = {
     children: ReactNode;

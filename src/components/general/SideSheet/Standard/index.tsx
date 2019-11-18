@@ -5,12 +5,15 @@ import styles from './styles.less';
 import CollapseExpandButton from './CollapseExpandButton';
 import { OverlayPortal, styling } from '@equinor/fusion-components';
 
+type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
+
 export type StandardSideSheetProps = {
     id: string;
     title?: string;
     isOpen: boolean;
     onClose: (isOpen: boolean) => void;
     screenPlacement?: 'right' | 'left';
+    size?: SideSheetSize;
     children: ReactNode;
 };
 
@@ -19,6 +22,7 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
     title,
     isOpen,
     onClose,
+    size = 'medium',
     children,
     screenPlacement = 'right',
 }) => {
@@ -32,6 +36,10 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
         {
             [styles.isCollapsed]: !isOpen,
             [styles.screenPlacementLeft]: screenPlacement === 'left',
+            [styles.xlarge]: size === 'xlarge',
+            [styles.large]: size === 'large',
+            [styles.medium]: size === 'medium',
+            [styles.small]: size === 'small',
         }
     );
 
@@ -57,6 +65,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     title,
     isOpen,
     onClose,
+    size,
     children,
 }) => {
     const [windowWidth, setWindowWidth] = useState<Number>(0);
@@ -82,7 +91,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     }, [rootElement, windowWidth]);
 
     const sideSheet = (
-        <SideSheet id={id} title={title} isOpen={isOpen} onClose={onClose}>
+        <SideSheet id={id} title={title} isOpen={isOpen} size={size} onClose={onClose}>
             {children}
         </SideSheet>
     );

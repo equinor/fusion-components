@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
+import  {useInstancesWithRotation, PositionInstanceRotation } from '../hooks';
 
 type PositionTimelineProps = {
     /** The instance that is currently active/shown */
@@ -13,17 +14,21 @@ type PositionTimelineProps = {
     firstInstance: PositionInstance;
     /** Last instance sorted by appliesTo time */
     lastInstance: PositionInstance | undefined;
+    /**Selected date reflecting active instance */
+    selectedDate?: Date;
 };
 
 type TimelineInstanceProps = {
     /** Mapped instance from allInstances */
-    instance: PositionInstance;
+    instance: PositionInstanceRotation;
     /** The instance that is currently active/shown */
-    activeInstance: PositionInstance | null;
+    activeInstance: PositionInstanceRotation | null;
     /** All instances to the position */
-    allInstances: PositionInstance[];
+    allInstances: PositionInstanceRotation[];
     /** Position range calculator */
     calculator: (time: number) => number;
+    /**Selected date reflecting active instance */
+    selectedDate?: Date;
 };
 
 const createPositionCalculator = (start: number, end: number) => {
@@ -33,7 +38,7 @@ const createPositionCalculator = (start: number, end: number) => {
         throw new Error('No range');
     }
 
-    return (time: number) => Math.floor(Math.min(Math.max(((time - start) / full) * 100, 0), 100));
+    return (time: number) => Math.round(Math.min(Math.max(((time - start) / full) * 100, 0), 100));
 };
 
 const addDaysToDate = (date: Date, days: number): Date => {
@@ -47,19 +52,38 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     activeInstance,
     allInstances,
     calculator,
+    selectedDate,
 }) => {
-    const assignedPersonName = instance.assignedPerson ? instance.assignedPerson.name : 'TBN';
+    const getName = useCallback(
+        (instance: PositionInstanceRotation) =>
+            instance.assignedPerson ? instance.assignedPerson.name : 'TBN',
+        []
+    );
+    const rotationInstances = instance.rotatingInstances || [];
+    const assignedPersons = [instance, ...rotationInstances];
+
     const assignedPersonTooltipRef = useTooltipRef(
-        <span>
-            {assignedPersonName}
-            <br /> {formatDate(instance.appliesFrom)} - {formatDate(instance.appliesTo)} (
-            {instance.workload}%)
-        </span>,
+        assignedPersons.map(i => (
+            <>
+                <span>
+                    {getName(i)}
+                    <br /> {formatDate(i.appliesFrom)} - {formatDate(i.appliesTo)} ({i.workload}%)
+                </span>
+                <br />
+            </>
+        )),
         'below'
     );
-
+    const isCurrent = useMemo(
+        () =>
+            rotationInstances.length > 0 && selectedDate //For rotation positions we ned to determine active instance based on selectedDate
+                ? selectedDate.getTime() >= instance.appliesFrom.getTime() &&
+                  selectedDate.getTime() <= instance.appliesTo.getTime()
+                : activeInstance && activeInstance.id === instance.id,
+        [instance, selectedDate, activeInstance]
+    );
     const timelineInstanceClasses = classNames(styles.instance, {
-        [styles.isCurrent]: activeInstance && activeInstance.id === instance.id,
+        [styles.isCurrent]: isCurrent,
         [styles.hasUnAssignedPerson]: instance.assignedPerson === null,
     });
 
@@ -79,7 +103,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
             return true;
         }
         return false;
-    }, [allInstances, instance]);
+    }, [allInstances, instance, activeInstance]);
 
     const shouldRenderLeftDot = useMemo(() => {
         const currentIndex = allInstances.findIndex(i => i.id === instance.id);
@@ -108,6 +132,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
         >
             {shouldRenderLeftDot && <div className={styles.dot} />}
             <div className={styles.instanceLine} />
+
             {shouldRenderRightDot && <div className={classNames(styles.dot, styles.right)} />}
         </div>
     );
@@ -118,22 +143,32 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
     allInstances,
     firstInstance,
     lastInstance,
+    selectedDate,
 }) => {
     const calculator = createPositionCalculator(
         firstInstance.appliesFrom.getTime(),
         (lastInstance || firstInstance).appliesTo.getTime()
     );
+    const allInstancesWithRotation = useInstancesWithRotation(allInstances);
+
     return (
         <div className={styles.instanceTimelineContainer}>
-            {allInstances.map(instanceByFrom => (
+            {allInstancesWithRotation.map(instanceByFrom => (
                 <TimelineInstance
                     key={instanceByFrom.id}
                     instance={instanceByFrom}
-                    activeInstance={activeInstance || null}
-                    allInstances={allInstances}
+                    activeInstance={activeInstance}
+                    allInstances={allInstancesWithRotation}
                     calculator={calculator}
+                    selectedDate={selectedDate}
                 />
             ))}
+            {selectedDate && (
+                <div
+                    className={classNames(styles.dot, styles.selectedDate)}
+                    style={{ left: calculator(selectedDate.getTime()) + '%' }}
+                />
+            )}
         </div>
     );
 };

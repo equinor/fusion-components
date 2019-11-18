@@ -30,7 +30,7 @@ export const positionsToDropdownOption = (
 
     return positions.map(p => ({
         key: p.id,
-        title: p.name,
+        title: `${p.externalId} - ${p.name}`,
         position: p,
         isSelected: selectedPosition !== null && selectedPosition.id === p.id,
     }));

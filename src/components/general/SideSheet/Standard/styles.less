@@ -9,14 +9,30 @@
     overflow-y: auto;
     overflow-x: hidden;
     color: var(--color-primary-accent);
-    width: calc(var(--grid-unit)* 40px + 2px);
+    width: var(--sidesheet-size);
     flex-shrink: 0;
     background: var(--color-white);
     justify-content: flex-end;
 
-    &.screenPlacementLeft{
+    &.screenPlacementLeft {
         border-left: none;
         border-right: 2px solid var(--color-black-alt4);
+    }
+
+    &.xlarge {
+        --sidesheet-size: calc(var(--grid-unit) * 80px);
+    }
+
+    &.large{
+        --sidesheet-size: calc(var(--grid-unit) * 60px);
+    }
+
+    &.medium{
+        --sidesheet-size: calc(var(--grid-unit) * 40px);
+    }
+
+    &.small{
+        --sidesheet-size: calc(var(--grid-unit) * 30px);
     }
 
     @media (max-width: @mobile-max-width) {

@@ -19,6 +19,7 @@ export { default as Menu, MenuItemType, MenuSection } from './components/general
 export { Tabs, Tab } from './components/general/Tabs';
 export { Stepper, Step } from './components/general/Stepper';
 export { default as TextInput } from './components/general/TextInput';
+export { default as TextArea } from './components/general/TextArea';
 export { Switch, CheckBox, RadioButton } from './components/general/SelectionControls';
 export {
     default as Pagination,
@@ -107,8 +108,8 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon } from './components/icons/components/alert';
-export { AddIcon, BlockIcon, SaveIcon  } from './components/icons/components/content';
-export { SyncDisabledIcon } from './components/icons/components/notification';
+export { AddIcon, BlockIcon, SaveIcon } from './components/icons/components/content';
+export { SyncDisabledIcon, SyncIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
     DoneIcon,
@@ -131,11 +132,17 @@ export {
     ExpandMoreIcon,
     ArrowBackIcon,
     ArrowForwardIcon,
+    ArrowDownwardIcon,
+    ArrowUpwardIcon,
+    MoreIcon,
+    SubdirectoryArrowRightIcon, 
+    SubdirectoryArrowLeftIcon, 
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
-export { LinkIcon } from './components/icons/components/wysiwyg';
+export { FormatBoldIcon, FormatBulletedListIcon, FormatItalicsIcon, FormatNumberedListIcon, LinkIcon, TitleIcon } from './components/icons/components/wysiwyg';
+export { PlatformIcon } from './components/icons/components/uncategorized';
 
 // Styling
 export { default as styling } from './styles/styling';

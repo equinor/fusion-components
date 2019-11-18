@@ -1,6 +1,12 @@
 import React, { useRef } from 'react';
 import { Position, PositionInstance } from '@equinor/fusion';
-import { PersonPhoto, LinkIcon, styling, useTooltipRef } from '@equinor/fusion-components';
+import {
+    PersonPhoto,
+    LinkIcon,
+    styling,
+    useTooltipRef,
+    SyncIcon
+} from '@equinor/fusion-components';
 
 import styles from '../styles.less';
 
@@ -9,23 +15,42 @@ type PositionPhotoIconProps = {
     currentInstance?: PositionInstance;
     isLinked?: boolean;
     onClick?: (position: Position, instance: PositionInstance) => void;
+    rotationInstances: PositionInstance[];
 };
 
-const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({ currentInstance, isLinked }) => {
+const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
+    currentInstance,
+    isLinked,
+    rotationInstances,
+}) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const linkedRef = useTooltipRef("Linked", "below");
+    const linkedRef = useTooltipRef('Linked', 'below');
+    const rotatingRef = useTooltipRef('Rotating', 'below');
+
+    const isRotating = rotationInstances.length > 0;
 
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
                 <PersonPhoto
-                    person={currentInstance ? currentInstance.assignedPerson : undefined}
+                    person={currentInstance && currentInstance.assignedPerson}
+                    additionalPersons={rotationInstances.map(instance => instance.assignedPerson)}
                     size="large"
+                    key={currentInstance ? currentInstance.id : (+new Date()).toString()}
                 />
             </div>
-            {isLinked && (
-                <div className={styles.linkedIcon} ref={linkedRef}>
-                    <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />
+            {(isLinked || isRotating) && (
+                <div className={styles.stateIcon}>
+                    {isLinked && (
+                        <span ref={linkedRef}>
+                            <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />
+                        </span>
+                    )}
+                    {isRotating && (
+                        <span ref={rotatingRef}>
+                            <SyncIcon color={styling.colors.blackAlt2} height={16} width={16} />
+                        </span>
+                    )}
                 </div>
             )}
         </div>

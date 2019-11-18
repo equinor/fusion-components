@@ -5,7 +5,7 @@ import { withKnobs, number, color } from '@storybook/addon-knobs';
 
 import withFusionStory from "../../../../.storybook/withFusionStory";
 
-import { SyncDisabledIcon } from '../components/notification';
+import { SyncDisabledIcon, SyncIcon } from '../components/notification';
 
 const eventsFromNames = actions('onClick');
 
@@ -15,6 +15,15 @@ stories.addDecorator(withFusionStory("Notification"));
 
 stories.add('SyncDisabled', () => (
     <SyncDisabledIcon
+        {...eventsFromNames}
+        width={number('width', 24)}
+        height={number('height', 24)}
+        color={color('color', '#000')}
+    />
+));
+
+stories.add('Sync', () => (
+    <SyncIcon
         {...eventsFromNames}
         width={number('width', 24)}
         height={number('height', 24)}

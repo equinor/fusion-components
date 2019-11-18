@@ -21,6 +21,8 @@ type PersonPickerProps = {
     label?: string;
     placeholder?: string;
     initialPerson?: PersonDetails;
+    hasError?: boolean;
+    errorMessage?: string;
     onSelect?: (person: PersonDetails) => void;
 };
 
@@ -28,10 +30,26 @@ const ItemComponent = ({ item }) => {
     const tooltipRef = useTooltipRef(item.person ? item.person.mail : '');
 
     if (item.person) {
-        return <div ref={tooltipRef}>{item.title}</div>;
+        return (
+            <div ref={tooltipRef}>
+                {item.title} <br />
+                {item.person.mail}
+            </div>
+        );
     }
-
     return item.title;
+};
+
+const SelectedItemComponent = ({ item }) => {
+    if (item && item.person) {
+        return (
+            <div>
+                {item.title} <br />
+                {item.person.mail}
+            </div>
+        );
+    }
+    return null;
 };
 
 const AsideComponent = ({ item }) => {
@@ -42,7 +60,14 @@ const AsideComponent = ({ item }) => {
     return <PersonPhoto person={item.person} size="medium" hideTooltip />;
 };
 
-export default ({ initialPerson, onSelect, label, placeholder }: PersonPickerProps) => {
+export default ({
+    initialPerson,
+    onSelect,
+    hasError,
+    errorMessage,
+    label,
+    placeholder,
+}: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
     const [searchQuery, setSearchQuery] = useState('');
@@ -85,8 +110,11 @@ export default ({ initialPerson, onSelect, label, placeholder }: PersonPickerPro
             sections={sections}
             onSelect={handleSelect}
             onSearchAsync={query => setSearchQuery(query)}
+            error={hasError}
+            errorMessage={errorMessage}
             itemComponent={ItemComponent}
             asideComponent={AsideComponent}
+            selectedComponent={SelectedItemComponent}
             label={label}
             placeholder={placeholder}
         />

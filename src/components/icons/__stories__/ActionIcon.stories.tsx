@@ -58,10 +58,10 @@ stories.add('Sort', () => (
             None: null,
             Ascending: 'asc',
             Descending: 'desc',
-        })}
+        }, null)}
     />
 ));
-stories.add('Dropdown', () => <DropdownArrow {...eventsFromNames} isOpen={boolean('I sopen')} />);
+stories.add('Dropdown', () => <DropdownArrow {...eventsFromNames} isOpen={boolean('I sopen', false)} />);
 stories.add('Info', () => (
     <InfoIcon
         color={color('color', '#000')}

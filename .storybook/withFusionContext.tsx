@@ -116,6 +116,8 @@ const serviceResolver: ServiceResolver = {
     getProjectsBaseUrl: () => 'https://pro-s-projects-ci.azurewebsites.net',
     getMeetingsBaseUrl: () => 'https://pro-s-meetingsv2-ci.azurewebsites.net',
     getPeopleBaseUrl: () => 'https://pro-s-people-ci.azurewebsites.net',
+    getReportsBaseUrl: () => 'https://pro-s-reports-ci.azurewebsites.net',
+    getPowerBiApiBaseUrl: () => 'https://api.powerbi.com/v1.0/myorg',
 };
 
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
