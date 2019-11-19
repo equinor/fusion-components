@@ -1,0 +1,36 @@
+name: Build storybook
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: npm install and build storybook
+      run: |
+        npm ci
+        npm run build:storybook
+    - name: Commit changes and push
+      run: |
+        git config --local user.email "fusion@equinor.com"
+        git config --local user.name "GitHub Action by Eskil Sand"
+        git add -A
+        git commit -m "Build storybook"
+        git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" HEAD:master
+      env:
+        CI: true
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
