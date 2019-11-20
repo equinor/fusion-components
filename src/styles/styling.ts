@@ -1,3 +1,7 @@
+const computedStyle = (variableName: string) => {
+    return getComputedStyle(document.documentElement).getPropertyValue(variableName);
+};
+
 export default {
     grid: (value: number) => `calc(var(--grid-unit) * ${value}px)`,
 
@@ -13,8 +17,8 @@ export default {
         primaryAlt3: 'var(--color-primary-alt3)',
         primaryAlt4: 'var(--color-primary-alt4)',
         primaryAccent: 'var(--color-primary-accent)',
-        primaryHover: 'var(--color-primaryHover)',
-        primaryHoverAlt1: 'var(--color-primaryHover-alt1)',
+        primaryHover: 'var(--color-primary-hover)',
+        primaryHoverAlt1: 'var(--color-primary-hover-alt1)',
 
         // Secondary color and alternatives
         secondary: 'var(--color-secondary)', // Energy Red
@@ -50,44 +54,106 @@ export default {
 
     colors: {
         // Primary color and alternatives
-        primary: '#007079', // Moss green
-        primaryAlt1: '#73B1B5',
-        primaryAlt2: '#A8CED1',
-        primaryAlt3: '#C9E0E2',
-        primaryAlt4: '#DEEDEE',
-        primaryAccent: '#243746',
-        primaryHover: '#004E55',
-        primaryHoverAlt1: '#F2F8F8',
+        get primary() {
+            return computedStyle('--color-primary');
+        },
+        get primaryAlt1() {
+            return computedStyle('--color-primary-alt1');
+        },
+        get primaryAlt2() {
+            return computedStyle('--color-primary-alt2');
+        },
+        get primaryAlt3() {
+            return computedStyle('--color-primary-alt3');
+        },
+        get primaryAlt4() {
+            return computedStyle('--color-primary-alt4');
+        },
+        get primaryAccent() {
+            return computedStyle('--color-primary-accent');
+        },
+        get primaryHover() {
+            return computedStyle('--color-primary-hover');
+        },
+        get primaryHoverAlt1() {
+            return computedStyle('--color-primary-hover-alt1');
+        },
 
         // Secondary color and alternatives
-        secondary: '#FF1243', // Energy Red
-        secondaryAlt1: '#FF7D98',
-        secondaryAlt2: '#FFAEBF',
-        secondaryAlt3: '#FFCDD7',
-        secondaryAlt4: '#FFE0E7',
-        secondaryAccent: '#990025',
+        get secondary() {
+            return computedStyle('--color-secondary');
+        }, // Energy Red
+        get secondaryAlt1() {
+            return computedStyle('--color-secondary-alt1');
+        },
+        get secondaryAlt2() {
+            return computedStyle('--color-secondary-alt2');
+        },
+        get secondaryAlt3() {
+            return computedStyle('--color-secondary-alt3');
+        },
+        get secondaryAlt4() {
+            return computedStyle('--color-secondary-alt4');
+        },
+        get secondaryAccent() {
+            return computedStyle('--color-secondary-accent');
+        },
 
         // Black and white color and alternatives
-        black: '#000000',
-        blackAlt1: '#333333',
-        blackAlt2: '#666666',
-        blackAlt3: '#BFBFBF',
-        blackAlt4: '#E6E6E6',
-        blackAlt5: '#F7F7F7',
-        white: '#FFFFFF', // White
+        get black() {
+            return computedStyle('--color-black');
+        },
+        get blackAlt1() {
+            return computedStyle('--color-black-alt1');
+        },
+        get blackAlt2() {
+            return computedStyle('--color-black-alt2');
+        },
+        get blackAlt3() {
+            return computedStyle('--color-black-alt3');
+        },
+        get blackAlt4() {
+            return computedStyle('--color-black-alt4');
+        },
+        get blackAlt5() {
+            return computedStyle('--color-black-alt5');
+        },
+        get white() {
+            return computedStyle('--color-white');
+        }, // White
 
         // Supplementary colors
-        supplementary: '#D5EAF4', // Mist blue
-        supplementaryAlt1: '#DEFAEB', // Soft mint
-        supplementaryAlt2: '#FBE5D5', // Spruce Wood
+        get supplementary() {
+            return computedStyle('--color-supplementary');
+        }, // Mist blue
+        get supplementaryAlt1() {
+            return computedStyle('--color-supplementary-alt1');
+        }, // Soft mint
+        get supplementaryAlt2() {
+            return computedStyle('--color-supplementary-alt2');
+        }, // Spruce Wood
 
         // Non-brand colors
-        yellow: '#FBCA36',
-        orange: '#FF9200',
-        red: '#FF3B3B',
-        green: '#4BB748',
-        purple: '#771FDD',
-        blue: '#1273DD',
-        turquoise: '#1DB7A6',
+        get yellow() {
+            return computedStyle('--color-yellow');
+        },
+        get orange() {
+            return computedStyle('--color-orange');
+        },
+        get red() {
+            return computedStyle('--color-red');
+        },
+        get green() {
+            return computedStyle('--color-green');
+        },
+        get purple() {
+            return computedStyle('--color-purple');
+        },
+        get blue() {
+            return computedStyle('--color-blue');
+        },
+        get turquoise() {
+            return computedStyle('--color-turquoise');
+        },
     },
 };
