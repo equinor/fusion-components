@@ -8,8 +8,8 @@ export default {
     cssColors: {
         // Primary color and alternatives
         primary: 'var(--color-primary)', // Moss green
-        primaryAlt1: 'var(--color-primaryAlt1)',
-        primaryAlt2: 'var(--color-primaryAlt2)',
+        primaryAlt1: 'var(--color-primary-alt1)',
+        primaryAlt2: 'var(--color-primary-alt2)',
         primaryAlt3: 'var(--color-primary-alt3)',
         primaryAlt4: 'var(--color-primary-alt4)',
         primaryAccent: 'var(--color-primary-accent)',
