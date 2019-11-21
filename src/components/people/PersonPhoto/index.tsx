@@ -78,13 +78,13 @@ export default ({
         <div>
             {[...additionalPersons, currentPerson].map(person => (
                 <>
-                    <span>{person.name}</span>
+                    <span>{person ? person.name: "TBN"}</span>
                     <br />
                 </>
             ))}
         </div>
     ) : (
-        currentPerson.name
+        currentPerson ? currentPerson.name : "TBN"
     );
     const nameTooltipRef = useTooltipRef(toolTipContent);
     return (
