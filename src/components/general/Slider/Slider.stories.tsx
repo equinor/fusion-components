@@ -67,7 +67,11 @@ const SliderDateStory = () => {
         <div style={{ width: 800, margin: '0 auto' }}>
             <div style={{ display: 'flex' }}>
                 <div style={{ width: 200, marginRight: 48, flexShrink: 0 }}>
-                    <DatePicker selectedDate={value} onChange={date => date && setValue(date)} />
+                    <DatePicker
+                        label="Select date"
+                        selectedDate={value}
+                        onChange={date => date && setValue(date)}
+                    />
                 </div>
                 <Slider
                     value={value.getTime()}

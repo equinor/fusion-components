@@ -8,11 +8,11 @@ import {
     usePersonImageUrl,
 } from '@equinor/fusion';
 
-import { useTooltipRef } from '@equinor/fusion-components';
+import { useTooltipRef, usePopoverRef } from '@equinor/fusion-components';
 import FallbackImage from './FallbackImage';
 import AccountTypeBadge from './AccountTypeBadge';
 import RotationBadge from './RotationBadge';
-
+import PersonDetail from '../PersonDetail';
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 export type PersonPhotoProps = {
@@ -21,6 +21,7 @@ export type PersonPhotoProps = {
     size?: PhotoSize;
     hideTooltip?: boolean;
     additionalPersons?: PersonDetails[];
+    hidePopover?: boolean;
 };
 
 const getDefaultPerson = (): PersonDetails => ({
@@ -40,6 +41,7 @@ export default ({
     personId,
     person,
     hideTooltip,
+    hidePopover,
     size = 'medium',
     additionalPersons = [],
 }: PersonPhotoProps) => {
@@ -87,25 +89,64 @@ export default ({
         currentPerson ? currentPerson.name : "TBN"
     );
     const nameTooltipRef = useTooltipRef(toolTipContent);
+
+    const popoverClassNames = classNames(styles.popoverDetails, {
+        [styles.hidePopover]: hideTooltip,
+    });
+
+    const PopoverContent = () => (
+        <>
+            {additionalPersons.length > 0 ? (
+                <div>
+                    {[...additionalPersons, currentPerson].map(person => (
+                        <>
+                            <span>{person.name}</span>
+                            <br />
+                        </>
+                    ))}
+                </div>
+            ) : (
+                <PersonDetail person={currentPerson} />
+            )}
+        </>
+    );
+
+    const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
+        <PopoverContent />,
+        {
+            justify: 'start', // start = "left" | middle = "center" | end = "right"
+            placement: 'below', // start = "top" | middle = "center" | end = "bottom"
+        },
+        true
+    );
+
     return (
-        <div ref={nameTooltipRef} className={photoClassNames} style={imageStyle}>
-            {(imageError !== null || additionalPersons.length > 0) && (
-                <FallbackImage size={size} rotation={additionalPersons.length > 0} />
-            )}
-            {personDetails && additionalPersons.length === 0 && (
-                <AccountTypeBadge
-                    currentPerson={personDetails}
-                    size={size}
-                    hideTooltip={hideTooltip}
-                />
-            )}
-            {additionalPersons.length > 0 && (
-                <RotationBadge
-                    numberOfPersons={additionalPersons.length + 1}
-                    size={size}
-                    hideTooltip={hideTooltip}
-                />
-            )}
+        <div
+            ref={hidePopover ? undefined : popoverRef}
+            className={photoClassNames}
+            style={imageStyle}
+        >
+            <div ref={nameTooltipRef}>
+                <div className={popoverClassNames}>
+                    {(imageError !== null || additionalPersons.length > 0) && (
+                        <FallbackImage size={size} rotation={additionalPersons.length > 0} />
+                    )}
+                    {personDetails && additionalPersons.length === 0 && (
+                        <AccountTypeBadge
+                            currentPerson={personDetails}
+                            size={size}
+                            hideTooltip={hideTooltip}
+                        />
+                    )}
+                    {additionalPersons.length > 0 && (
+                        <RotationBadge
+                            numberOfPersons={additionalPersons.length + 1}
+                            size={size}
+                            hideTooltip={hideTooltip}
+                        />
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

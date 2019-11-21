@@ -83,10 +83,10 @@
             input:checked + label,
             input:checked + label .activator {
                 background-color: var(--color-black-alt4);
-            }
         }
     }
-
+    }
+    
     &.checkbox {
         label {
             width: var(--checkbox-size);
@@ -194,7 +194,7 @@
         --container-height: calc(var(--grid-unit) * 6px);
 
         &.switch {
-            --switch-bar-width: calc(var(--grid-unit) * 5px);
+            --switch-bar-width: calc((var(--grid-unit) * 5px) - 6px);
             --switch-bar-height: calc(var(--grid-unit) * 1px);
             --switch-activator-size: calc(var(--grid-unit) * 2px);
             --switch-activator-margin: 0px;

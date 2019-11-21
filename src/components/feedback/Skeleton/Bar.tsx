@@ -9,7 +9,8 @@ type SkeletonBarProps = {
 
 const SkeletonBar: React.FC<SkeletonBarProps> = props => {
     const displayClassNames = useComponentDisplayClassNames(styles);
-    const barClassNames = classNames(styles.bar, displayClassNames);
+    const barClassNames = classNames(styles.bar, displayClassNames, styles.skeleton);
+
     const width = useMemo(
         () => props.width || Math.max(Math.min(Math.floor(Math.random() * 100), 100), 50) + '%',
         [props.width]

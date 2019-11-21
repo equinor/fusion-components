@@ -11,14 +11,10 @@ type ItemProps = {
 
 export const Item: React.FC<ItemProps> = ({ changeItem, prevItem, nextItem, content }) => {
     const prevButton = prevItem ? (
-        <Button onClick={() => prevItem && changeItem(prevItem)}>
-            Previous Item
-        </Button>
+        <Button onClick={() => prevItem && changeItem(prevItem)}>Previous Item</Button>
     ) : null;
     const nextButton = nextItem ? (
-        <Button onClick={() => nextItem && changeItem(nextItem)}>
-            Next Item
-        </Button>
+        <Button onClick={() => nextItem && changeItem(nextItem)}>Next Item</Button>
     ) : null;
 
     return (

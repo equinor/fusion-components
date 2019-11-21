@@ -6,17 +6,30 @@ import {
     useRelativePositioning,
     useClickOutsideOverlayPortal,
     useOverlayPortal,
+    useHoverToggleController,
 } from '@equinor/fusion-components';
 
 export default <T extends HTMLElement>(
     content: React.ReactNode,
-    props?: PopoverContainerProps
-): [React.MutableRefObject<T | null>, boolean, React.Dispatch<React.SetStateAction<boolean>>] => {
+    props?: PopoverContainerProps,
+    hover?: boolean,
+    delay?: number
+): [
+    React.MutableRefObject<T | null>,
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>> | undefined
+] => {
     const popoverContentRef = React.useRef<HTMLDivElement | null>(null);
-    const [isOpen, ref, setIsOpen] = useClickToggleController<T>();
+    const [isOpen, ref, setIsOpen] = hover
+        ? useHoverToggleController<T>(delay)
+        : useClickToggleController<T>();
+
     const rect = useRelativePositioning(ref);
 
-    const close = React.useCallback(() => isOpen && setIsOpen(false), [isOpen]);
+    const close = React.useCallback(() => isOpen && setIsOpen && setIsOpen(false), [
+        isOpen,
+        setIsOpen,
+    ]);
 
     useClickOutsideOverlayPortal(close, popoverContentRef.current);
 
