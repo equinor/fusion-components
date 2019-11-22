@@ -9,9 +9,9 @@ type PopoverJustification = 'start' | 'center' | 'end';
 export type PopoverContainerProps = {
     placement?: PopoverPlacement;
     justify?: PopoverJustification;
-    centered?: boolean,
+    centered?: boolean;
     title?: string;
-    fillWithContent?: boolean,
+    fillWithContent?: boolean;
 };
 
 const Arrow = () => {
@@ -37,7 +37,10 @@ const Arrow = () => {
     );
 };
 
-const PopoverContainer: React.FC<PopoverContainerProps> = ({ placement, justify, title, fillWithContent, centered, children }) => {
+const PopoverContainer = React.forwardRef<
+    HTMLDivElement | null,
+    React.PropsWithChildren<PopoverContainerProps>
+>(({ placement, justify, title, fillWithContent, centered, children }, ref) => {
     const containerClassNames = classNames(
         styles.popoverContainer,
         useElevationClassName(1),
@@ -50,13 +53,12 @@ const PopoverContainer: React.FC<PopoverContainerProps> = ({ placement, justify,
     );
 
     return (
-        <div className={containerClassNames}>
+        <div className={containerClassNames} ref={ref as React.Ref<HTMLDivElement>}>
             <Arrow />
             {title && <h5>{title}</h5>}
             <div className={styles.content}>{children}</div>
         </div>
     );
-};
+});
 
 export default PopoverContainer;
-

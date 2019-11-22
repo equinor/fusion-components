@@ -79,7 +79,7 @@ const PersonPhotoStory = () => {
 
     const size = select('Size', sizes, sizes.xlarge) as PhotoSize;
 
-    return <PersonPhoto hideTooltip={boolean('Hide tooltip', false)} person={person} size={size} />;
+    return <PersonPhoto hideTooltip={boolean('Hide tooltip', true)} person={person} size={size} />;
 };
 
 stories.add('Default', () => <PersonPhotoStory />);

@@ -19,24 +19,38 @@ export default <T extends HTMLElement>(
     boolean,
     React.Dispatch<React.SetStateAction<boolean>> | undefined
 ] => {
-    const popoverContentRef = React.useRef<HTMLDivElement | null>(null);
-    const [isOpen, ref, setIsOpen] = hover
-        ? useHoverToggleController<T>(delay)
+    const [isOpen, setIsOpen] = React.useState(false);
+
+    const [isPopoverOpen, ref, setIsPopoverOpen] = hover
+        ? useHoverToggleController<T>()
         : useClickToggleController<T>();
+
+    const [isContentOpen, popoverContentRef] = useHoverToggleController<HTMLDivElement>();
 
     const rect = useRelativePositioning(ref);
 
-    const close = React.useCallback(() => isOpen && setIsOpen && setIsOpen(false), [
-        isOpen,
-        setIsOpen,
-    ]);
+    const close = React.useCallback(() => {
+        if (hover) {
+            setTimeout(() => {
+                !isContentOpen && setIsOpen(false);
+            }, delay || 0);
+        } else {
+            isContentOpen && setIsOpen && setIsOpen(false);
+        }
+    }, [isContentOpen, setIsOpen, delay, isPopoverOpen, hover]);
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsOpen(isPopoverOpen || isContentOpen);
+        }, delay || 0);
+        return () => clearTimeout(timer);
+    }, [isPopoverOpen, isContentOpen]);
 
     useClickOutsideOverlayPortal(close, popoverContentRef.current);
 
     useOverlayPortal(
         isOpen,
         <div
-            ref={popoverContentRef}
             className={styles.container}
             style={{
                 width: rect.width,
@@ -45,7 +59,9 @@ export default <T extends HTMLElement>(
                 left: rect.left,
             }}
         >
-            <PopoverContainer {...props}>{content}</PopoverContainer>
+            <PopoverContainer ref={popoverContentRef as React.RefObject<HTMLDivElement>} {...props}>
+                {content}
+            </PopoverContainer>
         </div>
     );
 

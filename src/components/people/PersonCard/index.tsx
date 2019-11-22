@@ -59,7 +59,8 @@ export default ({
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
         },
-        true
+        true,
+        500
     );
 
     return (

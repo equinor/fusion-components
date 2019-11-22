@@ -117,7 +117,8 @@ export default ({
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
         },
-        true
+        true,
+        500
     );
 
     return (
@@ -126,7 +127,7 @@ export default ({
             className={photoClassNames}
             style={imageStyle}
         >
-            <div ref={nameTooltipRef}>
+            <div ref={hideTooltip ? undefined : nameTooltipRef}>
                 <div className={popoverClassNames}>
                     {(imageError !== null || additionalPersons.length > 0) && (
                         <FallbackImage size={size} rotation={additionalPersons.length > 0} />

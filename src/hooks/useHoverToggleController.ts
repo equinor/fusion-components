@@ -34,7 +34,7 @@ export default <T extends HTMLElement>(
                 hide();
             }
         },
-        [show, ref.current]
+        [show, ref.current, isHovering]
     );
 
     useEventListener(ref.current, 'mouseenter', show, [ref.current]);
