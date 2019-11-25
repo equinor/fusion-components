@@ -40,7 +40,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                 </div>
             </>
         ),
-        [icon, title, isOpen, onChange]
+        [icon, title, isOpen, onChange, navigationChildren]
     );
 
     const getCollapsedContent = useCallback(
