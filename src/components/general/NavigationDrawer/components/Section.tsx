@@ -5,6 +5,7 @@ import { NavigationComponentProps } from '..';
 import { getNavigationComponentForItem } from '../utils';
 
 import NavigationItem from './NavigationItem';
+import { NavigationChild } from '.';
 
 const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, isActive, title, onClick, navigationChildren, isOpen } = navigationItem;
@@ -32,11 +33,13 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
                     className={styles.toggleOpenContainer}
                     onClick={() => onChange && onChange(id, true, false)}
                 >
-                    {!isCollapsed && <DropdownArrow cursor="pointer" isOpen={isOpen || false} />}
+                    {!isCollapsed && navigationChildren && navigationChildren.length > 0 && (
+                        <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
+                    )}
                 </div>
             </>
         ),
-        [title, isOpen, onChange]
+        [title, isOpen, onChange, navigationChildren]
     );
 
     return (
