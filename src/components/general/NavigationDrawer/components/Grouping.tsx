@@ -11,13 +11,10 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
 
     const navigationStructure = useMemo(
         () =>
-            getNavigationComponentForItem(
-                navigationChildren,
-                {
-                    onChange: onChange,
-                    isCollapsed: isCollapsed,
-                }
-            ),
+            getNavigationComponentForItem(navigationChildren, {
+                onChange: onChange,
+                isCollapsed: isCollapsed,
+            }),
         [navigationChildren, onChange, isCollapsed]
     );
 
@@ -37,11 +34,13 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                     className={styles.toggleOpenContainer}
                     onClick={() => onChange && onChange(id, true, false)}
                 >
-                    {!isCollapsed && <DropdownArrow cursor="pointer" isOpen={isOpen || false} />}
+                    {!isCollapsed && navigationChildren && navigationChildren.length > 0 && (
+                        <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
+                    )}
                 </div>
             </>
         ),
-        [icon, title, isOpen, onChange]
+        [icon, title, isOpen, onChange, navigationChildren]
     );
 
     const getCollapsedContent = useCallback(
