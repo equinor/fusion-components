@@ -1,9 +1,9 @@
 name: Build storybook
 
 on:
-  push:
-    branches: 
-      - master
+  release:
+    types: 
+      - published
 
 jobs:
   build:
@@ -27,10 +27,10 @@ jobs:
     - name: Commit changes and push
       run: |
         git config --local user.email "fusion@equinor.com"
-        git config --local user.name "GitHub Action by Eskil Sand"
+        git config --local user.name "GitHub Action by Fusion Team"
         git add -A
         git commit -m "Build storybook"
         git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" HEAD:master
       env:
         CI: true
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_PERSONAL_TOKEN}}
