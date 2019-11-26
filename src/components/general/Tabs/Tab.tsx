@@ -5,7 +5,7 @@ import { useKeyboardNavigation } from '@equinor/fusion-components';
 
 type TabProps = {
     isCurrent?: boolean;
-    title: string;
+    title: string | React.ReactNode;
     tabKey: string;
     disabled?: boolean;
     onChange?: (ref: HTMLElement) => void;
