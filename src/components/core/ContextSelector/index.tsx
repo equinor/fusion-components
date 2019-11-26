@@ -1,177 +1,139 @@
 import * as React from 'react';
 import {
-    ContextTypes,
     useContextManager,
     useCurrentContext,
     Context,
     useComponentDisplayClassNames,
+    useContextQuery,
 } from '@equinor/fusion';
-import useContextSearchResults from './useContextSearchResults';
+import {
+    HeaderContentPortal,
+    SearchIcon,
+    useDropdownController,
+    Dropdown,
+    Menu,
+    SearchableDropdownSection,
+    SearchableDropdownOption,
+    Spinner,
+} from '@equinor/fusion-components';
+import * as styles from './styles.less';
 import classNames from 'classnames';
-import styles from './styles.less';
-import { SearchIcon } from '../../icons/components/action';
-import { Spinner } from '@equinor/fusion-components';
 
-type ContextSelectorProps = {
-    types: ContextTypes[];
-};
+import ContextToDropdownSection from './ContextToDropdownSection';
 
-const ContextSelector: React.FC<ContextSelectorProps> = ({ types }: ContextSelectorProps) => {
-    const [shouldShowResultsDropdown, setShouldShowResultsDropdown] = React.useState(false);
-    const [queryText, setQueryText] = React.useState('');
-    const [relatedContexts, setRelatedContexts] = React.useState<Context[]>([]);
-    const [isFetchingRelatedContexts, setIsFetchingRelatedContexts] = React.useState(false);
-    const [inputRef, setInputRef] = React.useState<HTMLElement | null>(null);
-    const contextManager = useContextManager();
-    const currentContext = useCurrentContext();
-    const currentContextForType = useCurrentContext(...types);
-
-    const exchangeCurrentContext = async () => {
-        setIsFetchingRelatedContexts(true);
-
-        try {
-            const possibleContexts = await contextManager.exchangeCurrentContextAsync(...types);
-            const linkedContext = currentContext
-                ? await contextManager.getLinkedContextAsync(currentContext)
-                : null;
-
-            setIsFetchingRelatedContexts(false);
-
-            if (possibleContexts.length === 1) {
-                return contextManager.setCurrentContextAsync(possibleContexts[0]);
-            }
-
-            const linkedContextIsRelevant =
-                linkedContext &&
-                types.find(type => linkedContext.type.id === type) &&
-                possibleContexts.find(c => c.id === linkedContext.id);
-            if (linkedContext && linkedContextIsRelevant) {
-                return contextManager.setCurrentContextAsync(linkedContext);
-            }
-
-            if (!possibleContexts.length) {
-                return;
-            }
-
-            // Try to resolve a related context from the history
-            const history = await contextManager.getAsync('history');
-            if (history !== null && history.length > 0) {
-                const fromHistory = history.filter(
-                    c => c && possibleContexts.find(pc => pc.id === c.id)
-                );
-
-                if (fromHistory.length === 1) {
-                    return contextManager.setCurrentContextAsync(fromHistory[0]);
-                }
-            }
-
-            setRelatedContexts(possibleContexts);
-        } catch {
-            setIsFetchingRelatedContexts(false);
-        }
-
-        if (inputRef) {
-            inputRef.focus();
-        }
-    };
-
-    React.useEffect(() => {
-        if (currentContext && !types.find(type => currentContext.type.id === type)) {
-            exchangeCurrentContext();
-        }
-    }, [currentContext, types]);
-
-    const setCurrentContextAsync = async (context?: Context) => {
-        if (context) {
-            await contextManager.setCurrentContextAsync(context);
-            setQueryText('');
-            setRelatedContexts([]);
-            setShouldShowResultsDropdown(false);
-        }
-    };
-
-    const onSearchChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setQueryText(e.target.value);
-    }, []);
-
-    const onOpen = React.useCallback(() => setShouldShowResultsDropdown(true), []);
-    const onClose = React.useCallback(() => {
-        setShouldShowResultsDropdown(false);
-        setQueryText('');
-    }, []);
-
-    const onKeyUp = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.keyCode === 27) {
-            // ESC
-            onClose();
-        }
-    }, []);
-
-    React.useEffect(() => {
-        if (shouldShowResultsDropdown && inputRef) {
-            inputRef.focus();
-        }
-    }, [shouldShowResultsDropdown, inputRef]);
-
-    const containerRef = React.useRef<HTMLDivElement>(null);
-
-    const isQuerying = useContextSearchResults(
-        inputRef,
-        containerRef,
-        types,
-        relatedContexts,
-        setCurrentContextAsync,
-        queryText,
-        shouldShowResultsDropdown,
-        onClose
+const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
+    sections.reduce(
+        (acc: SearchableDropdownOption[], curr: SearchableDropdownSection) =>
+            acc.concat(curr.items),
+        []
     );
 
-    const inputClassNames = classNames(styles.searchInput, {
-        [styles.focus]: shouldShowResultsDropdown,
-    });
+const ContextSelector: React.FC = () => {
+    const [queryText, setQueryText] = React.useState('');
+    const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
+    const currentContext = useCurrentContext();
+    const { error, isQuerying, contexts, search } = useContextQuery();
+    const contextManager = useContextManager();
 
-    const getButtonContent = () => {
-        if (currentContextForType) {
-            return currentContextForType.title;
-        }
+    React.useEffect(() => {
+        setDropdownSections(
+            ContextToDropdownSection(contexts, queryText, isQuerying, currentContext)
+        );
+    }, [contexts, currentContext, queryText, isQuerying]);
 
-        if (isFetchingRelatedContexts) {
-            return (
-                <span>
-                    Resolving {currentContext ? currentContext.title : null} <Spinner inline />
-                </span>
-            );
-        }
+    React.useEffect(() => {
+        search(queryText);
+    }, [queryText]);
 
-        if (currentContext && !isFetchingRelatedContexts) {
-            return `Unable to resolve ${currentContext.title}. Please select context`;
-        }
-
-        return 'Select context';
+    const setCurrentContextAsync = async (context?: Context) => {
+        if (context) await contextManager.setCurrentContextAsync(context);
     };
 
+    const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => {
+        const selectedItem = React.useMemo(() => {
+            const mergedItems = mergeDropdownSectionItems(dropdownSections);
+            const selectedItem = mergedItems.find(option => option.isSelected === true);
+            return selectedItem;
+        }, [dropdownSections]);
+
+        const selectedValue = React.useMemo(() => {
+            if (isOpen) {
+                return queryText;
+            } else if (selectedItem) {
+                return selectedItem.title;
+            } else if (currentContext) {
+                return currentContext.title;
+            }
+            return '';
+        }, [isOpen, queryText, selectedItem, currentContext]);
+
+        return (
+            <>
+                <SearchIcon color="#DADADA" />
+                <input
+                    type="text"
+                    value={selectedValue}
+                    onChange={e => setQueryText(e.target.value)}
+                    onClick={() => !isOpen && setIsOpen(true)}
+                    placeholder={selectedValue !== '' ? selectedValue : 'Search contexts'}
+                    className={styles.searchInput}
+                    ref={inputRef}
+                />
+                {isQuerying && <Spinner inline />}
+            </>
+        );
+    });
+
+    const updateOptions = (item: SearchableDropdownSection) =>
+        dropdownSections.map(option => {
+            return { ...option, isSelected: item.key === option.key };
+        });
+
+    const { isOpen, setIsOpen, controllerRef } = dropdownController;
+
+    const onSelect = React.useCallback(
+        item => {
+            if (item.key && item.key === 'empty') {
+                return;
+            }
+            if (isOpen) {
+                const selectedContext = contexts.find(c => c.id === item.key);
+                updateOptions(item);
+                setIsOpen(false);
+                setQueryText('');
+                setCurrentContextAsync(selectedContext);
+            }
+        },
+        [isOpen, contexts]
+    );
+
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
+    const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
+    const helperText = React.useMemo(
+        () =>
+            !contexts.length && !isQuerying && !queryText
+                ? 'No contexts, please try the search bar above (Start typing to search)'
+                : null,
+        [contexts, isQuerying, queryText]
+    );
 
     return (
-        <div ref={containerRef} onClick={onOpen} className={containerClassNames}>
-            <SearchIcon color="#DADADA" />
-            {shouldShowResultsDropdown ? (
-                <>
-                    <input
-                        ref={setInputRef}
-                        type="text"
-                        value={queryText}
-                        onChange={onSearchChange}
-                        onKeyUp={onKeyUp}
-                        placeholder={'Search'}
-                        className={inputClassNames}
-                    />
-                    {isQuerying && <Spinner inline />}
-                </>
-            ) : (
-                <button className={styles.contextButton}>{getButtonContent()}</button>
-            )}
-        </div>
+        <HeaderContentPortal>
+            <div className={containerClassNames} ref={containerRef}>
+                <Dropdown controller={dropdownController}>
+                    <div className={styles.dropdownContainer}>
+                        {helperText ? <div className={styles.helperText}>{helperText}</div> : null}
+                        <Menu
+                            elevation={0}
+                            onClick={onSelect}
+                            keyboardNavigationRef={inputRef.current}
+                            sections={dropdownSections}
+                        />
+                    </div>
+                </Dropdown>
+            </div>
+        </HeaderContentPortal>
     );
 };
 
