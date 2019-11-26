@@ -29,7 +29,7 @@ jobs:
         git config --local user.email "fusion@equinor.com"
         git config --local user.name "GitHub Action by Fusion Team"
         git add -A
-        git commit -m "Build storybook"
+        git commit -m "Build storybook" || true
         git push "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git" HEAD:master
       env:
         CI: true
