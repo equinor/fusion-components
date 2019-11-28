@@ -74,14 +74,22 @@ const ContextSelector: React.FC = () => {
             return '';
         }, [isOpen, queryText, selectedItem, currentContext]);
 
+        const onChangeQueryText = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+            setQueryText(e.target.value);
+        }, []);
+
+        const onClickDropDown = React.useCallback(() => {
+            !isOpen && setIsOpen(true);
+        }, []);
+
         return (
             <>
                 <SearchIcon color="#DADADA" />
                 <input
                     type="text"
                     value={selectedValue}
-                    onChange={e => setQueryText(e.target.value)}
-                    onClick={() => !isOpen && setIsOpen(true)}
+                    onChange={onChangeQueryText}
+                    onClick={onClickDropDown}
                     onKeyUp={onKeyUpCloseDropDown}
                     placeholder={selectedValue !== '' ? selectedValue : 'Search contexts'}
                     className={styles.searchInput}
