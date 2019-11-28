@@ -7,7 +7,6 @@ import {
     useContextQuery,
 } from '@equinor/fusion';
 import {
-    HeaderContentPortal,
     SearchIcon,
     useDropdownController,
     Dropdown,
@@ -33,7 +32,7 @@ const ContextSelector: React.FC = () => {
     const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
     const inputRef = React.useRef<HTMLInputElement | null>(null);
     const currentContext = useCurrentContext();
-    const { error, isQuerying, contexts, search } = useContextQuery();
+    const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
 
     React.useEffect(() => {
@@ -50,7 +49,14 @@ const ContextSelector: React.FC = () => {
         if (context) await contextManager.setCurrentContextAsync(context);
     };
 
-    const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => {
+    const onKeyUpCloseDropDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.keyCode !== 27) return; //ESC
+
+        setIsOpen(false);
+        setQueryText('');
+    }, []);
+
+    const dropdownControllerProps = React.useCallback((ref, isOpen, setIsOpen) => {
         const selectedItem = React.useMemo(() => {
             const mergedItems = mergeDropdownSectionItems(dropdownSections);
             const selectedItem = mergedItems.find(option => option.isSelected === true);
@@ -76,6 +82,7 @@ const ContextSelector: React.FC = () => {
                     value={selectedValue}
                     onChange={e => setQueryText(e.target.value)}
                     onClick={() => !isOpen && setIsOpen(true)}
+                    onKeyUp={onKeyUpCloseDropDown}
                     placeholder={selectedValue !== '' ? selectedValue : 'Search contexts'}
                     className={styles.searchInput}
                     ref={inputRef}
@@ -83,13 +90,9 @@ const ContextSelector: React.FC = () => {
                 {isQuerying && <Spinner inline />}
             </>
         );
-    });
+    }, []);
 
-    const updateOptions = (item: SearchableDropdownSection) =>
-        dropdownSections.map(option => {
-            return { ...option, isSelected: item.key === option.key };
-        });
-
+    const dropdownController = useDropdownController(dropdownControllerProps);
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
 
     const onSelect = React.useCallback(
@@ -99,7 +102,6 @@ const ContextSelector: React.FC = () => {
             }
             if (isOpen) {
                 const selectedContext = contexts.find(c => c.id === item.key);
-                updateOptions(item);
                 setIsOpen(false);
                 setQueryText('');
                 setCurrentContextAsync(selectedContext);
@@ -119,21 +121,19 @@ const ContextSelector: React.FC = () => {
     );
 
     return (
-        <HeaderContentPortal>
-            <div className={containerClassNames} ref={containerRef}>
-                <Dropdown controller={dropdownController}>
-                    <div className={styles.dropdownContainer}>
-                        {helperText ? <div className={styles.helperText}>{helperText}</div> : null}
-                        <Menu
-                            elevation={0}
-                            onClick={onSelect}
-                            keyboardNavigationRef={inputRef.current}
-                            sections={dropdownSections}
-                        />
-                    </div>
-                </Dropdown>
-            </div>
-        </HeaderContentPortal>
+        <div className={containerClassNames} ref={containerRef}>
+            <Dropdown controller={dropdownController}>
+                <div className={styles.dropdownContainer}>
+                    {helperText ? <div className={styles.helperText}>{helperText}</div> : null}
+                    <Menu
+                        elevation={0}
+                        onClick={onSelect}
+                        keyboardNavigationRef={inputRef.current}
+                        sections={dropdownSections}
+                    />
+                </div>
+            </Dropdown>
+        </div>
     );
 };
 
