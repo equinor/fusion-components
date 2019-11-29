@@ -35,15 +35,27 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
         [trackLeft, trackWidth, markers, calculateValue]
     );
 
-    useEffect(() => {
+    let animationFrame = 0;
+    const updateTrackLeftAndWidth = () => {
         if (!trackRef.current) {
             return;
         }
 
         const trackRect = trackRef.current.getBoundingClientRect();
-        setTrackLeft(trackRect.left);
-        setTrackWidth(trackRect.width);
-    }, [trackRef.current]);
+        if (trackRect.left !== trackLeft) {
+            setTrackLeft(trackRect.left);
+        }
+
+        if (trackRect.width !== trackWidth) {
+            setTrackWidth(trackRect.width);
+        }
+
+        animationFrame = window.requestAnimationFrame(updateTrackLeftAndWidth);
+
+        return () => window.cancelAnimationFrame(animationFrame);
+    };
+
+    useEffect(updateTrackLeftAndWidth, [trackRef.current]);
 
     const onTrackClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -56,17 +68,20 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
     );
 
     const [mouseIsDown, setMouseIsDown] = useState(false);
-    const onHandleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const onHandleMouseDown = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         setMouseIsDown(true);
-    };
+    }, []);
 
-    const handleMouseMove = (e: Event) => {
-        const mouseEvent = e as MouseEvent;
-        if (mouseIsDown && !disabled) {
-            const marker = markerFinder(mouseEvent.pageX);
-            onChange(marker);
-        }
-    };
+    const handleMouseMove = useCallback(
+        (e: Event) => {
+            const mouseEvent = e as MouseEvent;
+            if (mouseIsDown && !disabled) {
+                const marker = markerFinder(mouseEvent.pageX);
+                onChange(marker);
+            }
+        },
+        [markerFinder, onChange, disabled, mouseIsDown]
+    );
 
     const handleMouseUp = useCallback(() => {
         if (!disabled) {
