@@ -1,30 +1,48 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { ContextTypes } from '@equinor/fusion';
 import ContextSelector from '../index';
 import FusionHeader from '../../Header';
 import FusionContent from '../../Content';
+import { useCurrentApp, ContextTypes, useFusionContext, ContextType } from '@equinor/fusion';
 
-const PDPContextSelectorStory = () => (
-    <React.Fragment>
-        <FusionHeader
-            start={null}
-            content={<ContextSelector types={[ContextTypes.PDP]} />}
-            aside={null}
-        />
-        <FusionContent>
-            <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
-        </FusionContent>
-    </React.Fragment>
-);
+const CurrentContextPDP: React.FC = ({ children }) => {
+    const { app } = useFusionContext();
+
+    app.container.currentApp = {
+        AppComponent: ContextSelector,
+        key: 'PDP',
+        name: 'PDP',
+        shortName: 'PDP',
+        version: '1',
+        description: 'pdp',
+        tags: ['PDP'],
+        context: {
+            types: [
+                { id: ContextTypes.Project, isChildType: false, parentTypeIds: ['nothing'] },
+                { id: ContextTypes.PDP, isChildType: false, parentTypeIds: ['nothing'] },
+            ],
+        },
+    };
+
+    return <> {children} </>;
+};
+
+const PDPContextSelectorStory = () => {
+    return (
+        <React.Fragment>
+            <CurrentContextPDP>
+                <FusionHeader start={null} content={<ContextSelector />} aside={null} />
+                <FusionContent>
+                    <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
+                </FusionContent>
+            </CurrentContextPDP>
+        </React.Fragment>
+    );
+};
 
 const OrgChartContextSelectorStory = () => (
     <React.Fragment>
-        <FusionHeader
-            start={null}
-            content={<ContextSelector types={[ContextTypes.OrgChart, ContextTypes.Contract]} />}
-            aside={null}
-        />
+        <FusionHeader start={null} content={<ContextSelector />} aside={null} />
 
         <FusionContent>
             <h1 style={{ textAlign: 'center', margin: 16 }}>Pro Org</h1>
@@ -34,11 +52,7 @@ const OrgChartContextSelectorStory = () => (
 
 const ContractContextSelectorStory = () => (
     <React.Fragment>
-        <FusionHeader
-            start={null}
-            content={<ContextSelector types={[ContextTypes.Contract]} />}
-            aside={null}
-        />
+        <FusionHeader start={null} content={<ContextSelector />} aside={null} />
         <FusionContent>
             <h1 style={{ textAlign: 'center', margin: 16 }}>Contracts</h1>
         </FusionContent>
