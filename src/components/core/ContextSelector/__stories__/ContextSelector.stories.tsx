@@ -3,15 +3,42 @@ import { storiesOf } from '@storybook/react';
 import ContextSelector from '../index';
 import FusionHeader from '../../Header';
 import FusionContent from '../../Content';
+import { useCurrentApp, ContextTypes, useFusionContext, ContextType } from '@equinor/fusion';
 
-const PDPContextSelectorStory = () => (
-    <React.Fragment>
-        <FusionHeader start={null} content={<ContextSelector />} aside={null} />
-        <FusionContent>
-            <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
-        </FusionContent>
-    </React.Fragment>
-);
+const CurrentContextPDP: React.FC = ({ children }) => {
+    const { app } = useFusionContext();
+
+    app.container.currentApp = {
+        AppComponent: ContextSelector,
+        key: 'PDP',
+        name: 'PDP',
+        shortName: 'PDP',
+        version: '1',
+        description: 'pdp',
+        tags: ['PDP'],
+        context: {
+            types: [
+                { id: ContextTypes.Project, isChildType: false, parentTypeIds: ['nothing'] },
+                { id: ContextTypes.PDP, isChildType: false, parentTypeIds: ['nothing'] },
+            ],
+        },
+    };
+
+    return <> {children} </>;
+};
+
+const PDPContextSelectorStory = () => {
+    return (
+        <React.Fragment>
+            <CurrentContextPDP>
+                <FusionHeader start={null} content={<ContextSelector />} aside={null} />
+                <FusionContent>
+                    <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
+                </FusionContent>
+            </CurrentContextPDP>
+        </React.Fragment>
+    );
+};
 
 const OrgChartContextSelectorStory = () => (
     <React.Fragment>
