@@ -56,49 +56,55 @@ const ContextSelector: React.FC = () => {
         setQueryText('');
     }, []);
 
-    const dropdownControllerProps = React.useCallback((ref, isOpen, setIsOpen) => {
-        const selectedItem = React.useMemo(() => {
-            const mergedItems = mergeDropdownSectionItems(dropdownSections);
-            const selectedItem = mergedItems.find(option => option.isSelected === true);
-            return selectedItem;
-        }, [dropdownSections]);
+    const dropdownControllerProps = React.useCallback(
+        (ref, isOpen, setIsOpen) => {
+            const selectedItem = React.useMemo(() => {
+                const mergedItems = mergeDropdownSectionItems(dropdownSections);
+                const selectedItem = mergedItems.find(option => option.isSelected === true);
+                return selectedItem;
+            }, [dropdownSections]);
 
-        const selectedValue = React.useMemo(() => {
-            if (isOpen) {
-                return queryText;
-            } else if (selectedItem) {
-                return selectedItem.title;
-            } else if (currentContext) {
-                return currentContext.title;
-            }
-            return '';
-        }, [isOpen, queryText, selectedItem, currentContext]);
+            const selectedValue = React.useMemo(() => {
+                if (isOpen) {
+                    return queryText;
+                } else if (selectedItem) {
+                    return selectedItem.title;
+                } else if (currentContext) {
+                    return currentContext.title;
+                }
+                return '';
+            }, [isOpen, queryText, selectedItem, currentContext]);
 
-        const onChangeQueryText = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-            setQueryText(e.target.value);
-        }, []);
+            const onChangeQueryText = React.useCallback(
+                (e: React.ChangeEvent<HTMLInputElement>) => {
+                    setQueryText(e.target.value);
+                },
+                []
+            );
 
-        const onClickDropDown = React.useCallback(() => {
-            !isOpen && setIsOpen(true);
-        }, []);
+            const onClickDropDown = React.useCallback(() => {
+                !isOpen && setIsOpen(true);
+            }, [isOpen]);
 
-        return (
-            <>
-                <SearchIcon color="#DADADA" />
-                <input
-                    type="text"
-                    value={selectedValue}
-                    onChange={onChangeQueryText}
-                    onClick={onClickDropDown}
-                    onKeyUp={onKeyUpCloseDropDown}
-                    placeholder={selectedValue !== '' ? selectedValue : 'Search contexts'}
-                    className={styles.searchInput}
-                    ref={inputRef}
-                />
-                {isQuerying && <Spinner inline />}
-            </>
-        );
-    }, []);
+            return (
+                <>
+                    <SearchIcon color="#DADADA" />
+                    <input
+                        type="text"
+                        value={selectedValue}
+                        onChange={onChangeQueryText}
+                        onClick={onClickDropDown}
+                        onKeyUp={onKeyUpCloseDropDown}
+                        placeholder={selectedValue !== '' ? selectedValue : 'Search contexts'}
+                        className={styles.searchInput}
+                        ref={inputRef}
+                    />
+                    {isQuerying && <Spinner inline />}
+                </>
+            );
+        },
+        [queryText, currentContext]
+    );
 
     const dropdownController = useDropdownController(dropdownControllerProps);
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
