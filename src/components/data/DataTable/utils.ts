@@ -103,8 +103,7 @@ const getNextColumnToCollapse = <T>(
 
 /**
  * Calculates which columns can fit (and be visible) in a table.
- * It works by reacting to the resize event on the window
- * and checking if the current table is to wide for its parent.
+ * It works by continuously checking if the current table is to wide for its parent.
  * @param columns All columns
  * @param ref A ref to the table wrapper
  */
@@ -127,7 +126,6 @@ export const useVisibleColumns = <T>(
         const isTooWide = nodeIsTooWide(ref.current);
 
         const columnsLeft = columns.length - collapsedColumns.length;
-
         if (
             isTooWide &&
             (resize.from > resize.to || resize.from === resize.to) &&
@@ -138,7 +136,7 @@ export const useVisibleColumns = <T>(
             const columnToCollapse = getNextColumnToCollapse(columns, collapsedColumns);
             setCollapsedColumns([...collapsedColumns, columnToCollapse]);
         } else if (!isTooWide && collapsedColumns.length && resize.from < resize.to) {
-            // The table is not wider than the parend, the user is making the window bigger
+            // The table is not wider than the parent, the user is making the window bigger
             // and we have collapsed a couple of columns
             // so we test if we can expand one column without while keeping the table narrower than the parent
             const newCollapsedColumns =
@@ -147,6 +145,8 @@ export const useVisibleColumns = <T>(
             setShouldTestColumns(true);
         }
     };
+
+    useEffect(checkParentWidth, [columns, ref.current, collapsedColumns, resize, ...deps]);
 
     useEffect(() => {
         if (!ref.current || !shouldTestColumns) {
@@ -169,18 +169,14 @@ export const useVisibleColumns = <T>(
         setShouldTestColumns(false);
     }, [testCollapsedColumns, shouldTestColumns, ref.current]);
 
-    useEffect(checkParentWidth, [
-        columns,
-        ref.current,
-        collapsedColumns,
-        resize,
-        ...deps,
-    ]);
-
     // We can't rely on the window resize event since expanding/collapsing/resizing other elements on the page
     // might affect the size of the table/it's parent. Therefore we use requestAnimationFrame to check periodically
+    let animationFrame: number = 0;
     const checkResize = () => {
+        window.cancelAnimationFrame(animationFrame);
+
         if (!ref.current) {
+            animationFrame = window.requestAnimationFrame(checkResize);
             return;
         }
 
@@ -188,15 +184,15 @@ export const useVisibleColumns = <T>(
         const didResize = width !== resize.to;
 
         if (didResize) {
-            setResize({ from: resize.to, to: width });
+            setResize({ from: resize.to || width, to: width });
         } else {
-            window.requestAnimationFrame(checkResize);
+            animationFrame = window.requestAnimationFrame(checkResize);
         }
+
+        return () => window.cancelAnimationFrame(animationFrame);
     };
 
-    useEffect(() => {
-        checkResize();
-    }, [resize, columns, ref.current, ...deps]);
+    useEffect(checkResize, [resize, columns, ref.current, ...deps]);
 
     // Remove the collapsed columns, or the columns we're testing from all the columns before returning
     const visibleColumns = columns.filter(
