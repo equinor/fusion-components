@@ -80,7 +80,14 @@ const PersonCardStory = () => {
 
     const size = select('Photo size', sizes, sizes.xlarge) as PhotoSize;
 
-    return <PersonCard person={person} photoSize={size} inline={boolean('Inline', false)} />;
+    return (
+        <PersonCard
+            person={person}
+            photoSize={size}
+            showJobTitle={boolean('Job title', true)}
+            inline={boolean('Inline', false)}
+        />
+    );
 };
 
 stories.add('Default', () => <PersonCardStory />);
