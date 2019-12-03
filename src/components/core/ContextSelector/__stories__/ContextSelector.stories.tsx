@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import ContextSelector from '../index';
 import FusionHeader from '../../Header';
 import FusionContent from '../../Content';
-import { useCurrentApp, ContextTypes, useFusionContext, ContextType } from '@equinor/fusion';
+import { ContextTypes, useFusionContext } from '@equinor/fusion';
 
 const CurrentContextPDP: React.FC = ({ children }) => {
     const { app } = useFusionContext();
@@ -17,10 +17,7 @@ const CurrentContextPDP: React.FC = ({ children }) => {
         description: 'pdp',
         tags: ['PDP'],
         context: {
-            types: [
-                { id: ContextTypes.Project, isChildType: false, parentTypeIds: ['nothing'] },
-                { id: ContextTypes.PDP, isChildType: false, parentTypeIds: ['nothing'] },
-            ],
+            types: [ContextTypes.Project, ContextTypes.PDP],
         },
     };
 

@@ -45,10 +45,6 @@ const ContextSelector: React.FC = () => {
         search(queryText);
     }, [queryText]);
 
-    const setCurrentContextAsync = async (context?: Context) => {
-        if (context) await contextManager.setCurrentContextAsync(context);
-    };
-
     const onKeyUpCloseDropDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.keyCode !== 27) return; //ESC
 
@@ -103,7 +99,7 @@ const ContextSelector: React.FC = () => {
                 </>
             );
         },
-        [queryText, currentContext]
+        [queryText, currentContext, dropdownSections]
     );
 
     const dropdownController = useDropdownController(dropdownControllerProps);
@@ -118,7 +114,7 @@ const ContextSelector: React.FC = () => {
                 const selectedContext = contexts.find(c => c.id === item.key);
                 setIsOpen(false);
                 setQueryText('');
-                setCurrentContextAsync(selectedContext);
+                if (selectedContext) contextManager.setCurrentContextAsync(selectedContext);
             }
         },
         [isOpen, contexts]
