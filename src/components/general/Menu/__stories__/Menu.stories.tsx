@@ -8,6 +8,27 @@ import { CheckBox, DoneIcon } from '@equinor/fusion-components';
 const MenuStory = () => {
     const [ref, setRef] = React.useState<HTMLElement | null>(null);
 
+    const items = [
+        {
+            key: '1',
+            title: 'First',
+        },
+        {
+            key: '2',
+            title: 'Selected',
+            isSelected: true,
+        },
+        {
+            key: '3',
+            title: 'Disabled',
+            isDisabled: true,
+        },
+        {
+            key: '4',
+            title: 'Last',
+        },
+    ]
+
     return (
         <React.Fragment>
             <input placeholder="Focus here to navigate" ref={setRef} />
@@ -17,29 +38,23 @@ const MenuStory = () => {
                 sections={[
                     {
                         key: 'This is the only section, but I still need a key',
-                        items: [
-                            {
-                                key: '1',
-                                title: 'First',
-                            },
-                            {
-                                key: '2',
-                                title: 'Selected',
-                                isSelected: true,
-                            },
-                            {
-                                key: '3',
-                                title: 'Disabled',
-                                isDisabled: true,
-                            },
-                            {
-                                key: '4',
-                                title: 'Last',
-                            },
-                        ],
+                        items: items,
                     },
                 ]}
             />
+            <div style={{width: '300px'}}>
+                <input placeholder="Narrow menu" ref={setRef} />
+                <Menu
+                    onClick={action('click')}
+                    keyboardNavigationRef={ref}
+                    sections={[
+                        {
+                            key: 'This is the only section, but I still need a key',
+                            items: items,
+                        },
+                    ]}
+                />
+            </div>
         </React.Fragment>
     );
 };

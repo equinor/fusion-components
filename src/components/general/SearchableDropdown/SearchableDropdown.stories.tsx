@@ -110,6 +110,14 @@ const DropdownStory = () => {
                 onSelect={item => updateSections(item)}
                 sections={sections}
             />
+            <br />
+            <div style={{width: '300px'}}>
+                <SearchableDropdown
+                    label="Narrow food"
+                    onSelect={item => updateSections(item)}
+                    sections={sections}
+                />
+            </div>
         </div>
     );
 };
