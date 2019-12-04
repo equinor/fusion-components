@@ -20,6 +20,7 @@ type ModalSideSheetProps = {
     headerIcons?: ReactNode[];
     size?: SideSheetSize;
     safeClose?: boolean;
+    safeCloseTitle?: string;
 };
 
 export default ({
@@ -30,6 +31,7 @@ export default ({
     headerIcons,
     size = 'xlarge',
     safeClose,
+    safeCloseTitle
 }: ModalSideSheetProps) => {
     const [isShowing, setIsShowing] = useState(false);
     const sendNotification = useNotificationCenter();
@@ -43,14 +45,14 @@ export default ({
     const closeSafe = useCallback(async () => {
         const response = await sendNotification({
             level: 'high',
-            title: 'Are you sure you want to close, all changes will be lost',
+            title: safeCloseTitle ||'',
             confirmLabel: 'Close',
             cancelLabel: 'Cancel',
         });
         if (response.confirmed || response.dismissed) {
             setIsShowing(false);
         }
-    }, [sendNotification]);
+    }, [sendNotification, safeCloseTitle]);
 
     const close = useCallback(() => {
         if (safeClose) {
