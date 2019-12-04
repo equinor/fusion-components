@@ -50,9 +50,9 @@ export default ({
         if (response.confirmed || response.dismissed) {
             setIsShowing(false);
         }
-    }, []);
+    }, [sendNotification]);
 
-    const close = useCallback(async () => {
+    const close = useCallback(() => {
         if (safeClose) {
             return closeSafe();
         }
