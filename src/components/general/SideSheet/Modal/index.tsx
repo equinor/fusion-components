@@ -8,7 +8,7 @@ import {
     OverlayPortal,
     Scrim,
 } from '@equinor/fusion-components';
-import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { useComponentDisplayClassNames, useNotificationCenter } from '@equinor/fusion';
 
 type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -19,6 +19,8 @@ type ModalSideSheetProps = {
     onClose?: () => void;
     headerIcons?: ReactNode[];
     size?: SideSheetSize;
+    safeClose?: boolean;
+    safeCloseTitle?: string;
 };
 
 export default ({
@@ -28,8 +30,11 @@ export default ({
     onClose,
     headerIcons,
     size = 'xlarge',
+    safeClose,
+    safeCloseTitle
 }: ModalSideSheetProps) => {
     const [isShowing, setIsShowing] = useState(false);
+    const sendNotification = useNotificationCenter();
 
     useEffect(() => {
         if (!isShowing && show) {
@@ -37,9 +42,24 @@ export default ({
         }
     }, [show]);
 
+    const closeSafe = useCallback(async () => {
+        const response = await sendNotification({
+            level: 'high',
+            title: safeCloseTitle ||'',
+            confirmLabel: 'Close',
+            cancelLabel: 'Cancel',
+        });
+        if (response.confirmed || response.dismissed) {
+            setIsShowing(false);
+        }
+    }, [sendNotification, safeCloseTitle]);
+
     const close = useCallback(() => {
+        if (safeClose) {
+            return closeSafe();
+        }
         setIsShowing(false);
-    }, []);
+    }, [safeClose]);
 
     const modalSideSheetClassNames = classNames(
         styles.modalSideSheet,
