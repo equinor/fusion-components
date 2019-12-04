@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, select } from '@storybook/addon-knobs';
+import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
 import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
@@ -31,6 +31,7 @@ const ModalSideSheetStory = () => {
                 onClose={() => {
                     setIsOpen(false);
                 }}
+                safeClose={boolean("Safe close", false)}
                 headerIcons={[
                     <IconButton key="Icon1">
                         <WarningIcon outline />
