@@ -20,6 +20,7 @@ export type PersonCardProps = {
     photoSize?: PhotoSize;
     inline?: boolean;
     hidePopover?: boolean;
+    showJobTitle?: boolean;
 };
 
 export default ({
@@ -28,6 +29,7 @@ export default ({
     inline,
     photoSize = 'xlarge',
     hidePopover,
+    showJobTitle,
 }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
     const { error, personDetails } = personId
@@ -70,6 +72,9 @@ export default ({
                     <PersonPhoto person={currentPerson} size={photoSize} hidePopover />
                     <div className={styles.details}>
                         <div className={nameClassNames}>{currentPerson.name}</div>
+                        {showJobTitle && (
+                            <div className={styles.jobTitle}> {currentPerson.jobTitle}</div>
+                        )}
                         {shouldDisplayEmail && (
                             <div className={styles.email}>
                                 <a href={`mailto:${currentPerson.mail}`}>{currentPerson.mail}</a>
