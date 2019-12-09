@@ -1,5 +1,3 @@
-import { NotificationIcon } from './components/icons/components/alert';
-
 // Core components
 export { default as FusionHeader } from './components/core/Header';
 export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
