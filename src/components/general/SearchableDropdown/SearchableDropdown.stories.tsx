@@ -116,6 +116,7 @@ const DropdownStory = () => {
                     label="Narrow food"
                     onSelect={item => updateSections(item)}
                     sections={sections}
+                    dropdownMaxHeight={200}
                 />
             </div>
         </div>

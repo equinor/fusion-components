@@ -5,7 +5,6 @@ import {
     Menu,
     Dropdown,
     useDropdownController,
-    ErrorMessage,
 } from '@equinor/fusion-components';
 import styles from './styles.less';
 
@@ -34,6 +33,7 @@ type SearchableDropdownProps = {
     selectedComponent?: any;
     onSelect?: (item: SearchableDropdownOption) => void;
     onSearchAsync?: (query: string) => void;
+    dropdownMaxHeight?: number;
 };
 
 const createSingleSectionFromOptions = (
@@ -81,6 +81,7 @@ const SearchableDropdown = ({
     itemComponent,
     asideComponent,
     selectedComponent,
+    dropdownMaxHeight,
 }: SearchableDropdownProps) => {
     if ((!options && !sections) || (options && sections)) {
         throw new Error("You must supply only one of 'options', 'sections' props");
@@ -210,14 +211,19 @@ const SearchableDropdown = ({
     return (
         <div ref={containerRef}>
             <Dropdown controller={dropdownController}>
-                <Menu
-                    elevation={0}
-                    onClick={select}
-                    keyboardNavigationRef={inputRef.current}
-                    sections={dropdownSections}
-                    itemComponent={itemComponent}
-                    asideComponent={asideComponent}
-                />
+                <div
+                    className={styles.menuContainer}
+                    style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
+                >
+                    <Menu
+                        elevation={0}
+                        onClick={select}
+                        keyboardNavigationRef={inputRef.current}
+                        sections={dropdownSections}
+                        itemComponent={itemComponent}
+                        asideComponent={asideComponent}
+                    />
+                </div>
             </Dropdown>
         </div>
     );
