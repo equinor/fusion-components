@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, select, boolean } from '@storybook/addon-knobs';
+import { withKnobs, select, boolean, number } from '@storybook/addon-knobs';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
 import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
@@ -40,6 +40,10 @@ const ModalSideSheetStory = () => {
                         <DoneIcon />
                     </IconButton>,
                 ]}
+                isResizable={boolean("Resizable", false)}
+                id="Story.ModalSidesheet"
+                maxWidth={number("Max width", 0)}
+                minWidth={number("Min width", 0)}
             >
                 <div style={{ padding: '0 24px' }}>This is the modal side sheet content</div>
             </ModalSideSheet>
