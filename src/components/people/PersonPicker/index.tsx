@@ -21,6 +21,7 @@ type PersonPickerProps = {
     label?: string;
     placeholder?: string;
     initialPerson?: PersonDetails;
+    selectedPerson: PersonDetails | null;
     hasError?: boolean;
     errorMessage?: string;
     onSelect?: (person: PersonDetails) => void;
@@ -62,6 +63,7 @@ const AsideComponent = ({ item }) => {
 
 export default ({
     initialPerson,
+    selectedPerson,
     onSelect,
     hasError,
     errorMessage,
@@ -72,7 +74,6 @@ export default ({
     const [error, isQuerying, people, search] = usePersonQuery();
     const [searchQuery, setSearchQuery] = useState('');
     const [peopleMatch, setPeopleMatch] = useState<PersonDetails[]>([]);
-    const [selectedPersonId, setSelectedPersonId] = useState('');
     const [isInitialized, setInitialized] = useState(false);
 
     useEffect(() => {
@@ -91,15 +92,20 @@ export default ({
 
     useEffect(() => {
         if (isInitialized) {
-            setSections(peopleToSections(peopleMatch, selectedPersonId, searchQuery, isQuerying));
+            setSections(
+                peopleToSections(
+                    peopleMatch,
+                    selectedPerson != null ? selectedPerson.azureUniqueId : '',
+                    searchQuery,
+                    isQuerying
+                )
+            );
         } else {
             setInitialized(searchQuery !== '');
         }
-    }, [peopleMatch, searchQuery, selectedPersonId, isQuerying]);
+    }, [peopleMatch, searchQuery, selectedPerson, isQuerying]);
 
     const handleSelect = useCallback(item => {
-        setSelectedPersonId(item.key);
-
         if (onSelect) {
             onSelect(item.person);
         }
