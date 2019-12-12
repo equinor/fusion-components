@@ -6,11 +6,15 @@ interface ResizedSize {
     width: number;
 }
 
+export interface ResizablePaneOptions {
+    isResizable?: boolean;
+    id?: string;
+    minWidth?: number;
+    maxWidth?: number;
+}
+
 export default (
-    isEnabled?: boolean,
-    id?: string,
-    minWidth?: number,
-    maxWidth?: number,
+    { isResizable: isEnabled, id, minWidth, maxWidth }: ResizablePaneOptions,
     deps?: any[]
 ) => {
     const [appSettings, setAppSettings] = useAppSettings();
@@ -57,7 +61,7 @@ export default (
             const width = window.innerWidth - mouseEvent.pageX;
             const size = getConstrainedSize({ width });
 
-            setResizedSize(size);
+            window.requestAnimationFrame(() => setResizedSize(size));
         },
         [isResizing]
     );
@@ -65,7 +69,7 @@ export default (
     const onResizeEnd = useCallback(() => {
         if (isResizing) {
             setTimeout(() => setIsResizing(false));
-            
+
             if (resizeSettingsKey && resizedSize) {
                 setAppSettings(resizeSettingsKey, resizedSize);
             }

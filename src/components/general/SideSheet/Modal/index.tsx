@@ -10,11 +10,11 @@ import {
     PaginationArrow,
 } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames, useNotificationCenter } from '@equinor/fusion';
-import useResizablePanel from '../useResizablePanel';
+import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
 
 type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
-type ModalSideSheetProps = {
+type ModalSideSheetProps = ResizablePaneOptions & {
     children: ReactNode;
     header?: string;
     show?: boolean;
@@ -23,10 +23,6 @@ type ModalSideSheetProps = {
     size?: SideSheetSize;
     safeClose?: boolean;
     safeCloseTitle?: string;
-    isResizable?: boolean;
-    id?: string;
-    maxWidth?: number;
-    minWidth?: number;
 };
 
 export default ({
@@ -65,10 +61,12 @@ export default ({
     }, [sendNotification, safeCloseTitle]);
 
     const { resizedSize, isResizing, onResizeStart } = useResizablePanel(
-        isResizable,
-        id,
-        minWidth,
-        maxWidth,
+        {
+            isResizable,
+            id,
+            minWidth,
+            maxWidth,
+        },
         [size, show]
     );
 
