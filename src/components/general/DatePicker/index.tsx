@@ -11,12 +11,14 @@ import {
 } from '@equinor/fusion-components';
 
 type DatePickerProps = {
+    error?: boolean;
+    errorMessage?: string;
     label?: string;
-    selectedDate?: Date | null;
     onChange: (date: Date | null) => void;
+    selectedDate?: Date | null;
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({ label, selectedDate, onChange }) => {
+const DatePicker: React.FC<DatePickerProps> = ({ error, errorMessage, label, selectedDate, onChange  }) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [maskedValue, isValidMask] = useStringMask(dateMask, inputValue);
 
@@ -43,14 +45,16 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, selectedDate, onChange }
 
         return (
             <TextInput
-                value={value}
-                onChange={value => setInputValue(unmaskString(dateMask, value))}
-                onIconAction={() => isOpen && setIsOpen(false)}
-                onClick={() => !isOpen && setIsOpen(true)}
+                error={error}
+                errorMessage={errorMessage}
                 icon={<CalendarIcon />}
                 label={label}
-                placeholder={selectedDate ? formatDate(selectedDate) : 'dd/mm/yyyy'}
+                onChange={value => setInputValue(unmaskString(dateMask, value))}
+                onClick={() => !isOpen && setIsOpen(true)}
+                onIconAction={() => isOpen && setIsOpen(false)}
                 onKeyUp={handleKeyUp}
+                placeholder={selectedDate ? formatDate(selectedDate) : 'dd/mm/yyyy'}
+                value={value}
             />
         );
     });

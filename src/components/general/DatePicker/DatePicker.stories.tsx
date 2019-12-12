@@ -10,7 +10,8 @@ const DatePickerStory = () => {
     return (
         <div style={{ width: 200 }}>
             <DatePicker label="Select date" selectedDate={selectedDate} onChange={setSelecteDate} />
-
+            <br/>
+            <DatePicker label="Select date" selectedDate={selectedDate} onChange={setSelecteDate} error errorMessage="Select a date in the future"/>
         </div>
     );
 };
