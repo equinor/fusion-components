@@ -65,6 +65,7 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
         <div className={containerClassNames} key={id} style={{ ...resizedSize }}>
             {isResizable && isOpen && (
                 <div className={styles.resizeHandle} onMouseDown={onResizeStart}>
+                    <div className={styles.bar} />
                     <div className={resizeIndicatorClassNames}>
                         <PaginationArrow prev />
                         <PaginationArrow next />

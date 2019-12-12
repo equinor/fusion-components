@@ -117,6 +117,7 @@ export default ({
                 >
                     {isResizable && (
                         <div className={styles.resizeHandle} onMouseDown={onResizeStart}>
+                            <div className={styles.bar} />
                             <div className={resizeIndicatorClassNames}>
                                 <PaginationArrow prev />
                                 <PaginationArrow next />
