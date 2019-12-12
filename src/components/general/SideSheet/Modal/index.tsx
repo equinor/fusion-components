@@ -31,7 +31,7 @@ export default ({
     show,
     onClose,
     headerIcons,
-    size = 'xlarge',
+    size = 'large',
     safeClose,
     safeCloseTitle,
     isResizable = false,
