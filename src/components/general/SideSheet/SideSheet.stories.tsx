@@ -31,7 +31,7 @@ const OutsideContent = () => (
 );
 
 const SidesheetContent = () => (
-    <div style={{ paddingTop: 16, paddingLeft: 16 }}>
+    <div style={{ paddingTop: 32, paddingLeft: 32 }}>
         <p>
             I'm gonna be at the dance. Well yeah, you know we have two of them. Excuse me. Oh honey,
             he's teasing you, nobody has two television sets. Oh yes sir.
@@ -136,7 +136,7 @@ const ModalSideSheetStory = () => {
                 maxWidth={number('Max width', 0)}
                 minWidth={number('Min width', 0)}
             >
-                <div style={{ padding: '0 24px' }}>This is the modal side sheet content</div>
+                <SidesheetContent />
             </ModalSideSheet>
         </div>
     );

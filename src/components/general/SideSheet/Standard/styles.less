@@ -38,7 +38,7 @@
     }
 
     @media (max-width: @mobile-max-width) {
-        width: 100%;
+        width: 100% !important;
         height: 100%;
         transition: transform .1s ease-out;
 
@@ -49,6 +49,10 @@
             right: 0;
             position: fixed;
             pointer-events: all;
+        }
+
+        .resizeHandle {
+            display: none;
         }
     }
 
