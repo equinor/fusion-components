@@ -1,13 +1,19 @@
-import React, { FC, useState, useCallback, useRef, useEffect, ReactNode } from 'react';
+import React, { FC, useState, useCallback, useRef, useEffect, ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
 import styles from './styles.less';
 import CollapseExpandButton from './CollapseExpandButton';
-import { OverlayPortal, styling } from '@equinor/fusion-components';
+import {
+    OverlayPortal,
+    styling,
+    PaginationArrow,
+    useElevationClassName,
+} from '@equinor/fusion-components';
+import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
 
 type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
-export type StandardSideSheetProps = {
+export type StandardSideSheetProps = ResizablePaneOptions & {
     id: string;
     title?: string;
     isOpen: boolean;
@@ -25,10 +31,19 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
     size = 'medium',
     children,
     screenPlacement = 'right',
+    isResizable,
+    minWidth,
+    maxWidth,
 }) => {
     const toggleOpen = useCallback(() => {
         onClose(!isOpen);
     }, [isOpen]);
+
+    const windowWidth = (window.innerWidth / 3) * 2;
+    const { resizedSize, isResizing, onResizeStart } = useResizablePanel(
+        { isResizable: isOpen && isResizable, id, minWidth, maxWidth: Math.min(maxWidth || windowWidth, windowWidth) },
+        [size, isOpen]
+    );
 
     const containerClassNames = classNames(
         styles.container,
@@ -40,11 +55,22 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
             [styles.large]: size === 'large',
             [styles.medium]: size === 'medium',
             [styles.small]: size === 'small',
+            [styles.isResizing]: isResizing,
         }
     );
 
+    const resizeIndicatorClassNames = classNames(styles.indicator, useElevationClassName(1));
+
     return (
-        <div className={containerClassNames} key={id}>
+        <div className={containerClassNames} key={id} style={{ ...resizedSize }}>
+            {isResizable && isOpen && (
+                <div className={styles.resizeHandle} onMouseDown={onResizeStart}>
+                    <div className={resizeIndicatorClassNames}>
+                        <PaginationArrow prev />
+                        <PaginationArrow next />
+                    </div>
+                </div>
+            )}
             <div className={styles.header}>
                 <div className={styles.collapseButtonContainer}>
                     <CollapseExpandButton
@@ -55,7 +81,7 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
                 </div>
                 {isOpen && title && <div className={styles.title}>{title}</div>}
             </div>
-            {isOpen && <div>{children}</div>}
+            {isOpen && <div className={styles.content}>{children}</div>}
         </div>
     );
 };
@@ -66,6 +92,10 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     isOpen,
     onClose,
     size,
+    screenPlacement,
+    isResizable,
+    minWidth,
+    maxWidth,
     children,
 }) => {
     const [windowWidth, setWindowWidth] = useState<Number>(0);
@@ -91,12 +121,22 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     }, [rootElement, windowWidth]);
 
     const sideSheet = (
-        <SideSheet id={id} title={title} isOpen={isOpen} size={size} onClose={onClose}>
+        <SideSheet
+            id={id}
+            title={title}
+            isOpen={isOpen}
+            size={size}
+            onClose={onClose}
+            screenPlacement={screenPlacement}
+            isResizable={isResizable}
+            minWidth={minWidth}
+            maxWidth={maxWidth}
+        >
             {children}
         </SideSheet>
     );
 
-    const mobileMaxWidth = styling.mobileWidth();
+    const mobileMaxWidth = useMemo(() => styling.mobileWidth(), [windowWidth]);
 
     if (isOpen && windowWidth < parseInt(mobileMaxWidth)) {
         return <OverlayPortal show={isOpen}>{sideSheet}</OverlayPortal>;

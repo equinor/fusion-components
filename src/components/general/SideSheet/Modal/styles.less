@@ -8,33 +8,39 @@
     width: var(--modal-size);
     transform: translateX(640px);
     background: var(--color-white);
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     pointer-events: all;
     transition: transform .2s ease;
+    max-width: calc(100vw - (var(--grid-unit) * 4px));
 
 
     @media (max-width: @mobile-max-width) {
-        width: 100%;
+        width: 100% !important;
+        max-width: 100%;
         left: 0;
         transition: transform .1s ease-out;
+
+        .resizeHandle {
+            display: none;
+        }
     }
 
     &.xlarge {
+        --modal-size: calc(var(--grid-unit) * 120px);
+    }
+
+    &.large {
         --modal-size: calc(var(--grid-unit) * 80px);
     }
 
-    &.large{
+    &.medium {
         --modal-size: calc(var(--grid-unit) * 60px);
     }
 
-    &.medium{
+    &.small {
         --modal-size: calc(var(--grid-unit) * 40px);
-    }
-
-    &.small{
-        --modal-size: calc(var(--grid-unit) * 30px);
     }
 
     .content {
@@ -84,6 +90,46 @@
         --header-font-size: calc(var(--grid-unit) * 2.5px);
         --header-line-height: calc(var(--grid-unit) * 4px);
     }
+
+    .resizeHandle {
+        width: calc(var(--grid-unit) * 1px);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(var(--grid-unit) * -.5px);
+        cursor: col-resize;
+    
+        .indicator {
+            position: absolute;
+            top: 50%;
+            left: calc(var(--grid-unit) * -1px);
+            width: calc(var(--grid-unit) * 3px);
+            height: calc(var(--grid-unit) * 3px);
+            background: var(--color-white);
+            border-radius: 4px;
+            transform: translateY(-50%);
+            display: flex;
+            align-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity .2s;
+        }
+    
+        &:hover {
+            background: rgba(0, 0, 0, .1);
+        }
+    }
+    
+    &:hover {
+        .resizeHandle {
+            .indicator {
+                opacity: 1;
+            }
+        }
+    }
+
+    &.isResizing {
+        user-select: none;
+    }
 }
 
-    

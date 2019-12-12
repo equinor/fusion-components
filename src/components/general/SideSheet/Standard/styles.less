@@ -2,17 +2,19 @@
 @import '~styles/variables.less';
 
 .container {
+    position: relative;
+    z-index: 1;
     box-sizing: border-box;
     height: 100%;
     border-left: 2px solid var(--color-black-alt4);
     transition: width .1s;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: visible;
     color: var(--color-primary-accent);
     width: var(--sidesheet-size);
     flex-shrink: 0;
     background: var(--color-white);
-    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
 
     &.screenPlacementLeft {
         border-left: none;
@@ -36,7 +38,7 @@
     }
 
     @media (max-width: @mobile-max-width) {
-        width: 100%;
+        width: 100% !important;
         height: 100%;
         transition: transform .1s ease-out;
 
@@ -48,17 +50,23 @@
             position: fixed;
             pointer-events: all;
         }
+
+        .resizeHandle {
+            display: none;
+        }
     }
 
     .content {
        display: flex;
        flex-direction: column;
+       overflow: auto;
     }
 
     .header{
         display: flex;
         align-items: center;
         overflow: hidden;
+        flex-shrink: 0;
     }
 
     .collapseButtonContainer {
@@ -77,5 +85,51 @@
 
     &.isCollapsed {
         width: .grid-unit(6px)[];
+
+        .resizeHandle {
+            display: none;
+        }
+    }
+
+    .resizeHandle {
+        width: calc(var(--grid-unit) * 1px);
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        bottom: 0;
+        left: calc(var(--grid-unit) * -.5px);
+        cursor: col-resize;
+    
+        .indicator {
+            position: absolute;
+            top: 50%;
+            left: calc(var(--grid-unit) * -1px);
+            width: calc(var(--grid-unit) * 3px);
+            height: calc(var(--grid-unit) * 3px);
+            background: var(--color-white);
+            border-radius: 4px;
+            transform: translateY(-50%);
+            display: flex;
+            align-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity .2s;
+        }
+    
+        &:hover {
+            background: rgba(0, 0, 0, .1);
+        }
+    }
+    
+    &:hover {
+        .resizeHandle {
+            .indicator {
+                opacity: 1;
+            }
+        }
+    }
+
+    &.isResizing {
+        user-select: none;
     }
 }
