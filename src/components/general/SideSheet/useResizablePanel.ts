@@ -11,10 +11,11 @@ export interface ResizablePaneOptions {
     id?: string;
     minWidth?: number;
     maxWidth?: number;
+    screenPlacement?: 'right' | 'left';
 }
 
 export default (
-    { isResizable: isEnabled, id, minWidth, maxWidth }: ResizablePaneOptions,
+    { isResizable: isEnabled, id, minWidth, maxWidth, screenPlacement }: ResizablePaneOptions,
     deps?: any[]
 ) => {
     const [appSettings, setAppSettings] = useAppSettings();
@@ -58,7 +59,7 @@ export default (
 
             const mouseEvent = e as MouseEvent;
 
-            const width = window.innerWidth - mouseEvent.pageX;
+            const width = screenPlacement === "left" ? mouseEvent.pageX : window.innerWidth - mouseEvent.pageX;
             const size = getConstrainedSize({ width });
 
             window.requestAnimationFrame(() => setResizedSize(size));
@@ -84,7 +85,9 @@ export default (
             const persistedSize = appSettings[resizeSettingsKey] as ResizedSize;
 
             if (persistedSize && persistedSize.width) {
+                setIsResizing(true);
                 setResizedSize(getConstrainedSize(persistedSize));
+                setTimeout(() => setIsResizing(false), 0);
                 return;
             }
         }

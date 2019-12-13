@@ -41,7 +41,13 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
 
     const windowWidth = (window.innerWidth / 3) * 2;
     const { resizedSize, isResizing, onResizeStart } = useResizablePanel(
-        { isResizable: isOpen && isResizable, id, minWidth, maxWidth: Math.min(maxWidth || windowWidth, windowWidth) },
+        {
+            isResizable: isOpen && isResizable,
+            id,
+            minWidth,
+            maxWidth: Math.min(maxWidth || windowWidth, windowWidth),
+            screenPlacement,
+        },
         [size, isOpen]
     );
 

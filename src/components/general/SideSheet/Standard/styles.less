@@ -19,6 +19,15 @@
     &.screenPlacementLeft {
         border-left: none;
         border-right: 2px solid var(--color-black-alt4);
+
+        .header {
+            flex-direction: row-reverse;
+        }
+
+        .resizeHandle {
+            right: calc(var(--grid-unit) * -2px);
+            left: auto;
+        }
     }
 
     &.xlarge {
@@ -82,6 +91,7 @@
     .title {
         font-size: calc(var(--grid-unit) * 3px);
         padding-left: calc(var(--grid-unit) * 2px);
+        flex-grow: 1;
     }
 
     &.isCollapsed {
@@ -141,6 +151,7 @@
 
     &.isResizing {
         user-select: none;
+        transition: none;
 
         .resizeHandle {
             .bar {
