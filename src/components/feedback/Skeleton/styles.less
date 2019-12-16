@@ -16,6 +16,58 @@
 
 .disc{
     border-radius: 50%;
+    display: flex;
+    position: relative;
+    width: var(--photo-size);
+    height: var(--photo-size);
+    
+        &.xlarge {
+            &.comfortable {
+                // 56x56
+                --photo-size: calc(var(--grid-unit) * 7px);
+            }
+    
+            &.compact {
+                // 48x48
+                --photo-size: calc(var(--grid-unit) * 6px);
+            }
+        }
+    
+        &.large {
+            &.comfortable {
+                // 40x40
+                --photo-size: calc(var(--grid-unit) * 5px);
+            }
+    
+            &.compact {
+                // 32x32
+                --photo-size: calc(var(--grid-unit) * 4px);
+            }
+        }
+    
+        &.medium {
+            &.comfortable {
+                // 32x32
+                --photo-size: calc(var(--grid-unit) * 4px);
+            }
+    
+            &.compact {
+                // 24x24
+                --photo-size: calc(var(--grid-unit) * 3px);
+            }
+        }
+    
+        &.small {
+            &.comfortable {
+                // 24x24
+                --photo-size: calc(var(--grid-unit) * 3px);
+            }
+    
+            &.compact {
+                // 16x16
+                --photo-size: calc(var(--grid-unit) * 2px);
+            }
+        }
 }
 
 @keyframes skeleton-slide {

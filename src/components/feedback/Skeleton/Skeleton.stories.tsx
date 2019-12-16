@@ -4,6 +4,16 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 
 import { SkeletonBar, SkeletonButton, SkeletonDisc } from './index';
 import { styling } from '@equinor/fusion-components';
+import { DiscSize } from './Disc';
+
+const sizes = {
+    xlarge: 'xlarge',
+    large: 'large',
+    medium: 'medium',
+    small: 'small',
+};
+
+const size = sizes.xlarge as DiscSize;
 
 const stories = storiesOf('Feedback|Skeleton', module);
 stories.addDecorator(withFusionStory('Skeleton'));
@@ -45,16 +55,7 @@ stories.add('Button', () => (
 stories.add('Disc', () => (
     <>
         <div>
-            <SkeletonDisc width={styling.grid(7)} height={styling.grid(7)} />
-        </div>
-        <div>
-            <SkeletonDisc width={styling.grid(6)} height={styling.grid(6)} />
-        </div>
-        <div>
-            <SkeletonDisc width={styling.grid(5)} height={styling.grid(5)} />
-        </div>
-        <div>
-            <SkeletonDisc width={styling.grid(4)} height={styling.grid(4)} />
+            <SkeletonDisc size={size} />
         </div>
     </>
 ));
