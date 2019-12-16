@@ -115,14 +115,6 @@ export default ({
         </>
     );
 
-    if (isFetching) {
-        return (
-            <div className={photoClassNames}>
-                <SkeletonDisc size={size} />
-            </div>
-        );
-    }
-
     const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
         <PopoverContent />,
         {
@@ -132,6 +124,14 @@ export default ({
         true,
         500
     );
+
+    if (isFetching) {
+        return (
+            <div className={photoClassNames}>
+                <SkeletonDisc size={size} />
+            </div>
+        );
+    }
 
     return (
         <div

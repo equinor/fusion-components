@@ -81,9 +81,7 @@ export default ({
                                     <SkeletonBar />
                                 </div>
                             )}
-                            <div>
-                                <SkeletonBar />
-                            </div>
+                            <SkeletonBar />
                         </div>
                     )}
                     <div className={styles.details}>
