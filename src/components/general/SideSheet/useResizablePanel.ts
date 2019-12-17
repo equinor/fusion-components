@@ -43,10 +43,8 @@ export default (
             const actualMinWidth = minWidth || 150;
 
             if (width > actualMaxWidth) {
-                console.log("CONSTRAINING SIZE MAX", actualMaxWidth);
                 return { width: actualMaxWidth };
             } else if (width < actualMinWidth) {
-                console.log("CONSTRAINING SIZE MIN", actualMinWidth);
                 return { width: actualMinWidth };
             }
 
@@ -90,7 +88,6 @@ export default (
             const persistedSize = appSettings[resizeSettingsKey] as ResizedSize;
 
             if (persistedSize && persistedSize.width) {
-                console.log("SETTING SIZE", persistedSize.width);
                 setIsResizing(true);
                 setResizedSize(getConstrainedSize(persistedSize));
                 setTimeout(() => setIsResizing(false), 0);
