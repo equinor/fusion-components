@@ -21,12 +21,14 @@ export default (
     const [appSettings, setAppSettings] = useAppSettings();
     const resizeSettingsKey = id && `${id}.size`;
     const [isResizing, setIsResizing] = useState(false);
+    const [mouseIsDown, setMouseIsDown] = useState(false);
     const [resizedSize, setResizedSize] = useState<ResizedSize | null>(null);
 
     const onResizeStart = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             if (isEnabled) {
                 setIsResizing(true);
+                setMouseIsDown(true);
             }
         },
         [isEnabled]
@@ -41,8 +43,10 @@ export default (
             const actualMinWidth = minWidth || 150;
 
             if (width > actualMaxWidth) {
+                console.log("CONSTRAINING SIZE MAX", actualMaxWidth);
                 return { width: actualMaxWidth };
             } else if (width < actualMinWidth) {
+                console.log("CONSTRAINING SIZE MIN", actualMinWidth);
                 return { width: actualMinWidth };
             }
 
@@ -53,7 +57,7 @@ export default (
 
     const onResize = useCallback(
         (e: Event) => {
-            if (!isResizing) {
+            if (!isResizing || !mouseIsDown) {
                 return;
             }
 
@@ -69,6 +73,7 @@ export default (
 
     const onResizeEnd = useCallback(() => {
         if (isResizing) {
+            setMouseIsDown(false);
             setTimeout(() => setIsResizing(false));
 
             if (resizeSettingsKey && resizedSize) {
@@ -85,6 +90,7 @@ export default (
             const persistedSize = appSettings[resizeSettingsKey] as ResizedSize;
 
             if (persistedSize && persistedSize.width) {
+                console.log("SETTING SIZE", persistedSize.width);
                 setIsResizing(true);
                 setResizedSize(getConstrainedSize(persistedSize));
                 setTimeout(() => setIsResizing(false), 0);
