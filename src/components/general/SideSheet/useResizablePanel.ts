@@ -21,12 +21,14 @@ export default (
     const [appSettings, setAppSettings] = useAppSettings();
     const resizeSettingsKey = id && `${id}.size`;
     const [isResizing, setIsResizing] = useState(false);
+    const [mouseIsDown, setMouseIsDown] = useState(false);
     const [resizedSize, setResizedSize] = useState<ResizedSize | null>(null);
 
     const onResizeStart = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
             if (isEnabled) {
                 setIsResizing(true);
+                setMouseIsDown(true);
             }
         },
         [isEnabled]
@@ -53,7 +55,7 @@ export default (
 
     const onResize = useCallback(
         (e: Event) => {
-            if (!isResizing) {
+            if (!isResizing || !mouseIsDown) {
                 return;
             }
 
@@ -69,6 +71,7 @@ export default (
 
     const onResizeEnd = useCallback(() => {
         if (isResizing) {
+            setMouseIsDown(false);
             setTimeout(() => setIsResizing(false));
 
             if (resizeSettingsKey && resizedSize) {
