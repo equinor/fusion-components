@@ -8,7 +8,7 @@ import { ContextTypes, useFusionContext } from '@equinor/fusion';
 const CurrentContextPDP: React.FC = ({ children }) => {
     const { app } = useFusionContext();
 
-    app.container.currentApp = {
+    (app.container as any)._currentApp.state = {
         AppComponent: ContextSelector,
         key: 'PDP',
         name: 'PDP',

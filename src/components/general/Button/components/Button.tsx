@@ -14,7 +14,7 @@ type ButtonProps = {
 };
 
 const ButtonComponent = React.forwardRef<
-    HTMLButtonElement | null,
+    HTMLButtonElement,
     React.PropsWithChildren<ButtonProps>
 >(({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, ...props }, ref) => (
     <button

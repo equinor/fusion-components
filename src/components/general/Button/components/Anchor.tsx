@@ -14,7 +14,7 @@ type AnchorProps = {
     mouseHasBeenDown: boolean;
 };
 
-const AnchorComponent = forwardRef<HTMLAnchorElement | null, AnchorProps>(
+const AnchorComponent = forwardRef<HTMLAnchorElement, AnchorProps>(
     (
         { children, url, targetBlank, onMouseDown, onMouseUp, onClick, onClickCapture, ...props },
         ref

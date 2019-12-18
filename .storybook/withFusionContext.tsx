@@ -129,7 +129,8 @@ authContainer.registerAppAsync(
 const FusionWrapper: React.FC = ({ children }) => {
     const overlay = React.useRef<HTMLElement | null>(null);
     const root = React.useRef<HTMLElement | null>(null);
-    const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root });
+    const headerContent = React.useRef<HTMLElement | null>(null);
+    const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root, headerContent });
 
     return (
         <FusionContext.Provider value={fusionContext}>

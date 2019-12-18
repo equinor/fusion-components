@@ -57,7 +57,7 @@ const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<Butt
             <AnchorComponent
                 {...props}
                 displayType={displayType}
-                ref={buttonRef as React.RefObject<HTMLAnchorElement | null>}
+                ref={buttonRef as React.RefObject<HTMLAnchorElement>}
                 mouseHasBeenDown={mouseHasBeenDown}
                 onMouseDown={handleOnMouseDown}
                 onMouseUp={handleOnMouseUp}
@@ -69,7 +69,7 @@ const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<Butt
             <ButtonComponent
                 {...props}
                 displayType={displayType}
-                ref={buttonRef as React.RefObject<HTMLButtonElement | null>}
+                ref={buttonRef as React.RefObject<HTMLButtonElement>}
                 mouseHasBeenDown={mouseHasBeenDown}
                 onMouseDown={handleOnMouseDown}
                 onMouseUp={handleOnMouseUp}

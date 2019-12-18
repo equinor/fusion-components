@@ -43,10 +43,8 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
             forceUpdate(null);
         }
 
-        return appContainer.on('update', app => {
-            if (app.key === appKey) {
-                forceUpdate(null);
-            }
+        return appContainer.on('update', () => {
+            forceUpdate(null);
         });
     }, [appKey]);
 
