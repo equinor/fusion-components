@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { PersonPhoto, PhotoSize, usePopoverRef } from '@equinor/fusion-components';
+import {
+    PersonPhoto,
+    PhotoSize,
+    usePopoverRef,
+    PersonPicker,
+    styling,
+} from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
 import {
@@ -22,6 +28,7 @@ export type PersonCardProps = {
     inline?: boolean;
     hidePopover?: boolean;
     showJobTitle?: boolean;
+    isFetchingPerson?: boolean;
 };
 
 export default ({
@@ -31,11 +38,12 @@ export default ({
     photoSize = 'xlarge',
     hidePopover,
     showJobTitle,
+    isFetchingPerson,
 }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
     const { isFetching, error, personDetails } = personId
         ? usePersonDetails(personId)
-        : { isFetching: true, error: null, personDetails: person };
+        : { isFetching: isFetchingPerson, error: null, personDetails: person };
 
     useEffect(() => {
         if (!error && personDetails) {
@@ -66,24 +74,40 @@ export default ({
         500
     );
 
+    if (isFetchingPerson) {
+        return (
+            <div className={containerClassNames}>
+                <PersonPhoto size={photoSize} />
+                <div className={styles.details}>
+                    <div className={nameClassNames}>
+                        {showJobTitle ? (
+                            <SkeletonBar height={styling.grid(1.5)} />
+                        ) : (
+                            <SkeletonBar />
+                        )}
+                    </div>
+                    {showJobTitle && (
+                        <div className={styles.jobTitle}>
+                            <SkeletonBar height={styling.grid(1.5)} />
+                        </div>
+                    )}
+                    <div>
+                        {showJobTitle ? (
+                            <SkeletonBar height={styling.grid(1.5)} />
+                        ) : (
+                            <SkeletonBar />
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div ref={hidePopover ? undefined : popoverRef}>
             {currentPerson && (
                 <div className={containerClassNames}>
                     <PersonPhoto person={currentPerson} size={photoSize} hidePopover />
-                    {isFetching && (
-                        <div className={styles.details}>
-                            <div className={nameClassNames}>
-                                <SkeletonBar />
-                            </div>
-                            {showJobTitle && (
-                                <div className={styles.jobTitle}>
-                                    <SkeletonBar />
-                                </div>
-                            )}
-                            <SkeletonBar />
-                        </div>
-                    )}
                     <div className={styles.details}>
                         <div className={nameClassNames}>{currentPerson.name}</div>
                         {showJobTitle && (

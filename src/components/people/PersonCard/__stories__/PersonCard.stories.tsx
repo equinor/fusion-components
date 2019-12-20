@@ -80,13 +80,44 @@ const PersonCardStory = () => {
 
     const size = select('Photo size', sizes, sizes.xlarge) as PhotoSize;
 
+    const [isFetchingPerson, setIsFetchingPerson] = React.useState(true);
+
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsFetchingPerson(false);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, [isFetchingPerson]);
+
     return (
-        <PersonCard
-            person={person}
-            photoSize={size}
-            showJobTitle={boolean('Job title', true)}
-            inline={boolean('Inline', false)}
-        />
+        <>
+            <div style={{ paddingBottom: '16px' }}>
+                <PersonCard
+                    person={person}
+                    photoSize={size}
+                    showJobTitle={boolean('Job title', true)}
+                    inline={boolean('Inline', false)}
+                />
+            </div>
+            <div style={{ paddingBottom: '16px' }}>
+                <PersonCard
+                    person={person}
+                    isFetchingPerson={isFetchingPerson}
+                    photoSize={size}
+                    showJobTitle={boolean('Job title', true)}
+                    inline={boolean('Inline', false)}
+                />
+            </div>
+            <div>
+                <PersonCard
+                    person={person}
+                    isFetchingPerson
+                    photoSize={size}
+                    showJobTitle={boolean('Job title', true)}
+                    inline={boolean('Inline', false)}
+                />
+            </div>
+        </>
     );
 };
 
