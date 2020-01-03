@@ -2,6 +2,7 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Slider from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { DatePicker } from '@equinor/fusion-components';
 
 const SliderPercentageStory = () => {
@@ -29,13 +30,14 @@ const SliderPercentageStory = () => {
 
     return (
         <div style={{ width: 400, margin: '0 auto' }}>
-            <Slider value={value} markers={markers} onChange={marker => setValue(marker.value)} />
+            <Slider value={value} markers={markers} onChange={marker => setValue(marker.value)} hideHandle={boolean('Hide handle', false)}/>
             <p>Value: {Math.ceil(value)}%</p>
             <Slider
                 value={value}
                 disabled
                 markers={markers}
                 onChange={marker => setValue(marker.value)}
+                hideHandle={boolean('Hide handle', false)}
             />
         </div>
     );
@@ -77,6 +79,7 @@ const SliderDateStory = () => {
                     value={value.getTime()}
                     markers={markers}
                     onChange={marker => setValue(new Date(marker.value))}
+                    hideHandle={boolean('Hide handle', false)}
                 />
             </div>
         </div>
@@ -84,6 +87,7 @@ const SliderDateStory = () => {
 };
 
 storiesOf('General|Slider', module)
+    .addDecorator(withKnobs)
     .addDecorator(withFusionStory('Slider'))
     .add('Percentage', () => <SliderPercentageStory />)
     .add('Date', () => <SliderDateStory />);
