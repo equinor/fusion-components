@@ -74,7 +74,7 @@ export default ({
         500
     );
 
-    if (isFetchingPerson) {
+    if (isFetching) {
         return (
             <div className={containerClassNames}>
                 <PersonPhoto size={photoSize} />
