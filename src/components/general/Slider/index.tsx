@@ -11,10 +11,11 @@ type SliderProps = {
     value: number; // | [number, number];
     markers: SliderMarker[];
     disabled?: boolean;
+    hideHandle?: boolean;
     onChange: (marker: SliderMarker) => void;
 };
 
-const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) => {
+const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
     const trackRef = useRef<HTMLDivElement | null>(null);
     const [trackLeft, setTrackLeft] = useState(0);
     const [trackWidth, setTrackWidth] = useState(0);
@@ -111,15 +112,17 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, onChange }) =
                     width: calculatePosition(value),
                 }}
             />
-            <button
-                className={styles.handle}
-                onMouseDown={onHandleMouseDown}
-                style={{
-                    left: calculatePosition(value),
-                }}
-            >
-                <div className={styles.dot} />
-            </button>
+            {!hideHandle && (
+                <button
+                    className={styles.handle}
+                    onMouseDown={onHandleMouseDown}
+                    style={{
+                        left: calculatePosition(value),
+                    }}
+                >
+                    <div className={styles.dot} />
+                </button>
+            )}
             {sortedMarkers.map(marker => (
                 <Marker
                     key={marker.value}
