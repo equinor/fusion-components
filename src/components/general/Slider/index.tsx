@@ -103,10 +103,6 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
         }
     );
 
-    const handleClassNames = classNames(styles.handle, {
-        [styles.hideHandle]: hideHandle,
-    })
-
     return (
         <div className={containerClassNames} onClick={onTrackClick}>
             <div className={styles.track} ref={trackRef} />
@@ -116,15 +112,17 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
                     width: calculatePosition(value),
                 }}
             />
-            <button
-                className={handleClassNames}
-                onMouseDown={onHandleMouseDown}
-                style={{
-                    left: calculatePosition(value),
-                }}
-            >
-                <div className={styles.dot} />
-            </button>
+            {!hideHandle && (
+                <button
+                    className={styles.handle}
+                    onMouseDown={onHandleMouseDown}
+                    style={{
+                        left: calculatePosition(value),
+                    }}
+                >
+                    <div className={styles.dot} />
+                </button>
+            )}
             {sortedMarkers.map(marker => (
                 <Marker
                     key={marker.value}
