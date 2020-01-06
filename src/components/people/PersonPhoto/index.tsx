@@ -13,6 +13,8 @@ import FallbackImage from './FallbackImage';
 import AccountTypeBadge from './AccountTypeBadge';
 import RotationBadge from './RotationBadge';
 import PersonDetail from '../PersonDetail';
+import { SkeletonDisc } from '../../feedback/Skeleton';
+
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 export type PersonPhotoProps = {
@@ -46,7 +48,7 @@ export default ({
     additionalPersons = [],
 }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
-    const { imageUrl, error: imageError } = usePersonImageUrl(
+    const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(
         person && additionalPersons.length === 0 ? person.azureUniqueId : personId || ''
     );
 
@@ -80,13 +82,15 @@ export default ({
         <div>
             {[...additionalPersons, currentPerson].map(person => (
                 <>
-                    <span>{person ? person.name: "TBN"}</span>
+                    <span>{person ? person.name : 'TBN'}</span>
                     <br />
                 </>
             ))}
         </div>
+    ) : currentPerson ? (
+        currentPerson.name
     ) : (
-        currentPerson ? currentPerson.name : "TBN"
+        'TBN'
     );
     const nameTooltipRef = useTooltipRef(toolTipContent);
 
@@ -120,6 +124,14 @@ export default ({
         true,
         500
     );
+
+    if (isFetching) {
+        return (
+            <div className={photoClassNames}>
+                <SkeletonDisc size={size} />
+            </div>
+        );
+    }
 
     return (
         <div
