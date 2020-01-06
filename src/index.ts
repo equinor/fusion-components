@@ -66,7 +66,7 @@ export { default as Spinner } from './components/feedback/Spinner';
 export { default as Banner } from './components/feedback/Banner';
 export { Dialog, DialogActions, DialogContent, DialogTitle } from './components/feedback/Dialog';
 export { default as Snackbar } from './components/feedback/Snackbar';
-export { SkeletonBar, SkeletonButton } from './components/feedback/Skeleton';
+export { SkeletonBar, SkeletonButton, SkeletonDisc } from './components/feedback/Skeleton';
 
 // Hooks
 export { default as useElevationClassName, Elevation } from './hooks/useElevationClassName';
