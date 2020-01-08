@@ -30,14 +30,14 @@ const useBreakpoint = (
             if (!nodeRef.current) {
                 return;
             }
-            
+
             const nodeRect = nodeRef.current.getBoundingClientRect();
             setCurrentBreakpoints(checkSize(nodeRect));
         });
     };
 
     useEventListener(window, 'resize', performCheckSize, [], true);
-    useEffect(performCheckSize, []);
+    useEffect(performCheckSize, [nodeRef.current]);
 
     return [nodeRef as MutableRefObject<HTMLDivElement>, currentBreakpoints];
 };
