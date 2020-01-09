@@ -1,13 +1,18 @@
 import * as React from 'react';
 import * as styles from './styles.less';
-import PopoverContainer, { PopoverContainerProps } from './components/Container';
+import PopoverContainer, {
+    PopoverContainerProps,
+    PopoverPlacement,
+    PopoverJustification,
+} from './components/Container';
 import {
     useClickToggleController,
     useRelativePositioning,
-    useClickOutsideOverlayPortal,
     useOverlayPortal,
     useHoverToggleController,
 } from '@equinor/fusion-components';
+import useClickOutside from '../useClickOutside';
+export { PopoverPlacement, PopoverJustification };
 
 export default <T extends HTMLElement>(
     content: React.ReactNode,
@@ -46,23 +51,28 @@ export default <T extends HTMLElement>(
         return () => clearTimeout(timer);
     }, [isPopoverOpen, isContentOpen]);
 
-    useClickOutsideOverlayPortal(close, popoverContentRef.current);
+    useClickOutside(close, popoverContentRef.current);
 
     useOverlayPortal(
         isOpen,
-        <div
-            className={styles.container}
-            style={{
-                width: rect.width,
-                height: rect.height,
-                top: rect.top,
-                left: rect.left,
-            }}
-        >
-            <PopoverContainer ref={popoverContentRef as React.RefObject<HTMLDivElement>} {...props}>
-                {content}
-            </PopoverContainer>
-        </div>
+        isOpen ? (
+            <div
+                className={styles.container}
+                style={{
+                    width: rect.width,
+                    height: rect.height,
+                    top: rect.top,
+                    left: rect.left,
+                }}
+            >
+                <PopoverContainer
+                    ref={popoverContentRef as React.RefObject<HTMLDivElement>}
+                    {...props}
+                >
+                    {content}
+                </PopoverContainer>
+            </div>
+        ) : null
     );
 
     return [ref, isOpen, setIsOpen];

@@ -42,12 +42,25 @@
 
     &.left {
         right: 100%;
+        margin-right: calc(var(--grid-unit) * 1px);
 
         .arrow {
             transform: rotate(90deg);
 
             left: 100%;
             margin-left: -2px;
+        }
+    }
+
+    &.right {
+        left: 100%;
+        margin-left: calc(var(--grid-unit) * 1px);
+
+        .arrow {
+            transform: rotate(-90deg);
+
+            right: 100%;
+            margin-right: -2px;
         }
     }
 
@@ -73,7 +86,7 @@
         }
 
         &.above .arrow {
-            transform: rotate(180deg) translateX(-50%);
+            transform: translateX(-50%) rotate(180deg);
         }
     }
 

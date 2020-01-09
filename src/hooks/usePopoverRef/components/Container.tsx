@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import styles from '../styles.less';
 import useElevationClassName from '../../useElevationClassName';
 
-type PopoverPlacement = 'below' | 'above' | 'left' | 'right';
-type PopoverJustification = 'start' | 'center' | 'end';
+export type PopoverPlacement = 'below' | 'above' | 'left' | 'right';
+export type PopoverJustification = 'start' | 'center' | 'end';
 
 export type PopoverContainerProps = {
     placement?: PopoverPlacement;
@@ -37,10 +37,67 @@ const Arrow = () => {
     );
 };
 
+const isCompletelyInView = (el: HTMLElement, margin = 1) => {
+    const rect = el.getBoundingClientRect();
+
+    return (
+        el.contains(document.elementFromPoint(rect.left + margin, rect.top + margin)) &&
+        el.contains(document.elementFromPoint(rect.left + margin, rect.bottom - margin)) &&
+        el.contains(document.elementFromPoint(rect.right - margin, rect.top + margin)) &&
+        el.contains(document.elementFromPoint(rect.right - margin, rect.bottom - margin))
+    );
+};
+
+const getNextAlternativePlacement = (
+    possiblePlacements: PopoverPlacement[],
+    testedPlacements: PopoverPlacement[]
+): PopoverPlacement | null => {
+    const next = possiblePlacements.filter(p => testedPlacements.indexOf(p) === -1);
+
+    if (next.length > 0) {
+        return next[0];
+    }
+
+    return null;
+};
+
+const getAlternatives = (preferredPlacement: PopoverPlacement): PopoverPlacement[] => {
+    switch (preferredPlacement) {
+        case 'above':
+            return ['below', 'left', 'right'];
+
+        case 'below':
+            return ['above', 'left', 'right'];
+
+        case 'left':
+            return ['right', 'below', 'above'];
+
+        case 'right':
+            return ['left', 'below', 'above'];
+    }
+};
+
+const getAlternativePlacement = (
+    preferredPlacement: PopoverPlacement,
+    testedPlacements: PopoverPlacement[]
+): PopoverPlacement => {
+    const alternatives = getAlternatives(preferredPlacement);
+    return getNextAlternativePlacement(alternatives, testedPlacements) || preferredPlacement;
+};
+
 const PopoverContainer = React.forwardRef<
     HTMLDivElement | null,
     React.PropsWithChildren<PopoverContainerProps>
->(({ placement, justify, title, fillWithContent, centered, children }, ref) => {
+>(({ placement: preferredPlacement, justify, title, fillWithContent, centered, children }, ref) => {
+    const [placement, setPlacement] = React.useState<PopoverPlacement>(
+        preferredPlacement || 'below'
+    );
+    React.useEffect(() => {
+        if (preferredPlacement) {
+            setPlacement(preferredPlacement);
+        }
+    }, [preferredPlacement]);
+
     const containerClassNames = classNames(
         styles.popoverContainer,
         useElevationClassName(1),
@@ -52,8 +109,52 @@ const PopoverContainer = React.forwardRef<
         }
     );
 
+    const getIsInView = () => {
+        const refObject = ref as React.MutableRefObject<HTMLDivElement>;
+        if (!refObject || !refObject.current) {
+            return true;
+        }
+
+        return isCompletelyInView(refObject.current, 4);
+    };
+
+    const [isInView, setIsInView] = React.useState(getIsInView());
+    const [testedPlacements, setTestedPlacements] = React.useState<PopoverPlacement[]>([]);
+    React.useEffect(() => {
+        if (isInView || testedPlacements.length >= 4) {
+            return;
+        }
+
+        const nextPlacement = getAlternativePlacement(
+            preferredPlacement || 'below',
+            testedPlacements
+        );
+        setTestedPlacements([...testedPlacements, nextPlacement]);
+        setPlacement(nextPlacement);
+        setIsInView(true);
+    }, [isInView]);
+
+    const animationFrame = React.useRef(0);
+    const checkIsInView = () => {
+        window.cancelAnimationFrame(animationFrame.current);
+
+        setIsInView(getIsInView());
+
+        animationFrame.current = window.requestAnimationFrame(checkIsInView);
+    };
+
+    React.useEffect(() => {
+        checkIsInView();
+        return () => {
+            window.cancelAnimationFrame(animationFrame.current);
+        };
+    }, []);
+
     return (
-        <div className={containerClassNames} ref={ref as React.Ref<HTMLDivElement>}>
+        <div
+            className={containerClassNames}
+            ref={ref as React.Ref<HTMLDivElement>}
+        >
             <Arrow />
             {title && <h5>{title}</h5>}
             <div className={styles.content}>{children}</div>

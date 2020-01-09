@@ -1,16 +1,34 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import withFusionStory from "../../../../.storybook/withFusionStory";
+import { withKnobs, select, text, boolean } from '@storybook/addon-knobs';
+import withFusionStory from '../../../../.storybook/withFusionStory';
 import Button from '../../../components/general/Button';
-import usePopoverRef from '../index';
+import usePopoverRef, { PopoverPlacement, PopoverJustification } from '../index';
 
-const PopoverContent = () => <div>This is a popover!</div>;
+const justifyOptions: { [key: string]: PopoverJustification } = {
+    Start: 'start',
+    Center: 'center',
+    End: 'end',
+};
+
+const placementOptions: { [key: string]: PopoverPlacement } = {
+    Below: 'below',
+    Above: 'above',
+    Left: 'left',
+    Right: 'right',
+};
+
+const PopoverContent = ({ content }) => <div>{content}</div>;
 
 const PopoverStory = () => {
-    const [popoverRef, isOpen] = usePopoverRef(<PopoverContent />, {
-        justify: 'center', // start = "left" | middle = "center" | end = "right"
-        placement: 'below', // start = "top" | middle = "center" | end = "bottom"
-    });
+    const [popoverRef] = usePopoverRef(
+        <PopoverContent content={text('Popover text', 'This is a popover!')} />,
+        {
+            justify: select('Justification', justifyOptions, 'center'),
+            placement: select('Placement', placementOptions, 'below'),
+            centered: boolean('Centered', true),
+        }
+    );
 
     return (
         <Button ref={popoverRef} contained>
@@ -20,7 +38,8 @@ const PopoverStory = () => {
 };
 
 storiesOf('Hooks|Popover', module)
-    .addDecorator(withFusionStory("Popover"))
+    .addDecorator(withFusionStory('Popover'))
+    .addDecorator(withKnobs)
     .add('Default', () => {
         return <PopoverStory />;
     });
