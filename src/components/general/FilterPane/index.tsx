@@ -36,7 +36,7 @@ export type FilterPaneProps<T> = {
     terms: FilterTerm[];
     onChange: OnFilterChangeHandler<T>;
     screenPlacement?: 'right' | 'left';
-    onToggleCollapse?:(isCollapsed: boolean) => void;
+    onToggleCollapse?: (isCollapsed: boolean) => void;
 };
 
 function FilterPane<T>({
@@ -46,7 +46,7 @@ function FilterPane<T>({
     terms,
     onChange,
     screenPlacement = 'right',
-    onToggleCollapse
+    onToggleCollapse,
 }: FilterPaneProps<T>) {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [filterCount, setFilterCount] = useState<Count[]>([]);
@@ -102,16 +102,22 @@ function FilterPane<T>({
     return (
         <FilterPaneContext.Provider value={filterPaneContext}>
             <div className={containerClassNames}>
-                <CollapseExpandButton onClick={toggleCollapsed} />
-                {sectionDefinitions.map(section => (
-                    <Section
-                        key={section.key}
-                        section={section}
-                        terms={terms}
-                        filterCount={filterCount}
-                        onChange={handleOnSectionChange}
-                    />
-                ))}
+                <div className={styles.header}>
+                    <div className={styles.collapseExpandButtonContainer}>
+                        <CollapseExpandButton onClick={toggleCollapsed} />
+                    </div>
+                </div>
+                <div className={styles.content}>
+                    {sectionDefinitions.map(section => (
+                        <Section
+                            key={section.key}
+                            section={section}
+                            terms={terms}
+                            filterCount={filterCount}
+                            onChange={handleOnSectionChange}
+                        />
+                    ))}
+                </div>
             </div>
         </FilterPaneContext.Provider>
     );
