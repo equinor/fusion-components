@@ -128,6 +128,7 @@ export {
     HelpIcon,
     PrintIcon,
     DeleteIcon,
+    LockIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
@@ -152,6 +153,7 @@ export {
     LinkIcon,
     TitleIcon,
 } from './components/icons/components/wysiwyg';
+export { StarIcon } from './components/icons/components/toggle';
 export { PlatformIcon } from './components/icons/components/uncategorized';
 
 // Styling
