@@ -19,4 +19,9 @@
         --header-height: calc((var(--grid-unit) * 6px) + 2px);
         grid-template-rows: var(--header-height) calc(100% - var(--header-height));
     }
+
+    &.noHeader {
+        --header-height: 0px;
+        grid-template-rows: 0px calc(100% - var(--header-height));
+    }
 }
