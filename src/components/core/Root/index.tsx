@@ -10,11 +10,12 @@ import classNames from 'classnames';
 type FusionRootProps = {
     rootRef: React.MutableRefObject<HTMLElement | null>;
     overlayRef: React.MutableRefObject<HTMLElement | null>;
+    noHeader?: boolean;
 };
 
-const FusionRoot: React.FC<FusionRootProps> = ({ children, rootRef, overlayRef }) => (
+const FusionRoot: React.FC<FusionRootProps> = ({ children, rootRef, overlayRef, noHeader = false }) => (
     <div className={classNames(styles.container, useComponentDisplayClassNames(styles))}>
-        <FusionContainer ref={rootRef as React.MutableRefObject<HTMLDivElement>}>
+        <FusionContainer ref={rootRef as React.MutableRefObject<HTMLDivElement>} noHeader={noHeader}>
             {children}
         </FusionContainer>
         <div
