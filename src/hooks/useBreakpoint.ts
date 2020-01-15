@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, MutableRefObject } from 'react';
-import { enqueueAsyncOperation } from "@equinor/fusion";
+import { enqueueAsyncOperation } from '@equinor/fusion';
 
 export type Breakpoint = {
     key: string;
@@ -33,7 +33,10 @@ const useBreakpoint = (
 
             const nodeRect = nodeRef.current.getBoundingClientRect();
             const breakpoints = checkSize(nodeRect);
-            if(breakpoints.length !== currentBreakpoints.length || breakpoints.filter(b => currentBreakpoints.indexOf(b) > -1).length > 0) {
+            if (
+                breakpoints.length !== currentBreakpoints.length ||
+                breakpoints.filter(b => currentBreakpoints.indexOf(b) === -1).length > 0
+            ) {
                 setCurrentBreakpoints(breakpoints);
             }
             performCheckSize(abortSignal);
