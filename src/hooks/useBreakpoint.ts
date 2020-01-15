@@ -28,7 +28,6 @@ const useBreakpoint = (
     const performCheckSize = async (abortSignal: AbortSignal) => {
         enqueueAsyncOperation(() => {
             if (!nodeRef.current) {
-                performCheckSize(abortSignal);
                 return;
             }
 
