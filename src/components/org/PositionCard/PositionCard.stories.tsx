@@ -48,8 +48,13 @@ const position: Position = {
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
-            rotationId:'R1',
+            rotationId: 'R1',
             properties: {},
+            externalId: '800',
+            parentPositionId: '0',
+            isDeleted: false,
+            positionId: '1',
+            taskOwnerIds: null,
         },
         {
             id: '2',
@@ -83,7 +88,12 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
-            rotationId:'R3',
+            rotationId: 'R3',
+            parentPositionId: '0',
+            isDeleted: false,
+            externalId: '800',
+            positionId: '1',
+            taskOwnerIds: null,
         },
 
         {
@@ -118,7 +128,12 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
-            rotationId:null,
+            rotationId: null,
+            externalId: '800',
+            isDeleted: false,
+            parentPositionId: '0',
+            positionId: '1',
+            taskOwnerIds: null,
         },
         {
             id: '5',
@@ -151,8 +166,13 @@ const position: Position = {
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
-            rotationId:'R2',
+            rotationId: 'R2',
             properties: {},
+            externalId: '800',
+            isDeleted: false,
+            parentPositionId: '0',
+            positionId: '1',
+            taskOwnerIds: null,
         },
         {
             id: '6',
@@ -186,7 +206,12 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
-            rotationId:'R3',
+            rotationId: 'R3',
+            externalId: '800',
+            isDeleted: false,
+            parentPositionId: '0',
+            positionId: '1',
+            taskOwnerIds: null,
         },
     ],
     contractId: null,
@@ -197,9 +222,7 @@ const position: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
-    parentPositionId: '0',
 };
-
 
 const tbnPosition: Position = {
     id: '1',
@@ -220,7 +243,6 @@ const tbnPosition: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
-    parentPositionId: '0',
 };
 
 const positions = {
@@ -232,7 +254,6 @@ const positionKeys = {
     Standard: 'Standard',
     TBN: 'TBN',
 };
-
 
 const InteractiveStory = () => {
     const [isSelected, setIsSelected] = useState(false);

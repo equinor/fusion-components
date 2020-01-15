@@ -48,6 +48,11 @@ const position: Position = {
             },
             rotationId:null,
             properties: {},
+            parentPositionId: '0',
+            taskOwnerIds: null,
+            externalId: '800',
+            isDeleted:false,
+            positionId:"1"
         },
     ],
     contractId: null,
@@ -58,7 +63,6 @@ const position: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
-    parentPositionId: '0',
 };
 
 const DefaultStory = () => {

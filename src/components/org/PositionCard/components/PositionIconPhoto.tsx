@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import { Position, PositionInstance } from '@equinor/fusion';
+import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 import {
     PersonPhoto,
     LinkIcon,
     styling,
     useTooltipRef,
-    SyncIcon
+    SyncIcon,
 } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
@@ -29,12 +29,21 @@ const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
 
     const isRotating = rotationInstances.length > 0;
 
+    const additionalPersons = rotationInstances.reduce(
+        (previousPersons: PersonDetails[], instance) => {
+            if (instance.assignedPerson) {
+                return [...previousPersons, instance.assignedPerson];
+            }
+            return previousPersons;
+        },
+        []
+    );
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
                 <PersonPhoto
-                    person={currentInstance && currentInstance.assignedPerson}
-                    additionalPersons={rotationInstances.map(instance => instance.assignedPerson)}
+                    person={(currentInstance && currentInstance.assignedPerson) || undefined}
+                    additionalPersons={additionalPersons}
                     size="large"
                     key={currentInstance ? currentInstance.id : (+new Date()).toString()}
                 />

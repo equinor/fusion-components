@@ -165,7 +165,12 @@ const position: Position = {
                 officeLocation: 'Stavanger',
             },
             properties: {},
-            rotationId:null,
+            rotationId: null,
+            parentPositionId: '0',
+            isDeleted: false,
+            positionId: '1',
+            externalId: '800',
+            taskOwnerIds: null,
         },
     ],
     contractId: null,
@@ -176,7 +181,6 @@ const position: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
-    parentPositionId: '0',
 };
 
 const breadCrumbStyle = {
@@ -235,7 +239,7 @@ const OrgChartStory = () => {
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
     const rowMargin = componentDisplayType === 'Compact' ? 138 : 164;
     const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
-    const cardWidth = componentDisplayType === 'Compact' ?  300: 340 ;
+    const cardWidth = componentDisplayType === 'Compact' ? 300 : 340;
 
     return (
         <div style={{ width: '100%', height: '100%' }}>
