@@ -47,7 +47,7 @@ const useBreakpoint = (
         const abortController = new AbortController();
         performCheckSize(abortController.signal);
         () => abortController.abort();
-    }, [nodeRef.current]);
+    }, [nodeRef.current, currentBreakpoints]);
 
     return [nodeRef as MutableRefObject<HTMLDivElement>, currentBreakpoints];
 };
