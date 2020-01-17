@@ -1,14 +1,25 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useMemo, useEffect, useState } from 'react';
 import styles from './styles.less';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { NavigationComponentProps } from '..';
 import { getNavigationComponentForItem } from '../utils';
+import { useTooltipRef } from '@equinor/fusion-components';
 
 import NavigationItem from './NavigationItem';
 import { NavigationChild } from '.';
 
 const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, isActive, title, onClick, navigationChildren, isOpen } = navigationItem;
+    const tooltipRef = useTooltipRef(title, 'right');
+    const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
+    const textRef = React.useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (textRef.current) {
+            const isOverflowing = textRef.current.offsetWidth < textRef.current.scrollWidth;
+            setShouldHaveTooltip(isOverflowing);
+        }
+    }, [textRef])
 
     const navigationStructure = useMemo(
         () =>
@@ -25,9 +36,9 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
 
     const getNavigationContent = useCallback(
         () => (
-            <>
+            <div className={styles.sectionContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
                 <div className={styles.linkContainer} onClick={change}>
-                    <span className={styles.linkText}> {title} </span>
+                    <span className={styles.linkText} ref={textRef}>{title}</span>
                 </div>
                 <div
                     className={styles.toggleOpenContainer}
@@ -37,7 +48,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
                         <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
                     )}
                 </div>
-            </>
+            </div>
         ),
         [title, isOpen, onChange, navigationChildren]
     );

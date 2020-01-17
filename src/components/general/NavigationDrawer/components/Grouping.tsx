@@ -1,13 +1,24 @@
-import React, { FC, useMemo, useCallback } from 'react';
+import React, { FC, useMemo, useCallback, useEffect, useState } from 'react';
 import styles from './styles.less';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
 import { NavigationComponentProps } from '..';
 import NavigationPopover from './NavigationPopover';
 import NavigationItem from './NavigationItem';
+import { useTooltipRef } from '@equinor/fusion-components';
 
 const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, icon, title, onClick, navigationChildren, isActive, isOpen } = navigationItem;
+    const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
+    const tooltipRef = useTooltipRef(title, 'right');
+    const textRef = React.useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        if (textRef.current) {
+            const isOverflowing = textRef.current.offsetWidth < textRef.current.scrollWidth;
+            setShouldHaveTooltip(isOverflowing);
+        }
+    }, [textRef])
 
     const navigationStructure = useMemo(
         () =>
@@ -25,10 +36,10 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
 
     const getNavigationContent = useCallback(
         () => (
-            <>
+            <div className={styles.groupingContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
                 <div className={styles.linkContainer} onClick={change}>
                     <div className={styles.navigationIcon}>{icon}</div>
-                    <div className={styles.linkText}>{title}</div>
+                    <span className={styles.linkText} ref={textRef}>{title}</span>
                 </div>
                 <div
                     className={styles.toggleOpenContainer}
@@ -38,7 +49,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                         <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
                     )}
                 </div>
-            </>
+            </div>
         ),
         [icon, title, isOpen, onChange, navigationChildren]
     );

@@ -81,6 +81,7 @@ const navStructure = [
         id: 'grouping3',
         type: 'grouping',
         title: 'Grouping 3 with a super long title to show off how neat ellipsis is',
+        icon: "3", 
         navigationChildren: [
             {
                 id: 'section3',
@@ -88,7 +89,7 @@ const navStructure = [
                 type: 'section',
                 navigationChildren: [
                     {
-                        id: 'child4',
+                        id: 's3c1',
                         type: 'child',
                         title: 'Child4 with a super long title to show off how neat ellipsis is',
                     },
