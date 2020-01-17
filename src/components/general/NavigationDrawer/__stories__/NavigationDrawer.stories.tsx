@@ -77,6 +77,25 @@ const navStructure = [
             },
         ],
     },
+    {
+        id: 'grouping3',
+        type: 'grouping',
+        title: 'Grouping 3 with a super long title to show off how neat ellipsis is',
+        navigationChildren: [
+            {
+                id: 'section3',
+                title: 'Section 3 with a super long title to show off how neat ellipsis is',
+                type: 'section',
+                navigationChildren: [
+                    {
+                        id: 'child4',
+                        type: 'child',
+                        title: 'Child4 with a super long title to show off how neat ellipsis is',
+                    },
+                ],
+            },
+        ],
+    },
 ] as NavigationStructure[];
 
 const NavigationDrawerStory = () => {

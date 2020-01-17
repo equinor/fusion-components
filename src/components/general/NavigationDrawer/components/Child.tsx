@@ -14,7 +14,7 @@ const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
     return (
         <NavigationItem type="child" isActive={isActive} onClick={change}>
              <div className={styles.linkContainer}>
-                {title}
+                <span className={styles.linkText}>{title}</span>
             </div>
         </NavigationItem>
     );

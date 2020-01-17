@@ -27,7 +27,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
         () => (
             <>
                 <div className={styles.linkContainer} onClick={change}>
-                    {title}
+                    <span className={styles.linkText}> {title} </span>
                 </div>
                 <div
                     className={styles.toggleOpenContainer}
