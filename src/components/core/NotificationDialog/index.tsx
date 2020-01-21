@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
 import { useFusionContext, NotificationRequest, NotificationResponse } from '@equinor/fusion';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@equinor/fusion-components';
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    Button,
+} from '@equinor/fusion-components';
 
 import styles from './styles.less';
 
@@ -44,8 +50,8 @@ const NotificationDialog: React.FC = () => {
         resolve: (response: NotificationResponse) => void,
         signal: AbortSignal
     ) => {
-        if(currentNotification) {
-            throw new Error("Unable to present multiple dialogs");
+        if (currentNotification) {
+            throw new Error('Unable to present multiple dialogs');
         }
 
         setCurrentNotification(notification);
@@ -66,13 +72,15 @@ const NotificationDialog: React.FC = () => {
             <Dialog>
                 <DialogTitle>{currentNotification.title}</DialogTitle>
                 <DialogContent>
-                    <p>
-                        {currentNotification.body}
-                    </p>
+                    <p>{currentNotification.body}</p>
                 </DialogContent>
                 <DialogActions>
-                    <Button frameless onClick={onCancel}>Cancel</Button>
-                    <Button frameless onClick={onConfirm}>Ok</Button>
+                    <Button frameless onClick={onCancel}>
+                        {currentNotification.cancelLabel || 'Cancel'}
+                    </Button>
+                    <Button frameless onClick={onConfirm}>
+                        {currentNotification.confirmLabel || 'Ok'}
+                    </Button>
                 </DialogActions>
             </Dialog>
         </div>
