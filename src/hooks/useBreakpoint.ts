@@ -40,7 +40,7 @@ const useBreakpoint = (
                 setCurrentBreakpoints(breakpoints);
             }
             performCheckSize(abortSignal);
-        }, abortSignal);
+        }, abortSignal).catch();
     };
 
     useEffect(() => {
