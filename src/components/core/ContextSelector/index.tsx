@@ -85,9 +85,11 @@ const ContextSelector: React.FC = () => {
                 !isOpen && setIsOpen(true);
             }, [isOpen]);
 
-            const placeholder = contextManifest?.placeholder
-                ? contextManifest.placeholder
-                : 'Search context';
+            const placeholder = React.useMemo(() => {
+                return contextManifest?.placeholder
+                    ? contextManifest.placeholder
+                    : 'Search context';
+            }, [contextManifest?.placeholder]);
 
             return (
                 <>
