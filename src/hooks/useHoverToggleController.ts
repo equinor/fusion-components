@@ -22,6 +22,10 @@ export default <T extends HTMLElement>(
     const checkShouldShow = useCallback(
         (e: Event) => {
             if (!ref.current || !e.target) {
+                if(isHovering) {
+                    hide();
+                }
+                
                 return;
             }
 

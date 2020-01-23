@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, MutableRefObject } from 'react';
-import useEventListener from './useEventListener';
+import { enqueueAsyncOperation } from '@equinor/fusion';
 
 export type Breakpoint = {
     key: string;
@@ -25,19 +25,29 @@ const useBreakpoint = (
     const [currentBreakpoints, setCurrentBreakpoints] = useState<string[]>([]);
     const nodeRef = useRef<HTMLDivElement>(null);
 
-    const performCheckSize = () => {
-        window.requestAnimationFrame(() => {
+    const performCheckSize = async (abortSignal: AbortSignal) => {
+        enqueueAsyncOperation(() => {
             if (!nodeRef.current) {
                 return;
             }
 
             const nodeRect = nodeRef.current.getBoundingClientRect();
-            setCurrentBreakpoints(checkSize(nodeRect));
-        });
+            const breakpoints = checkSize(nodeRect);
+            if (
+                breakpoints.length !== currentBreakpoints.length ||
+                breakpoints.filter(b => currentBreakpoints.indexOf(b) === -1).length > 0
+            ) {
+                setCurrentBreakpoints(breakpoints);
+            }
+            performCheckSize(abortSignal);
+        }, abortSignal);
     };
 
-    useEventListener(window, 'resize', performCheckSize, [], true);
-    useEffect(performCheckSize, [nodeRef.current]);
+    useEffect(() => {
+        const abortController = new AbortController();
+        performCheckSize(abortController.signal);
+        return () => abortController.abort();
+    }, [nodeRef.current, currentBreakpoints]);
 
     return [nodeRef as MutableRefObject<HTMLDivElement>, currentBreakpoints];
 };
