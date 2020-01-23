@@ -2,9 +2,9 @@ import * as React from 'react';
 import {
     useContextManager,
     useCurrentContext,
-    Context,
     useComponentDisplayClassNames,
     useContextQuery,
+    useCurrentApp,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -14,6 +14,8 @@ import {
     SearchableDropdownSection,
     SearchableDropdownOption,
     Spinner,
+    IconButton,
+    CloseIcon,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
@@ -34,6 +36,7 @@ const ContextSelector: React.FC = () => {
     const currentContext = useCurrentContext();
     const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
+    const contextManifest = useCurrentApp()?.context;
 
     React.useEffect(() => {
         setDropdownSections(
@@ -96,10 +99,18 @@ const ContextSelector: React.FC = () => {
                         ref={inputRef}
                     />
                     {isQuerying && <Spinner inline />}
+                    {contextManifest?.nullable && (
+                        <IconButton
+                            disabled={!currentContext}
+                            onClick={() => contextManager.setCurrentContextAsync(null)}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    )}
                 </>
             );
         },
-        [queryText, currentContext, dropdownSections]
+        [queryText, currentContext, dropdownSections, contextManifest]
     );
 
     const dropdownController = useDropdownController(dropdownControllerProps);
@@ -125,9 +136,11 @@ const ContextSelector: React.FC = () => {
     const helperText = React.useMemo(
         () =>
             !contexts.length && !isQuerying && !queryText
-                ? 'No contexts, please try the search bar above (Start typing to search)'
+                ? contextManifest?.placeholder
+                    ? contextManifest.placeholder
+                    : 'No contexts, please try the search bar above (Start typing to search)'
                 : null,
-        [contexts, isQuerying, queryText]
+        [contexts, isQuerying, queryText, contextManifest]
     );
 
     return (

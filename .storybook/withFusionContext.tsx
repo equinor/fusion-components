@@ -109,7 +109,7 @@ window.parent['authContainer'] = authContainer;
 const serviceResolver: ServiceResolver = {
     getDataProxyBaseUrl: () => 'https://pro-s-dataproxy-ci.azurewebsites.net',
     getFusionBaseUrl: () => 'https://pro-s-portal-ci.azurewebsites.net',
-    getContextBaseUrl: () => 'https://pro-s-context-pr-1334.azurewebsites.net',
+    getContextBaseUrl: () => 'https://pro-s-context-ci.azurewebsites.net',
     getOrgBaseUrl: () => 'https://pro-s-org-ci.azurewebsites.net',
     getPowerBiBaseUrl: () => 'https://pro-s-powerbi-ci.azurewebsites.net',
     getTasksBaseUrl: () => 'https://pro-s-tasks-ci.azurewebsites.net',
@@ -130,7 +130,11 @@ const FusionWrapper: React.FC = ({ children }) => {
     const overlay = React.useRef<HTMLElement | null>(null);
     const root = React.useRef<HTMLElement | null>(null);
     const headerContent = React.useRef<HTMLElement | null>(null);
-    const fusionContext = createFusionContext(authContainer, serviceResolver, { overlay, root, headerContent });
+    const fusionContext = createFusionContext(authContainer, serviceResolver, {
+        overlay,
+        root,
+        headerContent,
+    });
 
     return (
         <FusionContext.Provider value={fusionContext}>
