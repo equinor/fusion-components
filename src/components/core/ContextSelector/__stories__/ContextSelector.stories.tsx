@@ -19,7 +19,7 @@ const CurrentContextNullableAndPlaceholder: React.FC = ({ children }) => {
         context: {
             types: [ContextTypes.Project, ContextTypes.PDP],
             nullable: true,
-            placeholder: 'Search above for Project or pdp ',
+            placeholder: 'Search project and PDP ',
         },
     };
 

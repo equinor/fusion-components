@@ -85,6 +85,10 @@ const ContextSelector: React.FC = () => {
                 !isOpen && setIsOpen(true);
             }, [isOpen]);
 
+            const placeholder = contextManifest?.placeholder
+                ? contextManifest.placeholder
+                : 'Search context';
+
             return (
                 <>
                     <SearchIcon color="#DADADA" />
@@ -94,7 +98,7 @@ const ContextSelector: React.FC = () => {
                         onChange={onChangeQueryText}
                         onClick={onClickDropDown}
                         onKeyUp={onKeyUpCloseDropDown}
-                        placeholder={selectedValue !== '' ? selectedValue : 'Search contexts'}
+                        placeholder={selectedValue !== '' ? selectedValue : placeholder}
                         className={styles.searchInput}
                         ref={inputRef}
                     />
@@ -134,12 +138,7 @@ const ContextSelector: React.FC = () => {
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
     const helperText = React.useMemo(
-        () =>
-            !contexts.length && !isQuerying && !queryText
-                ? contextManifest?.placeholder
-                    ? contextManifest.placeholder
-                    : 'No contexts, please try the search bar above (Start typing to search)'
-                : null,
+        () => (!contexts.length && !isQuerying && !queryText ? 'Start typing to search' : null),
         [contexts, isQuerying, queryText, contextManifest]
     );
 
