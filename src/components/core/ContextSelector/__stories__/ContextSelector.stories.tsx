@@ -5,7 +5,28 @@ import FusionHeader from '../../Header';
 import FusionContent from '../../Content';
 import { ContextTypes, useFusionContext } from '@equinor/fusion';
 
-const CurrentContextPDP: React.FC = ({ children }) => {
+const CurrentContextNullableAndPlaceholder: React.FC = ({ children }) => {
+    const { app } = useFusionContext();
+
+    (app.container as any)._currentApp.state = {
+        AppComponent: ContextSelector,
+        key: 'PDP',
+        name: 'PDP',
+        shortName: 'PDP',
+        version: '1',
+        description: 'pdp',
+        tags: ['PDP'],
+        context: {
+            types: [ContextTypes.Project, ContextTypes.PDP],
+            nullable: true,
+            placeholder: 'Search project and PDP ',
+        },
+    };
+
+    return <> {children} </>;
+};
+
+const CurrentContext: React.FC = ({ children }) => {
     const { app } = useFusionContext();
 
     (app.container as any)._currentApp.state = {
@@ -27,36 +48,29 @@ const CurrentContextPDP: React.FC = ({ children }) => {
 const PDPContextSelectorStory = () => {
     return (
         <React.Fragment>
-            <CurrentContextPDP>
+            <CurrentContext>
                 <FusionHeader start={null} content={<ContextSelector />} aside={null} />
                 <FusionContent>
                     <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
                 </FusionContent>
-            </CurrentContextPDP>
+            </CurrentContext>
         </React.Fragment>
     );
 };
 
-const OrgChartContextSelectorStory = () => (
-    <React.Fragment>
-        <FusionHeader start={null} content={<ContextSelector />} aside={null} />
-
-        <FusionContent>
-            <h1 style={{ textAlign: 'center', margin: 16 }}>Pro Org</h1>
-        </FusionContent>
-    </React.Fragment>
-);
-
-const ContractContextSelectorStory = () => (
-    <React.Fragment>
-        <FusionHeader start={null} content={<ContextSelector />} aside={null} />
-        <FusionContent>
-            <h1 style={{ textAlign: 'center', margin: 16 }}>Contracts</h1>
-        </FusionContent>
-    </React.Fragment>
-);
+const NullableAndPlaceHolderContextSelectorStory = () => {
+    return (
+        <React.Fragment>
+            <CurrentContextNullableAndPlaceholder>
+                <FusionHeader start={null} content={<ContextSelector />} aside={null} />
+                <FusionContent>
+                    <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
+                </FusionContent>
+            </CurrentContextNullableAndPlaceholder>
+        </React.Fragment>
+    );
+};
 
 storiesOf('Core|Context Selector', module)
     .add('PDP', () => <PDPContextSelectorStory />)
-    .add('OrgChart', () => <OrgChartContextSelectorStory />)
-    .add('Contract', () => <ContractContextSelectorStory />);
+    .add('PDP Nullable And Placeholder', () => <NullableAndPlaceHolderContextSelectorStory />);
