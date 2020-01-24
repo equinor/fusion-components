@@ -1,0 +1,43 @@
+.positionCard {
+    position: relative;
+    display: block;
+    border: 1px solid var(--color-black-alt4);
+    background: var(--color-white);
+    border-radius: 4px;
+    padding: calc(var(--grid-unit) * 1px);
+    margin-bottom: calc(var(--grid-unit) * 2px);
+    color: var(--color-primary--accent);
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 24px;
+    width: calc(var(--grid-unit) * 40px);
+    
+    .personPositionName{
+        color: var(--color-primary);
+        text-decoration: underline;
+    }
+
+    h5 {
+        margin-right: calc(var(--grid-unit) * 3px);
+        margin-bottom: calc(var(--grid-unit) * 1px);
+    }
+
+    p {
+        margin: 0;
+        margin-bottom: calc(var(--grid-unit) * 1px);
+    }
+
+    &:hover {
+        box-shadow:
+            0px 1px 10px rgba(0, 0, 0, 0.2),
+            0px 4px 5px rgba(0, 0, 0, 0.12),
+            0px 2px 4px rgba(0, 0, 0, 0.14);
+    }
+
+    .openInNewIcon {
+        position: absolute;
+        top: calc(var(--grid-unit) * 1px);
+        right: calc(var(--grid-unit) * 1px);
+    }
+}
