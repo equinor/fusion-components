@@ -34,7 +34,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         onClick && onClick();
     }, [onClick, id, isOpen, onChange]);
 
-    const getNavigationContent = useCallback(
+    const navigationContent = useMemo(
         () => (
             <div className={styles.groupingContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
                 <div className={styles.linkContainer} onClick={change}>
@@ -54,7 +54,9 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         [icon, title, isOpen, onChange, navigationChildren]
     );
 
-    const getCollapsedContent = useCallback(
+    const getNavigationContent = useCallback(() => navigationContent, [navigationContent]);
+
+    const collapsedContent = useMemo(
         () => (
             <NavigationPopover
                 icon={icon}
@@ -68,13 +70,13 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
     );
 
     if (isCollapsed) {
-        return getCollapsedContent();
+        return collapsedContent;
     }
 
     return (
         <>
             <NavigationItem isActive={isActive} type="grouping" isCollapsed={isCollapsed}>
-                {getNavigationContent()}
+                {navigationContent}
             </NavigationItem>
             {isOpen && navigationStructure}
         </>

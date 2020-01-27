@@ -6,12 +6,11 @@ import { getNavigationComponentForItem } from '../utils';
 import { useTooltipRef } from '@equinor/fusion-components';
 
 import NavigationItem from './NavigationItem';
-import { NavigationChild } from '.';
 
 const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, isActive, title, onClick, navigationChildren, isOpen } = navigationItem;
-    const tooltipRef = useTooltipRef(title, 'right');
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
+    const tooltipRef = useTooltipRef(shouldHaveTooltip ? title : '', 'right');
     const textRef = React.useRef<HTMLElement | null>(null);
 
     useEffect(() => {
@@ -19,7 +18,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
             const isOverflowing = textRef.current.offsetWidth < textRef.current.scrollWidth;
             setShouldHaveTooltip(isOverflowing);
         }
-    }, [textRef])
+    }, [textRef.current]);
 
     const navigationStructure = useMemo(
         () =>
@@ -34,29 +33,24 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
         onClick && onClick();
     }, [onClick, id, isOpen, onChange]);
 
-    const getNavigationContent = useCallback(
-        () => (
-            <div className={styles.sectionContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
-                <div className={styles.linkContainer} onClick={change}>
-                    <span className={styles.linkText} ref={textRef}>{title}</span>
-                </div>
-                <div
-                    className={styles.toggleOpenContainer}
-                    onClick={() => onChange && onChange(id, true, false)}
-                >
-                    {!isCollapsed && navigationChildren && navigationChildren.length > 0 && (
-                        <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
-                    )}
-                </div>
-            </div>
-        ),
-        [title, isOpen, onChange, navigationChildren]
-    );
-
     return (
         <>
             <NavigationItem type="section" isActive={isActive}>
-                {getNavigationContent()}
+                <div className={styles.sectionContainer} ref={tooltipRef}>
+                    <div className={styles.linkContainer} onClick={change}>
+                        <span className={styles.linkText} ref={textRef}>
+                            {title}
+                        </span>
+                    </div>
+                    <div
+                        className={styles.toggleOpenContainer}
+                        onClick={() => onChange && onChange(id, true, false)}
+                    >
+                        {!isCollapsed && navigationChildren && navigationChildren.length > 0 && (
+                            <DropdownArrow cursor="pointer" isOpen={isOpen || false} />
+                        )}
+                    </div>
+                </div>
             </NavigationItem>
             {isCollapsed ? navigationStructure : isOpen && navigationStructure}
         </>
