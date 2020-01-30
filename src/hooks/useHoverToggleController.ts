@@ -1,6 +1,5 @@
-import { useRef, useState, MutableRefObject, useCallback } from 'react';
+import { useRef, useState, MutableRefObject, useCallback, useEffect } from 'react';
 import { useEventListener } from '@equinor/fusion-components';
-import { Recoverable } from 'repl';
 
 let showTimeout: NodeJS.Timeout;
 export default <T extends HTMLElement>(
@@ -14,36 +13,28 @@ export default <T extends HTMLElement>(
         showTimeout = setTimeout(() => setIsHovering(true), delay);
     }, [delay]);
 
-    const hide = () => {
+    const hide = useCallback(() => {
         clearTimeout(showTimeout);
         setIsHovering(false);
-    };
+    }, []);
 
     const checkShouldShow = useCallback(
         (e: Event) => {
             if (!ref.current || !e.target) {
-                if(isHovering) {
+                if (isHovering) {
+                    console.log('Hide');
                     hide();
                 }
-                
+
                 return;
             }
-
-            const target = e.target as Node;
-            const isWithinRef = ref.current.isSameNode(target);
-
-            if (isWithinRef && !isHovering) {
-                show();
-            } else if (!isWithinRef && isHovering) {
-                hide();
-            }
         },
-        [show, ref.current, isHovering]
+        [hide, ref.current, isHovering]
     );
 
     useEventListener(ref.current, 'mouseenter', show, [ref.current]);
     useEventListener(ref.current, 'mouseleave', hide, [ref.current]);
-    useEventListener(window, 'mousemove', checkShouldShow, []);
+    useEventListener(window, 'mousemove', checkShouldShow, [checkShouldShow]);
 
     return [isHovering, ref];
 };
