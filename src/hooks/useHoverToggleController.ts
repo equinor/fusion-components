@@ -22,7 +22,6 @@ export default <T extends HTMLElement>(
         (e: Event) => {
             if (!ref.current || !e.target) {
                 if (isHovering) {
-                    console.log('Hide');
                     hide();
                 }
 
