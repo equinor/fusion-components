@@ -1,8 +1,8 @@
 @import '~styles/mixins.less';
 
 .menuContainer{
-    overflow: auto;
     pointer-events: all;
+    min-height: calc(var(--grid-unit) * 8px);
 }
 
 .selectedItem {
@@ -27,4 +27,12 @@
         padding: .grid-unit(1px)[] .grid-unit(2px)[];
         border-radius: 4px 4px 0 0;
     }
+}
+
+.noResultsContainer {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    min-height: calc(var(--grid-unit) * 8px);
+    padding: 0 calc(var(--grid-unit) * 2px);
 }
