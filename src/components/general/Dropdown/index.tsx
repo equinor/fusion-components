@@ -1,11 +1,13 @@
-import React, { useState, useRef, useCallback, FC } from 'react';
+import React, { useState, useRef, useCallback, FC, useMemo, useEffect } from 'react';
 import classNames from 'classnames';
 import {
     useClickOutsideOverlayPortal,
     RelativeOverlayPortal,
     useElevationClassName,
+    useRelativePositioning,
 } from '@equinor/fusion-components';
 import styles from './styles.less';
+import { enqueueAsyncOperation, AsyncOperation } from '@equinor/fusion';
 
 export type DropdownController = {
     isOpen: boolean;
@@ -38,6 +40,22 @@ export const useDropdownController = (
     };
 };
 
+const useLoop = (handler: AsyncOperation<void>, dependencies: any[] = []) => {
+    const loopAsync = async (abortSignal: AbortSignal) => {
+        try {
+            await enqueueAsyncOperation(handler, abortSignal);
+            loopAsync(abortSignal);
+        } catch(e) {
+
+        }
+    }
+    useEffect(() => {
+        const abortController = new AbortController();
+        loopAsync(abortController.signal);
+        return () => abortController.abort();
+    }, dependencies);
+}
+
 const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) => {
     const { isOpen, setIsOpen, node, controllerRef } = controller;
 
@@ -52,11 +70,30 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
         }
     );
 
+    const rect = useRelativePositioning(controllerRef);
+    const maxHeight = useMemo(() => {
+        return `calc(100vh - ${rect.top + rect.height}px - (var(--grid-unit) * 3px))`;
+    }, [rect.top, rect.height]);
+
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const [top, setTop] = useState<number | undefined>(undefined);
+    useLoop(() => {
+        if(!dropdownRef.current) return;
+        const height = dropdownRef.current.offsetHeight;
+        const minHeight = parseInt(getComputedStyle(dropdownRef.current).getPropertyValue('min-height'));
+        if(height <= minHeight) {
+            const calculatedTop = Math.max(0, window.innerHeight - (8 * 3) - height - rect.top);
+            setTop(calculatedTop);
+        } else {
+            setTop(undefined);
+        }
+    }, [rect]);
+
     return (
         <>
             {node}
             <RelativeOverlayPortal relativeRef={controllerRef} show={isOpen}>
-                <div className={dropdownContainerClassNames}>{children}</div>
+                <div className={dropdownContainerClassNames} style={{ maxHeight, top }} ref={dropdownRef}>{children}</div>
             </RelativeOverlayPortal>
         </>
     );
