@@ -148,13 +148,16 @@ const ContextSelector: React.FC = () => {
         <div className={containerClassNames} ref={containerRef}>
             <Dropdown controller={dropdownController}>
                 <div className={styles.dropdownContainer}>
-                    {helperText ? <div className={styles.helperText}>{helperText}</div> : null}
-                    <Menu
-                        elevation={0}
-                        onClick={onSelect}
-                        keyboardNavigationRef={inputRef.current}
-                        sections={dropdownSections}
-                    />
+                    {helperText ? (
+                        <div className={styles.helperText}>{helperText}</div>
+                    ) : (
+                        <Menu
+                            elevation={0}
+                            onClick={onSelect}
+                            keyboardNavigationRef={inputRef.current}
+                            sections={dropdownSections}
+                        />
+                    )}
                 </div>
             </Dropdown>
         </div>

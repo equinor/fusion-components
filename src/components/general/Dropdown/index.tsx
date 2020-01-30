@@ -70,28 +70,30 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
     );
 
     const rect = useRelativePositioning(controllerRef);
-    const maxHeight = useMemo(() => {
-        return `calc(100vh - ${rect.top + rect.height}px - (var(--grid-unit) * 3px))`;
-    }, [rect.top, rect.height]);
-
     const dropdownRef = useRef<HTMLDivElement | null>(null);
     const [top, setTop] = useState<number | undefined>(undefined);
+    const [maxHeight, setMaxHeight] = useState<string | undefined>(undefined);
     useLoop(() => {
-        if (!dropdownRef.current) return;
+        if (!dropdownRef.current || !isOpen) return;
         const height = dropdownRef.current.offsetHeight;
         const minHeight = parseInt(
-            getComputedStyle(dropdownRef.current).getPropertyValue('min-height')
+            getComputedStyle(dropdownRef.current).getPropertyValue('min-height'),
+            10
         );
         if (height <= minHeight) {
             const calculatedTop = Math.min(
-                rect.top,
-                Math.max(0, window.innerHeight - 8 * 3 - height - rect.top)
+                rect.height,
+                Math.max(rect.top * -1, window.innerHeight - 8 * 3 - height - rect.top)
             );
+
             setTop(calculatedTop);
         } else {
             setTop(undefined);
         }
-    }, [rect]);
+
+        const dropdownRect = dropdownRef.current?.getBoundingClientRect();
+        setMaxHeight(`calc(100vh - ${dropdownRect?.top}px - (var(--grid-unit) * 3px))`);
+    }, [rect, isOpen]);
 
     return (
         <>
