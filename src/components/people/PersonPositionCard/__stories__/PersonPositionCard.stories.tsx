@@ -29,11 +29,7 @@ const position: PersonPosition = {
 };
 
 const PersonCardStory = () => {
-    return (
-        <div style={{ paddingBottom: '16px' }}>
-            <PersonPositionCard position={position} />
-        </div>
-    );
+    return <PersonPositionCard position={position} />;
 };
 
 storiesOf('People|PersonPositinCard', module)
