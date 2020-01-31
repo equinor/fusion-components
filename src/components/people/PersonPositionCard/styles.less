@@ -1,32 +1,14 @@
-.positionCard {
-    position: relative;
-    display: block;
-    border: 1px solid var(--color-black-alt4);
-    background: var(--color-white);
-    border-radius: 4px;
-    padding: calc(var(--grid-unit) * 1px);
-    margin-bottom: calc(var(--grid-unit) * 2px);
-    color: var(--color-primary--accent);
-    text-decoration: none;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 24px;
+.container {
     width: calc(var(--grid-unit) * 40px);
-    
-    .personPositionName{
-        color: var(--color-primary);
-        text-decoration: underline;
-    }
-
-    h5 {
-        margin-right: calc(var(--grid-unit) * 3px);
-        margin-bottom: calc(var(--grid-unit) * 1px);
-    }
-
-    p {
-        margin: 0;
-        margin-bottom: calc(var(--grid-unit) * 1px);
-    }
+    padding: calc(var(--grid-unit)* 2px);
+    box-sizing: border-box;
+    display: block;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-black-alt4);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    color: var(--color-primary-accent);
 
     &:hover {
         box-shadow:
@@ -35,9 +17,43 @@
             0px 2px 4px rgba(0, 0, 0, 0.14);
     }
 
-    .openInNewIcon {
-        position: absolute;
-        top: calc(var(--grid-unit) * 1px);
-        right: calc(var(--grid-unit) * 1px);
+    .projectName {
+        font-weight: 600;
+        line-height: var(--header-line-height);
+    }
+
+    .period {
+        font-size: var(--text-font-size);
+        line-height: var(--text-line-height);
+    }
+
+    .personPosition {  
+        color: var(--color-primary);
+        text-decoration: underline;
+        font-size: var(--text-font-size);
+        line-height: var(--text-line-height);
+    }
+
+    .projectName, .period, .personPosition {
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &.comfortable {
+        --container-padding: calc(var(--grid-unit) * 1px);
+        --container-height: calc(var(--grid-unit) * 13);
+        --header-line-height: 24px;
+        --text-font-size: 16px;
+        --text-line-height: 24px;
+    }
+
+    &.compact {
+        --container-padding: calc(var(--grid-unit) * 1px);
+        --container-height: calc(var(--grid-unit) * 12);
+        --header-line-height: 24px;
+        --text-font-size: 14px;
+        --text-line-height: 16px;
     }
 }

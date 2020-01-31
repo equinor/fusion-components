@@ -12,7 +12,7 @@ const position: PersonPosition = {
     obs: 'Project Management Team',
     project: {
         id: 'da03f725-29e5-43d9-8f2b-f756873a6034',
-        name: 'Åsgard Subsea Compression Phase II',
+        name: 'Åsgard Subsea Compression Phase II with long text',
         pimsDomainId: '20396',
         wbs: 'PRD',
     },
@@ -31,7 +31,7 @@ const position: PersonPosition = {
 const PersonCardStory = () => {
     return (
         <div style={{ paddingBottom: '16px' }}>
-            <PersonPositionCard position={position} shouldShowIcon />
+            <PersonPositionCard position={position} />
         </div>
     );
 };
