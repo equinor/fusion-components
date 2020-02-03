@@ -5,7 +5,7 @@ export type PositionInstanceRotation = PositionInstance & {
     rotatingInstances?: PositionInstance[];
 };
 
-export const useInstancesWithRotation = (allInstances: PositionInstance[]) =>
+export const useInstancesWithRotation = (allInstances: PositionInstance[]): PositionInstanceRotation[] =>
     useMemo(
         () =>
             allInstances
