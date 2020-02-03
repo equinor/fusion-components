@@ -6,9 +6,9 @@ export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
 export { default as ContextSelector } from './components/core/ContextSelector';
 export { default as AppWrapper } from './components/core/AppWrapper';
-export { default as NotificationSnacks } from './components/core/NotificationSnacks'
-export { default as NotificationBanner } from './components/core/NotificationBanner'
-export { default as NotificationDialog } from './components/core/NotificationDialog'
+export { default as NotificationSnacks } from './components/core/NotificationSnacks';
+export { default as NotificationBanner } from './components/core/NotificationBanner';
+export { default as NotificationDialog } from './components/core/NotificationDialog';
 
 // Data components
 export { default as DataTable, DataTableColumn } from './components/data/DataTable';
@@ -61,6 +61,7 @@ export { default as Accordion, AccordionItem } from './components/general/Accord
 export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
 export { default as PersonPicker } from './components/people/PersonPicker';
+export { default as PersonPositionCard } from './components/people/PersonPositionCard';
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 
