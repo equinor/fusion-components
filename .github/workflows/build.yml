@@ -1,4 +1,4 @@
-name: Build and publish to NPM
+name: PR Build
 
 on:
     pull_request:
