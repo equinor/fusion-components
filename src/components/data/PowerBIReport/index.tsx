@@ -2,7 +2,12 @@ import * as React from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
 import { Spinner, ErrorMessage } from '@equinor/fusion-components';
-import { useTelemetryLogger, FusionApiHttpErrorResponse, useApiClients } from '@equinor/fusion';
+import {
+    useTelemetryLogger,
+    FusionApiHttpErrorResponse,
+    useApiClients,
+    useCurrentApp,
+} from '@equinor/fusion';
 import { ReportType } from './models/reportTypes';
 import { ICustomEvent } from 'service';
 import FusionError from './models/FusionError';
@@ -73,6 +78,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
+    const timeLoadStart = new Date();
 
     const getReportInfo = async () => {
         try {
@@ -150,7 +156,17 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
                 embeddedRef.current.off('loaded');
                 embeddedRef.current.off('error');
-                embeddedRef.current.on('loaded', () => setIsLoading(false));
+                embeddedRef.current.on('loaded', () => {
+                    // console.log("Loaded Time:",(new Date().getTime() - timeLoadStart.getTime())/1000," Seconds")
+
+                    telemetryLogger.trackMetric({
+                        name: `${useCurrentApp.name}-EmbedloadedTime`,
+                        average: new Date().getTime() - timeLoadStart.getTime(),
+                        sampleCount: 1,
+                    });
+
+                    setIsLoading(false);
+                });
                 embeddedRef.current.on('error', (err: ICustomEvent<IError>) => {
                     if (err && err.detail) {
                         telemetryLogger.trackException({
