@@ -36,17 +36,6 @@
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
         "@equinor/fusion": "^1.0.14",
-<<<<<<< HEAD
-        "@storybook/addon-actions": "^5.2.5",
-        "@storybook/addon-info": "^5.3.7",
-        "@storybook/addon-jest": "^5.2.5",
-        "@storybook/addon-knobs": "^5.2.5",
-        "@storybook/addon-options": "^5.2.5",
-        "@storybook/addon-storyshots": "^5.2.5",
-        "@storybook/addon-viewport": "^5.2.5",
-        "@storybook/react": "^5.2.5",
-        "@storybook/theming": "^5.2.5",
-=======
         "@storybook/addon-actions": "^5.3.10",
         "@storybook/addon-jest": "^5.3.10",
         "@storybook/addon-knobs": "^5.3.10",
@@ -55,7 +44,6 @@
         "@storybook/addon-viewport": "^5.3.10",
         "@storybook/react": "^5.3.10",
         "@storybook/theming": "^5.3.10",
->>>>>>> master
         "@types/classnames": "^2.2.7",
         "@types/enzyme": "^3.9.1",
         "@types/history": "^4.7.5",
