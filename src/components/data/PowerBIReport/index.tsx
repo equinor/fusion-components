@@ -74,11 +74,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const [report, setReport] = React.useState<Report>();
     const [embedInfo, setEmbedInfo] = React.useState<EmbedInfo>();
     const [accessToken, setAccessToken] = React.useState<AccessToken>();
+    const [timeLoadStart, SetTimeLoadStart] = React.useState<Date>(new Date());
     const telemetryLogger = useTelemetryLogger();
 
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
-    const timeLoadStart = new Date();
 
     const getReportInfo = async () => {
         try {
@@ -156,16 +156,22 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
                 embeddedRef.current.off('loaded');
                 embeddedRef.current.off('error');
+                embeddedRef.current.off('rendered');
                 embeddedRef.current.on('loaded', () => {
-                    // console.log("Loaded Time:",(new Date().getTime() - timeLoadStart.getTime())/1000," Seconds")
-
                     telemetryLogger.trackMetric({
-                        name: `${useCurrentApp.name}-EmbedloadedTime`,
-                        average: new Date().getTime() - timeLoadStart.getTime(),
+                        name: `${useCurrentApp.name}-EmbedLoadedTime`,
+                        average: (new Date().getTime() - timeLoadStart.getTime()) / 1000,
                         sampleCount: 1,
                     });
 
                     setIsLoading(false);
+                });
+                embeddedRef.current.on('rendered', () => {
+                    telemetryLogger.trackMetric({
+                        name: `${useCurrentApp.name}-EmbedRenderedTime`,
+                        average: (new Date().getTime() - timeLoadStart.getTime()) / 1000,
+                        sampleCount: 1,
+                    });
                 });
                 embeddedRef.current.on('error', (err: ICustomEvent<IError>) => {
                     if (err && err.detail) {
