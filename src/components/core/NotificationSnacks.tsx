@@ -1,10 +1,17 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
-import { useFusionContext, NotificationRequest, NotificationResponse } from '@equinor/fusion';
+import {
+    NotificationRequest,
+    NotificationResponse,
+    RegisterNotificationPresenter,
+} from '@equinor/fusion';
 import { Snackbar } from '@equinor/fusion-components';
 
-const NotificationSnacks: React.FC = () => {
-    const { notificationCenter } = useFusionContext();
+type NotificationSnacksProps = {
+    registerPresenter: RegisterNotificationPresenter;
+};
+
+const NotificationSnacks: React.FC<NotificationSnacksProps> = ({ registerPresenter }) => {
     const [currentNotification, setCurrentNotification] = useState<NotificationRequest | null>(
         null
     );
@@ -45,7 +52,7 @@ const NotificationSnacks: React.FC = () => {
     };
 
     useEffect(() => {
-        return notificationCenter.registerPresenter('low', presentSnackbar);
+        return registerPresenter('low', presentSnackbar);
     }, [currentResolver]);
 
     if (!currentNotification || !currentAbortSignal || !currentResolver) {
