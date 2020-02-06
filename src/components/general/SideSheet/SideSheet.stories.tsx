@@ -72,8 +72,9 @@ const SidesheetContent = () => {
 
         dialog(response);
     };
+
     return (
-        <div style={{ paddingTop: 32, paddingLeft: 32 }}>
+        <div style={{ paddingTop: 32, paddingLeft: 32, paddingRight: 32 }}>
             <div>
                 <Button onClick={onSnackbarClick}>Show low priority notification</Button>
             </div>
