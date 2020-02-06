@@ -9,10 +9,11 @@
     border-radius: 4px;
     display: flex;
     align-items: center;
-    position: fixed;
+    position: absolute;
     justify-content: space-between;
     transition: opacity .2s;
     opacity: 0;
+    pointer-events: all;
 
     @media (max-width: @mobile-max-width) {
         --width-multiplier: 38px;
@@ -68,22 +69,24 @@
     }
 
     &.left {
-        left: .grid-unit(1px)[];
-    }
-    &.right {
-        right: .grid-unit(1px)[];
+        left: .grid-unit(4px)[];
     }
 
-    &.center{
+    &.right {
+        right: .grid-unit(4px)[];
+    }
+
+    &.center {
         left: 50%;
         right: auto;
         transform: translateX(-50%);
     }
 
     &.top {
-        top: .grid-unit(1px)[];
+        top: .grid-unit(5px)[];
     }
+
     &.bottom {
-        bottom: .grid-unit(1px)[];
+        bottom: .grid-unit(5px)[];
     }
 }

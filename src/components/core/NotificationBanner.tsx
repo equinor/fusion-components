@@ -49,11 +49,11 @@ const NotificationBanner: React.FC = () => {
         return notificationCenter.registerPresenter('medium', presentBanner);
     }, []);
 
-    if (!banners.length) {
+    const currentBanner = React.useMemo(() => banners.length ? banners[0] : null, [banners]);
+
+    if(!currentBanner) {
         return null;
     }
-
-    const currentBanner = banners[0];
 
     return (
         <Banner

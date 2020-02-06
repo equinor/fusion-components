@@ -96,9 +96,6 @@ const FusionStory = () => {
             />
             <FusionContent>
                 <div style={{ maxWidth: 800, margin: '20px auto' }}>
-                    <h2>Scrolling appears a bit weird in Storybook</h2>
-                    <h3>The header disappears when scrolling past ~50%</h3>
-                    <h4>But works like a charm when placed directly within body with margin: 0;</h4>
                     <p>
                         <Button onClick={onSnackbarClick}>Show low priority notification</Button>
                         <Button onClick={onBannerClick}>Show medium priority notification</Button>
