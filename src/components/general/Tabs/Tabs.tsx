@@ -20,8 +20,8 @@ type GradientType = 'left' | 'right' | 'leftAndRight' | null;
 
 const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
     const active = React.Children.toArray(children).find(
-        child => child.props.tabKey === activeTabKey
-    );
+        child => (child as React.ReactElement).props.tabKey === activeTabKey
+    ) as React.ReactElement | null;
     if (!active) {
         return null;
     }

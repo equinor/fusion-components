@@ -37,9 +37,9 @@ const Stepper: React.FC<StepperProps> = ({
 
     React.useEffect(() => {
         const steps: StepKey[] = React.Children.toArray(children).map((c, i) => ({
-            key: c.props.stepKey,
+            key: (c as React.ReactElement).props.stepKey,
             position: i + 1,
-            disabled: c.props.disabled,
+            disabled: (c as React.ReactElement).props.disabled,
         }));
 
         setStepKeys(steps);
