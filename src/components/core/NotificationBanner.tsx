@@ -1,5 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useFusionContext, NotificationRequest, NotificationResponse } from '@equinor/fusion';
+import {
+    NotificationRequest,
+    NotificationResponse,
+    RegisterNotificationPresenter,
+} from '@equinor/fusion';
 import { Banner } from '@equinor/fusion-components';
 
 type BannerNotification = {
@@ -8,8 +12,11 @@ type BannerNotification = {
     abortSignal: AbortSignal;
 };
 
-const NotificationBanner: React.FC = () => {
-    const { notificationCenter } = useFusionContext();
+type NotificationBannerProps = {
+    registerPresenter: RegisterNotificationPresenter;
+};
+
+const NotificationBanner: React.FC<NotificationBannerProps> = ({ registerPresenter }) => {
     const [banners, setBanners] = useState<BannerNotification[]>([]);
 
     const resolveBanner = useCallback(
@@ -46,12 +53,12 @@ const NotificationBanner: React.FC = () => {
     };
 
     useEffect(() => {
-        return notificationCenter.registerPresenter('medium', presentBanner);
+        return registerPresenter('medium', presentBanner);
     }, []);
 
-    const currentBanner = React.useMemo(() => banners.length ? banners[0] : null, [banners]);
+    const currentBanner = React.useMemo(() => (banners.length ? banners[0] : null), [banners]);
 
-    if(!currentBanner) {
+    if (!currentBanner) {
         return null;
     }
 

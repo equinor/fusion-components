@@ -5,7 +5,8 @@
     --width-multiplier: 75px;
     background-color: var(--color-black-alt1);
     height: .grid-unit(6px)[];
-    width: calc(var(--width-multiplier)* var(--grid-unit));
+    width: calc(var(--width-multiplier) * var(--grid-unit));
+    max-width: calc(100% - (var(--grid-unit) * 8px));
     border-radius: 4px;
     display: flex;
     align-items: center;

@@ -1,9 +1,17 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, select, boolean, number } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
 import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
+import { useNotificationCenter } from '@equinor/fusion';
+
+const snackbar = action('snackbar');
+const banner = action('banner');
+const dialog = action('dialog');
+let snackbarCount = 1;
+let bannerCount = 1;
 
 const OutsideContent = () => (
     <div style={{ flexGrow: 1, padding: 24 }}>
@@ -30,67 +38,112 @@ const OutsideContent = () => (
     </div>
 );
 
-const SidesheetContent = () => (
-    <div style={{ paddingTop: 32, paddingLeft: 32 }}>
-        <p>
-            I'm gonna be at the dance. Well yeah, you know we have two of them. Excuse me. Oh honey,
-            he's teasing you, nobody has two television sets. Oh yes sir.
-        </p>
-        <p>
-            A bolt of lightning, unfortunately, you never know when or where it's ever gonna strike.
-            Let him go, Biff, you're drunk. On the night I go back in time, you get- Doc. You wait
-            and see, Mr. Caruthers, I will be mayor and I'll be the most powerful mayor in the
-            history of Hill Valley, and I'm gonna clean up this town. It's cold, damn cold. Ha, ha,
-            ha, Einstein, you little devil. Einstein's clock is exactly one minute behind mine, it's
-            still ticking.
-        </p>
-        <p>
-            What's a rerun? But I can't go to the dance, I'll miss my favorite television program,
-            Science Fiction Theater. Wait a minute, wait a minute. 1:15 in the morning? I don't like
-            her, Marty. Any girl who calls a boy is just asking for trouble. Yeah, exactly.
-        </p>
-        <p>
-            I'm writing this down, this is good stuff. Hot, Jesus Christ, Doc. Jesus Christ, Doc,
-            you disintegrated Einstein. Take that you mutated son-of-a-bitch. My pine, why you. You
-            space bastard, you killed a pine. Hey Dad, George, hey, you on the bike. Yeah, sure,
-            okay.
-        </p>
-        <p>
-            Unroll their fire. Alright, c'mon, I think we're safe. What, what? Doc, she didn't even
-            look at him. Great Scott. Let me see that photograph again of your brother. Just as I
-            thought, this proves my theory, look at your brother.
-        </p>
-        <p>
-            Well yeah, you know we have two of them. Marty, why are you so nervous? Hey, Doc, we
-            better back up, we don't have enough roads to get up to 88. Whoa, whoa, okay. Well,
-            because George, nice girls get angry when guys take advantage of them.
-        </p>
-        <p>
-            Right. Kids, we're gonna have to eat this cake by ourselves, Uncle Joey didn't make
-            parole again. I think it would be nice, if you all dropped him a line. Doc, you don't
-            just walk into a store and ask for plutonium. Did you rip this off? Uh? Hey man, the
-            dance is over. Unless you know someone else who could play the guitar.
-        </p>
-        <p>
-            Well, now we gotta sneak this back into my laboratory, we've gotta get you home. Its
-            good. Go. What the hell is a gigawatt? Alright, alright, okay McFly, get a grip on
-            yourself. It's all a dream. Just a very intense dream. Woh, hey, listen, you gotta help
-            me.
-        </p>
-        <p>
-            That's good advice, Marty. Where's Einstein, is he with you? We never would have fallen
-            in love. Ho, you mean you're gonna touch her on her- Alright, alright, okay McFly, get a
-            grip on yourself. It's all a dream. Just a very intense dream. Woh, hey, listen, you
-            gotta help me.
-        </p>
-        <p>
-            Einstein, hey Einstein, where's the Doc, boy, huh? Doc Well, safe and sound, now, n good
-            old 1955. He's alright. Brown, Brown, Brown, Brown, Brown, great, you're alive. Do you
-            know where 1640 Riverside- Yeah I know, If you put your mind to it you could accomplish
-            anything.
-        </p>
-    </div>
-);
+const SidesheetContent = () => {
+    const sendNotificationAsync = useNotificationCenter();
+    const onSnackbarClick = async () => {
+        const response = await sendNotificationAsync({
+            level: 'low',
+            title: 'This is is low priority notification #' + snackbarCount++,
+            cancelLabel: 'Undo',
+        });
+
+        snackbar(response);
+    };
+
+    const onBannerClick = async () => {
+        const response = await sendNotificationAsync({
+            level: 'medium',
+            title: 'What a nice banner! And this is medium priority notification #' + bannerCount++,
+            confirmLabel: 'Sure is',
+        });
+
+        banner(response);
+    };
+
+    const onDialogClick = async () => {
+        const response = await sendNotificationAsync({
+            level: 'high',
+            title: 'Are you sure you want a blocking notification?',
+            body:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in fringilla magna, nec posuere justo.',
+            cancelLabel: 'Cancel',
+            confirmLabel: "I'm sure",
+        });
+
+        dialog(response);
+    };
+    return (
+        <div style={{ paddingTop: 32, paddingLeft: 32 }}>
+            <div>
+                <Button onClick={onSnackbarClick}>Show low priority notification</Button>
+            </div>
+            <div>
+                <Button onClick={onBannerClick}>Show medium priority notification</Button>
+            </div>
+            <div>
+                <Button onClick={onDialogClick}>Show high priority blocking notification</Button>
+            </div>
+            <p>
+                I'm gonna be at the dance. Well yeah, you know we have two of them. Excuse me. Oh
+                honey, he's teasing you, nobody has two television sets. Oh yes sir.
+            </p>
+            <p>
+                A bolt of lightning, unfortunately, you never know when or where it's ever gonna
+                strike. Let him go, Biff, you're drunk. On the night I go back in time, you get-
+                Doc. You wait and see, Mr. Caruthers, I will be mayor and I'll be the most powerful
+                mayor in the history of Hill Valley, and I'm gonna clean up this town. It's cold,
+                damn cold. Ha, ha, ha, Einstein, you little devil. Einstein's clock is exactly one
+                minute behind mine, it's still ticking.
+            </p>
+            <p>
+                What's a rerun? But I can't go to the dance, I'll miss my favorite television
+                program, Science Fiction Theater. Wait a minute, wait a minute. 1:15 in the morning?
+                I don't like her, Marty. Any girl who calls a boy is just asking for trouble. Yeah,
+                exactly.
+            </p>
+            <p>
+                I'm writing this down, this is good stuff. Hot, Jesus Christ, Doc. Jesus Christ,
+                Doc, you disintegrated Einstein. Take that you mutated son-of-a-bitch. My pine, why
+                you. You space bastard, you killed a pine. Hey Dad, George, hey, you on the bike.
+                Yeah, sure, okay.
+            </p>
+            <p>
+                Unroll their fire. Alright, c'mon, I think we're safe. What, what? Doc, she didn't
+                even look at him. Great Scott. Let me see that photograph again of your brother.
+                Just as I thought, this proves my theory, look at your brother.
+            </p>
+            <p>
+                Well yeah, you know we have two of them. Marty, why are you so nervous? Hey, Doc, we
+                better back up, we don't have enough roads to get up to 88. Whoa, whoa, okay. Well,
+                because George, nice girls get angry when guys take advantage of them.
+            </p>
+            <p>
+                Right. Kids, we're gonna have to eat this cake by ourselves, Uncle Joey didn't make
+                parole again. I think it would be nice, if you all dropped him a line. Doc, you
+                don't just walk into a store and ask for plutonium. Did you rip this off? Uh? Hey
+                man, the dance is over. Unless you know someone else who could play the guitar.
+            </p>
+            <p>
+                Well, now we gotta sneak this back into my laboratory, we've gotta get you home. Its
+                good. Go. What the hell is a gigawatt? Alright, alright, okay McFly, get a grip on
+                yourself. It's all a dream. Just a very intense dream. Woh, hey, listen, you gotta
+                help me.
+            </p>
+            <p>
+                That's good advice, Marty. Where's Einstein, is he with you? We never would have
+                fallen in love. Ho, you mean you're gonna touch her on her- Alright, alright, okay
+                McFly, get a grip on yourself. It's all a dream. Just a very intense dream. Woh,
+                hey, listen, you gotta help me.
+            </p>
+            <p>
+                Einstein, hey Einstein, where's the Doc, boy, huh? Doc Well, safe and sound, now, n
+                good old 1955. He's alright. Brown, Brown, Brown, Brown, Brown, great, you're alive.
+                Do you know where 1640 Riverside- Yeah I know, If you put your mind to it you could
+                accomplish anything.
+            </p>
+        </div>
+    );
+};
 
 const ModalSideSheetStory = () => {
     const [isOpen, setIsOpen] = React.useState(false);
