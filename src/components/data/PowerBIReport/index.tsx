@@ -13,6 +13,14 @@ import { ICustomEvent } from 'service';
 import FusionError from './models/FusionError';
 import FusionErrorMessage from './components/FusionErrorMessage';
 import { Report, EmbedInfo, AccessToken } from '@equinor/fusion/lib/http/apiClients/models/report/';
+import {
+    ReportLevelFilters,
+    IBasicFilter,
+    IBasicFilterWithKeys,
+    IAdvancedFilter,
+    IRelativeDateFuilter,
+    ITupleFilter,
+} from './models/ReportLevelFilters';
 
 import * as styles from './styles.less';
 
@@ -278,3 +286,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 };
 
 export default PowerBIReport;
+export {
+    ReportLevelFilters,
+    IBasicFilter,
+    IBasicFilterWithKeys,
+    IAdvancedFilter,
+    IRelativeDateFuilter,
+    ITupleFilter,
+};
