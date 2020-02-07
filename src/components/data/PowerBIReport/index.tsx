@@ -23,6 +23,7 @@ import {
 } from './models/ReportLevelFilters';
 
 import * as styles from './styles.less';
+import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 type PowerBIProps = {
     reportId: string;
@@ -198,8 +199,12 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     React.useEffect(() => {
         if (embeddedRef.current) {
             embeddedRef.current.off('pageChanged');
+            embeddedRef.current.off('buttonClicked');
             embeddedRef.current.on('pageChanged', () => {
                 setFilter();
+            });
+            embeddedRef.current.on('buttonClicked', (button: ICustomEvent<ButtonClickEvent>) => {
+                if (button.detail.title === 'reset filter') setFilter();
             });
         }
     }, [filters, embedRef.current]);
