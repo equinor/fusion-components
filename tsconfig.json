@@ -7,7 +7,7 @@
         "outDir": "dist",
         "rootDir": "src",
         "baseUrl": "./",
-        "strict": true,
+        "strict": false,
         "target": "es2017",
         "composite": false,
         "moduleResolution": "node",
@@ -15,7 +15,7 @@
         "noImplicitAny": false,
         "paths": {
             "@equinor/fusion-components": ["./src/index.ts"]
-        }
+        },
     },
     "include": [
         "src/**/*",

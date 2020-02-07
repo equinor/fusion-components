@@ -1,4 +1,4 @@
-import React, { ReactNode, FC, useCallback, useMemo, useState, useEffect } from 'react';
+import React, { ReactNode, useCallback, useMemo, useState, useEffect } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
@@ -9,8 +9,10 @@ import {
     Scrim,
     PaginationArrow,
 } from '@equinor/fusion-components';
-import { useComponentDisplayClassNames, useNotificationCenter } from '@equinor/fusion';
+import { useComponentDisplayClassNames, useNotificationCenter, NotificationContextProvider } from '@equinor/fusion';
 import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
+import BannerPresenter from './BannerPresenter';
+import SnackbarPresenter from './SnackbarPresenter';
 
 type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -111,36 +113,40 @@ export default ({
     return (
         <OverlayPortal show={show}>
             <Scrim onClick={close} show={isShowing}>
-                <div
-                    style={{ ...resizedSize }}
-                    className={modalSideSheetClassNames}
-                    onClick={e => e.stopPropagation()}
-                    onTransitionEnd={() => {
-                        !isShowing && onClose && onClose();
-                    }}
-                >
-                    {isResizable && (
-                        <div className={styles.resizeHandle} onMouseDown={onResizeStart}>
-                            <div className={styles.bar} />
-                            <div className={resizeIndicatorClassNames}>
-                                <PaginationArrow prev />
-                                <PaginationArrow next />
+                <NotificationContextProvider>
+                    <div
+                        style={{ ...resizedSize }}
+                        className={modalSideSheetClassNames}
+                        onClick={e => e.stopPropagation()}
+                        onTransitionEnd={() => {
+                            !isShowing && onClose && onClose();
+                        }}
+                    >
+                        {isResizable && (
+                            <div className={styles.resizeHandle} onMouseDown={onResizeStart}>
+                                <div className={styles.bar} />
+                                <div className={resizeIndicatorClassNames}>
+                                    <PaginationArrow prev />
+                                    <PaginationArrow next />
+                                </div>
                             </div>
-                        </div>
-                    )}
-                    <header className={styles.header}>
-                        <div className={styles.closeButton}>
-                            <IconButton onClick={close}>
-                                <CloseIcon />
-                            </IconButton>
-                        </div>
-                        <div className={styles.headerContent}>
-                            <div className={styles.headerTitle}>{header}</div>
-                            <div className={styles.headerIcons}>{headerIcons}</div>
-                        </div>
-                    </header>
-                    {content}
-                </div>
+                        )}
+                        <BannerPresenter />
+                        <header className={styles.header}>
+                            <div className={styles.closeButton}>
+                                <IconButton onClick={close}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </div>
+                            <div className={styles.headerContent}>
+                                <div className={styles.headerTitle}>{header}</div>
+                                <div className={styles.headerIcons}>{headerIcons}</div>
+                            </div>
+                        </header>
+                        {content}
+                        <SnackbarPresenter />
+                    </div>
+                </NotificationContextProvider>
             </Scrim>
         </OverlayPortal>
     );

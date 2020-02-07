@@ -2,9 +2,9 @@ import * as React from 'react';
 import {
     useContextManager,
     useCurrentContext,
-    Context,
     useComponentDisplayClassNames,
     useContextQuery,
+    useCurrentApp,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -14,6 +14,8 @@ import {
     SearchableDropdownSection,
     SearchableDropdownOption,
     Spinner,
+    IconButton,
+    CloseIcon,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
@@ -34,6 +36,7 @@ const ContextSelector: React.FC = () => {
     const currentContext = useCurrentContext();
     const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
+    const contextManifest = useCurrentApp()?.context;
 
     React.useEffect(() => {
         setDropdownSections(
@@ -82,6 +85,12 @@ const ContextSelector: React.FC = () => {
                 !isOpen && setIsOpen(true);
             }, [isOpen]);
 
+            const placeholder = React.useMemo(() => {
+                return contextManifest?.placeholder
+                    ? contextManifest.placeholder
+                    : 'Search context';
+            }, [contextManifest?.placeholder]);
+
             return (
                 <>
                     <SearchIcon color="#DADADA" />
@@ -91,15 +100,23 @@ const ContextSelector: React.FC = () => {
                         onChange={onChangeQueryText}
                         onClick={onClickDropDown}
                         onKeyUp={onKeyUpCloseDropDown}
-                        placeholder={selectedValue !== '' ? selectedValue : 'Search contexts'}
+                        placeholder={selectedValue !== '' ? selectedValue : placeholder}
                         className={styles.searchInput}
                         ref={inputRef}
                     />
                     {isQuerying && <Spinner inline />}
+                    {contextManifest?.nullable && (
+                        <IconButton
+                            disabled={!currentContext}
+                            onClick={() => contextManager.setCurrentContextAsync(null)}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                    )}
                 </>
             );
         },
-        [queryText, currentContext, dropdownSections]
+        [queryText, currentContext, dropdownSections, contextManifest]
     );
 
     const dropdownController = useDropdownController(dropdownControllerProps);
@@ -123,24 +140,24 @@ const ContextSelector: React.FC = () => {
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
     const helperText = React.useMemo(
-        () =>
-            !contexts.length && !isQuerying && !queryText
-                ? 'No contexts, please try the search bar above (Start typing to search)'
-                : null,
-        [contexts, isQuerying, queryText]
+        () => (!contexts.length && !isQuerying && !queryText ? 'Start typing to search' : null),
+        [contexts, isQuerying, queryText, contextManifest]
     );
 
     return (
         <div className={containerClassNames} ref={containerRef}>
             <Dropdown controller={dropdownController}>
                 <div className={styles.dropdownContainer}>
-                    {helperText ? <div className={styles.helperText}>{helperText}</div> : null}
-                    <Menu
-                        elevation={0}
-                        onClick={onSelect}
-                        keyboardNavigationRef={inputRef.current}
-                        sections={dropdownSections}
-                    />
+                    {helperText ? (
+                        <div className={styles.helperText}>{helperText}</div>
+                    ) : (
+                        <Menu
+                            elevation={0}
+                            onClick={onSelect}
+                            keyboardNavigationRef={inputRef.current}
+                            sections={dropdownSections}
+                        />
+                    )}
                 </div>
             </Dropdown>
         </div>

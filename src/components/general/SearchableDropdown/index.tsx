@@ -208,6 +208,16 @@ const SearchableDropdown = ({
     );
 
     const containerRef = dropdownController.controllerRef as React.MutableRefObject<HTMLDivElement | null>;
+
+    const hasResults = useMemo(() => {
+        return (
+            dropdownSections.reduce<SearchableDropdownOption[]>(
+                (items, section) => [...items, ...section.items],
+                []
+            ).length > 0
+        );
+    }, [dropdownSections]);
+
     return (
         <div ref={containerRef}>
             <Dropdown controller={dropdownController}>
@@ -215,14 +225,20 @@ const SearchableDropdown = ({
                     className={styles.menuContainer}
                     style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
                 >
-                    <Menu
-                        elevation={0}
-                        onClick={select}
-                        keyboardNavigationRef={inputRef.current}
-                        sections={dropdownSections}
-                        itemComponent={itemComponent}
-                        asideComponent={asideComponent}
-                    />
+                    {hasResults ? (
+                        <Menu
+                            elevation={0}
+                            onClick={select}
+                            keyboardNavigationRef={inputRef.current}
+                            sections={dropdownSections}
+                            itemComponent={itemComponent}
+                            asideComponent={asideComponent}
+                        />
+                    ) : (
+                        <div className={styles.noResultsContainer}>
+                            {inputValue ? <span>No matches for <strong> {inputValue}</strong></span> : 'Start typing to search'}
+                        </div>
+                    )}
                 </div>
             </Dropdown>
         </div>

@@ -7,7 +7,7 @@ const prettier = require('../build/prettier');
 const resolve = require('../build/resolve');
 const typescript = require('../build/typescript');
 
-module.exports = ({ config }) =>
+module.exports = async ({ config }) =>
     merge(config, styles, fonts, eslint, prettier, typescript('../'), resolve, {
         resolve: {
             alias: {
