@@ -36,7 +36,9 @@ const ItemComponent: React.FC<ItemComponentProps> = ({ item }) => {
 
     return (
         <div className={styles.cardContainer}>
-            <div className={styles.positionName}>{item.position.externalId} - {item.position.name}</div>
+            <div className={styles.positionName}>
+                {item.position.externalId} - {item.position.name}
+            </div>
             <div className={styles.assignedPersonName}>
                 {activeInstance && activeInstance.assignedPerson
                     ? activeInstance.assignedPerson.name
@@ -58,7 +60,11 @@ const AsideComponent: React.FC<ItemComponentProps> = ({ item }) => {
 
     return (
         <PersonPhoto
-            person={activeInstance ? activeInstance.assignedPerson : undefined}
+            person={
+                activeInstance && activeInstance.assignedPerson
+                    ? activeInstance.assignedPerson
+                    : undefined
+            }
             size="medium"
         />
     );

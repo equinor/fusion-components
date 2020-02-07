@@ -25,6 +25,8 @@ type ModalSideSheetProps = ResizablePaneOptions & {
     size?: SideSheetSize;
     safeClose?: boolean;
     safeCloseTitle?: string;
+    safeCloseConfirmLabel?: string;
+    safeCloseCancelLabel?: string;
 };
 
 export default ({
@@ -36,6 +38,8 @@ export default ({
     size = 'large',
     safeClose,
     safeCloseTitle,
+    safeCloseConfirmLabel,
+    safeCloseCancelLabel,
     isResizable = false,
     id = '',
     minWidth,
@@ -54,8 +58,8 @@ export default ({
         const response = await sendNotification({
             level: 'high',
             title: safeCloseTitle || '',
-            confirmLabel: 'Close',
-            cancelLabel: 'Cancel',
+            confirmLabel: safeCloseConfirmLabel || 'Confirm',
+            cancelLabel: safeCloseCancelLabel || 'Cancel',
         });
         if (response.confirmed || response.dismissed) {
             setIsShowing(false);
