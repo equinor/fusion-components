@@ -16,8 +16,9 @@ type PositionInstanceProps = {
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     childCount?: number;
+    cumulativeChildCount?: number;
     rotationInstances: PositionInstance[];
-    selectedDate?: Date,
+    selectedDate?: Date;
 };
 
 const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
@@ -31,6 +32,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     onClick,
     onExpand,
     childCount,
+    cumulativeChildCount,
     rotationInstances,
     selectedDate,
 }) => {
@@ -48,7 +50,18 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const directChildrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
+    const directChildrenTooltipRef = useTooltipRef(
+        <span>
+            Direct: {childCount} positions
+            {cumulativeChildCount && (
+                <>
+                    <br />
+                    Cumulative: {cumulativeChildCount} positions
+                </>
+            )}
+        </span>,
+        'above'
+    );
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
@@ -125,7 +138,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                 <div className={styles.expandButton}>
                     <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>
-                            {childCount}
+                            {childCount} {cumulativeChildCount && <>/ {cumulativeChildCount} </>}
                             <ExpandMoreIcon height={16} isExpanded={false} />
                         </div>
                     </IconButton>

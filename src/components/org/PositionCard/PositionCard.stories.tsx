@@ -293,9 +293,11 @@ const InteractiveStory = () => {
             isSelected={isSelected}
             onExpand={action('onExpand')}
             childCount={number('Child count', 2)}
+            cumulativeChildCount={number('Cumulative child count', 2)}
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
             selectedDate={new Date('2022-09-25T00:00:00')}
+
         />
     );
 };

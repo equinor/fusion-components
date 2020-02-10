@@ -224,9 +224,15 @@
                 
                 &.isCurrent {
                     --instance-color: var(--color-primary);
+                    &.hasRotation {
+                        --instance-color: var(--color-secondary-alt1);
+                    }
                 }
                 &:not(.isCurrent){
                     --instance-color: var(--color-primary-alt1);
+                    &.hasRotation {
+                        --instance-color: var(--color-secondary-alt3);
+                    }
                 }
 
                 &.hasUnAssignedPerson {
