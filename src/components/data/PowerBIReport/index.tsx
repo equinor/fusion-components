@@ -204,7 +204,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 setFilter();
             });
             embeddedRef.current.on('buttonClicked', (button: ICustomEvent<ButtonClickEvent>) => {
-                if (button.detail.title === 'reset filter') setFilter();
+                if (button.detail.title.toLowerCase() === 'reset filter') setFilter();
             });
         }
     }, [filters, embedRef.current]);
