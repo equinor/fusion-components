@@ -85,6 +85,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     const timelineInstanceClasses = classNames(styles.instance, {
         [styles.isCurrent]: isCurrent,
         [styles.hasUnAssignedPerson]: instance.assignedPerson === null,
+        [styles.hasRotation]: rotationInstances.length > 0
     });
 
     const shouldRenderRightDot = useMemo(() => {
