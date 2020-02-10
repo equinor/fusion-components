@@ -3,7 +3,7 @@ import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import  {useInstancesWithRotation, PositionInstanceRotation } from '../hooks';
+import { useInstancesWithRotation, PositionInstanceRotation } from '../hooks';
 
 type PositionTimelineProps = {
     /** The instance that is currently active/shown */
@@ -85,7 +85,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     const timelineInstanceClasses = classNames(styles.instance, {
         [styles.isCurrent]: isCurrent,
         [styles.hasUnAssignedPerson]: instance.assignedPerson === null,
-        [styles.hasRotation]: rotationInstances.length > 0
+        [styles.hasRotation]: rotationInstances.length > 0,
     });
 
     const shouldRenderRightDot = useMemo(() => {

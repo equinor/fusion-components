@@ -16,7 +16,6 @@ type PositionInstanceProps = {
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     childCount?: number;
-    cumulativeChildCount?: number;
     rotationInstances: PositionInstance[];
     selectedDate?: Date;
 };
@@ -32,7 +31,6 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     onClick,
     onExpand,
     childCount,
-    cumulativeChildCount,
     rotationInstances,
     selectedDate,
 }) => {
@@ -50,18 +48,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const directChildrenTooltipRef = useTooltipRef(
-        <span>
-            Direct: {childCount} positions
-            {cumulativeChildCount && (
-                <>
-                    <br />
-                    Cumulative: {cumulativeChildCount} positions
-                </>
-            )}
-        </span>,
-        'above'
-    );
+    const childrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
@@ -136,9 +123,9 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             )}
             {onExpand && childCount !== undefined && childCount > 0 && (
                 <div className={styles.expandButton}>
-                    <IconButton ref={directChildrenTooltipRef} onClick={onExpandHandler}>
+                    <IconButton ref={childrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>
-                            {childCount} {cumulativeChildCount && <>/ {cumulativeChildCount} </>}
+                            {childCount}
                             <ExpandMoreIcon height={16} isExpanded={false} />
                         </div>
                     </IconButton>

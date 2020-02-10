@@ -20,7 +20,6 @@ type PositionCardProps = {
     isPast?: boolean;
     isLinked?: boolean;
     childCount?: number;
-    cumulativeChildCount?: number;
     selectedDate?: Date;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
@@ -41,7 +40,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
     isPast,
     isLinked,
     childCount,
-    cumulativeChildCount,
     selectedDate,
 }) => {
     const isExternalHire =
@@ -104,7 +102,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
                 onClick={onClick}
                 onExpand={onExpand}
                 childCount={childCount}
-                cumulativeChildCount={cumulativeChildCount}
                 rotationInstances={rotatingInstances}
                 selectedDate={selectedDate}
             />
