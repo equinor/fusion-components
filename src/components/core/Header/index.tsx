@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import ComponentDisplayToggleButton from './components/ComponentDisplayToggleButton';
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
+import AppManifest from '@equinor/fusion/lib/app/AppManifest';
 
 enum Breakpoints {
     medium = 'medium',
@@ -30,9 +31,13 @@ const breakpoints = [
     },
 ];
 
+type HeaderContentProps = {
+    app: AppManifest | null;
+};
+
 type FusionHeaderProps = {
     start: React.ReactElement | null;
-    content: React.ReactElement | null;
+    content: React.FC<HeaderContentProps> | null;
     aside: React.ReactElement | null;
 };
 
@@ -79,7 +84,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
                 className={styles.contentContainer}
                 ref={headerContent as React.MutableRefObject<HTMLDivElement | null>}
             >
-                {content}
+                {content && React.createElement(content, { app: currentApp })}
             </div>
 
             <aside className={styles.asideContainer}>
