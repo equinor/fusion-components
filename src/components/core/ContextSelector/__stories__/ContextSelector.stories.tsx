@@ -49,7 +49,7 @@ const PDPContextSelectorStory = () => {
     return (
         <React.Fragment>
             <CurrentContext>
-                <FusionHeader start={null} content={<ContextSelector />} aside={null} />
+                <FusionHeader start={null} content={ContextSelector} aside={null} />
                 <FusionContent>
                     <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
                 </FusionContent>
@@ -62,7 +62,7 @@ const NullableAndPlaceHolderContextSelectorStory = () => {
     return (
         <React.Fragment>
             <CurrentContextNullableAndPlaceholder>
-                <FusionHeader start={null} content={<ContextSelector />} aside={null} />
+                <FusionHeader start={null} content={ContextSelector} aside={null} />
                 <FusionContent>
                     <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
                 </FusionContent>
