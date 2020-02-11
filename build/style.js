@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
     module: {
         rules: [
@@ -10,9 +12,12 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: true,
-                            localIdentName: 'fc--[local]--[hash:base64:5]',
-                            // url: false,
+                            modules: {
+                                mode: 'local',
+                                localIdentName: 'fc--[folder]__[local]--[hash:base64:5]',
+                                context: path.resolve(__dirname, '..', 'src'),
+                                hashPrefix: new Date().getTime().toString(),
+                            },
                         },
                     },
                     {
