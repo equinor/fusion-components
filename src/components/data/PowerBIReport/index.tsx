@@ -85,6 +85,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const [accessToken, setAccessToken] = React.useState<AccessToken>();
     const [timeLoadStart, SetTimeLoadStart] = React.useState<Date>(new Date());
     const telemetryLogger = useTelemetryLogger();
+    const [reApplyFilter, setReapplyFilter] = React.useState<boolean>(false);
 
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
@@ -114,7 +115,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         const report = powerbi.get(embedRef.current) as pbi.Report;
 
         if (!report) return;
-
         filters ? report.setFilters(filters) : report.removeFilters();
     };
 
@@ -162,10 +162,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 const config = getConfig(embedInfo.embedConfig.embedType.toLowerCase());
 
                 embeddedRef.current = powerbi.embed(node, config);
-
                 embeddedRef.current.off('loaded');
                 embeddedRef.current.off('error');
                 embeddedRef.current.off('rendered');
+                embeddedRef.current.off('buttonClicked');
+
                 embeddedRef.current.on('loaded', () => {
                     telemetryLogger.trackMetric({
                         name: `${useCurrentApp.name}-EmbedLoadedTime`,
@@ -191,6 +192,13 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                     setPowerBIError(err);
                     setIsLoading(false);
                 });
+                embeddedRef.current.on(
+                    'buttonClicked',
+                    (button: ICustomEvent<ButtonClickEvent>) => {
+                        if (button?.detail?.title?.toLowerCase() === 'reset filter')
+                            setReapplyFilter(true);
+                    }
+                );
             }
         },
         [embedInfo, accessToken, reportId]
@@ -199,15 +207,21 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     React.useEffect(() => {
         if (embeddedRef.current) {
             embeddedRef.current.off('pageChanged');
-            embeddedRef.current.off('buttonClicked');
             embeddedRef.current.on('pageChanged', () => {
                 setFilter();
             });
-            embeddedRef.current.on('buttonClicked', (button: ICustomEvent<ButtonClickEvent>) => {
-                if (button.detail.title.toLowerCase() === 'reset filter') setFilter();
-            });
         }
-    }, [filters, embedRef.current]);
+    }, [filters, embeddedRef.current]);
+
+    React.useEffect(() => {
+        if (!embeddedRef.current) return;
+
+        embeddedRef.current.off('rendered');
+        embeddedRef.current.on('rendered', () => {
+            if (reApplyFilter) setFilter();
+            setReapplyFilter(false);
+        });
+    }, [reApplyFilter]);
 
     React.useEffect(() => {
         if (accessToken) {
