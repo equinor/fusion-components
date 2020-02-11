@@ -48,9 +48,10 @@ export default ({
     additionalPersons = [],
 }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
-    const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(
-        person && additionalPersons.length === 0 ? person.azureUniqueId : personId || ''
-    );
+
+    const id = person && additionalPersons.length === 0 ? person.azureUniqueId : personId || '';
+
+    const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
 
     const { error, personDetails } = personId
         ? usePersonDetails(personId)
@@ -141,7 +142,7 @@ export default ({
         >
             <div ref={hideTooltip ? undefined : nameTooltipRef}>
                 <div className={popoverClassNames}>
-                    {(imageError !== null || additionalPersons.length > 0) && (
+                    {(imageError !== null || additionalPersons.length > 0 || !id) && (
                         <FallbackImage size={size} rotation={additionalPersons.length > 0} />
                     )}
                     {personDetails && additionalPersons.length === 0 && (
