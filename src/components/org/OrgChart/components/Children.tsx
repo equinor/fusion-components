@@ -71,16 +71,17 @@ function Children<T>() {
         (cards: OrgNode<T>[], rowNo: number) => {
 
             const startX = getStartXPosition(cards, rowNo);
-
-            return cards.map((card, i) => (
+            return cards.map((card, i) => {
+                console.log(card.numberOfAssignees)
+                return(
                 <React.Fragment key={card.id}>
                     <Card
                         node={card}
                         x={startX + i * (cardWidth + cardMargin)}
-                        y={initialMargin + (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)}
+                        y={initialMargin + (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin) }
                     />
                 </React.Fragment>
-            ));
+            )});
         },
         [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows, width]
     );
