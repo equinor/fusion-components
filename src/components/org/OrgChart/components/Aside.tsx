@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useMemo, useCallback } from 'react';
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
+import useAdditionalRowHeight from '../useAdditionalRowHeight';
 
 function Aside<T>() {
     const {
@@ -41,7 +42,7 @@ function Aside<T>() {
             ),
         [asideNodes, numberOfCardsPerRow]
     );
-
+    
     useEffect(() => {
         if (rows.length !== asideRows) {
             dispatch({
@@ -50,6 +51,19 @@ function Aside<T>() {
             });
         }
     }, [asideRows, rows]);
+
+    const additionalRowHeight = useAdditionalRowHeight(rows, true);
+
+    useEffect(() => {
+        const maxAdditionalRowHeight = additionalRowHeight[additionalRowHeight.length - 1];
+        if (maxAdditionalRowHeight !== additionalAsideRowHeight) {
+            dispatch({
+                type: 'UPDATE_ADDITIONAL_ROW_HEIGHT',
+                additionalAsideRowHeight: maxAdditionalRowHeight,
+            });
+        }
+    }, [additionalRowHeight]);
+
 
     const getStartXPosition = () => {
         if (numberOfCardsPerRow === 1) {
@@ -76,50 +90,6 @@ function Aside<T>() {
         },
         [centerX, cardWidth, cardMargin, rowMargin, numberOfCardsPerRow]
     );
-
-    const getAdditionalRowHeight = useCallback(
-        (cards: OrgNode<T>[]) => {
-            const greatestAdditionPersons = cards.reduce((highest: number, card: OrgNode<T>) => {
-                if (card.numberOfAssignees && card.numberOfAssignees > highest) {
-                    return card.numberOfAssignees;
-                }
-                return highest;
-            }, 0);
-            if (greatestAdditionPersons === 0) {
-                return 0;
-            }
-            return (
-                Math.ceil(greatestAdditionPersons / 3) *
-                (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
-            );
-        },
-        [numberOfCardsPerRow, rowMargin]
-    );
-
-    const additionalRowHeight = rows.reduce(
-        (additionalHeight: number[], _: OrgNode<T>[], index: number) => {
-            const previousHeight = additionalHeight.reduce(
-                (totalHeight: number, height: number) => totalHeight + height,
-                0
-            );
-            if (index === 0) {
-                return [...additionalHeight, 0];
-            }
-            const currentRowHeight = getAdditionalRowHeight(rows[index - 1]);
-            return [...additionalHeight, previousHeight + currentRowHeight];
-        },
-        []
-    );
-
-    useEffect(() => {
-        const maxAdditionalRowHeight = additionalRowHeight[additionalRowHeight.length - 1];
-        if (maxAdditionalRowHeight !== additionalAsideRowHeight) {
-            dispatch({
-                type: 'UPDATE_ADDITIONAL_ROW_HEIGHT',
-                additionalAsideRowHeight: maxAdditionalRowHeight,
-            });
-        }
-    }, [additionalRowHeight]);
 
     return (
         <g className="aside">
