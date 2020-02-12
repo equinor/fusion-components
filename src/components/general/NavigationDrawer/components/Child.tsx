@@ -1,10 +1,21 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import styles from './styles.less';
 import { NavigationComponentProps } from '..';
 import NavigationItem from './NavigationItem';
+import { useTooltipRef } from '@equinor/fusion-components';
 
 const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
     const { id, isActive, title, onClick } = navigationItem;
+    const textRef = React.useRef<HTMLElement | null>(null);
+    const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
+    const tooltipRef = useTooltipRef(title, 'right');
+
+    useEffect(() => {
+        if (textRef.current) {
+            const isOverflowing = textRef.current.offsetWidth < textRef.current.scrollWidth;
+            setShouldHaveTooltip(isOverflowing);
+        }
+    }, [textRef])
 
     const change = useCallback(() => {
         onChange && onChange(id, false, true);
@@ -13,8 +24,8 @@ const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
 
     return (
         <NavigationItem type="child" isActive={isActive} onClick={change}>
-             <div className={styles.linkContainer}>
-                {title}
+            <div className={styles.linkContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
+                <span className={styles.linkText} ref={textRef}>{title}</span>
             </div>
         </NavigationItem>
     );

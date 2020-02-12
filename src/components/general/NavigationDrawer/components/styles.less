@@ -35,6 +35,9 @@
 
         .linkText{
             width: .grid-unit(27px)[];
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     
     }
@@ -59,6 +62,12 @@
         border-radius: 4px;
         opacity: 0;
         align-self: center;
+    }
+
+    .groupingContainer{
+        display: flex; 
+        justify-content: flex-end;
+        width: 100%;
     }
 
     &:hover{
@@ -107,6 +116,12 @@
             padding-left: .grid-unit(7px)[];
         }
 
+        .sectionContainer{
+            display: flex; 
+            justify-content: flex-end;
+            width: 100%;
+        }
+
     }
 
     &.isCollapsed{
@@ -116,6 +131,8 @@
         }
     }
 }
+
+
 
 .label{
     width: 100%;
