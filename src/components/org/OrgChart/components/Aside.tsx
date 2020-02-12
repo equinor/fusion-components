@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useMemo, useCallback } from 'react';
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
+import useAdditionalRowHeight from '../useAdditionalRowHeight';
 
 function Aside<T>() {
     const {
@@ -15,6 +16,7 @@ function Aside<T>() {
             cardWidth,
             numberOfCardsPerRow,
             width,
+            additionalAsideRowHeight,
         },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -40,7 +42,7 @@ function Aside<T>() {
             ),
         [asideNodes, numberOfCardsPerRow]
     );
-
+    
     useEffect(() => {
         if (rows.length !== asideRows) {
             dispatch({
@@ -49,6 +51,19 @@ function Aside<T>() {
             });
         }
     }, [asideRows, rows]);
+
+    const additionalRowHeight = useAdditionalRowHeight(rows, true);
+
+    useEffect(() => {
+        const maxAdditionalRowHeight = additionalRowHeight[additionalRowHeight.length - 1];
+        if (maxAdditionalRowHeight !== additionalAsideRowHeight) {
+            dispatch({
+                type: 'UPDATE_ADDITIONAL_ROW_HEIGHT',
+                additionalAsideRowHeight: maxAdditionalRowHeight,
+            });
+        }
+    }, [additionalRowHeight]);
+
 
     const getStartXPosition = () => {
         if (numberOfCardsPerRow === 1) {
@@ -62,14 +77,14 @@ function Aside<T>() {
     };
 
     const renderRow = useCallback(
-        (cards: OrgNode<T>[], rowNo: number) => {
+        (cards: OrgNode<T>[], rowNo: number, additionalRowHeight: number) => {
             const startX = getStartXPosition();
             return cards.map((card, i) => (
                 <Card
                     key={card.id}
                     node={card}
                     x={startX + i * (cardWidth + cardMargin)}
-                    y={(rowNo + 1) * (rowMargin - 20) + 24}
+                    y={(rowNo + 1) * (rowMargin - 20) + 24 + additionalRowHeight}
                 />
             ));
         },
@@ -79,7 +94,7 @@ function Aside<T>() {
     return (
         <g className="aside">
             {rows.map((cards, rowNo) => (
-                <React.Fragment key={rowNo}>{renderRow(cards, rowNo)}</React.Fragment>
+                <React.Fragment key={rowNo}>{renderRow(cards, rowNo, additionalRowHeight[rowNo])}</React.Fragment>
             ))}
         </g>
     );

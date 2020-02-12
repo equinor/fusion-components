@@ -36,6 +36,7 @@ const useOrgChartActions = <T extends OrgStructure>({
                 data: item,
                 aside: item.aside,
                 linked: item.linked,
+                numberOfAssignees: item.numberOfAssignees
             };
         });
     };

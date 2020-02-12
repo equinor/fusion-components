@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useMemo, useCallback } from 'react';
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
+import useAdditionalRowHeight from '../useAdditionalRowHeight';
 
 function Children<T>() {
     const {
@@ -15,7 +16,8 @@ function Children<T>() {
             cardWidth,
             centerX,
             numberOfCardsPerRow,
-            width
+            width,
+            additionalChildRowHeight,
         },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -44,8 +46,6 @@ function Children<T>() {
         [childrenNodes, numberOfCardsPerRow]
     );
 
-    const initialMargin = (rowMargin - 20) * asideRows + (numberOfCardsPerRow === 1 ? 40 : 50);
-
     useEffect(() => {
         if (rows.length !== childrenRows) {
             dispatch({
@@ -55,10 +55,24 @@ function Children<T>() {
         }
     }, [childrenRows, rows]);
 
+    const additionalRowHeight = useAdditionalRowHeight(rows);
+
+    useEffect(() => {
+        const maxAdditionalRowHeight = additionalRowHeight[additionalRowHeight.length - 1];
+        if (maxAdditionalRowHeight !== additionalChildRowHeight) {
+            dispatch({
+                type: 'UPDATE_ADDITIONAL_ROW_HEIGHT',
+                additionalChildRowHeight: maxAdditionalRowHeight,
+            });
+        }
+    }, [additionalRowHeight]);
+
+    const initialMargin = (rowMargin - 20) * asideRows + (numberOfCardsPerRow === 1 ? 40 : 50);
+
     const getStartXPosition = (cards: OrgNode<T>[], rowNo: number) => {
         if (numberOfCardsPerRow === 1) {
-            if(width < cardWidth * 1.5 + 10){
-               return width - cardWidth
+            if (width < cardWidth * 1.5 + 10) {
+                return width - cardWidth;
             }
             return cardWidth / 2 + 10;
         }
@@ -68,16 +82,18 @@ function Children<T>() {
     };
 
     const renderRow = useCallback(
-        (cards: OrgNode<T>[], rowNo: number) => {
-
+        (cards: OrgNode<T>[], rowNo: number, additionalRowHeight: number) => {
             const startX = getStartXPosition(cards, rowNo);
-
             return cards.map((card, i) => (
                 <React.Fragment key={card.id}>
                     <Card
                         node={card}
                         x={startX + i * (cardWidth + cardMargin)}
-                        y={initialMargin + (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)}
+                        y={
+                            initialMargin +
+                            additionalRowHeight +
+                            (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
+                        }
                     />
                 </React.Fragment>
             ));
@@ -88,7 +104,9 @@ function Children<T>() {
     return (
         <g className="children">
             {rows.map((cards, rowNo) => (
-                <React.Fragment key={rowNo}>{renderRow(cards, rowNo)}</React.Fragment>
+                <React.Fragment key={rowNo}>
+                    {renderRow(cards, rowNo, additionalRowHeight[rowNo])}
+                </React.Fragment>
             ))}
         </g>
     );

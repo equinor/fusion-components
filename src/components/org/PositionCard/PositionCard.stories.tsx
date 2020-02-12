@@ -330,6 +330,7 @@ const DefaultStory = () => {
             isSelected={false}
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
+            showRotation={boolean("Show rotation", true)}
         />
     );
 };
