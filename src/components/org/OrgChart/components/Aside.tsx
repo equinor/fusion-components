@@ -15,6 +15,7 @@ function Aside<T>() {
             cardWidth,
             numberOfCardsPerRow,
             width,
+            additionalAsideRowHeight,
         },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -62,24 +63,68 @@ function Aside<T>() {
     };
 
     const renderRow = useCallback(
-        (cards: OrgNode<T>[], rowNo: number) => {
+        (cards: OrgNode<T>[], rowNo: number, additionalRowHeight: number) => {
             const startX = getStartXPosition();
             return cards.map((card, i) => (
                 <Card
                     key={card.id}
                     node={card}
                     x={startX + i * (cardWidth + cardMargin)}
-                    y={(rowNo + 1) * (rowMargin - 20) + 24}
+                    y={(rowNo + 1) * (rowMargin - 20) + 24 + additionalRowHeight}
                 />
             ));
         },
         [centerX, cardWidth, cardMargin, rowMargin, numberOfCardsPerRow]
     );
 
+    const getAdditionalRowHeight = useCallback(
+        (cards: OrgNode<T>[]) => {
+            const greatestAdditionPersons = cards.reduce((highest: number, card: OrgNode<T>) => {
+                if (card.numberOfAssignees && card.numberOfAssignees > highest) {
+                    return card.numberOfAssignees;
+                }
+                return highest;
+            }, 0);
+            if (greatestAdditionPersons === 0) {
+                return 0;
+            }
+            return (
+                Math.ceil(greatestAdditionPersons / 3) *
+                (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
+            );
+        },
+        [numberOfCardsPerRow, rowMargin]
+    );
+
+    const additionalRowHeight = rows.reduce(
+        (additionalHeight: number[], _: OrgNode<T>[], index: number) => {
+            const previousHeight = additionalHeight.reduce(
+                (totalHeight: number, height: number) => totalHeight + height,
+                0
+            );
+            if (index === 0) {
+                return [...additionalHeight, 0];
+            }
+            const currentRowHeight = getAdditionalRowHeight(rows[index - 1]);
+            return [...additionalHeight, previousHeight + currentRowHeight];
+        },
+        []
+    );
+
+    useEffect(() => {
+        const maxAdditionalRowHeight = additionalRowHeight[additionalRowHeight.length - 1];
+        if (maxAdditionalRowHeight !== additionalAsideRowHeight) {
+            dispatch({
+                type: 'UPDATE_ADDITIONAL_ROW_HEIGHT',
+                additionalAsideRowHeight: maxAdditionalRowHeight,
+            });
+        }
+    }, [additionalRowHeight]);
+
     return (
         <g className="aside">
             {rows.map((cards, rowNo) => (
-                <React.Fragment key={rowNo}>{renderRow(cards, rowNo)}</React.Fragment>
+                <React.Fragment key={rowNo}>{renderRow(cards, rowNo, additionalRowHeight[rowNo])}</React.Fragment>
             ))}
         </g>
     );

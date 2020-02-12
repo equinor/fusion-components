@@ -13,7 +13,7 @@ type CardProps<T> = {
 
 function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
     const {
-        state: { cardWidth, cardHeight, component },
+        state: { cardWidth, cardHeight, component, numberOfCardsPerRow, rowMargin },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
@@ -30,20 +30,29 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
 
     const Component = component;
 
+    const additionalCardHeight = React.useMemo(
+        () =>
+            node.numberOfAssignees
+                ? Math.ceil(node.numberOfAssignees / 3) *
+                  (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
+                : 0,
+        [rowMargin, numberOfCardsPerRow, node.numberOfAssignees]
+    );
+
     if (node.x === null || node.y == null) {
         return null;
     }
-
+    console.log(additionalCardHeight);
     return (
         <g className="card">
             <rect
                 x={node.x}
                 y={node.y}
                 width={cardWidth}
-                height={cardHeight}
+                height={cardHeight + additionalCardHeight}
                 className={styles.card}
             />
-            <foreignObject x={node.x} y={node.y} width={cardWidth} height={cardHeight}>
+            <foreignObject x={node.x} y={node.y} width={cardWidth} height={cardHeight + additionalCardHeight}>
                 {Component && <Component item={node.data} />}
             </foreignObject>
         </g>

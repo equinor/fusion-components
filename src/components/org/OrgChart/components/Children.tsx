@@ -15,7 +15,9 @@ function Children<T>() {
             cardWidth,
             centerX,
             numberOfCardsPerRow,
-            width
+            width,
+            additionalChildRowHeight,
+            additionalAsideRowHeight,
         },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -55,10 +57,12 @@ function Children<T>() {
         }
     }, [childrenRows, rows]);
 
+   
+
     const getStartXPosition = (cards: OrgNode<T>[], rowNo: number) => {
         if (numberOfCardsPerRow === 1) {
-            if(width < cardWidth * 1.5 + 10){
-               return width - cardWidth
+            if (width < cardWidth * 1.5 + 10) {
+                return width - cardWidth;
             }
             return cardWidth / 2 + 10;
         }
@@ -68,28 +72,75 @@ function Children<T>() {
     };
 
     const renderRow = useCallback(
-        (cards: OrgNode<T>[], rowNo: number) => {
-
+        (cards: OrgNode<T>[], rowNo: number, additionalRowHeight: number) => {
             const startX = getStartXPosition(cards, rowNo);
-            return cards.map((card, i) => {
-                console.log(card.numberOfAssignees)
-                return(
+            return cards.map((card, i) => (
                 <React.Fragment key={card.id}>
                     <Card
                         node={card}
                         x={startX + i * (cardWidth + cardMargin)}
-                        y={initialMargin + (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin) }
+                        y={
+                            initialMargin +
+                            additionalRowHeight +
+                            (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
+                        }
                     />
                 </React.Fragment>
-            )});
+            ));
         },
         [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows, width]
     );
 
+    const getAdditionalRowHeight = useCallback(
+        (cards: OrgNode<T>[]) => {
+            const greatestAdditionPersons = cards.reduce((highest: number, card: OrgNode<T>) => {
+                if (card.numberOfAssignees && card.numberOfAssignees > highest) {
+                    return card.numberOfAssignees;
+                }
+                return highest;
+            }, 0);
+            if (greatestAdditionPersons === 0) {
+                return 0;
+            }
+            return (
+                Math.ceil(greatestAdditionPersons / 3) *
+                (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
+            );
+        },
+        [numberOfCardsPerRow, rowMargin]
+    );
+
+    const additionalRowHeight = rows.reduce(
+        (additionalHeight: number[], _: OrgNode<T>[], index: number) => {
+            const previousHeight = additionalHeight.reduce(
+                (totalHeight: number, height: number) => totalHeight + height,
+                0
+            );
+            if (index === 0) {
+                return [...additionalHeight, additionalAsideRowHeight];
+            }
+            const currentRowHeight = getAdditionalRowHeight(rows[index - 1]);
+            return [...additionalHeight, previousHeight + currentRowHeight];
+        },
+        []
+    );
+
+    useEffect(() => {
+        const maxAdditionalRowHeight = additionalRowHeight[additionalRowHeight.length - 1];
+        if (maxAdditionalRowHeight !== additionalChildRowHeight) {
+            dispatch({
+                type: 'UPDATE_ADDITIONAL_ROW_HEIGHT',
+                additionalChildRowHeight: maxAdditionalRowHeight,
+            });
+        }
+    }, [additionalRowHeight]);
+
     return (
         <g className="children">
             {rows.map((cards, rowNo) => (
-                <React.Fragment key={rowNo}>{renderRow(cards, rowNo)}</React.Fragment>
+                <React.Fragment key={rowNo}>
+                    {renderRow(cards, rowNo, additionalRowHeight[rowNo])}
+                </React.Fragment>
             ))}
         </g>
     );

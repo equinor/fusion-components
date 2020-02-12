@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useContext } from 'react';
-import {useParentSize} from '@equinor/fusion-components';
+import { useParentSize } from '@equinor/fusion-components';
 import { OrgChartContextProvider, OrgChartContextReducer, OrgChartContext } from './store';
 import { OrgStructure, OrgChartProps, OrgChartItemProps, OrgNode } from './orgChartTypes';
 import Links from './components/Links';
@@ -25,7 +25,13 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
     useOrgChartActions({ ...props, parentHeight: height, parentWidth: width });
 
     const {
-        state: { rowMargin, asideRows, childrenRows },
+        state: {
+            rowMargin,
+            asideRows,
+            childrenRows,
+            additionalAsideRowHeight,
+            additionalChildRowHeight,
+        },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     const svgHeight = useMemo(() => {
@@ -33,8 +39,15 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
         const labelMargin = 60;
         const asideMargin = (rowMargin - 20) * asideRows;
         const childrenMargin = rowMargin * childrenRows;
-        return asideMargin + childrenMargin + rootMargin + labelMargin;
-    }, [rowMargin, asideRows, childrenRows]);
+        return (
+            asideMargin +
+            childrenMargin +
+            rootMargin +
+            labelMargin +
+            additionalAsideRowHeight +
+            additionalChildRowHeight
+        );
+    }, [rowMargin, asideRows, childrenRows, additionalAsideRowHeight, additionalChildRowHeight]);
 
     return (
         <svg
