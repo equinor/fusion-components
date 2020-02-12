@@ -5,7 +5,7 @@ import Content from '../src/components/core/Content';
 export default (title: string, padding: number = 16) => (stories: () => React.ReactNode) => {
     return (
         <>
-            <Header aside={null} start={null} content={<div>{title}</div>} />
+            <Header aside={null} start={null} content={null} />
             <Content>
                 <div
                     style={{
