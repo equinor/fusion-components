@@ -27,7 +27,6 @@ const positions: PositionStructure[] = [
         personName: 'Sam Test',
         aside: true,
         linked: true,
-        numberOfAssignees: 2,
 
     },
     {
@@ -63,7 +62,6 @@ const positions: PositionStructure[] = [
         name: 'Engineer',
         positionId: '3',
         personName: 'Jane Test',
-        numberOfAssignees: 2
 
     },
     {
