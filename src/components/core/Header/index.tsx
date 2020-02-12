@@ -31,7 +31,7 @@ const breakpoints = [
     },
 ];
 
-type HeaderContentProps = {
+export type HeaderContentProps = {
     app: AppManifest | null;
 };
 
