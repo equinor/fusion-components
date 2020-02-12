@@ -10,6 +10,53 @@
     position: relative;
     transition: box-shadow .15s;
 
+    &.futurePosition{
+        background-color: #EEFCF2;
+        border: 1px solid var(--color-green);
+    }
+
+    &.pastPosition {
+        background-color: #E6E6E6;
+        border: 1px solid var(--color-black-alt3);
+    }
+
+    &.isClickable {
+        cursor: pointer;
+
+        &:hover, &.isSelected {
+            box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+        }
+
+        &.isSelected {
+            background-color: var(--color-primary-alt4);
+            border-color: var(--color-primary-alt4);
+        }
+    }
+
+    &.multipleAssignments {
+        &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: -2px;
+            background-color: var(--color-primary-alt4);
+            z-index: -1;
+            border-radius: 4px;
+            border-color: white;
+        }
+
+        .photoContainer {
+            cursor: pointer;
+        }
+    }
+
+    &.isLinked {
+        border: 1px dashed var(--color-black-alt3);
+    }
+
+
     .rotationInstances {
         border-top: 1px solid var(--color-black-alt4);
         padding-top: calc(var(--grid-unit) * 1px);
@@ -39,247 +86,203 @@
 
         }
     }
+    
 
     .container {
         display: flex;
         flex-direction: row;
 
-        &.futurePosition{
-            background-color: #EEFCF2;
-            border: 1px solid var(--color-green);
-        }
-
-        &.pastPosition {
-            background-color: #E6E6E6;
-            border: 1px solid var(--color-black-alt3);
-        }
-
-        &.isClickable {
-            cursor: pointer;
-
-            &:hover, &.isSelected {
-                box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
-            }
-
-            &.isSelected {
-                background-color: var(--color-primary-alt4);
-                border-color: var(--color-primary-alt4);
-            }
-        }
-
-        &.multipleAssignments {
-            &::before {
-                content: "";
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                left: -2px;
-                background-color: var(--color-primary-alt4);
-                z-index: -1;
-                border-radius: 4px;
-                border-color: white;
-            }
-
-            .photoContainer {
-                cursor: pointer;
-            }
-        }
-
-        &.isLinked {
-            border: 1px dashed var(--color-black-alt3);
-        }
-    }
-
-    .photoIconContainer {
-        user-select: none;
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-
-        .personIconContainer {
-            width: calc(var(--grid-unit) * 5px);
-            height: calc(var(--grid-unit) * 5px);
-            border-radius: 50%;
-            color: var(--color-black-alt2);
+       
+        .photoIconContainer {
+            user-select: none;
+            flex-shrink: 0;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            flex-direction: column;
 
-            .instanceCount {
-                position: absolute;
-                width: calc(var(--grid-unit) * 2.5px);
-                height: calc(var(--grid-unit) * 2.5px);
-                font-size: 12px;
-                font-weight: bold;
-                color: var(--color-white);
-                background-color: var(--color-red);
-                top: calc(var(--grid-unit) * .25px);
-                right: 0;
-                transform: translateX(50%);
+            .personIconContainer {
+                width: calc(var(--grid-unit) * 5px);
+                height: calc(var(--grid-unit) * 5px);
                 border-radius: 50%;
+                color: var(--color-black-alt2);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-            }
-        }
+                position: relative;
 
-        .stateIcon{
-            position: relative;
-            display: flex;
-            justify-content: center;
-            padding-top: calc(var(--grid-unit)* .5px);
-        }
-    }
-
-    .positionInstance {
-        position: relative;
-        flex-grow: 1;
-        margin-left: var(--photo-and-details-spacing);
-        width: 1px;
-        min-height: calc(var(--grid-unit)* 7px);
-
-        .assignedPersonName span, .basePositionName span, .positionName span {
-            display: inline-block;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-
-        .basePositionName, .location, .period {
-            font-size: var(--small-section-font-size);
-            line-height: var(--small-section-line-height);
-        }
-
-        .positionName {
-            font-size: var(--big-section-font-size);
-            margin-bottom: var(--position-name-spacing);
-            line-height: var(--big-section-line-height);
-            color: var(--color-primary);
-            display: flex;
-
-            span {            
-                text-decoration: underline;
-            }
-        }
-
-        .assignedPersonName {
-            font-size: var(--big-section-font-size);
-            line-height: var(--big-section-line-height);
-            margin-right: calc(var(--grid-unit) * 6px);
-            display: flex;
-
-        }
-        .basePositionName{
-            display: flex;
-            margin-right: calc(var(--grid-unit) * 6px);
-        }
-    
-        .externalId {
-                padding-left: calc(var(--grid-unit) * .5px);
-                position: absolute;
-                top: 0;
-                right: 0;
-                display: flex;
-                align-items: center;
-                font-size: var(--small-section-font-size);
-                line-height: var(--small-section-line-height);
-        }
-
-        .childPositionCount {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                height: 100%;
-                align-items: center;
-                justify-content: center;
-                font-size: var(--small-section-font-size);
-        } 
-
-        .expandButton {
-            height: var(--child-position-height); 
-            position: absolute;
-            right: 0;
-            bottom: 0;
-        }
-
-        &.cropPositionName{
-            .positionName span{
-                margin-right: calc(var(--grid-unit) * 6px);
-            }
-        }
-
-        .instanceTimelineContainer {
-            position: relative;
-            height: calc(var(--grid-unit) * 1px);
-            border-radius: 4px;
-            overflow: hidden;
-            width: calc(var(--grid-unit) * 23px);
-
-            .dot {
-                background: var(--instance-color);
-                border-radius: 50%;
-                top: 50%;
-                transform: translateY(-50%);
-                box-sizing: border-box;
-                height: calc(var(--grid-unit) * .5px);
-                width: calc(var(--grid-unit) * .5px);
-                position: absolute;
-
-                &.right{
-                    right: 0;
-                }
-                &.selectedDate{
-                    background: var(--color-white);
-                    border: 1px solid var(--color-primary);
-                }
-            }
-
-            .instance{
-                height: 100%;
-                position: absolute;
-
-                .instanceLine {
-                    left: 0;
-                    right: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
+                .instanceCount {
                     position: absolute;
-                    height: calc(var(--grid-unit) * .5px - 2px);
+                    width: calc(var(--grid-unit) * 2.5px);
+                    height: calc(var(--grid-unit) * 2.5px);
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: var(--color-white);
+                    background-color: var(--color-red);
+                    top: calc(var(--grid-unit) * .25px);
+                    right: 0;
+                    transform: translateX(50%);
+                    border-radius: 50%;
                     display: flex;
                     align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            .stateIcon{
+                position: relative;
+                display: flex;
+                justify-content: center;
+                padding-top: calc(var(--grid-unit)* .5px);
+            }
+        }
+
+        .positionInstance {
+            position: relative;
+            flex-grow: 1;
+            margin-left: var(--photo-and-details-spacing);
+            width: 1px;
+            min-height: calc(var(--grid-unit)* 7px);
+
+            .assignedPersonName span, .basePositionName span, .positionName span {
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            .basePositionName, .location, .period {
+                font-size: var(--small-section-font-size);
+                line-height: var(--small-section-line-height);
+            }
+
+            .positionName {
+                font-size: var(--big-section-font-size);
+                margin-bottom: var(--position-name-spacing);
+                line-height: var(--big-section-line-height);
+                color: var(--color-primary);
+                display: flex;
+
+                span {            
+                    text-decoration: underline;
+                }
+            }
+
+            .assignedPersonName {
+                font-size: var(--big-section-font-size);
+                line-height: var(--big-section-line-height);
+                margin-right: calc(var(--grid-unit) * 6px);
+                display: flex;
+
+            }
+            .basePositionName{
+                display: flex;
+                margin-right: calc(var(--grid-unit) * 6px);
+            }
+        
+            .externalId {
+                    padding-left: calc(var(--grid-unit) * .5px);
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    display: flex;
+                    align-items: center;
+                    font-size: var(--small-section-font-size);
+                    line-height: var(--small-section-line-height);
+            }
+
+            .childPositionCount {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    height: 100%;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: var(--small-section-font-size);
+            } 
+
+            .expandButton {
+                height: var(--child-position-height); 
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+
+            &.cropPositionName{
+                .positionName span{
+                    margin-right: calc(var(--grid-unit) * 6px);
+                }
+            }
+
+            .instanceTimelineContainer {
+                position: relative;
+                height: calc(var(--grid-unit) * 1px);
+                border-radius: 4px;
+                overflow: hidden;
+                width: calc(var(--grid-unit) * 23px);
+
+                .dot {
                     background: var(--instance-color);
+                    border-radius: 50%;
+                    top: 50%;
+                    transform: translateY(-50%);
                     box-sizing: border-box;
-                }
-                
-                &.isCurrent {
-                    --instance-color: var(--color-primary);
-                    &.hasRotation {
-                        --instance-color: var(--color-secondary-alt1);
+                    height: calc(var(--grid-unit) * .5px);
+                    width: calc(var(--grid-unit) * .5px);
+                    position: absolute;
+
+                    &.right{
+                        right: 0;
                     }
-                }
-                &:not(.isCurrent){
-                    --instance-color: var(--color-primary-alt1);
-                    &.hasRotation {
-                        --instance-color: var(--color-secondary-alt3);
+                    &.selectedDate{
+                        background: var(--color-white);
+                        border: 1px solid var(--color-primary);
                     }
                 }
 
-                &.hasUnAssignedPerson {
-                    .instanceLine{
-                        background: repeating-linear-gradient(
-                            to right,
-                            var(--instance-color),
-                            var(--instance-color) calc(var(--grid-unit) * 1px),
-                            rgba(0,0,0,0) calc(var(--grid-unit) * 1px),
-                            rgba(0,0,0,0) calc(var(--grid-unit) * 1.5px)
-                          );
+                .instance{
+                    height: 100%;
+                    position: absolute;
+
+                    .instanceLine {
+                        left: 0;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        position: absolute;
+                        height: calc(var(--grid-unit) * .5px - 2px);
+                        display: flex;
+                        align-items: center;
+                        background: var(--instance-color);
+                        box-sizing: border-box;
+                    }
+                    
+                    &.isCurrent {
+                        --instance-color: var(--color-primary);
+                        &.hasRotation {
+                            --instance-color: var(--color-secondary-alt1);
+                        }
+                    }
+                    &:not(.isCurrent){
+                        --instance-color: var(--color-primary-alt1);
+                        &.hasRotation {
+                            --instance-color: var(--color-secondary-alt3);
+                        }
                     }
 
+                    &.hasUnAssignedPerson {
+                        .instanceLine{
+                            background: repeating-linear-gradient(
+                                to right,
+                                var(--instance-color),
+                                var(--instance-color) calc(var(--grid-unit) * 1px),
+                                rgba(0,0,0,0) calc(var(--grid-unit) * 1px),
+                                rgba(0,0,0,0) calc(var(--grid-unit) * 1.5px)
+                            );
+                        }
+
+                    }
+    
                 }
- 
             }
         }
     }
