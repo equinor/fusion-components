@@ -6,6 +6,7 @@ import styles from './styles.less';
 import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
 import { useCurrentInstance } from './hooks';
+import RotationInstances from './components/RotationInstances';
 
 type PositionCardProps = {
     position: Position;
@@ -21,6 +22,7 @@ type PositionCardProps = {
     isLinked?: boolean;
     childCount?: number;
     selectedDate?: Date;
+    showRotation?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
@@ -41,6 +43,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     isLinked,
     childCount,
     selectedDate,
+    showRotation,
 }) => {
     const isExternalHire =
         instance &&
@@ -54,7 +57,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
 
     const containerClassNames = classNames(
         styles.context,
-        styles.container,
         useComponentDisplayClassNames(styles),
         {
             [styles.isSelected]: isSelected,
@@ -83,28 +85,31 @@ const PositionCard: React.FC<PositionCardProps> = ({
             : [];
 
     return (
-        <div className={containerClassNames} onClick={onClickHandler}>
-            <PositionIconPhoto
-                position={position}
-                currentInstance={current}
-                isLinked={isLinked}
-                onClick={onClick}
-                rotationInstances={rotatingInstances}
-            />
-            <PositionInstanceComponent
-                position={position}
-                instance={current}
-                showLocation={showLocation}
-                showDate={showDate}
-                showExternalId={showExternalId}
-                showObs={showObs}
-                showTimeline={showTimeline}
-                onClick={onClick}
-                onExpand={onExpand}
-                childCount={childCount}
-                rotationInstances={rotatingInstances}
-                selectedDate={selectedDate}
-            />
+        <div className={containerClassNames}>
+            <div className={styles.container} onClick={onClickHandler}>
+                <PositionIconPhoto
+                    position={position}
+                    currentInstance={current}
+                    isLinked={isLinked}
+                    onClick={onClick}
+                    rotationInstances={rotatingInstances}
+                />
+                <PositionInstanceComponent
+                    position={position}
+                    instance={current}
+                    showLocation={showLocation}
+                    showDate={showDate}
+                    showExternalId={showExternalId}
+                    showObs={showObs}
+                    showTimeline={showTimeline}
+                    onClick={onClick}
+                    onExpand={onExpand}
+                    childCount={childCount}
+                    rotationInstances={rotatingInstances}
+                    selectedDate={selectedDate}
+                />
+            </div>
+            {showRotation && rotatingInstances.length > 0 && <RotationInstances allInstances={[...rotatingInstances, current]} position={position}/>}
         </div>
     );
 };
