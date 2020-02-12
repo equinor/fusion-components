@@ -9,16 +9,20 @@ type RotationInstancesProps = {
 };
 
 const RotationInstances: React.FC<RotationInstancesProps> = ({ allInstances, position }) => {
-
     return (
         <div className={styles.rotationInstances}>
             {allInstances.map(instance => (
                 <div className={styles.assignee}>
                     <PersonPhoto person={instance.assignedPerson} />
                     <div className={styles.assigneeInfo}>
-                        <span className={styles.name}>{instance.assignedPerson.name}</span>
+                        <span className={styles.name}>
+                            {instance.assignedPerson && instance.assignedPerson.name
+                                ? instance.assignedPerson.name
+                                : 'TBN'}
+                        </span>
                         <span className={styles.externalId}>
-                            {position.externalId}-{instance.rotationId.toUpperCase()}
+                            {position.externalId}-
+                            {instance.rotationId ? instance.rotationId.toUpperCase() : ''}
                         </span>
                     </div>
                 </div>
