@@ -29,13 +29,22 @@ export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
         () =>
             rows.reduce((additionalHeight: number[], node: OrgNode<T>[], index: number) => {
                 const previousHeight = index === 0 ? 0 : additionalHeight[index - 1];
-                if (index === 0) {
-                    return [...additionalHeight, isAside ? 0 : additionalAsideRowHeight];
+                const isLastRow = index === rows.length - 1;
+                const isFirstRow = index === 0;
+
+                if (isAside && isLastRow && isFirstRow) {
+                    const rowHeight = getAdditionalRowHeight(node);
+                    return [...additionalHeight, 0, rowHeight];
                 }
-        
+                if (isFirstRow) {
+                    const asideRowHeight = isAside ? 0 : additionalAsideRowHeight;
+
+                    return [...additionalHeight, asideRowHeight];
+                }
+
                 const currentRowHeight = getAdditionalRowHeight(rows[index - 1]);
                 const rowHeight = previousHeight + currentRowHeight;
-                if (index === rows.length - 1) {
+                if (isLastRow) {
                     const lastRowHeight = getAdditionalRowHeight(node);
                     return [...additionalHeight, rowHeight, rowHeight + lastRowHeight];
                 }
