@@ -156,9 +156,13 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
             return {
                 ...state,
                 additionalChildRowHeight:
-                    action.additionalChildRowHeight || state.additionalChildRowHeight,
+                    action.additionalChildRowHeight !== undefined
+                        ? action.additionalChildRowHeight
+                        : state.additionalChildRowHeight,
                 additionalAsideRowHeight:
-                    action.additionalAsideRowHeight || state.additionalAsideRowHeight,
+                    action.additionalAsideRowHeight !== undefined
+                        ? action.additionalAsideRowHeight
+                        : state.additionalAsideRowHeight,
             };
     }
 }
