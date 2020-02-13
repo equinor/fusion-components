@@ -43,7 +43,6 @@ export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
             }, []),
         [rows, rowMargin]
     );
-    console.log(additionalRowHeight)
 
     return additionalRowHeight;
 };
