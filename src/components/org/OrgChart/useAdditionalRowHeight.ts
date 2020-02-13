@@ -4,7 +4,7 @@ import { OrgChartContextReducer, OrgChartContext } from './store';
 
 export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
     const {
-        state: { rowMargin, numberOfCardsPerRow, additionalAsideRowHeight },
+        state: { rowMargin, additionalAsideRowHeight, cardMargin },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     const getAdditionalRowHeight = useCallback(
@@ -18,29 +18,32 @@ export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
             if (greatestAdditionPersons === 0) {
                 return 0;
             }
-            return (
-                Math.ceil(greatestAdditionPersons / 3) *
-                (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
-            );
+            const rows = Math.ceil(greatestAdditionPersons / 3);
+            const additionalMargin = rows <= 1 ? 0 : 8 * rows;
+            return rows * rowMargin - cardMargin * rows - additionalMargin;
         },
-        [numberOfCardsPerRow, rowMargin]
+        [rowMargin, cardMargin]
     );
 
     const additionalRowHeight = useMemo(
         () =>
-            rows.reduce((additionalHeight: number[], _: OrgNode<T>[], index: number) => {
-                const previousHeight = additionalHeight.reduce(
-                    (totalHeight: number, height: number) => totalHeight + height,
-                    0
-                );
+            rows.reduce((additionalHeight: number[], node: OrgNode<T>[], index: number) => {
+                const previousHeight = index === 0 ? 0 : additionalHeight[index - 1];
                 if (index === 0) {
                     return [...additionalHeight, isAside ? 0 : additionalAsideRowHeight];
                 }
+        
                 const currentRowHeight = getAdditionalRowHeight(rows[index - 1]);
-                return [...additionalHeight, previousHeight + currentRowHeight];
+                const rowHeight = previousHeight + currentRowHeight;
+                if (index === rows.length - 1) {
+                    const lastRowHeight = getAdditionalRowHeight(node);
+                    return [...additionalHeight, rowHeight, rowHeight + lastRowHeight];
+                }
+                return [...additionalHeight, rowHeight];
             }, []),
-        [rows, numberOfCardsPerRow, rowMargin]
+        [rows, rowMargin]
     );
+    console.log(additionalRowHeight)
 
     return additionalRowHeight;
 };

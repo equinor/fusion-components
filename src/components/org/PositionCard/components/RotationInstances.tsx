@@ -22,7 +22,7 @@ const RotationInstances: React.FC<RotationInstancesProps> = ({ allInstances, pos
                         </span>
                         <span className={styles.externalId}>
                             {position.externalId}-
-                            {instance.rotationId ? instance.rotationId.toUpperCase() : ''}
+                            {instance.rotationId ? `R${instance.rotationId.toUpperCase()}` : ''}
                         </span>
                     </div>
                 </div>
