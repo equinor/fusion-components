@@ -59,18 +59,14 @@
 
     .rotationInstances {
         border-top: 1px solid var(--color-black-alt4);
-        padding-top: calc(var(--grid-unit) * 1px);
         margin-top: calc(var(--grid-unit) * 1px);
 
         .assignee {
             display: flex;
             width: 100%;
             align-items: center;
+            padding-top: calc(var(--grid-unit) * 1px);
 
-            &:not(:last-child) {
-                padding-bottom: calc(var(--grid-unit) * .5px);
-
-            }
             .assigneeInfo{
                 display: flex;
                 flex-direction: column;
