@@ -41,7 +41,7 @@ export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
                 }
                 return [...additionalHeight, rowHeight];
             }, []),
-        [rows, rowMargin]
+        [rows, rowMargin, additionalAsideRowHeight, isAside]
     );
 
     return additionalRowHeight;
