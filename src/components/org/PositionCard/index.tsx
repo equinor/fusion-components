@@ -85,8 +85,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
             : [];
 
     return (
-        <div className={containerClassNames}>
-            <div className={styles.container} onClick={onClickHandler}>
+        <div className={containerClassNames} onClick={onClickHandler}>
+            <div className={styles.container} >
                 <PositionIconPhoto
                     position={position}
                     currentInstance={current}
