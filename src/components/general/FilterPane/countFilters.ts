@@ -55,7 +55,7 @@ const countFilter = async <T>(
     return -1;
 };
 
-const countFilters = async <T>(data: T[], { sectionDefinitions, terms }: FilterOptions<T>) => {
+const countFilters = async <T>(data: T[] = [], { sectionDefinitions, terms }: FilterOptions<T>) => {
     // Flatten section definitions to a list of filters
     const allFilters = sectionDefinitions.reduce(
         (filters, section) => filters.concat(section.filters),
@@ -82,10 +82,6 @@ const countFilters = async <T>(data: T[], { sectionDefinitions, terms }: FilterO
 
 const countFiltersAsync = <T>(data: T[], options: FilterOptions<T>) =>
     new Promise<Count[]>(resolve => {
-        if (!data || !data.length) {
-            return resolve([]);
-        }
-
         window.requestAnimationFrame(async () => {
             const result = await countFilters(data, options);
             resolve(result);
