@@ -40,7 +40,7 @@
         "@storybook/addon-jest": "^5.3.10",
         "@storybook/addon-knobs": "^5.3.10",
         "@storybook/addon-options": "^5.3.10",
-        "@storybook/addon-storyshots": "^5.3.10",
+        "@storybook/addon-storyshots": "^5.3.13",
         "@storybook/addon-viewport": "^5.3.10",
         "@storybook/react": "^5.3.10",
         "@storybook/theming": "^5.3.12",
