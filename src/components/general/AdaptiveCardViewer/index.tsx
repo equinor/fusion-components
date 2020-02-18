@@ -71,13 +71,10 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
         return adaptiveCard.render();
     }, [payload]);
 
-
     React.useEffect(() => {
-        if (cardContainerRef && cardContainerRef.current) {
-            const current = cardContainerRef.current;
-            current.firstChild && current.removeChild(current.firstChild);
-            current.appendChild(result);
-        }
+        const current = cardContainerRef.current;
+        current && current.appendChild(result);
+        return () => current && current.firstChild && current.removeChild(current.firstChild);
     }, [result]);
 
     return <div className={className} ref={cardContainerRef} />;
