@@ -73,6 +73,7 @@ export { default as PersonPicker } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
+export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
