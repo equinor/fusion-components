@@ -32,6 +32,7 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
     onActionSubmit,
     className,
 }) => {
+    const cardContainerRef = React.useRef<HTMLDivElement | null>(null);
     const adaptiveCard = React.useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
 
     AdaptiveCards.AdaptiveCard.onProcessMarkdown = (text, result) => {
@@ -70,20 +71,16 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
         return adaptiveCard.render();
     }, [payload]);
 
-    const appendNewChild = React.useCallback(
-        (n: HTMLElement) => {
-            n.firstChild && n.removeChild(n.firstChild);
-            n.appendChild(result);
-        },
-        [result]
-    );
 
-    const jsxAdaptiveCard = React.useMemo(
-        () => <div className={className} ref={n => n && appendNewChild(n)} />,
-        [result, className]
-    );
+    React.useEffect(() => {
+        if (cardContainerRef && cardContainerRef.current) {
+            const current = cardContainerRef.current;
+            current.firstChild && current.removeChild(current.firstChild);
+            current.appendChild(result);
+        }
+    }, [result]);
 
-    return jsxAdaptiveCard;
+    return <div className={className} ref={cardContainerRef} />;
 };
 
 export default AdaptiveCardViewer;
