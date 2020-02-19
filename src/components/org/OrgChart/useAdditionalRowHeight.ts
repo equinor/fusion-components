@@ -23,7 +23,13 @@ export function getAdditionalRowHeight<T>(
 
 export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
     const {
-        state: { rowMargin, additionalAsideRowHeight, cardMargin, additionalRootRowHeight },
+        state: {
+            rowMargin,
+            additionalAsideRowHeight,
+            cardMargin,
+            additionalRootRowHeight,
+            asideRows,
+        },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     const additionalRowHeight = useMemo(
@@ -37,13 +43,17 @@ export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
                     const rowHeight = getAdditionalRowHeight(node, cardMargin, rowMargin);
                     const lastRowHeight = isAside
                         ? additionalRootRowHeight
-                        : additionalAsideRowHeight;
+                        : asideRows > 0
+                        ? additionalAsideRowHeight
+                        : additionalRootRowHeight;
                     return [...additionalHeight, lastRowHeight, rowHeight + lastRowHeight];
                 }
                 if (isFirstRow) {
                     const asideRowHeight = isAside
                         ? additionalRootRowHeight
-                        : additionalAsideRowHeight;
+                        : asideRows > 0
+                        ? additionalAsideRowHeight
+                        : additionalRootRowHeight;
 
                     return [...additionalHeight, asideRowHeight];
                 }
@@ -60,7 +70,15 @@ export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
                 }
                 return [...additionalHeight, rowHeight];
             }, []),
-        [rows, rowMargin, additionalAsideRowHeight, isAside, cardMargin, additionalRootRowHeight]
+        [
+            rows,
+            rowMargin,
+            additionalAsideRowHeight,
+            isAside,
+            cardMargin,
+            additionalRootRowHeight,
+            asideRows,
+        ]
     );
 
     return additionalRowHeight;
