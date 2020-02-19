@@ -2,10 +2,21 @@ import React, { useContext, useMemo, useEffect } from 'react';
 
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
+import { getAdditionalRowHeight } from '../useAdditionalRowHeight';
 
 function Root<T>() {
     const {
-        state: { allNodes, cardWidth, centerX, width, cardMargin, numberOfCardsPerRow, initialCardWidth },
+        state: {
+            allNodes,
+            cardWidth,
+            centerX,
+            width,
+            cardMargin,
+            numberOfCardsPerRow,
+            initialCardWidth,
+            rowMargin,
+            additionalRootRowHeight,
+        },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
@@ -24,25 +35,34 @@ function Root<T>() {
     });
 
     useEffect(() => {
-        if(width === 0) {
+        if (width === 0) {
             return;
         }
-        
-        if(width <= initialCardWidth + 30){
+
+        if (width <= initialCardWidth + 30) {
             dispatch({
                 type: 'UPDATE_CARD_SIZE',
-                width: width - 30
+                width: width - 30,
+            });
+        } else if (width !== initialCardWidth) {
+            dispatch({
+                type: 'UPDATE_CARD_SIZE',
+                width: initialCardWidth,
             });
         }
-        else if(width !== initialCardWidth){
-            dispatch({
-                type:'UPDATE_CARD_SIZE',
-                width: initialCardWidth
-            })
-        }
-    },[width])
+    }, [width]);
 
     const root = allNodes.find(n => !n.parentId);
+    const additionalRowHeight = root ? getAdditionalRowHeight([root], cardMargin, rowMargin) : 0;
+    useEffect(() => {
+        if (additionalRowHeight !== additionalRootRowHeight) {
+            dispatch({
+                type: 'UPDATE_ADDITIONAL_ROW_HEIGHT',
+                additionalRootRowHeight: additionalRowHeight,
+            });
+        }
+    }, [additionalRowHeight]);
+
     const x = cardsPerRow !== 1 ? centerX - cardWidth / 2 : 0;
     return <g className="root">{root && <Card node={root} x={x} />}</g>;
 }
