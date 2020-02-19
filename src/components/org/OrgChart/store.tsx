@@ -29,6 +29,7 @@ type Action<T> =
           type: 'UPDATE_ADDITIONAL_ROW_HEIGHT';
           additionalChildRowHeight?: number;
           additionalAsideRowHeight?: number;
+          additionalRootRowHeight?: number;
       };
 
 export type OrgChartContextType<T> = {
@@ -55,6 +56,7 @@ export type OrgChartContextType<T> = {
     breadCrumbMargin: number;
     additionalChildRowHeight: number;
     additionalAsideRowHeight: number;
+    additionalRootRowHeight: number;
 };
 
 export type OrgChartContextReducer<T> = {
@@ -163,6 +165,10 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                     action.additionalAsideRowHeight !== undefined
                         ? action.additionalAsideRowHeight
                         : state.additionalAsideRowHeight,
+                additionalRootRowHeight:
+                    action.additionalRootRowHeight !== undefined
+                        ? action.additionalRootRowHeight
+                        : state.additionalRootRowHeight,
             };
     }
 }
@@ -192,6 +198,7 @@ export function OrgChartContextProvider<T>({ children }: any) {
         breadCrumbMargin: 0,
         additionalChildRowHeight: 0,
         additionalAsideRowHeight: 0,
+        additionalRootRowHeight: 0,
     };
 
     const [state, dispatch] = useReducer<Reducer<OrgChartContextType<T>, Action<T>>>(
