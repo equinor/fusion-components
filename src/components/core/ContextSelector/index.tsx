@@ -36,7 +36,8 @@ const ContextSelector: React.FC = () => {
     const currentContext = useCurrentContext();
     const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
-    const contextManifest = useCurrentApp()?.context;
+    const currentApp = useCurrentApp();
+    const contextManifest = currentApp?.context;
 
     React.useEffect(() => {
         setDropdownSections(
@@ -121,6 +122,36 @@ const ContextSelector: React.FC = () => {
 
     const dropdownController = useDropdownController(dropdownControllerProps);
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
+    
+    const exchangeContext = React.useCallback(async () => {
+        const alternatives = await contextManager.exchangeCurrentContextAsync();
+
+        if(!alternatives || !alternatives.length) {
+            return contextManager.setCurrentContextAsync(null);
+        }
+
+        if(alternatives.length === 1) {
+            return contextManager.setCurrentContextAsync(alternatives[0]);
+        }
+
+        setDropdownSections(
+            ContextToDropdownSection(alternatives, '', false, currentContext)
+        );
+
+        setIsOpen(true);
+    }, [contextManager, currentContext]);
+
+    React.useEffect(() => {
+        if(!contextManifest || !currentContext) {
+            return;
+        }
+
+        if(contextManifest.types.indexOf(currentContext.type.id)) {
+            contextManager.setCurrentContextAsync(currentContext);
+        } else {
+            exchangeContext();
+        }
+    }, [currentApp, contextManifest, exchangeContext]);
 
     const onSelect = React.useCallback(
         item => {
