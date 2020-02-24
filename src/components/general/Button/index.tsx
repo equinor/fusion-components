@@ -17,6 +17,9 @@ export type ButtonProps = {
     // Link
     /** Provide an url and the button wil use <a>-tag instead of <button>-tag */
     url?: string | null;
+    /** Provide an url and the button wil use <Link>-tag instead of <button>-tag */
+    relativeUrl?: string | null;
+    
     /** Set target="_blank" */
     targetBlank?: boolean;
     onMouseDown?: React.EventHandler<React.SyntheticEvent>;
@@ -53,7 +56,7 @@ const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<Butt
             }
         };
 
-        return props.url ? (
+        return props.url || props.relativeUrl ? (
             <AnchorComponent
                 {...props}
                 displayType={displayType}
@@ -64,19 +67,20 @@ const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<Butt
                 onClick={props.onClick}
                 onClickCapture={props.onClickCapture}
                 url={props.url}
+                relativeUrl={props.relativeUrl}
             />
         ) : (
-            <ButtonComponent
-                {...props}
-                displayType={displayType}
-                ref={buttonRef as React.RefObject<HTMLButtonElement>}
-                mouseHasBeenDown={mouseHasBeenDown}
-                onMouseDown={handleOnMouseDown}
-                onMouseUp={handleOnMouseUp}
-                onClick={props.onClick}
-                onClickCapture={props.onClickCapture}
-            />
-        );
+                <ButtonComponent
+                    {...props}
+                    displayType={displayType}
+                    ref={buttonRef as React.RefObject<HTMLButtonElement>}
+                    mouseHasBeenDown={mouseHasBeenDown}
+                    onMouseDown={handleOnMouseDown}
+                    onMouseUp={handleOnMouseUp}
+                    onClick={props.onClick}
+                    onClickCapture={props.onClickCapture}
+                />
+            );
     }
 );
 
@@ -88,10 +92,11 @@ Button.defaultProps = {
     outlined: false,
     frameless: false,
     url: null,
+    relativeUrl: null,
     targetBlank: false,
-    onMouseDown: () => {},
-    onClickCapture: () => {},
-    onClick: () => {},
+    onMouseDown: () => { },
+    onClickCapture: () => { },
+    onClick: () => { },
 };
 
 export default Button;
