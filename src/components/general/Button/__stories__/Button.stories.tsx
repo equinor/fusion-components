@@ -14,6 +14,18 @@ const createButtonStory = props => () => (
         <Button disabled {...props} {...eventsFromNames}>
             Disabled button
         </Button>
+
+        <div>
+            <Button>
+                {`Button with <a>-tag`}
+            </Button>
+        </div>
+
+        <div>
+            <Button>
+                {`Button with <Link>-tag`}
+            </Button>
+        </div>
     </React.Fragment>
 );
 
@@ -22,4 +34,4 @@ storiesOf('General|Button', module)
     .addDecorator(withFusionStory("Buttons"))
     .add('Contained', createButtonStory({ contained: true }))
     .add('Outlined', createButtonStory({ outlined: true }))
-    .add('Frameless', createButtonStory({ frameless: true }));
+    .add('Frameless', createButtonStory({ frameless: true }))

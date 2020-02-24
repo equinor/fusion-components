@@ -23,10 +23,11 @@ const AnchorComponent = forwardRef<HTMLAnchorElement, AnchorProps>(
     ) => {
         if (Boolean(relativeUrl)) {
             return (
-                <span ref={ref}>
+                <span
+                    className={getButtonClasses(props)}
+                    ref={ref}>
                     <Link
                         to={"/123"}
-                        className={getButtonClasses(props)}
                         target={targetBlank ? '_blank' : '_self'}
                         onMouseDown={onMouseDown}
                         onMouseUp={onMouseUp}
