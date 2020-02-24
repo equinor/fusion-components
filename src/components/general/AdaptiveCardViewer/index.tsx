@@ -1,6 +1,8 @@
 import * as AdaptiveCards from 'adaptivecards';
 import React from 'react';
 import marked from 'marked';
+import classNames from 'classnames';
+import styles from './styles.less';
 
 type AdaptiveCardViewerProps = {
     /** The hostConfig object that is passed along to the native AdaptiveCards. [More Info](https://docs.microsoft.com/en-us/adaptive-cards/display/hostconfig) */
@@ -73,11 +75,12 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
 
     React.useEffect(() => {
         const current = cardContainerRef.current;
+        result.className = classNames(styles.adaptiveCard, className);
         current && current.appendChild(result);
         return () => current && current.firstChild && current.removeChild(current.firstChild);
-    }, [result]);
+    }, [result, className]);
 
-    return <div className={className} ref={cardContainerRef} />;
+    return <div ref={cardContainerRef} />;
 };
 
 export default AdaptiveCardViewer;

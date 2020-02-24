@@ -4,7 +4,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import AdaptiveCardViewer from '.';
 import { action } from '@storybook/addon-actions';
 
-var payload = {
+const payload = {
     type: 'AdaptiveCard',
     version: '1.0',
     body: [
