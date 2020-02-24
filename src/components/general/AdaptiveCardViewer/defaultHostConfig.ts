@@ -33,11 +33,11 @@ const getDefaultHostConfig = () => ({
         },
         monospace: {
             fontSizes: {
-                small: 8,
-                default: 12,
-                medium: 14,
-                large: 18,
-                extraLarge: 24,
+                small: 12,
+                default: 14,
+                medium: 16,
+                large: 16,
+                extraLarge: 20,
             },
             fontWeights: {
                 lighter: 200,
