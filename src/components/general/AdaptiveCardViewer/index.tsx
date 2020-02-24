@@ -3,6 +3,7 @@ import React from 'react';
 import marked from 'marked';
 import classNames from 'classnames';
 import styles from './styles.less';
+import getDefaultHostConfig from './defaultHostConfig';
 
 type AdaptiveCardViewerProps = {
     /** The hostConfig object that is passed along to the native AdaptiveCards. [More Info](https://docs.microsoft.com/en-us/adaptive-cards/display/hostconfig) */
@@ -42,9 +43,9 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
         result.didProcess = true;
     };
 
-    if (hostConfig) {
-        adaptiveCard.hostConfig = new AdaptiveCards.HostConfig(hostConfig);
-    }
+    adaptiveCard.hostConfig = new AdaptiveCards.HostConfig(
+        hostConfig ? hostConfig : getDefaultHostConfig()
+    );
 
     const executeAction = React.useCallback(
         (action: AdaptiveCards.Action) => {
