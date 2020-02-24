@@ -25,12 +25,9 @@ const AnchorComponent = forwardRef<HTMLAnchorElement, AnchorProps>(
             return (
                 <span ref={ref}>
                     <Link
+                        to={"/123"}
                         className={getButtonClasses(props)}
                         target={targetBlank ? '_blank' : '_self'}
-                        onMouseUp={onMouseUp}
-                        onClick={onClick}
-                        onClickCapture={onClickCapture}
-                        to={relativeUrl}
                     >
                         <Content>{children}</Content>
                     </Link>
