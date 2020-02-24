@@ -28,6 +28,8 @@ const AnchorComponent = forwardRef<HTMLAnchorElement, AnchorProps>(
                         to={"/123"}
                         className={getButtonClasses(props)}
                         target={targetBlank ? '_blank' : '_self'}
+                        onMouseDown={onMouseDown}
+                        onMouseUp={onMouseUp}
                     >
                         <Content>{children}</Content>
                     </Link>
