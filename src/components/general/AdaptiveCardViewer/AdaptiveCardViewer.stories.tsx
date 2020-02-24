@@ -33,13 +33,7 @@ const payload = {
 const AdaptiveCardViewerStory = () => {
     return (
         <div style={{ margin: '8px' }} >
-            <AdaptiveCardViewer payload={payload} onActionSubmit={action("Submit")} hostConfig={{
-                actions :{
-                    buttonSpacing: 16,
-
-
-                }
-            }}/>
+            <AdaptiveCardViewer payload={payload} onActionSubmit={action("Submit")} />
         </div>
     );
 };

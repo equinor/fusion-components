@@ -1,13 +1,15 @@
 import { styling } from '@equinor/fusion-components';
-
+const gridUnit = (unit: number) => {
+    return +getComputedStyle(document.documentElement).getPropertyValue('--grid-unit') * unit;
+};
 const getDefaultHostConfig = () => ({
     spacing: {
-        small: styling.grid(0.5),
-        default: styling.grid(1),
-        medium: styling.grid(2),
-        large: styling.grid(3),
-        extraLarge: styling.grid(4),
-        padding: styling.grid(1),
+        small: gridUnit(0.5),
+        default: gridUnit(1),
+        medium: gridUnit(2),
+        large: gridUnit(3),
+        extraLarge: gridUnit(4),
+        padding: gridUnit(2),
     },
     separator: {
         lineThickness: 1,
@@ -204,20 +206,19 @@ const getDefaultHostConfig = () => ({
     actions: {
         maxActions: 5,
         spacing: 'default',
-        buttonSpacing: styling.grid(2),
+        buttonSpacing: gridUnit(2),
         showCard: {
             actionMode: 'inline',
-            inlineTopMargin: styling.grid(1),
+            inlineTopMargin: gridUnit(1),
         },
         actionsOrientation: 'horizontal',
-        actionAlignment: 'stretch',
     },
     adaptiveCard: {
         allowCustomStyle: false,
     },
     imageSet: {
         imageSize: 'medium',
-        maxImageHeight: styling.grid(13),
+        maxImageHeight: gridUnit(13),
     },
     factSet: {
         title: {
@@ -226,7 +227,7 @@ const getDefaultHostConfig = () => ({
             isSubtle: false,
             weight: 'bolder',
             wrap: true,
-            maxWidth: styling.grid(18),
+            maxWidth: gridUnit(18),
         },
         value: {
             color: 'default',
@@ -235,7 +236,7 @@ const getDefaultHostConfig = () => ({
             weight: 'default',
             wrap: true,
         },
-        spacing: styling.grid(1),
+        spacing: gridUnit(1),
     },
 });
 export default getDefaultHostConfig;
