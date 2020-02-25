@@ -5,6 +5,10 @@ const computedStyle = (variableName: string) => {
 export default {
     grid: (value: number) => `calc(var(--grid-unit) * ${value}px)`,
 
+    numericalGrid: (value: number) => {
+        return +getComputedStyle(document.documentElement).getPropertyValue('--grid-unit') * value;
+    },
+
     mobileWidth: () =>
         getComputedStyle(document.documentElement).getPropertyValue('--mobile-max-width'),
 
