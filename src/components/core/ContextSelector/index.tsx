@@ -20,7 +20,7 @@ import {
 import * as styles from './styles.less';
 import classNames from 'classnames';
 
-import ContextToDropdownSection from './ContextToDropdownSection';
+import contextToDropdownSection from './ContextToDropdownSection';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -41,7 +41,7 @@ const ContextSelector: React.FC = () => {
 
     React.useEffect(() => {
         setDropdownSections(
-            ContextToDropdownSection(contexts, queryText, isQuerying, currentContext)
+            contextToDropdownSection(contexts, queryText, isQuerying, currentContext)
         );
     }, [contexts, currentContext, queryText, isQuerying]);
 
@@ -135,7 +135,7 @@ const ContextSelector: React.FC = () => {
         }
 
         setDropdownSections(
-            ContextToDropdownSection(alternatives, '', false, currentContext)
+            contextToDropdownSection(alternatives, '', false, currentContext)
         );
 
         setIsOpen(true);
@@ -146,7 +146,7 @@ const ContextSelector: React.FC = () => {
             return;
         }
 
-        if(contextManifest.types.indexOf(currentContext.type.id)) {
+        if(contextManifest.types.indexOf(currentContext.type.id) !== -1) {
             contextManager.setCurrentContextAsync(currentContext);
         } else {
             exchangeContext();
