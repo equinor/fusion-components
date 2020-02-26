@@ -147,7 +147,14 @@ const ContextSelector: React.FC = () => {
         }
 
         if(contextManifest.types.indexOf(currentContext.type.id) !== -1) {
-            contextManager.setCurrentContextAsync(currentContext);
+            const appPath = `/apps/${currentApp.key}`;
+            const scopedPath = window.location.pathname.replace(appPath, '');
+            const expectedContextIdFromUrl = contextManifest.getContextFromUrl(scopedPath);
+            if(!expectedContextIdFromUrl || expectedContextIdFromUrl === currentContext.id) {
+                contextManager.setCurrentContextAsync(currentContext);
+            } else {
+                contextManager.setCurrentContextIdAsync(expectedContextIdFromUrl);
+            }
         } else {
             exchangeContext();
         }
