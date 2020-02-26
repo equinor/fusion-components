@@ -7,7 +7,6 @@ import Button from '../../../general/Button';
 const ReportStandard: React.FC = () => {
     return (
         <>
-            <p>Make sure you have a valid token in auth or you will just get an error </p>
             <div style={{ width: '100%', height: '100%' }}>
                 <PowerBIReport reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'} />
             </div>
@@ -22,7 +21,7 @@ const ReportWithFilter: React.FC = () => {
         return {
             $schema: 'http://powerbi.com/product/schema#basic',
             target: {
-                table: 'Dim_Commonlibrary_Projects',
+                table: "Dim_MasterProject",
                 column: 'Project',
             },
             filterType: 1,
@@ -38,7 +37,6 @@ const ReportWithFilter: React.FC = () => {
     return (
         <>
             <div>
-                <p>Make sure you have a valid token in auth or you will just get an error </p>
                 <Button
                     onClick={() => {
                         setFilterStrings(null);
@@ -57,24 +55,17 @@ const ReportWithFilter: React.FC = () => {
                 </Button>
                 <Button
                     onClick={() => {
-                        setFilterStrings(['Aasta Hansteen']);
+                        setFilterStrings(['Snorre Expansion Project']);
                     }}
                 >
-                    Aasta Hansteen
+                    Snorre Expansion Project
                 </Button>
                 <Button
                     onClick={() => {
-                        setFilterStrings(['Bauge']);
+                        setFilterStrings(['Johan Sverdrup Phase 1']);
                     }}
                 >
-                    Bauge
-                </Button>
-                <Button
-                    onClick={() => {
-                        setFilterStrings(['Bauge', 'Aasta Hansteen']);
-                    }}
-                >
-                    Aasta and Bauge
+                    Johan Sverdrup Phase 1
                 </Button>
             </div>
             <div style={{ width: '100%', height: '100%' }}>
