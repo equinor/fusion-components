@@ -5,6 +5,7 @@ import {
     useComponentDisplayClassNames,
     useContextQuery,
     useCurrentApp,
+    useContextHistory,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -30,14 +31,17 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     );
 
 const ContextSelector: React.FC = () => {
-    const [queryText, setQueryText] = React.useState('');
-    const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
-    const inputRef = React.useRef<HTMLInputElement | null>(null);
-    const currentContext = useCurrentContext();
-    const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
+    const currentContext = useCurrentContext();
+    const contextHistory = useContextHistory();
     const currentApp = useCurrentApp();
     const contextManifest = currentApp?.context;
+    const { isQuerying, contexts, search } = useContextQuery();
+    
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
+    
+    const [queryText, setQueryText] = React.useState('');
+    const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>(contextToDropdownSection(contextHistory,"",false,currentContext));
 
     React.useEffect(() => {
         setDropdownSections(
@@ -171,8 +175,8 @@ const ContextSelector: React.FC = () => {
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
     const helperText = React.useMemo(
-        () => (!contexts.length && !isQuerying && !queryText ? 'Start typing to search' : null),
-        [contexts, isQuerying, queryText, contextManifest]
+        () => (dropdownSections.length === 1 && dropdownSections[0].key === "empty" ? 'Start typing to search' : null),
+        [dropdownSections]
     );
 
     return (
