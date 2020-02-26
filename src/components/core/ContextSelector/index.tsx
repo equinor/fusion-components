@@ -122,35 +122,35 @@ const ContextSelector: React.FC = () => {
 
     const dropdownController = useDropdownController(dropdownControllerProps);
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
-    
+
     const exchangeContext = React.useCallback(async () => {
         const alternatives = await contextManager.exchangeCurrentContextAsync();
 
-        if(!alternatives || !alternatives.length) {
+        if (!alternatives || !alternatives.length) {
             return contextManager.setCurrentContextAsync(null);
         }
 
-        if(alternatives.length === 1) {
+        if (alternatives.length === 1) {
             return contextManager.setCurrentContextAsync(alternatives[0]);
         }
 
-        setDropdownSections(
-            contextToDropdownSection(alternatives, '', false, currentContext)
-        );
+        setDropdownSections(contextToDropdownSection(alternatives, '', false, currentContext));
 
         setIsOpen(true);
     }, [contextManager, currentContext]);
 
     React.useEffect(() => {
-        if(!contextManifest || !currentContext) {
+        if (!contextManifest || !currentContext) {
             return;
         }
 
-        if(contextManifest.types.indexOf(currentContext.type.id) !== -1) {
+        if (contextManifest.types.indexOf(currentContext.type.id) !== -1) {
             const appPath = `/apps/${currentApp.key}`;
             const scopedPath = window.location.pathname.replace(appPath, '');
-            const expectedContextIdFromUrl = contextManifest.getContextFromUrl(scopedPath);
-            if(!expectedContextIdFromUrl || expectedContextIdFromUrl === currentContext.id) {
+            const expectedContextIdFromUrl = contextManifest.getContextFromUrl
+                ? contextManifest.getContextFromUrl(scopedPath)
+                : null;
+            if (!expectedContextIdFromUrl || expectedContextIdFromUrl === currentContext.id) {
                 contextManager.setCurrentContextAsync(currentContext);
             } else {
                 contextManager.setCurrentContextIdAsync(expectedContextIdFromUrl);
