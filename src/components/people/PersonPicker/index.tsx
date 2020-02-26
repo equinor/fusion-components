@@ -109,7 +109,7 @@ export default ({
         if (onSelect) {
             onSelect(item.person);
         }
-    }, []);
+    }, [onSelect]);
 
     return (
         <SearchableDropdown
