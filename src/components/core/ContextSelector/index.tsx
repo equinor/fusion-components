@@ -180,7 +180,10 @@ const ContextSelector: React.FC = () => {
                 setIsOpen(false);
                 setQueryText('');
                 if (selectedContext){ 
-                    contextManager.setCurrentContextAsync(selectedContext)};
+                    contextManager.setCurrentContextAsync(selectedContext)}
+                else {
+                    contextManager.setCurrentContextIdAsync(item.key);
+                };
             }
         },
         [isOpen, contexts,contextHistory]
@@ -192,7 +195,7 @@ const ContextSelector: React.FC = () => {
         () => (!dropdownSections[0]?.items?.length && !isQuerying && !queryText  ? 'Start typing to search' : null),
         [dropdownSections]
     );
-    console.log(dropdownSections)
+
     return (
         <div className={containerClassNames} ref={containerRef}>
             <Dropdown controller={dropdownController}>
