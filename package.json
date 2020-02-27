@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "1.1.47",
+    "version": "1.1.49",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -35,7 +35,11 @@
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
+<<<<<<< HEAD
         "@equinor/fusion": "^1.0.33",
+=======
+        "@equinor/fusion": "^1.0.34",
+>>>>>>> master
         "@storybook/addon-actions": "^5.3.10",
         "@storybook/addon-jest": "^5.3.10",
         "@storybook/addon-knobs": "^5.3.10",
