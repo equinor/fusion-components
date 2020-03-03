@@ -5,6 +5,7 @@ import {
     Menu,
     Dropdown,
     useDropdownController,
+    useOverlayContainer,
 } from '@equinor/fusion-components';
 import styles from './styles.less';
 
@@ -165,6 +166,13 @@ const SearchableDropdown = ({
             }
         }, [isOpen, selectedComponent, selectedItem, setIsOpen, aside]);
 
+        const overlayContainer = useOverlayContainer();
+        const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+            if(isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                setIsOpen(false);
+            }
+        }, [isOpen]);
+
         return (
             <>
                 {!isOpen && selectedComponent && selectedItem ? (
@@ -188,6 +196,8 @@ const SearchableDropdown = ({
                         value={selectedValue}
                         ref={inputRef}
                         onKeyUp={e => e.keyCode === 27 && setIsOpen(false)}
+                        onFocus={() => !isOpen && setIsOpen(true)}
+                        onBlur={handleBlur}
                     />
                 )}
             </>
@@ -195,11 +205,10 @@ const SearchableDropdown = ({
     });
 
     const { isOpen, setIsOpen } = dropdownController;
-
     const select = useCallback(
         item => {
+            onSelect && onSelect(item);
             if (isOpen) {
-                onSelect && onSelect(item);
                 setIsOpen(false);
                 setInputValue('');
             }

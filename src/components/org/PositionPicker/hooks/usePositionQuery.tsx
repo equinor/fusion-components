@@ -1,8 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useFusionContext, useDebouncedAbortable, Position } from '@equinor/fusion';
+import { useFusionContext, Position } from '@equinor/fusion';
 
 const usePositionQuery = (
-    projectId: string
+    selectedPosition: Position | null,
+    projectId: string,
+    contractId?: string
 ): [Error | null, boolean, Position[], (query: string) => void] => {
     const [error, setError] = useState(null);
     const [isFetching, setIsFetching] = useState(false);
@@ -14,11 +16,17 @@ const usePositionQuery = (
 
     const canQuery = (query: string) => !!query && query.length > 2;
 
-    const fetchPosition = useCallback(async (projectId: string) => {
+    const performFetchAsync = useCallback(async (projectId: string, contractId: string) => {
+        return contractId
+        ? fusionContext.http.apiClients.org.getContractPositionsAsync(projectId, contractId)
+        : fusionContext.http.apiClients.org.getPositionsAsync(projectId);
+    }, []);
+
+    const fetchPositions = useCallback(async (projectId: string, contractId?: string) => {
         setPositions([]);
         setIsFetching(true);
         try {
-            const response = await fusionContext.http.apiClients.org.getPositionsAsync(projectId);
+            const response = await performFetchAsync(projectId, contractId);
             setPositions(response.data);
             setIsFetching(false);
         } catch (e) {
@@ -28,7 +36,16 @@ const usePositionQuery = (
         }
     }, []);
 
-    useDebouncedAbortable(fetchPosition, projectId);
+    useEffect(() => {
+        fetchPositions(projectId, contractId);
+    }, [projectId, contractId]);
+
+    useEffect(() => {
+        // Refetch positions when setting selected position
+        if(selectedPosition && !positions.find(p => p.id === selectedPosition.id)) {
+            fetchPositions(projectId, contractId);
+        }
+    }, [selectedPosition]);
 
     const search = (query: string) => {
         const queryParts = query.toLowerCase().split(' ');
