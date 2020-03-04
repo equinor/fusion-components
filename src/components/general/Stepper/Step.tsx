@@ -89,6 +89,7 @@ const Step: React.FC<StepProps> = ({
                 <div className={titleClasses}>
                     <span>{title}</span>
                 </div>
+                <span className={styles.description}>{description}</span>
             </span>
         );
     }
