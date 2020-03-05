@@ -9,12 +9,16 @@ import {
     Scrim,
     PaginationArrow,
 } from '@equinor/fusion-components';
-import { useComponentDisplayClassNames, useNotificationCenter, NotificationContextProvider } from '@equinor/fusion';
+import {
+    useComponentDisplayClassNames,
+    useNotificationCenter,
+    NotificationContextProvider,
+} from '@equinor/fusion';
 import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
 import BannerPresenter from './BannerPresenter';
 import SnackbarPresenter from './SnackbarPresenter';
 
-type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
+type SideSheetSize = 'fullscreen' | 'xlarge' | 'large' | 'medium' | 'small';
 
 type ModalSideSheetProps = ResizablePaneOptions & {
     children: ReactNode;
@@ -100,6 +104,7 @@ export default ({
         useComponentDisplayClassNames(styles),
         {
             [styles.show]: isShowing,
+            [styles.fullscreen]: size === 'fullscreen',
             [styles.xlarge]: size === 'xlarge',
             [styles.large]: size === 'large',
             [styles.medium]: size === 'medium',
