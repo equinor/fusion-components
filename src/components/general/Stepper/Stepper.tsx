@@ -29,8 +29,8 @@ const Stepper: React.FC<StepperProps> = ({
     hideNavButtons,
 }) => {
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
-    const [currentStepKey, setCurrentStepKey] = React.useState();
-    const [activeStepPosition, setActiveStepPosition] = React.useState();
+    const [currentStepKey, setCurrentStepKey] = React.useState<string | null>(null);
+    const [activeStepPosition, setActiveStepPosition] = React.useState<number | null>(null);
 
     const [canNext, setCanNext] = React.useState(true);
     const [canPrev, setCanPrev] = React.useState(false);
