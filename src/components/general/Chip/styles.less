@@ -1,0 +1,35 @@
+
+.chipContainer {
+    display: inline-block;
+
+    .chip {
+        align-items: center;
+        background-color: var(--color-black-alt5);
+        border-radius: 16px;
+        color: var(--color-primary);
+        display: inline-flex;
+        padding: calc(var(--grid-unit) * 1px) calc(var(--grid-unit) * 2px);
+        cursor: default;
+
+        .removeButton {
+            display: flex;
+            cursor: pointer;
+
+        }
+
+        .title {
+            margin: 0;
+
+            & + .removeButton {
+                padding-left: calc(var(--grid-unit) * 1px);
+            }
+        }
+    }
+
+    &:hover {
+        .title,
+        .removeButton {
+            color: var(--color-primary-hover);
+        }
+    }
+}
