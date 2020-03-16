@@ -58,8 +58,8 @@ const usePositionQuery = (
                     .filter(position =>
                         queryParts.every(
                             query =>
-                                position.name.toLowerCase().includes(query) ||
-                                position.externalId.toLowerCase().includes(query) ||
+                                (position.name || '').toLowerCase().includes(query) ||
+                                (position.externalId || '').toLowerCase().includes(query) ||
                                 position.instances.some(
                                     i =>
                                         now >= i.appliesFrom.getTime() &&
