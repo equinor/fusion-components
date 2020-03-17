@@ -1,5 +1,5 @@
 import { SearchableDropdownSection } from '@equinor/fusion-components';
-import { Context } from '@equinor/fusion/lib/http/apiClients/models/context';
+import { Context, ContextTypes } from '@equinor/fusion';
 
 const getEmptySection = (isQuerying: boolean) => ({
     key: 'empty',
@@ -12,16 +12,25 @@ const getEmptySection = (isQuerying: boolean) => ({
     ],
 });
 
-const getDefaultSection = (items: any) => ({
-    key: 'default',
-    items,
-});
+const ContextTypesStrings = {
+    Contract: 'Contract',
+    OrgChart: 'Org Chart',
+    PDP: 'PDP/Procosys',
+    PimsDomain: 'Pims Domain',
+    Portfolio: 'Portfolio',
+    Project: 'Project',
+    ProjectMaster: 'Project Master',
+    Facility: 'Facility',
+};
+
+const formattedContextType = (contextType: string): string =>
+    contextType in ContextTypesStrings ? ContextTypesStrings[contextType] : contextType;
 
 export default function(
     contexts: Context[],
     searchQuery: string,
     isQuerying: boolean,
-    context?: Context | null
+    selectecContext?: Context | null
 ): SearchableDropdownSection[] {
     const isNoMatches = !contexts.length;
 
@@ -31,14 +40,24 @@ export default function(
 
     const sections: SearchableDropdownSection[] = [];
 
-    const items = contexts.map(c => ({
-        key: c.id,
-        title: c.title,
-        contextType: c.type,
-        isSelected: context && c.id === context.id,
-    }));
+    return contexts.reduce((s, c): SearchableDropdownSection[] => {
+        const context = {
+            key: c.id,
+            title: c.title,
+            contextType: c.type,
+            isSelected: selectecContext && selectecContext.id === c.id,
+        };
 
-    sections.push(getDefaultSection(items));
+        const sectionIndex = s.findIndex(s => s.key === c.type.id);
 
-    return sections;
+        sectionIndex > -1
+            ? sections[sectionIndex].items.push(context)
+            : sections.push({
+                  key: c.type.id,
+                  title: formattedContextType(c.type.id),
+                  items: [context],
+              });
+
+        return sections;
+    }, sections);
 }
