@@ -73,6 +73,7 @@ const DefaultStory = () => {
             projectId="5e905893-26b3-41c9-be54-00f4f397493d"
             selectedPosition={selectedPosition}
             onSelect={setSelectedPosition}
+            label="Select position"
         />
     );
 };

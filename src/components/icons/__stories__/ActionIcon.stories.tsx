@@ -18,6 +18,8 @@ import {
     PrintIcon,
     DeleteIcon,
     LockIcon,
+    CheckCircleIcon,
+    CloseCircleIcon,
 } from '../components/action';
 
 const eventsFromNames = actions('onClick');
@@ -55,14 +57,20 @@ stories.add('Minimize', () => (
 stories.add('Sort', () => (
     <SortIcon
         {...eventsFromNames}
-        direction={select('Direction', {
-            None: null,
-            Ascending: 'asc',
-            Descending: 'desc',
-        }, null)}
+        direction={select(
+            'Direction',
+            {
+                None: null,
+                Ascending: 'asc',
+                Descending: 'desc',
+            },
+            null
+        )}
     />
 ));
-stories.add('Dropdown', () => <DropdownArrow {...eventsFromNames} isOpen={boolean('I sopen', false)} />);
+stories.add('Dropdown', () => (
+    <DropdownArrow {...eventsFromNames} isOpen={boolean('I sopen', false)} />
+));
 stories.add('Info', () => (
     <InfoIcon
         color={color('color', '#000')}
@@ -105,7 +113,7 @@ stories.add('Help', () => (
     />
 ));
 stories.add('Print', () => (
-    <PrintIcon 
+    <PrintIcon
         {...eventsFromNames}
         color={color('color', '#000')}
         height={number('height', 24)}
@@ -113,19 +121,36 @@ stories.add('Print', () => (
     />
 ));
 stories.add('Delete', () => (
-    <DeleteIcon 
-        {...eventsFromNames}
-        color={color('color', '#000')}
-        height={number('height', 24)}
-        width={number('width', 24)}
-    />
-))
-stories.add('Lock', () => (
-    <LockIcon 
+    <DeleteIcon
         {...eventsFromNames}
         color={color('color', '#000')}
         height={number('height', 24)}
         width={number('width', 24)}
         outline={boolean('outline', false)}
+    />
+));
+stories.add('Lock', () => (
+    <LockIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+        outline={boolean('outline', false)}
+    />
+));
+stories.add('CheckCircle', () => (
+    <CheckCircleIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+stories.add('CloseCircle', () => (
+    <CloseCircleIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
     />
 ));
