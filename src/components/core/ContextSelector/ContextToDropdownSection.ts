@@ -30,7 +30,7 @@ export default function(
     contexts: Context[],
     searchQuery: string,
     isQuerying: boolean,
-    selectecContext?: Context | null
+    selectedContext?: Context | null
 ): SearchableDropdownSection[] {
     const isNoMatches = !contexts.length;
 
@@ -45,7 +45,7 @@ export default function(
             key: c.id,
             title: c.title,
             contextType: c.type,
-            isSelected: selectecContext && selectecContext.id === c.id,
+            isSelected: selectedContext && selectedContext.id === c.id,
         };
 
         const sectionIndex = s.findIndex(s => s.key === c.type.id);
