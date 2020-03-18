@@ -123,7 +123,7 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon, NotificationIcon } from './components/icons/components/alert';
-export { AddIcon, BlockIcon, SaveIcon } from './components/icons/components/content';
+export { AddIcon, BlockIcon, SaveIcon, CopyIcon } from './components/icons/components/content';
 export { SyncDisabledIcon, SyncIcon } from './components/icons/components/notification';
 export {
     SearchIcon,
@@ -141,6 +141,8 @@ export {
     PrintIcon,
     DeleteIcon,
     LockIcon,
+    CheckCircleIcon,
+    CloseCircleIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
