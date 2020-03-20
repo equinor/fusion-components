@@ -20,6 +20,7 @@ import {
     LockIcon,
     CheckCircleIcon,
     CloseCircleIcon,
+    ScheduleIcon,
 } from '../components/action';
 
 const eventsFromNames = actions('onClick');
@@ -148,6 +149,14 @@ stories.add('CheckCircle', () => (
 ));
 stories.add('CloseCircle', () => (
     <CloseCircleIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+stories.add('Schedule', () => (
+    <ScheduleIcon
         {...eventsFromNames}
         color={color('color', '#000')}
         height={number('height', 24)}
