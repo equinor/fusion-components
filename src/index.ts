@@ -143,6 +143,7 @@ export {
     LockIcon,
     CheckCircleIcon,
     CloseCircleIcon,
+    ScheduleIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
