@@ -1,14 +1,14 @@
-import { CloseIcon, IconButton } from '@equinor/fusion-components';
+import { CloseIcon } from '@equinor/fusion-components';
 import * as React from 'react';
 
 import * as styles from "./styles.less";
 
-interface IChipProps {
-    onRemove: () => void,
+type ChipProps = {
+    onRemove?: () => void,
     title: string
 }
 
-const Chip: React.FC<IChipProps> = ({ onRemove, title }) => {
+const Chip: React.FC<ChipProps> = ({ onRemove, title }) => {
     return (
         <div className={styles.chipContainer}>
             <div className={styles.chip}>
