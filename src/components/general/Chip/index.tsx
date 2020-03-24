@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as styles from "./styles.less";
 
 interface IChipProps {
-    onRemove: () => void,
+    onRemove?: () => void,
     title: string
 }
 
