@@ -5,6 +5,7 @@ import {
     useComponentDisplayClassNames,
     useContextQuery,
     useCurrentApp,
+    ContextType,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -16,6 +17,7 @@ import {
     Spinner,
     IconButton,
     CloseIcon,
+    TextInput,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
@@ -28,6 +30,10 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
             acc.concat(curr.items),
         []
     );
+
+type SearchableContextDropdownOption = SearchableDropdownOption & {
+    contextType: ContextType;
+};
 
 const ContextSelector: React.FC = () => {
     const [queryText, setQueryText] = React.useState('');
@@ -61,16 +67,16 @@ const ContextSelector: React.FC = () => {
             const selectedItem = React.useMemo(() => {
                 const mergedItems = mergeDropdownSectionItems(dropdownSections);
                 const selectedItem = mergedItems.find(option => option.isSelected === true);
-                return selectedItem;
+                return selectedItem as SearchableContextDropdownOption;
             }, [dropdownSections]);
 
             const selectedValue = React.useMemo(() => {
                 if (isOpen) {
                     return queryText;
                 } else if (selectedItem) {
-                    return selectedItem.title;
+                    return `${selectedItem.title} (${selectedItem.contextType.id})`;
                 } else if (currentContext) {
-                    return currentContext.title;
+                    return `${currentContext.title} (${currentContext.type.id})`;
                 }
                 return '';
             }, [isOpen, queryText, selectedItem, currentContext]);
