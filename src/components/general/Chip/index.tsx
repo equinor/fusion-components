@@ -4,13 +4,13 @@ import * as React from 'react';
 
 import * as styles from "./styles.less";
 
-interface IChipProps {
+type ChipProps = {
     isDisabled?: boolean,
-    title: string,
+    title: string
     onRemove?: () => void,
 }
 
-const Chip: React.FC<IChipProps> = ({ isDisabled, onRemove, title }) => {
+const Chip: React.FC<ChipProps> = ({ isDisabled, onRemove, title }) => {
 
     const chipContainerClassNames = classNames(
         styles.chipContainer,
