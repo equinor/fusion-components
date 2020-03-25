@@ -10,7 +10,7 @@ const ChipsStory = () => (
         <span style={{ paddingLeft: "10px" }}></span>
         <Chip onRemove={() => { }} title="Removable" />
         <span style={{ paddingLeft: "10px" }}></span>
-        <Chip isDisabled onRemove={() => { }} title="Disabled" />
+        <Chip isDisabled title="Disabled" />
     </React.Fragment>
 );
 
