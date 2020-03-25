@@ -7,13 +7,13 @@
         background-color: var(--color-black-alt5);
         border-radius: 16px;
         color: var(--color-primary);
+        cursor: default;
         display: inline-flex;
         padding: calc(var(--grid-unit) * 1px) calc(var(--grid-unit) * 2px);
-        cursor: default;
 
         .removeButton {
-            display: flex;
             cursor: pointer;
+            display: flex;
         }
 
         .title {
@@ -21,6 +21,20 @@
 
             & + .removeButton {
                 padding-left: calc(var(--grid-unit) * 1px);
+            }
+        }
+    }
+
+    &.disabled{
+        .chip{
+            color: var(--color-black-alt2);
+            cursor: not-allowed;
+
+            &:hover{
+                .title,
+                .removeButton {
+                    color: var(--color-black-alt2);
+                }
             }
         }
     }
