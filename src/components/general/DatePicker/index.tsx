@@ -8,6 +8,7 @@ import {
     unmaskString,
     Calendar,
     CalendarIcon,
+    useOverlayContainer,
 } from '@equinor/fusion-components';
 
 type DatePickerProps = {
@@ -42,6 +43,14 @@ const DatePicker: React.FC<DatePickerProps> = ({ error, errorMessage, label, sel
                 setIsOpen(false);
             }
         }, [isValidMask, onChange]);
+        
+        const overlayContainer = useOverlayContainer();
+        const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+            if(isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                setIsOpen(false);
+            }
+        }, [isOpen]);
+
 
         return (
             <TextInput
@@ -55,6 +64,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ error, errorMessage, label, sel
                 onKeyUp={handleKeyUp}
                 placeholder={selectedDate ? formatDate(selectedDate) : 'dd/mm/yyyy'}
                 value={value}
+                onBlur={handleBlur}
             />
         );
     });
