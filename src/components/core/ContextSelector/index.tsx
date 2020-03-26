@@ -22,7 +22,7 @@ import {
 import * as styles from './styles.less';
 import classNames from 'classnames';
 
-import contextToDropdownSection from './ContextToDropdownSection';
+import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -74,9 +74,13 @@ const ContextSelector: React.FC = () => {
                 if (isOpen) {
                     return queryText;
                 } else if (selectedItem) {
-                    return `${selectedItem.title} (${selectedItem.contextType.id})`;
+                    return `${selectedItem.title} (${formattedContextType(
+                        selectedItem.contextType.id
+                    )})`;
                 } else if (currentContext) {
-                    return `${currentContext.title} (${currentContext.type.id})`;
+                    return `${currentContext.title} (${formattedContextType(
+                        currentContext.type.id
+                    )})`;
                 }
                 return '';
             }, [isOpen, queryText, selectedItem, currentContext]);
