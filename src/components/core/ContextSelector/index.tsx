@@ -5,6 +5,7 @@ import {
     useComponentDisplayClassNames,
     useContextQuery,
     useCurrentApp,
+    ContextType,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -16,11 +17,12 @@ import {
     Spinner,
     IconButton,
     CloseIcon,
+    TextInput,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 
-import contextToDropdownSection from './ContextToDropdownSection';
+import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -28,6 +30,10 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
             acc.concat(curr.items),
         []
     );
+
+type SearchableContextDropdownOption = SearchableDropdownOption & {
+    contextType: ContextType;
+};
 
 const ContextSelector: React.FC = () => {
     const [queryText, setQueryText] = React.useState('');
@@ -61,16 +67,20 @@ const ContextSelector: React.FC = () => {
             const selectedItem = React.useMemo(() => {
                 const mergedItems = mergeDropdownSectionItems(dropdownSections);
                 const selectedItem = mergedItems.find(option => option.isSelected === true);
-                return selectedItem;
+                return selectedItem as SearchableContextDropdownOption;
             }, [dropdownSections]);
 
             const selectedValue = React.useMemo(() => {
                 if (isOpen) {
                     return queryText;
                 } else if (selectedItem) {
-                    return selectedItem.title;
+                    return `${selectedItem.title} (${formattedContextType(
+                        selectedItem.contextType.id
+                    )})`;
                 } else if (currentContext) {
-                    return currentContext.title;
+                    return `${currentContext.title} (${formattedContextType(
+                        currentContext.type.id
+                    )})`;
                 }
                 return '';
             }, [isOpen, queryText, selectedItem, currentContext]);

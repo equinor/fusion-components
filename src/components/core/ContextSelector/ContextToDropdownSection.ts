@@ -23,7 +23,7 @@ const ContextTypesStrings = {
     Facility: 'Facility',
 };
 
-const formattedContextType = (contextType: string): string =>
+export const formattedContextType = (contextType: string): string =>
     contextType in ContextTypesStrings ? ContextTypesStrings[contextType] : contextType;
 
 export default function(
