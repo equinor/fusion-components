@@ -49,6 +49,7 @@ export type NavigationStructure = {
     isActive?: boolean;
     isOpen?: boolean;
     navigationChildren?: NavigationStructure[];
+    aside?: ReactNode;
 };
 
 type NavigationDrawerProps = {
