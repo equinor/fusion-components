@@ -7,10 +7,7 @@ import {
 } from './components';
 import { NavigationStructure } from '.';
 
-export const getNavigationComponentForItem = (
-    structure?: NavigationStructure[],
-    customProps?,
-) => {
+export const getNavigationComponentForItem = (structure?: NavigationStructure[], customProps?) => {
     if (!structure) {
         return null;
     }
@@ -23,6 +20,7 @@ export const getNavigationComponentForItem = (
             isOpen: item.isOpen,
             icon: item.icon,
             navigationChildren: item.navigationChildren,
+            aside: item.aside,
         };
         switch (item.type) {
             case 'child':

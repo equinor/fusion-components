@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import NavigationDrawer, { NavigationStructure } from '../index';
 import { ErrorIcon, WarningIcon } from '@equinor/fusion-components';
+import Chip from "../../Chip";
 
 const navStructure = [
     {
@@ -92,6 +93,7 @@ const navStructure = [
                         id: 's3c1',
                         type: 'child',
                         title: 'Child4 with a super long title to show off how neat ellipsis is',
+                        aside:<Chip title="1"/>
                     },
                 ],
             },
