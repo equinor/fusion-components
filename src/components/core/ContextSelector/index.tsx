@@ -6,6 +6,7 @@ import {
     useContextQuery,
     useCurrentApp,
     ContextType,
+    useCurrentContextTypes,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -42,6 +43,7 @@ const ContextSelector: React.FC = () => {
     const currentContext = useCurrentContext();
     const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
+    const currentContextTypes = useCurrentContextTypes();
     const currentApp = useCurrentApp();
     const contextManifest = currentApp?.context;
 
@@ -134,7 +136,9 @@ const ContextSelector: React.FC = () => {
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
 
     const exchangeContext = React.useCallback(async () => {
-        const alternatives = await contextManager.exchangeCurrentContextAsync();
+        const alternatives = await contextManager.exchangeCurrentContextAsync(
+            ...currentContextTypes
+        );
 
         if (!alternatives || !alternatives.length) {
             return contextManager.setCurrentContextAsync(null);
@@ -147,7 +151,7 @@ const ContextSelector: React.FC = () => {
         setDropdownSections(contextToDropdownSection(alternatives, '', false, currentContext));
 
         setIsOpen(true);
-    }, [contextManager, currentContext]);
+    }, [contextManager, currentContext, currentContextTypes]);
 
     React.useEffect(() => {
         if (!contextManifest || !currentContext) {
