@@ -6,6 +6,7 @@ import {
     TextInput,
     unmaskString,
     useDropdownController,
+    useOverlayContainer,
     useStringMask,
 } from '@equinor/fusion-components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -43,6 +44,14 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
                 setIsOpen(false);
             }
         }, [isValidMask, onChange]);
+        
+        const overlayContainer = useOverlayContainer();
+        const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+            if(isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                setIsOpen(false);
+            }
+        }, [isOpen]);
+
 
         return (
             <TextInput
@@ -51,6 +60,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
                 errorMessage={errorMessage}
                 icon={<CalendarIcon />}
                 label={label}
+                onBlur={handleBlur}
                 onChange={value => setInputValue(unmaskString(dateMask, value))}
                 onClick={() => (!isOpen && !disabled) && setIsOpen(true)}
                 onIconAction={() => isOpen && setIsOpen(false)}
