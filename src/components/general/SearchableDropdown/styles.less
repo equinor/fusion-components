@@ -8,6 +8,9 @@
 .selectedItem {
     flex-grow: 2;
     padding-left: calc(var(--grid-unit) * 2px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .buttonContainer {
@@ -25,6 +28,10 @@
         caret-color: var(--color-primary);
         padding: .grid-unit(1px)[] .grid-unit(2px)[];
         border-radius: 4px 4px 0 0;
+
+        .dropDownArrow {
+            min-width: calc(var(--grid-unit) * 3px);
+        }
     }
 }
 

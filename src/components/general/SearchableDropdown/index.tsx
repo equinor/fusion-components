@@ -159,7 +159,9 @@ const SearchableDropdown = ({
                             <div className={styles.selectedItem}>
                                 <SelectedComponent item={selectedItem} />
                             </div>
-                            <DropdownArrow cursor="pointer" isOpen={isOpen} />
+                            <div className={styles.dropDownArrow}>
+                                <DropdownArrow cursor="pointer" isOpen={isOpen} />
+                            </div>
                         </div>
                     </div>
                 );
@@ -167,11 +169,14 @@ const SearchableDropdown = ({
         }, [isOpen, selectedComponent, selectedItem, setIsOpen, aside]);
 
         const overlayContainer = useOverlayContainer();
-        const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-            if(isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
-                setIsOpen(false);
-            }
-        }, [isOpen]);
+        const handleBlur = useCallback(
+            (e: React.FocusEvent<HTMLInputElement>) => {
+                if (isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                    setIsOpen(false);
+                }
+            },
+            [isOpen]
+        );
 
         return (
             <>
@@ -245,7 +250,13 @@ const SearchableDropdown = ({
                         />
                     ) : (
                         <div className={styles.noResultsContainer}>
-                            {inputValue ? <span>No matches for <strong> {inputValue}</strong></span> : 'Start typing to search'}
+                            {inputValue ? (
+                                <span>
+                                    No matches for <strong> {inputValue}</strong>
+                                </span>
+                            ) : (
+                                'Start typing to search'
+                            )}
                         </div>
                     )}
                 </div>
