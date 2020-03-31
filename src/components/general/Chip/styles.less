@@ -4,9 +4,9 @@
 
     .chip {
         align-items: center;
-        background-color: var(--color-black-alt5);
+        background-color: var(--chip-background-color);
         border-radius: 16px;
-        color: var(--color-primary);
+        color: var(--chip-color);
         cursor: default;
         display: inline-flex;
         padding: calc(var(--grid-unit) * 1px) calc(var(--grid-unit) * 2px);
@@ -25,24 +25,34 @@
         }
     }
 
-    &.disabled{
-        .chip{
-            color: var(--color-black-alt2);
-            cursor: not-allowed;
-
-            &:hover{
-                .title,
-                .removeButton {
-                    color: var(--color-black-alt2);
-                }
-            }
-        }
-    }
-
     &:hover {
         .title,
         .removeButton {
-            color: var(--color-primary-hover);
+            color: var(--chip-hover-color);
         }
+    }
+
+    --chip-color: var(--color-primary);
+    --chip-background-color: var(--color-black-alt5);
+    --chip-hover-color: var(--color-primary-hover);
+
+    &.secondary {
+        --chip-color: var(--color-secondary);
+        --chip-background-color: var(--color-secondary-alt3);
+        --chip-hover-color: var(--color-secondary);
+    }
+    &.primary {
+        --chip-color: var(--color-primary);
+        --chip-background-color: var(--color-primary-alt4);
+        --chip-hover-color: var(--color-primary-hover);
+    }
+    &.disabled {
+        --chip-color: var(--color-black-alt2);
+        --chip-background-color: var(--color-black-alt5);
+        --chip-hover-color: var(--color-black-alt2);
+        
+        .chip {
+            cursor: not-allowed;
+        }   
     }
 }

@@ -122,7 +122,7 @@ const TextInput = React.forwardRef<
         });
 
         const inputTextContentClasses = classNames(styles.inputTextContent, {
-            [styles.moveLabel]: (value.length && !disabled) || (focus && !disabled),
+            [styles.moveLabel]: value.length || focus,
             [styles.disabled]: disabled,
             [styles.error]: error,
         });
@@ -145,7 +145,7 @@ const TextInput = React.forwardRef<
                             placeholder={placeholderValue}
                             onBlur={handleBlur}
                             onFocus={handleFocus}
-                            value={!disabled ? value : ''}
+                            value={value}
                             onChange={handleChange}
                             disabled={disabled}
                             onKeyUp={onKeyUp}

@@ -11,6 +11,10 @@ const ChipsStory = () => (
         <Chip onRemove={() => { }} title="Removable" />
         <span style={{ paddingLeft: "10px" }}></span>
         <Chip isDisabled title="Disabled" />
+        <span style={{ paddingLeft: "10px" }}></span>
+        <Chip primary onRemove={() => { }} title="Primary" />
+        <span style={{ paddingLeft: "10px" }}></span>
+        <Chip secondary onRemove={() => { }} title="Secondary" />
     </React.Fragment>
 );
 

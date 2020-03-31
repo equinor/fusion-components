@@ -8,14 +8,18 @@ type ChipProps = {
     isDisabled?: boolean,
     title: string
     onRemove?: () => void,
+    secondary?: boolean;
+    primary?: boolean;
 }
 
-const Chip: React.FC<ChipProps> = ({ isDisabled, onRemove, title }) => {
+const Chip: React.FC<ChipProps> = ({ isDisabled, onRemove, title, secondary, primary }) => {
 
     const chipContainerClassNames = classNames(
         styles.chipContainer,
         {
             [styles.disabled]: isDisabled,
+            [styles.secondary]: secondary,
+            [styles.primary]: primary
         }
     );
 

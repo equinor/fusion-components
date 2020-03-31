@@ -8,7 +8,16 @@ import NavigationItem from './NavigationItem';
 import { useTooltipRef } from '@equinor/fusion-components';
 
 const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
-    const { id, icon, title, onClick, navigationChildren, isActive, isOpen } = navigationItem;
+    const {
+        id,
+        icon,
+        title,
+        onClick,
+        navigationChildren,
+        isActive,
+        isOpen,
+        aside,
+    } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
     const textRef = React.useRef<HTMLElement | null>(null);
@@ -18,7 +27,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
             const isOverflowing = textRef.current.offsetWidth < textRef.current.scrollWidth;
             setShouldHaveTooltip(isOverflowing);
         }
-    }, [textRef])
+    }, [textRef]);
 
     const navigationStructure = useMemo(
         () =>
@@ -39,7 +48,10 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
             <div className={styles.groupingContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
                 <div className={styles.linkContainer} onClick={change}>
                     <div className={styles.navigationIcon}>{icon}</div>
-                    <span className={styles.linkText} ref={textRef}>{title}</span>
+                    <span className={styles.linkText} ref={textRef}>
+                        {title}
+                    </span>
+                    {aside && <div className={styles.asideContainer}>{aside}</div>}
                 </div>
                 <div
                     className={styles.toggleOpenContainer}
@@ -51,7 +63,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                 </div>
             </div>
         ),
-        [icon, title, isOpen, onChange, navigationChildren]
+        [icon, title, isOpen, onChange, navigationChildren, aside]
     );
 
     const getNavigationContent = useCallback(() => navigationContent, [navigationContent]);
