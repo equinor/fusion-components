@@ -39,7 +39,7 @@ const resolveTooltip = (accountType: string, isExternalHire: boolean) => {
         case 'External':
             return 'Affiliate access';
         case 'Consultant':
-            return 'X-External';
+            return 'X-External / External with Equinor account';
         default:
             return accountType;
     }
