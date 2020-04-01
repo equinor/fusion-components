@@ -5,6 +5,8 @@ import {
     useComponentDisplayClassNames,
     useContextQuery,
     useCurrentApp,
+    ContextType,
+    useCurrentContextTypes,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -16,11 +18,12 @@ import {
     Spinner,
     IconButton,
     CloseIcon,
+    TextInput,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 
-import contextToDropdownSection from './ContextToDropdownSection';
+import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -29,6 +32,10 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
         []
     );
 
+type SearchableContextDropdownOption = SearchableDropdownOption & {
+    contextType: ContextType;
+};
+
 const ContextSelector: React.FC = () => {
     const [queryText, setQueryText] = React.useState('');
     const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
@@ -36,6 +43,7 @@ const ContextSelector: React.FC = () => {
     const currentContext = useCurrentContext();
     const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
+    const currentContextTypes = useCurrentContextTypes();
     const currentApp = useCurrentApp();
     const contextManifest = currentApp?.context;
 
@@ -61,16 +69,20 @@ const ContextSelector: React.FC = () => {
             const selectedItem = React.useMemo(() => {
                 const mergedItems = mergeDropdownSectionItems(dropdownSections);
                 const selectedItem = mergedItems.find(option => option.isSelected === true);
-                return selectedItem;
+                return selectedItem as SearchableContextDropdownOption;
             }, [dropdownSections]);
 
             const selectedValue = React.useMemo(() => {
                 if (isOpen) {
                     return queryText;
                 } else if (selectedItem) {
-                    return selectedItem.title;
+                    return `${selectedItem.title} (${formattedContextType(
+                        selectedItem.contextType.id
+                    )})`;
                 } else if (currentContext) {
-                    return currentContext.title;
+                    return `${currentContext.title} (${formattedContextType(
+                        currentContext.type.id
+                    )})`;
                 }
                 return '';
             }, [isOpen, queryText, selectedItem, currentContext]);
@@ -124,7 +136,9 @@ const ContextSelector: React.FC = () => {
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
 
     const exchangeContext = React.useCallback(async () => {
-        const alternatives = await contextManager.exchangeCurrentContextAsync();
+        const alternatives = await contextManager.exchangeCurrentContextAsync(
+            ...currentContextTypes
+        );
 
         if (!alternatives || !alternatives.length) {
             return contextManager.setCurrentContextAsync(null);
@@ -137,7 +151,7 @@ const ContextSelector: React.FC = () => {
         setDropdownSections(contextToDropdownSection(alternatives, '', false, currentContext));
 
         setIsOpen(true);
-    }, [contextManager, currentContext]);
+    }, [contextManager, currentContext, currentContextTypes]);
 
     React.useEffect(() => {
         if (!contextManifest || !currentContext) {

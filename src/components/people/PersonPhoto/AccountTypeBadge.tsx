@@ -33,11 +33,13 @@ const resolveTooltip = (accountType: string, isExternalHire: boolean) => {
             return 'No affiliate access account. User cannot log in to Fusion';
         case 'Employee':
             if (isExternalHire) {
-                return 'External Hire';
+                return 'External hire';
             }
-            return 'Equinor Employee';
+            return 'Equinor employee';
         case 'External':
-            return 'Joint venture/Affiliate access';
+            return 'Affiliate access';
+        case 'Consultant':
+            return 'X-External / External with Equinor account';
         default:
             return accountType;
     }

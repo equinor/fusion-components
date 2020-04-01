@@ -1,19 +1,33 @@
-import { CloseIcon, IconButton } from '@equinor/fusion-components';
+import { CloseIcon } from '@equinor/fusion-components';
+import classNames from 'classnames';
 import * as React from 'react';
 
 import * as styles from "./styles.less";
 
-interface IChipProps {
-    onRemove: () => void,
+type ChipProps = {
+    isDisabled?: boolean,
     title: string
+    onRemove?: () => void,
+    secondary?: boolean;
+    primary?: boolean;
 }
 
-const Chip: React.FC<IChipProps> = ({ onRemove, title }) => {
+const Chip: React.FC<ChipProps> = ({ isDisabled, onRemove, title, secondary, primary }) => {
+
+    const chipContainerClassNames = classNames(
+        styles.chipContainer,
+        {
+            [styles.disabled]: isDisabled,
+            [styles.secondary]: secondary,
+            [styles.primary]: primary
+        }
+    );
+
     return (
-        <div className={styles.chipContainer}>
+        <div className={chipContainerClassNames}>
             <div className={styles.chip}>
                 <p className={styles.title}>{title}</p>
-                {onRemove &&
+                {(onRemove && !isDisabled) &&
                     <div className={styles.removeButton} onClick={onRemove}>
                         <CloseIcon
                             height={16}

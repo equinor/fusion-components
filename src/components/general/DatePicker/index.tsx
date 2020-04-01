@@ -1,24 +1,26 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { dateMask, formatDate, parseDate, Month } from '@equinor/fusion';
+import { Month, dateMask, formatDate, parseDate } from '@equinor/fusion';
 import {
-    Dropdown,
-    useDropdownController,
-    TextInput,
-    useStringMask,
-    unmaskString,
     Calendar,
     CalendarIcon,
+    Dropdown,
+    TextInput,
+    unmaskString,
+    useDropdownController,
+    useOverlayContainer,
+    useStringMask,
 } from '@equinor/fusion-components';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 type DatePickerProps = {
+    disabled?: boolean;
     error?: boolean;
     errorMessage?: string;
     label?: string;
-    onChange: (date: Date | null) => void;
-    selectedDate?: Date | null;
+    selectedDate?: null | Date;
+    onChange: (date: null | Date) => void;
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({ error, errorMessage, label, selectedDate, onChange  }) => {
+const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, label, onChange, selectedDate  }) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [maskedValue, isValidMask] = useStringMask(dateMask, inputValue);
 
@@ -42,15 +44,25 @@ const DatePicker: React.FC<DatePickerProps> = ({ error, errorMessage, label, sel
                 setIsOpen(false);
             }
         }, [isValidMask, onChange]);
+        
+        const overlayContainer = useOverlayContainer();
+        const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+            if(isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                setIsOpen(false);
+            }
+        }, [isOpen]);
+
 
         return (
             <TextInput
+                disabled={disabled}
                 error={error}
                 errorMessage={errorMessage}
                 icon={<CalendarIcon />}
                 label={label}
+                onBlur={handleBlur}
                 onChange={value => setInputValue(unmaskString(dateMask, value))}
-                onClick={() => !isOpen && setIsOpen(true)}
+                onClick={() => (!isOpen && !disabled) && setIsOpen(true)}
                 onIconAction={() => isOpen && setIsOpen(false)}
                 onKeyUp={handleKeyUp}
                 placeholder={selectedDate ? formatDate(selectedDate) : 'dd/mm/yyyy'}
@@ -81,11 +93,11 @@ const DatePicker: React.FC<DatePickerProps> = ({ error, errorMessage, label, sel
         >
             <Dropdown controller={dropdownController}>
                 <Calendar
-                    selectedDate={selectedDate}
-                    initialYear={today.getFullYear()}
                     initialMonth={today.getMonth() as Month}
+                    initialYear={today.getFullYear()}
                     interactive
                     onChange={onDatePickerChange}
+                    selectedDate={selectedDate}
                 />
             </Dropdown>
         </div>

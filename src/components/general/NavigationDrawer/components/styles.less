@@ -39,6 +39,9 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+        .asideContainer {
+            padding: 0 calc(var(--grid-unit) * 1px);
+        }
     
     }
     .toggleOpenContainer{
@@ -114,6 +117,14 @@
             letter-spacing: 0.8px;
             font-weight: 500;
             padding-left: .grid-unit(7px)[];
+            position: absolute;
+
+            .linkText{
+                flex: 2;
+            }
+            .asideContainer {
+                flex: 1;
+            }
         }
 
         .sectionContainer{

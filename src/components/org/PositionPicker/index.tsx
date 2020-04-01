@@ -16,6 +16,7 @@ type PositionPickerProps = {
     contractId?: string;
     selectedPosition: Position | null;
     label?: string;
+    placeholder?: string;
 };
 
 const PositionPicker = ({
@@ -25,6 +26,7 @@ const PositionPicker = ({
     projectId,
     contractId,
     label,
+    placeholder,
 }: PositionPickerProps) => {
     const [options, setOptions] = useState<SearchableDropdownOption[]>([]);
     const [error, isFetching, filteredPositions, search] = usePositionQuery(selectedPosition, projectId, contractId);
@@ -62,7 +64,8 @@ const PositionPicker = ({
             itemComponent={ItemComponent}
             asideComponent={AsideComponent}
             onSearchAsync={setSearchQuery}
-            label={label || 'Select position'}
+            label={label}
+            placeholder={placeholder || 'Select position'}
         />
     );
 };
