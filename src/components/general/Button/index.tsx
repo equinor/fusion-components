@@ -14,6 +14,13 @@ export type ButtonProps = {
     /** Use the frameless variant */
     frameless?: boolean;
 
+    // Colors
+    /** Use the primary variant */
+    primary?: boolean;
+
+    /** Use the danger variant */
+    danger?: boolean;
+
     // Link
     /** Provide an url and the button wil use <a>-tag instead of <button>-tag */
     url?: string | null;
