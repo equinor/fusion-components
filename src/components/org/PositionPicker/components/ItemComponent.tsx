@@ -12,10 +12,16 @@ const ItemComponent: React.FC<ItemComponentProps> = ({ item }) => {
         i => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
     );
 
+    const externalId = React.useMemo(
+        () => (item.position.externalId ? `${item.position.externalId} - ` : ''),
+        [item.position.externalId]
+    );
+
     return (
         <div className={styles.cardContainer}>
             <div className={styles.positionName}>
-                {item.position.externalId} - {item.position.name}
+                {externalId}
+                {item.position.name}
             </div>
             <div className={styles.assignedPersonName}>
                 {activeInstance && activeInstance.assignedPerson
