@@ -9,12 +9,20 @@ export const singlePositionToDropdownOption = (
     return positionsToDropdownOption(query, [position], selectedPosition);
 };
 
+const createPositionTitle = (position: Position) => {
+    if (!position.externalId) {
+        return position.name;
+    }
+
+    return `${position.externalId} - ${position.name}`;
+};
+
 export const positionsToDropdownOption = (
     query: string,
     positions: Position[],
     selectedPosition: Position | null
 ): SearchableDropdownOption[] => {
-    if(selectedPosition !== null && !positions.find(p => p.id === selectedPosition.id)) {
+    if (selectedPosition !== null && !positions.find(p => p.id === selectedPosition.id)) {
         positions = [selectedPosition, ...positions];
     }
 
@@ -30,7 +38,7 @@ export const positionsToDropdownOption = (
 
     return positions.map(p => ({
         key: p.id,
-        title: `${p.externalId} - ${p.name}`,
+        title: createPositionTitle(p),
         position: p,
         isSelected: selectedPosition !== null && selectedPosition.id === p.id,
     }));
