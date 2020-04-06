@@ -70,13 +70,21 @@
     &.contained {
         .variant-contained(primary, var(--color-primary), var(--color-white), var(--color-primary-hover), var(--color-primary-alt4));
 
+        &.danger{
+            .variant-contained(danger, var(--color-danger),var(--color-white), var(--color-danger-hover), var(--color-danger-highlight) )
+        }
+
         &[disabled] {
             .button-disabled(var(--color-black-alt4), var(--color-black-alt4), var(--color-black-alt2));
         }
     }   
 
     &.outlined {
-        .variant-outlined(primary, var(--color-primary-alt4), var(--color-primary), var(--color-primary-alt3));
+        .variant-outlined(primary, var(--color-primary-white), var(--color-primary), var(--color-primary-hover), var(--color-primary-alt3));
+
+        &.danger{
+            .variant-outlined(danger, var(--color-white), var(--color-danger), var(--color-danger-hover), var(--color-danger-highlight));
+        }
 
         &[disabled] {
             .button-disabled(var(--color-black-alt4), var(--color-black-alt3), var(--color-black-alt2));
@@ -85,6 +93,10 @@
 
     &.frameless {
         .variant-frameless(primary, var(--color-primary), var(--color-primary-hover), var(--color-primary-alt4));
+
+        &.danger{
+            .variant-frameless(danger, var(--color-danger), var(--color-danger-hover), var(--color-danger-highlight))
+        }
 
         &[disabled] {
             .button-disabled(transparent, transparent, var(--color-black-alt2));

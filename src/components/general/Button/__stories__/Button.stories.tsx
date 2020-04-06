@@ -11,6 +11,9 @@ const createButtonStory = props => () => (
         <Button {...props} {...eventsFromNames}>
             Button
         </Button>
+        <Button danger {...props} {...eventsFromNames}>
+            Button
+        </Button>
         <Button disabled {...props} {...eventsFromNames}>
             Disabled button
         </Button>

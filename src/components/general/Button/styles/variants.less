@@ -20,7 +20,6 @@
         &:active {
             .button {
                 box-shadow: 0 0 0 2px @pressed-color;
-
                 background-color: @background-color;
                 border-color: @background-color;
             }
@@ -28,7 +27,7 @@
     }
 }
 
-.variant-outlined(@name, @background-color, @color, @hover-color) {
+.variant-outlined(@name, @background-color, @color, @hover-color, @hover-background-color) {
     &.@{name} {
         transition: background-color .2s;
 
@@ -40,14 +39,16 @@
 
         &:hover {
             .button {
-                background-color: @hover-color;
+                background-color: @hover-background-color;
+                color: @hover-color;
+                border-color: @hover-color;
             }
         }
         &:active{
             .button {
-                box-shadow: 0 0 0 2px @background-color;
-
-                background-color: @background-color;
+                box-shadow: 0 0 0 2px @hover-background-color;
+                color: @hover-color;
+                background-color: @hover-background-color;
             }
         }
     }
@@ -67,21 +68,21 @@
             .button {
                 color: @hover-color;
                 background-color: @pressed-color;
-
             }
         }
 
         &:active {
             .button {
+                color: @hover-color;
                 background-color: @pressed-color;
+                box-shadow: 0 0 0 2px @pressed-color;
                 border-color: transparent !important;
             }
         }
 
         &:focus {
             .button {
-                box-shadow: 0 0 0 2px @pressed-color;
-                color: @color;
+                color: @hover-color;
             }
         }
     }
