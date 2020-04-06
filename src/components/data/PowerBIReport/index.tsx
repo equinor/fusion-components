@@ -109,6 +109,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         }
     };
 
+    React.useEffect(() => {
+        if (!embeddedRef.current) return;
+        embeddedRef.current.reload();
+    }, [filters, embeddedRef]);
+
     const setFilter = async () => {
         if (!embedRef.current) return;
 
