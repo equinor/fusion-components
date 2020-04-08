@@ -7,6 +7,7 @@ import {
     FusionApiHttpErrorResponse,
     useApiClients,
     useCurrentApp,
+    useCurrentContext,
 } from '@equinor/fusion';
 import { ReportType } from './models/reportTypes';
 import { ICustomEvent } from 'service';
@@ -74,6 +75,7 @@ let timeout: any;
 
 const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const reportContext = useApiClients().report;
+    const currentContext = useCurrentContext();
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [isFetching, setIsFetching] = React.useState<boolean>(true);
@@ -111,21 +113,22 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
     React.useEffect(() => {
         if (!embeddedRef.current) return;
+        setIsLoading(true);
+
         embeddedRef.current.reload();
-    }, [filters, embeddedRef]);
+    }, [currentContext?.id]);
 
     const setFilter = async () => {
         if (!embedRef.current) return;
 
         const report = powerbi.get(embedRef.current) as pbi.Report;
-
         if (!report) return;
         filters ? report.setFilters(filters) : report.removeFilters();
     };
 
     React.useEffect(() => {
         if (!isLoading) setFilter();
-    }, [filters, embedRef, isLoading]);
+    }, [isLoading]);
 
     React.useEffect(() => {
         getReportInfo();
