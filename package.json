@@ -64,6 +64,7 @@
         "cache-loader": "^4.1.0",
         "classnames": "^2.2.6",
         "css-loader": "^3.4.2",
+        "dompurify": "^2.0.8",
         "enzyme": "^3.9.0",
         "enzyme-adapter-react-16": "^1.12.1",
         "eslint": "5.16.0",
