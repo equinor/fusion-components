@@ -8,9 +8,8 @@ type MarkdownViewerProps = {
 };
 
 const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ markdown }) => {
-
     return (
-        <div className={styles.container} dangerouslySetInnerHTML={{ __html: marked(markdown) }} />
+        <div className={styles.container} dangerouslySetInnerHTML={{ __html: dompurify(markdown) }} />
     );
 };
 
