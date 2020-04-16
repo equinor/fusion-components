@@ -116,14 +116,14 @@
         .linkContainer{
             letter-spacing: 0.8px;
             font-weight: 500;
-            padding-left: .grid-unit(7px)[];
-            position: absolute;
-
+            width: calc(100% - (var(--grid-unit) * 13px));
+            display: flex;
+            
             .linkText{
-                flex: 2;
+                flex: 1;
             }
             .asideContainer {
-                flex: 1;
+                flex: 0;
             }
         }
 
