@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import useOverlayContainer from './useOverlayContainer';
 
 const isCompletelyInView = (el: HTMLElement, margin = 1) => {
     const rect = el.getBoundingClientRect();
+    console.log(el.contains(document.elementFromPoint(rect.left + margin, rect.top + margin)));
 
+    console.log("EL", el, "CONTAINS",document.elementFromPoint(rect.left + margin, rect.top + margin) )
     return (
         el.contains(document.elementFromPoint(rect.left + margin, rect.top + margin)) &&
         el.contains(document.elementFromPoint(rect.left + margin, rect.bottom - margin)) &&
