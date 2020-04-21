@@ -84,7 +84,7 @@
         "jsdom": "^16.2.0",
         "less": "^3.9.0",
         "less-loader": "^5.0.0",
-        "marked": "^0.8.0",
+        "marked": "^1.0.0",
         "powerbi-client": "^2.8.0",
         "prettier": "^2.0.2",
         "prettier-loader": "^3.3.0",
