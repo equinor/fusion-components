@@ -51,7 +51,10 @@
         z-index: 2;
         height: calc(var(--grid-unit) * 0.5px);
         border-radius: 4px;
-        transition: width .2s;
+        
+        &.active{
+            background-color: var(--color-primary);
+        }
     }
 
     .dot {
@@ -69,6 +72,10 @@
         width: calc(var(--grid-unit) * 5px);
         height: calc(var(--grid-unit) * 5px);
         transition: left .2s;
+
+        &.noTransition{
+            transition: none;
+        }
 
         .dot {
             width: calc(var(--grid-unit) * 1.5px);
