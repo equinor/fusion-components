@@ -49,9 +49,9 @@ function DataTableRow<T>({
                 isHovering={isHovering}
                 onMouseOver={setIsHoveringTrue}
                 onMouseOut={setIsHoveringFalse}
-                className={classNames(styles.cell)}
+                className={classNames(styles.cell, { [styles.isExpanded]: isExpanded })}
             />
-            {columns.map(column => (
+            {columns.map((column) => (
                 <Cell
                     key={column.key}
                     column={column}
