@@ -108,10 +108,6 @@ const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, 
         }
     );
 
-    const diffWidth = React.useMemo(
-        () => calculatePosition(Math.abs(firstValue - lastValue)),
-        [firstValue, lastValue]
-    );
 
     return (
         <div className={containerClassNames} onClick={onTrackClick}>
@@ -120,7 +116,12 @@ const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, 
                 className={classNames(styles.slider, styles.active)}
                 style={{
                     left: calculatePosition(lastValue > firstValue ? firstValue : lastValue),
-                    width: diffWidth,
+                    right: `${
+                        100 -
+                        +calculatePosition(lastValue > firstValue ? lastValue : firstValue).split(
+                            '%'
+                        )[0]
+                    }%`,
                 }}
             />
             {createValueHandle(firstValue, 'firstHandle')}
