@@ -1,14 +1,14 @@
-import React, { useMemo, useCallback, useRef, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { useEventListener } from '@equinor/fusion-components';
-import { createPositionCalculator, createValueCalculator, createMarkerFinder } from './utils';
+import useSliderTrack from './useSliderTrack';
 export { SliderMarker };
 
 type SliderProps = {
-    value: number; // | [number, number];
+    value: number;
     markers: SliderMarker[];
     disabled?: boolean;
     hideHandle?: boolean;
@@ -16,47 +16,7 @@ type SliderProps = {
 };
 
 const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
-    const trackRef = useRef<HTMLDivElement | null>(null);
-    const [trackLeft, setTrackLeft] = useState(0);
-    const [trackWidth, setTrackWidth] = useState(0);
-
-    const sortedMarkers = useMemo(() => markers.sort((a, b) => a.value - b.value), [markers]);
-    const firstMarker = useMemo(() => sortedMarkers[0], [sortedMarkers]);
-    const lastMarker = useMemo(() => sortedMarkers[sortedMarkers.length - 1], [sortedMarkers]);
-    const calculatePosition = useMemo(
-        () => createPositionCalculator(firstMarker.value, lastMarker.value),
-        [firstMarker, lastMarker]
-    );
-    const calculateValue = useMemo(
-        () => createValueCalculator(firstMarker.value, lastMarker.value),
-        [firstMarker, lastMarker]
-    );
-    const markerFinder = useMemo(
-        () => createMarkerFinder(trackLeft, trackWidth, markers, calculateValue),
-        [trackLeft, trackWidth, markers, calculateValue]
-    );
-
-    let animationFrame = 0;
-    const updateTrackLeftAndWidth = () => {
-        if (!trackRef.current) {
-            return;
-        }
-
-        const trackRect = trackRef.current.getBoundingClientRect();
-        if (trackRect.left !== trackLeft) {
-            setTrackLeft(trackRect.left);
-        }
-
-        if (trackRect.width !== trackWidth) {
-            setTrackWidth(trackRect.width);
-        }
-
-        animationFrame = window.requestAnimationFrame(updateTrackLeftAndWidth);
-
-        return () => window.cancelAnimationFrame(animationFrame);
-    };
-
-    useEffect(updateTrackLeftAndWidth, [trackRef.current]);
+    const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
     const onTrackClick = useCallback(
         (e: React.MouseEvent<HTMLDivElement>) => {
@@ -65,7 +25,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
                 onChange(marker);
             }
         },
-        [trackLeft, trackWidth, calculateValue, onChange, disabled]
+        [onChange, disabled]
     );
 
     const [mouseIsDown, setMouseIsDown] = useState(false);
@@ -99,7 +59,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
         {
             [styles.mouseIsDown]: mouseIsDown,
             [styles.isDisabled]: disabled,
-            [styles.isLowered]: markers.some(marker => !!marker.lowered),
+            [styles.isLowered]: markers.some((marker) => !!marker.lowered),
         }
     );
 
@@ -109,7 +69,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
             <div
                 className={styles.slider}
                 style={{
-                    width: calculatePosition(value),
+                    width: calculatePosition(value[0]),
                 }}
             />
             {!hideHandle && (
@@ -123,7 +83,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
                     <div className={styles.dot} />
                 </button>
             )}
-            {sortedMarkers.map(marker => (
+            {sortedMarkers.map((marker) => (
                 <Marker
                     key={marker.value}
                     marker={marker}
