@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import Slider from './index';
+import { Slider, RangedSlider } from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { DatePicker } from '@equinor/fusion-components';
-import RangedSlider from './RangeSlider';
 
 const SliderPercentageStory = () => {
     const [value, setValue] = React.useState(75);
