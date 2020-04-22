@@ -114,6 +114,7 @@ const sections: FilterSection<DataItem>[] = [
                     {
                         key: 'Female',
                         label: 'Female',
+                        hideCount: true,
                     },
                 ],
             },
