@@ -108,11 +108,10 @@ const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, 
         }
     );
 
-    const diffWidth = React.useMemo(
-        () => calculatePosition(Math.abs(firstValue - lastValue)),
-        [firstValue, lastValue]
+    const rightPosition = React.useMemo(
+        () => parseInt(calculatePosition(lastValue > firstValue ? lastValue : firstValue), 10),
+        [calculatePosition, lastValue, firstValue]
     );
-
     return (
         <div className={containerClassNames} onClick={onTrackClick}>
             <div className={styles.track} ref={trackRef} />
@@ -120,7 +119,7 @@ const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, 
                 className={classNames(styles.slider, styles.active)}
                 style={{
                     left: calculatePosition(lastValue > firstValue ? firstValue : lastValue),
-                    width: diffWidth,
+                    right: `${100 - rightPosition}%`,
                 }}
             />
             {createValueHandle(firstValue, 'firstHandle')}

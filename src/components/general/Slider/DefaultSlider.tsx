@@ -69,7 +69,7 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
             <div
                 className={styles.slider}
                 style={{
-                    width: calculatePosition(value[0]),
+                    width: calculatePosition(value),
                 }}
             />
             {!hideHandle && (
