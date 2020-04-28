@@ -1,3 +1,6 @@
+// Polyfills
+import './polyfills';
+
 // Core components
 export { default as FusionHeader, HeaderContentProps } from './components/core/Header';
 export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
