@@ -1,0 +1,74 @@
+.container {
+    background-color: rgba(0,0,0,0);;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column-reverse;
+    position: fixed;
+    pointer-events: all;
+    max-height: calc(100vh - var(--top-height));
+    width: var(--notifications-width);
+    right: calc(var(--grid-unit) * 4px);
+    top: var(--top-height);
+    pointer-events: all;
+    overflow:  auto;
+    padding: calc(var(--grid-unit) * 1px);
+    justify-content: flex-start;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .gradientTop, .gradientBottom{
+        height: calc(var(--grid-unit) * 8px);
+        width: var(--notifications-width);
+        position: fixed;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .gradientBottom{
+        bottom: 0;
+    }
+    .gradientTop{
+        top: var(--top-height);
+    }
+
+    &.showGradientTop{
+        .gradientTop{
+            opacity: 1;
+            background: linear-gradient(180deg, #FFF 23.44%, rgba(255, 255, 255, 0) 100%);
+        }
+       
+    }
+
+    &.showGradientBottom{
+        .gradientBottom{
+            opacity: 1;
+            background: linear-gradient(0deg, #FFF 23.44%, rgba(255, 255, 255, 0) 100%);
+        }
+        
+    }
+
+    .notificationCardWrapper {
+        border-radius: 4px;
+        opacity: 0;
+        transition: opacity .5s;
+        margin-bottom: calc(var(--grid-unit) * 2px);
+        border-collapse: separate; 
+
+        &.isVisible{
+            opacity: 1;
+        }
+    
+    }
+
+    &.comfortable {
+        --top-height: calc(var(--grid-unit) * 11px);
+        --notifications-width: calc(var(--grid-unit) * 40px);
+    }
+    &.compact {
+        --top-height: calc(var(--grid-unit) * 8px);
+        --notifications-width: calc(var(--grid-unit) * 40px);
+    }
+}
