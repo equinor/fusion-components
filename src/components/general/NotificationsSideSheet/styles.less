@@ -1,4 +1,26 @@
 .notificationsContainer {
     display: flex;
     flex-direction: column;
+    padding: 0 calc(var(--grid-unit) * 2px);
+
+    .markAllAsReadButton {
+        padding: calc(var(--grid-unit) * 2px) 0;
+    }
+    .cardContainer {
+        display: flex;
+        flex-direction: column;
+
+        .dateMarker {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            padding: calc(var(--grid-unit) * 1px) 0;
+            font-size: 12px;
+            color: var(--color-black-alt2);
+        }
+    }
+}
+.chipContainer {
+    display: flex;
+    align-items: center;
 }

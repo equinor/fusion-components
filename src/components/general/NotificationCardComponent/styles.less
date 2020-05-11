@@ -1,3 +1,46 @@
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .actionableComponents {
+        display: flex;
+        flex-direction: row;
+        height: calc(var(--grid-unit) * 10px);
+        align-items: center;
+        padding: 0 calc(var(--grid-unit) * 2px);
+        border-top: 1px solid var(--color-black-alt3);
+    }
+
+    .closeIconContainer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10000;
+        
+
+    }
+}
+
 .notificationCard {
     border-radius: 4px;
+    background-color: var(--color-black-alt5);
+}
+
+
+.extendedNotificationCard {
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity .5s;
+    margin-bottom: calc(var(--grid-unit) * 2px);
+    border-collapse: separate; 
+
+    &.isVisible{
+        opacity: 1;
+    }
+
+    &.showAsUnread{
+        border: 1px solid var(--color-primary);
+    }
+    
 }

@@ -2,14 +2,18 @@ import * as React from 'react';
 import { NotificationCard, useComponentDisplayClassNames } from '@equinor/fusion';
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import NotificationCardWrapper from './NotificationCardWrapper';
+import { ExtendedNotificationCard, Button } from '@equinor/fusion-components';
 
 type NotificationCardsProps = {
     notifications: NotificationCard[];
+    updateNotifications: (notificationCards: NotificationCard[]) => void;
 };
 type GradientType = 'top' | 'bottom' | 'topAndBottom' | null;
 
-const NotificationCards: React.FC<NotificationCardsProps> = ({ notifications }) => {
+const NotificationCards: React.FC<NotificationCardsProps> = ({
+    notifications,
+    updateNotifications,
+}) => {
     const [showCards, setShowCards] = React.useState<boolean>(false);
     const notificationCardsRef = React.useRef<HTMLDivElement | null>(null);
 
@@ -44,6 +48,14 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({ notifications }) 
         }
     );
 
+    const removeNotification = React.useCallback(
+        (card: NotificationCard) => {
+            const updatedNotifications = [...notifications].filter((n) => n.id !== card.id);
+            updateNotifications(updatedNotifications);
+        },
+        [notifications, updateNotifications]
+    );
+
     React.useEffect(() => setGradient(checkForGradient), [showCards]);
 
     React.useEffect(() => {
@@ -65,7 +77,11 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({ notifications }) 
             <div className={styles.gradientTop} />
 
             {notifications.map((notification) => (
-                <NotificationCardWrapper notification={notification} />
+                <ExtendedNotificationCard
+                    notification={notification}
+                    onDiscard={removeNotification}
+                    actionableComponents={[<Button outlined>Show in list</Button>]}
+                />
             ))}
 
             <div className={styles.gradientBottom} />
