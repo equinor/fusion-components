@@ -55,9 +55,9 @@ export type DataTableProps<T> = {
     expandedComponent?: React.FC<DataItemComponentProps<T>>;
     onRowClick?: OnDataTableRowClickHandler<T>;
     onExpand?: (item: T) => void;
-
     listComponent?: React.FC<DataItemComponentProps<T>>;
     listSkeleton?: React.FC;
+    noColumnsCollapse?: boolean;
 };
 
 export type DataTableTableProps<T> = {
@@ -76,6 +76,7 @@ export type DataTableTableProps<T> = {
     expandedComponent?: React.FC<DataItemComponentProps<T>>;
     onRowClick?: OnDataTableRowClickHandler<T>;
     onExpand?: (item: T) => void;
+    noColumnsCollapse?: boolean;
 };
 
 export type DataTableListProps<T> = {
