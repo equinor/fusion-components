@@ -108,7 +108,7 @@ window.parent['authContainer'] = authContainer;
 
 const serviceResolver: ServiceResolver = {
     getDataProxyBaseUrl: () => 'https://pro-s-dataproxy-ci.azurewebsites.net',
-    getFusionBaseUrl: () => 'https://pro-s-portal-ci.azurewebsites.net',
+    getFusionBaseUrl: () => 'https://pro-s-portal-pr-1770.azurewebsites.net',
     getContextBaseUrl: () => 'https://pro-s-context-ci.azurewebsites.net',
     getOrgBaseUrl: () => 'https://pro-s-org-ci.azurewebsites.net',
     getPowerBiBaseUrl: () => 'https://pro-s-powerbi-ci.azurewebsites.net',

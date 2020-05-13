@@ -6,13 +6,13 @@ import {
     NotificationsIcon,
     styling,
     NotificationsSideSheet,
+    useOverlayContainer,
+    OverlayPortal,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import {
-    useComponentDisplayClassNames,
-    useNotificationCards,
-} from '@equinor/fusion';
+import { useComponentDisplayClassNames, useNotificationCards } from '@equinor/fusion';
+import NotificationCardsPresenter from '../../../NotificationCardsPresenter';
 
 type NotificationNumberBadgeProps = IconProps & {
     numberOfUnread: number;
@@ -42,7 +42,7 @@ const NotificationsButton: React.FC = () => {
         styles.badgeContainer,
         useComponentDisplayClassNames(styles)
     );
-    
+
     return (
         <>
             <IconButton onClick={() => setOpenSideSheet(true)}>
@@ -63,8 +63,10 @@ const NotificationsButton: React.FC = () => {
                 open={openSideSheet}
                 onClose={() => setOpenSideSheet(false)}
                 notifications={notificationCards}
-                numberOfUnread={numberOfUnread}
             />
+            <OverlayPortal show>
+                <NotificationCardsPresenter onShowInList={() => setOpenSideSheet(true)} />
+            </OverlayPortal>
         </>
     );
 };

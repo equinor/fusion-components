@@ -2,17 +2,19 @@ import * as React from 'react';
 import { NotificationCard, useComponentDisplayClassNames } from '@equinor/fusion';
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import { ExtendedNotificationCard, Button } from '@equinor/fusion-components';
+import NotificationCardWrapper from './NotificationCardWrapper';
 
 type NotificationCardsProps = {
     notifications: NotificationCard[];
     updateNotifications: (notificationCards: NotificationCard[]) => void;
+    onShowInList: () => void;
 };
 type GradientType = 'top' | 'bottom' | 'topAndBottom' | null;
 
 const NotificationCards: React.FC<NotificationCardsProps> = ({
     notifications,
     updateNotifications,
+    onShowInList,
 }) => {
     const [showCards, setShowCards] = React.useState<boolean>(false);
     const notificationCardsRef = React.useRef<HTMLDivElement | null>(null);
@@ -77,10 +79,10 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
             <div className={styles.gradientTop} />
 
             {notifications.map((notification) => (
-                <ExtendedNotificationCard
+                <NotificationCardWrapper
                     notification={notification}
                     onDiscard={removeNotification}
-                    actionableComponents={[<Button outlined>Show in list</Button>]}
+                    onShowInList={onShowInList}
                 />
             ))}
 

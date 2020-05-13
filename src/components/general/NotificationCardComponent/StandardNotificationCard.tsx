@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { AdaptiveCardViewer, IconButton, CloseIcon } from '@equinor/fusion-components';
+import { AdaptiveCardViewer } from '@equinor/fusion-components';
 import { NotificationCard } from '@equinor/fusion';
 import * as styles from './styles.less';
 
 type StandardNotificationCardProps = {
     notification: NotificationCard;
-    onDiscard?: () => void;
+    discardComponent?: React.ReactNode;
     actionableComponents?: React.ReactNode[];
 };
 
 const StandardNotificationCard: React.FC<StandardNotificationCardProps> = ({
     notification,
-    onDiscard,
+    discardComponent,
     actionableComponents,
 }) => {
     return (
@@ -20,12 +20,8 @@ const StandardNotificationCard: React.FC<StandardNotificationCardProps> = ({
             {actionableComponents && actionableComponents.length > 0 && (
                 <div className={styles.actionableComponents}>{actionableComponents}</div>
             )}
-            {onDiscard && (
-                <div className={styles.closeIconContainer}>
-                    <IconButton onClick={onDiscard}>
-                        <CloseIcon />
-                    </IconButton>
-                </div>
+            {discardComponent && (
+                <div className={styles.closeIconContainer}>{discardComponent}</div>
             )}
         </div>
     );

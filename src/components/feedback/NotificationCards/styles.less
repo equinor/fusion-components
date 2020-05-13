@@ -50,17 +50,18 @@
         
     }
 
-    .notificationCardWrapper {
+    .notificationWrapper {
         border-radius: 4px;
         opacity: 0;
         transition: opacity .5s;
         margin-bottom: calc(var(--grid-unit) * 2px);
         border-collapse: separate; 
-
+        background-color: var(--color-white);
+    
+    
         &.isVisible{
             opacity: 1;
         }
-    
     }
 
     &.comfortable {

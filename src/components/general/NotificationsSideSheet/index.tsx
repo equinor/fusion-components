@@ -5,22 +5,20 @@ import {
     Chip,
     Button,
     Spinner,
-    ExtendedNotificationCard,
 } from '@equinor/fusion-components';
 import { NotificationCard, useMarkNotificationsAsSeen, formatDate } from '@equinor/fusion';
+import NotificationDateDivisions from './NotificationDateDivisions';
 
 type NotificationsSideSheetProps = {
     open: boolean;
     onClose: () => void;
     notifications: NotificationCard[];
-    numberOfUnread: number;
 };
 
 const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
     open,
     onClose,
     notifications,
-    numberOfUnread,
 }) => {
     const { isMarkingNotifications, markNotificationsAsSeenAsync } = useMarkNotificationsAsSeen();
 
@@ -29,6 +27,22 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
             await markNotificationsAsSeenAsync(notifications);
         },
         [markNotificationsAsSeenAsync]
+    );
+
+    const unReadNotifications = React.useMemo(
+        () =>
+            [...notifications]
+                .filter((n) => !n.seenByUser)
+                .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()),
+        [notifications]
+    );
+
+    const readNotifications = React.useMemo(
+        () =>
+            [...notifications]
+                .filter((n) => n.seenByUser)
+                .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()),
+        [notifications]
     );
 
     return (
@@ -40,26 +54,29 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
             isResizable
             headerIcons={[
                 <div className={styles.chipContainer}>
-                    <Chip title={`${numberOfUnread} unread`} />
+                    <Chip title={`${unReadNotifications.length} unread`} />
                 </div>,
             ]}
         >
             <div className={styles.notificationsContainer}>
                 <div className={styles.markAllAsReadButton}>
-                    <Button onClick={() => markNotificationAsSeen(notifications)}>
+                    <Button
+                        onClick={() =>
+                            unReadNotifications.length > 0 &&
+                            markNotificationAsSeen(unReadNotifications)
+                        }
+                        disabled={unReadNotifications.length <= 0}
+                    >
                         {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
                     </Button>
                 </div>
-                {notifications.map((notification) => (
-                    <div className={styles.cardContainer}>
-                        <div className={styles.dateMarker}>{formatDate(notification.created)}</div>
-                        <ExtendedNotificationCard
-                            notification={notification}
-                            onDiscard={() => {}}
-                            showAsUnread={!notification.seenByUser}
-                        />
-                    </div>
-                ))}
+                <div className={styles.notifications}>
+                    <NotificationDateDivisions notifications={unReadNotifications} />
+                </div>
+                <div className={styles.notifications}>
+                    <h3>Closed notifications - last 30 days</h3>
+                    <NotificationDateDivisions notifications={readNotifications} />
+                </div>
             </div>
         </ModalSideSheet>
     );

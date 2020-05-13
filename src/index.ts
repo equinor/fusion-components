@@ -79,7 +79,7 @@ export { default as PersonPositionCard } from './components/people/PersonPositio
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
 export { default as NotificationsSideSheet } from './components/general/NotificationsSideSheet';
-export { StandardNotificationCard, ExtendedNotificationCard } from './components/general/NotificationCardComponent';
+export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';

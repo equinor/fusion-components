@@ -6,21 +6,39 @@
     .markAllAsReadButton {
         padding: calc(var(--grid-unit) * 2px) 0;
     }
-    .cardContainer {
+    .notifications{ 
         display: flex;
         flex-direction: column;
 
-        .dateMarker {
-            width: 100%;
-            display: flex;
-            justify-content: flex-end;
-            padding: calc(var(--grid-unit) * 1px) 0;
-            font-size: 12px;
-            color: var(--color-black-alt2);
-        }
+            .division{
+                padding-top: calc(var(--grid-unit) * 2px);
+
+                .dateMarker {
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+                    padding: calc(var(--grid-unit) * 1px) 0;
+                    font-size: 12px;
+                    color: var(--color-black-alt2);
+                }
+            }
+       
     }
+    
 }
 .chipContainer {
     display: flex;
     align-items: center;
+}
+
+.notificationWrapper {
+    border-radius: 4px;
+    margin-bottom: calc(var(--grid-unit) * 2px);
+    border-collapse: separate; 
+    border: 1px solid var(--color-black-alt4);
+
+    &.unSeen{
+        border: 1px solid var(--color-primary);
+    }
+    
 }
