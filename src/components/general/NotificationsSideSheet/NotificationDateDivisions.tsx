@@ -86,12 +86,12 @@ const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({ no
             {notificationDivisions.map(
                 (division) =>
                     division.notifications.length > 0 && (
-                        <div className={styles.division}>
+                        <div className={styles.division} key={division.key}>
                             {division.key !== 'today' && (
                                 <span className={styles.dateMarker}>{division.label}</span>
                             )}
                             {division.notifications.map((notification) => (
-                                <>
+                                <React.Fragment key={notification.id}>
                                     {division.key === 'today' && (
                                         <span className={styles.dateMarker}>
                                             Today {get24HTime(new Date(notification.created))}
@@ -100,9 +100,9 @@ const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({ no
                                     <NotificationCardWrapper
                                         notification={notification}
                                         onDiscard={() => {}}
-                                        
+
                                     />
-                                </>
+                                </React.Fragment>
                             ))}
                         </div>
                     )

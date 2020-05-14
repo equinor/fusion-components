@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NotificationCard, useMarkNotificationsAsSeen } from '@equinor/fusion';
+import { NotificationCard, useNotificationCardActions } from '@equinor/fusion';
 import {
     StandardNotificationCard,
     useElevationClassName,
@@ -24,7 +24,7 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
     onShowInList,
 }) => {
     const [isVisible, setIsVisible] = React.useState<boolean | undefined>();
-    const { isMarkingNotifications, markNotificationsAsSeenAsync } = useMarkNotificationsAsSeen();
+    const { isMarkingNotifications, markNotificationsAsSeenAsync } = useNotificationCardActions();
 
     React.useEffect(() => {
         window.requestAnimationFrame(() => setIsVisible(true));

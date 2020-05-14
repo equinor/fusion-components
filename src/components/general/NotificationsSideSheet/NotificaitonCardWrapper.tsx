@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NotificationCard, useMarkNotificationsAsSeen } from '@equinor/fusion';
+import { NotificationCard, useNotificationCardActions } from '@equinor/fusion';
 import {
     StandardNotificationCard,
     useElevationClassName,
@@ -11,7 +11,6 @@ import {
 import classNames from 'classnames';
 import * as styles from './styles.less';
 
-
 type NotificationCardWrapperProps = {
     notification: NotificationCard;
     onDiscard: (card: NotificationCard) => void;
@@ -21,13 +20,23 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
     notification,
     onDiscard,
 }) => {
-    const { isMarkingNotifications, markNotificationsAsSeenAsync } = useMarkNotificationsAsSeen();
+    const {
+        isMarkingNotifications,
+        markNotificationsAsSeenAsync,
+        deleteNotificationCard,
+        isDeletingNotification,
+    } = useNotificationCardActions();
     const isSeen = React.useMemo(() => notification.seenByUser, [notification]);
 
     const markNotificationAsSeen = React.useCallback(async () => {
         await markNotificationsAsSeenAsync([notification]);
         onDiscard(notification);
     }, [onDiscard, markNotificationsAsSeenAsync]);
+
+    const removeNotificationCard = React.useCallback(async () => {
+        await deleteNotificationCard(notification);
+        onDiscard(notification);
+    }, [deleteNotificationCard, onDiscard]);
 
     const cardStyles = classNames(styles.notificationWrapper, useElevationClassName(4), {
         [styles.unSeen]: !isSeen,
@@ -47,8 +56,8 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
                         : []
                 }
                 discardComponent={
-                    <IconButton onClick={() => onDiscard(notification)}>
-                        <DeleteIcon outline/>
+                    <IconButton onClick={removeNotificationCard}>
+                        {isDeletingNotification ? <Spinner inline /> : <DeleteIcon outline />}
                     </IconButton>
                 }
             />

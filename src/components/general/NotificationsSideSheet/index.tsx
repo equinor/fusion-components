@@ -6,7 +6,7 @@ import {
     Button,
     Spinner,
 } from '@equinor/fusion-components';
-import { NotificationCard, useMarkNotificationsAsSeen, formatDate } from '@equinor/fusion';
+import { NotificationCard, useNotificationCardActions, formatDate } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';
 
 type NotificationsSideSheetProps = {
@@ -20,7 +20,7 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
     onClose,
     notifications,
 }) => {
-    const { isMarkingNotifications, markNotificationsAsSeenAsync } = useMarkNotificationsAsSeen();
+    const { isMarkingNotifications, markNotificationsAsSeenAsync } = useNotificationCardActions();
 
     const markNotificationAsSeen = React.useCallback(
         async (notifications: NotificationCard[]) => {
