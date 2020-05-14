@@ -67,7 +67,7 @@ export const generateRowTemplate = <T>(rows: T[], expandedRows: T[], skeletonRow
                 const isExpanded = expandedRows.findIndex((r) => r === row) > -1;
 
                 if (!isExpanded) {
-                    return `minmax(${rowTemplate},auto)`;
+                    return `minmax(${rowTemplate},min-content)`;
                 }
 
                 return `${rowTemplate} min-content`;
