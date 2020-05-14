@@ -62,12 +62,12 @@ const divisions: DateDivision[] = [
     },
     {
         key: 'more-than-one-week',
-        label: 'More than one week',
+        label: 'More than one week ago',
         accessor: (n) =>
             !(
                 isNotificationFromLastWeek(n) ||
                 isNotificationFromToday(n) ||
-                isNotificationFromThisWeek
+                isNotificationFromThisWeek(n)
             ),
         notifications: [],
     },

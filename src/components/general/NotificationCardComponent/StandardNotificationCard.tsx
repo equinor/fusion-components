@@ -16,7 +16,7 @@ const StandardNotificationCard: React.FC<StandardNotificationCardProps> = ({
 }) => {
     return (
         <div className={styles.cardContainer}>
-            <AdaptiveCardViewer payload={notification.card} className={styles.notificationCard} />
+            <AdaptiveCardViewer payload={notification.card} className={styles.notificationCard}/>
             {actionableComponents && actionableComponents.length > 0 && (
                 <div className={styles.actionableComponents}>{actionableComponents}</div>
             )}

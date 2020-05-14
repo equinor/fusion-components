@@ -38,8 +38,9 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
         onDiscard(notification);
     }, [deleteNotificationCard, onDiscard]);
 
-    const cardStyles = classNames(styles.notificationWrapper, useElevationClassName(4), {
+    const cardStyles = classNames(styles.notificationWrapper, {
         [styles.unSeen]: !isSeen,
+        [useElevationClassName(3)]:!isSeen
     });
 
     return (

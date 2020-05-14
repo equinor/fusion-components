@@ -1,11 +1,6 @@
 import * as React from 'react';
 import * as styles from './styles.less';
-import {
-    ModalSideSheet,
-    Chip,
-    Button,
-    Spinner,
-} from '@equinor/fusion-components';
+import { ModalSideSheet, Chip, Button, Spinner } from '@equinor/fusion-components';
 import { NotificationCard, useNotificationCardActions, formatDate } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';
 
@@ -70,13 +65,19 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
                         {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
                     </Button>
                 </div>
-                <div className={styles.notifications}>
-                    <NotificationDateDivisions notifications={unReadNotifications} />
-                </div>
-                <div className={styles.notifications}>
-                    <h3>Closed notifications - last 30 days</h3>
-                    <NotificationDateDivisions notifications={readNotifications} />
-                </div>
+                {notifications.length === 0 ? (
+                    <h2>You have no notifications</h2>
+                ) : (
+                    <>
+                        <div className={styles.notifications}>
+                            <NotificationDateDivisions notifications={unReadNotifications} />
+                        </div>
+                        <div className={styles.notifications}>
+                            <h3>Read notifications - last 30 days</h3>
+                            <NotificationDateDivisions notifications={readNotifications} />
+                        </div>
+                    </>
+                )}
             </div>
         </ModalSideSheet>
     );
