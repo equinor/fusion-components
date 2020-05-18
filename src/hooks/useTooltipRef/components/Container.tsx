@@ -56,7 +56,6 @@ const PopoverContainer = React.forwardRef<
     );
     const [placement, setPlacement] = React.useState<TooltipPlacement>(preferredPlacement);
     const [testedPlacements, setTestedPlacements] = React.useState<TooltipPlacement[]>([]);
-    console.log(preferredPlacement, testedPlacements, isInView);
 
     React.useEffect(() => {
         if (preferredPlacement) {

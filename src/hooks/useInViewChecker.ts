@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 
 const isCompletelyInView = (el: HTMLElement, margin = 1) => {
     const rect = el.getBoundingClientRect();
+
     return (
         el.contains(document.elementFromPoint(rect.left + margin, rect.top + margin)) &&
         el.contains(document.elementFromPoint(rect.left + margin, rect.bottom - margin)) &&
