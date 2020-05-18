@@ -46,7 +46,7 @@ const getAlternativePlacement = (
     return getNextAlternativePlacement(alternatives, testedPlacements) || preferredPlacement;
 };
 
-const PopoverContainer = React.forwardRef<
+const TooltipContainer = React.forwardRef<
     HTMLDivElement | null,
     React.PropsWithChildren<TooltipContainerProps>
 >(({ placement: preferredPlacement, content }, ref) => {
@@ -84,4 +84,4 @@ const PopoverContainer = React.forwardRef<
     );
 });
 
-export default PopoverContainer;
+export default TooltipContainer;

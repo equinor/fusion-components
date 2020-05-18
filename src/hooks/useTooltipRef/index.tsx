@@ -6,7 +6,7 @@ import {
     useHoverToggleController,
     useOverlayPortal,
 } from '@equinor/fusion-components';
-import PopoverContainer from './components/Container';
+import TooltipContainer from './components/Container';
 
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 
@@ -32,13 +32,13 @@ export default (
                 left: rect.left,
             }}
         >
-            <PopoverContainer
+            <TooltipContainer
                 ref={containerRef as React.RefObject<HTMLDivElement>}
                 content={content}
                 placement={placement}
             >
                 {content}
-            </PopoverContainer>
+            </TooltipContainer>
         </div>
     );
 
