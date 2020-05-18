@@ -10,7 +10,6 @@ import PopoverContainer from './components/Container';
 
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 
-
 export default (
     content: String | React.ReactNode,
     placement: TooltipPlacement = 'below',
@@ -23,25 +22,24 @@ export default (
     const isTooltipOpen = React.useMemo(() => isOpen && content !== '', [isOpen, content]);
     useOverlayPortal(
         isTooltipOpen,
-        isTooltipOpen ? (
-            <div
-                className={styles.container}
-                style={{
-                    width: rect.width,
-                    height: rect.height,
-                    top: rect.top,
-                    left: rect.left,
-                }}
+
+        <div
+            className={styles.container}
+            style={{
+                width: rect.width,
+                height: rect.height,
+                top: rect.top,
+                left: rect.left,
+            }}
+        >
+            <PopoverContainer
+                ref={containerRef as React.RefObject<HTMLDivElement>}
+                content={content}
+                placement={placement}
             >
-                <PopoverContainer
-                    ref={containerRef as React.RefObject<HTMLDivElement>}
-                    content={content}
-                    placement={placement}
-                >
-                    {content}
-                </PopoverContainer>
-            </div>
-        ) : null
+                {content}
+            </PopoverContainer>
+        </div>
     );
 
     return ref;
