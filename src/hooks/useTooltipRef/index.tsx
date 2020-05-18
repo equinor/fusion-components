@@ -1,27 +1,28 @@
 import * as React from 'react';
 import * as styles from './styles.less';
-import Arrow from './Arrow';
-import classNames from 'classnames';
+
 import {
     useRelativePositioning,
     useHoverToggleController,
     useOverlayPortal,
 } from '@equinor/fusion-components';
+import TooltipContainer from './components/Container';
 
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 
 export default (
     content: String | React.ReactNode,
     placement: TooltipPlacement = 'below',
-    delay?: number,
+    delay?: number
 ): React.MutableRefObject<any> => {
     const [isOpen, ref] = useHoverToggleController(delay);
+    const containerRef = React.useRef<HTMLDivElement | null>(null);
     const rect = useRelativePositioning(ref);
 
-    const tooltipClassName = classNames(styles.tooltip, styles[placement.toLocaleLowerCase()]);
-
+    const isTooltipOpen = React.useMemo(() => isOpen && content !== '', [isOpen, content]);
     useOverlayPortal(
-        isOpen && content !== '',
+        isTooltipOpen,
+
         <div
             className={styles.container}
             style={{
@@ -31,10 +32,13 @@ export default (
                 left: rect.left,
             }}
         >
-            <div className={tooltipClassName}>
-                <Arrow />
-                <span className={styles.content}>{content}</span>
-            </div>
+            <TooltipContainer
+                ref={containerRef as React.RefObject<HTMLDivElement>}
+                content={content}
+                placement={placement}
+            >
+                {content}
+            </TooltipContainer>
         </div>
     );
 
