@@ -39,7 +39,6 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
     const update = () => {
         clearTimeout(timer.current);
         window.cancelAnimationFrame(timer.current);
-
         if (isStopped.current) {
             return;
         }
@@ -52,7 +51,6 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
     };
 
     useEffect(() => {
-        isStopped.current = false;
         animationFrame.current = window.requestAnimationFrame(update);
 
         return () => {
