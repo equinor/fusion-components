@@ -6,7 +6,6 @@ import {
     NotificationsIcon,
     styling,
     NotificationsSideSheet,
-    useOverlayContainer,
     OverlayPortal,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
@@ -32,7 +31,7 @@ const NotificationNumberBadge = (props: NotificationNumberBadgeProps) => {
 };
 const NotificationsButton: React.FC = () => {
     const [openSideSheet, setOpenSideSheet] = React.useState<boolean>(false);
-    const { notificationCards } = useNotificationCards();
+    const { notificationCards, isFetching } = useNotificationCards();
 
     const numberOfUnread = React.useMemo(
         () => notificationCards.filter((notification) => !notification.seenByUser).length,
@@ -52,8 +51,8 @@ const NotificationsButton: React.FC = () => {
                         <div className={badgeClassNames}>
                             <NotificationNumberBadge
                                 numberOfUnread={numberOfUnread}
-                                width={24}
-                                height={24}
+                                width={styling.numericalGrid(3)}
+                                height={styling.numericalGrid(3)}
                             />
                         </div>
                     )}
@@ -63,6 +62,7 @@ const NotificationsButton: React.FC = () => {
                 open={openSideSheet}
                 onClose={() => setOpenSideSheet(false)}
                 notifications={notificationCards}
+                isFetchingNotifications={isFetching}
             />
             <OverlayPortal show>
                 <NotificationCardsPresenter onShowInList={() => setOpenSideSheet(true)} />

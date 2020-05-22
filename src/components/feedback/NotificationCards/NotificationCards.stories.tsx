@@ -5,8 +5,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import NotificationCards from '.';
 import { NotificationCard } from '@equinor/fusion';
 
-const payload = [
-    {
+const payload: NotificationCard = {
         id: '284f7e5f-0f7d-4b14-8876okpok-a02e5969174e',
         targetAzureUniqueId: '7ecc8cd2-077b-4a4a-953f-8e02c0f07c24',
         title: 'Query test',
@@ -78,10 +77,8 @@ const payload = [
         },
         seenByUser: false,
         seen: null,
-    },
-];
-const payload2 = [
-    {
+    };
+const payload2: NotificationCard = {
         id: '284f7e5f-0f7d-4b14-8876-a02e5969174e',
         targetAzureUniqueId: '7ecc8cd2-077b-4a4a-953f-8e02c0f07c24',
         title: 'Query test 2',
@@ -125,24 +122,28 @@ const payload2 = [
         },
         seenByUser: false,
         seen: null,
-    },
-];
+    };
 const NotificationCardsStory = () => {
-    const [notifications, setNotifications] = React.useState<NotificationCard[]>(([
-        ...payload,
-        ...payload2,
-     
-    ] as any) as NotificationCard[]);
+    const [notifications, setNotifications] = React.useState<NotificationCard[]>([]);
 
-    // setTimeout(() => {
-    //     setNotifications([ ...payload2 as any as NotificationCard[],...notifications])
-    // },5000)
+    React.useEffect(() => {
+        setTimeout(() => {
+            setNotifications((n) => [ ...n,payload2]);
+        }, 2000);
+    }, []);
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            setNotifications((n) => [...n,payload]);
+        }, 5000);
+    }, []);
 
     return (
         <div style={{ margin: '8px' }}>
             <NotificationCards
                 notifications={notifications}
                 updateNotifications={setNotifications}
+                onShowInList={() => {}}
             />
         </div>
     );

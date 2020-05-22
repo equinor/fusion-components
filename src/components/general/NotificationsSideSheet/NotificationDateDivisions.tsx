@@ -97,11 +97,7 @@ const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({ no
                                             Today {get24HTime(new Date(notification.created))}
                                         </span>
                                     )}
-                                    <NotificationCardWrapper
-                                        notification={notification}
-                                        onDiscard={() => {}}
-
-                                    />
+                                    <NotificationCardWrapper notification={notification} />
                                 </React.Fragment>
                             ))}
                         </div>

@@ -83,6 +83,7 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
                     notification={notification}
                     onDiscard={removeNotification}
                     onShowInList={onShowInList}
+                    key={notification.id}
                 />
             ))}
 

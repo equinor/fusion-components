@@ -13,13 +13,9 @@ import * as styles from './styles.less';
 
 type NotificationCardWrapperProps = {
     notification: NotificationCard;
-    onDiscard: (card: NotificationCard) => void;
 };
 
-const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
-    notification,
-    onDiscard,
-}) => {
+const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notification }) => {
     const {
         isMarkingNotifications,
         markNotificationsAsSeenAsync,
@@ -30,17 +26,15 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
 
     const markNotificationAsSeen = React.useCallback(async () => {
         await markNotificationsAsSeenAsync([notification]);
-        onDiscard(notification);
-    }, [onDiscard, markNotificationsAsSeenAsync]);
+    }, [markNotificationsAsSeenAsync]);
 
     const removeNotificationCard = React.useCallback(async () => {
         await deleteNotificationCard(notification);
-        onDiscard(notification);
-    }, [deleteNotificationCard, onDiscard]);
+    }, [deleteNotificationCard]);
 
     const cardStyles = classNames(styles.notificationWrapper, {
         [styles.unSeen]: !isSeen,
-        [useElevationClassName(3)]:!isSeen
+        [useElevationClassName(3)]: !isSeen,
     });
 
     return (

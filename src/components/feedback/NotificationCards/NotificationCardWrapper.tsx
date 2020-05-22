@@ -26,10 +26,6 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
     const [isVisible, setIsVisible] = React.useState<boolean | undefined>();
     const { isMarkingNotifications, markNotificationsAsSeenAsync } = useNotificationCardActions();
 
-    React.useEffect(() => {
-        window.requestAnimationFrame(() => setIsVisible(true));
-    }, []);
-
     const markNotificationAsSeen = React.useCallback(async () => {
         await markNotificationsAsSeenAsync([notification]);
         onDiscard(notification);
@@ -52,6 +48,7 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
     );
 
     React.useEffect(() => {
+        window.requestAnimationFrame(() => setIsVisible(true));
         startDismissNotificationTimeout();
         return () => clearTimeout(discardNotificationTimeout);
     }, []);
