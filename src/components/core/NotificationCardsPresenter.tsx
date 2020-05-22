@@ -23,6 +23,14 @@ const NotificationCardsPresenter: React.FC<NotificationCardsPresenterProps> = ({
         onShowInList();
     }, [onShowInList]);
 
+    const removeNotificationCard = React.useCallback(
+        (card: NotificationCard) => {
+            const updatedNotifications = [...notificationCards].filter((n) => n.id !== card.id);
+            setNotificationCards(updatedNotifications);
+        },
+        [notificationCards, setNotificationCards]
+    );
+
     if (notificationCards.length <= 0) {
         return null;
     }
@@ -30,7 +38,7 @@ const NotificationCardsPresenter: React.FC<NotificationCardsPresenterProps> = ({
     return (
         <NotificationCards
             notifications={notificationCards}
-            updateNotifications={setNotificationCards}
+            onDiscardNotification={removeNotificationCard}
             onShowInList={showCardInList}
         />
     );

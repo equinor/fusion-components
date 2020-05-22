@@ -138,11 +138,18 @@ const NotificationCardsStory = () => {
         }, 5000);
     }, []);
 
+    const removeNotification = React.useCallback(
+        (card: NotificationCard) => {
+            const updatedNotifications = [...notifications].filter((n) => n.id !== card.id);
+            setNotifications(updatedNotifications);
+        },
+        [notifications, setNotifications]
+    );
     return (
         <div style={{ margin: '8px' }}>
             <NotificationCards
                 notifications={notifications}
-                updateNotifications={setNotifications}
+                onDiscardNotification={removeNotification}
                 onShowInList={() => {}}
             />
         </div>

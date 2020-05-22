@@ -6,14 +6,14 @@ import NotificationCardWrapper from './NotificationCardWrapper';
 
 type NotificationCardsProps = {
     notifications: NotificationCard[];
-    updateNotifications: (notificationCards: NotificationCard[]) => void;
+    onDiscardNotification: (notificationCard: NotificationCard) => void;
     onShowInList: () => void;
 };
 type GradientType = 'top' | 'bottom' | 'topAndBottom' | null;
 
 const NotificationCards: React.FC<NotificationCardsProps> = ({
     notifications,
-    updateNotifications,
+    onDiscardNotification,
     onShowInList,
 }) => {
     const [showCards, setShowCards] = React.useState<boolean>(false);
@@ -50,12 +50,11 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
         }
     );
 
-    const removeNotification = React.useCallback(
+    const onDiscard = React.useCallback(
         (card: NotificationCard) => {
-            const updatedNotifications = [...notifications].filter((n) => n.id !== card.id);
-            updateNotifications(updatedNotifications);
+            onDiscardNotification(card);
         },
-        [notifications, updateNotifications]
+        [onDiscardNotification]
     );
 
     React.useEffect(() => setGradient(checkForGradient), [showCards]);
@@ -81,7 +80,7 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
             {notifications.map((notification) => (
                 <NotificationCardWrapper
                     notification={notification}
-                    onDiscard={removeNotification}
+                    onDiscard={onDiscard}
                     onShowInList={onShowInList}
                     key={notification.id}
                 />
