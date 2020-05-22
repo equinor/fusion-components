@@ -55,8 +55,10 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
                     <NotificationDateDivisions notifications={unReadNotifications} />
                 </div>
                 <div className={styles.notifications}>
-                    <h3>Read notifications - last 30 days</h3>
-                    <NotificationDateDivisions notifications={readNotifications} />
+                    <div className={styles.divisionTitle}>
+                        <h3>Read notifications - last 30 days</h3>
+                    </div>
+                    <NotificationDateDivisions notifications={readNotifications} collapsed />
                 </div>
             </>
         );
@@ -75,21 +77,20 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
                 <div className={styles.chipContainer}>
                     <Chip title={`${unReadNotifications.length} unread`} />
                 </div>,
-                <Button
-                    onClick={() =>
-                        unReadNotifications.length > 0 &&
-                        markNotificationAsSeen(unReadNotifications)
-                    }
-                    disabled={unReadNotifications.length <= 0}
-                >
-                    {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
-                </Button>,
+                <div className={styles.markAllAsReadButton}>
+                    <Button
+                        onClick={() =>
+                            unReadNotifications.length > 0 &&
+                            markNotificationAsSeen(unReadNotifications)
+                        }
+                        disabled={unReadNotifications.length <= 0}
+                    >
+                        {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
+                    </Button>
+                </div>,
             ]}
         >
-            <div className={styles.notificationsContainer}>
-                <div className={styles.markAllAsReadButton}></div>
-                {content}
-            </div>
+            <div className={styles.notificationsContainer}>{content}</div>
         </ModalSideSheet>
     );
 };
