@@ -1,5 +1,9 @@
 import * as React from 'react';
-import { NotificationCard, useComponentDisplayClassNames } from '@equinor/fusion';
+import {
+    NotificationCard,
+    useComponentDisplayClassNames,
+    enqueueAsyncOperation,
+} from '@equinor/fusion';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import NotificationCardWrapper from './NotificationCardWrapper';
@@ -16,30 +20,33 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
     onDiscardNotification,
     onShowInList,
 }) => {
-    const [showCards, setShowCards] = React.useState<boolean>(false);
     const notificationCardsRef = React.useRef<HTMLDivElement | null>(null);
 
-    const checkForGradient = React.useCallback((): GradientType => {
-        if (!notificationCardsRef.current) {
-            return null;
-        }
+    // const abortController = React.useMemo(() => new AbortController(), []);
+    const [gradient, setGradient] = React.useState<GradientType | null>(null);
+    console.log(gradient);
 
-        const pane = notificationCardsRef.current;
+    const checkForGradient = async (abortSignal: AbortSignal) => {
+        enqueueAsyncOperation(() => {
+            if (!notificationCardsRef.current) {
+                return null;
+            }
 
-        if (pane.scrollTop === 0 && pane.offsetHeight < pane.scrollHeight) {
-            return 'bottom';
-        }
+            const pane = notificationCardsRef.current;
 
-        if (pane.scrollTop != 0 && pane.scrollTop + pane.offsetHeight < pane.scrollHeight) {
-            return 'topAndBottom';
-        }
-        if (pane.scrollTop != 0 && pane.scrollTop + pane.offsetHeight === pane.scrollHeight) {
-            return 'top';
-        }
-        return null;
-    }, [notificationCardsRef.current]);
+            if (pane.scrollTop === 0 && pane.offsetHeight < pane.scrollHeight) {
+                setGradient('bottom');
+            }
 
-    const [gradient, setGradient] = React.useState<GradientType>(checkForGradient);
+            if (pane.scrollTop != 0 && pane.scrollTop + pane.offsetHeight < pane.scrollHeight) {
+                setGradient('topAndBottom');
+            }
+            if (pane.scrollTop != 0 && pane.scrollTop + pane.offsetHeight === pane.scrollHeight) {
+                setGradient('top');
+            }
+            checkForGradient(abortSignal);
+        }, abortSignal).catch(() => {});
+    };
 
     const containerClassNames = classNames(
         styles.container,
@@ -57,12 +64,13 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
         [onDiscardNotification]
     );
 
-    React.useEffect(() => setGradient(checkForGradient), [showCards]);
+    React.useEffect(() => {
+        const abortController = new AbortController();
+        checkForGradient(abortController.signal);
+        return () => abortController.abort();
+    }, [notifications, notificationCardsRef.current]);
 
     React.useEffect(() => {
-        if (notifications.length > 0 && !showCards) {
-            setShowCards(true);
-        }
         if (!(notificationCardsRef && notificationCardsRef.current)) {
             return;
         }
@@ -70,11 +78,7 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
     }, [notifications]);
 
     return (
-        <div
-            className={containerClassNames}
-            ref={notificationCardsRef}
-            onScroll={() => setGradient(checkForGradient)}
-        >
+        <div className={containerClassNames} ref={notificationCardsRef}>
             <div className={styles.gradientTop} />
 
             {notifications.map((notification) => (
