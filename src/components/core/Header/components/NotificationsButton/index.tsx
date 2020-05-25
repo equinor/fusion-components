@@ -31,7 +31,12 @@ const NotificationNumberBadge = (props: NotificationNumberBadgeProps) => {
 };
 const NotificationsButton: React.FC = () => {
     const [openSideSheet, setOpenSideSheet] = React.useState<boolean>(false);
-    const { notificationCards, isFetching } = useNotificationCards();
+    const {
+        notificationCards,
+        isFetchingRead,
+        isFetchingUnRead,
+        getReadNotificationCardsAsync,
+    } = useNotificationCards();
 
     const numberOfUnread = React.useMemo(
         () => notificationCards.filter((notification) => !notification.seenByUser).length,
@@ -41,6 +46,12 @@ const NotificationsButton: React.FC = () => {
         styles.badgeContainer,
         useComponentDisplayClassNames(styles)
     );
+
+    React.useEffect(() => {
+        if (openSideSheet) {
+            getReadNotificationCardsAsync();
+        }
+    }, [openSideSheet]);
 
     return (
         <>
@@ -62,7 +73,8 @@ const NotificationsButton: React.FC = () => {
                 open={openSideSheet}
                 onClose={() => setOpenSideSheet(false)}
                 notifications={notificationCards}
-                isFetchingNotifications={isFetching}
+                isFetchingReadNotifications={isFetchingRead}
+                isFetchingUnReadNotifications={isFetchingUnRead}
             />
             <OverlayPortal show>
                 <NotificationCardsPresenter onShowInList={() => setOpenSideSheet(true)} />

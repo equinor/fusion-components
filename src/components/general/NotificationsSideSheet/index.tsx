@@ -1,23 +1,28 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 import { ModalSideSheet, Chip, Button, Spinner, styling } from '@equinor/fusion-components';
-import { NotificationCard, useNotificationCardActions } from '@equinor/fusion';
+import { NotificationCard, useGlobalNotificationCardsActions } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';
 
 type NotificationsSideSheetProps = {
     open: boolean;
     onClose: () => void;
     notifications: NotificationCard[];
-    isFetchingNotifications: boolean;
+    isFetchingReadNotifications: boolean;
+    isFetchingUnReadNotifications: boolean;
 };
 
 const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
     open,
     onClose,
     notifications,
-    isFetchingNotifications,
+    isFetchingReadNotifications,
+    isFetchingUnReadNotifications,
 }) => {
-    const { isMarkingNotifications, markNotificationsAsSeenAsync } = useNotificationCardActions();
+    const {
+        isMarkingNotifications,
+        markNotificationsAsSeenAsync,
+    } = useGlobalNotificationCardsActions();
 
     const markNotificationAsSeen = React.useCallback(
         async (notifications: NotificationCard[]) => {
@@ -43,26 +48,40 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
     );
 
     const content = React.useMemo(() => {
-        if (isFetchingNotifications) {
-            return <Spinner centered />;
-        }
-        if (notifications.length === 0) {
+        if (
+            notifications.length === 0 &&
+            !(isFetchingReadNotifications || isFetchingUnReadNotifications)
+        ) {
             return <h2>You have no notifications</h2>;
         }
         return (
             <>
                 <div className={styles.notifications}>
-                    <NotificationDateDivisions notifications={unReadNotifications} />
+                    {isFetchingUnReadNotifications ? (
+                        <Spinner centered />
+                    ) : (
+                        <NotificationDateDivisions notifications={unReadNotifications} />
+                    )}
                 </div>
                 <div className={styles.notifications}>
                     <div className={styles.divisionTitle}>
                         <h3>Read notifications - last 30 days</h3>
                     </div>
-                    <NotificationDateDivisions notifications={readNotifications} collapsed />
+                    {isFetchingReadNotifications ? (
+                        <Spinner centered />
+                    ) : (
+                        <NotificationDateDivisions notifications={readNotifications} collapsed />
+                    )}
                 </div>
             </>
         );
-    }, [isFetchingNotifications, notifications, unReadNotifications, readNotifications]);
+    }, [
+        isFetchingUnReadNotifications,
+        isFetchingReadNotifications,
+        notifications,
+        unReadNotifications,
+        readNotifications,
+    ]);
 
     return (
         <ModalSideSheet

@@ -24,10 +24,12 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
     onShowInList,
 }) => {
     const [isVisible, setIsVisible] = React.useState<boolean | undefined>();
-    const { isMarkingNotifications, markNotificationsAsSeenAsync } = useNotificationCardActions();
+    const { isMarkingNotification, markNotificationsAsSeenAsync } = useNotificationCardActions(
+        notification
+    );
 
     const markNotificationAsSeen = React.useCallback(async () => {
-        await markNotificationsAsSeenAsync([notification]);
+        await markNotificationsAsSeenAsync();
         onDiscard(notification);
     }, [onDiscard, markNotificationsAsSeenAsync]);
 
@@ -69,7 +71,7 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
                 notification={notification}
                 actionableComponents={[
                     <Button outlined onClick={markNotificationAsSeen}>
-                        {isMarkingNotifications ? <Spinner inline /> : 'Mark as read'}
+                        {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
                     </Button>,
                     <Button outlined onClick={onShowInList}>
                         Show in list

@@ -17,19 +17,20 @@ type NotificationCardWrapperProps = {
 
 const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notification }) => {
     const {
-        isMarkingNotifications,
+        isMarkingNotification,
         markNotificationsAsSeenAsync,
         deleteNotificationCard,
         isDeletingNotification,
-    } = useNotificationCardActions();
+    } = useNotificationCardActions(notification);
+    
     const isSeen = React.useMemo(() => notification.seenByUser, [notification]);
 
     const markNotificationAsSeen = React.useCallback(async () => {
-        await markNotificationsAsSeenAsync([notification]);
+        await markNotificationsAsSeenAsync();
     }, [markNotificationsAsSeenAsync]);
 
     const removeNotificationCard = React.useCallback(async () => {
-        await deleteNotificationCard(notification);
+        await deleteNotificationCard();
     }, [deleteNotificationCard]);
 
     const cardStyles = classNames(styles.notificationWrapper, {
@@ -45,7 +46,7 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notif
                     !isSeen
                         ? [
                               <Button outlined onClick={markNotificationAsSeen}>
-                                  {isMarkingNotifications ? <Spinner inline /> : 'Mark as read'}
+                                  {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
                               </Button>,
                           ]
                         : []
