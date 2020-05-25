@@ -22,9 +22,7 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
 }) => {
     const notificationCardsRef = React.useRef<HTMLDivElement | null>(null);
 
-    // const abortController = React.useMemo(() => new AbortController(), []);
     const [gradient, setGradient] = React.useState<GradientType | null>(null);
-    console.log(gradient);
 
     const checkForGradient = async (abortSignal: AbortSignal) => {
         enqueueAsyncOperation(() => {
@@ -57,13 +55,6 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
         }
     );
 
-    const onDiscard = React.useCallback(
-        (card: NotificationCard) => {
-            onDiscardNotification(card);
-        },
-        [onDiscardNotification]
-    );
-
     React.useEffect(() => {
         const abortController = new AbortController();
         checkForGradient(abortController.signal);
@@ -84,7 +75,7 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
             {notifications.map((notification) => (
                 <NotificationCardWrapper
                     notification={notification}
-                    onDiscard={onDiscard}
+                    onDiscard={onDiscardNotification}
                     onShowInList={onShowInList}
                     key={notification.id}
                 />
