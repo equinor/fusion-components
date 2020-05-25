@@ -31,6 +31,8 @@ const NotificationNumberBadge = (props: NotificationNumberBadgeProps) => {
 };
 const NotificationsButton: React.FC = () => {
     const [openSideSheet, setOpenSideSheet] = React.useState<boolean>(false);
+    const [hasOpenedSideSheet, setHasOpenedSideSheet] = React.useState<boolean>(false);
+
     const {
         notificationCards,
         isFetchingRead,
@@ -49,9 +51,13 @@ const NotificationsButton: React.FC = () => {
 
     React.useEffect(() => {
         if (openSideSheet) {
-            getReadNotificationCardsAsync();
+            setHasOpenedSideSheet(true);
         }
     }, [openSideSheet]);
+
+    React.useEffect(() => {
+        getReadNotificationCardsAsync();
+    }, [hasOpenedSideSheet]);
 
     return (
         <>
