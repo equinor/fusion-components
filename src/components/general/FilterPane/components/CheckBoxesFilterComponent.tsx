@@ -88,7 +88,9 @@ const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
 
     return (
         <li onClick={selectSingleOption} ref={tooltipRef}>
-            <CheckBox selected={isChecked} color={option.color} onChange={toggleOption} />
+            <span>
+                <CheckBox selected={isChecked} color={option.color} onChange={toggleOption} />
+            </span>
             {!filterPaneContext.paneIsCollapsed && (
                 <label>
                     {option.label}
