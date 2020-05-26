@@ -49,8 +49,8 @@ const toCssUnit = (value: number | string) => {
 };
 
 export const generateColumnTemplate = <T>(columns: DataTableColumn<T>[]) =>
-    'max-content max-content ' +
-    columns.map(c => toCssUnit(`minmax(max-content, ${c.width || 'auto'})`)).join(' ');
+    'min-content min-content ' +
+    columns.map((c) => toCssUnit(`minmax(max-content, ${c.width || 'auto'})`)).join(' ');
 
 const rowTemplate = 'calc(var(--grid-unit) * var(--row-height-multiplier))';
 export const generateRowTemplate = <T>(rows: T[], expandedRows: T[], skeletonRows: number) => {
@@ -63,14 +63,14 @@ export const generateRowTemplate = <T>(rows: T[], expandedRows: T[], skeletonRow
         rowTemplate +
         ' ' +
         rows
-            .map(row => {
-                const isExpanded = expandedRows.findIndex(r => r === row) > -1;
+            .map((row) => {
+                const isExpanded = expandedRows.findIndex((r) => r === row) > -1;
 
                 if (!isExpanded) {
-                    return rowTemplate;
+                    return `minmax(${rowTemplate},min-content)`;
                 }
 
-                return `${rowTemplate} auto`;
+                return `${rowTemplate} min-content`;
             })
             .join(' ')
     );
@@ -87,7 +87,7 @@ const getNextColumnToCollapse = <T>(
     // Remove already collapsed columns
     // Sort the columns by priority
     const sortedColumns = columns
-        .filter(c => !collapsedColumns.find(cc => cc.key === c.key))
+        .filter((c) => !collapsedColumns.find((cc) => cc.key === c.key))
         .sort((a, b) => {
             if (!a.priority) {
                 return -1;
@@ -196,9 +196,9 @@ export const useVisibleColumns = <T>(
 
     // Remove the collapsed columns, or the columns we're testing from all the columns before returning
     const visibleColumns = columns.filter(
-        c =>
+        (c) =>
             !(testCollapsedColumns.length ? testCollapsedColumns : collapsedColumns).find(
-                cc => cc.key === c.key
+                (cc) => cc.key === c.key
             )
     );
 

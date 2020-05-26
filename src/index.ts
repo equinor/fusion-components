@@ -1,3 +1,6 @@
+// Polyfills
+import './polyfills';
+
 // Core components
 export { default as FusionHeader, HeaderContentProps } from './components/core/Header';
 export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
@@ -62,7 +65,7 @@ export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
 export { default as Chip } from './components/general/Chip';
 export { default as DatePicker } from './components/general/DatePicker';
-export { default as Slider } from './components/general/Slider';
+export { Slider, RangedSlider, SliderMarker } from './components/general/Slider';
 export {
     default as NavigationDrawer,
     NavigationStructure,

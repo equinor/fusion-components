@@ -8,6 +8,7 @@ type CheckBoxOption = {
     key: string;
     label: string;
     color?: string;
+    hideCount?: boolean;
 };
 
 type OnChangeHandler = (newTerms: string[] | null) => void;
@@ -31,7 +32,7 @@ const getCountForOption = (option: CheckBoxOption, filterCount: Count) => {
         return -1;
     }
 
-    const countForOption = filterCount.count.find(c => c.key === option.key);
+    const countForOption = filterCount.count.find((c) => c.key === option.key);
 
     if (!countForOption) {
         return -1;
@@ -58,7 +59,7 @@ const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
 
     const toggleOption = (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
-        
+
         const index = term.value.indexOf(option.key);
 
         let newValue: string[] | null = [...term.value];
@@ -75,25 +76,25 @@ const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
         onChange(newValue);
     };
 
-    const count = getCountForOption(option, filterCount);
+    const optionCount = getCountForOption(option, filterCount);
     const isChecked = term.value.indexOf(option.key) > -1;
     const filterPaneContext = useFilterPaneContext();
-    const tooltipRef = useTooltipRef(`${option.label} (${count})`, filterPaneContext.tooltipPlacement);
+    const count = !option.hideCount ? ` (${optionCount})` : '';
+    const tooltipRef = useTooltipRef(`${option.label}${count}`, filterPaneContext.tooltipPlacement);
 
-    if (count === 0 && !isChecked) {
+    if (optionCount === 0 && !isChecked) {
         return null;
     }
 
     return (
         <li onClick={selectSingleOption} ref={tooltipRef}>
-            <CheckBox
-                selected={isChecked}
-                color={option.color}
-                onChange={toggleOption}
-            />
+            <span>
+                <CheckBox selected={isChecked} color={option.color} onChange={toggleOption} />
+            </span>
             {!filterPaneContext.paneIsCollapsed && (
                 <label>
-                    {option.label} ({count})
+                    {option.label}
+                    {count}
                 </label>
             )}
         </li>
@@ -109,8 +110,8 @@ const CheckBoxesFilterComponent: React.FC<CheckBoxesFilterProps> = ({
     const ensuredTerm = term || { key: '', value: [] };
 
     const renderedOptions = options
-        .filter(option => getCountForOption(option, filterCount) !== 0)
-        .map(option => (
+        .filter((option) => getCountForOption(option, filterCount) !== 0)
+        .map((option) => (
             <CheckboxWrapper
                 key={option.key}
                 option={option}

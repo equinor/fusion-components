@@ -5,7 +5,7 @@ import FilterPane, { FilterTypes, FilterSection, FilterTerm } from '../index';
 import storyData, { DataItem } from './storyData';
 import columns from './columns';
 import { useAppSettings, useSorting, usePagination, Page } from '@equinor/fusion';
-import { styling, DataTable, DataTableColumn } from '@equinor/fusion-components';
+import { styling, DataTable, DataTableColumn, Button } from '@equinor/fusion-components';
 
 type TableProps = {
     data: DataItem[];
@@ -32,7 +32,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
         [sortBy, direction]
     );
 
-    const sortedByColumn = columns.find(c => c.accessor === sortBy) || null;
+    const sortedByColumn = columns.find((c) => c.accessor === sortBy) || null;
 
     return (
         <DataTable
@@ -60,7 +60,7 @@ const sections: FilterSection<DataItem>[] = [
                 key: 'search',
                 title: '',
                 type: FilterTypes.Search,
-                getValue: item => item.firstName + item.lastName + item.email,
+                getValue: (item) => item.firstName + item.lastName + item.email,
             },
         ],
     },
@@ -74,7 +74,7 @@ const sections: FilterSection<DataItem>[] = [
                 title: '',
                 type: FilterTypes.Radio,
                 isVisibleWhenPaneIsCollapsed: true,
-                getValue: item => '',
+                getValue: (item) => '',
                 options: [
                     {
                         key: 'papayawhip',
@@ -103,7 +103,7 @@ const sections: FilterSection<DataItem>[] = [
                 key: 'gender',
                 title: 'Gender',
                 type: FilterTypes.Checkbox,
-                getValue: item => item.gender,
+                getValue: (item) => item.gender,
                 isVisibleWhenPaneIsCollapsed: true,
                 isCollapsible: true,
                 options: [
@@ -114,6 +114,7 @@ const sections: FilterSection<DataItem>[] = [
                     {
                         key: 'Female',
                         label: 'Female',
+                        hideCount: true,
                     },
                 ],
             },
@@ -121,7 +122,7 @@ const sections: FilterSection<DataItem>[] = [
                 key: 'id',
                 title: 'Id - with custom colors',
                 type: FilterTypes.Checkbox,
-                getValue: item => item.id.toString(),
+                getValue: (item) => item.id.toString(),
                 isCollapsible: true,
                 isCollapsed: false,
                 options: [
@@ -154,24 +155,46 @@ const FilterPaneStory: React.FC = () => {
         },
     ]);
     const [filteredData, setFilteredData] = useState<DataItem[]>(storyData);
+    const [filterScreenPlacement, setFilterScreenPlacement] = useState('right');
 
     const onChange = (filteredData: DataItem[], newTerms: FilterTerm[]) => {
         setTerms(newTerms);
         setFilteredData(filteredData);
     };
 
+    const changeSide = () => {
+        setFilterScreenPlacement(filterScreenPlacement === 'right' ? 'left' : 'right');
+    };
+
+    const filterHeaderComponent = (
+        <div style={{ marginRight: '8px' }}>
+            <Button frameless onClick={changeSide}>
+                Flip pane {filterScreenPlacement === 'right' ? 'left' : 'right'}
+            </Button>
+        </div>
+    );
+
     return (
         <div style={{ display: 'flex', height: '100%', width: '100%' }}>
-            <div style={{ marginRight: styling.grid(4), width: 1, flexGrow: 1 }}>
-                <Table data={filteredData} />
-            </div>
+            {filterScreenPlacement === 'right' && (
+                <div style={{ marginRight: styling.grid(4), width: 1, flexGrow: 1 }}>
+                    <Table data={filteredData} />
+                </div>
+            )}
             <FilterPane
                 id="story"
                 data={storyData}
                 sectionDefinitions={sections}
                 terms={terms}
                 onChange={onChange}
+                screenPlacement={filterScreenPlacement}
+                headerComponent={filterHeaderComponent}
             />
+            {filterScreenPlacement === 'left' && (
+                <div style={{ marginRight: styling.grid(4), width: 1, flexGrow: 1 }}>
+                    <Table data={filteredData} />
+                </div>
+            )}
         </div>
     );
 };
