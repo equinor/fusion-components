@@ -94,4 +94,49 @@ export const simpleColumns: DataTableColumn<DataItem>[] = [
     },
 ];
 
+export const wordWrapColumns: DataTableColumn<DataItem>[] = [
+    {
+        key: 'id',
+        accessor: 'id',
+        label: 'Id',
+        sortable: true,
+        width: styling.grid(5),
+    },
+    {
+        key: 'firstName',
+        accessor: 'firstName',
+        label: 'First name',
+        sortable: true,
+    },
+    {
+        key: 'lastName',
+        accessor: 'lastName',
+        label: 'Last name',
+        sortable: true,
+    },
+    {
+        key: 'email',
+        accessor: 'email',
+        label: 'Email',
+        priority: 4,
+        sortable: true,
+        width: styling.grid(5),
+        component: ({ item }) => (
+            <div style={{ width: '190px', wordWrap: 'break-word' }}>{item.email}</div>
+        ),
+    },
+    {
+        key: 'delete',
+        accessor: 'id',
+        label: '',
+        component: DeleteColumn,
+        skeleton: DeleteColumnSkeleton,
+        width: styling.grid(17),
+        style: {
+            justifyContent: 'flex-end',
+        },
+        priority: 3,
+    },
+];
+
 export default columns;

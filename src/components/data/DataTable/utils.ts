@@ -49,7 +49,7 @@ const toCssUnit = (value: number | string) => {
 };
 
 export const generateColumnTemplate = <T>(columns: DataTableColumn<T>[]) =>
-    'max-content max-content ' +
+    'min-content min-content ' +
     columns.map((c) => toCssUnit(`minmax(max-content, ${c.width || 'auto'})`)).join(' ');
 
 const rowTemplate = 'calc(var(--grid-unit) * var(--row-height-multiplier))';
@@ -67,7 +67,7 @@ export const generateRowTemplate = <T>(rows: T[], expandedRows: T[], skeletonRow
                 const isExpanded = expandedRows.findIndex((r) => r === row) > -1;
 
                 if (!isExpanded) {
-                    return rowTemplate;
+                    return `minmax(${rowTemplate},min-content)`;
                 }
 
                 return `${rowTemplate} min-content`;

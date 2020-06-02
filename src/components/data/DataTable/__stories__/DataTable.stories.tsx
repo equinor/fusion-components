@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import DataTable from '../index';
 import data, { fakeFetchAsync, DataItem } from './storyData';
-import columns, { simpleColumns, DataItemProps } from './columns';
+import columns, { simpleColumns, DataItemProps, wordWrapColumns } from './columns';
 import {
     Page,
     usePagination,
@@ -40,7 +40,7 @@ const WithSkeleton: React.FC = () => {
         [sortBy, direction]
     );
 
-    const sortedByColumn = columns.find(c => c.accessor === sortBy) || null;
+    const sortedByColumn = columns.find((c) => c.accessor === sortBy) || null;
 
     return (
         <DataTable
@@ -95,7 +95,7 @@ const WithoutSkeleton: React.FC = () => {
         [sortBy, direction]
     );
 
-    const sortedByColumn = columns.find(c => c.accessor === sortBy) || null;
+    const sortedByColumn = columns.find((c) => c.accessor === sortBy) || null;
 
     return (
         <DataTable
@@ -112,6 +112,48 @@ const WithoutSkeleton: React.FC = () => {
             }}
             expandedComponent={ExpandedItem}
             listComponent={ExpandedItem}
+        />
+    );
+};
+
+const NoColumnsCollapse: React.FC = () => {
+    const [appSettings, setAppSetting] = useAppSettings();
+    const perPage = parseInt(appSettings['perPage'], 10) || 20;
+
+    const { sortedData, setSortBy, sortBy, direction } = useSorting(data, null, null);
+    const { pagination, pagedData, setCurrentPage } = usePagination(
+        sortedData as DataItem[],
+        perPage
+    );
+
+    const onPaginationChange = useCallback((newPage: Page, perPage: number) => {
+        setCurrentPage(newPage.index, perPage);
+        setAppSetting('perPage', perPage);
+    }, []);
+
+    const onSortChange = useCallback(
+        (column: DataTableColumn<DataItem>) => {
+            setSortBy(column.accessor, null);
+        },
+        [sortBy, direction]
+    );
+
+    const sortedByColumn = columns.find((c) => c.accessor === sortBy) || null;
+
+    return (
+        <DataTable
+            noColumnsCollapse
+            columns={wordWrapColumns}
+            data={pagedData}
+            pagination={pagination}
+            onPaginationChange={onPaginationChange}
+            isFetching={false}
+            rowIdentifier={'id'}
+            onSortChange={onSortChange}
+            sortedBy={{
+                column: sortedByColumn,
+                direction,
+            }}
         />
     );
 };
@@ -139,7 +181,7 @@ const Selectable: React.FC = () => {
         [sortBy, direction]
     );
 
-    const sortedByColumn = columns.find(c => c.accessor === sortBy) || null;
+    const sortedByColumn = columns.find((c) => c.accessor === sortBy) || null;
 
     return (
         <DataTable
@@ -186,11 +228,11 @@ const SingleSelectable: React.FC = () => {
         [sortBy, direction]
     );
 
-    const sortedByColumn = simpleColumns.find(c => c.accessor === sortBy) || null;
+    const sortedByColumn = simpleColumns.find((c) => c.accessor === sortBy) || null;
 
     const handleClick = React.useCallback(
-        item => {
-            if (selectedItems.findIndex(i => i.id === item.id) !== -1) {
+        (item) => {
+            if (selectedItems.findIndex((i) => i.id === item.id) !== -1) {
                 setSelectedItems([]);
             } else {
                 setSelectedItems([item]);
@@ -226,4 +268,5 @@ storiesOf('Data|Data Table', module)
     .add('Default', () => <WithoutSkeleton />)
     .add('With skeleton', () => <WithSkeleton />)
     .add('Single selectable', () => <SingleSelectable />)
-    .add('Multi selectable', () => <Selectable />);
+    .add('Multi selectable', () => <Selectable />)
+    .add('No Columns Collapse', () => <NoColumnsCollapse />);

@@ -37,6 +37,7 @@ export type FilterPaneProps<T> = {
     onChange: OnFilterChangeHandler<T>;
     screenPlacement?: 'right' | 'left';
     onToggleCollapse?: (isCollapsed: boolean) => void;
+    headerComponent?: React.ReactNode;
 };
 
 function FilterPane<T>({
@@ -47,6 +48,7 @@ function FilterPane<T>({
     onChange,
     screenPlacement = 'right',
     onToggleCollapse,
+    headerComponent,
 }: FilterPaneProps<T>) {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [filterCount, setFilterCount] = useState<Count[]>([]);
@@ -106,9 +108,10 @@ function FilterPane<T>({
                     <div className={styles.collapseExpandButtonContainer}>
                         <CollapseExpandButton onClick={toggleCollapsed} />
                     </div>
+                    {!isCollapsed && headerComponent}
                 </div>
                 <div className={styles.content}>
-                    {sectionDefinitions.map(section => (
+                    {sectionDefinitions.map((section) => (
                         <Section
                             key={section.key}
                             section={section}
@@ -123,7 +126,7 @@ function FilterPane<T>({
     );
 }
 
-export default props => (
+export default (props) => (
     <ErrorBoundary>
         <FilterPane {...props} />
     </ErrorBoundary>

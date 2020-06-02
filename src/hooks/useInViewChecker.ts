@@ -26,17 +26,21 @@ export default <T extends HTMLElement>(
     const [isInView, setIsInView] = useState(getIsInView());
 
     const animationFrame = useRef(0);
+    const timer = useRef(0);
     const checkIsInView = () => {
+        clearTimeout(timer.current);
         window.cancelAnimationFrame(animationFrame.current);
-
-        setIsInView(getIsInView());
-
-        animationFrame.current = window.requestAnimationFrame(checkIsInView);
+        timer.current = setTimeout(() => {
+            setIsInView(getIsInView());
+            animationFrame.current = window.requestAnimationFrame(checkIsInView);
+        });
     };
 
     useEffect(() => {
         checkIsInView();
+
         return () => {
+            clearTimeout(timer.current);
             window.cancelAnimationFrame(animationFrame.current);
         };
     }, []);
