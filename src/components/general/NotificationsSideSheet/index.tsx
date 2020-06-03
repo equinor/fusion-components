@@ -30,9 +30,11 @@ const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps
         unReadNotifications.length === 0 &&
         !(isFetchingReadNotifications || isFetchingUnReadNotifications)
     ) {
-        return <div className={styles.noNotificationMessage}>
-            <span>You don't have any notifications</span>
-            </div>;
+        return (
+            <div className={styles.noNotificationMessage}>
+                <span>You don't have any notifications</span>
+            </div>
+        );
     }
     return (
         <>
