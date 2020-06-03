@@ -12,6 +12,51 @@ type NotificationsSideSheetProps = {
     isFetchingUnReadNotifications: boolean;
 };
 
+type NotificationsSideSheetContentProps = {
+    readNotifications: NotificationCard[];
+    unReadNotifications: NotificationCard[];
+    isFetchingReadNotifications: boolean;
+    isFetchingUnReadNotifications: boolean;
+};
+
+const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps> = ({
+    readNotifications,
+    unReadNotifications,
+    isFetchingReadNotifications,
+    isFetchingUnReadNotifications,
+}) => {
+    if (
+        readNotifications.length === 0 &&
+        unReadNotifications.length === 0 &&
+        !(isFetchingReadNotifications || isFetchingUnReadNotifications)
+    ) {
+        return <div className={styles.noNotificationMessage}>
+            <span>You don't have any notifications</span>
+            </div>;
+    }
+    return (
+        <>
+            <div className={styles.notifications}>
+                {isFetchingUnReadNotifications ? (
+                    <Spinner centered />
+                ) : (
+                    <NotificationDateDivisions notifications={unReadNotifications} />
+                )}
+            </div>
+            <div className={styles.notifications}>
+                <div className={styles.divisionTitle}>
+                    <h3>Dismissed notifications - last 30 days</h3>
+                </div>
+                {isFetchingReadNotifications ? (
+                    <Spinner centered />
+                ) : (
+                    <NotificationDateDivisions notifications={readNotifications} collapsed />
+                )}
+            </div>
+        </>
+    );
+};
+
 const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
     open,
     onClose,
@@ -47,41 +92,25 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
         [notifications]
     );
 
-    const content = React.useMemo(() => {
-        if (
-            notifications.length === 0 &&
-            !(isFetchingReadNotifications || isFetchingUnReadNotifications)
-        ) {
-            return <h2>You have no notifications</h2>;
-        }
-        return (
-            <>
-                <div className={styles.notifications}>
-                    {isFetchingUnReadNotifications ? (
-                        <Spinner centered />
-                    ) : (
-                        <NotificationDateDivisions notifications={unReadNotifications} />
-                    )}
-                </div>
-                <div className={styles.notifications}>
-                    <div className={styles.divisionTitle}>
-                        <h3>Read notifications - last 30 days</h3>
-                    </div>
-                    {isFetchingReadNotifications ? (
-                        <Spinner centered />
-                    ) : (
-                        <NotificationDateDivisions notifications={readNotifications} collapsed />
-                    )}
-                </div>
-            </>
-        );
-    }, [
-        isFetchingUnReadNotifications,
-        isFetchingReadNotifications,
-        notifications,
-        unReadNotifications,
-        readNotifications,
-    ]);
+    const sideSheetHeaderIcons = React.useMemo(
+        () => [
+            <div className={styles.chipContainer}>
+                <Chip title={`${unReadNotifications.length} unread`} />
+            </div>,
+            <div className={styles.markAllAsReadButton}>
+                <Button
+                    onClick={() =>
+                        unReadNotifications.length > 0 &&
+                        markNotificationAsSeen(unReadNotifications)
+                    }
+                    disabled={unReadNotifications.length <= 0}
+                >
+                    {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
+                </Button>
+            </div>,
+        ],
+        [unReadNotifications, markNotificationAsSeen, isMarkingNotifications]
+    );
 
     return (
         <ModalSideSheet
@@ -92,24 +121,16 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
             isResizable
             maxWidth={styling.numericalGrid(100)}
             minWidth={styling.numericalGrid(50)}
-            headerIcons={[
-                <div className={styles.chipContainer}>
-                    <Chip title={`${unReadNotifications.length} unread`} />
-                </div>,
-                <div className={styles.markAllAsReadButton}>
-                    <Button
-                        onClick={() =>
-                            unReadNotifications.length > 0 &&
-                            markNotificationAsSeen(unReadNotifications)
-                        }
-                        disabled={unReadNotifications.length <= 0}
-                    >
-                        {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
-                    </Button>
-                </div>,
-            ]}
+            headerIcons={sideSheetHeaderIcons}
         >
-            <div className={styles.notificationsContainer}>{content}</div>
+            <div className={styles.notificationsContainer}>
+                <NotificationsSideSheetContent
+                    readNotifications={readNotifications}
+                    unReadNotifications={unReadNotifications}
+                    isFetchingReadNotifications={isFetchingReadNotifications}
+                    isFetchingUnReadNotifications={isFetchingUnReadNotifications}
+                />
+            </div>
         </ModalSideSheet>
     );
 };

@@ -55,11 +55,36 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
         return () => clearTimeout(discardNotificationTimeout);
     }, []);
 
+    const discardNotification = React.useCallback(() => onDiscard(notification), [
+        onDiscard,
+        notification,
+    ]);
+
     React.useEffect(() => {
         if (isVisible === false) {
-            onDiscard(notification);
+            discardNotification();
         }
     }, [isVisible]);
+
+    const actionableComponents = React.useMemo(
+        () => [
+            <Button outlined onClick={markNotificationAsSeen}>
+                {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
+            </Button>,
+            <Button outlined onClick={onShowInList}>
+                Show in list
+            </Button>,
+        ],
+        [markNotificationAsSeen, onShowInList, isMarkingNotification]
+    );
+    const discardComponent = React.useMemo(
+        () => (
+            <IconButton onClick={discardNotification}>
+                <CloseIcon />
+            </IconButton>
+        ),
+        [discardNotification]
+    );
 
     return (
         <div
@@ -69,19 +94,8 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
         >
             <StandardNotificationCard
                 notification={notification}
-                actionableComponents={[
-                    <Button outlined onClick={markNotificationAsSeen}>
-                        {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
-                    </Button>,
-                    <Button outlined onClick={onShowInList}>
-                        Show in list
-                    </Button>,
-                ]}
-                discardComponent={
-                    <IconButton onClick={() => onDiscard(notification)}>
-                        <CloseIcon />
-                    </IconButton>
-                }
+                actionableComponents={actionableComponents}
+                discardComponent={discardComponent}
             />
         </div>
     );

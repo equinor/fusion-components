@@ -22,8 +22,8 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notif
         deleteNotificationCard,
         isDeletingNotification,
     } = useNotificationCardActions(notification);
-    
-    const isSeen = React.useMemo(() => notification.seenByUser, [notification]);
+
+    const isSeen = notification.seenByUser;
 
     const markNotificationAsSeen = React.useCallback(async () => {
         await markNotificationsAsSeenAsync();
@@ -38,24 +38,33 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notif
         [useElevationClassName(3)]: !isSeen,
     });
 
+    const actionableComponents = React.useMemo(
+        () =>
+            !isSeen
+                ? [
+                      <Button outlined onClick={markNotificationAsSeen}>
+                          {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
+                      </Button>,
+                  ]
+                : [],
+        [isSeen, markNotificationAsSeen, isMarkingNotification]
+    );
+
+    const discardComponent = React.useMemo(
+        () => (
+            <IconButton onClick={removeNotificationCard}>
+                {isDeletingNotification ? <Spinner inline /> : <DeleteIcon outline />}
+            </IconButton>
+        ),
+        [isDeletingNotification, removeNotificationCard]
+    );
+
     return (
         <div className={cardStyles}>
             <StandardNotificationCard
                 notification={notification}
-                actionableComponents={
-                    !isSeen
-                        ? [
-                              <Button outlined onClick={markNotificationAsSeen}>
-                                  {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
-                              </Button>,
-                          ]
-                        : []
-                }
-                discardComponent={
-                    <IconButton onClick={removeNotificationCard}>
-                        {isDeletingNotification ? <Spinner inline /> : <DeleteIcon outline />}
-                    </IconButton>
-                }
+                actionableComponents={actionableComponents}
+                discardComponent={discardComponent}
             />
         </div>
     );

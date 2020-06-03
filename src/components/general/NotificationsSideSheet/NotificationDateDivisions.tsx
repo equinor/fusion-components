@@ -17,11 +17,21 @@ type DateDivisionsContainerProps = {
     collapsed?: boolean;
 };
 
+type DateDivisionKey = 'today' | 'this-week' | 'last-week' | 'more-than-one-week';
+
 type DateDivision = {
-    key: string;
+    key: DateDivisionKey;
     label: string;
     accessor: (notification: NotificationCard) => boolean;
     notifications: NotificationCard[];
+};
+
+type NotificationCardContainerProps = {
+    notification: NotificationCard;
+    openAccordions: AccordionOpenDictionary;
+    handleOpenAccordionChange: (accordionId: string) => void;
+    divisionKey: DateDivisionKey;
+    collapsed?: boolean;
 };
 
 const getMonday = (date: Date) => {
@@ -51,6 +61,7 @@ const isNotificationFromLastWeek = (notification: NotificationCard) =>
         getMonday(new Date(notification.created)).toDateString() ===
         getMonday(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)).toDateString()
     );
+
 const divisions: DateDivision[] = [
     {
         key: 'today',
@@ -86,6 +97,40 @@ const divisions: DateDivision[] = [
 const DateDivisionsContainer: React.FC<DateDivisionsContainerProps> = ({ collapsed, children }) =>
     collapsed ? <Accordion>{children}</Accordion> : <>{children} </>;
 
+const NotificationCardContainer: React.FC<NotificationCardContainerProps> = ({
+    notification,
+    collapsed,
+    openAccordions,
+    divisionKey,
+    handleOpenAccordionChange,
+}) => {
+    const card = <NotificationCardWrapper notification={notification} />;
+    if (collapsed) {
+        const id = notification.id;
+        return (
+            <AccordionItem
+                actionDirection="right"
+                onChange={() => handleOpenAccordionChange(id)}
+                key={id}
+                isOpen={openAccordions[id]}
+                label={notification.title}
+            >
+                {openAccordions[id] ? card : null}
+            </AccordionItem>
+        );
+    }
+    return (
+        <React.Fragment key={notification.id}>
+            {divisionKey === 'today' && (
+                <span className={styles.dateMarker}>
+                    Today {get24HTime(new Date(notification.created))}
+                </span>
+            )}
+            {card}
+        </React.Fragment>
+    );
+};
+
 const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({
     notifications,
     collapsed,
@@ -106,37 +151,6 @@ const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({
         }));
     }, [notifications, divisions]);
 
-    const notificationCardContainer = React.useCallback(
-        (notification: NotificationCard, division: DateDivision) => {
-            const card = <NotificationCardWrapper notification={notification} />;
-            if (collapsed) {
-                const id = notification.id;
-                return (
-                    <AccordionItem
-                        actionDirection="right"
-                        onChange={() => handleOpenAccordionChange(id)}
-                        key={id}
-                        isOpen={openAccordions[id]}
-                        label={notification.title}
-                    >
-                        {openAccordions[id] ? card : null}
-                    </AccordionItem>
-                );
-            }
-            return (
-                <React.Fragment key={notification.id}>
-                    {division.key === 'today' && (
-                        <span className={styles.dateMarker}>
-                            Today {get24HTime(new Date(notification.created))}
-                        </span>
-                    )}
-                    {card}
-                </React.Fragment>
-            );
-        },
-        [handleOpenAccordionChange, openAccordions]
-    );
-
     return (
         <DateDivisionsContainer collapsed={collapsed}>
             {notificationDivisions.map(
@@ -146,9 +160,15 @@ const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({
                             {(division.key !== 'today' || collapsed) && (
                                 <span className={styles.dateMarker}>{division.label}</span>
                             )}
-                            {division.notifications.map((notification) =>
-                                notificationCardContainer(notification, division)
-                            )}
+                            {division.notifications.map((notification) => (
+                                <NotificationCardContainer
+                                    notification={notification}
+                                    divisionKey={division.key}
+                                    handleOpenAccordionChange={handleOpenAccordionChange}
+                                    openAccordions={openAccordions}
+                                    collapsed={collapsed}
+                                />
+                            ))}
                         </div>
                     )
             )}
