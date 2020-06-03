@@ -136,23 +136,22 @@
         justify-content: center;
         align-items: center;
         
-        &.available {
+        &.online {
             background: var(--color-green);
         }
     
-        &.away {
+        &.idleBusy, &.beRightBack, &.away {
             background: var(--color-yellow);
         } 
         
-        &.doNotDisturb, &.busy{
+        &.doNotDisturb{
             background: var(--color-danger);
         }
 
-        &.offline {
+        &.offline, &.none {
             background: var(--color-black-alt3);
         }
-
-
+        
         &.xlarge {
             &.comfortable, &.compact {
                 // 24x24

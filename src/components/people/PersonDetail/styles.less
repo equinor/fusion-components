@@ -2,11 +2,27 @@
     font-size: 14px;
     line-height: 24px;
     white-space: nowrap;
+    display: flex;
+
+    .imageContainer {
+        display: flex;
+        flex-direction: column;
+        flex: 0;
+        padding: 0 calc(var(--grid-unit) * 3px);
+    }
+
+    .detailsContainer {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
 }
-.jobTitle{
+
+.personName {
+    font-size: 18px;
     font-weight: 600;
 }
 
-.contactInfo{
+.detailSection {
     padding-top: calc(var(--grid-unit) *1px);
 }

@@ -6,6 +6,7 @@ import {
     usePersonDetails,
     PersonDetails,
     usePersonImageUrl,
+    PersonPresenceAvailability,
 } from '@equinor/fusion';
 
 import { useTooltipRef, usePopoverRef } from '@equinor/fusion-components';
@@ -18,8 +19,6 @@ import PersonStatusBadge from './PersonStatusBadge';
 
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
-export type PersonPresence = 'available' | 'away' | 'doNotDisturb' | 'busy' | 'offline';
-
 export type PersonPhotoProps = {
     personId?: string;
     person?: PersonDetails;
@@ -27,7 +26,7 @@ export type PersonPhotoProps = {
     hideTooltip?: boolean;
     additionalPersons?: PersonDetails[];
     hidePopover?: boolean;
-    presenceStatus?: PersonPresence;
+    presenceStatus?: PersonPresenceAvailability;
 };
 
 const getDefaultPerson = (): PersonDetails => ({
