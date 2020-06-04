@@ -21,6 +21,11 @@ const FusionRoot: React.FC<FusionRootProps> = ({
 }) => {
     const { notificationCenter } = useFusionContext();
 
+    const registerPresenter = React.useCallback(
+        (level, present) => notificationCenter.registerPresenter(level, present),
+        [notificationCenter]
+    );
+
     return (
         <div className={classNames(styles.container, useComponentDisplayClassNames(styles))}>
             <FusionContainer
@@ -34,11 +39,7 @@ const FusionRoot: React.FC<FusionRootProps> = ({
                 ref={overlayRef as React.MutableRefObject<HTMLDivElement>}
             />
             <div className={styles.snacks}>
-                <NotificationSnacks
-                    registerPresenter={(level, present) =>
-                        notificationCenter.registerPresenter(level, present)
-                    }
-                />
+                <NotificationSnacks registerPresenter={registerPresenter} />
             </div>
             <div className={styles.dialog}>
                 <NotificationDialog />
