@@ -35,9 +35,9 @@ const FusionRoot: React.FC<FusionRootProps> = ({
             />
             <div className={styles.snacks}>
                 <NotificationSnacks
-                    registerPresenter={notificationCenter.registerPresenter.bind(
-                        notificationCenter
-                    )}
+                    registerPresenter={(level, present) =>
+                        notificationCenter.registerPresenter(level, present)
+                    }
                 />
             </div>
             <div className={styles.dialog}>
