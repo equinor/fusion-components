@@ -32,7 +32,7 @@ export type TextureCaches = {
 };
 
 const useTextureCaches = () => {
-    const [textureCaches, setTextureCaches] = React.useState<TextureCaches>();
+    const [textureCaches, setTextureCaches] = React.useState<TextureCaches>({});
 
     const clearTextureCaches = () => {
         setTextureCaches({
