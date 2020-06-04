@@ -30,7 +30,7 @@ const NotificationNumberBadge = (props: NotificationNumberBadgeProps) => {
     return iconFactory(props);
 };
 const NotificationsButton: React.FC = () => {
-    const [openSideSheet, setOpenSideSheet] = React.useState<boolean>(false);
+    const [showSideSheet, setShowSideSheet] = React.useState<boolean>(false);
     const [hasOpenedSideSheet, setHasOpenedSideSheet] = React.useState<boolean>(false);
 
     const {
@@ -50,10 +50,13 @@ const NotificationsButton: React.FC = () => {
     );
 
     React.useEffect(() => {
-        if (openSideSheet) {
+        if (showSideSheet) {
             setHasOpenedSideSheet(true);
         }
-    }, [openSideSheet]);
+    }, [showSideSheet]);
+
+    const openSideSheet = React.useCallback(() => setShowSideSheet(true), [setShowSideSheet]);
+    const closeSideSheet = React.useCallback(() => setShowSideSheet(false), [setShowSideSheet]);
 
     React.useEffect(() => {
         getReadNotificationCardsAsync();
@@ -61,7 +64,7 @@ const NotificationsButton: React.FC = () => {
 
     return (
         <>
-            <IconButton onClick={() => setOpenSideSheet(true)}>
+            <IconButton onClick={openSideSheet}>
                 <div className={styles.notificationsButton}>
                     <NotificationsIcon />
                     {numberOfUnread > 0 && (
@@ -76,14 +79,14 @@ const NotificationsButton: React.FC = () => {
                 </div>
             </IconButton>
             <NotificationsSideSheet
-                open={openSideSheet}
-                onClose={() => setOpenSideSheet(false)}
+                open={showSideSheet}
+                onClose={closeSideSheet}
                 notifications={notificationCards}
                 isFetchingReadNotifications={isFetchingRead}
                 isFetchingUnReadNotifications={isFetchingUnRead}
             />
             <OverlayPortal show>
-                <NotificationCardsPresenter onShowInList={() => setOpenSideSheet(true)} />
+                <NotificationCardsPresenter onShowInList={openSideSheet} />
             </OverlayPortal>
         </>
     );
