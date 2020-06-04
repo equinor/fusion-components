@@ -14,6 +14,7 @@ import ComponentDisplayToggleButton from './components/ComponentDisplayToggleBut
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
+import NotificationsButton from './components/NotificationsButton';
 
 enum Breakpoints {
     medium = 'medium',
@@ -90,6 +91,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
             <aside className={styles.asideContainer}>
                 <ComponentDisplayToggleButton />
                 {aside}
+                <NotificationsButton />
                 <CurrentUserButton />
             </aside>
         </header>
