@@ -59,7 +59,7 @@ const NotificationsButton: React.FC = () => {
     const closeSideSheet = React.useCallback(() => setShowSideSheet(false), [setShowSideSheet]);
 
     React.useEffect(() => {
-        getReadNotificationCardsAsync();
+        hasOpenedSideSheet && getReadNotificationCardsAsync();
     }, [hasOpenedSideSheet]);
 
     return (
