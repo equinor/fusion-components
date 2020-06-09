@@ -8,7 +8,6 @@ export const TEXTURE_CACHE_KEYS: { [i: string]: keyof TextureCaches } = {
     GRAPHICS: 'graphics',
     DESCRIPTIONS: 'descriptions',
     MASKS: 'masks',
-    TOOLTIPS: 'tooltips',
     TEXTS: 'texts',
     RECTS: 'rects',
 };
@@ -20,68 +19,76 @@ export type GraphicsCache = { [key: string]: PIXI.RenderTexture };
 export type TooltipsCache = PIXI.Container;
 
 export type TextureCaches = {
-    headers?: ContainerCache;
-    items?: ContainerCache;
-    chars?: TextureCache;
-    graphics?: RenderTextureCache;
-    descriptions?: any;
-    masks?: GraphicsCache;
-    tooltips?: TooltipsCache;
-    texts?: RenderTextureCache;
-    rects?: RenderTextureCache;
+    headers: ContainerCache;
+    items: ContainerCache;
+    chars: TextureCache;
+    graphics: RenderTextureCache;
+    descriptions: any;
+    masks: GraphicsCache;
+    texts: RenderTextureCache;
+    rects: RenderTextureCache;
 };
 
+const defaultState = () => ({
+    headers: {},
+    items: {},
+    chars: {},
+    graphics: {},
+    descriptions: {},
+    masks: {},
+    texts: {},
+    rects: {},
+});
+
 const useTextureCaches = () => {
-    const [textureCaches, setTextureCaches] = React.useState<TextureCaches>({});
+    const textureCaches = React.useRef<TextureCaches>(defaultState());
 
-    const clearTextureCaches = () => {
-        setTextureCaches({
-            items: textureCaches?.items,
-            texts: textureCaches?.texts,
-            graphics: textureCaches?.graphics,
-        });
-    };
+    const clearTextureCaches = React.useCallback(() => {
+        const newState = defaultState();
 
-    const clearItemTextureCaches = () => {
-        setTextureCaches({
-            ...textureCaches,
+        textureCaches.current = {
+            ...newState,
+            items: textureCaches.current.items,
+            graphics: textureCaches.current.graphics,
+            texts: textureCaches.current.texts,
+        };
+    }, [textureCaches]);
+
+    const clearItemTextureCaches = React.useCallback(() => {
+        textureCaches.current = {
+            ...textureCaches.current,
             items: {},
             graphics: {},
             texts: {},
-        });
-    };
+        };
+    }, [textureCaches]);
 
-    const addTextureToCache = (
-        cacheKey: keyof TextureCaches,
-        key: string,
-        texture: PIXI.RenderTexture | PIXI.Texture | PIXI.Container | PIXI.Graphics
-    ) => {
-        textureCaches[cacheKey]
-            ? (textureCaches[cacheKey][key] = texture)
-            : (textureCaches[cacheKey] = { [key]: texture });
+    const addTextureToCache = React.useCallback(
+        (
+            cacheKey: keyof TextureCaches,
+            key: string,
+            texture: PIXI.RenderTexture | PIXI.Texture | PIXI.Container | PIXI.Graphics
+        ) => {
+            textureCaches.current[cacheKey][key] = texture;
+        },
+        [textureCaches]
+    );
 
-        setTextureCaches(textureCaches);
-    };
-
-    const getTextureKeyFromCache = (
-        cacheKey: keyof TextureCaches,
-        key: string
-    ): PIXI.RenderTexture | PIXI.Texture | PIXI.Container | PIXI.Graphics => {
-        return textureCaches[cacheKey] ? textureCaches[cacheKey][key] : null;
-    };
-
-    const getTextureFromCache = (
-        cacheKey: keyof TextureCaches
-    ): RenderTextureCache | TextureCache | ContainerCache | GraphicsCache | TooltipsCache => {
-        return textureCaches[cacheKey];
-    };
+    const getTextureFromCache = React.useCallback(
+        (
+            cacheKey: keyof TextureCaches,
+            key: string
+        ): PIXI.RenderTexture | PIXI.Texture | PIXI.Container | PIXI.Graphics => {
+            return textureCaches.current[cacheKey][key];
+        },
+        [textureCaches]
+    );
 
     return {
         clearTextureCaches,
         clearItemTextureCaches,
         addTextureToCache,
         getTextureFromCache,
-        getTextureKeyFromCache,
     };
 };
 

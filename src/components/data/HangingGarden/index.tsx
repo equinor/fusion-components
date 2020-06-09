@@ -2,86 +2,29 @@ import * as React from 'react';
 import * as styles from './styles.less';
 import * as PIXI from 'pixi.js';
 import useTextureCaches, { TEXTURE_CACHE_KEYS } from './useTextureCaches';
-
-const DEFAULT_ITEM_HEIGHT = 24;
-const DEFAULT_HEADER_HEIGHT = 32;
-const TOOLTIP_PADDING = 4;
-const TOOLTIP_MARGIN = 8;
-const EXPANDED_COLUMN_PADDING = 8;
-const HIGHLIGHTED_ITEM_KEY = 'highlighted-item';
-
-const DEFAULT_ITEM_TEXT_STYLE = new PIXI.TextStyle({
-    fontFamily: 'Equinor',
-    fill: 'white',
-    fontSize: 13,
-    align: 'center',
-});
-
-export const createTextStyle = (style: PIXI.TextStyle) => new PIXI.TextStyle(style);
-
-export type RenderItem = {
-    key: string;
-    render: (context: ItemRenderTemplate) => void;
-    context: ItemRenderTemplate;
-};
-
-export type HangingGardenColumn<T> = {
-    key: string;
-    data: T[];
-};
-
-export type PopOver = {
-    top: number;
-    left: number;
-    render: () => JSX.Element;
-};
-
-export type ExpandedColumn = {
-    isExpanded: boolean;
-    maxWidth: number;
-    index: number;
-};
-
-export type ExpandedColumns = { [key: string]: ExpandedColumn };
-
-export type HeaderRenderTemplate = {
-    container: PIXI.Container;
-    width: number;
-    height: number;
-    graphics: PIXI.Graphics;
-    createTextNode: (text: string, color: number) => PIXI.Sprite;
-    isHighlighted: boolean;
-};
-
-export type ItemRenderTemplate = {
-    container: PIXI.Container;
-    width: number;
-    height: number;
-    graphics: PIXI.Graphics;
-    createTextNode: (text: string, color: number) => PIXI.Sprite;
-    createRect: (x: number, y: number, width: number, height: number, color: number) => void;
-    addDot: (color: number, x: number, y?: number, borderColor?: number) => void;
-    addPopover: (hitArea: any, renderPopover: () => JSX.Element) => void;
-    enquedRender: (key: string, render: (context: ItemRenderTemplate) => void) => void;
-};
-
-export type HangingGardenColumnIndex = { [key: string]: any };
-
-export type HangingGardenProps<T extends HangingGardenColumnIndex> = {
-    columns: HangingGardenColumn<T>[];
-    highlightedColumnKey: string;
-    highlightedItem: T | null;
-    itemKeyProp: keyof T;
-    itemWidth: number;
-    itemHeight: number;
-    getItemDescription: (item: T) => string;
-    onItemClick: (item: T) => void;
-    headerHeight: number;
-    renderItemTemplate: (item: T, context: ItemRenderTemplate) => void;
-    renderHeaderTemplate: (key: string, context: HeaderRenderTemplate) => void;
-    provideController?: any;
-    backgroundColor?: number;
-};
+import {
+    HangingGardenColumnIndex,
+    HangingGardenProps,
+    ExpandedColumns,
+    HangingGardenColumn,
+    ItemRenderTemplate,
+    RenderItem,
+} from './HangingGardenModels';
+import {
+    getMaxRowCount,
+    createRenderedItemDescription,
+    getColumnX,
+    addDot,
+    getHeaderWidth,
+    getCalculatedWidth,
+    getCalculatedHeight,
+    DEFAULT_ITEM_HEIGHT,
+    DEFAULT_HEADER_HEIGHT,
+    DEFAULT_ITEM_TEXT_STYLE,
+    EXPANDED_COLUMN_PADDING,
+    HIGHLIGHTED_ITEM_KEY,
+} from './utils';
+import PopOver, { addPopover, PopOver as PopOverType } from './PopOver';
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
@@ -100,22 +43,28 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 }: HangingGardenProps<T>) {
     const [maxRowCount, setMaxRowCount] = React.useState(0);
     const [expandedColumns, setExpandedColumns] = React.useState<ExpandedColumns>({});
-    const [popover, setPopover] = React.useState<PopOver | null>(null);
-    const [scrollTop, SetScrollTop] = React.useState(0);
-    const [scrollLeft, SetScrollLeft] = React.useState(0);
+    const [popover, setPopover] = React.useState<PopOverType | null>(null);
 
     const {
         clearTextureCaches,
         clearItemTextureCaches,
         addTextureToCache,
-        getTextureKeyFromCache,
+        getTextureFromCache,
     } = useTextureCaches();
 
-    const container = React.useRef<HTMLDivElement>(null);
-    const canvas = React.useRef<HTMLCanvasElement>(null);
     PIXI.utils.skipHello(); // Don't output the pixi message to the console
     PIXI.Ticker.shared.autoStart = false;
     PIXI.settings.ROUND_PIXELS = true;
+
+    const container = React.useRef<HTMLDivElement>(null);
+    const canvas = React.useRef<HTMLCanvasElement>(null);
+    const stage = React.useRef(new PIXI.Container());
+    const checkRendererSizeAnimationframe = React.useRef(0);
+    const renderQueue = React.useRef<RenderItem[]>([]);
+    const isRendering = React.useRef(false);
+    const isScrolling = React.useRef(false);
+    const scrollTop = React.useRef(0);
+    const scrollLeft = React.useRef(0);
 
     const pixiApp = React.useMemo(() => {
         if (!canvas.current || !container.current) return null;
@@ -132,8 +81,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
         });
     }, [canvas.current, container.current]);
 
-    const stage = React.useRef(new PIXI.Container());
-
     React.useEffect(() => {
         if (!pixiApp) return;
 
@@ -146,7 +93,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
         // No need to render twice
         if (!didScroll) {
             window.requestAnimationFrame(() => {
-                console.log('render garden 1');
                 renderGarden();
             });
         }
@@ -154,14 +100,19 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
         if (provideController) {
             provideController({
                 clearGarden: () => {
-                    clearGarden();
+                    clearTextureCaches();
                     clearItemTextureCaches();
                 },
             });
         }
     }, [pixiApp]);
 
-    const checkRendererSizeAnimationframe = React.useRef(0);
+    React.useEffect(() => {
+        clearTextureCaches();
+        setExpandedColumns({});
+        setMaxRowCount(getMaxRowCount(columns));
+        renderGarden();
+    }, [columns]);
 
     React.useEffect(() => {
         checkRendererSize();
@@ -172,22 +123,13 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     }, [columns]);
 
     React.useEffect(() => {
-        clearGarden();
-        console.log('render garden 2');
-        setMaxRowCount(getMaxRowCount(columns));
-        renderGarden();
-    }, [columns]);
-
-    React.useEffect(() => {
         scrollToHighlightedColumn();
-        clearGarden();
-        console.log('render garden 3');
+        clearTextureCaches();
         renderGarden();
     }, [highlightedColumnKey, highlightedItem]);
 
     React.useEffect(() => {
-        clearGarden();
-        console.log('render garden 4');
+        clearTextureCaches();
         renderGarden();
     }, [expandedColumns]);
 
@@ -195,18 +137,11 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
         clearItemTextureCaches();
     }, [itemHeight, itemWidth]);
 
-    const getMaxRowCount = (columns: HangingGardenColumn<T>[]) => {
-        return Math.max.apply(
-            Math,
-            columns.map((column) => column.data.length)
-        );
-    };
-
     const scrollToHighlightedColumn = React.useCallback(() => {
         if (!container.current) return;
 
         if (container.current.scrollWidth <= container.current.offsetWidth) {
-            SetScrollLeft((container.current.scrollLeft = 0));
+            scrollLeft.current = container.current.scrollLeft = 0;
             return false;
         }
 
@@ -227,48 +162,30 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
         }
 
         if (highlightedColumnIndex !== -1) {
-            SetScrollLeft(
-                (container.current.scrollLeft =
-                    highlightedColumnIndex > -1
-                        ? highlightedColumnIndex * itemWidth -
-                          container.current.offsetWidth / 2 +
-                          itemWidth / 2
-                        : 0)
-            );
+            scrollLeft.current = container.current.scrollLeft =
+                highlightedColumnIndex > -1
+                    ? highlightedColumnIndex * itemWidth -
+                      container.current.offsetWidth / 2 +
+                      itemWidth / 2
+                    : 0;
         } else {
-            SetScrollLeft((container.current.scrollLeft = 0));
+            scrollLeft.current = container.current.scrollLeft = 0;
         }
 
-        return scrollLeft !== 0;
-    }, [highlightedColumnKey, highlightedItem, container.current]);
-
-    const checkRendererSize = () => {
-        if (!container.current || !pixiApp) {
-            checkRendererSizeAnimationframe.current = window.requestAnimationFrame(
-                checkRendererSize
-            );
-            return;
-        }
-
-        const { offsetWidth, offsetHeight } = container.current;
-        const { width, height } = pixiApp.renderer;
-
-        if (width !== offsetWidth || height !== offsetHeight) {
-            pixiApp.renderer.resize(offsetWidth, offsetHeight);
-            console.log('render garden 5');
-            renderGarden();
-        }
-
-        checkRendererSizeAnimationframe.current = window.requestAnimationFrame(checkRendererSize);
-    };
-
-    const clearGarden = React.useCallback(() => {
-        clearTextureCaches();
-    }, []);
+        return scrollLeft.current !== 0;
+    }, [
+        columns,
+        highlightedColumnKey,
+        highlightedItem,
+        container.current?.scrollLeft,
+        container.current?.offsetWidth,
+        container.current?.offsetHeight,
+        itemWidth,
+    ]);
 
     const getCharTexture = React.useCallback(
         (char: string) => {
-            let texture = getTextureKeyFromCache(TEXTURE_CACHE_KEYS.CHARS, char) as PIXI.Texture;
+            let texture = getTextureFromCache(TEXTURE_CACHE_KEYS.CHARS, char) as PIXI.Texture;
             if (!texture) {
                 const text = new PIXI.Text(char, DEFAULT_ITEM_TEXT_STYLE);
                 stage.current.addChild(text);
@@ -280,55 +197,20 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
             return texture;
         },
-        [getTextureKeyFromCache, addTextureToCache]
-    );
-
-    const createRoundedRectMask = React.useCallback((width: number, height: number) => {
-        const mask = new PIXI.Graphics();
-        mask.cacheAsBitmap = true;
-        mask.beginFill(0xff3300);
-        mask.drawRoundedRect(1, 1, width - 2, height - 2, 4);
-        mask.endFill();
-        return mask;
-    }, []);
-
-    const getItemMask = React.useCallback(() => {
-        const key = 'item';
-        let mask = getTextureKeyFromCache(TEXTURE_CACHE_KEYS.MASKS, key);
-        if (!mask) {
-            mask = createRoundedRectMask(itemWidth, itemHeight);
-            addTextureToCache(TEXTURE_CACHE_KEYS.MASKS, key, mask);
-        }
-
-        return mask as PIXI.Graphics;
-    }, [getTextureKeyFromCache, addTextureToCache]);
-
-    const getHeaderMask = React.useCallback(
-        (index: number) => {
-            const key = `header-${index}`;
-            let mask = getTextureKeyFromCache(TEXTURE_CACHE_KEYS.MASKS, key);
-            if (!mask) {
-                const headerWidth = getHeaderWidth(index);
-                mask = createRoundedRectMask(headerWidth, headerHeight);
-                addTextureToCache(TEXTURE_CACHE_KEYS.MASKS, key, mask);
-            }
-
-            return mask as PIXI.Graphics;
-        },
-        [getTextureKeyFromCache, addTextureToCache]
+        [getTextureFromCache, addTextureToCache, stage.current]
     );
 
     const createTextNode = React.useCallback(
         (text: string, color: number) => {
-            let cachedText = getTextureKeyFromCache(
+            let cachedText = getTextureFromCache(
                 TEXTURE_CACHE_KEYS.TEXTS,
                 text + color
             ) as PIXI.RenderTexture;
 
             if (!cachedText) {
                 const chars = text.split('');
-                const container = new PIXI.Container();
-                container.cacheAsBitmap = true;
+                const textContainer = new PIXI.Container();
+                textContainer.cacheAsBitmap = true;
                 let x = 0;
                 chars.forEach((char) => {
                     const textSprite = new PIXI.Sprite(getCharTexture(char));
@@ -337,28 +219,28 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                     if (color) {
                         textSprite.tint = color;
                     }
-                    container.addChild(textSprite);
+                    textContainer.addChild(textSprite);
                     x = x + textSprite.width;
                 });
 
                 cachedText = PIXI.RenderTexture.create({
-                    width: container.width,
-                    height: container.height,
+                    width: textContainer.width,
+                    height: textContainer.height,
                 });
-                pixiApp?.renderer.render(container, cachedText);
+                pixiApp?.renderer.render(textContainer, cachedText);
 
                 addTextureToCache(TEXTURE_CACHE_KEYS.TEXTS, text + color, cachedText);
             }
 
             return new PIXI.Sprite(cachedText);
         },
-        [getTextureKeyFromCache, addTextureToCache]
+        [addTextureToCache, getTextureFromCache, pixiApp]
     );
 
     const createRect = React.useCallback(
         (x: number, y: number, width: number, height: number, color: number) => {
             const key = '' + color + x + y + width + height;
-            let cachedRect = getTextureKeyFromCache(
+            let cachedRect = getTextureFromCache(
                 TEXTURE_CACHE_KEYS.RECTS,
                 key
             ) as PIXI.RenderTexture;
@@ -366,7 +248,8 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
             if (!cachedRect) {
                 const graphics = new PIXI.Graphics();
                 graphics.beginFill(color);
-                graphics.drawRect(x, y, width, height);
+                graphics.drawRoundedRect(x, y, width - 2, height - 2, 4);
+                graphics.endFill();
                 cachedRect = PIXI.RenderTexture.create({ width, height });
                 pixiApp?.renderer.render(graphics, cachedRect);
                 addTextureToCache(TEXTURE_CACHE_KEYS.RECTS, key, cachedRect);
@@ -374,244 +257,222 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
             return new PIXI.Sprite(cachedRect);
         },
-        [getTextureKeyFromCache, addTextureToCache]
+        [pixiApp, getTextureFromCache, addTextureToCache]
     );
 
-    const addPopover = React.useCallback(
-        (container: PIXI.Container, hitArea: PIXI.Rectangle, renderPopover: () => JSX.Element) => {
-            const hitAreaContainer = new PIXI.Container();
-            hitAreaContainer.interactive = true;
-            hitAreaContainer.hitArea = hitArea;
-
-            let timer: NodeJS.Timeout;
-            hitAreaContainer.on('mouseover', () => {
-                clearTimeout(timer);
-                timer = setTimeout(() => {
-                    console.log('setPopOver');
-                    setPopover({
-                        top: container.y + hitArea.height,
-                        left: container.x + hitArea.x + TOOLTIP_MARGIN,
-                        render: renderPopover,
-                    });
-                }, 500);
-            });
-
-            hitAreaContainer.on('mouseout', () => {
-                clearTimeout(timer);
-                setPopover(null);
-            });
-
-            container.addChild(hitAreaContainer);
-        },
-        [popover, container]
-    );
-
-    const addDot = React.useCallback(
+    const enqueueRenderer = React.useCallback(
         (
-            context: ItemRenderTemplate,
-            color: number,
-            x: number,
-            y?: number,
-            borderColor = 0xffffff
+            key: string,
+            render: (context: ItemRenderTemplate) => void,
+            context: ItemRenderTemplate
         ) => {
-            const circle = new PIXI.Circle(x, y, 2);
-
-            context.graphics.lineStyle(1, borderColor, 1, 1);
-            context.graphics.beginFill(color);
-            context.graphics.drawShape(circle);
-            context.graphics.endFill();
-            context.graphics.lineStyle(0);
+            renderQueue.current.push({
+                key,
+                render,
+                context,
+            });
         },
-        []
+        [renderQueue.current]
     );
 
-    const renderGarden = () => {
-        const oldStage = stage.current;
-
-        stage.current = new PIXI.Container();
-
-        stage.current.x = -scrollLeft;
-        stage.current.y = -scrollTop;
-
-        const offsetWidth = container.current?.offsetWidth || 0;
-        const scrollRight = scrollLeft + offsetWidth;
-        for (let i = 0; i < columns.length; i++) {
-            const column = columns[i];
-            const columnX = getColumnX(i);
-            const width = getHeaderWidth(i);
-
-            if (column && columnX + width >= scrollLeft && columnX <= scrollRight) {
-                renderColumn(column, i);
+    const processRenderQueue = React.useCallback(() => {
+        if (isRendering.current || !renderQueue.current.length) {
+            if (!renderQueue.current.length) {
+                pixiApp?.render();
             }
-        }
-
-        renderHighlightedItem();
-
-        pixiApp?.stage.addChild(stage.current);
-
-        oldStage.destroy();
-        pixiApp?.stage.removeChild(oldStage);
-
-        pixiApp?.render();
-    };
-
-    const getColumnX = React.useCallback(
-        (index: number) => {
-            let expandedWithBeforeIndex = 0;
-            for (const key in expandedColumns) {
-                const expandedColumn = expandedColumns[key];
-                if (expandedColumn.index < index && expandedColumn.isExpanded) {
-                    expandedWithBeforeIndex =
-                        expandedWithBeforeIndex +
-                        expandedColumn.maxWidth +
-                        EXPANDED_COLUMN_PADDING * 2;
-                }
-            }
-
-            return index * itemWidth + expandedWithBeforeIndex;
-        },
-        [expandedColumns]
-    );
-
-    const getHeaderWidth = React.useCallback(
-        (index: number) => {
-            const column = columns[index];
-
-            if (column) {
-                const expandedColumn = expandedColumns && expandedColumns[column.key];
-
-                if (expandedColumn && expandedColumn.isExpanded) {
-                    return itemWidth + expandedColumn.maxWidth + EXPANDED_COLUMN_PADDING * 2;
-                }
-            }
-
-            return itemWidth;
-        },
-        [expandedColumns]
-    );
-
-    const renderColumn = (column: HangingGardenColumn<T>, index: number) => {
-        const startRow = Math.floor(scrollTop / itemHeight);
-        const offSetHeigth = container.current?.offsetHeight || 0;
-        const endRow = Math.min(
-            column.data.length,
-            Math.ceil((scrollTop + offSetHeigth) / itemHeight)
-        );
-
-        for (let i = startRow; i < endRow; i++) {
-            renderItem(column.data[i], i, index);
-        }
-
-        renderHeader(column.key, index);
-    };
-
-    const getRenderedItemDescription = (item: T) => {
-        const description = getItemDescription(item);
-        let container = getTextureKeyFromCache(TEXTURE_CACHE_KEYS.DESCRIPTIONS, item[itemKeyProp]);
-        if (!container) {
-            container = new PIXI.Container();
-            container.cacheAsBitmap = true;
-            const textNode = createTextNode(description, 0x243746);
-
-            // Adding a "transparent" background graphic improves the quality of the description text
-            const graphics = new PIXI.Graphics();
-            graphics.beginFill(backgroundColor);
-            graphics.drawRect(0, 0, textNode.width, textNode.height);
-            container.addChild(graphics);
-            container.addChild(textNode);
-            addTextureToCache(TEXTURE_CACHE_KEYS.DESCRIPTIONS, item[itemKeyProp], container);
-        }
-
-        return container;
-    };
-
-    const onHeaderClick = (key: string, index: number) => {
-        if (expandedColumns && expandedColumns[key]) {
-            setExpandedColumns((prevExpandedColumns) => ({
-                ...prevExpandedColumns,
-                [key]: {
-                    ...prevExpandedColumns[key],
-                    isExpanded: !prevExpandedColumns[key].isExpanded,
-                },
-            }));
 
             return;
         }
 
-        const column = columns[index];
+        isRendering.current = true;
 
-        const renderedDescriptions = column.data.map(getRenderedItemDescription);
+        const renderers = renderQueue.current.splice(0, 100);
+        renderers.forEach(processRenderer);
+        pixiApp?.render();
+        isRendering.current = false;
+        window.requestAnimationFrame(processRenderQueue);
+    }, [isRendering.current, pixiApp, renderQueue.current]);
 
-        const maxWidth = Math.max.apply(
-            Math,
-            renderedDescriptions.map((container) => container.width)
-        );
-        setExpandedColumns((prevExpandedColumns) => ({
-            ...prevExpandedColumns,
-            [key]: {
-                isExpanded: true,
-                maxWidth,
-                index,
-            },
-        }));
-    };
+    const processRenderer = React.useCallback(
+        (renderer: RenderItem) => {
+            let graphicsContainer = getTextureFromCache(
+                TEXTURE_CACHE_KEYS.GRAPHICS,
+                renderer.key
+            ) as PIXI.RenderTexture;
 
-    const renderHeader = (key: string, index: number) => {
-        let renderedHeader = getTextureKeyFromCache(
-            TEXTURE_CACHE_KEYS.HEADERS,
-            key
-        ) as PIXI.Container;
+            if (!graphicsContainer) {
+                const graphics = new PIXI.Graphics();
+                graphics.cacheAsBitmap = false;
+                renderer.render({
+                    ...renderer.context,
+                    graphics,
+                });
 
-        if (!renderedHeader) {
-            const headerWidth = getHeaderWidth(index);
-            const isHighlighted = highlightedColumnKey === key;
-            renderedHeader = new PIXI.Container();
-            renderedHeader.buttonMode = true;
-            renderedHeader.interactive = true;
-            renderedHeader.on('click', () => onHeaderClick(key, index));
-            renderedHeader.on('tap', () => onHeaderClick(key, index));
+                graphicsContainer = PIXI.RenderTexture.create({
+                    width: renderer.context.width,
+                    height: renderer.context.height,
+                });
+                pixiApp?.renderer.render(graphics, graphicsContainer);
+                addTextureToCache(TEXTURE_CACHE_KEYS.GRAPHICS, renderer.key, graphicsContainer);
+            }
 
-            // Header container position and size
-            const x = getColumnX(index);
-            renderedHeader.x = x;
-            renderedHeader.y = 0;
-            renderedHeader.width = headerWidth;
-            renderedHeader.height = headerHeight;
+            renderer.context.container.addChild(new PIXI.Sprite(graphicsContainer));
+        },
+        [getTextureFromCache, addTextureToCache, pixiApp]
+    );
 
-            // Render header
-            const graphicsContext = new PIXI.Graphics();
-            graphicsContext.cacheAsBitmap = true;
-            renderedHeader.addChild(graphicsContext);
-            graphicsContext.beginFill(isHighlighted ? 0x007079 : 0xf7f7f7);
-            graphicsContext.drawRect(1, 1, headerWidth - 2, headerHeight - 2);
-            graphicsContext.endFill();
+    const getRenderedItemDescription = React.useCallback(
+        (item: T) => {
+            let itemDescription = getTextureFromCache(
+                TEXTURE_CACHE_KEYS.DESCRIPTIONS,
+                item[itemKeyProp]
+            );
 
-            renderHeaderTemplate(key, {
-                container: renderedHeader,
-                width: headerWidth,
-                height: headerHeight,
-                graphics: graphicsContext,
-                createTextNode: createTextNode,
-                isHighlighted,
-            });
+            if (!itemDescription) {
+                const description = getItemDescription(item);
+                const textNode = createTextNode(description, 0x243746);
+                itemDescription = createRenderedItemDescription(backgroundColor, textNode);
+                addTextureToCache(
+                    TEXTURE_CACHE_KEYS.DESCRIPTIONS,
+                    item[itemKeyProp],
+                    itemDescription
+                );
+            }
+            return itemDescription as PIXI.Container;
+        },
+        [backgroundColor, getTextureFromCache, addTextureToCache, getItemDescription]
+    );
 
-            const mask = getHeaderMask(index);
-            graphicsContext.mask = mask;
+    const renderItemDescription = React.useCallback(
+        (item: T, index: number, columnIndex: number) => {
+            const column = columns[columnIndex];
+            const expandedColumn = expandedColumns && expandedColumns[column.key];
 
-            addTextureToCache(TEXTURE_CACHE_KEYS.HEADERS, key, renderedHeader);
-        }
+            if (!expandedColumn || !expandedColumn.isExpanded) {
+                return;
+            }
 
-        // Fixed header when scrolling
-        renderedHeader.y = scrollTop;
+            const pixiContainer = getRenderedItemDescription(item);
+            pixiContainer.y =
+                headerHeight + index * itemHeight + (itemHeight / 2 - pixiContainer.height / 2);
+            pixiContainer.x =
+                getColumnX(columnIndex, expandedColumns, itemWidth) +
+                itemWidth +
+                EXPANDED_COLUMN_PADDING;
+            stage.current.removeChild(pixiContainer);
+            stage.current.addChild(pixiContainer);
+        },
+        [
+            headerHeight,
+            columns,
+            expandedColumns,
+            getColumnX,
+            itemHeight,
+            itemWidth,
+            getRenderedItemDescription,
+            stage.current,
+        ]
+    );
 
-        // Ensure the header is on top (zIndex)
-        stage.current.removeChild(renderedHeader);
-        stage.current.addChild(renderedHeader);
-    };
+    let processRenderQueueAnimationFrame: number = 0;
+    const renderItem = React.useCallback(
+        (item: T, index: number, columnIndex: number) => {
+            const x = getColumnX(columnIndex, expandedColumns, itemWidth);
+            const y = headerHeight + index * itemHeight;
 
-    const renderHighlightedItem = () => {
+            let renderedItem = getTextureFromCache(
+                TEXTURE_CACHE_KEYS.ITEMS,
+                item[itemKeyProp]
+            ) as PIXI.Container;
+            if (!renderedItem) {
+                renderedItem = new PIXI.Container();
+                renderedItem;
+                renderedItem.x = x;
+                renderedItem.y = y;
+                renderedItem.width = itemWidth;
+                renderedItem.height = itemHeight;
+                renderedItem.buttonMode = true;
+                renderedItem.interactive = true;
+                renderedItem.on('click', () => onItemClick(item));
+                renderedItem.on('tap', () => onItemClick(item));
+
+                const graphicsContext = new PIXI.Graphics();
+                graphicsContext.cacheAsBitmap = true;
+                renderedItem.addChild(graphicsContext);
+
+                const itemRenderContext: ItemRenderTemplate = {
+                    container: renderedItem,
+                    width: itemWidth,
+                    height: itemHeight,
+                    graphics: graphicsContext,
+                    createTextNode: createTextNode,
+                    createRect: (x, y, width, height, color) =>
+                        graphicsContext.addChild(createRect(x, y, width, height, color)),
+                    addDot: (color, x, y, borderColor) =>
+                        enqueueRenderer(
+                            '' + color + x + y + borderColor,
+                            (context) => addDot(context, color, x, y, borderColor),
+                            itemRenderContext
+                        ),
+                    addPopover: (hitArea, renderPopover) =>
+                        addPopover(renderedItem, hitArea, renderPopover, setPopover),
+                    enquedRender: (key, render) => enqueueRenderer(key, render, itemRenderContext),
+                };
+
+                renderItemTemplate(item, itemRenderContext);
+
+                window.cancelAnimationFrame(processRenderQueueAnimationFrame);
+                processRenderQueueAnimationFrame = window.requestAnimationFrame(processRenderQueue);
+
+                addTextureToCache(TEXTURE_CACHE_KEYS.ITEMS, item[itemKeyProp], renderedItem);
+            }
+
+            if (highlightedItem && highlightedItem[itemKeyProp] === item[itemKeyProp]) {
+                let renderedHighlightedItem = getTextureFromCache(
+                    TEXTURE_CACHE_KEYS.ITEMS,
+                    HIGHLIGHTED_ITEM_KEY
+                ) as PIXI.Graphics;
+                if (!renderedHighlightedItem) {
+                    renderedHighlightedItem = new PIXI.Graphics();
+                    renderedHighlightedItem.cacheAsBitmap = true;
+                    renderedHighlightedItem.lineStyle(4, 0x243746);
+                    renderedHighlightedItem.drawRoundedRect(0, 0, itemWidth - 2, itemHeight - 2, 4);
+                }
+
+                renderedHighlightedItem.x = x;
+                renderedHighlightedItem.y = y;
+                stage.current.addChild(renderedHighlightedItem);
+            }
+
+            renderItemDescription(item, index, columnIndex);
+
+            renderedItem.x = x;
+            renderedItem.y = y;
+
+            stage.current.addChild(renderedItem);
+        },
+        [
+            stage.current,
+            getColumnX,
+            expandedColumns,
+            highlightedItem,
+            headerHeight,
+            itemHeight,
+            itemWidth,
+            createTextNode,
+            enqueueRenderer,
+            getTextureFromCache,
+            addTextureToCache,
+            processRenderQueueAnimationFrame,
+            processRenderQueue,
+            renderItemDescription,
+            onItemClick,
+        ]
+    );
+
+    const renderHighlightedItem = React.useCallback(() => {
         if (!highlightedItem) {
-            const renderedHighlightedItem = getTextureKeyFromCache(
+            const renderedHighlightedItem = getTextureFromCache(
                 TEXTURE_CACHE_KEYS.ITEMS,
                 HIGHLIGHTED_ITEM_KEY
             ) as PIXI.Container;
@@ -634,227 +495,233 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                 columns.indexOf(column)
             );
         }
-    };
+    }, [highlightedItem, getTextureFromCache, addTextureToCache, stage.current, columns]);
 
-    const renderItemDescription = (item: T, index: number, columnIndex: number) => {
-        const column = columns[columnIndex];
-        const expandedColumn = expandedColumns && expandedColumns[column.key];
+    const onHeaderClick = React.useCallback(
+        (key: string, index: number) => {
+            if (expandedColumns && expandedColumns[key]) {
+                setExpandedColumns((prevColumns) => ({
+                    ...prevColumns,
+                    [key]: {
+                        ...prevColumns[key],
+                        isExpanded: !prevColumns[key].isExpanded,
+                    },
+                }));
 
-        if (!expandedColumn || !expandedColumn.isExpanded) {
-            return;
-        }
-
-        const pixiContainer = getRenderedItemDescription(item) as PIXI.Container;
-        pixiContainer.y =
-            headerHeight + index * itemHeight + (itemHeight / 2 - pixiContainer.height / 2);
-        pixiContainer.x = getColumnX(columnIndex) + itemWidth + EXPANDED_COLUMN_PADDING;
-        stage.current.removeChild(pixiContainer);
-        stage.current.addChild(pixiContainer);
-    };
-
-    const renderQueue: RenderItem[] = [];
-    const enqueueRenderer = (
-        key: string,
-        render: (context: ItemRenderTemplate) => void,
-        context: ItemRenderTemplate
-    ) => {
-        renderQueue.push({
-            key,
-            render,
-            context,
-        });
-    };
-
-    let isRendering = false;
-    const processRenderQueue = () => {
-        if (isRendering || !renderQueue.length) {
-            if (!renderQueue.length) {
-                pixiApp?.render();
+                return;
             }
 
-            return;
+            const column = columns[index];
+
+            const renderedDescriptions = column.data.map(getRenderedItemDescription);
+
+            const maxWidth = Math.max.apply(
+                Math,
+                renderedDescriptions.map((description) => description.width)
+            );
+
+            setExpandedColumns((prevColumns) => ({
+                ...prevColumns,
+                [key]: {
+                    isExpanded: true,
+                    maxWidth,
+                    index,
+                },
+            }));
+        },
+        [expandedColumns, columns, setExpandedColumns, getRenderedItemDescription]
+    );
+
+    const renderHeader = React.useCallback(
+        (key: string, index: number) => {
+            let renderedHeader = getTextureFromCache(
+                TEXTURE_CACHE_KEYS.HEADERS,
+                key
+            ) as PIXI.Container;
+
+            if (!renderedHeader) {
+                const headerWidth = getHeaderWidth(columns[index]?.key, expandedColumns, itemWidth);
+                const isHighlighted = highlightedColumnKey === key;
+                renderedHeader = new PIXI.Container();
+                renderedHeader.buttonMode = true;
+                renderedHeader.interactive = true;
+                renderedHeader.on('click', () => onHeaderClick(key, index));
+                renderedHeader.on('tap', () => onHeaderClick(key, index));
+
+                // Header container position and size
+                const x = getColumnX(index, expandedColumns, itemWidth);
+                renderedHeader.x = x;
+                renderedHeader.y = 0;
+                renderedHeader.width = headerWidth;
+                renderedHeader.height = headerHeight;
+
+                // Render header
+                const graphicsContext = new PIXI.Graphics();
+                graphicsContext.cacheAsBitmap = true;
+
+                renderedHeader.addChild(graphicsContext);
+                graphicsContext.beginFill(isHighlighted ? 0x007079 : 0xf7f7f7);
+                graphicsContext.drawRoundedRect(0, 0, headerWidth - 2, headerHeight - 2, 4);
+                graphicsContext.endFill();
+
+                renderHeaderTemplate(key, {
+                    container: renderedHeader,
+                    width: headerWidth,
+                    height: headerHeight,
+                    graphics: graphicsContext,
+                    createTextNode: createTextNode,
+                    isHighlighted,
+                });
+
+                addTextureToCache(TEXTURE_CACHE_KEYS.HEADERS, key, renderedHeader);
+            }
+
+            // Fixed header when scrolling
+            renderedHeader.y = scrollTop.current;
+
+            // Ensure the header is on top (zIndex)
+            stage.current.removeChild(renderedHeader);
+            stage.current.addChild(renderedHeader);
+        },
+        [
+            getTextureFromCache,
+            addTextureToCache,
+            onHeaderClick,
+            highlightedColumnKey,
+            expandedColumns,
+            columns,
+            itemWidth,
+            headerHeight,
+            renderHeaderTemplate,
+            stage.current,
+            createTextNode,
+            scrollTop.current,
+        ]
+    );
+
+    const renderColumn = React.useCallback(
+        (column: HangingGardenColumn<T>, index: number) => {
+            const startRow = Math.floor(scrollTop.current / itemHeight);
+            const offSetHeigth = container.current?.offsetHeight || 0;
+            const endRow = Math.min(
+                column.data.length,
+                Math.ceil((scrollTop.current + offSetHeigth) / itemHeight)
+            );
+
+            for (let i = startRow; i < endRow; i++) {
+                renderItem(column.data[i], i, index);
+            }
+
+            renderHeader(column.key, index);
+        },
+        [
+            renderItem,
+            renderHeader,
+            expandedColumns,
+            container.current?.offsetHeight,
+            scrollTop.current,
+            itemHeight,
+        ]
+    );
+
+    const renderGarden = React.useCallback(() => {
+        const oldStage = stage.current;
+
+        stage.current = new PIXI.Container();
+        stage.current.x = -scrollLeft.current;
+        stage.current.y = -scrollTop.current;
+
+        const offsetWidth = container.current?.offsetWidth || 0;
+        const scrollRight = scrollLeft.current + offsetWidth + 10;
+        for (let i = 0; i < columns.length; i++) {
+            const column = columns[i];
+            const columnX = getColumnX(i, expandedColumns, itemWidth);
+            const width = getHeaderWidth(column.key, expandedColumns, itemWidth);
+
+            if (column && columnX + width >= scrollLeft.current && columnX <= scrollRight) {
+                renderColumn(column, i);
+            }
         }
 
-        isRendering = true;
+        renderHighlightedItem();
 
-        const renderers = renderQueue.splice(0, 100);
-        renderers.forEach(processRenderer);
+        pixiApp?.stage.addChild(stage.current);
+
+        oldStage.destroy();
+        pixiApp?.stage.removeChild(oldStage);
+
         pixiApp?.render();
-        isRendering = false;
-        window.requestAnimationFrame(processRenderQueue);
-    };
+    }, [
+        container.current?.offsetWidth,
+        stage.current,
+        pixiApp,
+        scrollLeft.current,
+        scrollTop.current,
+        expandedColumns,
+        columns,
+        renderColumn,
+        getColumnX,
+        getHeaderWidth,
+        renderHighlightedItem,
+    ]);
 
-    const processRenderer = (renderer: RenderItem) => {
-        let container = getTextureKeyFromCache(
-            TEXTURE_CACHE_KEYS.GRAPHICS,
-            renderer.key
-        ) as PIXI.RenderTexture;
-
-        if (!container) {
-            const graphics = new PIXI.Graphics();
-            graphics.cacheAsBitmap = false;
-            renderer.render({
-                ...renderer.context,
-                graphics,
-            });
-
-            container = PIXI.RenderTexture.create({
-                width: renderer.context.width,
-                height: renderer.context.height,
-            });
-            pixiApp?.renderer.render(graphics, container);
-            addTextureToCache(TEXTURE_CACHE_KEYS.GRAPHICS, renderer.key, container);
-        }
-
-        renderer.context.container.addChild(new PIXI.Sprite(container));
-    };
-
-    let processRenderQueueAnimationFrame: number = 0;
-    const renderItem = (item: T, index: number, columnIndex: number) => {
-        const x = getColumnX(columnIndex);
-        const y = headerHeight + index * itemHeight;
-
-        let renderedItem = getTextureKeyFromCache(
-            TEXTURE_CACHE_KEYS.ITEMS,
-            item[itemKeyProp]
-        ) as PIXI.Container;
-        if (!renderedItem) {
-            renderedItem = new PIXI.Container();
-            renderedItem.x = x;
-            renderedItem.y = y;
-            renderedItem.width = itemWidth;
-            renderedItem.height = itemHeight;
-            renderedItem.buttonMode = true;
-            renderedItem.interactive = true;
-            renderedItem.on('click', () => onItemClick(item));
-            renderedItem.on('tap', () => onItemClick(item));
-
-            const graphicsContext = new PIXI.Graphics();
-            graphicsContext.cacheAsBitmap = true;
-            renderedItem.addChild(graphicsContext);
-
-            const itemRenderContext: ItemRenderTemplate = {
-                container: renderedItem,
-                width: itemWidth,
-                height: itemHeight,
-                graphics: graphicsContext,
-                createTextNode: createTextNode,
-                createRect: (x, y, width, height, color) =>
-                    graphicsContext.addChild(createRect(x, y, width, height, color)),
-                addDot: (color, x, y, borderColor) =>
-                    enqueueRenderer(
-                        '' + color + x + y + borderColor,
-                        (context) => addDot(context, color, x, y, borderColor),
-                        itemRenderContext
-                    ),
-                addPopover: (hitArea, renderPopover) =>
-                    addPopover(renderedItem, hitArea, renderPopover),
-                enquedRender: (key, render) => enqueueRenderer(key, render, itemRenderContext),
-            };
-
-            renderItemTemplate(item, itemRenderContext);
-
-            window.cancelAnimationFrame(processRenderQueueAnimationFrame);
-            processRenderQueueAnimationFrame = window.requestAnimationFrame(processRenderQueue);
-
-            const mask = getItemMask();
-            graphicsContext.mask = mask;
-
-            addTextureToCache(TEXTURE_CACHE_KEYS.ITEMS, item[itemKeyProp], renderedItem);
-        }
-
-        if (highlightedItem && highlightedItem[itemKeyProp] === item[itemKeyProp]) {
-            let renderedHighlightedItem = getTextureKeyFromCache(
-                TEXTURE_CACHE_KEYS.ITEMS,
-                HIGHLIGHTED_ITEM_KEY
-            ) as PIXI.Graphics;
-            if (!renderedHighlightedItem) {
-                renderedHighlightedItem = new PIXI.Graphics();
-                renderedHighlightedItem.cacheAsBitmap = true;
-                renderedHighlightedItem.lineStyle(4, 0x243746);
-                renderedHighlightedItem.drawRoundedRect(1, 1, itemWidth - 2, itemHeight - 2, 4);
-            }
-
-            renderedHighlightedItem.x = x;
-            renderedHighlightedItem.y = y;
-            stage.current.addChild(renderedHighlightedItem);
-        }
-
-        renderItemDescription(item, index, columnIndex);
-
-        renderedItem.x = x;
-        renderedItem.y = y;
-
-        stage.current.addChild(renderedItem);
-    };
-
-    const getCalculatedWidth = () => {
-        let expandedWidth = 0;
-        for (const key in expandedColumns) {
-            const expandedColumn = expandedColumns[key];
-            if (expandedColumn.isExpanded) {
-                expandedWidth =
-                    expandedWidth + expandedColumn.maxWidth + EXPANDED_COLUMN_PADDING * 2;
-            }
-        }
-
-        return columns.length * itemWidth + expandedWidth;
-    };
-
-    const getCalculatedHeight = () => {
-        if (!maxRowCount) {
-            return 0;
-        }
-
-        return headerHeight + itemHeight * maxRowCount;
-    };
-
-    let isScrolling = false;
-    const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-        if (isScrolling || !canvas.current) {
+    const checkRendererSize = React.useCallback(() => {
+        if (!container.current || !pixiApp) {
+            checkRendererSizeAnimationframe.current = window.requestAnimationFrame(
+                checkRendererSize
+            );
             return;
         }
 
-        isScrolling = true;
+        const { offsetWidth, offsetHeight } = container.current;
+        const { width, height } = pixiApp.renderer;
 
-        SetScrollLeft(e.currentTarget.scrollLeft);
-        SetScrollTop(e.currentTarget.scrollTop);
-        canvas.current.style.transform = `translate(${e.currentTarget.scrollLeft}px, ${e.currentTarget.scrollTop}px)`;
-
-        window.requestAnimationFrame(() => {
-            console.log('render garden 6');
+        if (width !== offsetWidth || height !== offsetHeight) {
+            pixiApp.renderer.resize(offsetWidth, offsetHeight);
             renderGarden();
-            isScrolling = false;
-        });
-    };
+        }
 
-    const RenderPopover: React.FC = () => {
-        if (!popover) return null;
+        checkRendererSizeAnimationframe.current = window.requestAnimationFrame(checkRendererSize);
+    }, [
+        container.current?.offsetWidth,
+        container.current?.offsetHeight,
+        pixiApp,
+        checkRendererSizeAnimationframe.current,
+        renderGarden,
+    ]);
 
-        return (
-            <div
-                className={styles.popoverContainer}
-                style={{ top: popover.top, left: popover.left }}
-            >
-                {' '}
-                {popover.render()}
-            </div>
-        );
-    };
+    const handleScroll = React.useCallback(
+        (e: React.UIEvent<HTMLDivElement>) => {
+            if (isScrolling.current || !canvas.current) {
+                return;
+            }
+
+            isScrolling.current = true;
+
+            scrollLeft.current = e.currentTarget.scrollLeft;
+            scrollTop.current = e.currentTarget.scrollTop;
+            canvas.current.style.transform = `translate(${e.currentTarget.scrollLeft}px, ${e.currentTarget.scrollTop}px)`;
+            window.requestAnimationFrame(() => {
+                renderGarden();
+                isScrolling.current = false;
+            });
+        },
+        [canvas.current, isScrolling.current, renderGarden]
+    );
 
     return (
         <div className={styles.container} ref={container} onScroll={handleScroll}>
             <div
                 style={{
-                    width: getCalculatedWidth(),
-                    height: getCalculatedHeight(),
+                    width: getCalculatedWidth(expandedColumns, columns.length, itemWidth),
+                    height: getCalculatedHeight(headerHeight, itemHeight, maxRowCount),
                     minWidth: '100%',
                     minHeight: '100%',
                 }}
             >
                 <canvas ref={canvas} />
             </div>
-            <RenderPopover />
+            <PopOver popover={popover} />
         </div>
     );
 }
