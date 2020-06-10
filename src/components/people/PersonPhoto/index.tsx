@@ -15,7 +15,10 @@ import AccountTypeBadge from './AccountTypeBadge';
 import RotationBadge from './RotationBadge';
 import PersonDetail from '../PersonDetail';
 import { SkeletonDisc } from '../../feedback/Skeleton';
-import PersonStatusBadge from './PersonStatusBadge';
+import PersonPresenceIcon from './PersonPresenceIcon';
+import AccountTypeIcon from './AccountTypeIcon';
+
+export { PersonPresenceIcon, AccountTypeIcon };
 
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -163,7 +166,6 @@ export default ({
                             hideTooltip={hideTooltip}
                         />
                     )}
-                    {presenceStatus && <PersonStatusBadge presence={presenceStatus} size={size} />}
                 </div>
             </div>
         </div>

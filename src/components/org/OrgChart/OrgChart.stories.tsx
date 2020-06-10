@@ -154,7 +154,42 @@ const position: Position = {
                     name: 'Equinor',
                 },
                 contracts: [],
-                positions: [],
+                positions: [
+                    {
+                        id: 'string',
+                        name: 'string',
+
+                        obs: 'string',
+                        project: {
+                            id: 'string',
+                            name: 'string',
+                            domainId: 'string',
+                            type: 'string',
+                        },
+                        basePosition: { id: 'string', name: 'string', discipline: 'string' },
+                        appliesFrom: new Date(new Date().getFullYear() - 1, 0),
+                        appliesTo: new Date(new Date().getFullYear() + 1, 0),
+
+                        workload: 100,
+                    },
+                    /*        {
+                        id: 'string',
+                        name: 'string',
+
+                        obs: 'string',
+                        project: {
+                            id: 'string',
+                            name: 'string',
+                            domainId: 'string',
+                            type: 'string',
+                        },
+                        basePosition: { id: 'string', name: 'string', discipline: 'string' },
+                        appliesFrom: new Date(new Date().getFullYear() - 1, 0),
+                        appliesTo: new Date(new Date().getFullYear() + 1, 0),
+
+                        workload: 100,
+                    }, */
+                ],
                 roles: [],
                 upn: 'egsag@equinor.com',
                 department: 'department',

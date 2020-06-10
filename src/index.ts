@@ -71,7 +71,12 @@ export {
     NavigationStructure,
 } from './components/general/NavigationDrawer';
 export { default as Accordion, AccordionItem } from './components/general/Accordion';
-export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
+export {
+    default as PersonPhoto,
+    PhotoSize,
+    AccountTypeIcon,
+    PersonPresenceIcon,
+} from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
 export { default as PersonPicker } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
