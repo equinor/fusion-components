@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withKnobs, select, text, boolean } from '@storybook/addon-knobs';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import Button from '../../../components/general/Button';
-import usePopoverRef, { PopoverPlacement, PopoverJustification } from '../index';
+import usePopoverRef, { PopoverJustification, PopoverPlacement } from '../index';
 
 const justifyOptions: { [key: string]: PopoverJustification } = {
     Start: 'start',

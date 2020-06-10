@@ -78,6 +78,12 @@ export { default as PersonPositionCard } from './components/people/PersonPositio
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
+export {
+    default as PopoverContainer,
+    PopoverPlacement,
+    PopoverJustification,
+    PopoverContainerProps,
+} from './components/general/PopoverContainer';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
