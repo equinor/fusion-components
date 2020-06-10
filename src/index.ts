@@ -78,6 +78,12 @@ export { default as PersonPositionCard } from './components/people/PersonPositio
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
+export {
+    default as PopoverContainer,
+    PopoverPlacement,
+    PopoverJustification,
+    PopoverContainerProps,
+} from './components/general/PopoverContainer';
 export { default as NotificationsSideSheet } from './components/general/NotificationsSideSheet';
 export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 
@@ -87,7 +93,7 @@ export { default as Banner } from './components/feedback/Banner';
 export { Dialog, DialogActions, DialogContent, DialogTitle } from './components/feedback/Dialog';
 export { default as Snackbar } from './components/feedback/Snackbar';
 export { SkeletonBar, SkeletonButton, SkeletonDisc } from './components/feedback/Skeleton';
-export {default as NotificationCards } from "./components/feedback/NotificationCards";
+export { default as NotificationCards } from './components/feedback/NotificationCards';
 
 // Hooks
 export { default as useElevationClassName, Elevation } from './hooks/useElevationClassName';
