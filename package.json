@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "1.1.88",
+    "version": "1.1.91",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -35,7 +35,7 @@
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
-        "@equinor/fusion": "^1.1.1",
+        "@equinor/fusion": "^2.0.13",
         "@storybook/addon-actions": "^5.3.10",
         "@storybook/addon-jest": "^5.3.10",
         "@storybook/addon-knobs": "^5.3.10",
@@ -102,7 +102,7 @@
         "url-loader": "^4.0.0",
         "uuid": "^3.4.0",
         "webpack": "^4.39.3",
-        "webpack-cli": "^3.3.1",
+        "webpack-cli": "^3.3.11",
         "webpack-merge": "^4.2.1"
     },
     "peerDependencies": {

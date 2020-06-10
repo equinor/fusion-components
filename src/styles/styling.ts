@@ -54,6 +54,12 @@ export default {
         purple: 'var(--color-purple)',
         blue: 'var(--color-blue)',
         turquoise: 'var(--color-turquoise)',
+
+        // Danger colors
+
+        danger: 'var(--color-danger)',
+        dangerHover: 'var(--color-danger-hover)',
+        dangerHighlight: 'var(--color-danger-highlight)',
     },
 
     colors: {
@@ -158,6 +164,17 @@ export default {
         },
         get turquoise() {
             return computedStyle('--color-turquoise');
+        },
+
+        // Danger colors
+        get danger() {
+            return computedStyle('--color-danger');
+        },
+        get dangerHover() {
+            return computedStyle('--color-danger-hover');
+        },
+        get dangerHighlight() {
+            return computedStyle('--color-danger-highlight');
         },
     },
 };
