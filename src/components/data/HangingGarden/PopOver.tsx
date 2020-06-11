@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as styles from './styles.less';
 import * as PIXI from 'pixi.js';
 import { POPOVER_MARGIN } from './utils';
+import { PopoverContainer } from '@equinor/fusion-components';
 
 export type PopOver = {
     top: number;
@@ -29,10 +30,10 @@ export const addPopover = (
         timer = setTimeout(() => {
             setPopover({
                 top: hitContainer.y + hitArea.height,
-                left: hitContainer.x + hitArea.x + POPOVER_MARGIN,
+                left: hitContainer.x + hitArea.x - POPOVER_MARGIN,
                 render: renderPopover,
             });
-        }, 1000);
+        }, 500);
     });
 
     hitAreaContainer.on('mouseout', () => {
@@ -48,7 +49,7 @@ const PopOver: React.FC<PopOverProps> = ({ popover }) => {
 
     return (
         <div className={styles.popoverContainer} style={{ top: popover.top, left: popover.left }}>
-            {popover.render()}
+            <PopoverContainer>{popover.render()}</PopoverContainer>
         </div>
     );
 };
