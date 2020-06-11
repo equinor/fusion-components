@@ -78,6 +78,14 @@ export { default as PersonPositionCard } from './components/people/PersonPositio
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
+export {
+    default as PopoverContainer,
+    PopoverPlacement,
+    PopoverJustification,
+    PopoverContainerProps,
+} from './components/general/PopoverContainer';
+export { default as NotificationsSideSheet } from './components/general/NotificationsSideSheet';
+export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -85,6 +93,7 @@ export { default as Banner } from './components/feedback/Banner';
 export { Dialog, DialogActions, DialogContent, DialogTitle } from './components/feedback/Dialog';
 export { default as Snackbar } from './components/feedback/Snackbar';
 export { SkeletonBar, SkeletonButton, SkeletonDisc } from './components/feedback/Skeleton';
+export { default as NotificationCards } from './components/feedback/NotificationCards';
 
 // Hooks
 export { default as useElevationClassName, Elevation } from './hooks/useElevationClassName';
@@ -127,7 +136,11 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon, NotificationIcon } from './components/icons/components/alert';
 export { AddIcon, BlockIcon, SaveIcon, CopyIcon } from './components/icons/components/content';
-export { SyncDisabledIcon, SyncIcon } from './components/icons/components/notification';
+export {
+    SyncDisabledIcon,
+    SyncIcon,
+    NotificationsIcon,
+} from './components/icons/components/notification';
 export {
     SearchIcon,
     DoneIcon,
