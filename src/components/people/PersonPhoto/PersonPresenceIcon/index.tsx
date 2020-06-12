@@ -23,12 +23,21 @@ const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presence, size }) =
         styles[presence.toLowerCase()]
     );
 
+    const presenceIcon = React.useMemo(() => {
+        if (presence === 'Online') {
+            return <CheckCircleIcon />;
+        }
+        if (presence === 'IdleBusy' || presence === 'BeRightBack') {
+            return <ScheduleIcon />;
+        }
+        return <CloseCircleIcon />;
+    }, [presence, size]);
+
     const presenceRef = useTooltipRef(presence);
+
     return (
         <div className={presenceClasses} ref={presenceRef}>
-            {presence === 'Online' && <CheckCircleIcon />}
-            {(presence === 'IdleBusy' || presence === 'BeRightBack') && <ScheduleIcon />}
-            {(presence === 'Offline' || presence === 'None') && <CloseCircleIcon />}
+            {presenceIcon}
         </div>
     );
 };

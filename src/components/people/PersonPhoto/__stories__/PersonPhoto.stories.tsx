@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
-import PersonPhoto, { PhotoSize, PersonPresence } from '../index';
+import PersonPhoto, { PhotoSize } from '../index';
 import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { PersonDetails } from '@equinor/fusion';
 
@@ -73,29 +73,21 @@ const sizes = {
     small: 'small',
 };
 
-const presenceStatus = {
+/* const presenceStatus = {
     available: 'available',
     away: 'away',
     doNotDisturb: 'doNotDisturb',
     busy: 'busy',
-    offline: 'offline'
-};
+    offline: 'offline',
+}; */
 
 const PersonPhotoStory = () => {
     const personKey = select('Account type', personKeys, personKeys.Consultant);
     const person = persons[personKey];
 
     const size = select('Size', sizes, sizes.xlarge) as PhotoSize;
-    const presence = select('Presence', presenceStatus, presenceStatus.available) as PersonPresence;
 
-    return (
-        <PersonPhoto
-            hideTooltip={boolean('Hide tooltip', true)}
-            person={person}
-            size={size}
-            presenceStatus={presence}
-        />
-    );
+    return <PersonPhoto hideTooltip={boolean('Hide tooltip', true)} person={person} size={size} />;
 };
 
 stories.add('Default', () => <PersonPhotoStory />);
