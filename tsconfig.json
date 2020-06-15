@@ -11,6 +11,7 @@
         "target": "es2017",
         "composite": false,
         "moduleResolution": "node",
+        "experimentalDecorators": true,
         "jsx": "react",
         "noImplicitAny": false,
         "paths": {
