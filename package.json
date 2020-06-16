@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "1.1.85",
+    "version": "1.1.92",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -102,7 +102,7 @@
         "url-loader": "^4.0.0",
         "uuid": "^3.4.0",
         "webpack": "^4.39.3",
-        "webpack-cli": "^3.3.1",
+        "webpack-cli": "^3.3.11",
         "webpack-merge": "^4.2.1"
     },
     "peerDependencies": {

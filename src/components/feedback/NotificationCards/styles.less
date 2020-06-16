@@ -1,0 +1,81 @@
+.container {
+    background-color: rgba(0,0,0,0);;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column-reverse;
+    position: fixed;
+    pointer-events: all;
+    max-height: calc(100vh - var(--top-height));
+    width: var(--notifications-width);
+    right: calc(var(--grid-unit) * 4px);
+    top: var(--top-height);
+    pointer-events: all;
+    overflow:  auto;
+    padding: calc(var(--grid-unit) * 1px);
+    justify-content: flex-start;
+    scroll-behavior: smooth;
+    
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .gradientTop, .gradientBottom{
+        height: calc(var(--grid-unit) * 8px);
+        width: var(--notifications-width);
+        position: fixed;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .gradientBottom{
+        bottom: 0;
+    }
+    .gradientTop{
+        top: var(--top-height);
+    }
+
+    &.showGradientTop{
+        .gradientTop{
+            opacity: 1;
+            background: linear-gradient(180deg, #FFF 23.44%, rgba(255, 255, 255, 0) 100%);
+            z-index: 2;
+        }
+       
+    }
+
+    &.showGradientBottom{
+        .gradientBottom{
+            opacity: 1;
+            background: linear-gradient(0deg, #FFF 23.44%, rgba(255, 255, 255, 0) 100%);
+            z-index: 2;
+
+        }
+        
+    }
+
+    .notificationWrapper {
+        border-radius: 4px;
+        transition: transform .3s ease, opacity .6s;
+        margin-bottom: calc(var(--grid-unit) * 2px);
+        border-collapse: separate; 
+        background-color: var(--color-white);
+        transform: translateX(calc(var(--notifications-width) * 1.1));
+        -webkit-transform: translateX(calc(var(--notifications-width) * 1.1));
+        opacity: 0;
+    
+        &.isVisible{
+            transform: translateX(0px);
+            -webkit-transform: translateX(0px);
+            opacity: 1;
+        }
+    }
+
+    &.comfortable {
+        --top-height: calc(var(--grid-unit) * 11px);
+        --notifications-width: calc(var(--grid-unit) * 56px);
+    }
+    &.compact {
+        --top-height: calc(var(--grid-unit) * 8px);
+        --notifications-width: calc(var(--grid-unit) * 56px);
+    }
+}

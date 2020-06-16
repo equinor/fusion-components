@@ -1,4 +1,4 @@
-import { useState, useEffect, MutableRefObject } from 'react';
+import { useState, useEffect, MutableRefObject, useRef } from 'react';
 
 const defaultRect: ClientRect = {
     left: 0,
@@ -33,24 +33,32 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
 
     useEffect(setRectFromRef, [ref.current]);
 
-    let animationFrame: number;
-    let isStopped = false;
+    const animationFrame = useRef(0);
+    const timer = useRef(0);
+    const isStopped = useRef(false);
     const update = () => {
-        if (isStopped) {
+        clearTimeout(timer.current);
+        window.cancelAnimationFrame(timer.current);
+
+        if (isStopped.current) {
             return;
         }
 
-        setRectFromRef();
+        timer.current = setTimeout(() => {
+            setRectFromRef();
 
-        animationFrame = window.requestAnimationFrame(update);
+            animationFrame.current = window.requestAnimationFrame(update);
+        });
     };
 
     useEffect(() => {
-        animationFrame = window.requestAnimationFrame(update);
+        isStopped.current = false;
+
+        animationFrame.current = window.requestAnimationFrame(update);
 
         return () => {
-            window.cancelAnimationFrame(animationFrame);
-            isStopped = true;
+            window.cancelAnimationFrame(animationFrame.current);
+            isStopped.current = true;
         };
     }, [rect]);
 

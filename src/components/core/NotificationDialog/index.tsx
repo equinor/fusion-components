@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { useFusionContext, NotificationRequest, NotificationResponse } from '@equinor/fusion';
+import { NotificationRequest, NotificationResponse, useFusionContext } from '@equinor/fusion';
 import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
     Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
 } from '@equinor/fusion-components';
 
 import styles from './styles.less';
@@ -29,7 +29,7 @@ const NotificationDialog: React.FC = () => {
 
     const onCancel = useCallback(() => {
         if (currentResolver) {
-            currentResolver({ dismissed: false, cancelled: true, confirmed: false });
+            currentResolver({ cancelled: true, confirmed: false, dismissed: false });
             setCurrentResolver(null);
         }
 
@@ -38,7 +38,7 @@ const NotificationDialog: React.FC = () => {
 
     const onConfirm = useCallback(() => {
         if (currentResolver) {
-            currentResolver({ dismissed: false, cancelled: false, confirmed: true });
+            currentResolver({ cancelled: false, confirmed: true, dismissed: false });
             setCurrentResolver(null);
         }
 
@@ -72,7 +72,7 @@ const NotificationDialog: React.FC = () => {
             <Dialog>
                 <DialogTitle>{currentNotification.title}</DialogTitle>
                 <DialogContent>
-                    <p>{currentNotification.body}</p>
+                    <div>{currentNotification.body}</div>
                 </DialogContent>
                 <DialogActions>
                     <Button frameless onClick={onCancel}>
