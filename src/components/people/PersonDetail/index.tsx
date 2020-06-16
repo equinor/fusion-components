@@ -31,19 +31,22 @@ export default ({ personId, person }: PersonDetailProps) => {
         }
     }, [error, personDetails]);
 
-    const fetchPresenceStatus = React.useCallback(async (mail: string) => {
-        setIsFetchingPresence(true);
-        setPresenceError(null);
+    const fetchPresenceStatus = React.useCallback(
+        async (mail: string) => {
+            setIsFetchingPresence(true);
+            setPresenceError(null);
 
-        try {
-            const response = await apiClients.people.getPresenceAsync(mail, '1.0-preview');
-            setPresence(response.data);
-        } catch (e) {
-            setPresenceError(e);
-        } finally {
-            setIsFetchingPresence(false);
-        }
-    }, []);
+            try {
+                const response = await apiClients.people.getPresenceAsync(mail, '1.0-preview');
+                setPresence(response.data);
+            } catch (e) {
+                setPresenceError(e);
+            } finally {
+                setIsFetchingPresence(false);
+            }
+        },
+        [apiClients]
+    );
 
     React.useEffect(() => {
         if (currentPerson && currentPerson.mail) {

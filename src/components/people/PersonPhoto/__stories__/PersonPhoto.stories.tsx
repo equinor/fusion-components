@@ -73,14 +73,6 @@ const sizes = {
     small: 'small',
 };
 
-/* const presenceStatus = {
-    available: 'available',
-    away: 'away',
-    doNotDisturb: 'doNotDisturb',
-    busy: 'busy',
-    offline: 'offline',
-}; */
-
 const PersonPhotoStory = () => {
     const personKey = select('Account type', personKeys, personKeys.Consultant);
     const person = persons[personKey];
