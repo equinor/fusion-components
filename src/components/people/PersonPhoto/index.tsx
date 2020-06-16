@@ -6,6 +6,7 @@ import {
     usePersonDetails,
     PersonDetails,
     usePersonImageUrl,
+    PersonPresenceAvailability,
 } from '@equinor/fusion';
 
 import { useTooltipRef, usePopoverRef } from '@equinor/fusion-components';
@@ -14,6 +15,10 @@ import AccountTypeBadge from './AccountTypeBadge';
 import RotationBadge from './RotationBadge';
 import PersonDetail from '../PersonDetail';
 import { SkeletonDisc } from '../../feedback/Skeleton';
+import PersonPresenceIcon from './PersonPresenceIcon';
+import AccountTypeIcon from './AccountTypeIcon';
+
+export { PersonPresenceIcon, AccountTypeIcon };
 
 export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -24,6 +29,7 @@ export type PersonPhotoProps = {
     hideTooltip?: boolean;
     additionalPersons?: PersonDetails[];
     hidePopover?: boolean;
+    presenceStatus?: PersonPresenceAvailability;
 };
 
 const getDefaultPerson = (): PersonDetails => ({
@@ -46,6 +52,7 @@ export default ({
     hidePopover,
     size = 'medium',
     additionalPersons = [],
+    presenceStatus,
 }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
 
@@ -81,7 +88,7 @@ export default ({
         ''
     ) : additionalPersons.length > 0 ? (
         <div>
-            {[...additionalPersons, currentPerson].map(person => (
+            {[...additionalPersons, currentPerson].map((person) => (
                 <>
                     <span>{person ? person.name : 'TBN'}</span>
                     <br />
@@ -103,7 +110,7 @@ export default ({
         <>
             {additionalPersons.length > 0 ? (
                 <div>
-                    {[...additionalPersons, currentPerson].map(person => (
+                    {[...additionalPersons, currentPerson].map((person) => (
                         <>
                             <span>{person.name}</span>
                             <br />
