@@ -17,6 +17,20 @@ export const Item: React.FC<ItemProps> = ({ changeItem, prevItem, nextItem, cont
         <Button onClick={() => nextItem && changeItem(nextItem)}>Next Item</Button>
     ) : null;
 
+    const timeoutPromise = (interval) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                console.log("RESOLVED")
+                resolve('done');
+            }, interval);
+        });
+    };
+
+    const timeOut = async () => await timeoutPromise(5000);
+
+    React.useEffect(() => {
+        timeOut();
+    }, []);
     return (
         <div className={styles.content}>
             {prevButton}

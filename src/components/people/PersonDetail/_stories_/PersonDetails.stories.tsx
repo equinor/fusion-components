@@ -10,7 +10,7 @@ stories.addDecorator(withFusionStory('PersonDetails'));
 export const getDefaultPerson = (): PersonDetails => ({
     azureUniqueId: 'string',
     name: 'No name',
-    mail: 'noname@equinor.com',
+    mail: 'eslsa@equinor.com',
     jobTitle: 'www',
     department: 'string',
     mobilePhone: 'string',
@@ -21,7 +21,7 @@ export const getDefaultPerson = (): PersonDetails => ({
 });
 
 const PersonDetailStory = () => {
-    const [person, setPerson] = useState<PersonDetails>();
+    const [person, setPerson] = useState<PersonDetails>(getDefaultPerson());
 
     return (
         <div style={{ padding: '16px' }}>
