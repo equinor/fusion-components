@@ -1,14 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
-import withFusionStory from '../../../../../.storybook/withFusionStory';
+import withFusionStory from '../../../../../../.storybook/withFusionStory';
 
 import '..';
+import { PhotoSize } from '../element';
 import { withKnobs, boolean, select } from '@storybook/addon-knobs';
 import { PersonDetails } from '@equinor/fusion';
 
-const stories = storiesOf('CustomeElements|Person', module);
+const stories = storiesOf('CustomeElements|PersonPhoto', module);
 stories.addDecorator(withKnobs);
-stories.addDecorator(withFusionStory('Person'));
+stories.addDecorator(withFusionStory('PersonPhoto'));
 
 interface PersonDictionary {
     [accountType: string]: PersonDetails;
@@ -61,12 +62,24 @@ const persons: PersonDictionary = {
     },
 };
 
+const compactKnob = () => boolean('Compact mode', false);
+const sizeKnob = (defaultSize: PhotoSize = 'medium') =>
+    select<PhotoSize>(
+        'Photo size',
+        {
+            xlarge: 'xlarge',
+            large: 'large',
+            medium: 'medium',
+            small: 'small',
+        },
+        defaultSize
+    );
 
 stories.add('Default', () => {
     const props = {
         // person: 'e2d6d1a4-5b48-4a1d-8db1-08a5043dc658',
-        // compact: compactKnob(),
-        // size: sizeKnob(),
+        compact: compactKnob(),
+        size: sizeKnob(),
         // details: persons.Employee
         // type: typeKnob()
     };
@@ -80,11 +93,11 @@ stories.add('Default', () => {
     return (
         <div>
             <strong>vanilla</strong><br/>
-            <fusion-person person={persons.Employee.azureUniqueId} /><br/>
-            {/* <strong>with refs</strong><br/>
-            <fusion-person {...props} ref={ref} /><br/>
+            <fusion-person-photo {...props} person={persons.Employee.azureUniqueId} /><br/>
+            <strong>with refs</strong><br/>
+            <fusion-person-photo {...props} ref={ref} /><br/>
             <strong>with json</strong><br/>
-            <fusion-person {...props} details={JSON.stringify(persons.Employee)}/><br/> */}
+            <fusion-person-photo {...props} details={JSON.stringify(persons.Employee)}/><br/>
         </div>
     );
 });

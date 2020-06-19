@@ -1,19 +1,19 @@
 import { css } from '../../../base';
 
 export const style = css`
-    :host([type="consultant"]) {
+    .Consultant {
         --border-color: var(--color-secondary);
     } 
 
-    :host([type="employee"]) {
+    .Employee {
         --border-color: var(--color-purple);
     } 
 
-    :host([type="externalhire"]) {
+    .External {
         --border-color: var(--color-primary-accent);
     } 
 
-    :host([type="local"]) {
+    .Local {
         --border-color: var(--color-black-alt3);
     }
 `;

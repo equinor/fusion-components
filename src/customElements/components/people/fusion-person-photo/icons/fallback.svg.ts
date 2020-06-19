@@ -1,7 +1,7 @@
 import {svg} from 'lit-element';
 
 export const icon = svg`
-<svg>
+<svg viewBox="0 0 56 56">
     <circle cx="28" cy="28" r="28" fill="#EAEAEA" />
     <path
         fillRule="evenodd"

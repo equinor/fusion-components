@@ -10,7 +10,7 @@ declare global {
         "fusion-person-photo": PersonPhotoElement;
     }
     namespace JSX {
-        interface ReactHTML{
+        interface ReactHTML {
             "fusion-person-photo": React.DetailedHTMLFactory<PersonPhotoElementHTMLAttributes, PersonPhotoElement>;
         }
         interface IntrinsicElements {
@@ -20,3 +20,4 @@ declare global {
 }
 
 export * from './element';
+export default PersonPhotoElement;
