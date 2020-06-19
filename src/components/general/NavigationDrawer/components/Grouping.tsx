@@ -6,6 +6,7 @@ import { NavigationComponentProps } from '..';
 import NavigationPopover from './NavigationPopover';
 import NavigationItem from './NavigationItem';
 import { useTooltipRef } from '@equinor/fusion-components';
+import classNames from 'classnames';
 
 const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const {
@@ -43,11 +44,15 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         onClick && onClick();
     }, [onClick, id, isOpen, onChange]);
 
+    const iconClasses = classNames(styles.navigationIcon, {
+        [styles.isOpen]: !isCollapsed
+    })
+
     const navigationContent = useMemo(
         () => (
             <div className={styles.groupingContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
                 <div className={styles.linkContainer} onClick={change}>
-                    <div className={styles.navigationIcon}>{icon}</div>
+                    <div className={iconClasses}>{icon}</div>
                     <span className={styles.linkText} ref={textRef}>
                         {title}
                     </span>
@@ -63,7 +68,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                 </div>
             </div>
         ),
-        [icon, title, isOpen, onChange, navigationChildren, aside]
+        [icon, title, isOpen, onChange, navigationChildren, aside, iconClasses]
     );
 
     const getNavigationContent = useCallback(() => navigationContent, [navigationContent]);

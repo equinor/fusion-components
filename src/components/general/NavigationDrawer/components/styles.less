@@ -13,12 +13,18 @@
 
     .navigationIcon{
         height: .grid-unit(6px)[];
-        width: .grid-unit(6px)[];
+        min-width: .grid-unit(6px)[];
+        max-width: .grid-unit(6px)[];
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 1;
+        
+        &.isOpen {
+            padding-right: .grid-unit(1px)[];
+
+        }
     }
 
     .linkContainer{ 
