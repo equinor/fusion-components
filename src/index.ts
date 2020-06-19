@@ -191,6 +191,7 @@ export {
 } from './components/icons/components/wysiwyg';
 export { StarIcon } from './components/icons/components/toggle';
 export { PlatformIcon } from './components/icons/components/uncategorized';
+export { ColumnViewIcon, GridViewIcon, ListViewIcon } from './components/icons/components/view';
 
 // Styling
 export { default as styling } from './styles/styling';
