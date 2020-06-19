@@ -2,14 +2,13 @@ import { LitElement, html } from 'lit-element';
 import { classMap } from '../../directives';
 
 import { IFusionContext, ResourceCollections } from '@equinor/fusion';
-import FusionResourceCollection from '@equinor/fusion/lib/http/resourceCollections/FusionResourceCollection';
 
 const globalEquinorFusionContextKey = '74b1613f-f22a-451b-a5c3-1c9391e91e68';
 
 export abstract class FusionElement extends LitElement {
 
     get containerClass(): Record<string, string | boolean | number> {
-        return { FusionElement: true };
+        return {};
     }
 
     get fusionContext(): IFusionContext {
