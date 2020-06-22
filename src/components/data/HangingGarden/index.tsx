@@ -661,4 +661,10 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     );
 }
 
+export {
+    HangingGardenProps,
+    HangingGardenColumn,
+    ItemRenderContext,
+    RenderItem,
+} from './HangingGardenModels';
 export default HangingGarden;
