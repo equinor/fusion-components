@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { ExpandedColumns, ItemRenderTemplate, HangingGardenColumn } from './HangingGardenModels';
+import { ExpandedColumns, ItemRenderContext, HangingGardenColumn } from './HangingGardenModels';
 
 export const DEFAULT_ITEM_HEIGHT = 24;
 export const DEFAULT_HEADER_HEIGHT = 32;
@@ -58,7 +58,7 @@ export const getCalculatedHeight = (
 ) => (maxRowCount ? headerHeight + itemHeight * maxRowCount : 0);
 
 export const addDot = (
-    context: ItemRenderTemplate,
+    context: ItemRenderContext,
     color: number,
     x: number,
     y?: number,

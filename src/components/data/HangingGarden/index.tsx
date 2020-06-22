@@ -1,13 +1,13 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 import * as PIXI from 'pixi.js';
-import useTextureCaches, { TEXTURE_CACHE_KEYS } from './useTextureCaches';
+import useTextureCaches, { TEXTURE_CACHE_KEYS } from './hooks/useTextureCaches';
 import {
     HangingGardenColumnIndex,
     HangingGardenProps,
     ExpandedColumns,
     HangingGardenColumn,
-    ItemRenderTemplate,
+    ItemRenderContext,
     RenderItem,
 } from './HangingGardenModels';
 import {
@@ -24,7 +24,8 @@ import {
     EXPANDED_COLUMN_PADDING,
     HIGHLIGHTED_ITEM_KEY,
 } from './utils';
-import PopOver, { addPopover, PopOver as PopOverType } from './PopOver';
+import useScrolling from './hooks/useScrolling';
+import usePopover from './hooks/usePopOver';
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
@@ -33,8 +34,8 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     itemKeyProp,
     itemHeight = DEFAULT_ITEM_HEIGHT,
     itemWidth,
-    renderHeaderTemplate,
-    renderItemTemplate,
+    renderHeaderContext,
+    renderItemContext,
     getItemDescription,
     onItemClick,
     headerHeight = DEFAULT_HEADER_HEIGHT,
@@ -43,14 +44,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 }: HangingGardenProps<T>) {
     const [maxRowCount, setMaxRowCount] = React.useState(0);
     const [expandedColumns, setExpandedColumns] = React.useState<ExpandedColumns>({});
-    const [popover, setPopover] = React.useState<PopOverType | null>(null);
-
-    const {
-        clearTextureCaches,
-        clearItemTextureCaches,
-        addTextureToCache,
-        getTextureFromCache,
-    } = useTextureCaches();
 
     PIXI.utils.skipHello(); // Don't output the pixi message to the console
     PIXI.Ticker.shared.autoStart = false;
@@ -62,9 +55,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     const checkRendererSizeAnimationframe = React.useRef(0);
     const renderQueue = React.useRef<RenderItem[]>([]);
     const isRendering = React.useRef(false);
-    const isScrolling = React.useRef(false);
-    const scrollTop = React.useRef(0);
-    const scrollLeft = React.useRef(0);
 
     const pixiApp = React.useMemo(() => {
         if (!canvas.current || !container.current) return null;
@@ -79,23 +69,30 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
             transparent: true,
             sharedTicker: true,
         });
-    }, [canvas.current, container.current]);
+    }, [canvas.current, container.current, backgroundColor]);
+
+    const {
+        scrollLeft,
+        scrollTop,
+        onScroll,
+        scrollToHighlightedColumn,
+        scrollToHighlightedItem,
+    } = useScrolling<T>(canvas, container);
+
+    const { popover, addPopover } = usePopover();
+
+    const {
+        clearTextureCaches,
+        clearItemTextureCaches,
+        addTextureToCache,
+        getTextureFromCache,
+    } = useTextureCaches();
 
     React.useEffect(() => {
         if (!pixiApp) return;
 
         pixiApp.stage.addChild(stage.current);
         pixiApp.stop();
-
-        const didScroll = scrollToHighlightedColumn();
-
-        // If we did scroll to the highlighted item, the scroll handler will render for us.
-        // No need to render twice
-        if (!didScroll) {
-            window.requestAnimationFrame(() => {
-                renderGarden();
-            });
-        }
 
         if (provideController) {
             provideController({
@@ -111,6 +108,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
         clearTextureCaches();
         setExpandedColumns({});
         setMaxRowCount(getMaxRowCount(columns));
+        scrollToHighlightedColumn(columns, highlightedColumnKey, itemWidth);
         renderGarden();
     }, [columns]);
 
@@ -123,10 +121,10 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     }, [columns]);
 
     React.useEffect(() => {
-        scrollToHighlightedColumn();
+        scrollToHighlightedItem(columns, highlightedItem, itemKeyProp, itemWidth);
         clearTextureCaches();
         renderGarden();
-    }, [highlightedColumnKey, highlightedItem]);
+    }, [highlightedItem]);
 
     React.useEffect(() => {
         clearTextureCaches();
@@ -136,52 +134,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     React.useEffect(() => {
         clearItemTextureCaches();
     }, [itemHeight, itemWidth]);
-
-    const scrollToHighlightedColumn = React.useCallback(() => {
-        if (!container.current) return;
-
-        if (container.current.scrollWidth <= container.current.offsetWidth) {
-            scrollLeft.current = container.current.scrollLeft = 0;
-            return false;
-        }
-
-        let highlightedColumnIndex = -1;
-        if (highlightedItem) {
-            highlightedColumnIndex = columns.findIndex(
-                (column) =>
-                    column.data.findIndex(
-                        (item) => item[itemKeyProp] === highlightedItem[itemKeyProp]
-                    ) > -1
-            );
-        }
-
-        if (highlightedColumnKey && highlightedColumnIndex === -1) {
-            highlightedColumnIndex = columns.findIndex(
-                (column) => column.key === highlightedColumnKey
-            );
-        }
-
-        if (highlightedColumnIndex !== -1) {
-            scrollLeft.current = container.current.scrollLeft =
-                highlightedColumnIndex > -1
-                    ? highlightedColumnIndex * itemWidth -
-                      container.current.offsetWidth / 2 +
-                      itemWidth / 2
-                    : 0;
-        } else {
-            scrollLeft.current = container.current.scrollLeft = 0;
-        }
-
-        return scrollLeft.current !== 0;
-    }, [
-        columns,
-        highlightedColumnKey,
-        highlightedItem,
-        container.current?.scrollLeft,
-        container.current?.offsetWidth,
-        container.current?.offsetHeight,
-        itemWidth,
-    ]);
 
     const getCharTexture = React.useCallback(
         (char: string) => {
@@ -261,11 +213,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     );
 
     const enqueueRenderer = React.useCallback(
-        (
-            key: string,
-            render: (context: ItemRenderTemplate) => void,
-            context: ItemRenderTemplate
-        ) => {
+        (key: string, render: (context: ItemRenderContext) => void, context: ItemRenderContext) => {
             renderQueue.current.push({
                 key,
                 render,
@@ -400,7 +348,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                 graphicsContext.cacheAsBitmap = true;
                 renderedItem.addChild(graphicsContext);
 
-                const itemRenderContext: ItemRenderTemplate = {
+                const itemRenderContext: ItemRenderContext = {
                     container: renderedItem,
                     width: itemWidth,
                     height: itemHeight,
@@ -415,11 +363,11 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                             itemRenderContext
                         ),
                     addPopover: (hitArea, renderPopover) =>
-                        addPopover(renderedItem, hitArea, renderPopover, setPopover),
+                        addPopover(renderedItem, hitArea, renderPopover),
                     enquedRender: (key, render) => enqueueRenderer(key, render, itemRenderContext),
                 };
 
-                renderItemTemplate(item, itemRenderContext);
+                renderItemContext(item, itemRenderContext);
 
                 window.cancelAnimationFrame(processRenderQueueAnimationFrame);
                 processRenderQueueAnimationFrame = window.requestAnimationFrame(processRenderQueue);
@@ -564,7 +512,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                 graphicsContext.drawRoundedRect(0, 0, headerWidth - 2, headerHeight - 2, 4);
                 graphicsContext.endFill();
 
-                renderHeaderTemplate(key, {
+                renderHeaderContext(key, {
                     container: renderedHeader,
                     width: headerWidth,
                     height: headerHeight,
@@ -592,7 +540,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
             columns,
             itemWidth,
             headerHeight,
-            renderHeaderTemplate,
+            renderHeaderContext,
             stage.current,
             createTextNode,
             scrollTop.current,
@@ -626,7 +574,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
     const renderGarden = React.useCallback(() => {
         const oldStage = stage.current;
-
         stage.current = new PIXI.Container();
         stage.current.x = -scrollLeft.current;
         stage.current.y = -scrollTop.current;
@@ -692,21 +639,9 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
     const handleScroll = React.useCallback(
         (e: React.UIEvent<HTMLDivElement>) => {
-            if (isScrolling.current || !canvas.current) {
-                return;
-            }
-
-            isScrolling.current = true;
-
-            scrollLeft.current = e.currentTarget.scrollLeft;
-            scrollTop.current = e.currentTarget.scrollTop;
-            canvas.current.style.transform = `translate(${e.currentTarget.scrollLeft}px, ${e.currentTarget.scrollTop}px)`;
-            window.requestAnimationFrame(() => {
-                renderGarden();
-                isScrolling.current = false;
-            });
+            onScroll(e, renderGarden);
         },
-        [canvas.current, isScrolling.current, renderGarden]
+        [renderGarden, onScroll]
     );
 
     return (
@@ -721,7 +656,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
             >
                 <canvas ref={canvas} />
             </div>
-            <PopOver popover={popover} />
+            {popover}
         </div>
     );
 }

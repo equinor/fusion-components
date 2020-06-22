@@ -8,7 +8,7 @@ export type ExpandedColumn = {
 
 export type ExpandedColumns = { [key: string]: ExpandedColumn };
 
-export type RenderTemplate = {
+export type RenderContext = {
     container: PIXI.Container;
     width: number;
     height: number;
@@ -16,21 +16,21 @@ export type RenderTemplate = {
     createTextNode: (text: string, color: number) => PIXI.Sprite;
 };
 
-export type HeaderRenderTemplate = RenderTemplate & {
+export type HeaderRenderContext = RenderContext & {
     isHighlighted: boolean;
 };
 
-export type ItemRenderTemplate = RenderTemplate & {
+export type ItemRenderContext = RenderContext & {
     createRect: (x: number, y: number, width: number, height: number, color: number) => void;
     addDot: (color: number, x: number, y?: number, borderColor?: number) => void;
     addPopover: (hitArea: any, renderPopover: () => JSX.Element) => void;
-    enquedRender: (key: string, render: (context: ItemRenderTemplate) => void) => void;
+    enquedRender: (key: string, render: (context: ItemRenderContext) => void) => void;
 };
 
 export type RenderItem = {
     key: string;
-    render: (context: ItemRenderTemplate) => void;
-    context: ItemRenderTemplate;
+    render: (context: ItemRenderContext) => void;
+    context: ItemRenderContext;
 };
 
 export type HangingGardenColumn<T> = {
@@ -50,8 +50,8 @@ export type HangingGardenProps<T extends HangingGardenColumnIndex> = {
     getItemDescription: (item: T) => string;
     onItemClick: (item: T) => void;
     headerHeight: number;
-    renderItemTemplate: (item: T, context: ItemRenderTemplate) => void;
-    renderHeaderTemplate: (key: string, context: HeaderRenderTemplate) => void;
+    renderItemContext: (item: T, context: ItemRenderContext) => void;
+    renderHeaderContext: (key: string, context: HeaderRenderContext) => void;
     provideController?: any;
     backgroundColor?: number;
 };
