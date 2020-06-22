@@ -25,7 +25,7 @@ import {
     HIGHLIGHTED_ITEM_KEY,
 } from './utils';
 import useScrolling from './hooks/useScrolling';
-import usePopover from './hooks/usePopOver';
+import usePopover from './hooks/usePopover';
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
