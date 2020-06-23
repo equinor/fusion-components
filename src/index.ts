@@ -30,6 +30,7 @@ export {
     HangingGardenColumn,
     ItemRenderContext,
     RenderItem,
+    useHangingGardenData,
 } from './components/data/HangingGarden';
 
 // General components

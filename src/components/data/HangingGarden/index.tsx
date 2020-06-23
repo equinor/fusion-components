@@ -667,4 +667,5 @@ export {
     ItemRenderContext,
     RenderItem,
 } from './HangingGardenModels';
+export * as useHangingGardenData from './hooks/useHangingGardenData';
 export default HangingGarden;
