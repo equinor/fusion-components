@@ -112,7 +112,8 @@
         "react-router-dom": "^5.0.1",
         "history": "^4.9.0",
         "powerbi-client": "^2.8.0",
-        "pixi.js": "^5.2.4"
+        "pixi.js": "^5.2.4",
+        "moment": "^2.27.0"
     },
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
