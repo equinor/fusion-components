@@ -104,7 +104,8 @@
         "webpack": "^4.39.3",
         "webpack-cli": "^3.3.11",
         "webpack-merge": "^4.2.1",
-        "pixi.js": "^5.2.4"
+        "pixi.js": "^5.2.4",
+        "moment": "^2.27.0"
     },
     "peerDependencies": {
         "react": "^16.8.1",
