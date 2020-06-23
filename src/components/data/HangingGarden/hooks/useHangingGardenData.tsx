@@ -1,6 +1,6 @@
 import { useCurrentContext, Context, useApiClients, ApiClients } from '@equinor/fusion';
 import * as React from 'react';
-import * as moment from 'moment';
+import moment from 'moment';
 import { HttpResponse } from '@equinor/fusion/lib/http/HttpClient';
 
 const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof ApiClients[C]>(
