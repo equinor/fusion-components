@@ -26,6 +26,7 @@ import {
 } from './utils';
 import useScrolling from './hooks/useScrolling';
 import usePopover from './hooks/usePopover';
+import useHangingGardenData from './hooks/useHangingGardenData';
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
@@ -667,5 +668,5 @@ export {
     ItemRenderContext,
     RenderItem,
 } from './HangingGardenModels';
-export * as useHangingGardenData from './hooks/useHangingGardenData';
+export { useHangingGardenData };
 export default HangingGarden;
