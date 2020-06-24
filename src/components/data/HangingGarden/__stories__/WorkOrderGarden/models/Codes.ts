@@ -1,12 +1,8 @@
 import { StatusFilterType } from '../helpers';
 
 type Codes = {
-  [key:string]:StatusFilterType[]
-  disciplineCode: StatusFilterType[],
-  responsibleCode: StatusFilterType[],
-  milestoneCode: StatusFilterType[],
-  statuses: StatusFilterType[],
-  siteCodes: StatusFilterType[],
+    [key: string]: StatusFilterType[];
+    statuses: StatusFilterType[];
 };
 
-export default Codes
+export default Codes;

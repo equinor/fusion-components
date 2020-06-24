@@ -1,7 +1,5 @@
 import * as React from 'react';
 import WorkOrderType from '../models/WorkOrderType';
-
-import WorkOrderSheetInfo from './SideSheetInfo';
 import { ModalSideSheet } from '../../../../../..';
 
 type workOrderSideSheetProps = {
@@ -23,14 +21,14 @@ const WorkOrderSideSheet: React.FC<workOrderSideSheetProps> = ({
         <ModalSideSheet
             header={workOrder.workOrderNumber}
             show={isOpen}
-            size={'xlarge'}
+            size={'small'}
             onClose={() => {
                 setIsOpen(false);
                 setSelectedWorkOrder(null);
             }}
             id={workOrder.workOrderNumber}
         >
-            <WorkOrderSheetInfo workOrder={workOrder} />
+            <p>{workOrder.description}</p>
         </ModalSideSheet>
     );
 };

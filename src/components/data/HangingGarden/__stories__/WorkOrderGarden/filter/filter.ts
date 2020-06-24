@@ -24,7 +24,6 @@ export const getGroupBy = (filter: FilterTerm[]) => {
     const groupBy = getGroupByOption(filter);
 
     switch (groupBy) {
-        case 'wp':
         case 'hwp':
             return 'plannedStartDate';
 
@@ -72,12 +71,6 @@ export const getFilterOptions = (
     defaultOptions?: StatusFilterType[]
 ): StatusFilterType[] | null => {
     switch (key) {
-        case 'responsibleCode':
-        case 'milestoneCode':
-        case 'disciplineCode':
-        case 'siteCodes':
-            return codes[key];
-
         case 'status':
             return getGroupByOption(filterTerms) === 'wp'
                 ? proCoSysStatusFilters.filter((option) =>

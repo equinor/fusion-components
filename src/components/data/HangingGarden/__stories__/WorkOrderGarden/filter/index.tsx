@@ -44,10 +44,6 @@ const buildFiltersSection = (
     data: Codes,
     filterTerms: FilterTerm[]
 ): FilterSection<WorkOrderType> => {
-    Object.keys(data).forEach((code) => {
-        if (code !== 'statuses') data[code] = data[code].sort((a, b) => optionSorter(a.key, b.key));
-    });
-
     const newFilters = section
         ? section.filters.map((filter) => ({
               ...filter,
@@ -80,22 +76,12 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
 
     const updateFilterOptionsAsync = async () => {
         const filters: Codes = {
-            disciplineCode: [],
-            responsibleCode: [],
-            milestoneCode: [],
             statuses: [],
-            siteCodes: [],
         };
         const subProjects: StatusFilterType[] = [];
 
         for (let wo of data) {
-            addIfNotExist(filters.disciplineCode, wo.disciplineCode);
-            addIfNotExist(filters.responsibleCode, wo.responsibleCode);
-            addIfNotExist(filters.milestoneCode, wo.milestoneCode);
             addIfNotExist(filters.statuses, getStatus(wo));
-            wo.siteCodes.forEach((site: string) => {
-                addIfNotExist(filters.siteCodes, site);
-            });
             addIfNotExist(
                 subProjects,
                 wo.projectIdentifier,
