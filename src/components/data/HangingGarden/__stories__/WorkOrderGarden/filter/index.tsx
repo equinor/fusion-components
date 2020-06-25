@@ -15,7 +15,14 @@ import {
 } from './filter';
 import Codes from '../models/Codes';
 import { StatusFilterType } from '../helpers';
-import { FilterTerm, FilterSection, FilterPane } from '../../../../../..';
+import {
+    FilterTerm,
+    FilterSection,
+    FilterPane,
+    useTooltipRef,
+    IconButton,
+    SyncIcon,
+} from '../../../../../..';
 
 type WorkorderFilterProps = {
     data: WorkOrderType[];
@@ -125,6 +132,9 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
         []
     );
 
+    const refTitle = cacheIsInvalid ? 'Data is old, click to refresh ' : 'Refresh Data';
+    const toolTipRef = useTooltipRef(refTitle, 'left');
+
     return (
         <div style={{ flexShrink: 0, minWidth: 0 }}>
             <FilterPane
@@ -133,6 +143,14 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
                 terms={filterTerms}
                 onChange={onFilterChange}
                 screenPlacement={'right'}
+                headerComponent={
+                    <>
+                        <span>{`Updated ${cacheAge}`}</span>
+                        <IconButton ref={toolTipRef} onClick={invalidateCache}>
+                            <SyncIcon color={cacheIsInvalid ? 'red' : undefined} />
+                        </IconButton>
+                    </>
+                }
             />
         </div>
     );
