@@ -39,10 +39,15 @@ const CurrentUserDropdown: React.FC = () => {
         return null;
     }
 
+    const fullName =
+        currentUser.givenName && currentUser.familyName
+            ? `${currentUser.givenName} ${currentUser.familyName}`
+            : currentUser.fullName || null;
+
     const sections = [
         {
             key: currentUser.id,
-            title: `${currentUser.givenName} ${currentUser.familyName}`,
+            title: fullName,
             items: [
                 {
                     key: 'logout',
@@ -70,7 +75,7 @@ const CurrentUserDropdown: React.FC = () => {
 };
 
 const CurrentUserButton: React.FC = () => {
-    const {  personDetails } = useCurrentPersonDetails();
+    const { personDetails } = useCurrentPersonDetails();
     const [popoverRef, isOpen] = usePopoverRef<HTMLButtonElement>(<CurrentUserDropdown />, {
         placement: 'below',
         justify: 'end',
