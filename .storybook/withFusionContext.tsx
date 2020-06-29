@@ -12,6 +12,21 @@ import FusionRoot from '../src/components/core/Root';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
 
+const customElementsDefine = customElements.define;
+customElements.define = (
+    name: string,
+    constructor: CustomElementConstructor,
+    options: ElementDefinitionOptions
+) => {
+    if (customElements.get(name)) {
+        console.warn(`${name} is already defined as a custom element`);
+    } else {
+        customElementsDefine.call(customElements, name, constructor, options);
+    }
+};
+
+import '../src/customElements/applicationGuidance/Wrapper';
+
 const mockUser = {
     id: '1337',
     fullName: 'Charles Carmichael',
@@ -118,13 +133,13 @@ const serviceResolver: ServiceResolver = {
     getPeopleBaseUrl: () => 'https://pro-s-people-ci.azurewebsites.net',
     getReportsBaseUrl: () => 'https://pro-s-reports-ci.azurewebsites.net',
     getPowerBiApiBaseUrl: () => 'https://api.powerbi.com/v1.0/myorg',
-    getNotificationBaseUrl:() => 'https://pro-s-notification-ci.azurewebsites.net',
+    getNotificationBaseUrl: () => 'https://pro-s-notification-ci.azurewebsites.net',
 };
 
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
 authContainer.registerAppAsync(
     clientId,
-    Object.keys(serviceResolver).map(key => serviceResolver[key]())
+    Object.keys(serviceResolver).map((key) => serviceResolver[key]())
 );
 
 const FusionWrapper: React.FC = ({ children }) => {
@@ -140,14 +155,19 @@ const FusionWrapper: React.FC = ({ children }) => {
     return (
         <FusionContext.Provider value={fusionContext}>
             <HashRouter>
-                <FusionRoot rootRef={root} overlayRef={overlay}>
-                    {children}
-                </FusionRoot>
+                <app-guide-wrapper
+                    scope="storybook"
+                    azure-ad-app-id="5a842df8-3238-415d-b168-9f16a6a6031b"
+                >
+                    <FusionRoot rootRef={root} overlayRef={overlay}>
+                        {children}
+                    </FusionRoot>
+                </app-guide-wrapper>
             </HashRouter>
         </FusionContext.Provider>
     );
 };
 
-export const withFusionContext = () => stories => {
+export const withFusionContext = () => (stories) => {
     return <FusionWrapper>{stories()}</FusionWrapper>;
 };
