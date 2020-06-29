@@ -35,7 +35,6 @@ export const useDropdownController = (
     const delayTimer = useRef<NodeJS.Timeout>();
     const setIsOpen = useCallback(
         (open: boolean, delay?: number) => {
-            console.log(delayTimer.current);
             clearTimeout(delayTimer.current);
             delayTimer.current = setTimeout(() => _setIsOpen(open), delay);
         },
