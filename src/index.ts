@@ -99,6 +99,12 @@ export { Dialog, DialogActions, DialogContent, DialogTitle } from './components/
 export { default as Snackbar } from './components/feedback/Snackbar';
 export { SkeletonBar, SkeletonButton, SkeletonDisc } from './components/feedback/Skeleton';
 export { default as NotificationCards } from './components/feedback/NotificationCards';
+export {
+    default as ProgressSideSheet,
+    FailedRequest,
+    RenderRequestProps,
+    SuccessfulRequest,
+} from './components/feedback/ProgressSideSheet';
 
 // Hooks
 export { default as useElevationClassName, Elevation } from './hooks/useElevationClassName';
