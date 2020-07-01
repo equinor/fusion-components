@@ -1,9 +1,9 @@
-export const prepend = jest.fn();
+export const appendChild = jest.fn();
 export const removeChild = jest.fn();
 
 const useOverlayContainer = jest.fn();
 useOverlayContainer.mockReturnValue({
-    prepend,
+    appendChild,
     removeChild,
 });
 

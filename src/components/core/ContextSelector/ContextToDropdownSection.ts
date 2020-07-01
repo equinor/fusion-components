@@ -1,5 +1,5 @@
-import { SearchableDropdownSection } from '@equinor/fusion-components';
-import { Context, ContextTypes } from '@equinor/fusion';
+import { Context } from '@equinor/fusion';
+import { SearchableDropdownSection } from 'components/general/SearchableDropdown';
 
 const getEmptySection = (isQuerying: boolean) => ({
     key: 'empty',

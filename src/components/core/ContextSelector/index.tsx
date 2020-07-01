@@ -8,22 +8,17 @@ import {
     ContextType,
     useCurrentContextTypes,
 } from '@equinor/fusion';
-import {
-    SearchIcon,
-    useDropdownController,
-    Dropdown,
-    Menu,
-    SearchableDropdownSection,
-    SearchableDropdownOption,
-    Spinner,
-    IconButton,
-    CloseIcon,
-    TextInput,
-} from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 
 import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
+import { SearchableDropdownSection, SearchableDropdownOption } from 'components/general/SearchableDropdown';
+import SearchIcon from 'components/icons/components/action/SearchIcon';
+import Spinner from 'components/feedback/Spinner';
+import IconButton from 'components/general/IconButton';
+import CloseIcon from 'components/icons/components/navigation/CloseIcon';
+import Dropdown, { useDropdownController } from 'components/general/Dropdown';
+import Menu from 'components/general/Menu';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(

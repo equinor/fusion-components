@@ -6,7 +6,7 @@
         "module": "esnext",
         "outDir": "dist",
         "rootDir": "src",
-        "baseUrl": "./",
+        "baseUrl": "./src",
         "strict": false,
         "target": "es2017",
         "composite": false,
@@ -22,7 +22,6 @@
         "./css-modules.d.ts",
     ],
     "exclude": [
-        "src/**/*.stories.*",
-        "src/**/__stories__/*"
+        
     ]
 }
