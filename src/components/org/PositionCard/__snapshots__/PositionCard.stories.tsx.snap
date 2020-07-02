@@ -55,38 +55,6 @@ exports[`Pro org|Position Card Default 1`] = `
                       fillRule="evenodd"
                     />
                   </svg>
-                  <div
-                    className="iconContainer comfortable large"
-                  >
-                    <svg
-                      height={16}
-                      numberOfPersons={3}
-                      style={
-                        Object {
-                          "color": "",
-                        }
-                      }
-                      viewBox="0 0 24 24"
-                      width={16}
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        fill="#007079"
-                        r="12"
-                      />
-                      <text
-                        dy=".3em"
-                        stroke="white"
-                        stroke-width="1px"
-                        text-anchor="middle"
-                        x="50%"
-                        y="50%"
-                      >
-                        3
-                      </text>
-                    </svg>
-                  </div>
                 </div>
               </div>
             </div>
@@ -394,38 +362,6 @@ exports[`Pro org|Position Card Interactive 1`] = `
                       fillRule="evenodd"
                     />
                   </svg>
-                  <div
-                    className="iconContainer comfortable large"
-                  >
-                    <svg
-                      height={16}
-                      numberOfPersons={3}
-                      style={
-                        Object {
-                          "color": "",
-                        }
-                      }
-                      viewBox="0 0 24 24"
-                      width={16}
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        fill="#007079"
-                        r="12"
-                      />
-                      <text
-                        dy=".3em"
-                        stroke="white"
-                        stroke-width="1px"
-                        text-anchor="middle"
-                        x="50%"
-                        y="50%"
-                      >
-                        3
-                      </text>
-                    </svg>
-                  </div>
                 </div>
               </div>
             </div>

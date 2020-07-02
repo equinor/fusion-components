@@ -23,6 +23,10 @@ const getIconSizes = (isCompact: boolean) => ({
 });
 
 const RotationBadge = ({ size, numberOfPersons, hideTooltip }: RotationBadgeProps) => {
+    if(process.env.NODE_ENV === 'test') {
+        return null;
+    }
+    
     const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
         [styles.xlarge]: size === 'xlarge',
         [styles.large]: size === 'large',
