@@ -13,8 +13,8 @@ const position: PersonPosition = {
     project: {
         id: 'da03f725-29e5-43d9-8f2b-f756873a6034',
         name: 'Åsgard Subsea Compression Phase II with long text',
-        pimsDomainId: '20396',
-        wbs: 'PRD',
+        domainId: '20396',
+        type: ''
     },
     basePosition: {
         id: '3f743b4b-a1e1-414c-8dc9-a3652dab8eb1',

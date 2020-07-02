@@ -5,7 +5,7 @@
         "importHelpers": true,
         "module": "esnext",
         "outDir": "dist",
-        "rootDir": "src",
+        "rootDir": ".",
         "baseUrl": "./src",
         "strict": false,
         "target": "es2017",
@@ -19,6 +19,7 @@
     },
     "include": [
         "src/**/*",
+        ".storybook/**/*",
         "./css-modules.d.ts",
     ],
     "exclude": [

@@ -1,12 +1,11 @@
 import React, { useState, useCallback, useMemo } from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
-import { DropdownArrow } from "@equinor/fusion-components";
 import Filter from "./Filter";
 import styles from "../styles.less";
 import { FilterTerm, FilterSection, Filter as FilterType } from "../applyFilters";
 import { Count } from "../countFilters";
 import { useFilterPaneContext } from '../FilterPaneContext';
+import DropdownArrow from 'components/icons/components/action/DropdownArrow';
 
 type SectionProps<T> = {
     terms: FilterTerm[];

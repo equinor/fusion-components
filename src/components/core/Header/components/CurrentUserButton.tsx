@@ -7,6 +7,7 @@ import { MenuItemType } from 'components/general/Menu/MenuItem';
 import usePopoverRef from 'hooks/usePopoverRef';
 import IconButton from 'components/general/IconButton';
 import PersonPhoto from 'components/people/PersonPhoto';
+import Menu from 'components/general/Menu';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
