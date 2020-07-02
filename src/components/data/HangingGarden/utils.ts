@@ -39,15 +39,18 @@ export const getColumnX = (
     return index * defaultWidth + expandedWidthBeforeIndex;
 };
 
+export const isHeaderExpanded = (columnKey: string, expandedColumns: ExpandedColumns) => {
+    const expandedColumn = expandedColumns && expandedColumns[columnKey];
+    return expandedColumn?.isExpanded;
+};
+
 export const getHeaderWidth = (
     columnKey: string,
     expandedColumns: ExpandedColumns,
     defaultWidth: number
 ) => {
-    const expandedColumn = expandedColumns && expandedColumns[columnKey];
-
-    return expandedColumn?.isExpanded
-        ? defaultWidth + expandedColumn.maxWidth + EXPANDED_COLUMN_PADDING * 2
+    return isHeaderExpanded(columnKey, expandedColumns)
+        ? defaultWidth + expandedColumns[columnKey].maxWidth + EXPANDED_COLUMN_PADDING * 2
         : defaultWidth;
 };
 

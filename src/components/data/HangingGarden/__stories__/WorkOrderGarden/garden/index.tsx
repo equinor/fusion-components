@@ -272,7 +272,7 @@ const Garden: React.FC<GardenProps> = ({
     const getHeaderHeight = () => 40;
     const renderHeader = (key: string, context: HeaderRenderContext) => {
         const textNode = context.createTextNode(
-            key || 'N/A',
+            context.isExpanded ? key + ' Expanded' || 'NA Expanded' : key || 'NA',
             context.isHighlighted ? 0xffffff : 0x243746
         );
 

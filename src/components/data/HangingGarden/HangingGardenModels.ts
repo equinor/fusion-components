@@ -18,6 +18,7 @@ export type RenderContext = {
 
 export type HeaderRenderContext = RenderContext & {
     isHighlighted: boolean;
+    isExpanded: boolean;
 };
 
 export type ItemRenderContext = RenderContext & {

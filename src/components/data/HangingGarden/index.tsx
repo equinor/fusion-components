@@ -15,6 +15,7 @@ import {
     createRenderedItemDescription,
     getColumnX,
     addDot,
+    isHeaderExpanded,
     getHeaderWidth,
     getCalculatedWidth,
     getCalculatedHeight,
@@ -491,6 +492,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
             if (!renderedHeader) {
                 const headerWidth = getHeaderWidth(columns[index]?.key, expandedColumns, itemWidth);
                 const isHighlighted = highlightedColumnKey === key;
+                const isExpanded = isHeaderExpanded(key, expandedColumns);
                 renderedHeader = new PIXI.Container();
                 renderedHeader.buttonMode = true;
                 renderedHeader.interactive = true;
@@ -520,6 +522,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                     graphics: graphicsContext,
                     createTextNode: createTextNode,
                     isHighlighted,
+                    isExpanded,
                 });
 
                 addTextureToCache(TEXTURE_CACHE_KEYS.HEADERS, key, renderedHeader);
