@@ -92,7 +92,7 @@ exports[`General|Slider Date 1`] = `
             className="slider"
             style={
               Object {
-                "width": "100%",
+                "width": "100.0%",
               }
             }
           />
@@ -101,7 +101,7 @@ exports[`General|Slider Date 1`] = `
             onMouseDown={[Function]}
             style={
               Object {
-                "left": "100%",
+                "left": "100.0%",
               }
             }
           >
@@ -114,7 +114,7 @@ exports[`General|Slider Date 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "0%",
+                "left": "0.0%",
               }
             }
           >
@@ -130,7 +130,7 @@ exports[`General|Slider Date 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "33.31859811389191%",
+                "left": "33.3%",
               }
             }
           >
@@ -146,7 +146,7 @@ exports[`General|Slider Date 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "60.51142546245919%",
+                "left": "60.5%",
               }
             }
           >
@@ -162,7 +162,7 @@ exports[`General|Slider Date 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "100%",
+                "left": "100.0%",
               }
             }
           >
@@ -215,7 +215,7 @@ exports[`General|Slider Percentage 1`] = `
           className="slider"
           style={
             Object {
-              "width": "75%",
+              "width": "75.0%",
             }
           }
         />
@@ -224,7 +224,7 @@ exports[`General|Slider Percentage 1`] = `
           onMouseDown={[Function]}
           style={
             Object {
-              "left": "75%",
+              "left": "75.0%",
             }
           }
         >
@@ -237,7 +237,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "0%",
+              "left": "0.0%",
             }
           }
         >
@@ -253,7 +253,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "28.000000000000004%",
+              "left": "28.0%",
             }
           }
         >
@@ -269,7 +269,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "28.999999999999996%",
+              "left": "29.0%",
             }
           }
         >
@@ -285,7 +285,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "100%",
+              "left": "100.0%",
             }
           }
         >
@@ -313,7 +313,7 @@ exports[`General|Slider Percentage 1`] = `
           className="slider"
           style={
             Object {
-              "width": "75%",
+              "width": "75.0%",
             }
           }
         />
@@ -322,7 +322,7 @@ exports[`General|Slider Percentage 1`] = `
           onMouseDown={[Function]}
           style={
             Object {
-              "left": "75%",
+              "left": "75.0%",
             }
           }
         >
@@ -335,7 +335,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "0%",
+              "left": "0.0%",
             }
           }
         >
@@ -351,7 +351,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "28.000000000000004%",
+              "left": "28.0%",
             }
           }
         >
@@ -367,7 +367,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "28.999999999999996%",
+              "left": "29.0%",
             }
           }
         >
@@ -383,7 +383,7 @@ exports[`General|Slider Percentage 1`] = `
           onClick={[Function]}
           style={
             Object {
-              "left": "100%",
+              "left": "100.0%",
             }
           }
         >
@@ -554,7 +554,7 @@ exports[`General|Slider Ranged 1`] = `
             className="slider active"
             style={
               Object {
-                "left": "100%",
+                "left": "100.0%",
                 "right": "0%",
               }
             }
@@ -564,7 +564,7 @@ exports[`General|Slider Ranged 1`] = `
             onMouseDown={[Function]}
             style={
               Object {
-                "left": "100%",
+                "left": "100.0%",
               }
             }
           >
@@ -577,7 +577,7 @@ exports[`General|Slider Ranged 1`] = `
             onMouseDown={[Function]}
             style={
               Object {
-                "left": "100%",
+                "left": "100.0%",
               }
             }
           >
@@ -590,7 +590,7 @@ exports[`General|Slider Ranged 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "0%",
+                "left": "0.0%",
               }
             }
           >
@@ -606,7 +606,7 @@ exports[`General|Slider Ranged 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "33.31859811389191%",
+                "left": "33.3%",
               }
             }
           >
@@ -622,7 +622,7 @@ exports[`General|Slider Ranged 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "60.51142546245919%",
+                "left": "60.5%",
               }
             }
           >
@@ -638,7 +638,7 @@ exports[`General|Slider Ranged 1`] = `
             onClick={[Function]}
             style={
               Object {
-                "left": "100%",
+                "left": "100.0%",
               }
             }
           >
