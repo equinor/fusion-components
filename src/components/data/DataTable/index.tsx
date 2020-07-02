@@ -5,7 +5,7 @@ import List from './components/List';
 import styles from './styles.less';
 import classnames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { useHorizontalBreakpoint } from '@equinor/fusion-components';
+import useHorizontalBreakpoint from 'hooks/useHorizontalBreakpoint';
 
 enum Breakpoints {
     medium = 'medium',

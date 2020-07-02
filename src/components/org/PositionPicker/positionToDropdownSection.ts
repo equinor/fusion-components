@@ -1,5 +1,5 @@
 import { Position } from '@equinor/fusion';
-import { SearchableDropdownOption } from '@equinor/fusion-components';
+import { SearchableDropdownOption } from 'components/general/SearchableDropdown';
 
 export const singlePositionToDropdownOption = (
     query: string,

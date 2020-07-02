@@ -1,8 +1,8 @@
-import { CloseIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import * as React from 'react';
 
 import * as styles from "./styles.less";
+import CloseIcon from 'components/icons/components/navigation/CloseIcon';
 
 type ChipProps = {
     isDisabled?: boolean,

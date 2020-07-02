@@ -2,11 +2,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 import MenuItem, { MenuItemType, MenuItemComponentProps } from './MenuItem';
 import styles from './styles.less';
-import {
-    useKeyboardNavigation,
-    Elevation,
-    useElevationClassName,
-} from '@equinor/fusion-components';
+import useElevationClassName, { Elevation } from 'hooks/useElevationClassName';
+import useKeyboardNavigation from 'hooks/useKeyboardNavigation';
 
 export type MenuSection<TItem extends MenuItemType> = {
     key: string;

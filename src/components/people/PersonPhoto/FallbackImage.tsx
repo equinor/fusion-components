@@ -1,8 +1,8 @@
 import React from 'react';
-import { PhotoSize } from '@equinor/fusion-components';
 import FallbackIcon from './icons/FallbackIcon';
 import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
 import RotationIcon from './icons/RotationIcon';
+import { PhotoSize } from '../PersonCard';
 
 type FallbackImageProps = {
     size: PhotoSize;

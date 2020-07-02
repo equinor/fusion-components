@@ -1,0 +1,666 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Slider Date 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "margin": "0 auto",
+          "width": 800,
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "flexShrink": 0,
+              "marginRight": 48,
+              "width": 200,
+            }
+          }
+        >
+          <div>
+            <div
+              className="inputContainer"
+            >
+              <div
+                className="inputContent"
+                onClick={[Function]}
+              >
+                <div
+                  className="inputTextContent moveLabel"
+                >
+                  <label>
+                    Select date
+                  </label>
+                  <input
+                    disabled={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyUp={[Function]}
+                    placeholder=""
+                    value="7/2/2020"
+                  />
+                </div>
+                <div
+                  className="icon"
+                  onClick={[Function]}
+                >
+                  <svg
+                    height={24}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={24}
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M19 4H18V3C18 2.45 17.55 2 17 2C16.45 2 16 2.45 16 3V4H8V3C8 2.45 7.55 2 7 2C6.45 2 6 2.45 6 3V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 19C19 19.55 18.55 20 18 20H6C5.45 20 5 19.55 5 19V9H19V19ZM9 13V11H7V13H9ZM11 11H13V13H11V11ZM17 13V11H15V13H17Z"
+                      fill="currentColor"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="container comfortable"
+          onClick={[Function]}
+        >
+          <div
+            className="track"
+          />
+          <div
+            className="slider"
+            style={
+              Object {
+                "width": "100%",
+              }
+            }
+          />
+          <button
+            className="handle"
+            onMouseDown={[Function]}
+            style={
+              Object {
+                "left": "100%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+          </button>
+          <button
+            className="marker isActive"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "0%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Moon landing
+            </label>
+          </button>
+          <button
+            className="marker isActive"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "33.31859811389191%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Chernobyl
+            </label>
+          </button>
+          <button
+            className="marker isActive"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "60.51142546245919%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Y2K
+            </label>
+          </button>
+          <button
+            className="marker isActive"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "100%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Org chart release
+            </label>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Slider Percentage 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "margin": "0 auto",
+          "width": 400,
+        }
+      }
+    >
+      <div
+        className="container comfortable isLowered"
+        onClick={[Function]}
+      >
+        <div
+          className="track"
+        />
+        <div
+          className="slider"
+          style={
+            Object {
+              "width": "75%",
+            }
+          }
+        />
+        <button
+          className="handle"
+          onMouseDown={[Function]}
+          style={
+            Object {
+              "left": "75%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+        </button>
+        <button
+          className="marker isActive"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "0%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            0%
+          </label>
+        </button>
+        <button
+          className="marker isActive"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "28.000000000000004%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            28%
+          </label>
+        </button>
+        <button
+          className="marker isActive isLowered"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "28.999999999999996%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            29%
+          </label>
+        </button>
+        <button
+          className="marker"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "100%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            100%
+          </label>
+        </button>
+      </div>
+      <p>
+        Value: 
+        75
+        %
+      </p>
+      <div
+        className="container comfortable isDisabled isLowered"
+        onClick={[Function]}
+      >
+        <div
+          className="track"
+        />
+        <div
+          className="slider"
+          style={
+            Object {
+              "width": "75%",
+            }
+          }
+        />
+        <button
+          className="handle"
+          onMouseDown={[Function]}
+          style={
+            Object {
+              "left": "75%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+        </button>
+        <button
+          className="marker isActive"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "0%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            0%
+          </label>
+        </button>
+        <button
+          className="marker isActive"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "28.000000000000004%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            28%
+          </label>
+        </button>
+        <button
+          className="marker isActive isLowered"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "28.999999999999996%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            29%
+          </label>
+        </button>
+        <button
+          className="marker"
+          onClick={[Function]}
+          style={
+            Object {
+              "left": "100%",
+            }
+          }
+        >
+          <div
+            className="dot"
+          />
+          <label>
+            100%
+          </label>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Slider Ranged 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "margin": "0 auto",
+          "width": 800,
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "flexShrink": 0,
+              "marginRight": 48,
+              "width": 200,
+            }
+          }
+        >
+          <div>
+            <div
+              className="inputContainer"
+            >
+              <div
+                className="inputContent labelLess"
+                onClick={[Function]}
+              >
+                <div
+                  className="inputTextContent moveLabel"
+                >
+                  <input
+                    disabled={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyUp={[Function]}
+                    placeholder="11/15/2019"
+                    value="11/15/2019"
+                  />
+                </div>
+                <div
+                  className="icon"
+                  onClick={[Function]}
+                >
+                  <svg
+                    height={24}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={24}
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M19 4H18V3C18 2.45 17.55 2 17 2C16.45 2 16 2.45 16 3V4H8V3C8 2.45 7.55 2 7 2C6.45 2 6 2.45 6 3V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 19C19 19.55 18.55 20 18 20H6C5.45 20 5 19.55 5 19V9H19V19ZM9 13V11H7V13H9ZM11 11H13V13H11V11ZM17 13V11H15V13H17Z"
+                      fill="currentColor"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style={
+            Object {
+              "flexShrink": 0,
+              "marginRight": 48,
+              "width": 200,
+            }
+          }
+        >
+          <div>
+            <div
+              className="inputContainer"
+            >
+              <div
+                className="inputContent labelLess"
+                onClick={[Function]}
+              >
+                <div
+                  className="inputTextContent moveLabel"
+                >
+                  <input
+                    disabled={false}
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyUp={[Function]}
+                    placeholder="7/2/2020"
+                    value="7/2/2020"
+                  />
+                </div>
+                <div
+                  className="icon"
+                  onClick={[Function]}
+                >
+                  <svg
+                    height={24}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={24}
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M19 4H18V3C18 2.45 17.55 2 17 2C16.45 2 16 2.45 16 3V4H8V3C8 2.45 7.55 2 7 2C6.45 2 6 2.45 6 3V4H5C3.89 4 3.01 4.9 3.01 6L3 20C3 21.1 3.89 22 5 22H19C20.1 22 21 21.1 21 20V6C21 4.9 20.1 4 19 4ZM19 19C19 19.55 18.55 20 18 20H6C5.45 20 5 19.55 5 19V9H19V19ZM9 13V11H7V13H9ZM11 11H13V13H11V11ZM17 13V11H15V13H17Z"
+                      fill="currentColor"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="container comfortable"
+          onClick={[Function]}
+        >
+          <div
+            className="track"
+          />
+          <div
+            className="slider active"
+            style={
+              Object {
+                "left": "100%",
+                "right": "0%",
+              }
+            }
+          />
+          <button
+            className="handle"
+            onMouseDown={[Function]}
+            style={
+              Object {
+                "left": "100%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+          </button>
+          <button
+            className="handle"
+            onMouseDown={[Function]}
+            style={
+              Object {
+                "left": "100%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+          </button>
+          <button
+            className="marker"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "0%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Moon landing
+            </label>
+          </button>
+          <button
+            className="marker"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "33.31859811389191%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Chernobyl
+            </label>
+          </button>
+          <button
+            className="marker"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "60.51142546245919%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Y2K
+            </label>
+          </button>
+          <button
+            className="marker isActive"
+            onClick={[Function]}
+            style={
+              Object {
+                "left": "100%",
+              }
+            }
+          >
+            <div
+              className="dot"
+            />
+            <label>
+              Org chart release
+            </label>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

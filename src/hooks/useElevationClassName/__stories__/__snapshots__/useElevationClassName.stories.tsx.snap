@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hooks useElevationClassName 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "alignItems": "space-between",
+          "display": "flex",
+          "flexWrap": "wrap",
+          "justifyContent": "space-between",
+          "margin": 40,
+        }
+      }
+    >
+      <div
+        className="elevation0"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        0
+      </div>
+      <div
+        className="elevation1"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        1
+      </div>
+      <div
+        className="elevation2"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        2
+      </div>
+      <div
+        className="elevation3"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        3
+      </div>
+      <div
+        className="elevation4"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        4
+      </div>
+      <div
+        className="elevation6"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        6
+      </div>
+      <div
+        className="elevation8"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        8
+      </div>
+      <div
+        className="elevation12"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        12
+      </div>
+      <div
+        className="elevation16"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        16
+      </div>
+      <div
+        className="elevation24"
+        style={
+          Object {
+            "alignItems": "center",
+            "background": "white",
+            "borderRadius": 4,
+            "display": "flex",
+            "fontSize": 24,
+            "height": 100,
+            "justifyContent": "center",
+            "marginBottom": 24,
+            "width": 100,
+          }
+        }
+      >
+        24
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

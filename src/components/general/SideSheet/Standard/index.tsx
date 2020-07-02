@@ -3,13 +3,11 @@ import classNames from 'classnames';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
 import styles from './styles.less';
 import CollapseExpandButton from './CollapseExpandButton';
-import {
-    OverlayPortal,
-    styling,
-    PaginationArrow,
-    useElevationClassName,
-} from '@equinor/fusion-components';
 import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
+import PaginationArrow from 'components/icons/components/navigation/PaginationArrow';
+import useElevationClassName from 'hooks/useElevationClassName';
+import OverlayPortal from 'components/utils/OverlayPortal';
+import styling from 'styles/styling';
 
 type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 

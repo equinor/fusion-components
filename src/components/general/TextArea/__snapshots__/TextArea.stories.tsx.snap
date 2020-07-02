@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|TextArea Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flexDirection": "column",
+          "padding": "8px",
+        }
+      }
+    >
+      <div
+        className="textAreaContainer"
+      >
+        <div
+          className="textAreaContent"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent"
+          >
+            <label>
+              Label
+            </label>
+            <textarea
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="helperIconText"
+        >
+          <div
+            className="helperText"
+          >
+            Helper text - Optional
+          </div>
+        </div>
+      </div>
+      <br />
+      <div
+        className="textAreaContainer"
+      >
+        <div
+          className="textAreaContent error"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent error"
+          >
+            <label>
+              Error label
+            </label>
+            <textarea
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="helperIconText"
+        >
+          <div
+            className="icon"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "var(--color-red)",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 13C11.45 13 11 12.55 11 12V8C11 7.45 11.45 7 12 7C12.55 7 13 7.45 13 8V12C13 12.55 12.55 13 12 13ZM11 15V17H13V15H11Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </div>
+          <div
+            className="helperText error"
+          >
+            An error occurred
+          </div>
+        </div>
+      </div>
+      <br />
+      <div
+        className="textAreaContainer"
+      >
+        <div
+          className="textAreaContent disabled"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent disabled"
+          >
+            <label>
+              Disabled
+            </label>
+            <textarea
+              disabled={true}
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="helperIconText"
+        />
+      </div>
+      <br />
+      <div
+        className="textAreaContainer"
+      >
+        <div
+          className="textAreaContent labelLess"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent"
+          >
+            <textarea
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              placeholder=""
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="helperIconText"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

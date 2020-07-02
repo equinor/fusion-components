@@ -4,8 +4,11 @@ import { withKnobs, select, boolean, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
-import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
 import { useNotificationCenter } from '@equinor/fusion';
+import Button from '../Button';
+import IconButton from '../IconButton';
+import WarningIcon from 'components/icons/components/alert/WarningIcon';
+import DoneIcon from 'components/icons/components/action/DoneIcon';
 
 const snackbar = action('snackbar');
 const banner = action('banner');

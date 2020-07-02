@@ -1,5 +1,4 @@
 import React from 'react';
-import { PhotoSize, useTooltipRef } from '@equinor/fusion-components';
 import {
     PersonDetails,
     useComponentDisplayType,
@@ -13,6 +12,8 @@ import ExternalHireIcon from './icons/ExternalHireIcon';
 import AffiliateIcon from './icons/AffiliateIcon';
 import LockedIcon from './icons/LockedIcon';
 import EmployeeIcon from './icons/EmployeeIcon';
+import { PhotoSize } from '../PersonCard';
+import useTooltipRef from 'hooks/useTooltipRef';
 
 type AccountTypeBageProps = {
     size: PhotoSize;

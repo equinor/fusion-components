@@ -2,8 +2,10 @@ import * as React from 'react';
 import Button from '../Button';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { BlockIcon } from 'components/icons/components/content';
+import WarningIcon from 'components/icons/components/alert/WarningIcon';
+import SyncDisabledIcon from 'components/icons/components/notification/SyncDisabledIcon';
 
 export type ErrorTypes = 'error' | 'accessDenied' | 'notFound' | 'noData';
 

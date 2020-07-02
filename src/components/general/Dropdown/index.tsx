@@ -1,13 +1,11 @@
 import React, { useState, useRef, useCallback, FC, useMemo, useEffect, useReducer } from 'react';
 import classNames from 'classnames';
-import {
-    useClickOutsideOverlayPortal,
-    RelativeOverlayPortal,
-    useElevationClassName,
-    useRelativePositioning,
-} from '@equinor/fusion-components';
 import styles from './styles.less';
 import { enqueueAsyncOperation, AsyncOperation } from '@equinor/fusion';
+import useClickOutsideOverlayPortal from 'hooks/useClickOutsideOverlayPortal';
+import useElevationClassName from 'hooks/useElevationClassName';
+import useRelativePositioning from 'hooks/useRelativePositioning';
+import RelativeOverlayPortal from 'components/utils/RelativeOverlayPortal';
 
 export type DropdownController = {
     isOpen: boolean;

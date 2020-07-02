@@ -12,9 +12,9 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import ComponentDisplayToggleButton from './components/ComponentDisplayToggleButton';
 import CurrentUserButton from './components/CurrentUserButton';
-import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
 import NotificationsButton from './components/NotificationsButton';
+import useHorizontalBreakpoint from 'hooks/useHorizontalBreakpoint';
 
 enum Breakpoints {
     medium = 'medium',

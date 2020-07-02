@@ -1,16 +1,12 @@
 import React from 'react';
 import { useCurrentUser, useFusionContext, useCurrentPersonDetails } from '@equinor/fusion';
-import {
-    IconProps,
-    MenuItemType,
-    Menu,
-    usePopoverRef,
-    useIcon,
-    IconButton,
-    PersonPhoto,
-} from '@equinor/fusion-components';
 import { useEventEmitterValue } from '@equinor/fusion/lib/utils/EventEmitter';
 import { UserMenuSectionItem } from '@equinor/fusion/lib/core/UserMenuContainer';
+import useIcon, { IconProps } from 'hooks/useIcon';
+import { MenuItemType } from 'components/general/Menu/MenuItem';
+import usePopoverRef from 'hooks/usePopoverRef';
+import IconButton from 'components/general/IconButton';
+import PersonPhoto from 'components/people/PersonPhoto';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(

@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Core|Context Selector PDP 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+     
+    <div
+      className="container comfortable"
+    />
+    <div
+      className="container"
+    >
+      <h1
+        style={
+          Object {
+            "margin": 16,
+            "textAlign": "center",
+          }
+        }
+      >
+        PDP
+      </h1>
+    </div>
+     
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Core|Context Selector PDP Nullable And Placeholder 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+     
+    <div
+      className="container comfortable"
+    />
+    <div
+      className="container"
+    >
+      <h1
+        style={
+          Object {
+            "margin": 16,
+            "textAlign": "center",
+          }
+        }
+      >
+        PDP
+      </h1>
+    </div>
+     
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

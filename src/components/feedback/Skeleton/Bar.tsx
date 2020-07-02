@@ -13,7 +13,10 @@ const SkeletonBar: React.FC<SkeletonBarProps> = ({ height, width }) => {
     const barClassNames = classNames(styles.bar, displayClassNames, styles.skeleton);
 
     const barWidth = useMemo(
-        () => width || Math.max(Math.min(Math.floor(Math.random() * 100), 100), 50) + '%',
+        () =>
+            width || process.env.NODE_ENV === 'test'
+                ? '50%'
+                : Math.max(Math.min(Math.floor(Math.random() * 100), 100), 50) + '%',
         [width]
     );
     return <div className={barClassNames} style={{ width: barWidth, height }} />;

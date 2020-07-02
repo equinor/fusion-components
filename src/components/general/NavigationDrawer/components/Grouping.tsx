@@ -1,12 +1,12 @@
 import React, { FC, useMemo, useCallback, useEffect, useState } from 'react';
 import styles from './styles.less';
-import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
 import { NavigationComponentProps } from '..';
 import NavigationPopover from './NavigationPopover';
 import NavigationItem from './NavigationItem';
-import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
+import useTooltipRef from 'hooks/useTooltipRef';
+import DropdownArrow from 'components/icons/components/action/DropdownArrow';
 
 const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const {

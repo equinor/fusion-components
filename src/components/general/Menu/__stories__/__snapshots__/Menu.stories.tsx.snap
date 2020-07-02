@@ -1,0 +1,342 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Menu Custom items 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      className="container elevation2"
+    >
+      <section>
+        <button
+          className=""
+          onClick={[Function]}
+          tabIndex={1}
+        >
+          <span>
+            <aside>
+              <div
+                className="container checkbox comfortable"
+                onClick={[Function]}
+              >
+                <input
+                  readOnly={true}
+                  type="checkbox"
+                />
+                <label
+                  style={
+                    Object {
+                      "backgroundColor": undefined,
+                      "borderColor": undefined,
+                    }
+                  }
+                >
+                  <span
+                    className="checkmark"
+                  />
+                </label>
+              </div>
+            </aside>
+            <span>
+              <strong>
+                1
+              </strong>
+               - 
+              <em>
+                Some option
+              </em>
+            </span>
+          </span>
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+          tabIndex={2}
+        >
+          <span>
+            <aside>
+              <div
+                className="container checkbox comfortable"
+                onClick={[Function]}
+              >
+                <input
+                  readOnly={true}
+                  type="checkbox"
+                />
+                <label
+                  style={
+                    Object {
+                      "backgroundColor": undefined,
+                      "borderColor": undefined,
+                    }
+                  }
+                >
+                  <span
+                    className="checkmark"
+                  />
+                </label>
+              </div>
+            </aside>
+            <span>
+              <strong>
+                2
+              </strong>
+               - 
+              <em>
+                This is another option
+              </em>
+            </span>
+          </span>
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+          tabIndex={3}
+        >
+          <span>
+            <aside>
+              <div
+                className="container checkbox comfortable"
+                onClick={[Function]}
+              >
+                <input
+                  readOnly={true}
+                  type="checkbox"
+                />
+                <label
+                  style={
+                    Object {
+                      "backgroundColor": undefined,
+                      "borderColor": undefined,
+                    }
+                  }
+                >
+                  <span
+                    className="checkmark"
+                  />
+                </label>
+              </div>
+            </aside>
+            <span>
+              <strong>
+                3
+              </strong>
+               - 
+              <em>
+                You can check this one 
+                <svg
+                  height={24}
+                  style={
+                    Object {
+                      "color": "",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                  width={24}
+                >
+                  <path
+                    clipRule="evenodd"
+                    d="M8.80004 15.905L5.30004 12.405C5.11519 12.2179 4.86309 12.1125 4.60004 12.1125C4.33699 12.1125 4.0849 12.2179 3.90004 12.405C3.51004 12.795 3.51004 13.415 3.90004 13.805L8.09004 17.995C8.48004 18.385 9.11004 18.385 9.50004 17.995L20.1 7.40501C20.49 7.01501 20.49 6.39501 20.1 6.00501C19.9152 5.81786 19.6631 5.71252 19.4 5.71252C19.137 5.71252 18.8849 5.81786 18.7 6.00501L8.80004 15.905Z"
+                    fill="currentColor"
+                    fillRule="evenodd"
+                  />
+                </svg>
+              </em>
+            </span>
+          </span>
+        </button>
+        <button
+          className=""
+          disabled={true}
+          onClick={[Function]}
+          tabIndex={4}
+        >
+          <span>
+            <aside>
+              <div
+                className="container checkbox comfortable disabled"
+                onClick={[Function]}
+              >
+                <input
+                  disabled={true}
+                  readOnly={true}
+                  type="checkbox"
+                />
+                <label
+                  style={
+                    Object {
+                      "backgroundColor": undefined,
+                      "borderColor": undefined,
+                    }
+                  }
+                >
+                  <span
+                    className="checkmark"
+                  />
+                </label>
+              </div>
+            </aside>
+            <span>
+              <strong>
+                4
+              </strong>
+               - 
+              <em>
+                This one is disabled
+              </em>
+            </span>
+          </span>
+        </button>
+      </section>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Menu Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <input
+      placeholder="Focus here to navigate"
+    />
+    <div
+      className="container elevation2"
+    >
+      <section>
+        <button
+          className=""
+          onClick={[Function]}
+          tabIndex={1}
+        >
+          <span>
+            <span>
+              First
+            </span>
+          </span>
+        </button>
+        <button
+          className="isSelected"
+          onClick={[Function]}
+          tabIndex={2}
+        >
+          <span>
+            <span>
+              Selected
+            </span>
+          </span>
+        </button>
+        <button
+          className=""
+          disabled={true}
+          onClick={[Function]}
+          tabIndex={3}
+        >
+          <span>
+            <span>
+              Disabled
+            </span>
+          </span>
+        </button>
+        <button
+          className=""
+          onClick={[Function]}
+          tabIndex={4}
+        >
+          <span>
+            <span>
+              Last
+            </span>
+          </span>
+        </button>
+      </section>
+    </div>
+    <div
+      style={
+        Object {
+          "width": "300px",
+        }
+      }
+    >
+      <input
+        placeholder="Narrow menu"
+      />
+      <div
+        className="container elevation2"
+      >
+        <section>
+          <button
+            className=""
+            onClick={[Function]}
+            tabIndex={1}
+          >
+            <span>
+              <span>
+                First
+              </span>
+            </span>
+          </button>
+          <button
+            className="isSelected"
+            onClick={[Function]}
+            tabIndex={2}
+          >
+            <span>
+              <span>
+                Selected
+              </span>
+            </span>
+          </button>
+          <button
+            className=""
+            disabled={true}
+            onClick={[Function]}
+            tabIndex={3}
+          >
+            <span>
+              <span>
+                Disabled
+              </span>
+            </span>
+          </button>
+          <button
+            className=""
+            onClick={[Function]}
+            tabIndex={4}
+          >
+            <span>
+              <span>
+                Last
+              </span>
+            </span>
+          </button>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

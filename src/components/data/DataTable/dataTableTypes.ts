@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pagination, SortDirection } from '@equinor/fusion';
-import { PaginationChangeHandler } from '@equinor/fusion-components';
+import { PaginationChangeHandler } from 'components/general/Pagination';
 
 export type DataItemPropertyAccessorFunction<T> = (item: T) => string;
 export type DataItemPropertyAccessor<T> = keyof T | DataItemPropertyAccessorFunction<T>;

@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useMemo, useCallback } from 'react';
 
 import Card from './Card';
 import { ReportingPathContext, ReportingPathContextReducer } from '../store';
-import { OrgNode } from '@equinor/fusion-components';
+import { OrgNode } from 'components/org/OrgChart/orgChartTypes';
 
 function Children<T>() {
     const {

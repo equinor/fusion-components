@@ -2,14 +2,11 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import TextInput from './index';
-import {
-    useKeyboardNavigation,
-    Spinner,
-    SearchIcon,
-    useStringMask,
-    unmaskString,
-} from '@equinor/fusion-components';
 import { dateTimeMask, parseDateTime } from '@equinor/fusion';
+import useStringMask, { unmaskString } from 'hooks/useStringMask';
+import useKeyboardNavigation from 'hooks/useKeyboardNavigation';
+import SearchIcon from 'components/icons/components/action/SearchIcon';
+import Spinner from 'components/feedback/Spinner';
 
 const TextInputStory = () => {
     const [value, setValue] = React.useState('');

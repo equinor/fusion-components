@@ -1,6 +1,8 @@
 import React from 'react';
 import { useFusionContext, useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
-import { IconButton, IconProps, useIcon, useTooltipRef } from '@equinor/fusion-components';
+import useIcon, { IconProps } from 'hooks/useIcon';
+import useTooltipRef from 'hooks/useTooltipRef';
+import IconButton from 'components/general/IconButton';
 
 const inverseComponentDisplayType = (componentDisplayType: ComponentDisplayType) =>
     componentDisplayType === ComponentDisplayType.Comfortable

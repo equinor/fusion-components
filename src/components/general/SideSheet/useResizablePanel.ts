@@ -1,6 +1,6 @@
 import { useAppSettings } from '@equinor/fusion';
 import { useState, useCallback, useEffect } from 'react';
-import { useEventListener } from '@equinor/fusion-components';
+import useEventListener from 'hooks/useEventListener';
 
 interface ResizedSize {
     width: number;

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
-import { Spinner, ErrorMessage } from '@equinor/fusion-components';
 import {
     useTelemetryLogger,
     FusionApiHttpErrorResponse,
@@ -25,6 +24,8 @@ import {
 
 import * as styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
+import ErrorMessage from 'components/general/ErrorMessage';
+import Spinner from 'components/feedback/Spinner';
 
 type PowerBIProps = {
     reportId: string;

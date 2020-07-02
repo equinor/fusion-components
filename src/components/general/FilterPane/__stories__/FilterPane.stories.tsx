@@ -5,7 +5,10 @@ import FilterPane, { FilterTypes, FilterSection, FilterTerm } from '../index';
 import storyData, { DataItem } from './storyData';
 import columns from './columns';
 import { useAppSettings, useSorting, usePagination, Page } from '@equinor/fusion';
-import { styling, DataTable, DataTableColumn, Button } from '@equinor/fusion-components';
+import { DataTableColumn } from 'components/data/DataTable/dataTableTypes';
+import DataTable from 'components/data/DataTable';
+import Button from 'components/general/Button';
+import styling from 'styles/styling';
 
 type TableProps = {
     data: DataItem[];

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import { DoneIcon, styling } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import useWindowWidth from './useWindowWidth';
+import styling from 'styles/styling';
+import DoneIcon from 'components/icons/components/action/DoneIcon';
 
 type StepProps = {
     title: string;

@@ -2,9 +2,11 @@ import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/fusion';
 
-import { IconButton, Button, PaginationArrow } from '@equinor/fusion-components';
 import Day from './Day';
 import styles from './styles.less';
+import IconButton from '../IconButton';
+import PaginationArrow from 'components/icons/components/navigation/PaginationArrow';
+import Button from '../Button';
 
 type CalendarProps = {
     initialYear: number;

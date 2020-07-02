@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Button Contained 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <button
+      className="container contained primary comfortable"
+      disabled={false}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Button
+      </span>
+    </button>
+    <button
+      className="container contained danger comfortable"
+      disabled={false}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Button
+      </span>
+    </button>
+    <button
+      className="container contained primary comfortable"
+      disabled={true}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Button Frameless 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <button
+      className="container frameless primary comfortable"
+      disabled={false}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Button
+      </span>
+    </button>
+    <button
+      className="container frameless danger comfortable"
+      disabled={false}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Button
+      </span>
+    </button>
+    <button
+      className="container frameless primary comfortable"
+      disabled={true}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Button Outlined 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <button
+      className="container outlined primary comfortable"
+      disabled={false}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Button
+      </span>
+    </button>
+    <button
+      className="container outlined danger comfortable"
+      disabled={false}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Button
+      </span>
+    </button>
+    <button
+      className="container outlined primary comfortable"
+      disabled={true}
+      onClick={[Function]}
+      onClickCapture={[Function]}
+      onMouseDown={[Function]}
+      onMouseUp={[Function]}
+      type="button"
+    >
+      <span
+        className="button"
+      >
+        Disabled button
+      </span>
+    </button>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

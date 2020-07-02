@@ -1,6 +1,7 @@
 import React, { FC, ReactNode, MutableRefObject } from 'react';
-import { useOverlayContainer, useRelativePositioning } from '@equinor/fusion-components';
 import { createPortal } from 'react-dom';
+import useOverlayContainer from 'hooks/useOverlayContainer';
+import useRelativePositioning from 'hooks/useRelativePositioning';
 
 type OverlayProps = {
     children?: ReactNode;

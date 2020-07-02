@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useEventListener } from '@equinor/fusion-components';
+import useEventListener from './useEventListener';
 
 const KEY_HANDLERS = {
     38: 'onUp',

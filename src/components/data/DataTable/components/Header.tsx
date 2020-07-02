@@ -3,8 +3,9 @@ import { DataTableHeaderProps, DataTableColumn } from '../dataTableTypes';
 import styles from '../styles.less';
 import classnames from 'classnames';
 import { SortDirection } from '@equinor/fusion';
-import { SortIcon, useTooltipRef } from '@equinor/fusion-components';
 import SelectionCell from './SelectionCell';
+import SortIcon from 'components/icons/components/action/SortIcon';
+import useTooltipRef from 'hooks/useTooltipRef';
 
 function getCellClassNames<T>(base: string, column: DataTableColumn<T>) {
     return classnames(base, {

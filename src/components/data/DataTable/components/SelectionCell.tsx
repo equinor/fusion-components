@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
 import { SelectionCellProps } from '../dataTableTypes';
-import { CheckBox } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from '../styles.less';
+import { CheckBox } from 'components/general/SelectionControls';
 
 const SelectionCell = forwardRef<
     HTMLDivElement | null,

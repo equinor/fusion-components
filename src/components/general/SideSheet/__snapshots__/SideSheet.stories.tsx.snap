@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|SideSheet Modal 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <button
+        className="container contained primary comfortable"
+        disabled={false}
+        onClick={[Function]}
+        onClickCapture={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        <span
+          className="button"
+        >
+          Open Side Sheet
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|SideSheet Standard 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "height": "100%",
+          "width": "100%",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "flexGrow": 1,
+            "padding": 24,
+          }
+        }
+      >
+        <p>
+          Right, and where am I gonna be? Well, Marty, I want to thank you for all your good advise, I'll never forget it. This is it. This is the answer. It says here that a bolt of lightning is gonna strike the clock tower precisely at 10:04 p.m. next Saturday night. If we could somehow harness this bolt of lightning, channel it into the flux capacitor, it just might work. Next Saturday night, we're sending you back to the future. Hey, George, buddy, you weren't at school, what have you been doing all day? Lynda, first of all, I'm not your answering service. Second of all, somebody named Greg or Craig called you just a little while ago.
+        </p>
+        <p>
+          Right. Thank you. In about thirty years. Whoa, whoa, okay. Next, please. I'm gonna ram him
+        </p>
+        <p>
+          Hey, George, buddy, you weren't at school, what have you been doing all day? Hey beat it, spook, this don't concern you. He's an absolute dream. Check out that four by four. That is hot. Someday, Jennifer, someday. Wouldn't it be great to take that truck up to the lake. Throw a couple of sleeping bags in the back. Lie out under the stars.
+        </p>
+      </div>
+      <div
+        className="container comfortable isCollapsed medium"
+        style={Object {}}
+      >
+        <div
+          className="header"
+        >
+          <div
+            className="collapseButtonContainer"
+          >
+            <button
+              className="container comfortable"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+            >
+              <span
+                className="iconContainer"
+              >
+                <svg
+                  height={24}
+                  style={
+                    Object {
+                      "color": "",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                  width={24}
+                >
+                  <path
+                    clipRule="evenodd"
+                    d="M7.99878 7C7.99878 6.45 7.54878 6 6.99878 6C6.44878 6 5.99878 6.45 5.99878 7V17C5.99878 17.55 6.44878 18 6.99878 18C7.54878 18 7.99878 17.55 7.99878 17V7ZM13.8188 12L17.6988 15.89C18.0888 16.27 18.0888 16.91 17.7088 17.29C17.3188 17.68 16.6888 17.68 16.2988 17.29L11.7088 12.7C11.3188 12.31 11.3188 11.68 11.7088 11.29L16.2988 6.7C16.4856 6.51275 16.7393 6.40751 17.0038 6.40751C17.2683 6.40751 17.5219 6.51275 17.7088 6.7C18.0988 7.09 18.0988 7.72 17.7088 8.11L13.8188 12Z"
+                    fill="currentColor"
+                    fillRule="evenodd"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

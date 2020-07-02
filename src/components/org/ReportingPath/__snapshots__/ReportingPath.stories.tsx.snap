@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pro org|Reporting Path Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <svg
+      height={0}
+      viewBox="0 0 0 0"
+      width={0}
+    >
+      <g
+        className="links"
+      />
+      <g
+        className="children"
+      />
+      <g
+        className="children"
+      />
+    </svg>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

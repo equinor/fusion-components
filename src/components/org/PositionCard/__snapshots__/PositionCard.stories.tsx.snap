@@ -1,0 +1,769 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pro org|Position Card Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      className="context comfortable"
+      onClick={[Function]}
+    >
+      <div
+        className="container"
+      >
+        <div
+          className="photoIconContainer"
+        >
+          <div
+            className="personIconContainer"
+          >
+            <div
+              className="photoContainer comfortable large"
+              style={
+                Object {
+                  "backgroundImage": "url()",
+                }
+              }
+            >
+              <div>
+                <div
+                  className="popoverDetails"
+                >
+                  <svg
+                    height={40}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 56 56 "
+                    width={40}
+                  >
+                    <circle
+                      cx="28"
+                      cy="28"
+                      fill="#EAEAEA"
+                      r="28"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M23.0002 28C26.2168 28 28.8335 25.3834 28.8335 22.1667C28.8335 18.95 26.2168 16.3334 23.0002 16.3334C19.7835 16.3334 17.1668 18.95 17.1668 22.1667C17.1668 25.3834 19.7835 28 23.0002 28ZM11.3335 36.75C11.3335 32.8667 19.1002 30.9167 23.0002 30.9167C26.9002 30.9167 34.6668 32.8667 34.6668 36.75V39.6667H11.3335V36.75ZM23.0002 34.25C20.0168 34.25 16.6335 35.3667 15.2335 36.3334H30.7668C29.3668 35.3667 25.9835 34.25 23.0002 34.25ZM25.5002 22.1667C25.5002 20.7834 24.3835 19.6667 23.0002 19.6667C21.6168 19.6667 20.5002 20.7834 20.5002 22.1667C20.5002 23.55 21.6168 24.6667 23.0002 24.6667C24.3835 24.6667 25.5002 23.55 25.5002 22.1667ZM34.7335 31.0167C36.6668 32.4167 38.0002 34.2834 38.0002 36.75V39.6667H44.6668V36.75C44.6668 33.3834 38.8335 31.4667 34.7335 31.0167ZM38.8335 22.1667C38.8335 25.3834 36.2168 28 33.0002 28C32.1002 28 31.2668 27.7834 30.5002 27.4167C31.5502 25.9334 32.1668 24.1167 32.1668 22.1667C32.1668 20.2167 31.5502 18.4 30.5002 16.9167C31.2668 16.55 32.1002 16.3334 33.0002 16.3334C36.2168 16.3334 38.8335 18.95 38.8335 22.1667Z"
+                      fill="#666666"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                  <div
+                    className="iconContainer comfortable large"
+                  >
+                    <svg
+                      height={16}
+                      numberOfPersons={3}
+                      style={
+                        Object {
+                          "color": "",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                      width={16}
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        fill="#007079"
+                        r="12"
+                      />
+                      <text
+                        dy=".3em"
+                        stroke="white"
+                        stroke-width="1px"
+                        text-anchor="middle"
+                        x="50%"
+                        y="50%"
+                      >
+                        3
+                      </text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="stateIcon"
+          >
+            <span>
+              <svg
+                height={16}
+                style={
+                  Object {
+                    "color": "",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width={16}
+              >
+                <path
+                  clipRule="evenodd"
+                  d="M12 2.21V4C16.42 4 20 7.58 20 12C20 13.04 19.8 14.04 19.43 14.95C19.16 15.62 18.3 15.8 17.79 15.29C17.52 15.02 17.41 14.61 17.56 14.25C17.85 13.56 18 12.79 18 12C18 8.69 15.31 6 12 6V7.79C12 8.24 11.46 8.46 11.14 8.15L8.35 5.36C8.15 5.16 8.15 4.85 8.35 4.65L11.15 1.86C11.46 1.54 12 1.76 12 2.21ZM6 12C6 15.31 8.69 18 12 18V16.21C12 15.76 12.54 15.54 12.85 15.85L15.64 18.64C15.84 18.84 15.84 19.15 15.64 19.35L12.85 22.14C12.54 22.46 12 22.24 12 21.79V20C7.58 20 4 16.42 4 12C4 10.96 4.2 9.96 4.57 9.05C4.84 8.38 5.7 8.2 6.21 8.71C6.48 8.98 6.59 9.39 6.44 9.75C6.15 10.44 6 11.21 6 12Z"
+                  fill="currentColor"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div
+          className="positionInstance"
+          onClick={[Function]}
+        >
+          <div
+            className="basePositionName"
+          >
+            <span>
+              obs
+            </span>
+          </div>
+          <div
+            className="positionName"
+          >
+            <span>
+              Drilling Engineer
+            </span>
+          </div>
+          <div
+            className="assignedPersonName"
+          >
+            <span>
+              3 assignees
+            </span>
+          </div>
+          <div
+            className="location"
+          >
+            Stavanger
+          </div>
+          <div
+            className="period"
+          >
+            <span>
+              9/27/2021
+               - 
+              1/26/2022
+               (
+              100
+              %)
+            </span>
+          </div>
+          <div
+            className="externalId"
+          >
+            800
+          </div>
+          <div
+            className="instanceTimelineContainer"
+          >
+            <div
+              className="instance"
+              style={
+                Object {
+                  "left": "0%",
+                  "right": "21%",
+                }
+              }
+            >
+              <div
+                className="dot"
+              />
+              <div
+                className="instanceLine"
+              />
+            </div>
+            <div
+              className="instance isCurrent hasRotation"
+              style={
+                Object {
+                  "left": "79%",
+                  "right": "14%",
+                }
+              }
+            >
+              <div
+                className="dot"
+              />
+              <div
+                className="instanceLine"
+              />
+              <div
+                className="dot right"
+              />
+            </div>
+            <div
+              className="instance hasRotation"
+              style={
+                Object {
+                  "left": "86%",
+                  "right": "0%",
+                }
+              }
+            >
+              <div
+                className="instanceLine"
+              />
+              <div
+                className="dot right"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="rotationInstances"
+      >
+        <div
+          className="assignee"
+        >
+          <div
+            className="photoContainer comfortable medium"
+            style={
+              Object {
+                "backgroundImage": "url()",
+              }
+            }
+          >
+            <div>
+              <div
+                className="popoverDetails"
+              >
+                <div
+                  className="iconContainer comfortable medium employee"
+                >
+                  <svg
+                    height={16}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={16}
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M7 13.6928C7 12.4246 8.02809 11.3965 9.2963 11.3965H15.037C16.3052 11.3965 17.3333 12.4246 17.3333 13.6928V18.2854H7V13.6928ZM9.2963 12.1619C8.45082 12.1619 7.76543 12.8473 7.76543 13.6928V17.5199H16.5679V13.6928C16.5679 12.8473 15.8825 12.1619 15.037 12.1619H9.2963Z"
+                      fill="white"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M12.1668 9.63946C13.2344 9.63946 14.0999 8.77397 14.0999 7.70635C14.0999 6.63872 13.2344 5.77324 12.1668 5.77324C11.0992 5.77324 10.2337 6.63872 10.2337 7.70635C10.2337 8.77397 11.0992 9.63946 12.1668 9.63946ZM12.1668 10.4127C13.6615 10.4127 14.8731 9.20103 14.8731 7.70635C14.8731 6.21167 13.6615 5 12.1668 5C10.6721 5 9.46045 6.21167 9.46045 7.70635C9.46045 9.20103 10.6721 10.4127 12.1668 10.4127Z"
+                      fill="white"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M14.0999 7.70635C14.0999 8.77397 13.2344 9.63946 12.1668 9.63946C11.0992 9.63946 10.2337 8.77397 10.2337 7.70635C10.2337 6.63872 11.0992 5.77324 12.1668 5.77324C13.2344 5.77324 14.0999 6.63872 14.0999 7.70635ZM14.8731 7.70635C14.8731 9.20103 13.6615 10.4127 12.1668 10.4127C10.6721 10.4127 9.46045 9.20103 9.46045 7.70635C9.46045 6.21167 10.6721 5 12.1668 5C13.6615 5 14.8731 6.21167 14.8731 7.70635Z"
+                      fill="white"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M12.1668 9.63946C13.2344 9.63946 14.0999 8.77397 14.0999 7.70635C14.0999 6.63872 13.2344 5.77324 12.1668 5.77324C11.0992 5.77324 10.2337 6.63872 10.2337 7.70635C10.2337 8.77397 11.0992 9.63946 12.1668 9.63946ZM12.1668 10.4127C13.6615 10.4127 14.8731 9.20103 14.8731 7.70635C14.8731 6.21167 13.6615 5 12.1668 5C10.6721 5 9.46045 6.21167 9.46045 7.70635C9.46045 9.20103 10.6721 10.4127 12.1668 10.4127Z"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M14.0999 7.70635C14.0999 8.77397 13.2344 9.63946 12.1668 9.63946C11.0992 9.63946 10.2337 8.77397 10.2337 7.70635C10.2337 6.63872 11.0992 5.77324 12.1668 5.77324C13.2344 5.77324 14.0999 6.63872 14.0999 7.70635ZM14.8731 7.70635C14.8731 9.20103 13.6615 10.4127 12.1668 10.4127C10.6721 10.4127 9.46045 9.20103 9.46045 7.70635C9.46045 6.21167 10.6721 5 12.1668 5C13.6615 5 14.8731 6.21167 14.8731 7.70635Z"
+                      fill="white"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="assigneeInfo"
+          >
+            <span
+              className="name"
+            >
+              Rotation 1
+            </span>
+            <span
+              className="externalId"
+            >
+              800
+              -
+              RR1
+            </span>
+          </div>
+        </div>
+        <div
+          className="assignee"
+        >
+          <div
+            className="photoContainer comfortable medium"
+            style={
+              Object {
+                "backgroundImage": "url()",
+              }
+            }
+          >
+            <div>
+              <div
+                className="popoverDetails"
+              >
+                <div
+                  className="iconContainer comfortable medium employee"
+                >
+                  <svg
+                    height={16}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={16}
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M7 13.6928C7 12.4246 8.02809 11.3965 9.2963 11.3965H15.037C16.3052 11.3965 17.3333 12.4246 17.3333 13.6928V18.2854H7V13.6928ZM9.2963 12.1619C8.45082 12.1619 7.76543 12.8473 7.76543 13.6928V17.5199H16.5679V13.6928C16.5679 12.8473 15.8825 12.1619 15.037 12.1619H9.2963Z"
+                      fill="white"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M12.1668 9.63946C13.2344 9.63946 14.0999 8.77397 14.0999 7.70635C14.0999 6.63872 13.2344 5.77324 12.1668 5.77324C11.0992 5.77324 10.2337 6.63872 10.2337 7.70635C10.2337 8.77397 11.0992 9.63946 12.1668 9.63946ZM12.1668 10.4127C13.6615 10.4127 14.8731 9.20103 14.8731 7.70635C14.8731 6.21167 13.6615 5 12.1668 5C10.6721 5 9.46045 6.21167 9.46045 7.70635C9.46045 9.20103 10.6721 10.4127 12.1668 10.4127Z"
+                      fill="white"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M14.0999 7.70635C14.0999 8.77397 13.2344 9.63946 12.1668 9.63946C11.0992 9.63946 10.2337 8.77397 10.2337 7.70635C10.2337 6.63872 11.0992 5.77324 12.1668 5.77324C13.2344 5.77324 14.0999 6.63872 14.0999 7.70635ZM14.8731 7.70635C14.8731 9.20103 13.6615 10.4127 12.1668 10.4127C10.6721 10.4127 9.46045 9.20103 9.46045 7.70635C9.46045 6.21167 10.6721 5 12.1668 5C13.6615 5 14.8731 6.21167 14.8731 7.70635Z"
+                      fill="white"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M12.1668 9.63946C13.2344 9.63946 14.0999 8.77397 14.0999 7.70635C14.0999 6.63872 13.2344 5.77324 12.1668 5.77324C11.0992 5.77324 10.2337 6.63872 10.2337 7.70635C10.2337 8.77397 11.0992 9.63946 12.1668 9.63946ZM12.1668 10.4127C13.6615 10.4127 14.8731 9.20103 14.8731 7.70635C14.8731 6.21167 13.6615 5 12.1668 5C10.6721 5 9.46045 6.21167 9.46045 7.70635C9.46045 9.20103 10.6721 10.4127 12.1668 10.4127Z"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M14.0999 7.70635C14.0999 8.77397 13.2344 9.63946 12.1668 9.63946C11.0992 9.63946 10.2337 8.77397 10.2337 7.70635C10.2337 6.63872 11.0992 5.77324 12.1668 5.77324C13.2344 5.77324 14.0999 6.63872 14.0999 7.70635ZM14.8731 7.70635C14.8731 9.20103 13.6615 10.4127 12.1668 10.4127C10.6721 10.4127 9.46045 9.20103 9.46045 7.70635C9.46045 6.21167 10.6721 5 12.1668 5C13.6615 5 14.8731 6.21167 14.8731 7.70635Z"
+                      fill="white"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="assigneeInfo"
+          >
+            <span
+              className="name"
+            >
+              Rotation 3
+            </span>
+            <span
+              className="externalId"
+            >
+              800
+              -
+              RR2
+            </span>
+          </div>
+        </div>
+        <div
+          className="assignee"
+        >
+          <div
+            className="photoContainer comfortable medium"
+            style={
+              Object {
+                "backgroundImage": "url()",
+              }
+            }
+          >
+            <div>
+              <div
+                className="popoverDetails"
+              >
+                <div
+                  className="iconContainer comfortable medium employee"
+                >
+                  <svg
+                    height={16}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={16}
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M7 13.6928C7 12.4246 8.02809 11.3965 9.2963 11.3965H15.037C16.3052 11.3965 17.3333 12.4246 17.3333 13.6928V18.2854H7V13.6928ZM9.2963 12.1619C8.45082 12.1619 7.76543 12.8473 7.76543 13.6928V17.5199H16.5679V13.6928C16.5679 12.8473 15.8825 12.1619 15.037 12.1619H9.2963Z"
+                      fill="white"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M12.1668 9.63946C13.2344 9.63946 14.0999 8.77397 14.0999 7.70635C14.0999 6.63872 13.2344 5.77324 12.1668 5.77324C11.0992 5.77324 10.2337 6.63872 10.2337 7.70635C10.2337 8.77397 11.0992 9.63946 12.1668 9.63946ZM12.1668 10.4127C13.6615 10.4127 14.8731 9.20103 14.8731 7.70635C14.8731 6.21167 13.6615 5 12.1668 5C10.6721 5 9.46045 6.21167 9.46045 7.70635C9.46045 9.20103 10.6721 10.4127 12.1668 10.4127Z"
+                      fill="white"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M14.0999 7.70635C14.0999 8.77397 13.2344 9.63946 12.1668 9.63946C11.0992 9.63946 10.2337 8.77397 10.2337 7.70635C10.2337 6.63872 11.0992 5.77324 12.1668 5.77324C13.2344 5.77324 14.0999 6.63872 14.0999 7.70635ZM14.8731 7.70635C14.8731 9.20103 13.6615 10.4127 12.1668 10.4127C10.6721 10.4127 9.46045 9.20103 9.46045 7.70635C9.46045 6.21167 10.6721 5 12.1668 5C13.6615 5 14.8731 6.21167 14.8731 7.70635Z"
+                      fill="white"
+                      fillRule="evenodd"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M12.1668 9.63946C13.2344 9.63946 14.0999 8.77397 14.0999 7.70635C14.0999 6.63872 13.2344 5.77324 12.1668 5.77324C11.0992 5.77324 10.2337 6.63872 10.2337 7.70635C10.2337 8.77397 11.0992 9.63946 12.1668 9.63946ZM12.1668 10.4127C13.6615 10.4127 14.8731 9.20103 14.8731 7.70635C14.8731 6.21167 13.6615 5 12.1668 5C10.6721 5 9.46045 6.21167 9.46045 7.70635C9.46045 9.20103 10.6721 10.4127 12.1668 10.4127Z"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M14.0999 7.70635C14.0999 8.77397 13.2344 9.63946 12.1668 9.63946C11.0992 9.63946 10.2337 8.77397 10.2337 7.70635C10.2337 6.63872 11.0992 5.77324 12.1668 5.77324C13.2344 5.77324 14.0999 6.63872 14.0999 7.70635ZM14.8731 7.70635C14.8731 9.20103 13.6615 10.4127 12.1668 10.4127C10.6721 10.4127 9.46045 9.20103 9.46045 7.70635C9.46045 6.21167 10.6721 5 12.1668 5C13.6615 5 14.8731 6.21167 14.8731 7.70635Z"
+                      fill="white"
+                      fillRule="evenodd"
+                      stroke="white"
+                      stroke-width="0.2"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="assigneeInfo"
+          >
+            <span
+              className="name"
+            >
+              Rotation 4
+            </span>
+            <span
+              className="externalId"
+            >
+              800
+              -
+              RR3
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Pro org|Position Card Interactive 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      className="context comfortable isClickable"
+      onClick={[Function]}
+    >
+      <div
+        className="container"
+      >
+        <div
+          className="photoIconContainer"
+        >
+          <div
+            className="personIconContainer"
+          >
+            <div
+              className="photoContainer comfortable large"
+              style={
+                Object {
+                  "backgroundImage": "url()",
+                }
+              }
+            >
+              <div>
+                <div
+                  className="popoverDetails"
+                >
+                  <svg
+                    height={40}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 56 56 "
+                    width={40}
+                  >
+                    <circle
+                      cx="28"
+                      cy="28"
+                      fill="#EAEAEA"
+                      r="28"
+                    />
+                    <path
+                      clipRule="evenodd"
+                      d="M23.0002 28C26.2168 28 28.8335 25.3834 28.8335 22.1667C28.8335 18.95 26.2168 16.3334 23.0002 16.3334C19.7835 16.3334 17.1668 18.95 17.1668 22.1667C17.1668 25.3834 19.7835 28 23.0002 28ZM11.3335 36.75C11.3335 32.8667 19.1002 30.9167 23.0002 30.9167C26.9002 30.9167 34.6668 32.8667 34.6668 36.75V39.6667H11.3335V36.75ZM23.0002 34.25C20.0168 34.25 16.6335 35.3667 15.2335 36.3334H30.7668C29.3668 35.3667 25.9835 34.25 23.0002 34.25ZM25.5002 22.1667C25.5002 20.7834 24.3835 19.6667 23.0002 19.6667C21.6168 19.6667 20.5002 20.7834 20.5002 22.1667C20.5002 23.55 21.6168 24.6667 23.0002 24.6667C24.3835 24.6667 25.5002 23.55 25.5002 22.1667ZM34.7335 31.0167C36.6668 32.4167 38.0002 34.2834 38.0002 36.75V39.6667H44.6668V36.75C44.6668 33.3834 38.8335 31.4667 34.7335 31.0167ZM38.8335 22.1667C38.8335 25.3834 36.2168 28 33.0002 28C32.1002 28 31.2668 27.7834 30.5002 27.4167C31.5502 25.9334 32.1668 24.1167 32.1668 22.1667C32.1668 20.2167 31.5502 18.4 30.5002 16.9167C31.2668 16.55 32.1002 16.3334 33.0002 16.3334C36.2168 16.3334 38.8335 18.95 38.8335 22.1667Z"
+                      fill="#666666"
+                      fillRule="evenodd"
+                    />
+                  </svg>
+                  <div
+                    className="iconContainer comfortable large"
+                  >
+                    <svg
+                      height={16}
+                      numberOfPersons={3}
+                      style={
+                        Object {
+                          "color": "",
+                        }
+                      }
+                      viewBox="0 0 24 24"
+                      width={16}
+                    >
+                      <circle
+                        cx="12"
+                        cy="12"
+                        fill="#007079"
+                        r="12"
+                      />
+                      <text
+                        dy=".3em"
+                        stroke="white"
+                        stroke-width="1px"
+                        text-anchor="middle"
+                        x="50%"
+                        y="50%"
+                      >
+                        3
+                      </text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="stateIcon"
+          >
+            <span>
+              <svg
+                height={16}
+                style={
+                  Object {
+                    "color": "",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width={16}
+              >
+                <path
+                  clipRule="evenodd"
+                  d="M12 2.21V4C16.42 4 20 7.58 20 12C20 13.04 19.8 14.04 19.43 14.95C19.16 15.62 18.3 15.8 17.79 15.29C17.52 15.02 17.41 14.61 17.56 14.25C17.85 13.56 18 12.79 18 12C18 8.69 15.31 6 12 6V7.79C12 8.24 11.46 8.46 11.14 8.15L8.35 5.36C8.15 5.16 8.15 4.85 8.35 4.65L11.15 1.86C11.46 1.54 12 1.76 12 2.21ZM6 12C6 15.31 8.69 18 12 18V16.21C12 15.76 12.54 15.54 12.85 15.85L15.64 18.64C15.84 18.84 15.84 19.15 15.64 19.35L12.85 22.14C12.54 22.46 12 22.24 12 21.79V20C7.58 20 4 16.42 4 12C4 10.96 4.2 9.96 4.57 9.05C4.84 8.38 5.7 8.2 6.21 8.71C6.48 8.98 6.59 9.39 6.44 9.75C6.15 10.44 6 11.21 6 12Z"
+                  fill="currentColor"
+                  fillRule="evenodd"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div
+          className="positionInstance"
+          onClick={[Function]}
+        >
+          <div
+            className="basePositionName"
+          >
+            <span>
+              obs
+            </span>
+          </div>
+          <div
+            className="positionName"
+          >
+            <span>
+              Drilling Engineer
+            </span>
+          </div>
+          <div
+            className="assignedPersonName"
+          >
+            <span>
+              3 assignees
+            </span>
+          </div>
+          <div
+            className="location"
+          >
+            Stavanger
+          </div>
+          <div
+            className="period"
+          >
+            <span>
+              1/27/2022
+               - 
+              9/26/2022
+               (
+              100
+              %)
+            </span>
+          </div>
+          <div
+            className="externalId"
+          >
+            800
+          </div>
+          <div
+            className="expandButton"
+          >
+            <button
+              className="container comfortable"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+            >
+              <span
+                className="iconContainer"
+              >
+                <div
+                  className="childPositionCount"
+                >
+                  2
+                  <svg
+                    height={16}
+                    isExpanded={false}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={24}
+                  >
+                    <path
+                      d="M15.875 9.00001L11.995 12.88L8.11498 9.00001C7.92814 8.81275 7.67449 8.70752 7.40998 8.70752C7.14546 8.70752 6.89181 8.81275 6.70498 9.00001C6.31498 9.39001 6.31498 10.02 6.70498 10.41L11.295 15C11.685 15.39 12.315 15.39 12.705 15L17.295 10.41C17.685 10.02 17.685 9.39001 17.295 9.00001C16.905 8.62001 16.265 8.61001 15.875 9.00001Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+              </span>
+            </button>
+          </div>
+          <div
+            className="instanceTimelineContainer"
+          >
+            <div
+              className="instance"
+              style={
+                Object {
+                  "left": "0%",
+                  "right": "21%",
+                }
+              }
+            >
+              <div
+                className="dot"
+              />
+              <div
+                className="instanceLine"
+              />
+            </div>
+            <div
+              className="instance hasRotation"
+              style={
+                Object {
+                  "left": "79%",
+                  "right": "14%",
+                }
+              }
+            >
+              <div
+                className="dot"
+              />
+              <div
+                className="instanceLine"
+              />
+            </div>
+            <div
+              className="instance isCurrent hasRotation"
+              style={
+                Object {
+                  "left": "86%",
+                  "right": "0%",
+                }
+              }
+            >
+              <div
+                className="dot"
+              />
+              <div
+                className="instanceLine"
+              />
+              <div
+                className="dot right"
+              />
+            </div>
+            <div
+              className="dot selectedDate"
+              style={
+                Object {
+                  "left": "100%",
+                }
+              }
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

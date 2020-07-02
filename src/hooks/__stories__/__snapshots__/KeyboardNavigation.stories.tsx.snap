@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Hooks|KeyboardNavigation Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <input
+      placeholder="Item 1"
+    />
+    <ul>
+      <li
+        style={
+          Object {
+            "fontWeight": 600,
+            "listStyleType": "none",
+          }
+        }
+      >
+        Item 1
+      </li>
+      <li
+        style={
+          Object {
+            "fontWeight": 200,
+            "listStyleType": "none",
+          }
+        }
+      >
+        Item 2
+      </li>
+      <li
+        style={
+          Object {
+            "fontWeight": 200,
+            "listStyleType": "none",
+          }
+        }
+      >
+        Item 3
+      </li>
+    </ul>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

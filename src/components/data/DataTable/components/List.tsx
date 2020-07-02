@@ -1,9 +1,11 @@
 import React, { useRef, useCallback } from 'react';
 import { DataTableListProps } from '../dataTableTypes';
 import styles from '../styles.less';
-import { IconButton, SkeletonBar, PaginationArrow } from '@equinor/fusion-components';
 import { getString } from '../utils';
 import { Page } from '@equinor/fusion';
+import IconButton from 'components/general/IconButton';
+import PaginationArrow from 'components/icons/components/navigation/PaginationArrow';
+import SkeletonBar from 'components/feedback/Skeleton/Bar';
 
 // For now, this is the only way to create generic functional components with TS
 function List<T>({

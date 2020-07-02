@@ -1,14 +1,12 @@
 import React, { useRef } from 'react';
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
-import {
-    PersonPhoto,
-    LinkIcon,
-    styling,
-    useTooltipRef,
-    SyncIcon,
-} from '@equinor/fusion-components';
 
 import styles from '../styles.less';
+import useTooltipRef from 'hooks/useTooltipRef';
+import PersonPhoto from 'components/people/PersonPhoto';
+import LinkIcon from 'components/icons/components/wysiwyg/LinkIcon';
+import styling from 'styles/styling';
+import SyncIcon from 'components/icons/components/notification/SyncIcon';
 
 type PositionPhotoIconProps = {
     position: Position;

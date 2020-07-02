@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`People|PersonPositinCard Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      className="container comfortable"
+    >
+      <div
+        className="projectName"
+      >
+        Åsgard Subsea Compression Phase II with long text
+      </div>
+      <div
+        className="personPosition"
+      >
+        Administrative Lead
+      </div>
+      <div
+        className="period"
+      >
+        1/7/2018
+         - 
+        6/30/2025
+         (
+        25
+        %)
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

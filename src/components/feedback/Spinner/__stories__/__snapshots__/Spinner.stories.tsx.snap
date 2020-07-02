@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feedback|Spinner Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      className="spinnerContainer"
+    >
+      <div
+        className="spinner"
+      >
+        <svg
+          className="spinnerBox"
+          viewBox="24 24 48 48"
+        >
+          <circle
+            className="spinnerBorder"
+            cx="48"
+            cy="48"
+            fill="none"
+            r="20"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      className="spinnerContainer"
+    >
+      <div
+        className="spinner primary"
+      >
+        <svg
+          className="spinnerBox"
+          viewBox="24 24 48 48"
+        >
+          <circle
+            className="spinnerBorder"
+            cx="48"
+            cy="48"
+            fill="none"
+            r="20"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      className="spinnerContainer"
+    >
+      <div
+        className="spinner small"
+      >
+        <svg
+          className="spinnerBox"
+          viewBox="24 24 48 48"
+        >
+          <circle
+            className="spinnerBorder"
+            cx="48"
+            cy="48"
+            fill="none"
+            r="20"
+            strokeMiterlimit="10"
+            strokeWidth="3"
+          />
+        </svg>
+      </div>
+    </div>
+    <p>
+      Inline spinner 
+      <div
+        className="spinnerContainer inline"
+      >
+        <div
+          className="spinner"
+        >
+          <svg
+            className="spinnerBox"
+            style={
+              Object {
+                "height": 24,
+                "width": 24,
+              }
+            }
+            viewBox="24 24 48 48"
+          >
+            <circle
+              className="spinnerBorder"
+              cx="48"
+              cy="48"
+              fill="none"
+              r="20"
+              strokeMiterlimit="10"
+              strokeWidth={3}
+            />
+          </svg>
+        </div>
+      </div>
+    </p>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

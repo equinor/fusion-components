@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Popover Container Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "left": "50px",
+          "position": "absolute",
+          "top": "50px",
+        }
+      }
+    >
+      <div
+        className="popoverContainer elevation1 below"
+      >
+        <svg
+          className="arrow"
+          fill="none"
+          height="8"
+          viewBox="0 0 12 8"
+          width="12"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.79423 7.5L10.7152 7.5L10.2135 6.72765L7.15506 2.0188C6.56361 1.10821 5.23062 1.10821 4.63917 2.0188L1.58069 6.72765L1.07903 7.5L2 7.5L9.79423 7.5Z"
+            fill="white"
+            stroke="#E6E6E6"
+          />
+          <path
+            d="M5.29289 3.70711C5.68342 3.31658 6.31658 3.31658 6.70711 3.70711L11 8L1 8L5.29289 3.70711Z"
+            fill="white"
+          />
+        </svg>
+        <div
+          className="content"
+        >
+          <div>
+            <p>
+              This is the PopOverContainer used in the popoverRef hook
+            </p>
+            <p>
+              If you want popovers then the 
+              <b>
+                popoverRef hook
+              </b>
+               is probably what you are looking for.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "left": "230px",
+          "position": "absolute",
+          "top": "200px",
+        }
+      }
+    >
+      <div
+        className="popoverContainer elevation1 right"
+      >
+        <svg
+          className="arrow"
+          fill="none"
+          height="8"
+          viewBox="0 0 12 8"
+          width="12"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.79423 7.5L10.7152 7.5L10.2135 6.72765L7.15506 2.0188C6.56361 1.10821 5.23062 1.10821 4.63917 2.0188L1.58069 6.72765L1.07903 7.5L2 7.5L9.79423 7.5Z"
+            fill="white"
+            stroke="#E6E6E6"
+          />
+          <path
+            d="M5.29289 3.70711C5.68342 3.31658 6.31658 3.31658 6.70711 3.70711L11 8L1 8L5.29289 3.70711Z"
+            fill="white"
+          />
+        </svg>
+        <div
+          className="content"
+        >
+          <div
+            style={
+              Object {
+                "width": "200px",
+              }
+            }
+          >
+            <p>
+              This is here if you need to implement a popover and a ref is really not working for you.
+            </p>
+            <p>
+              Using this component directly should be a last resort
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

@@ -1,9 +1,9 @@
 import React, { useMemo, useCallback } from 'react';
 import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
-import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { useInstancesWithRotation, PositionInstanceRotation } from '../hooks';
+import useTooltipRef from 'hooks/useTooltipRef';
 
 type PositionTimelineProps = {
     /** The instance that is currently active/shown */

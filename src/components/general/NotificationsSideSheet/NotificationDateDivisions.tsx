@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NotificationCard } from '@equinor/fusion';
 import * as styles from './styles.less';
 import NotificationCardWrapper from './NotificaitonCardWrapper';
-import { Accordion, AccordionItem } from '@equinor/fusion-components';
+import Accordion, { AccordionItem } from '../Accordion';
 
 type NotificationDateDivisionProps = {
     notifications: NotificationCard[];

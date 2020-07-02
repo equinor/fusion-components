@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react';
-import { BreadCrumb } from '../orgChartTypes';
+import { BreadCrumb as BreadCrumbType } from '../orgChartTypes';
 
 import styles from './styles.less';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
@@ -24,7 +24,7 @@ const BreadCrumbs = () => {
     );
 
     const renderComponent = useCallback(
-        (breadCrumb: BreadCrumb, index: number) => {
+        (breadCrumb: BreadCrumbType, index: number) => {
             const componentX = x - (breadCrumbWidth + breadCrumbMargin) * (index + 1);
             const componentY = y;
 

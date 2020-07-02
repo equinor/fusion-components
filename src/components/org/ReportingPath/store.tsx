@@ -1,5 +1,5 @@
-import { OrgChartItemProps, OrgNode } from '@equinor/fusion-components';
 import React, { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
+import { OrgNode, OrgChartItemProps } from '../OrgChart/orgChartTypes';
 
 type Action<T> =
     | { type: 'UPDATE_SIZE'; width?: number; height?: number }

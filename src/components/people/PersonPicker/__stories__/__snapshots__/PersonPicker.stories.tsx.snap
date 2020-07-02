@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`People|PersonPicker Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <div
+        className="inputContainer"
+      >
+        <div
+          className="inputContent labelLess"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent"
+          >
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyUp={[Function]}
+              placeholder="Find person"
+              value=""
+            />
+          </div>
+          <div
+            className="icon"
+            onClick={[Function]}
+          >
+            <svg
+              cursor="pointer"
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                d="M8.70627 11.4137L11.2963 14.0037C11.6863 14.3937 12.3163 14.3937 12.7063 14.0037L15.2963 11.4137C15.9263 10.7837 15.4763 9.70374 14.5863 9.70374H9.40627C8.51627 9.70374 8.07627 10.7837 8.70627 11.4137Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`People|PersonPicker Pre Selected 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <div
+        className="inputContainer"
+      >
+        <div
+          className="inputContent"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent"
+          >
+            <label>
+              Selected person
+            </label>
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              onKeyUp={[Function]}
+              placeholder=""
+              value=""
+            />
+          </div>
+          <div
+            className="icon"
+            onClick={[Function]}
+          >
+            <svg
+              cursor="pointer"
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                d="M8.70627 11.4137L11.2963 14.0037C11.6863 14.3937 12.3163 14.3937 12.7063 14.0037L15.2963 11.4137C15.9263 10.7837 15.4763 9.70374 14.5863 9.70374H9.40627C8.51627 9.70374 8.07627 10.7837 8.70627 11.4137Z"
+                fill="currentColor"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

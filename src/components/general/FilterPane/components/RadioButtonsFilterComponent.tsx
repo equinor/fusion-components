@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTooltipRef, RadioButton } from '@equinor/fusion-components';
 import { FilterTerm } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
+import useTooltipRef from 'hooks/useTooltipRef';
+import { RadioButton } from 'components/general/SelectionControls';
 
 type RadioOption = {
     key: string;

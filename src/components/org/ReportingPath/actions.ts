@@ -1,8 +1,7 @@
-import {OrgStructure, OrgNode } from '@equinor/fusion-components';
-
 import { useEffect, useContext } from 'react';
 import { ReportingPathContextReducer, ReportingPathContext } from './store';
 import { ReportingPathProps } from '.';
+import { OrgStructure, OrgNode } from '../OrgChart/orgChartTypes';
 
 type ReportingPathActionProps<T> = ReportingPathProps<T> & {
     parentHeight: number;

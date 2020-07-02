@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icons|Navigation Arrow Back 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <svg
+      height={24}
+      style={
+        Object {
+          "color": "",
+        }
+      }
+      viewBox="0 0 24 24"
+      width={24}
+    >
+      <path
+        clipRule="evenodd"
+        d="M18.7912 11.005H7.62124L12.5012 6.12502C12.8912 5.73502 12.8912 5.09502 12.5012 4.70502C12.3144 4.51777 12.0608 4.41254 11.7962 4.41254C11.5317 4.41254 11.2781 4.51777 11.0912 4.70502L4.50124 11.295C4.11124 11.685 4.11124 12.315 4.50124 12.705L11.0912 19.295C11.4812 19.685 12.1112 19.685 12.5012 19.295C12.8912 18.905 12.8912 18.275 12.5012 17.885L7.62124 13.005H18.7912C19.3412 13.005 19.7912 12.555 19.7912 12.005C19.7912 11.455 19.3412 11.005 18.7912 11.005Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Icons|Navigation Close 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <svg
+      height={24}
+      style={
+        Object {
+          "color": "",
+        }
+      }
+      viewBox="0 0 24 24"
+      width={24}
+    >
+      <path
+        clipRule="evenodd"
+        d="M18.3 5.71002C18.1131 5.52276 17.8595 5.41753 17.595 5.41753C17.3305 5.41753 17.0768 5.52276 16.89 5.71002L12 10.59L7.10997 5.70002C6.92314 5.51276 6.66949 5.40753 6.40497 5.40753C6.14045 5.40753 5.8868 5.51276 5.69997 5.70002C5.30997 6.09002 5.30997 6.72002 5.69997 7.11002L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11002C18.68 6.73002 18.68 6.09002 18.3 5.71002Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Icons|Navigation More 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <svg
+      height={24}
+      style={
+        Object {
+          "color": "",
+        }
+      }
+      viewBox="0 0 24 24"
+      width={24}
+    >
+      <path
+        clipRule="evenodd"
+        d="M12 8C13.1 8 14 7.1 14 6C14 4.9 13.1 4 12 4C10.9 4 10 4.9 10 6C10 7.1 10.9 8 12 8ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10ZM10 18C10 16.9 10.9 16 12 16C13.1 16 14 16.9 14 18C14 19.1 13.1 20 12 20C10.9 20 10 19.1 10 18Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Icons|Navigation Pagination arrows 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <svg
+      height={24}
+      style={
+        Object {
+          "color": "",
+        }
+      }
+      viewBox="0 0 24 24"
+      width={24}
+    >
+      <path
+        d="M15 6.70508C14.8132 6.51783 14.5595 6.4126 14.295 6.4126C14.0305 6.4126 13.7769 6.51783 13.59 6.70508L9.00002 11.2951C8.61002 11.6851 8.61002 12.3151 9.00002 12.7051L13.59 17.2951C13.98 17.6851 14.61 17.6851 15 17.2951C15.39 16.9051 15.39 16.2751 15 15.8851L11.12 11.9951L15 8.11508C15.39 7.72508 15.38 7.08508 15 6.70508Z"
+        fill="currentColor"
+      />
+    </svg>
+    <svg
+      height={24}
+      style={
+        Object {
+          "color": "",
+        }
+      }
+      viewBox="0 0 24 24"
+      width={24}
+    >
+      <path
+        d="M9.00002 6.71051C8.61002 7.10051 8.61002 7.73051 9.00002 8.12051L12.88 12.0005L9.00002 15.8805C8.61002 16.2705 8.61002 16.9005 9.00002 17.2905C9.39002 17.6805 10.02 17.6805 10.41 17.2905L15 12.7005C15.39 12.3105 15.39 11.6805 15 11.2905L10.41 6.70051C10.03 6.32051 9.39002 6.32051 9.00002 6.71051Z"
+        fill="currentColor"
+      />
+    </svg>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Icons|Navigation Subdirectory left 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <svg
+      height={24}
+      style={
+        Object {
+          "color": "",
+        }
+      }
+      viewBox="0 0 24 24"
+      width={24}
+    >
+      <path
+        d="M5.00124 15.4187L9.58124 19.9987C9.97124 20.3887 10.6112 20.3887 11.0012 19.9987C11.3912 19.6087 11.3912 18.9687 11.0012 18.5787L8.12124 15.7087H18.2912C18.8412 15.7087 19.2912 15.2587 19.2912 14.7087V4.70874C19.2912 4.15874 18.8412 3.70874 18.2912 3.70874C17.7412 3.70874 17.2912 4.15874 17.2912 4.70874V13.7087H8.12124L11.0012 10.8387C11.3912 10.4487 11.3912 9.80874 11.0012 9.41874C10.6112 9.02874 9.97124 9.02874 9.58124 9.41874L5.00124 13.9987C4.61124 14.3887 4.61124 15.0287 5.00124 15.4187Z"
+        fill="currentColor"
+      />
+    </svg>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Icons|Navigation Subdirectory right 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <svg
+      height={24}
+      style={
+        Object {
+          "color": "",
+        }
+      }
+      viewBox="0 0 24 24"
+      width={24}
+    >
+      <path
+        d="M18.9987 15.4187L14.4187 19.9987C14.0287 20.3887 13.3887 20.3887 12.9987 19.9987C12.6087 19.6087 12.6087 18.9687 12.9987 18.5787L15.8787 15.7087H5.70874C5.15874 15.7087 4.70874 15.2587 4.70874 14.7087V4.70874C4.70874 4.15874 5.15874 3.70874 5.70874 3.70874C6.25874 3.70874 6.70874 4.15874 6.70874 4.70874V13.7087H15.8787L12.9987 10.8387C12.6087 10.4487 12.6087 9.80874 12.9987 9.41874C13.3887 9.02874 14.0287 9.02874 14.4187 9.41874L18.9987 13.9987C19.3887 14.3887 19.3887 15.0287 18.9987 15.4187Z"
+        fill="currentColor"
+      />
+    </svg>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

@@ -1,4 +1,4 @@
-import { styling } from '@equinor/fusion-components';
+import styling from 'styles/styling';
 
 const getDefaultHostConfig = () => ({
     spacing: {

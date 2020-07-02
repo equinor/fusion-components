@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-    PersonPhoto,
-    SearchableDropdown,
-    SearchableDropdownSection,
-    useTooltipRef,
-} from '@equinor/fusion-components';
 
 import { PersonDetails } from '@equinor/fusion';
 import usePersonQuery from '../usePersonQuery';
 import peopleToSections, { singlePersonToDropdownSection } from './peopleToDropdownSections';
+import useTooltipRef from 'hooks/useTooltipRef';
+import PersonPhoto from '../PersonPhoto';
+import SearchableDropdown, { SearchableDropdownSection } from 'components/general/SearchableDropdown';
 
 export type PersonPickerOption = {
     title: string;

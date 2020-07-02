@@ -1,0 +1,587 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Filter Pane Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "height": "100%",
+          "width": "100%",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "flexGrow": 1,
+            "marginRight": "calc(var(--grid-unit) * 4px)",
+            "width": 1,
+          }
+        }
+      >
+        <div
+          className="container comfortable"
+        />
+      </div>
+      <div
+        className="container comfortable"
+      >
+        <div
+          className="header"
+        >
+          <div
+            className="collapseExpandButtonContainer"
+          >
+            <button
+              className="container comfortable"
+              onClick={[Function]}
+              onMouseDown={[Function]}
+            >
+              <span
+                className="iconContainer"
+              >
+                <svg
+                  height={24}
+                  style={
+                    Object {
+                      "color": "",
+                    }
+                  }
+                  viewBox="0 0 24 24"
+                  width={24}
+                >
+                  <path
+                    clipRule="evenodd"
+                    d="M18.0013 7C18.0013 6.45 17.5513 6 17.0013 6C16.4513 6 16.0013 6.45 16.0013 7V17C16.0013 17.55 16.4513 18 17.0013 18C17.5513 18 18.0013 17.55 18.0013 17V7ZM10.1813 12L6.29128 8.11C5.91128 7.73 5.91128 7.09 6.29128 6.7C6.47811 6.51275 6.73176 6.40751 6.99628 6.40751C7.2608 6.40751 7.51445 6.51275 7.70128 6.7L12.2913 11.3C12.6813 11.69 12.6813 12.32 12.2913 12.71L7.70128 17.3C7.31128 17.69 6.68128 17.69 6.29128 17.3C5.90128 16.91 5.90128 16.28 6.29128 15.89L10.1813 12Z"
+                    fill="currentColor"
+                    fillRule="evenodd"
+                  />
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div
+            style={
+              Object {
+                "marginRight": "8px",
+              }
+            }
+          >
+            <button
+              className="container frameless primary comfortable"
+              disabled={false}
+              onClick={[Function]}
+              onClickCapture={[Function]}
+              onMouseDown={[Function]}
+              onMouseUp={[Function]}
+              type="button"
+            >
+              <span
+                className="button"
+              >
+                Flip pane 
+                left
+              </span>
+            </button>
+          </div>
+        </div>
+        <div
+          className="content"
+        >
+          <section
+            className=""
+          >
+            <header
+              onClick={[Function]}
+            >
+              <h3>
+                
+              </h3>
+            </header>
+            <div>
+              <div
+                className="filter isExpanded"
+              >
+                
+                <div>
+                  <div
+                    className="inputContainer"
+                  >
+                    <div
+                      className="inputContent labelLess"
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="inputTextContent"
+                      >
+                        <input
+                          disabled={false}
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          placeholder=""
+                          value=""
+                        />
+                      </div>
+                      <div
+                        className="icon"
+                      >
+                        <svg
+                          height={24}
+                          style={
+                            Object {
+                              "color": "",
+                            }
+                          }
+                          viewBox="0 0 24 24"
+                          width={24}
+                        >
+                          <path
+                            clipRule="evenodd"
+                            d="M15.1866 14.4716H15.9766L20.2166 18.7316C20.6266 19.1416 20.6266 19.8116 20.2166 20.2216C19.8066 20.6316 19.1366 20.6316 18.7266 20.2216L14.4766 15.9716V15.1816L14.2066 14.9016C12.8066 16.1016 10.8966 16.7216 8.86658 16.3816C6.08658 15.9116 3.86658 13.5916 3.52658 10.7916C3.00658 6.56156 6.56658 3.00156 10.7966 3.52156C13.5966 3.86156 15.9166 6.08156 16.3866 8.86156C16.7266 10.8916 16.1066 12.8016 14.9066 14.2016L15.1866 14.4716ZM5.47658 9.97156C5.47658 12.4616 7.48658 14.4716 9.97658 14.4716C12.4666 14.4716 14.4766 12.4616 14.4766 9.97156C14.4766 7.48156 12.4666 5.47156 9.97658 5.47156C7.48658 5.47156 5.47658 7.48156 5.47658 9.97156Z"
+                            fill="currentColor"
+                            fillRule="evenodd"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section
+            className="hasTitle"
+          >
+            <header
+              onClick={[Function]}
+            >
+              <h3>
+                Custom colors
+              </h3>
+              <svg
+                height={24}
+                style={
+                  Object {
+                    "color": "",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width={24}
+              >
+                <path
+                  d="M8.70627 12.5862L11.2963 9.99624C11.6863 9.60624 12.3163 9.60624 12.7063 9.99624L15.2963 12.5862C15.9263 13.2162 15.4763 14.2962 14.5863 14.2962H9.40627C8.51627 14.2962 8.07627 13.2162 8.70627 12.5862Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </header>
+            <div>
+              <div
+                className="filter isExpanded"
+              >
+                
+                <div>
+                  <ul>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="container radio comfortable"
+                        onClick={[Function]}
+                      >
+                        <input
+                          checked={true}
+                          readOnly={true}
+                          type="radio"
+                        />
+                        <label
+                          style={
+                            Object {
+                              "borderColor": "papayawhip",
+                            }
+                          }
+                        >
+                          <span
+                            className="dot"
+                            style={
+                              Object {
+                                "backgroundColor": "papayawhip",
+                              }
+                            }
+                          />
+                        </label>
+                      </div>
+                      <label>
+                        Papayawhip
+                      </label>
+                    </li>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="container radio comfortable"
+                        onClick={[Function]}
+                      >
+                        <input
+                          checked={false}
+                          readOnly={true}
+                          type="radio"
+                        />
+                        <label
+                          style={
+                            Object {
+                              "borderColor": "tomato",
+                            }
+                          }
+                        >
+                          <span
+                            className="dot"
+                            style={
+                              Object {
+                                "backgroundColor": "tomato",
+                              }
+                            }
+                          />
+                        </label>
+                      </div>
+                      <label>
+                        Tomato
+                      </label>
+                    </li>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <div
+                        className="container radio comfortable"
+                        onClick={[Function]}
+                      >
+                        <input
+                          checked={false}
+                          readOnly={true}
+                          type="radio"
+                        />
+                        <label
+                          style={
+                            Object {
+                              "borderColor": undefined,
+                            }
+                          }
+                        >
+                          <span
+                            className="dot"
+                            style={
+                              Object {
+                                "backgroundColor": undefined,
+                              }
+                            }
+                          />
+                        </label>
+                      </div>
+                      <label>
+                        Default
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section
+            className="hasTitle"
+          >
+            <header
+              onClick={[Function]}
+            >
+              <h3>
+                Filters
+              </h3>
+              <svg
+                height={24}
+                style={
+                  Object {
+                    "color": "",
+                  }
+                }
+                viewBox="0 0 24 24"
+                width={24}
+              >
+                <path
+                  d="M8.70627 12.5862L11.2963 9.99624C11.6863 9.60624 12.3163 9.60624 12.7063 9.99624L15.2963 12.5862C15.9263 13.2162 15.4763 14.2962 14.5863 14.2962H9.40627C8.51627 14.2962 8.07627 13.2162 8.70627 12.5862Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </header>
+            <div>
+              <div
+                className="filter isExpanded"
+              >
+                <header
+                  onClick={[Function]}
+                >
+                  <h4>
+                    Gender
+                  </h4>
+                  <button
+                    className="container frameless primary comfortable"
+                    disabled={true}
+                    onClick={[Function]}
+                    onClickCapture={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    type="button"
+                  >
+                    <span
+                      className="button"
+                    >
+                      Reset
+                    </span>
+                  </button>
+                  <svg
+                    height={24}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={24}
+                  >
+                    <path
+                      d="M8.70627 12.5862L11.2963 9.99624C11.6863 9.60624 12.3163 9.60624 12.7063 9.99624L15.2963 12.5862C15.9263 13.2162 15.4763 14.2962 14.5863 14.2962H9.40627C8.51627 14.2962 8.07627 13.2162 8.70627 12.5862Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </header>
+                <div>
+                  <ul>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <span>
+                        <div
+                          className="container checkbox comfortable"
+                          onClick={[Function]}
+                        >
+                          <input
+                            checked={false}
+                            readOnly={true}
+                            type="checkbox"
+                          />
+                          <label
+                            style={
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              }
+                            }
+                          >
+                            <span
+                              className="checkmark"
+                            />
+                          </label>
+                        </div>
+                      </span>
+                      <label>
+                        Male
+                         (-1)
+                      </label>
+                    </li>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <span>
+                        <div
+                          className="container checkbox comfortable"
+                          onClick={[Function]}
+                        >
+                          <input
+                            checked={false}
+                            readOnly={true}
+                            type="checkbox"
+                          />
+                          <label
+                            style={
+                              Object {
+                                "backgroundColor": undefined,
+                                "borderColor": undefined,
+                              }
+                            }
+                          >
+                            <span
+                              className="checkmark"
+                            />
+                          </label>
+                        </div>
+                      </span>
+                      <label>
+                        Female
+                        
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div
+                className="filter isExpanded"
+              >
+                <header
+                  onClick={[Function]}
+                >
+                  <h4>
+                    Id - with custom colors
+                  </h4>
+                  <button
+                    className="container frameless primary comfortable"
+                    disabled={true}
+                    onClick={[Function]}
+                    onClickCapture={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    type="button"
+                  >
+                    <span
+                      className="button"
+                    >
+                      Reset
+                    </span>
+                  </button>
+                  <svg
+                    height={24}
+                    style={
+                      Object {
+                        "color": "",
+                      }
+                    }
+                    viewBox="0 0 24 24"
+                    width={24}
+                  >
+                    <path
+                      d="M8.70627 12.5862L11.2963 9.99624C11.6863 9.60624 12.3163 9.60624 12.7063 9.99624L15.2963 12.5862C15.9263 13.2162 15.4763 14.2962 14.5863 14.2962H9.40627C8.51627 14.2962 8.07627 13.2162 8.70627 12.5862Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </header>
+                <div>
+                  <ul>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <span>
+                        <div
+                          className="container checkbox comfortable"
+                          onClick={[Function]}
+                        >
+                          <input
+                            checked={false}
+                            readOnly={true}
+                            type="checkbox"
+                          />
+                          <label
+                            style={
+                              Object {
+                                "backgroundColor": "hotpink",
+                                "borderColor": "hotpink",
+                              }
+                            }
+                          >
+                            <span
+                              className="checkmark"
+                            />
+                          </label>
+                        </div>
+                      </span>
+                      <label>
+                        1 - hotpink
+                         (-1)
+                      </label>
+                    </li>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <span>
+                        <div
+                          className="container checkbox comfortable"
+                          onClick={[Function]}
+                        >
+                          <input
+                            checked={false}
+                            readOnly={true}
+                            type="checkbox"
+                          />
+                          <label
+                            style={
+                              Object {
+                                "backgroundColor": "#bada55",
+                                "borderColor": "#bada55",
+                              }
+                            }
+                          >
+                            <span
+                              className="checkmark"
+                            />
+                          </label>
+                        </div>
+                      </span>
+                      <label>
+                        2 - #bada55
+                         (-1)
+                      </label>
+                    </li>
+                    <li
+                      onClick={[Function]}
+                    >
+                      <span>
+                        <div
+                          className="container checkbox comfortable"
+                          onClick={[Function]}
+                        >
+                          <input
+                            checked={false}
+                            readOnly={true}
+                            type="checkbox"
+                          />
+                          <label
+                            style={
+                              Object {
+                                "backgroundColor": "palevioletred",
+                                "borderColor": "palevioletred",
+                              }
+                            }
+                          >
+                            <span
+                              className="checkmark"
+                            />
+                          </label>
+                        </div>
+                      </span>
+                      <label>
+                        3 - palevioletred
+                         (-1)
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

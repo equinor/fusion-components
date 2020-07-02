@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { ErrorBoundary } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import CollapseExpandButton from './components/CollapseExpandButton';
 import Section from './components/Section';
@@ -14,6 +13,7 @@ import applyFilters, {
 } from './applyFilters';
 import { applyCountAsync, Count, FilterCount } from './countFilters';
 import FilterPaneContext, { IFilterPaneContext } from './FilterPaneContext';
+import ErrorBoundary from '../ErrorBoundary';
 
 export { default as FilterTypes } from './filterTypes';
 export { applyFilters, FilterTerm, FilterSection, Count, FilterCount, CollapseExpandButton };

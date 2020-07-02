@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { BlockIcon, ErrorMessage, PersonCard } from '@equinor/fusion-components';
 import * as styles from '../styles.less';
 import FusionError from '../models/FusionError';
 import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
+import ErrorMessage from 'components/general/ErrorMessage';
+import PersonCard from 'components/people/PersonCard';
+import { BlockIcon } from 'components/icons/components/content';
 
 type FusionMessageProps = {
     error: FusionError;

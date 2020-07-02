@@ -2,12 +2,9 @@ import React, { useEffect } from 'react';
 import styles from './styles.less';
 import { PersonDetails, usePersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
 import { useState } from 'react';
-import {
-    PersonPhoto,
-    PersonPresenceIcon,
-    AccountTypeIcon,
-    SkeletonBar,
-} from '@equinor/fusion-components';
+import SkeletonBar from 'components/feedback/Skeleton/Bar';
+import PersonPresenceIcon from '../PersonPhoto/PersonPresenceIcon';
+import PersonPhoto, { AccountTypeIcon } from '../PersonPhoto';
 
 export type PersonDetailProps = {
     personId?: string;

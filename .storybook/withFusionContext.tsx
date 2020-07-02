@@ -50,7 +50,6 @@ class StorybookAuthContainer extends AuthContainer {
     }
 
     async loginAsync(clientId: string): Promise<void> {
-        console.log('No login for you');
         /*   super.login(clientId); */
     }
 
