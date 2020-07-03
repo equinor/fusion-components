@@ -18,14 +18,6 @@ export const storiesOf = (groupName) => {
 
             describe(groupName, () => {
                 it(storyName, () => {
-                    // const decoratedStory = api.decorators.reduce((s, decorator) => {
-                    //     try {
-                    //         return decorator(s, { parameters: api.parameters });
-                    //     } catch (e) {
-                    //         return s;
-                    //     }
-                    // }, story);
-
                     const component = renderer.create(fusionContext(story));
 
                     // @TODO Enable custom names once released:
