@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import 'babel-polyfill';
 
 global.window.resizeTo = (width, height) => {
     global.window.innerWidth = width || global.window.innerWidth;
@@ -11,3 +11,6 @@ global.document.body.scrollTo = (scrollTop, scrollLeft) => {
     global.document.body.scrollLeft = scrollLeft || global.document.body.scrollLeft;
     global.document.body.dispatchEvent(new Event('scroll'));
 };
+
+const mockDate = new Date(1466424490000);
+jest.spyOn(global, 'Date').mockImplementation(() => mockDate);
