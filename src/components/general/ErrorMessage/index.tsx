@@ -19,7 +19,7 @@ export type ErrorMessageProps = {
     onTakeAction?: (event?: React.SyntheticEvent<Element, Event>) => void;
 };
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({
+export const ErrorMessage: React.FC<ErrorMessageProps> = ({
     hasError,
     errorType = 'error',
     message,
