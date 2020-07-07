@@ -69,10 +69,6 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
         useComponentDisplayClassNames(styles)
     );
 
-    React.useEffect(() => {
-        throw Error('wooot');
-    }, []);
-
     if (!hasError) {
         return children;
     }
