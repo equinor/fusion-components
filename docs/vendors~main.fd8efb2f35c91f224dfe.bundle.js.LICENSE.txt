@@ -11,17 +11,17 @@ object-assign
 */
 
 /*!
- * Application Insights JavaScript SDK - Dependencies Plugin, 2.5.5
+ * Application Insights JavaScript SDK - Dependencies Plugin, 2.5.6
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
 /*!
- * Application Insights JavaScript SDK - Web Analytics, 2.5.5
+ * Application Insights JavaScript SDK - Web Analytics, 2.5.6
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
 /*!
- * Application Insights JavaScript SDK - Web, 2.5.5
+ * Application Insights JavaScript SDK - Web, 2.5.6
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
