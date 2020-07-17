@@ -106,7 +106,7 @@ const TEMP_QUICK_FACT_SCOPES: Record<string, ApplicationGuidanceQuickFact[]> = {
             bodyMarkdown: 'And it does **stuff!**',
             contentUrl: '',
             created: new Date(),
-            createdBy: { id: '' },
+            createdBy: { azureUniqueId: '', name: '', mail: '' },
             path: '',
             slug: '',
             collectionPath: 'storybook',
