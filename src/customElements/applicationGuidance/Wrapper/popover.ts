@@ -13,7 +13,7 @@ const createEmptyQuickFact = (id, scope: string): ApplicationGuidanceQuickFact =
     bodyMarkdown: '',
     contentUrl: '',
     created: new Date(),
-    createdBy: { id: '' },
+    createdBy: { azureUniqueId: '', name: '', mail: '' },
     path: '',
     slug: '',
     collectionPath: scope,
