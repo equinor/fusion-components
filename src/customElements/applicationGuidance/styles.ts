@@ -121,6 +121,7 @@ export const bodyStyle = css`
 
     .quick-fact {
         padding: calc(var(--grid-unit) * 3);
+        padding-top: calc(var(--grid-unit) * 2);
     }
 
     .quick-fact h2 {

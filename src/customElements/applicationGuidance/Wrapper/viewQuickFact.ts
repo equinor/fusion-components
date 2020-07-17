@@ -1,7 +1,9 @@
 import { LitElement, customElement, property, html, css } from 'lit-element';
+import { formatDateTime, IFusionContext } from '@equinor/fusion';
 import { ApplicationGuidanceQuickFact } from '../types';
 import * as marked from 'marked';
 import { buttonStyle, bodyStyle, iconButtonStyle, toolbarHeaderStyle } from '../styles';
+import { formatDistance } from 'date-fns';
 
 @customElement('app-guide-view-quick-fact')
 export default class ApplicationGuidanceViewQuickFact extends LitElement {
@@ -50,6 +52,30 @@ export default class ApplicationGuidanceViewQuickFact extends LitElement {
                     margin-top: calc(var(--grid-unit) * 3);
                 }
 
+                .date {
+                    width: 100%;
+                    text-align: center;
+                    margin-bottom: calc(var(--grid-unit) * 4);
+                    color: var(--color-contrast);
+                    cursor: default;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .person-photo {
+                    width: calc(var(--grid-unit) * 4);
+                    height: calc(var(--grid-unit) * 4);
+                    display: inline-block;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin-left: calc(var(--grid-unit) * 2);
+                }
+
+                .person-photo img {
+                    max-width: 100%;
+                }
+
                 @keyframes skeleton-slide {
                     0% {
                         background-position: 0% 0%;
@@ -77,6 +103,7 @@ export default class ApplicationGuidanceViewQuickFact extends LitElement {
                 <div class="spacer"></div>
                 <button
                     class="icon-button"
+                    title="Edit this Quickfact"
                     ?disabled="${disabled}"
                     @click="${this.handleEditClick}"
                 >
@@ -119,7 +146,7 @@ export default class ApplicationGuidanceViewQuickFact extends LitElement {
     private renderNoQuickFactMessage() {
         return html`
             <div class="quick-fact">
-                <p>There's no quick fact for this element.</p>
+                <h2>There's no quick fact for this element.</h2>
                 <button class="button create-button" @click="${this.handleEditClick}">
                     <svg
                         class="icon"
@@ -139,6 +166,7 @@ export default class ApplicationGuidanceViewQuickFact extends LitElement {
 
                     Create new
                 </button>
+                <p>Anyone can create and edit Quickfacts</p>
             </div>
         `;
     }
@@ -154,11 +182,21 @@ export default class ApplicationGuidanceViewQuickFact extends LitElement {
 
         const body = ([marked(this.quickFact.bodyMarkdown)] as unknown) as TemplateStringsArray;
 
+        const fusionContext = window['74b1613f-f22a-451b-a5c3-1c9391e91e68'] as IFusionContext;
+        const fusionUrl = fusionContext.http.serviceResolver.getFusionBaseUrl();
+
         return html`
             ${this.renderToolbar()}
             <div class="quick-fact">
                 <h2>${this.quickFact.title}</h2>
                 ${html(body)}
+            </div>
+            <div class="date" title="${formatDateTime(this.quickFact.created)}">
+                <span>Last updated ${formatDistance(this.quickFact.created, new Date())} ago by</span>
+                <span class="person-photo" title="${this.quickFact.createdBy.name}">
+                    <img src="${fusionUrl}/images/profiles/${this.quickFact.createdBy.azureUniqueId}" />
+                    ${/* @TODO: Use the person-photo element when ready */''}
+                </span>
             </div>
         `;
     }

@@ -43,7 +43,7 @@ export type ApplicationGuidanceQuickFact = {
     contentUrl: string;
     path: string;
     created: Date;
-    createdBy: { id: string };
+    createdBy: { azureUniqueId: string; mail: string | null; name: string };
     bodyMarkdown: string;
     collectionPath: string;
 };
@@ -53,7 +53,7 @@ export type ApplicationGuidanceQuickFactCollection = {
     name: string;
     order: any;
     created: Date;
-    createdBy: { id: string };
+    createdBy: { azureUniqueId: string; mail: string | null; name: string };
     collections: { id: string }[];
     documents: { id: string }[];
     quickTips: ApplicationGuidanceQuickFact[];
