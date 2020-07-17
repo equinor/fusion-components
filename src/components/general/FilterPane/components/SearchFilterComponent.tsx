@@ -1,14 +1,24 @@
 import React from 'react';
 import { TextInput, SearchIcon } from '@equinor/fusion-components';
-import { FilterTerm } from '../applyFilters';
+import { FilterTerm, Filter } from '../applyFilters';
 
-type SearchFilterProps = {
+type SearchFilterProps<T> = {
     term: FilterTerm;
     onChange: (value: string) => void;
+    quickFactScope?: string;
+    filter: Filter<T>,
 };
 
-const SearchFilterComponent: React.FC<SearchFilterProps> = ({ term, onChange }) => {
-    return <TextInput icon={<SearchIcon />} value={term ? term.value as string : ''} onChange={onChange} />;
+function SearchFilterComponent<T>({ filter, term, onChange, quickFactScope }: SearchFilterProps<T>) {
+    return (
+        <app-guide-anchor id={filter.key} scope={quickFactScope}>
+            <TextInput
+                icon={<SearchIcon />}
+                value={term ? (term.value as string) : ''}
+                onChange={onChange}
+            />
+        </app-guide-anchor>
+    );
 };
 
 export default SearchFilterComponent;

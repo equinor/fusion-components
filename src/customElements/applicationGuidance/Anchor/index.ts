@@ -19,6 +19,9 @@ export default class ApplicationGuidanceAnchor extends LitElement {
     @property({ type: String, attribute: 'scope' })
     scope: string | null = null;
 
+    @property({ type: Boolean, attribute: 'snug-fit' })
+    snugFit: boolean = false;
+
     constructor() {
         super();
         window.addEventListener('message', this.handleMessage);
@@ -61,6 +64,21 @@ export default class ApplicationGuidanceAnchor extends LitElement {
         }
     };
 
+    private applySnugness(rect: ApplicationGuidanceAnchorRect) {
+        if(this.snugFit) {
+            return rect;
+        }
+
+        const snugnessFactor = 16;
+
+        return {
+            top: rect.top - snugnessFactor,
+            left: rect.left - snugnessFactor,
+            width: rect.width + (snugnessFactor * 2),
+            height: rect.height + (snugnessFactor * 2),
+        };
+    }
+
     private currentRect: ApplicationGuidanceAnchorRect | null = null;
     private idleCallback: NodeJS.Timeout;
     private animationFrame: number;
@@ -80,12 +98,12 @@ export default class ApplicationGuidanceAnchor extends LitElement {
             const bottom = Math.max(...rects.map((r) => r.bottom));
             const left = Math.min(...rects.map((r) => r.left));
             const right = Math.max(...rects.map((r) => r.right));
-            const rect = {
+            const rect = this.applySnugness({
                 top,
                 left,
                 width: right - left,
                 height: bottom - top,
-            };
+            });
 
             if (
                 !this.currentRect ||
@@ -109,17 +127,14 @@ export default class ApplicationGuidanceAnchor extends LitElement {
     };
 
     render() {
-        return html`
-            <!-- <div class="anchor"> -->
-            <slot></slot>
-            <!-- </div> -->
-        `;
+        return html` <slot></slot> `;
     }
 }
 
 export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<{
     id: string;
-    scope: string;
+    scope?: string;
+    'snug-fit'?: boolean;
 }>;
 
 export type QuickFactToggleEventData = {

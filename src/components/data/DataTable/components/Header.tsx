@@ -1,14 +1,16 @@
 import React from 'react';
-import { DataTableHeaderProps, DataTableColumn } from '../dataTableTypes';
+import { DataTableHeaderProps, DataTableColumn, DataTableSortedBy } from '../dataTableTypes';
 import styles from '../styles.less';
 import classnames from 'classnames';
 import { SortDirection } from '@equinor/fusion';
 import { SortIcon, useTooltipRef } from '@equinor/fusion-components';
 import SelectionCell from './SelectionCell';
+import '../../../../customElements/applicationGuidance/Anchor';
 
-function getCellClassNames<T>(base: string, column: DataTableColumn<T>) {
+function getCellClassNames<T>(base: string, column: DataTableColumn<T>, isInAnchor: boolean) {
     return classnames(base, {
         [styles.isSortable]: column.sortable,
+        [styles.isInAnchor]: isInAnchor,
     });
 }
 
@@ -24,6 +26,36 @@ const SortIndicator: React.FC<SortIndicatorProps> = ({ isSortedBy, direction }) 
     );
 };
 
+type HeaderCellProps<T> = {
+    column: DataTableColumn<T>;
+    handleOnClick: (column: DataTableColumn<T>) => void;
+    cellClassName: string;
+    isSortedBy: (column: DataTableColumn<T>) => boolean;
+    sortedBy?: DataTableSortedBy<T>;
+    isInAnchor: boolean;
+};
+
+function DataTableHeaderCell<T>({
+    column,
+    handleOnClick,
+    cellClassName,
+    isSortedBy,
+    sortedBy,
+    isInAnchor,
+}: HeaderCellProps<T>) {
+    return (
+        <div
+            onClick={() => handleOnClick(column)}
+            className={getCellClassNames(cellClassName, column, isInAnchor)}
+        >
+            <span className={styles.label}>{column.label}</span>
+            {column.sortable && sortedBy && (
+                <SortIndicator isSortedBy={isSortedBy(column)} direction={sortedBy.direction} />
+            )}
+        </div>
+    );
+}
+
 function DataTableHeader<T>({
     columns,
     onSortChange,
@@ -32,6 +64,7 @@ function DataTableHeader<T>({
     isAllSelected,
     isSomeSelected,
     onSelectAll,
+    quickFactScope,
 }: DataTableHeaderProps<T>) {
     const cellClassName = classnames(styles.cell, styles.header);
 
@@ -47,7 +80,10 @@ function DataTableHeader<T>({
         return !!sortedBy && column === sortedBy.column;
     };
 
-    const selectableTooltipRef = useTooltipRef(isAllSelected ? 'Unselect all' : 'Select all', 'above');
+    const selectableTooltipRef = useTooltipRef(
+        isAllSelected ? 'Unselect all' : 'Select all',
+        'above'
+    );
 
     return (
         <>
@@ -60,21 +96,34 @@ function DataTableHeader<T>({
                 indeterminate={isSomeSelected}
                 ref={selectableTooltipRef}
             />
-            {columns.map(column => (
-                <div
-                    key={column.key}
-                    onClick={() => handleOnClick(column)}
-                    className={getCellClassNames(cellClassName, column)}
-                >
-                    <span className={styles.label}>{column.label}</span>
-                    {column.sortable && sortedBy && (
-                        <SortIndicator
-                            isSortedBy={isSortedBy(column)}
-                            direction={sortedBy.direction}
-                        />
-                    )}
-                </div>
-            ))}
+            {columns.map((column) => {
+                const cell = (
+                    <DataTableHeaderCell
+                        key={column.key}
+                        column={column}
+                        handleOnClick={handleOnClick}
+                        cellClassName={cellClassName}
+                        isSortedBy={isSortedBy}
+                        sortedBy={sortedBy}
+                        isInAnchor={!!quickFactScope}
+                    />
+                );
+
+                if (quickFactScope) {
+                    return (
+                        <app-guide-anchor
+                            key={column.key}
+                            scope={quickFactScope}
+                            id={column.key}
+                            snug-fit
+                        >
+                            {cell}
+                        </app-guide-anchor>
+                    );
+                }
+
+                return cell;
+            })}
         </>
     );
 }

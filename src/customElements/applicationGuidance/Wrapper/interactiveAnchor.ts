@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { LitElement, html, customElement, property, css } from 'lit-element';
 import { ApplicationGuidanceAnchorRect, ApplicationGuidanceMessage } from '../types';
+import { cssVariables } from '../styles';
 
 export type ApplicationGuidanceInteractiveAnchorProps = {
     id: string;
@@ -16,24 +17,23 @@ export default class ApplicationGuidanceInteractiveAnchor extends LitElement {
     isActive: boolean;
 
     static get styles() {
-        return css`
-            .anchor {
-                position: fixed;
-                box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 0 16px rgba(0, 0, 0, 0.12),
-                    0 0 24px rgba(0, 0, 0, 0.12);
-                border-radius: 4px;
-                cursor: pointer;
-                transition: box-shadow 0.2s, border-color 0.2s;
-                border: 2px solid transparent;
-                margin: -2px 0 0 -2px;
-            }
+        return [
+            cssVariables,
+            css`
+                .anchor {
+                    position: fixed;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: box-shadow 0.2s, border-color 0.2s;
+                    border: 2px solid var(--color-primary);
+                    margin: -2px 0 0 -2px;
+                }
 
-            .anchor.active {
-                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), 0 0 16px rgba(0, 0, 0, 0.2),
-                    0 0 24px rgba(0, 0, 0, 0.2);
-                border: 2px dashed white;
-            }
-        `;
+                .anchor.active {
+                    border-color: var(--color-highlight);
+                }
+            `,
+        ];
     }
 
     private handleClick = (e: MouseEvent) => {

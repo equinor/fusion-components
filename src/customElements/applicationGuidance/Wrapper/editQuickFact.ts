@@ -3,7 +3,7 @@ import { ApplicationGuidanceQuickFact, QuickFactEvent } from '../types';
 import { ChangeEvent } from 'react';
 import ApplicationGuidanceApi from '../api';
 import '../Editor';
-import { buttonStyle, cssVariables, actionsStyle } from '../styles';
+import { buttonStyle, cssVariables, toolbarHeaderStyle } from '../styles';
 
 @customElement('app-guide-edit-quick-fact')
 export default class ApplicationGuidanceEditQuickFact extends LitElement {
@@ -26,15 +26,20 @@ export default class ApplicationGuidanceEditQuickFact extends LitElement {
         return [
             cssVariables,
             buttonStyle,
-            actionsStyle,
+            toolbarHeaderStyle,
             css`
+                .form {
+                    padding: calc(var(--grid-unit) * 2);
+                }
+
                 input {
-                    background: none;
+                    background: var(--color-black-alt4);
                     padding: var(--grid-unit);
-                    border: 1px dashed var(--color-border);
-                    border-radius: var(--border-radius);
+                    border: none;
+                    border-bottom: 1px solid var(--color-black-alt3);
+                    border-radius: var(--border-radius) var(--border-radius) 0 0;
                     margin-bottom: calc(var(--grid-unit) * 2);
-                    color: var(--color-contrast);
+                    color: var(--color-primary);
                     font-size: 16px;
                     width: 100%;
                     box-sizing: border-box;
@@ -42,6 +47,13 @@ export default class ApplicationGuidanceEditQuickFact extends LitElement {
 
                 input:focus {
                     outline: none;
+                    border-color: var(--color-contrast);
+                }
+
+                label {
+                    font-size: 12px;
+                    line-height: 16px;
+                    color: #6f6f6f;
                 }
             `,
         ];
@@ -107,10 +119,17 @@ export default class ApplicationGuidanceEditQuickFact extends LitElement {
 
     renderActions() {
         return html`
-            <div class="actions">
+            <div class="toolbar-header">
+                <button
+                    class="button border"
+                    ?disabled="${this.isSaving}"
+                    @click="${this.handleCancel}"
+                >
+                    Cancel
+                </button>
                 <button class="button" ?disabled="${!this.canSave()}" @click="${this.handleSave}">
-                    ${this.isSaving ? 'Saving...' : 'Save'}</button
-                ><button class="button borderless" ?disabled="${this.isSaving}" @click="${this.handleCancel}">Cancel</button>
+                    ${this.isSaving ? 'Saving...' : 'Save'}
+                </button>
             </div>
         `;
     }
@@ -121,20 +140,23 @@ export default class ApplicationGuidanceEditQuickFact extends LitElement {
         const actions = this.renderActions();
 
         return html`
+            ${actions}
             <div class="form" @keydown="${(e) => e.stopPropagation()}">
+                <label>Title</label>
                 <input
                     placeholder="Title"
                     .value="${quickFact?.title || ''}"
                     @keyup="${this.handleTitleChange}"
                 />
                 <div>
+                    <label>Description</label>
                     <app-guide-editor
                         value="${quickFact?.bodyMarkdown || ''}"
                         @change="${this.handleBodyChange}"
                     ></app-guide-editor>
+                    <label>Please write in English</label>
                 </div>
             </div>
-            ${actions}
         `;
     }
 }

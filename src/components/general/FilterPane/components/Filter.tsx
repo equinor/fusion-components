@@ -37,13 +37,13 @@ function getTermPreview<T>(filter: Filter<T>, term: FilterTerm | null) {
             }
 
             return term.value
-                .map(v => filter.options.find(o => o.key === v))
-                .filter(option => option)
-                .map(option => option.label)
+                .map((v) => filter.options.find((o) => o.key === v))
+                .filter((option) => option)
+                .map((option) => option.label)
                 .join(', ');
 
         case FilterTypes.Radio:
-            const option = filter.options.find(o => o.key === term.value);
+            const option = filter.options.find((o) => o.key === term.value);
             return option ? option.label : null;
     }
 
@@ -80,6 +80,7 @@ type FilterProps<T> = {
     term?: FilterTerm;
     filterCount: Count[];
     onChange: (filter: Filter<T>, term: FilterTerm | null) => void;
+    quickFactScope?: string;
 };
 
 function Filter<T>({
@@ -87,12 +88,13 @@ function Filter<T>({
     term: defaultTerm,
     filterCount,
     onChange,
+    quickFactScope,
 }: FilterProps<T>) {
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
     const handleOnChange = useCallback(
-        newValue => {
+        (newValue) => {
             if (!newValue) {
                 setTerm(null);
                 onChange(filter, null);
@@ -107,7 +109,7 @@ function Filter<T>({
     );
 
     const handleOnReset = useCallback(
-        e => {
+        (e) => {
             e.stopPropagation();
             handleOnChange(null);
         },
@@ -130,7 +132,10 @@ function Filter<T>({
     );
 
     const filterPaneContext = useFilterPaneContext();
-    if (!FilterComponent || (filterPaneContext.paneIsCollapsed && !filter.isVisibleWhenPaneIsCollapsed)) {
+    if (
+        !FilterComponent ||
+        (filterPaneContext.paneIsCollapsed && !filter.isVisibleWhenPaneIsCollapsed)
+    ) {
         return null;
     }
 
@@ -138,7 +143,9 @@ function Filter<T>({
         options: filter.options,
         term,
         onChange: handleOnChange,
-        filterCount: filterCount.find(fc => fc.key === filter.key),
+        filterCount: filterCount.find((fc) => fc.key === filter.key),
+        filter,
+        quickFactScope
     });
 
     if (!renderedFilterComponent) {
@@ -149,9 +156,11 @@ function Filter<T>({
         <div className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
-                    <h4>
-                        <FilterTitle filter={filter} term={term} />
-                    </h4>
+                    <app-guide-anchor id={filter.key} scope={quickFactScope} snug-fit>
+                        <h4>
+                            <FilterTitle filter={filter} term={term} />
+                        </h4>
+                    </app-guide-anchor>
                     <Button
                         frameless
                         disabled={!term || !term.value || !term.value.length}
@@ -159,12 +168,12 @@ function Filter<T>({
                     >
                         Reset
                     </Button>
-                    {filter.isCollapsible && (
-                        <DropdownArrow isOpen={!isCollapsed} />
-                    )}
+                    {filter.isCollapsible && <DropdownArrow isOpen={!isCollapsed} />}
                 </header>
             )}
-            {(!isCollapsed || filterPaneContext.paneIsCollapsed) && <div>{renderedFilterComponent}</div>}
+            {(!isCollapsed || filterPaneContext.paneIsCollapsed) && (
+                <div>{renderedFilterComponent}</div>
+            )}
         </div>
     );
 }

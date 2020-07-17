@@ -47,6 +47,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
                 column: sortedByColumn,
                 direction,
             }}
+            quickFactScope="storybook"
         />
     );
 };
@@ -189,6 +190,7 @@ const FilterPaneStory: React.FC = () => {
                 onChange={onChange}
                 screenPlacement={filterScreenPlacement}
                 headerComponent={filterHeaderComponent}
+                quickFactScope="storybook"
             />
             {filterScreenPlacement === 'left' && (
                 <div style={{ marginRight: styling.grid(4), width: 1, flexGrow: 1 }}>

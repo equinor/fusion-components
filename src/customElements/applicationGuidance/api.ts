@@ -42,7 +42,7 @@ export const updateQuickFactAsync = async (
 
 const USE_TEMP = false;
 
-const BASE_URL = 'https://pro-s-info-app-pr-1848.azurewebsites.net';
+const BASE_URL = 'https://pro-s-info-app-ci.azurewebsites.net';
 export default class ApplicationGuidanceApi {
     constructor(clientId: string) {
         const fusionContext = window['74b1613f-f22a-451b-a5c3-1c9391e91e68'] as IFusionContext;

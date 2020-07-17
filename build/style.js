@@ -22,6 +22,9 @@ module.exports = {
                     },
                     {
                         loader: 'less-loader',
+                        options: {
+                            
+                        }
                     },
                 ],
             },

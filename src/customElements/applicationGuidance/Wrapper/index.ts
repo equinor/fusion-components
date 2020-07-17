@@ -47,6 +47,9 @@ export class ApplicationGuidanceWrapper extends LitElement {
     @property({ type: Array, attribute: false })
     quickFacts: ApplicationGuidanceQuickFact[] = [];
 
+    @property({ type: Boolean, attribute: false })
+    private isFetchingActiveQuickFact: boolean = false;
+
     @property({ type: String, attribute: 'azure-ad-app-id' })
     clientId: string;
 
@@ -111,15 +114,33 @@ export class ApplicationGuidanceWrapper extends LitElement {
     }
 
     private async fetchUpdatedQuickFact(scope, quickFactId) {
-        const quickFact = await this.api.getQuickFactAsync(scope, quickFactId);
+        this.isFetchingActiveQuickFact = true;
+
+        const start = Date.now();
+        let quickFact: ApplicationGuidanceQuickFact | null = null;
+        
+        try {
+            quickFact = await this.api.getQuickFactAsync(scope, quickFactId);
+        } finally {
+            const end = Date.now();
+            const duration = end - start;
+            const threshold = 300;
+            if (duration > threshold) {
+                this.addOrUpdateQuickFact(quickFact);
+            } else {
+                setTimeout(() => {
+                    this.addOrUpdateQuickFact(quickFact);
+                }, threshold - duration);
+            }
+        }
+    }
+
+    private addOrUpdateQuickFact = (quickFact: ApplicationGuidanceQuickFact | null) => {
         if (!quickFact) {
+            this.isFetchingActiveQuickFact = false;
             return;
         }
 
-        this.addOrUpdateQuickFact(quickFact);
-    }
-
-    private addOrUpdateQuickFact = (quickFact: ApplicationGuidanceQuickFact) => {
         if (this.quickFacts.some((qf) => qf.anchor === quickFact.anchor)) {
             this.quickFacts = this.quickFacts.map((qf) =>
                 qf.anchor === quickFact.anchor ? quickFact : qf
@@ -127,6 +148,8 @@ export class ApplicationGuidanceWrapper extends LitElement {
         } else {
             this.quickFacts = [...this.quickFacts, quickFact];
         }
+
+        this.isFetchingActiveQuickFact = false;
     };
 
     private handleMessage = (e: MessageEvent) => {
@@ -289,6 +312,7 @@ export class ApplicationGuidanceWrapper extends LitElement {
             </div>
             <app-guide-popover
                 ?active="${this.isActive}"
+                ?is-fetching-active-quick-fact="${this.isFetchingActiveQuickFact}"
                 scope="${this.getScopePath()}"
                 active-anchor-id="${this.activeAnchorId || ''}"
                 .quickFacts="${this.quickFacts}"
