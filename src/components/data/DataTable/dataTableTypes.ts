@@ -24,6 +24,7 @@ export type DataTableColumn<T> = {
     skeleton?: React.FC<DataItemSkeletonComponentProps>;
     style?: React.CSSProperties;
     sortable?: DataItemBooleanAccessor<T>;
+    overrideOnRowClick?: boolean;
 
     /** High value or falsy value will be collapsed first when there's no space for all columns */
     priority?: number;

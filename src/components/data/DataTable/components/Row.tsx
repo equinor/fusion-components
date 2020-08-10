@@ -62,7 +62,7 @@ function DataTableRow<T>({
                     isSelected={isSelected}
                     onMouseOver={setIsHoveringTrue}
                     onMouseOut={setIsHoveringFalse}
-                    onClick={onClick}
+                    onClick={column.overrideOnRowClick ? null : onClick}
                 />
             ))}
             <ExpandedContent
