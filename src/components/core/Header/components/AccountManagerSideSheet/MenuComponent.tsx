@@ -17,8 +17,10 @@ const MenuComponent: React.FC<MenuComponentProps> = ({ selectedMenuItem, onBackC
                         <ArrowBackIcon />
                     </IconButton>
                 </div>
-                {selectedMenuItem.aside}
-                <span className={styles.title}>{selectedMenuItem.title}</span>
+                <div className={styles.itemHeader}>
+                    {selectedMenuItem.aside}
+                    <span className={styles.title}>{selectedMenuItem.title}</span>
+                </div>
             </div>
             {selectedMenuItem.component}
         </div>

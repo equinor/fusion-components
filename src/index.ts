@@ -80,7 +80,7 @@ export {
 export { default as PersonCard } from './components/people/PersonCard';
 export { default as PersonPicker } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
-export { default as PersonDetail } from "./components/people/PersonDetail";
+export { default as PersonDetail } from './components/people/PersonDetail';
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
@@ -193,7 +193,13 @@ export {
 } from './components/icons/components/wysiwyg';
 export { StarIcon } from './components/icons/components/toggle';
 export { PlatformIcon } from './components/icons/components/uncategorized';
-export { ColumnViewIcon, GridViewIcon, ListViewIcon } from './components/icons/components/view';
+export {
+    ColumnViewIcon,
+    GridViewIcon,
+    ListViewIcon,
+    WorkIcon,
+} from './components/icons/components/view';
+export { SecurityIcon } from './components/icons/components/security';
 
 // Styling
 export { default as styling } from './styles/styling';

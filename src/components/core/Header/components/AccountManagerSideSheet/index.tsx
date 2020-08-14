@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ModalSideSheet, styling, AddIcon } from '@equinor/fusion-components';
+import { ModalSideSheet, SecurityIcon, styling, WorkIcon } from '@equinor/fusion-components';
 import {
     PersonDetails,
     useFusionContext,
@@ -8,6 +8,7 @@ import {
 } from '@equinor/fusion';
 import AccountDetails from './AccoutDetails';
 import MenuComponent from './MenuComponent';
+import MyRoles from '../MyRoles';
 
 type AccountManagerSideSheet = {
     show: boolean;
@@ -34,14 +35,20 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
     const sections = React.useMemo(
         () => [
             {
-                key: 'test',
+                key: 'account',
                 title: '',
                 items: [
                     {
-                        key: 'logout',
-                        title: 'Sign out',
-                        aside: <AddIcon />,
-                        component: <div>Test</div>,
+                        key: 'my-positions',
+                        title: 'My positions',
+                        aside: <WorkIcon />,
+                        component: <MyRoles />,
+                    },
+                    {
+                        key: 'my-roles',
+                        title: 'My roles',
+                        aside: <SecurityIcon />,
+                        component: <MyRoles />,
                     },
                 ],
             },
@@ -50,7 +57,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
         [customSections]
     );
     const removeSelectedMenuItem = React.useCallback(() => setSelectedMenuItem(null), []);
-
+    
     return (
         <ModalSideSheet
             header="Account manager"
@@ -58,6 +65,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
             onClose={onClose}
             size="small"
             isResizable
+            minWidth={styling.numericalGrid(40)}
         >
             {selectedMenuItem ? (
                 <MenuComponent

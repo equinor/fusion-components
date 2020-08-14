@@ -29,30 +29,42 @@
     .menuContainer{
         border-top: 1px solid var(--color-black-alt4);
         margin: calc(var(--grid-unit) * 1px) 0;
+
+        .itemComponent {
+            color: var(--color-black-alt2);
+            font-size: 14px;
+        }
     }
 }
 
 .menuComponentContainer {
     display: flex;
     flex-direction: column;
+    height: 100%;
 
     .header{
-        padding-left: calc(var(--grid-unit) * 1px);
         display: flex;
         align-items: center;
-        justify-content: center;
         color: var(--color-primary);
         font-weight: 500;
-        height: calc(var(--grid-unit) * 6px);
+        height: calc(var(--grid-unit) * 7px);
         border-top: 1px solid var(--color-black-alt4);
-        border-bottom: 1px solid var(--color-black-alt4);
+        border-bottom: 2px solid var(--color-black-alt4);
 
-        .title {
-            padding-left: calc(var(--grid-unit) * 1px);
+        .itemHeader{
+            display: flex;
+            align-items: center;
+
+            .title {
+                padding-left: calc(var(--grid-unit) * 1px);
+            }
         }
+        
         .backButton {
-            position: absolute;
-            left: calc(var(--grid-unit) * 2px);
+            padding: 0 calc(var(--grid-unit) * 1px);
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
     }
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as styles from "./styles.less"
+import * as styles from './styles.less';
 import {
     PersonDetails,
     UserMenuSectionItem,
@@ -20,6 +20,18 @@ type AccountDetailsProps = {
     personDetails: PersonDetails;
     onMenuClick: (item: UserMenuSectionItem) => void;
     sections: UserMenuSection[];
+};
+
+type MenuItemComponentProps = {
+    item: MenuItemType;
+};
+
+const ItemComponent: React.FC<MenuItemComponentProps> = ({ item }) => {
+    return <span className={styles.itemComponent}>{item.title}</span>;
+};
+
+const AsideComponent: React.FC<MenuItemComponentProps> = ({ item }) => {
+    return <div className={styles.itemComponent}>{item.aside}</div>;
 };
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({
@@ -54,10 +66,16 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
                 </Button>
             </div>
             <div className={styles.menuContainer}>
-                <Menu sections={sections} elevation={0} onClick={onClick} />
+                <Menu
+                    sections={sections}
+                    elevation={0}
+                    onClick={onClick}
+                    itemComponent={ItemComponent}
+                    asideComponent={AsideComponent}
+                />
             </div>
         </div>
     );
 };
 
-export default AccountDetails
+export default AccountDetails;
