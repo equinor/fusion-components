@@ -36,7 +36,7 @@
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
         "@equinor/fusion": "^2.1.0",
-        "@storybook/addon-actions": "^5.3.10",
+        "@storybook/addon-actions": "^6.0.7",
         "@storybook/addon-jest": "^5.3.10",
         "@storybook/addon-knobs": "^5.3.10",
         "@storybook/addon-options": "^5.3.10",
