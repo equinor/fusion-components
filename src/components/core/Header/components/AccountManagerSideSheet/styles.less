@@ -1,0 +1,58 @@
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+
+    .personPhoto {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: calc(var(--grid-unit) * 2px) 0;
+    }
+
+    .personDetails {
+        padding: 0 calc(var(--grid-unit) * 2px);
+    }
+
+    .signOutContainer{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding-right: calc(var(--grid-unit) * 2px);
+
+        .signOutLabel {
+            font-size: 14px;
+            color: var(--color-black-alt2);
+            padding-right: calc(var(--grid-unit) * 1.5px);
+        }  
+    }
+
+    .menuContainer{
+        border-top: 1px solid var(--color-black-alt4);
+        margin: calc(var(--grid-unit) * 1px) 0;
+    }
+}
+
+.menuComponentContainer {
+    display: flex;
+    flex-direction: column;
+
+    .header{
+        padding-left: calc(var(--grid-unit) * 1px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--color-primary);
+        font-weight: 500;
+        height: calc(var(--grid-unit) * 6px);
+        border-top: 1px solid var(--color-black-alt4);
+        border-bottom: 1px solid var(--color-black-alt4);
+
+        .title {
+            padding-left: calc(var(--grid-unit) * 1px);
+        }
+        .backButton {
+            position: absolute;
+            left: calc(var(--grid-unit) * 2px);
+        }
+    }
+}

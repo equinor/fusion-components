@@ -8,9 +8,11 @@ import {
     useIcon,
     IconButton,
     PersonPhoto,
+    AddIcon,
 } from '@equinor/fusion-components';
 import { useEventEmitterValue } from '@equinor/fusion/lib/utils/EventEmitter';
 import { UserMenuSectionItem } from '@equinor/fusion/lib/core/UserMenuContainer';
+import AccountManagerSideSheet from './AccountManagerSideSheet';
 
 const CurrentUserIcon = (props: IconProps) => {
     const iconFactory = useIcon(
@@ -52,6 +54,7 @@ const CurrentUserDropdown: React.FC = () => {
                 {
                     key: 'logout',
                     title: 'Sign out',
+                    aside: <AddIcon />,
                 },
             ],
             // TODO: Allow core and apps to add custom buttons like "Preview features" etc.
@@ -71,30 +74,32 @@ const CurrentUserDropdown: React.FC = () => {
         }
     };
 
-    return <Menu sections={sections} onClick={onClick} elevation={0} />;
+    return <Menu sections={sections} onClick={onClick} elevation={0}/>;
 };
 
 const CurrentUserButton: React.FC = () => {
     const { personDetails } = useCurrentPersonDetails();
-    const [popoverRef, isOpen] = usePopoverRef<HTMLButtonElement>(<CurrentUserDropdown />, {
-        placement: 'below',
-        justify: 'end',
-        centered: true,
-        fillWithContent: true,
-    });
+    const [showAccountManager, setShowAccountManager] = React.useState<boolean>(false);
 
-    if (!personDetails) {
-        return (
-            <IconButton active={isOpen} ref={popoverRef}>
-                <PersonPhoto />
-            </IconButton>
-        );
-    }
+    const closeSideSheet = React.useCallback(() => {
+        setShowAccountManager(false);
+    }, []);
+
+    const openSideSheet = React.useCallback(() => {
+        setShowAccountManager(true)
+    }, [])
 
     return (
-        <IconButton active={isOpen} ref={popoverRef}>
-            <PersonPhoto person={personDetails} />
-        </IconButton>
+        <>
+            <IconButton active={showAccountManager} onClick={openSideSheet}>
+                <PersonPhoto person={personDetails} hidePopover hideTooltip />
+            </IconButton>
+            <AccountManagerSideSheet
+                onClose={closeSideSheet}
+                personDetails={personDetails}
+                show={showAccountManager}
+            />
+        </>
     );
 };
 

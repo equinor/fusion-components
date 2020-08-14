@@ -13,7 +13,7 @@ import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
 
 const mockUser = {
-    id: '1337',
+    id: '7ecc8cd2-077b-4a4a-953f-8e02c0f07c24',
     fullName: 'Charles Carmichael',
     givenName: 'Charles',
     familyName: 'Carmichael',

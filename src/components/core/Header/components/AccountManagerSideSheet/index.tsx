@@ -1,0 +1,77 @@
+import * as React from 'react';
+import { ModalSideSheet, styling, AddIcon } from '@equinor/fusion-components';
+import {
+    PersonDetails,
+    useFusionContext,
+    useEventEmitterValue,
+    UserMenuSectionItem,
+} from '@equinor/fusion';
+import AccountDetails from './AccoutDetails';
+import MenuComponent from './MenuComponent';
+
+type AccountManagerSideSheet = {
+    show: boolean;
+    onClose: () => void;
+    personDetails: PersonDetails;
+};
+
+const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
+    show,
+    onClose,
+    personDetails,
+}) => {
+    const [selectedMenuItem, setSelectedMenuItem] = React.useState<UserMenuSectionItem | null>(
+        null
+    );
+
+    const { userMenuSectionsContainer } = useFusionContext();
+    const [customSections] = useEventEmitterValue(
+        userMenuSectionsContainer,
+        'change',
+        undefined,
+        userMenuSectionsContainer.sections
+    );
+    const sections = React.useMemo(
+        () => [
+            {
+                key: 'test',
+                title: '',
+                items: [
+                    {
+                        key: 'logout',
+                        title: 'Sign out',
+                        aside: <AddIcon />,
+                        component: <div>Test</div>,
+                    },
+                ],
+            },
+            ...(customSections || []),
+        ],
+        [customSections]
+    );
+    const removeSelectedMenuItem = React.useCallback(() => setSelectedMenuItem(null), []);
+
+    return (
+        <ModalSideSheet
+            header="Account manager"
+            show={show}
+            onClose={onClose}
+            size="small"
+            isResizable
+        >
+            {selectedMenuItem ? (
+                <MenuComponent
+                    selectedMenuItem={selectedMenuItem}
+                    onBackClick={removeSelectedMenuItem}
+                />
+            ) : (
+                <AccountDetails
+                    onMenuClick={setSelectedMenuItem}
+                    personDetails={personDetails}
+                    sections={sections}
+                />
+            )}
+        </ModalSideSheet>
+    );
+};
+export default AccountManagerSideSheet;

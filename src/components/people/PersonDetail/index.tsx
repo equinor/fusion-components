@@ -12,9 +12,10 @@ import {
 export type PersonDetailProps = {
     personId?: string;
     person?: PersonDetails;
+    noPhoto?: boolean;
 };
 
-export default ({ personId, person }: PersonDetailProps) => {
+export default ({ personId, person, noPhoto }: PersonDetailProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails | null>(null);
     const [presence, setPresence] = useState<PersonPresence | null>(null);
     const [isFetchingPresence, setIsFetchingPresence] = useState<boolean>(false);
@@ -128,9 +129,11 @@ export default ({ personId, person }: PersonDetailProps) => {
                             )}
                         </div>
                     </div>
-                    <div className={styles.imageContainer}>
-                        <PersonPhoto person={currentPerson} hidePopover size="xlarge" />
-                    </div>
+                    {!noPhoto && (
+                        <div className={styles.imageContainer}>
+                            <PersonPhoto person={currentPerson} hidePopover size="xlarge" />
+                        </div>
+                    )}
                 </div>
             )}
         </>
