@@ -163,7 +163,10 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 const settings = {
                     filterPaneEnabled: false,
                     navContentPaneEnabled: false,
-                    // background: pbi.models.BackgroundType.Transparent,
+                    localeSettings: {
+                        formatLocale: 'en',
+                        language: 'en',
+                    },
                 };
 
                 config.settings = settings;
@@ -181,7 +184,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         (node: HTMLDivElement) => {
             if (embedInfo) {
                 const config = getConfig(embedInfo.embedConfig.embedType);
-
                 embeddedRef.current = powerbi.embed(node, config);
                 embeddedRef.current.off('loaded');
                 embeddedRef.current.off('error');
