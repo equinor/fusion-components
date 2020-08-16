@@ -9,6 +9,7 @@ import {
 import AccountDetails from './AccoutDetails';
 import MenuComponent from './MenuComponent';
 import MyRoles from '../MyRoles';
+import MyPositions from '../MyPositions';
 
 type AccountManagerSideSheet = {
     show: boolean;
@@ -42,7 +43,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
                         key: 'my-positions',
                         title: 'My positions',
                         aside: <WorkIcon />,
-                        component: <MyRoles />,
+                        component: <MyPositions />,
                     },
                     {
                         key: 'my-roles',
@@ -57,7 +58,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
         [customSections]
     );
     const removeSelectedMenuItem = React.useCallback(() => setSelectedMenuItem(null), []);
-    
+
     return (
         <ModalSideSheet
             header="Account manager"
