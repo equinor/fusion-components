@@ -32,18 +32,22 @@ const RlsErrorMessage: React.FC<RlsErrorMessageProps> = ({ report }) => {
 
     React.useEffect(() => {
         getRlsRequirements();
-    }, []);
+    }, [report]);
 
     const getRlsRequirements = async () => {
-        setIsFetching(true);
-        const fetchedRequirements = await reportApiClient.getRlsRequirements(report.id);
-        const fetchedNoAccessMessage = await reportApiClient.getAccessDescription(report.id);
-        const fetchedDescriptions = await reportApiClient.getDescription(report.id);
+        try {
+            setIsFetching(true);
+            const fetchedRequirements = await reportApiClient.getRlsRequirements(report.id);
+            const fetchedNoAccessMessage = await reportApiClient.getAccessDescription(report.id);
+            const fetchedDescriptions = await reportApiClient.getDescription(report.id);
 
-        setNoAccessMessage(fetchedNoAccessMessage?.data || null);
-        setDescription(fetchedDescriptions?.data || null);
-        setRequirements(fetchedRequirements?.data || null);
-        setIsFetching(false);
+            setNoAccessMessage(fetchedNoAccessMessage?.data || null);
+            setDescription(fetchedDescriptions?.data || null);
+            setRequirements(fetchedRequirements?.data || null);
+            setIsFetching(false);
+        } catch {
+            setIsFetching(false);
+        }
     };
 
     if (isFetching)
