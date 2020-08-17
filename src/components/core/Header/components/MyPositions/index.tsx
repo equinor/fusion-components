@@ -8,7 +8,7 @@ import { sortPositionsByTo, filterPositionsByDate, isPositionsPast } from './hel
 const MyPositions: React.FC = () => {
     const [activeTabKey, setActiveTabKey] = React.useState('active-positions');
     const { personDetails } = useCurrentPersonDetails();
-    const positionsSortedByTo = sortPositionsByTo(personDetails.positions);
+    const positionsSortedByTo = sortPositionsByTo(personDetails?.positions || []);
 
     const activePositions = React.useMemo(
         () => filterPositionsByDate(positionsSortedByTo, new Date()),

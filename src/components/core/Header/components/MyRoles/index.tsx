@@ -1,14 +1,14 @@
-import React, { useCallback, useState } from "react";
-import { useCurrentUser, usePersonDetails, PersonDetails, PersonRole } from "@equinor/fusion";
-import { Spinner, Tab, Tabs } from "@equinor/fusion-components";
-import PermanentRoles from "./PermanentRoles";
-import ClaimableRoles from "./ClaimableRoles";
+import React, { useCallback, useState } from 'react';
+import { useCurrentUser, usePersonDetails, PersonDetails, PersonRole } from '@equinor/fusion';
+import { Spinner, Tab, Tabs } from '@equinor/fusion-components';
+import PermanentRoles from './PermanentRoles';
+import ClaimableRoles from './ClaimableRoles';
 
 export default () => {
     const currentUser = useCurrentUser();
-    const personDetails =
-        currentUser != null ? usePersonDetails(currentUser.id).personDetails : null;
-    const [activeTabKey, setActiveTabKey] = useState("claimable");
+    const { personDetails, isFetching } =
+        currentUser != null ? usePersonDetails(currentUser.id) : null;
+    const [activeTabKey, setActiveTabKey] = useState('claimable');
 
     const changeTabKey = useCallback((tabKey: string) => {
         setActiveTabKey(tabKey);
@@ -23,9 +23,11 @@ export default () => {
         },
         [personDetails]
     );
-
-    if (!personDetails || !personDetails.roles) {
-        return <Spinner centered floating />;
+    if (!personDetails) {
+        return null;
+    }
+    if (isFetching) {
+        return <Spinner centered />;
     }
 
     return userHasClaimableRoles(personDetails) ? (

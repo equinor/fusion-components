@@ -1,6 +1,6 @@
 import { PersonPosition } from '@equinor/fusion';
 
-export const sortPositionsByTo = (positions: PersonPosition[]) =>
+export const sortPositionsByTo = (positions?: PersonPosition[]) =>
     [...positions].sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime());
 
 export const filterPositionsByDate = (positions: PersonPosition[], date: Date) =>

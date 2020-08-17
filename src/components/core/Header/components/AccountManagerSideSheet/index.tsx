@@ -23,6 +23,8 @@ type AccountManagerSideSheet = {
     personDetails: PersonDetails;
 };
 
+const delveBaseUrl = 'https://eur.delve.office.com/?u=';
+
 const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
     show,
     onClose,
@@ -67,13 +69,17 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
                         key: 'delve',
                         title: 'Delve',
                         aside: <DelveIcon />,
-                        component: <MyPositions />,
+                        onClick: () =>
+                            window.open(
+                                delveBaseUrl + personDetails?.azureUniqueId || '',
+                                '_blank'
+                            ),
                     },
                 ],
             },
             ...(customSections || []),
         ],
-        [customSections]
+        [customSections, personDetails]
     );
     const removeSelectedMenuItem = React.useCallback(() => setSelectedMenuItem(null), []);
 
