@@ -200,6 +200,7 @@ export {
     WorkIcon,
 } from './components/icons/components/view';
 export { SecurityIcon } from './components/icons/components/security';
+export { DelveIcon } from './components/icons/components/o365';
 
 // Styling
 export { default as styling } from './styles/styling';

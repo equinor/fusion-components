@@ -8,23 +8,21 @@ type MenuComponentProps = {
     onBackClick: () => void;
 };
 
-const MenuComponent: React.FC<MenuComponentProps> = ({ selectedMenuItem, onBackClick }) => {
-    return (
-        <div className={styles.menuComponentContainer}>
-            <div className={styles.header}>
-                <div className={styles.backButton}>
-                    <IconButton onClick={onBackClick}>
-                        <ArrowBackIcon />
-                    </IconButton>
-                </div>
-                <div className={styles.itemHeader}>
-                    {selectedMenuItem.aside}
-                    <span className={styles.title}>{selectedMenuItem.title}</span>
-                </div>
+const MenuComponent: React.FC<MenuComponentProps> = ({ selectedMenuItem, onBackClick }) => (
+    <div className={styles.menuComponentContainer}>
+        <div className={styles.header}>
+            <div className={styles.backButton}>
+                <IconButton onClick={onBackClick}>
+                    <ArrowBackIcon />
+                </IconButton>
             </div>
-            {selectedMenuItem.component}
+            <div className={styles.itemHeader}>
+                {selectedMenuItem.aside}
+                <span className={styles.title}>{selectedMenuItem.title}</span>
+            </div>
         </div>
-    );
-};
+        {selectedMenuItem.component}
+    </div>
+);
 
 export default MenuComponent;

@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { ModalSideSheet, SecurityIcon, styling, WorkIcon } from '@equinor/fusion-components';
+import {
+    ModalSideSheet,
+    SecurityIcon,
+    styling,
+    WorkIcon,
+    DelveIcon,
+} from '@equinor/fusion-components';
 import {
     PersonDetails,
     useFusionContext,
@@ -50,6 +56,18 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
                         title: 'My roles',
                         aside: <SecurityIcon />,
                         component: <MyRoles />,
+                    },
+                ],
+            },
+            {
+                key: 'delve-section',
+                title: '',
+                items: [
+                    {
+                        key: 'delve',
+                        title: 'Delve',
+                        aside: <DelveIcon />,
+                        component: <MyPositions />,
                     },
                 ],
             },

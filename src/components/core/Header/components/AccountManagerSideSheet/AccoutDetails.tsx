@@ -42,7 +42,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
     const { auth } = useFusionContext();
     const signOutUser = React.useCallback(async () => await auth.container.logoutAsync(), [auth]);
 
-    const onClick = React.useCallback(
+    const onMenuItemClick = React.useCallback(
         (item: MenuItemType) => {
             const clickedItem = item as UserMenuSectionItem;
             clickedItem.onClick && clickedItem.onClick(clickedItem);
@@ -69,7 +69,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
                 <Menu
                     sections={sections}
                     elevation={0}
-                    onClick={onClick}
+                    onClick={onMenuItemClick}
                     itemComponent={ItemComponent}
                     asideComponent={AsideComponent}
                 />
