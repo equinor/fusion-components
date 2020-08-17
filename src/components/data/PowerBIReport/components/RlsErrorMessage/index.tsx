@@ -44,8 +44,8 @@ const RlsErrorMessage: React.FC<RlsErrorMessageProps> = ({ report }) => {
             setNoAccessMessage(fetchedNoAccessMessage?.data || null);
             setDescription(fetchedDescriptions?.data || null);
             setRequirements(fetchedRequirements?.data || null);
-            setIsFetching(false);
         } catch {
+        } finally {
             setIsFetching(false);
         }
     };
