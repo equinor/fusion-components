@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BlockIcon, ErrorMessage, PersonCard } from '@equinor/fusion-components';
-import * as styles from '../styles.less';
-import FusionError from '../models/FusionError';
+import * as styles from './styles.less';
+import FusionError from '../../models/FusionError';
 import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
 
-type FusionMessageProps = {
+type ReportMessageProps = {
     error: FusionError;
     report: Report;
 };
@@ -16,11 +16,11 @@ const iconProps = {
     color: '#666666',
 };
 
-const AccessDenied: React.FC<FusionMessageProps> = ({ report }) => {
+const AccessDenied: React.FC<ReportMessageProps> = ({ report }) => {
     const owner = report.ownedBy;
     const policy = report.securityRequirementCheck || 'any';
     const disciplines = report.securityRequirements
-        ? report.securityRequirements.map(s => s.value)
+        ? report.securityRequirements.map((s) => s.value)
         : [];
 
     return (
@@ -42,7 +42,7 @@ const AccessDenied: React.FC<FusionMessageProps> = ({ report }) => {
                         the following disciplines:
                     </div>
                     <ul>
-                        {disciplines.map(d => (
+                        {disciplines.map((d) => (
                             <li>{d}</li>
                         ))}
                     </ul>
@@ -52,7 +52,7 @@ const AccessDenied: React.FC<FusionMessageProps> = ({ report }) => {
     );
 };
 
-const ReportViewerErrorMessage: React.FC<FusionMessageProps> = ({ report, error }) => {
+const ReportErrorMessage: React.FC<ReportMessageProps> = ({ report, error }) => {
     if (error.statusCode === 403 || error.statusCode === 401) {
         return <AccessDenied report={report} error={error} />;
     }
@@ -83,4 +83,4 @@ const ReportViewerErrorMessage: React.FC<FusionMessageProps> = ({ report, error 
     );
 };
 
-export default ReportViewerErrorMessage;
+export default ReportErrorMessage;
