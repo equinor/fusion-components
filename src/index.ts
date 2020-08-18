@@ -200,5 +200,4 @@ export { default as RelativeOverlayPortal } from './components/utils/RelativeOve
 export { default as OverlayPortal } from './components/utils/OverlayPortal';
 
 // Application guidance
-import './customElements/applicationGuidance/Anchor';
-import './customElements/applicationGuidance/Wrapper';
+export * from './components/general/ApplicationGuidance';

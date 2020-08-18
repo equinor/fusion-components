@@ -9,23 +9,10 @@ import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
 import { HashRouter } from 'react-router-dom';
 
 import FusionRoot from '../src/components/core/Root';
+import {ApplicationGuidanceWrapper} from '../src/components/general/ApplicationGuidance';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
 
-const customElementsDefine = customElements.define;
-customElements.define = (
-    name: string,
-    constructor: CustomElementConstructor,
-    options: ElementDefinitionOptions
-) => {
-    if (customElements.get(name)) {
-        console.warn(`${name} is already defined as a custom element`);
-    } else {
-        customElementsDefine.call(customElements, name, constructor, options);
-    }
-};
-
-import '../src/customElements/applicationGuidance/Wrapper';
 
 const mockUser = {
     id: '1337',
@@ -155,14 +142,14 @@ const FusionWrapper: React.FC = ({ children }) => {
     return (
         <FusionContext.Provider value={fusionContext}>
             <HashRouter>
-                <app-guide-wrapper
+                <ApplicationGuidanceWrapper
                     scope="storybook"
                     azure-ad-app-id="5a842df8-3238-415d-b168-9f16a6a6031b"
                 >
                     <FusionRoot rootRef={root} overlayRef={overlay}>
                         {children}
                     </FusionRoot>
-                </app-guide-wrapper>
+                </ApplicationGuidanceWrapper>
             </HashRouter>
         </FusionContext.Provider>
     );

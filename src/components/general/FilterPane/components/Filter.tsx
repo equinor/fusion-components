@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { Button, useTooltipRef, DropdownArrow } from '@equinor/fusion-components';
+import { Button, useTooltipRef, DropdownArrow, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
 import SearchFilterComponent from './SearchFilterComponent';
 import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
@@ -156,11 +156,11 @@ function Filter<T>({
         <div className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
-                    <app-guide-anchor id={filter.key} scope={quickFactScope} snug-fit>
+                    <ApplicationGuidanceAnchor id={filter.key} scope={quickFactScope} snug>
                         <h4>
                             <FilterTitle filter={filter} term={term} />
                         </h4>
-                    </app-guide-anchor>
+                    </ApplicationGuidanceAnchor>
                     <Button
                         frameless
                         disabled={!term || !term.value || !term.value.length}

@@ -7,6 +7,7 @@ import styles from '../styles.less';
 import { FilterTerm, FilterSection, Filter as FilterType } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
+import { ApplicationGuidanceAnchor } from '../../ApplicationGuidance';
 
 type SectionProps<T> = {
     terms: FilterTerm[];
@@ -65,9 +66,9 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         <section className={sectionClassNames}>
             {!filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
-                    <app-guide-anchor id={section.key} scope={quickFactScope} snug-fit>
+                    <ApplicationGuidanceAnchor id={section.key} scope={quickFactScope} snug>
                         <h3>{section.title}</h3>
-                    </app-guide-anchor>
+                    </ApplicationGuidanceAnchor>
                     {section.isCollapsible && (
                         <>
                             <DropdownArrow isOpen={!isCollapsed} />

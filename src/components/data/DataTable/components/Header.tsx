@@ -3,9 +3,8 @@ import { DataTableHeaderProps, DataTableColumn, DataTableSortedBy } from '../dat
 import styles from '../styles.less';
 import classnames from 'classnames';
 import { SortDirection } from '@equinor/fusion';
-import { SortIcon, useTooltipRef } from '@equinor/fusion-components';
+import { SortIcon, useTooltipRef, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
 import SelectionCell from './SelectionCell';
-import '../../../../customElements/applicationGuidance/Anchor';
 
 function getCellClassNames<T>(base: string, column: DataTableColumn<T>, isInAnchor: boolean) {
     return classnames(base, {
@@ -111,14 +110,14 @@ function DataTableHeader<T>({
 
                 if (quickFactScope) {
                     return (
-                        <app-guide-anchor
+                        <ApplicationGuidanceAnchor
                             key={column.key}
                             scope={quickFactScope}
                             id={column.key}
-                            snug-fit
+                            snug
                         >
                             {cell}
-                        </app-guide-anchor>
+                        </ApplicationGuidanceAnchor>
                     );
                 }
 
