@@ -38,7 +38,7 @@ const CurrentContext: React.FC = ({ children }) => {
         description: 'pdp',
         tags: ['PDP'],
         context: {
-            types: [ContextTypes.Project, ContextTypes.PDP],
+            types: [ContextTypes.Project, ContextTypes.PDP, ContextTypes.ProjectMaster],
         },
     };
 

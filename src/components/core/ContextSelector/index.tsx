@@ -19,7 +19,6 @@ import {
     Spinner,
     IconButton,
     CloseIcon,
-    TextInput,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
@@ -52,7 +51,7 @@ const ContextSelector: React.FC = () => {
     const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
 
     React.useEffect(() => {
-        const selection = contexts.length ? contexts : contextHistory;
+        const selection = queryText && contexts.length ? contexts : contextHistory;
 
         setDropdownSections(
             contextToDropdownSection(selection, queryText, isQuerying, currentContext)
@@ -186,7 +185,7 @@ const ContextSelector: React.FC = () => {
                 return;
             }
             if (isOpen) {
-                const selection = contexts.length ? contexts : contextHistory;
+                const selection = queryText && contexts.length ? contexts : contextHistory;
                 const selectedContext = selection.find((c) => c.id === item.key);
                 setIsOpen(false);
                 setQueryText('');
@@ -197,7 +196,7 @@ const ContextSelector: React.FC = () => {
                 }
             }
         },
-        [isOpen, contexts, contextHistory]
+        [isOpen, contexts, queryText, contextHistory]
     );
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
