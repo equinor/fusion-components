@@ -20,7 +20,7 @@ export type PersonPickerOption = {
 type PersonPickerProps = {
     label?: string;
     placeholder?: string;
-    initialPerson?: PersonDetails;
+    initialPerson?: PersonDetails | null;
     selectedPerson: PersonDetails | null;
     hasError?: boolean;
     errorMessage?: string;
@@ -79,6 +79,9 @@ export default ({
     useEffect(() => {
         if (initialPerson && !isInitialized) {
             setSections(singlePersonToDropdownSection(initialPerson));
+        }
+        else {
+            setSections([]);
         }
     }, [isInitialized, initialPerson]);
 

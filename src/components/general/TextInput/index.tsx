@@ -17,6 +17,7 @@ type TextInputProps = {
     value?: string;
     icon?: React.ReactElement;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 };
@@ -39,6 +40,7 @@ const TextInput = React.forwardRef<
             value = '',
             icon,
             onBlur,
+            onFocus,
             onIconAction,
             helperText = '',
             onKeyUp,
@@ -51,25 +53,35 @@ const TextInput = React.forwardRef<
             (ref as React.MutableRefObject<HTMLInputElement | null>) ||
             React.useRef<HTMLInputElement | null>(null);
 
-        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
             if (!disabled) {
                 const newValue = event.target.value;
                 onChange(newValue);
             }
-        };
+        }, [disabled, onChange]);
 
-        const setInputFocus = () => {
+        const handleDivClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
             if (inputRef.current && !disabled) {
                 inputRef.current.focus();
                 setFocus(true);
             }
-        };
-        const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+
+            onClick && onClick(e)
+        }, []);
+
+        const handleBlur = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
             if (!disabled) {
                 setFocus(false);
                 onBlur && onBlur(event);
             }
-        };
+        }, [onBlur, disabled]);
+
+        const handleFocus = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
+            if (!disabled) {
+                setFocus(true);
+                onFocus && onFocus(event);
+            }
+        }, [onFocus, disabled]);
 
         const inputLabel = label && <label>{label}</label>;
 
@@ -110,7 +122,7 @@ const TextInput = React.forwardRef<
         });
 
         const inputTextContentClasses = classNames(styles.inputTextContent, {
-            [styles.moveLabel]: (value.length && !disabled) || (focus && !disabled),
+            [styles.moveLabel]: value.length || focus,
             [styles.disabled]: disabled,
             [styles.error]: error,
         });
@@ -123,10 +135,7 @@ const TextInput = React.forwardRef<
             <div className={styles.inputContainer}>
                 <div
                     className={inputContentClasses}
-                    onClick={e => {
-                        setInputFocus();
-                        onClick && onClick(e);
-                    }}
+                    onClick={handleDivClick}
                 >
                     {asideComponent}
                     <div className={inputTextContentClasses}>
@@ -135,7 +144,8 @@ const TextInput = React.forwardRef<
                             ref={inputRef}
                             placeholder={placeholderValue}
                             onBlur={handleBlur}
-                            value={!disabled ? value : ''}
+                            onFocus={handleFocus}
+                            value={value}
                             onChange={handleChange}
                             disabled={disabled}
                             onKeyUp={onKeyUp}

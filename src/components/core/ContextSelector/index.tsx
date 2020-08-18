@@ -6,6 +6,8 @@ import {
     useContextQuery,
     useCurrentApp,
     useContextHistory,
+    ContextType,
+    useCurrentContextTypes,
 } from '@equinor/fusion';
 import {
     SearchIcon,
@@ -17,11 +19,12 @@ import {
     Spinner,
     IconButton,
     CloseIcon,
+    TextInput,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 
-import contextToDropdownSection from './ContextToDropdownSection';
+import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -30,29 +33,31 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
         []
     );
 
+type SearchableContextDropdownOption = SearchableDropdownOption & {
+    contextType: ContextType;
+};
+
 const ContextSelector: React.FC = () => {
     const contextManager = useContextManager();
     const currentContext = useCurrentContext();
-    const contextHistory = useContextHistory();    
+    const contextHistory = useContextHistory();
+    const currentContextTypes = useCurrentContextTypes();
     const currentApp = useCurrentApp();
     const contextManifest = currentApp?.context;
     const { isQuerying, contexts, search } = useContextQuery();
-    
+
     const inputRef = React.useRef<HTMLInputElement | null>(null);
-    
+
     const [queryText, setQueryText] = React.useState('');
     const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
 
-   
-
     React.useEffect(() => {
-        const selection = contexts.length ? contexts : contextHistory
-        
+        const selection = contexts.length ? contexts : contextHistory;
+
         setDropdownSections(
             contextToDropdownSection(selection, queryText, isQuerying, currentContext)
-            );
-        
-    }, [contexts, currentContext, queryText, isQuerying,contextHistory]);
+        );
+    }, [contexts, currentContext, queryText, isQuerying, contextHistory]);
 
     React.useEffect(() => {
         search(queryText);
@@ -69,17 +74,21 @@ const ContextSelector: React.FC = () => {
         (ref, isOpen, setIsOpen) => {
             const selectedItem = React.useMemo(() => {
                 const mergedItems = mergeDropdownSectionItems(dropdownSections);
-                const selectedItem = mergedItems.find(option => option.isSelected === true);
-                return selectedItem;
+                const selectedItem = mergedItems.find((option) => option.isSelected === true);
+                return selectedItem as SearchableContextDropdownOption;
             }, [dropdownSections]);
 
             const selectedValue = React.useMemo(() => {
                 if (isOpen) {
                     return queryText;
                 } else if (selectedItem) {
-                    return selectedItem.title;
+                    return `${selectedItem.title} (${formattedContextType(
+                        selectedItem.contextType.id
+                    )})`;
                 } else if (currentContext) {
-                    return currentContext.title;
+                    return `${currentContext.title} (${formattedContextType(
+                        currentContext.type.id
+                    )})`;
                 }
                 return '';
             }, [isOpen, queryText, selectedItem, currentContext]);
@@ -133,7 +142,9 @@ const ContextSelector: React.FC = () => {
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
 
     const exchangeContext = React.useCallback(async () => {
-        const alternatives = await contextManager.exchangeCurrentContextAsync();
+        const alternatives = await contextManager.exchangeCurrentContextAsync(
+            ...currentContextTypes
+        );
 
         if (!alternatives || !alternatives.length) {
             return contextManager.setCurrentContextAsync(null);
@@ -146,7 +157,7 @@ const ContextSelector: React.FC = () => {
         setDropdownSections(contextToDropdownSection(alternatives, '', false, currentContext));
 
         setIsOpen(true);
-    }, [contextManager, currentContext]);
+    }, [contextManager, currentContext, currentContextTypes]);
 
     React.useEffect(() => {
         if (!contextManifest || !currentContext) {
@@ -170,29 +181,32 @@ const ContextSelector: React.FC = () => {
     }, [currentApp, contextManifest, exchangeContext]);
 
     const onSelect = React.useCallback(
-        item => {
+        (item) => {
             if (item.key && item.key === 'empty') {
                 return;
             }
             if (isOpen) {
-                const selection = contexts.length ? contexts : contextHistory
-                const selectedContext = selection.find(c => c.id === item.key);
+                const selection = contexts.length ? contexts : contextHistory;
+                const selectedContext = selection.find((c) => c.id === item.key);
                 setIsOpen(false);
                 setQueryText('');
-                if (selectedContext){ 
-                    contextManager.setCurrentContextAsync(selectedContext)}
-                else {
+                if (selectedContext) {
+                    contextManager.setCurrentContextAsync(selectedContext);
+                } else {
                     contextManager.setCurrentContextIdAsync(item.key);
-                };
+                }
             }
         },
-        [isOpen, contexts,contextHistory]
+        [isOpen, contexts, contextHistory]
     );
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
     const helperText = React.useMemo(
-        () => (!dropdownSections[0]?.items?.length && !isQuerying && !queryText  ? 'Start typing to search' : null),
+        () =>
+            !dropdownSections[0]?.items?.length && !isQuerying && !queryText
+                ? 'Start typing to search'
+                : null,
         [dropdownSections]
     );
 
@@ -200,7 +214,7 @@ const ContextSelector: React.FC = () => {
         <div className={containerClassNames} ref={containerRef}>
             <Dropdown controller={dropdownController}>
                 <div className={styles.dropdownContainer}>
-                {helperText ? (
+                    {helperText ? (
                         <div className={styles.helperText}>{helperText}</div>
                     ) : (
                         <Menu
@@ -209,7 +223,7 @@ const ContextSelector: React.FC = () => {
                             keyboardNavigationRef={inputRef.current}
                             sections={dropdownSections}
                         />
-                        )}
+                    )}
                 </div>
             </Dropdown>
         </div>

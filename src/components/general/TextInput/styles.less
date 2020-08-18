@@ -5,20 +5,20 @@
     flex-direction: column;
     
     .inputContent {
-        display: flex;
-        justify-content: space-between;
-        min-height: .grid-unit(5px)[];
-        max-height: .grid-unit(7px)[];
         background-color: var(--color-black-alt5);
         border-bottom: 1px solid var(--color-primary-accent);
-        caret-color: var(--color-primary);
-        padding: .grid-unit(1px)[] .grid-unit(2px)[];
         border-radius: 4px 4px 0 0;
+        caret-color: var(--color-primary);
+        display: flex;
+        justify-content: space-between;
+        max-height: .grid-unit(7px)[];
+        min-height: .grid-unit(5px)[];
+        padding: .grid-unit(1px)[] .grid-unit(2px)[];
         
         > aside {
-            padding-right: .grid-unit(2px)[];
-            display: flex;
             align-items: center;
+            display: flex;
+            padding-right: .grid-unit(2px)[];
         }
 
         &:hover {
@@ -45,36 +45,36 @@
         }
         
         &.labelLess {
-            padding-top: 0;
             padding-bottom: 0;
+            padding-top: 0;
         }
 
         .inputTextContent {
             display: flex;
             flex-direction: column;
-            width: 100%;
             justify-content: center;
             position: relative;
+            width: 100%;
 
             label {
-                position: absolute;
-                color: var(--color-primary-accent);
-                opacity: 0.6;
-                font-size: 16px;
-                transition: top ease .2s, font-size .2s;
-                top: 50%;
                 -ms-transform: translateY(-50%);
+                color: var(--color-primary-accent);
+                font-size: 16px;
+                opacity: 0.6;
+                position: absolute;
+                top: 50%;
                 transform: translateY(-50%);
+                transition: top ease .2s, font-size .2s;
             }
 
             input {
-                font-size: 16px;
-                line-height: .grid-unit(2px)[];
-                height: .grid-unit(3px)[];
-                width: 100%;
-                outline: none;
                 background-color: var(--color-black-alt5);
                 border:none;
+                font-size: 16px;
+                height: .grid-unit(3px)[];
+                line-height: .grid-unit(2px)[];
+                outline: none;
+                width: 100%;
      
                 &::placeholder {
                     color: var(--color-primary-accent);
@@ -86,9 +86,9 @@
                 label {
                     font-size: 12px;
                     line-height: 14px;
-                    top: .grid-unit(1px)[];
                     opacity: 1;
                     position: relative;
+                    top: .grid-unit(1px)[];
                 }
 
                 &.error{
@@ -101,8 +101,8 @@
             &.disabled {
                 label {
                     color: var(--color-primary-accent);
-                    opacity: 0.6;
                     cursor: not-allowed;
+                    opacity: 0.6;
                 }
 
                 input {
@@ -116,17 +116,23 @@
             padding-left: .grid-unit(2px)[];
 
             svg {
-                width: .grid-unit(3px)[];
                 height: .grid-unit(3px)[];
+                width: .grid-unit(3px)[];
+            }
+        }
+
+        &.disabled{
+            .icon {
+                opacity: 0.6;
             }
         }
     }
 
     .helperText {
-        padding: 0 .grid-unit(2px)[];
+        color: var(--color-black-alt1);
         font-size: 11px;
         line-height: .grid-unit(2px)[];
-        color: var(--color-black-alt1);
+        padding: 0 .grid-unit(2px)[];
 
         &.error {
             color: var(--color-red);

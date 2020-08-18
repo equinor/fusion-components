@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
-import { withKnobs, number, color } from '@storybook/addon-knobs';
+import { withKnobs, number, color, boolean } from '@storybook/addon-knobs';
 
 import withFusionStory from "../../../../.storybook/withFusionStory";
 
@@ -19,5 +19,6 @@ stories.add('Edit', () => (
         width={number('width', 24)}
         height={number('height', 24)}
         color={color('color', '#000')}
+        outline={boolean('outline', false)}
     />
 ));

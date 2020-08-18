@@ -13,12 +13,18 @@
 
     .navigationIcon{
         height: .grid-unit(6px)[];
-        width: .grid-unit(6px)[];
+        min-width: .grid-unit(6px)[];
+        max-width: .grid-unit(6px)[];
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 1;
+        
+        &.isOpen {
+            padding-right: .grid-unit(1px)[];
+
+        }
     }
 
     .linkContainer{ 
@@ -38,6 +44,9 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+        }
+        .asideContainer {
+            padding: 0 calc(var(--grid-unit) * 1px);
         }
     
     }
@@ -113,7 +122,15 @@
         .linkContainer{
             letter-spacing: 0.8px;
             font-weight: 500;
-            padding-left: .grid-unit(7px)[];
+            width: calc(100% - (var(--grid-unit) * 13px));
+            display: flex;
+            
+            .linkText{
+                flex: 1;
+            }
+            .asideContainer {
+                flex: 0;
+            }
         }
 
         .sectionContainer{

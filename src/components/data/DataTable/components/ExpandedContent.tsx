@@ -17,15 +17,23 @@ function DataTableExpandedContent<T>({
     const renderExpandedContent = () => {
         const ExpandedComponent = expandedComponent;
         if (ExpandedComponent) {
-            return <ExpandedComponent item={item} rowIndex={rowIndex} collapsedColumns={collapsedColumns}/>;
+            return (
+                <ExpandedComponent
+                    item={item}
+                    rowIndex={rowIndex}
+                    collapsedColumns={collapsedColumns}
+                />
+            );
         }
 
         return (
             <table>
                 <tbody>
-                    {collapsedColumns.map(column => (
+                    {collapsedColumns.map((column) => (
                         <tr key={column.key}>
-                            <td><strong>{column.label}</strong></td>
+                            <td className={styles.expandedLabel}>
+                                <strong>{column.label}</strong>
+                            </td>
                             <td>{getCellContent(item, column, rowIndex)}</td>
                         </tr>
                     ))}

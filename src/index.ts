@@ -1,3 +1,6 @@
+// Polyfills
+import './polyfills';
+
 // Core components
 export { default as FusionHeader, HeaderContentProps } from './components/core/Header';
 export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
@@ -60,20 +63,34 @@ export {
 export { ModalSideSheet, SideSheet } from './components/general/SideSheet';
 export { default as Scrim } from './components/general/Scrim';
 export { default as Calendar } from './components/general/Calendar';
+export { default as Chip } from './components/general/Chip';
 export { default as DatePicker } from './components/general/DatePicker';
-export { default as Slider } from './components/general/Slider';
+export { Slider, RangedSlider, SliderMarker } from './components/general/Slider';
 export {
     default as NavigationDrawer,
     NavigationStructure,
 } from './components/general/NavigationDrawer';
 export { default as Accordion, AccordionItem } from './components/general/Accordion';
-export { default as PersonPhoto, PhotoSize } from './components/people/PersonPhoto';
+export {
+    default as PersonPhoto,
+    PhotoSize,
+    AccountTypeIcon,
+    PersonPresenceIcon,
+} from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
 export { default as PersonPicker } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
+export {
+    default as PopoverContainer,
+    PopoverPlacement,
+    PopoverJustification,
+    PopoverContainerProps,
+} from './components/general/PopoverContainer';
+export { default as NotificationsSideSheet } from './components/general/NotificationsSideSheet';
+export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -81,6 +98,7 @@ export { default as Banner } from './components/feedback/Banner';
 export { Dialog, DialogActions, DialogContent, DialogTitle } from './components/feedback/Dialog';
 export { default as Snackbar } from './components/feedback/Snackbar';
 export { SkeletonBar, SkeletonButton, SkeletonDisc } from './components/feedback/Skeleton';
+export { default as NotificationCards } from './components/feedback/NotificationCards';
 
 // Hooks
 export { default as useElevationClassName, Elevation } from './hooks/useElevationClassName';
@@ -122,8 +140,12 @@ export { default as PositionPicker } from './components/org/PositionPicker';
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
 export { WarningIcon, ErrorIcon, NotificationIcon } from './components/icons/components/alert';
-export { AddIcon, BlockIcon, SaveIcon } from './components/icons/components/content';
-export { SyncDisabledIcon, SyncIcon } from './components/icons/components/notification';
+export { AddIcon, BlockIcon, SaveIcon, CopyIcon } from './components/icons/components/content';
+export {
+    SyncDisabledIcon,
+    SyncIcon,
+    NotificationsIcon,
+} from './components/icons/components/notification';
 export {
     SearchIcon,
     DoneIcon,
@@ -140,6 +162,9 @@ export {
     PrintIcon,
     DeleteIcon,
     LockIcon,
+    CheckCircleIcon,
+    CloseCircleIcon,
+    ScheduleIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
@@ -166,6 +191,7 @@ export {
 } from './components/icons/components/wysiwyg';
 export { StarIcon } from './components/icons/components/toggle';
 export { PlatformIcon } from './components/icons/components/uncategorized';
+export { ColumnViewIcon, GridViewIcon, ListViewIcon } from './components/icons/components/view';
 
 // Styling
 export { default as styling } from './styles/styling';

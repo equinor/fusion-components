@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, FC, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useCallback, FC, useMemo, useEffect, useReducer } from 'react';
 import classNames from 'classnames';
 import {
     useClickOutsideOverlayPortal,
@@ -26,11 +26,20 @@ export const useDropdownController = (
     controller: (
         ref: React.MutableRefObject<HTMLElement | null>,
         isOpen: boolean,
-        setIsOpen: (isOpen: boolean) => void
+        setIsOpen: (isOpen: boolean, delay?: number) => void
     ) => React.ReactNode
 ): DropdownController => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, _setIsOpen] = useState(false);
     const controllerRef = useRef<HTMLElement | null>(null);
+
+    const delayTimer = useRef<NodeJS.Timeout>();
+    const setIsOpen = useCallback(
+        (open: boolean, delay?: number) => {
+            clearTimeout(delayTimer.current);
+            delayTimer.current = setTimeout(() => _setIsOpen(open), delay);
+        },
+        [delayTimer]
+    );
 
     return {
         isOpen,

@@ -1,17 +1,18 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import DatePicker from './index';
+import * as React from 'react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
-import { formatDate } from '@equinor/fusion';
+import DatePicker from './index';
 
 const DatePickerStory = () => {
-    const [selectedDate, setSelecteDate] = React.useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
 
     return (
         <div style={{ width: 200 }}>
-            <DatePicker label="Select date" selectedDate={selectedDate} onChange={setSelecteDate} />
-            <br/>
-            <DatePicker label="Select date" selectedDate={selectedDate} onChange={setSelecteDate} error errorMessage="Select a date in the future"/>
+            <DatePicker label="Select date" onChange={setSelectedDate} selectedDate={selectedDate} />
+            <br />
+            <DatePicker error errorMessage="Select a date in the future" label="Select date" onChange={setSelectedDate} selectedDate={selectedDate} />
+            <br />
+            <DatePicker disabled label="Select date" onChange={setSelectedDate} selectedDate={selectedDate} />
         </div>
     );
 };

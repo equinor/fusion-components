@@ -8,7 +8,7 @@ import { useTooltipRef } from '@equinor/fusion-components';
 import NavigationItem from './NavigationItem';
 
 const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
-    const { id, isActive, title, onClick, navigationChildren, isOpen } = navigationItem;
+    const { id, isActive, title, onClick, navigationChildren, isOpen, aside } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(shouldHaveTooltip ? title : '', 'right');
     const textRef = React.useRef<HTMLElement | null>(null);
@@ -41,6 +41,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
                         <span className={styles.linkText} ref={textRef}>
                             {title}
                         </span>
+                        {aside && <div className={styles.asideContainer}>{aside}</div>}
                     </div>
                     <div
                         className={styles.toggleOpenContainer}

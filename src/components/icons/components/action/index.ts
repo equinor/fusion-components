@@ -13,3 +13,6 @@ export { default as HelpIcon } from './HelpIcon';
 export { default as PrintIcon } from './PrintIcon';
 export { default as DeleteIcon } from './DeleteIcon';
 export { default as LockIcon } from './LockIcon';
+export { default as CheckCircleIcon } from './CheckCircleIcon';
+export { default as CloseCircleIcon } from './CloseCircleIcon';
+export { default as ScheduleIcon } from './ScheduleIcon';

@@ -24,11 +24,15 @@ function Table<T>({
     isExpandable,
     expandedComponent,
     onRowClick,
+    noColumnsCollapse: noColumnsCollapse,
 }: DataTableTableProps<T>) {
     const tableRef = useRef<HTMLDivElement>(null);
     const skeletonRows = pagination ? pagination.perPage : 10;
 
-    const { visibleColumns, collapsedColumns } = useVisibleColumns(columns, tableRef, [data]);
+    const { visibleColumns, collapsedColumns } = noColumnsCollapse
+        ? { visibleColumns: columns, collapsedColumns: [] }
+        : useVisibleColumns(columns, tableRef, [data]);
+
     const columnTemplate = generateColumnTemplate(visibleColumns);
     const [expandedItems, setExpandedItems] = useState<T[]>([]);
     const rowTemplate = generateRowTemplate(data, expandedItems, skeletonRows);
@@ -48,12 +52,12 @@ function Table<T>({
 
     const handleOnExpand = useCallback(
         (item: T) => {
-            const existing = expandedItems.find(i => i === item);
+            const existing = expandedItems.find((i) => i === item);
 
             if (existing) {
-                setExpandedItems(expandedItems => expandedItems.filter(i => i !== existing));
+                setExpandedItems((expandedItems) => expandedItems.filter((i) => i !== existing));
             } else {
-                setExpandedItems(expandedItems => [...expandedItems, item]);
+                setExpandedItems((expandedItems) => [...expandedItems, item]);
             }
         },
         [expandedItems]

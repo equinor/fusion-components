@@ -152,6 +152,7 @@ const ModalSideSheetStory = () => {
     const size = select(
         'Size',
         {
+            Fullscreen: 'fullscreen',
             'Extra large': 'xlarge',
             Large: 'large',
             Medium: 'medium',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCurrentUser, useFusionContext } from '@equinor/fusion';
+import { useCurrentUser, useFusionContext, useCurrentPersonDetails } from '@equinor/fusion';
 import {
     IconProps,
     MenuItemType,
@@ -7,6 +7,7 @@ import {
     usePopoverRef,
     useIcon,
     IconButton,
+    PersonPhoto,
 } from '@equinor/fusion-components';
 import { useEventEmitterValue } from '@equinor/fusion/lib/utils/EventEmitter';
 import { UserMenuSectionItem } from '@equinor/fusion/lib/core/UserMenuContainer';
@@ -38,10 +39,15 @@ const CurrentUserDropdown: React.FC = () => {
         return null;
     }
 
+    const fullName =
+        currentUser.givenName && currentUser.familyName
+            ? `${currentUser.givenName} ${currentUser.familyName}`
+            : currentUser.fullName || null;
+
     const sections = [
         {
             key: currentUser.id,
-            title: `${currentUser.givenName} ${currentUser.familyName}`,
+            title: fullName,
             items: [
                 {
                     key: 'logout',
@@ -69,7 +75,7 @@ const CurrentUserDropdown: React.FC = () => {
 };
 
 const CurrentUserButton: React.FC = () => {
-    const currentUser = useCurrentUser();
+    const { personDetails } = useCurrentPersonDetails();
     const [popoverRef, isOpen] = usePopoverRef<HTMLButtonElement>(<CurrentUserDropdown />, {
         placement: 'below',
         justify: 'end',
@@ -77,13 +83,17 @@ const CurrentUserButton: React.FC = () => {
         fillWithContent: true,
     });
 
-    if (!currentUser) {
-        return null;
+    if (!personDetails) {
+        return (
+            <IconButton active={isOpen} ref={popoverRef}>
+                <PersonPhoto />
+            </IconButton>
+        );
     }
 
     return (
         <IconButton active={isOpen} ref={popoverRef}>
-            <CurrentUserIcon />
+            <PersonPhoto person={personDetails} />
         </IconButton>
     );
 };
