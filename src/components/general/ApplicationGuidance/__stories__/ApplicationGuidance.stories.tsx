@@ -2,8 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 
-import {ApplicationGuidanceAnchor} from '../components/Anchor';
+import { ApplicationGuidanceAnchor } from '../components/Anchor';
 import { Button } from '../../Button';
+import { SideSheet } from '../../SideSheet';
 
 const Story: React.FC = () => {
     const [showSideSheet, setShowSideSheet] = React.useState(true);
@@ -20,14 +21,14 @@ const Story: React.FC = () => {
                     <p>This anchor contains multiple components</p>
                 </ApplicationGuidanceAnchor>
             </div>
-            {/* <SideSheet title="Stuff in here" isOpen={showSideSheet} onClose={setShowSideSheet}>
+            <SideSheet id="stoybook" title="Stuff in here" isOpen={showSideSheet} onClose={setShowSideSheet}>
                 <fusion-app-guide-anchor scope="storybook" id="just-text">
-                    <p style={{ margin: 32, display: "block" }}>
+                    <p style={{ margin: 32, display: 'block' }}>
                         Text needs to be wrapped in something. This text is wrapped with
                         &lt;p&gt;&lt;/p&gt;
                     </p>
                 </fusion-app-guide-anchor>
-            </SideSheet> */}
+            </SideSheet>
         </div>
     );
 };
