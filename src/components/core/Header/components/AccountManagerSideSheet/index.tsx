@@ -51,13 +51,13 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
                         key: 'my-positions',
                         title: 'My positions',
                         aside: <WorkIcon />,
-                        component: <MyPositions />,
+                        component: MyPositions,
                     },
                     {
                         key: 'my-roles',
                         title: 'My roles',
                         aside: <SecurityIcon />,
-                        component: <MyRoles />,
+                        component: MyRoles,
                     },
                 ],
             },
@@ -96,6 +96,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
                 <MenuComponent
                     selectedMenuItem={selectedMenuItem}
                     onBackClick={removeSelectedMenuItem}
+                    personDetails={personDetails}
                 />
             ) : (
                 <AccountDetails

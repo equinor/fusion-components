@@ -1,45 +1,29 @@
 import React, { useCallback, useState } from 'react';
-import { useCurrentUser, usePersonDetails, PersonDetails, PersonRole } from '@equinor/fusion';
-import { Spinner, Tab, Tabs } from '@equinor/fusion-components';
-import PermanentRoles from './PermanentRoles';
-import ClaimableRoles from './ClaimableRoles';
+import { useCurrentUser, usePersonDetails } from '@equinor/fusion';
+import { Tab, Tabs, PersonRoleList } from '@equinor/fusion-components';
+import { UserMenuComponentProps } from '@equinor/fusion';
 
-export default () => {
+const MyRoles: React.FC<UserMenuComponentProps> = () => {
     const currentUser = useCurrentUser();
-    const { personDetails, isFetching } =
-        currentUser != null ? usePersonDetails(currentUser.id) : null;
+    const { personDetails } = currentUser != null ? usePersonDetails(currentUser.id) : null;
     const [activeTabKey, setActiveTabKey] = useState('claimable');
 
     const changeTabKey = useCallback((tabKey: string) => {
         setActiveTabKey(tabKey);
     }, []);
 
-    const userHasClaimableRoles = useCallback(
-        (person: PersonDetails) => {
-            if (person && person.roles) {
-                return person.roles.some((role: PersonRole) => role.onDemandSupport);
-            }
-            return false;
-        },
-        [personDetails]
-    );
-    if (!personDetails) {
-        return null;
-    }
-    if (isFetching) {
-        return <Spinner centered />;
-    }
+    const roles = React.useMemo(() => personDetails?.roles || [], [personDetails]);
 
-    return userHasClaimableRoles(personDetails) ? (
+    return (
         <Tabs activeTabKey={activeTabKey} onChange={changeTabKey}>
             <Tab tabKey="claimable" title="Claimable">
-                <ClaimableRoles personDetails={personDetails} />
+                <PersonRoleList personRoles={roles} roleType="claimable" />
             </Tab>
             <Tab tabKey="all" title="Permanent">
-                <PermanentRoles personDetails={personDetails} />
+                <PersonRoleList personRoles={roles} roleType="permanent" />
             </Tab>
         </Tabs>
-    ) : (
-        <PermanentRoles personDetails={personDetails} />
     );
 };
+
+export default MyRoles;

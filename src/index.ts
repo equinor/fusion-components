@@ -81,6 +81,8 @@ export { default as PersonCard } from './components/people/PersonCard';
 export { default as PersonPicker } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
 export { default as PersonDetail } from './components/people/PersonDetail';
+export { default as PersonPositionList } from './components/people/PersonPositionList';
+export { default as PersonRoleList } from './components/people/PersonRoleList';
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';

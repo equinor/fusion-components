@@ -3,51 +3,50 @@ import {
     PersonRole,
     useCurrentUser,
     useFusionContext,
-} from "@equinor/fusion";
-import { Switch } from "@equinor/fusion-components";
-import React, { useCallback, useState } from "react";
-import * as styles from "./styles.less";
-import { HttpClientRequestFailedError } from "@equinor/fusion/lib/http/HttpClient";
-import classNames from "classnames";
-import moment from "moment";
+} from '@equinor/fusion';
+import { Switch } from '@equinor/fusion-components';
+import React, { useCallback, useState } from 'react';
+import * as styles from './styles.less';
+import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClient';
+import classNames from 'classnames';
 
 export type RoleSwitchProps = {
     role: PersonRole;
     showSwitch: boolean;
-}
+};
 
 const expiresIn = (activeTo: string) => {
-    const activeToUtc = moment.utc(activeTo);
-    const nowUtc = moment.utc();
+    const activeToDate = new Date(activeTo).getTime();
+    const now = new Date().getTime();
 
-    if (activeToUtc.isBefore(nowUtc)) {
+    if (now > activeToDate) {
         return 'Expired';
     }
 
-    return 'Expires in ' + moment.duration(activeToUtc.diff(nowUtc)).humanize();
-}
+    return `Expires in ${Math.ceil(Math.abs(activeToDate - now) / 36e5)} hours`;
+};
 
 const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) => {
     const currentUser = useCurrentUser();
     const { peopleContainer } = useFusionContext();
     const [isActive, setIsActive] = useState<boolean>(role.isActive);
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const toggleRoleStatus = useCallback(
         async (clickedRole: PersonRole) => {
             if (!currentUser) {
                 return;
             }
-            setIsActive(previous => !previous);
+            setIsActive((previous) => !previous);
             try {
                 await peopleContainer.setRoleStatusForUser(
                     currentUser.id,
                     clickedRole.name,
                     !clickedRole.isActive
                 );
-                setErrorMessage("");
+                setErrorMessage('');
             } catch (e) {
-                setIsActive(previous => !previous);
+                setIsActive((previous) => !previous);
                 const error = e as HttpClientRequestFailedError<FusionApiHttpErrorResponse>;
                 if (
                     error.statusCode === 400 ||
@@ -56,7 +55,7 @@ const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchPro
                 ) {
                     setErrorMessage(error.response.error.message);
                 } else {
-                    setErrorMessage("Something went wrong when toggling the role");
+                    setErrorMessage('Something went wrong when toggling the role');
                 }
             }
         },
@@ -80,13 +79,9 @@ const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchPro
                 )}
             </div>
             <div className={styles.row}>
-                <div className={styles.small}>
-                    {role.name}
-                </div>
+                <div className={styles.small}>{role.name}</div>
                 {role.activeToUtc && showSwitch && !errorMessage && (
-                    <div className={styles.small}>
-                        {expiresIn(role.activeToUtc)}
-                    </div>
+                    <div className={styles.small}>{expiresIn(role.activeToUtc)}</div>
                 )}
                 {errorMessage && <div className={errorClassNames}>{errorMessage}</div>}
             </div>

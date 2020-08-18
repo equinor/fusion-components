@@ -1,19 +1,41 @@
-import * as React from "react";
-import { PersonPosition } from "@equinor/fusion";
-import { PersonPositionCard } from "@equinor/fusion-components";
-import * as styles from "./styles.less";
+import * as React from 'react';
+import { PersonPosition } from '@equinor/fusion';
+import { PersonPositionCard } from '@equinor/fusion-components';
+import * as styles from './styles.less';
 
 type PersonPositionCardsProps = {
-    positions: PersonPosition[],
+    positions: PersonPosition[];
+    disableOrgLink?: boolean;
 };
 
 type PositionProject = {
-    projectName: string,
-    id: string,
-    positions: PersonPosition[],
+    projectName: string;
+    id: string;
+    positions: PersonPosition[];
 };
 
-const PersonPositionCards: React.FC<PersonPositionCardsProps> = ({ positions }) => {
+type CardLinkProps = {
+    position: PersonPosition;
+    disableOrgLink: boolean;
+};
+
+const CardLink: React.FC<CardLinkProps> = ({ children, disableOrgLink, position }) => {
+    if (disableOrgLink) {
+        return <>{children}</>;
+    }
+    return (
+        <a
+            href={`/apps/pro-org/${position.project.id}/${
+                position.parentPositionId ? position.parentPositionId : ' '
+            }`}
+            className={styles.orgChartLink}
+        >
+            {children}
+        </a>
+    );
+};
+
+const PersonPositionCards: React.FC<PersonPositionCardsProps> = ({ positions, disableOrgLink }) => {
     if (positions.length === 0) {
         return <div className={styles.noPositions}> No positions </div>;
     }
@@ -43,21 +65,16 @@ const PersonPositionCards: React.FC<PersonPositionCardsProps> = ({ positions }) 
             ),
         [positions]
     );
-
+    console.log(disableOrgLink)
     return (
         <div className={styles.personPositionsContainer}>
             {personPositionProject.map((positionProject) => (
                 <div key={positionProject.id}>
                     {positionProject.positions.map((position) => (
                         <div className={styles.positionCards} key={position.id}>
-                            <a
-                                href={`/apps/pro-org/${position.project.id}/${
-                                    position.parentPositionId ? position.parentPositionId : " "
-                                }`}
-                                className={styles.orgChartLink}
-                            >
+                            <CardLink position={position} disableOrgLink={!!disableOrgLink}>
                                 <PersonPositionCard position={position} />
-                            </a>
+                            </CardLink>
                         </div>
                     ))}
                 </div>
