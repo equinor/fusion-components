@@ -7,10 +7,11 @@ import styles from './element.css';
 
 @customElement('fusion-app-guide-fab')
 export class AppGuideFAB extends LitElement {
+    static styles = styles;
+    
     @property({ type: Boolean })
     activated: boolean;
 
-    static styles = styles;
 
     render() {
         return html`<button class="fab ${this.activated ? 'active' : ''}">

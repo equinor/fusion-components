@@ -144,7 +144,7 @@ const FusionWrapper: React.FC = ({ children }) => {
             <HashRouter>
                 <ApplicationGuidanceWrapper
                     scope="storybook"
-                    azure-ad-app-id="5a842df8-3238-415d-b168-9f16a6a6031b"
+                    azure-ad-app-id={clientId}
                 >
                     <FusionRoot rootRef={root} overlayRef={overlay}>
                         {children}
