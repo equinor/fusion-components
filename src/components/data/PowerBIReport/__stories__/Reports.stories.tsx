@@ -6,17 +6,9 @@ import Button from '../../../general/Button';
 
 const ReportStandard: React.FC = () => {
     return (
-<<<<<<< HEAD
-        <>
-            <div style={{ width: '100%', height: '100%' }}>
-                <PowerBIReport reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'} />
-            </div>
-        </>
-=======
         <div style={{ width: '100%', height: '100vh' }}>
             <PowerBIReport reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'} />
         </div>
->>>>>>> master
     );
 };
 
@@ -27,7 +19,7 @@ const ReportWithFilter: React.FC = () => {
         return {
             $schema: 'http://powerbi.com/product/schema#basic',
             target: {
-                table: "Dim_MasterProject",
+                table: 'Dim_MasterProject',
                 column: 'Project',
             },
             filterType: 1,
