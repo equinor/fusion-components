@@ -19,7 +19,7 @@ const ReportWithFilter: React.FC = () => {
         return {
             $schema: 'http://powerbi.com/product/schema#basic',
             target: {
-                table: 'Dim_MasterProject',
+                table: 'Dim_Commonlibrary_Projects',
                 column: 'Project',
             },
             filterType: 1,
@@ -53,17 +53,24 @@ const ReportWithFilter: React.FC = () => {
                 </Button>
                 <Button
                     onClick={() => {
-                        setFilterStrings(['Snorre Expansion Project']);
+                        setFilterStrings(['Aasta Hansteen']);
                     }}
                 >
-                    Snorre Expansion Project
+                    Aasta Hansteen
                 </Button>
                 <Button
                     onClick={() => {
-                        setFilterStrings(['Johan Sverdrup Phase 1']);
+                        setFilterStrings(['Bauge']);
                     }}
                 >
-                    Johan Sverdrup Phase 1
+                    Bauge
+                </Button>
+                <Button
+                    onClick={() => {
+                        setFilterStrings(['Bauge', 'Aasta Hansteen']);
+                    }}
+                >
+                    Aasta and Bauge
                 </Button>
             </div>
             <div style={{ width: '100%', height: '100%' }}>
