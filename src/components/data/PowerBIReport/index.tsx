@@ -167,7 +167,9 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const embed = React.useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
-                const config = getConfig(embedInfo.embedConfig.embedType.toLowerCase());
+                const config = getConfig(
+                    embedInfo.embedConfig.embedType.toLowerCase() as ReportType
+                );
 
                 embeddedRef.current = powerbi.embed(node, config);
                 embeddedRef.current.off('loaded');
