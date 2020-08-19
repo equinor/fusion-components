@@ -45,10 +45,10 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
     const onMenuItemClick = React.useCallback(
         (item: MenuItemType) => {
             const clickedItem = item as UserMenuSectionItem;
-            clickedItem.onClick && clickedItem.onClick(clickedItem);
+            clickedItem.onClick && clickedItem.onClick(clickedItem, personDetails);
             clickedItem.component && onMenuClick(clickedItem);
         },
-        [onMenuClick]
+        [onMenuClick, personDetails]
     );
 
     return (
