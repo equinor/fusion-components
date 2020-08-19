@@ -202,3 +202,5 @@ export { default as OverlayPortal } from './components/utils/OverlayPortal';
 
 // Application guidance
 export * from './components/general/ApplicationGuidance';
+// @TODO fix me later
+import './customElements/index.ts';
