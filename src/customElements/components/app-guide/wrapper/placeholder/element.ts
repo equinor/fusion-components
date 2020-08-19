@@ -26,7 +26,6 @@ export class AppGuidePlaceholderElement extends LitElement {
     };
 
     render() {
-        console.log('rendering');
         return html`
             <div
                 @click=${this.handleClick}

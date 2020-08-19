@@ -47,6 +47,7 @@ const createOverlay = (mask: string|any) => svg`
 `;
 
 export interface AppGuideWrapperElementProps {
+    appId: string;
     scope?: string;
     isolation?: ApplicationGuidanceScopeIsolation
 };
@@ -77,8 +78,8 @@ export class AppGuideWrapperElement extends LitElement implements AppGuideWrappe
     @property({ type: Boolean, attribute: false })
     private isFetchingActiveQuickFact: boolean = false;
 
-    @property({ type: String, attribute: 'azure-ad-app-id' })
-    clientId: string;
+    @property({ type: String, attribute: 'appid' })
+    appId: string;
 
     private api: ApplicationGuidanceApi;
 
@@ -111,13 +112,11 @@ export class AppGuideWrapperElement extends LitElement implements AppGuideWrappe
         `;
     }
 
-    constructor() {
-        super();
-        window.addEventListener('message', this.handleMessage);
-        this.api = new ApplicationGuidanceApi(this.clientId);
-    }
-
     updated(changedProperties: Map<string, any>) {
+        if (changedProperties.has('scope') || changedProperties.has('scopes')) {
+            this.api = new ApplicationGuidanceApi(this.appId);
+        }
+
         if (changedProperties.has('scope') || changedProperties.has('scopes')) {
             this.fetchQuickFacts(this.getScopePath());
         }
@@ -129,6 +128,11 @@ export class AppGuideWrapperElement extends LitElement implements AppGuideWrappe
         if (!this.isActive && changedProperties.has('isActive')) {
             this.scopes = [];
         }
+    }
+
+    connectedCallback(){
+        super.connectedCallback();
+        window.addEventListener('message', this.handleMessage);
     }
 
     disconnectedCallback() {
