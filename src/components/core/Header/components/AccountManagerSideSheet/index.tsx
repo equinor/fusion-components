@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-    ModalSideSheet,
-    SecurityIcon,
-    styling,
-    WorkIcon,
-    DelveIcon,
-} from '@equinor/fusion-components';
+import { ModalSideSheet, styling } from '@equinor/fusion-components';
 import {
     PersonDetails,
     useFusionContext,
@@ -14,16 +8,12 @@ import {
 } from '@equinor/fusion';
 import AccountDetails from './AccoutDetails';
 import MenuComponent from './MenuComponent';
-import MyRoles from '../MyRoles';
-import MyPositions from '../MyPositions';
 
 type AccountManagerSideSheet = {
     show: boolean;
     onClose: () => void;
     personDetails: PersonDetails;
 };
-
-const delveBaseUrl = 'https://eur.delve.office.com/?u=';
 
 const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
     show,
@@ -41,46 +31,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
         undefined,
         userMenuSectionsContainer.sections
     );
-    const sections = React.useMemo(
-        () => [
-            {
-                key: 'account',
-                title: '',
-                items: [
-                    {
-                        key: 'my-positions',
-                        title: 'My positions',
-                        aside: <WorkIcon />,
-                        component: MyPositions,
-                    },
-                    {
-                        key: 'my-roles',
-                        title: 'My roles',
-                        aside: <SecurityIcon />,
-                        component: MyRoles,
-                    },
-                ],
-            },
-            {
-                key: 'delve-section',
-                title: '',
-                items: [
-                    {
-                        key: 'delve',
-                        title: 'Delve',
-                        aside: <DelveIcon />,
-                        onClick: () =>
-                            window.open(
-                                delveBaseUrl + personDetails?.azureUniqueId || '',
-                                '_blank'
-                            ),
-                    },
-                ],
-            },
-            ...(customSections || []),
-        ],
-        [customSections, personDetails]
-    );
+
     const removeSelectedMenuItem = React.useCallback(() => setSelectedMenuItem(null), []);
 
     return (
@@ -102,7 +53,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
                 <AccountDetails
                     onMenuClick={setSelectedMenuItem}
                     personDetails={personDetails}
-                    sections={sections}
+                    sections={customSections}
                 />
             )}
         </ModalSideSheet>
