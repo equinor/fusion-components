@@ -6,12 +6,9 @@ import Button from '../../../general/Button';
 
 const ReportStandard: React.FC = () => {
     return (
-        <>
-            <p>Make sure you have a valid token in auth or you will just get an error </p>
-            <div style={{ width: '100%', height: '100%' }}>
-                <PowerBIReport reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'} />
-            </div>
-        </>
+        <div style={{ width: '100%', height: '100vh' }}>
+            <PowerBIReport reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'} />
+        </div>
     );
 };
 
@@ -38,7 +35,6 @@ const ReportWithFilter: React.FC = () => {
     return (
         <>
             <div>
-                <p>Make sure you have a valid token in auth or you will just get an error </p>
                 <Button
                     onClick={() => {
                         setFilterStrings(null);

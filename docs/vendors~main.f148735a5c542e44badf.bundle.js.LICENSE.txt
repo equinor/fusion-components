@@ -11,17 +11,22 @@ object-assign
 */
 
 /*!
- * Application Insights JavaScript SDK - Dependencies Plugin, 2.5.6
+ * Application Insights JavaScript SDK - Channel, 2.5.7
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
 /*!
- * Application Insights JavaScript SDK - Web Analytics, 2.5.6
+ * Application Insights JavaScript SDK - Dependencies Plugin, 2.5.7
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
 /*!
- * Application Insights JavaScript SDK - Web, 2.5.6
+ * Application Insights JavaScript SDK - Web, 2.5.7
+ * Copyright (c) Microsoft and contributors. All rights reserved.
+ */
+
+/*!
+ * Microsoft Dynamic Proto Utility, 1.0.0
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
@@ -74,13 +79,43 @@ object-assign
 
 /*! http-post-message v0.2.3 | (c) 2016 Microsoft Corporation MIT */
 
-/*! powerbi-client v2.11.0 | (c) 2016 Microsoft Corporation MIT */
+/*! https://mths.be/punycode v1.4.1 by @mathias */
 
-/*! powerbi-models v1.3.3 | (c) 2016 Microsoft Corporation MIT */
+/*! powerbi-client v2.13.3 | (c) 2016 Microsoft Corporation MIT */
+
+/*! powerbi-models v1.4.0 | (c) 2016 Microsoft Corporation MIT */
 
 /*! powerbi-router v0.1.5 | (c) 2016 Microsoft Corporation MIT */
 
 /*! window-post-message-proxy v0.2.6 | (c) 2016 Microsoft Corporation MIT */
+
+/**
+ * @license
+ * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
+
+/**
+ * @license
+ * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
+ */
 
 /**
  * Fast UUID generator, RFC4122 version 4 compliant.
@@ -88,6 +123,17 @@ object-assign
  * @license MIT license
  * @link http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript/21963136#21963136
  **/
+
+/**
+@license
+Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at
+http://polymer.github.io/LICENSE.txt The complete set of authors may be found at
+http://polymer.github.io/AUTHORS.txt The complete set of contributors may be
+found at http://polymer.github.io/CONTRIBUTORS.txt Code distributed by Google as
+part of the polymer project is also subject to an additional IP rights grant
+found at http://polymer.github.io/PATENTS.txt
+*/
 
 /** @license React v0.19.0
  * scheduler.production.min.js

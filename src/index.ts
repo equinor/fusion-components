@@ -210,3 +210,8 @@ export { default as styling } from './styles/styling';
 // Utils
 export { default as RelativeOverlayPortal } from './components/utils/RelativeOverlayPortal';
 export { default as OverlayPortal } from './components/utils/OverlayPortal';
+
+// Application guidance
+export * from './components/general/ApplicationGuidance';
+// @TODO fix me later
+import './customElements/index.ts';
