@@ -11,7 +11,7 @@ import MenuComponent from './MenuComponent';
 
 type AccountManagerSideSheet = {
     show: boolean;
-    onClose: () => void;
+    onClose: VoidFunction
     personDetails: PersonDetails;
 };
 

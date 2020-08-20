@@ -5,7 +5,7 @@ import { IconButton, ArrowBackIcon } from '@equinor/fusion-components';
 
 type MenuComponentProps = {
     selectedMenuItem: UserMenuSectionItem;
-    onBackClick: () => void;
+    onBackClick: VoidFunction;
     personDetails: PersonDetails;
 };
 
