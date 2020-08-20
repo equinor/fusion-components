@@ -65,7 +65,6 @@ const PersonPositionCards: React.FC<PersonPositionCardsProps> = ({ positions, di
             ),
         [positions]
     );
-    console.log(disableOrgLink)
     return (
         <div className={styles.personPositionsContainer}>
             {personPositionProject.map((positionProject) => (
