@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 
-import { PaginationArrow, CloseIcon, ArrowBackIcon, MoreIcon, SubdirectoryArrowRightIcon, SubdirectoryArrowLeftIcon } from '../components/navigation';
+import { PaginationArrow, CloseIcon, ArrowBackIcon, MoreIcon, SubdirectoryArrowRightIcon, SubdirectoryArrowLeftIcon, ExitToAppIcon } from '../components/navigation';
 
 const stories = storiesOf('Icons|Navigation', module);
 stories.addDecorator(withFusionStory('Navigation'));
@@ -41,5 +41,10 @@ stories.add('Subdirectory right', () => (
 stories.add('Subdirectory left', () => (
     <React.Fragment>
         <SubdirectoryArrowLeftIcon />
+    </React.Fragment>
+));
+stories.add('Exit to app', () => (
+    <React.Fragment>
+        <ExitToAppIcon />
     </React.Fragment>
 ));
