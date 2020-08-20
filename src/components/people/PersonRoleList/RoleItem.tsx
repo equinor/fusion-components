@@ -64,6 +64,12 @@ const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchPro
 
     const errorClassNames = classNames(styles.small, { [styles.error]: errorMessage });
 
+    const showExpireDate = React.useMemo(() => role.activeToUtc && showSwitch && !errorMessage, [
+        role,
+        showSwitch,
+        errorMessage,
+    ]);
+
     return (
         <div key={role.name} className={styles.roleManagementContainer}>
             <div className={styles.row}>
@@ -80,7 +86,7 @@ const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchPro
             </div>
             <div className={styles.row}>
                 <div className={styles.small}>{role.name}</div>
-                {role.activeToUtc && showSwitch && !errorMessage && (
+                {showExpireDate && (
                     <div className={styles.small}>{expiresIn(role.activeToUtc)}</div>
                 )}
                 {errorMessage && <div className={errorClassNames}>{errorMessage}</div>}
