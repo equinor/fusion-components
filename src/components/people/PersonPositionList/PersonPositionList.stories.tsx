@@ -9,7 +9,6 @@ const allPosition: PersonPosition[] = [
     {
         id: '1',
         name: 'Administrative Lead',
-        parentPositionId: null,
         obs: 'Project Management Team',
         project: {
             id: '3123',
@@ -31,7 +30,6 @@ const allPosition: PersonPosition[] = [
     {
         id: '2',
         name: 'Tech Lead',
-        parentPositionId: null,
         obs: 'Project Management Team',
         project: {
             id: '3123',
