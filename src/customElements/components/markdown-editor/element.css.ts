@@ -1,5 +1,4 @@
-import { cssVariables, bodyStyle } from '../../styles';
-import { css } from '../../../base';
+import { css } from '../base';
 
 export const style = css`
     :host {
@@ -9,6 +8,19 @@ export const style = css`
 
     #editor {
         padding: 0;
+    }
+
+    #editor p {
+        font-size: 16px;
+        margin: var(--grid-unit) 0;
+    }
+
+    #editor p:last-child {
+        margin-bottom: 0;
+    }
+
+    #editor p:first-child {
+        margin-top: 0;
     }
 
     .ProseMirror {
@@ -48,7 +60,5 @@ export const style = css`
 `;
 
 export default [
-    cssVariables,
-    bodyStyle,
     style
 ];

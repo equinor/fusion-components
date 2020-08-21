@@ -1,4 +1,4 @@
-import { fusionElement, LitElement, property, html } from '../../../base';
+import { fusionElement, LitElement, property, html } from '../base';
 
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
@@ -11,8 +11,8 @@ import menuPlugin from './menu';
 
 import styles from './element.css';
 
-@fusionElement('fusion-app-guide-editor')
-export class AppGuideEditorElement extends LitElement {
+@fusionElement('fusion-markdown-editor')
+export class MarkdownEditorElement extends LitElement {
     
     static styles = styles;
 
@@ -57,7 +57,7 @@ export class AppGuideEditorElement extends LitElement {
         return html`
             <div class="container">
                 <div id="menu"></div>
-                <div id="editor" class="quick-fact"></div>
+                <div id="editor"></div>
             </div>
         `;
     }
@@ -65,8 +65,8 @@ export class AppGuideEditorElement extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'fusion-app-guide-editor': AppGuideEditorElement;
+        'fusion-markdown-editor': MarkdownEditorElement;
     }
 }
 
-export default AppGuideEditorElement;
+export default MarkdownEditorElement;

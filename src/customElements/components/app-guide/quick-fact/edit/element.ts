@@ -2,7 +2,7 @@ import { fusionElement, LitElement, property, html } from '../../../base';
 
 import ApplicationGuidanceApi from '../../api';
 
-import '../editor';
+import '../../../markdown-editor';
 
 import { ApplicationGuidanceQuickFact, QuickFactEvent } from '../../types';
 
@@ -125,10 +125,10 @@ export class AppGuideQuickFactViewElement extends LitElement implements AppGuide
                 />
                 <div>
                     <label>Description</label>
-                    <fusion-app-guide-editor
+                    <fusion-markdown-editor
                         value="${quickFact?.bodyMarkdown || ''}"
                         @change="${this.handleBodyChange}"
-                    ></fusion-app-guide-editor>
+                    ></fusion-markdown-editor>
                     <label>Please write in English</label>
                 </div>
             </div>
