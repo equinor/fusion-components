@@ -1,4 +1,5 @@
-export { 
-    MarkdownEditorElement, 
-    MarkdownEditorElement as default 
+export {
+    MarkdownEditorElementProps,
+    MarkdownEditorElement,
+    MarkdownEditorElement as default,
 } from './element';

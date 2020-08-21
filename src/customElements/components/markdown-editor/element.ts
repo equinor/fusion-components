@@ -11,12 +11,15 @@ import menuPlugin from './menu';
 
 import styles from './element.css';
 
+export interface MarkdownEditorElementProps {
+    value: string;
+}
+
 @fusionElement('fusion-markdown-editor')
-export class MarkdownEditorElement extends LitElement {
-    
+export class MarkdownEditorElement extends LitElement implements MarkdownEditorElementProps {
     static styles = styles;
 
-    @property({reflect: false})
+    @property({ reflect: false })
     value: string;
 
     firstUpdated() {
@@ -29,16 +32,15 @@ export class MarkdownEditorElement extends LitElement {
         const state = EditorState.create({
             schema,
             doc: defaultMarkdownParser.parse(this.value),
-            plugins: [
-                history(),
-                keymap(buildKeymap(schema)),
-                keymap(baseKeymap),
-                menuPlugin(menu),
-            ],
+            plugins: [history(), keymap(buildKeymap(schema)), keymap(baseKeymap), menuPlugin(menu)],
         });
 
         const onChange = (markdown: string) => {
-            const event = new CustomEvent('change', { detail: markdown });
+            const event = new CustomEvent('change', {
+                detail: markdown,
+                composed: true,
+                bubbles: true,
+            });
             this.dispatchEvent(event);
         };
 
