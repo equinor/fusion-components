@@ -2,7 +2,7 @@ import { css } from '../base';
 
 export const style = css`
     :host {
-        --editor-color-background: var(--color-black-alt4);
+        --editor-color-background: var(--color-black-alt5);
         --editor-color-text: var(--color-primary);
     }
 
