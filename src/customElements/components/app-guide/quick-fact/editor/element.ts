@@ -13,6 +13,7 @@ import styles from './element.css';
 
 @fusionElement('fusion-app-guide-editor')
 export class AppGuideEditorElement extends LitElement {
+    
     static styles = styles;
 
     @property({reflect: false})
