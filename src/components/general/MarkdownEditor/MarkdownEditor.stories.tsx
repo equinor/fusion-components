@@ -15,7 +15,7 @@ const MarkdownEditorStory = () => {
 
     return (
         <>
-            <MarkdownEditor value={markdown} onChange={setMarkDown} />
+            <MarkdownEditor initialValue={markdown} onChange={setMarkDown} />
         </>
     );
 };
