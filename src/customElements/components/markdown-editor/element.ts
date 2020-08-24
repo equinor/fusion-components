@@ -12,15 +12,15 @@ import menuPlugin from './menu';
 import styles from './element.css';
 
 export interface MarkdownEditorElementProps {
-    value: string;
+    initialValue: string;
 }
 
 @fusionElement('fusion-markdown-editor')
 export class MarkdownEditorElement extends LitElement implements MarkdownEditorElementProps {
     static styles = styles;
-
+    
     @property({ reflect: false })
-    value: string;
+    initialValue: string;
 
     firstUpdated() {
         const editor = this.shadowRoot.querySelector('#editor');
@@ -31,7 +31,7 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
     private initializeEditor(editor: Element, menu: Element) {
         const state = EditorState.create({
             schema,
-            doc: defaultMarkdownParser.parse(this.value),
+            doc: defaultMarkdownParser.parse(this.initialValue),
             plugins: [history(), keymap(buildKeymap(schema)), keymap(baseKeymap), menuPlugin(menu)],
         });
 

@@ -126,7 +126,7 @@ export class AppGuideQuickFactViewElement extends LitElement implements AppGuide
                 <div>
                     <label>Description</label>
                     <fusion-markdown-editor
-                        value="${quickFact?.bodyMarkdown || ''}"
+                        initialValue="${quickFact?.bodyMarkdown || ''}"
                         @change="${this.handleBodyChange}"
                     ></fusion-markdown-editor>
                     <label>Please write in English</label>
