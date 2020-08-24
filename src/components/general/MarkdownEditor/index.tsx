@@ -5,7 +5,7 @@ import {
 } from '../../../customElements/components/markdown-editor';
 
 export type MarkdownEditorProps = MarkdownEditorElementProps & {
-    onChange: (e: CustomEvent<any>) => void;
+    onChange: (markDown: string) => void;
 };
 
 declare global {
@@ -29,11 +29,15 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = (props: MarkdownEdi
     const editorRef = React.useRef<MarkdownEditorElement>(null);
     const { onChange, ...attr } = props;
 
+    const change = (e: CustomEvent<HTMLInputElement>) => {
+        onChange(e.detail.toString());
+    };
+
     React.useEffect(() => {
         if (!editorRef.current) return;
-        editorRef.current.addEventListener('change', onChange);
+        editorRef.current.addEventListener('change', change);
 
-        return () => editorRef.current.removeEventListener('change', onChange);
+        return () => editorRef.current.removeEventListener('change', change);
     }, [editorRef]);
 
     return <fusion-markdown-editor ref={editorRef} {...attr} />;
