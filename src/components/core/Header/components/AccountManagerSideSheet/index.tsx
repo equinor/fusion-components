@@ -36,7 +36,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
 
     return (
         <ModalSideSheet
-            header="Account manager"
+            header="My account"
             show={show}
             onClose={onClose}
             size="small"
