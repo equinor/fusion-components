@@ -80,6 +80,9 @@ export {
 export { default as PersonCard } from './components/people/PersonCard';
 export { default as PersonPicker } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
+export { default as PersonDetail } from './components/people/PersonDetail';
+export { default as PersonPositionList } from './components/people/PersonPositionList';
+export { default as PersonRoleList } from './components/people/PersonRoleList';
 
 export { default as MarkdownViewer } from './components/general/MarkdownViewer';
 export { default as AdaptiveCardViewer } from './components/general/AdaptiveCardViewer';
@@ -177,6 +180,7 @@ export {
     MoreIcon,
     SubdirectoryArrowRightIcon,
     SubdirectoryArrowLeftIcon,
+    ExitToAppIcon,
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
 export { PlayIcon } from './components/icons/components/av';
@@ -191,7 +195,14 @@ export {
 } from './components/icons/components/wysiwyg';
 export { StarIcon } from './components/icons/components/toggle';
 export { PlatformIcon } from './components/icons/components/uncategorized';
-export { ColumnViewIcon, GridViewIcon, ListViewIcon } from './components/icons/components/view';
+export {
+    ColumnViewIcon,
+    GridViewIcon,
+    ListViewIcon,
+    WorkIcon,
+} from './components/icons/components/view';
+export { SecurityIcon } from './components/icons/components/security';
+export { DelveIcon } from './components/icons/components/o365';
 
 // Styling
 export { default as styling } from './styles/styling';

@@ -62,3 +62,7 @@ typings/
 
 dist
 lib
+
+# yalc files
+yalc.lock
+.yalc
