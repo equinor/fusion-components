@@ -10,17 +10,24 @@ import { buildKeymap } from './keymap';
 import menuPlugin from './menu';
 
 import styles from './element.css';
+import { MdMenuItemType } from './menuItems';
 
 export interface MarkdownEditorElementProps {
     initialValue: string;
+    menuItems?: Array<MdMenuItemType>;
 }
 
 @fusionElement('fusion-markdown-editor')
 export class MarkdownEditorElement extends LitElement implements MarkdownEditorElementProps {
     static styles = styles;
-    
+
+    private editorView;
+
     @property({ reflect: false })
     initialValue: string;
+
+    @property({ type: Array, reflect: false })
+    menuItems: Array<MdMenuItemType>;
 
     firstUpdated() {
         const editor = this.shadowRoot.querySelector('#editor');
@@ -28,11 +35,25 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
         this.initializeEditor(editor, menu);
     }
 
+    updateValue() {
+        if (!this.editorView) return;
+    }
+
+    getDefaultMenuItems(): Array<MdMenuItemType> {
+        return ['strong', 'em', 'bullet_list', 'ordered_list'];
+    }
+
     private initializeEditor(editor: Element, menu: Element) {
+        const mdMenuItems = this.menuItems || this.getDefaultMenuItems();
         const state = EditorState.create({
             schema,
             doc: defaultMarkdownParser.parse(this.initialValue),
-            plugins: [history(), keymap(buildKeymap(schema)), keymap(baseKeymap), menuPlugin(menu)],
+            plugins: [
+                history(),
+                keymap(buildKeymap(schema)),
+                keymap(baseKeymap),
+                menuPlugin(menu, mdMenuItems),
+            ],
         });
 
         const onChange = (markdown: string) => {
@@ -44,13 +65,12 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
             this.dispatchEvent(event);
         };
 
-        const view = new EditorView(editor, {
+        this.editorView = new EditorView(editor, {
             state,
             dispatchTransaction(transaction) {
                 onChange(defaultMarkdownSerializer.serialize(transaction.doc));
-
-                const newState = view.state.apply(transaction);
-                view.updateState(newState);
+                const newState = this.state.apply(transaction);
+                this.updateState(newState);
             },
         });
     }

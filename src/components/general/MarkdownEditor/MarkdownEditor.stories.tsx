@@ -15,7 +15,21 @@ const MarkdownEditorStory = () => {
 
     return (
         <>
-            <MarkdownEditor initialValue={markdown} onChange={setMarkDown} />
+            <MarkdownEditor
+                initialValue={markdown}
+                onChange={setMarkDown}
+                menuItems={[
+                    'strong',
+                    'em',
+                    'bullet_list',
+                    'ordered_list',
+                    'h1',
+                    'h2',
+                    'h3',
+                    'blockquote',
+                    'paragraph',
+                ]}
+            />
         </>
     );
 };

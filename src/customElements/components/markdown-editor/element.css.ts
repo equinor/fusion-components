@@ -4,10 +4,12 @@ export const style = css`
     :host {
         --editor-color-background: var(--color-black-alt5);
         --editor-color-text: var(--color-primary);
+        --grid-unit: 8px;
+        --border-radius: 4px;
     }
 
     #editor {
-        padding: 0;
+        padding: calc(var(--grid-unit) * 1px);
     }
 
     #editor p {
