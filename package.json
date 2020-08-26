@@ -121,6 +121,7 @@
         "/dist"
     ],
     "dependencies": {
+        "@webcomponents/custom-elements": "^1.4.2",
         "date-fns": "^2.14.0",
         "prosemirror-commands": "^1.1.4",
         "prosemirror-history": "^1.1.3",
