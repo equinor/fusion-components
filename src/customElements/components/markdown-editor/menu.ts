@@ -2,7 +2,7 @@ import { Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { MdMenuItemType, getMenuitemByType } from './menuItems';
 
-type MenuItem = {
+export type MenuItem = {
     command: Function;
     dom: HTMLButtonElement;
 };
@@ -32,11 +32,11 @@ export class MenuView {
 
     update() {
         this.items.forEach(({ command, dom }) => {
-            const active = command(this.editorView.state, null, this.editorView);
-            if (active) {
-                dom.classList.remove('active');
+            const applicable = command(this.editorView.state, null, this.editorView);
+            if (applicable) {
+                dom.classList.remove('disabled');
             } else {
-                dom.classList.add('active');
+                dom.classList.add('disabled');
             }
         });
     }

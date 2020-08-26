@@ -13,41 +13,31 @@ import styles from './element.css';
 import { MdMenuItemType } from './menuItems';
 
 export interface MarkdownEditorElementProps {
-    initialValue: string;
     menuItems?: Array<MdMenuItemType>;
 }
+
+const defaultMenuItem: Array<MdMenuItemType> = ['strong', 'em', 'bullet_list', 'ordered_list'];
 
 @fusionElement('fusion-markdown-editor')
 export class MarkdownEditorElement extends LitElement implements MarkdownEditorElementProps {
     static styles = styles;
 
-    private editorView;
-
-    @property({ reflect: false })
-    initialValue: string;
-
-    @property({ type: Array, reflect: false })
+    @property({ reflect: false, type: Array, converter: (a) => a.split(',') })
     menuItems: Array<MdMenuItemType>;
 
     firstUpdated() {
         const editor = this.shadowRoot.querySelector('#editor');
         const menu = this.shadowRoot.querySelector('#menu');
-        this.initializeEditor(editor, menu);
+        const initialValue = this.innerHTML;
+        this.innerHTML = null;
+        this.initializeEditor(editor, menu, initialValue);
     }
 
-    updateValue() {
-        if (!this.editorView) return;
-    }
-
-    getDefaultMenuItems(): Array<MdMenuItemType> {
-        return ['strong', 'em', 'bullet_list', 'ordered_list'];
-    }
-
-    private initializeEditor(editor: Element, menu: Element) {
-        const mdMenuItems = this.menuItems || this.getDefaultMenuItems();
+    private initializeEditor(editor: Element, menu: Element, initialValue: string) {
+        const mdMenuItems = this.menuItems || defaultMenuItem;
         const state = EditorState.create({
             schema,
-            doc: defaultMarkdownParser.parse(this.initialValue),
+            doc: defaultMarkdownParser.parse(initialValue),
             plugins: [
                 history(),
                 keymap(buildKeymap(schema)),
@@ -65,12 +55,12 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
             this.dispatchEvent(event);
         };
 
-        this.editorView = new EditorView(editor, {
+        let editorView = new EditorView(editor, {
             state,
             dispatchTransaction(transaction) {
                 onChange(defaultMarkdownSerializer.serialize(transaction.doc));
-                const newState = this.state.apply(transaction);
-                this.updateState(newState);
+                const newState = editorView.state.apply(transaction);
+                editorView.updateState(newState);
             },
         });
     }

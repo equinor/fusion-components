@@ -50,14 +50,21 @@ export const style = css`
         border-radius: var(--border-radius);
         color: var(--color-contrast);
         cursor: pointer;
+        font-family: Equinor, sans-serif;
     }
 
     #menu .button:hover {
         color: var(--color-primary);
     }
 
-    #menu .button.active {
-        display: none;
+    #menu .button.disabled {
+        background: var(--editor-color-background);
+        cursor: not-allowed;
+    }
+
+    #menu .button.heading {
+        font-size: 18px;
+        font-weight: 600;
     }
 `;
 

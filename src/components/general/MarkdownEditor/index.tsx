@@ -36,11 +36,11 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = (props: MarkdownEdi
     React.useEffect(() => {
         if (!editorRef.current) return;
         editorRef.current.addEventListener('change', onMarkdownChange);
-
+        Object.assign(editorRef.current, attr)
         return () => editorRef.current.removeEventListener('change', onMarkdownChange);
     }, [editorRef]);
 
-    return <fusion-markdown-editor ref={editorRef} {...attr} />;
+    return <fusion-markdown-editor ref={editorRef} {...attr}>{"test"}</fusion-markdown-editor>;
 };
 
 export default MarkdownEditor;
