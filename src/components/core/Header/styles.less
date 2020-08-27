@@ -141,12 +141,13 @@
 }
 
 /* Override the icon button colors */
-.startContainer, .asideContainer {
-    > fusion-app-guide-anchor > button > span {
+.startContainer, 
+.asideContainer {
+    button > span {
         color: var(--color-black-alt2) !important;
     }
 
-    > button:global(.isActive) > span {
+    button:global(.isActive) > span {
         color: var(--color-white) !important;
     }
 }
