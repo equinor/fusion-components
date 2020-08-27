@@ -28,12 +28,15 @@
         height: .grid-unit(10px)[];
         width: calc(100% - (var(--grid-unit) * 4px));
 
-        .startContainer, .asideContainer {
-            > button {
+        .startContainer, 
+        .asideContainer {
+            // @TODO this should be solved better, ex grid or padding with offset container
+            > * {
                 margin-right: .grid-unit(1px)[];
             }
 
-            :last-child, :only-child {
+            :last-child, 
+            :only-child {
                 margin: 0;
             }
         }
