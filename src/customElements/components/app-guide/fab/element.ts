@@ -1,11 +1,11 @@
-import { LitElement, customElement, property, css, html } from 'lit-element';
+import { fusionElement, LitElement, property, html } from '../../base';
 
 import { iconOpen } from './open.svg';
 import { iconClose } from './close.svg';
 
 import styles from './element.css';
 
-@customElement('fusion-app-guide-fab')
+@fusionElement('fusion-app-guide-fab')
 export class AppGuideFAB extends LitElement {
     static styles = styles;
     
@@ -21,10 +21,8 @@ export class AppGuideFAB extends LitElement {
 }
 
 declare global {
-    namespace JSX {
-        interface IntrinsicElements {
-            'fusion-app-guide-fab': AppGuideFAB;
-        }
+    interface HTMLElementTagNameMap {
+        'fusion-app-guide-fab': AppGuideFAB;
     }
 }
 

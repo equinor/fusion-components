@@ -1,10 +1,10 @@
-import { LitElement, html, customElement, property, css } from 'lit-element';
+import { fusionElement, LitElement, property, html } from '../../../base';
+
 import { ApplicationGuidanceAnchorRect, ApplicationGuidanceMessage } from '../../types';
-import { cssVariables } from '../../styles';
 
 import styles from './element.css';
 
-@customElement('fusion-app-guide-placeholder')
+@fusionElement('fusion-app-guide-placeholder')
 export class AppGuidePlaceholderElement extends LitElement {
     static styles = styles;
 
