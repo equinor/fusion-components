@@ -215,5 +215,4 @@ export { default as OverlayPortal } from './components/utils/OverlayPortal';
 export * from './components/general/ApplicationGuidance';
 
 // @TODO fix me later
-import '@webcomponents/custom-elements'
 import './customElements/index.ts';
