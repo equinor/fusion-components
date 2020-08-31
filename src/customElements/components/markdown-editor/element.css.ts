@@ -4,6 +4,7 @@ export const style = css`
     :host {
         --editor-color-background: var(--color-black-alt5);
         --editor-color-text: var(--color-primary);
+        --editor-color-active: var(--color-primary-hover-alt1)
         --grid-unit: 8px;
         --border-radius: 4px;
     }
@@ -62,8 +63,16 @@ export const style = css`
         cursor: not-allowed;
     }
 
+    #menu .button.active {
+        color: var(--editor-color-text);
+    }
+
     #menu .button.heading {
         font-size: 18px;
+        font-weight: 600;
+    }
+
+    #menu .button.paragraph {
         font-weight: 600;
     }
 `;

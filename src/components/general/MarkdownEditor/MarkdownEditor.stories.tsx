@@ -9,10 +9,6 @@ const initialMarkdown = `# This is markdown \n ## This is also markdown \n ### T
 const MarkdownEditorStory = () => {
     const [markdown, setMarkDown] = React.useState(initialMarkdown);
 
-    React.useEffect(() => {
-        console.log('Markdown', markdown);
-    }, [markdown]);
-
     return (
         <>
             <MarkdownEditor
