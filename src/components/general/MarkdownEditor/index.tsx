@@ -4,9 +4,11 @@ import {
     MarkdownEditorElementProps,
 } from '../../../customElements/components/markdown-editor';
 
-export type MarkdownEditorProps = MarkdownEditorElementProps & {
-    onChange: (markdown: string) => void;
-};
+export type MarkdownEditorProps = React.PropsWithChildren<
+    MarkdownEditorElementProps & {
+        onChange: (markdown: string) => void;
+    }
+>;
 
 declare global {
     namespace JSX {
@@ -27,20 +29,27 @@ declare global {
 
 export const MarkdownEditor: React.FC<MarkdownEditorProps> = (props: MarkdownEditorProps) => {
     const editorRef = React.useRef<MarkdownEditorElement>(null);
-    const { onChange, ...attr } = props;
+    const { onChange, children, ...attr } = props;
 
-    const onMarkdownChange = React.useCallback((e: CustomEvent) => {
-        onChange(e.detail);
-    }, [onChange])
+    const onMarkdownChange = React.useCallback(
+        (e: CustomEvent) => {
+            onChange(e.detail);
+        },
+        [onChange]
+    );
 
     React.useEffect(() => {
         if (!editorRef.current) return;
         editorRef.current.addEventListener('change', onMarkdownChange);
-        Object.assign(editorRef.current, attr)
+        Object.assign(editorRef.current, attr);
         return () => editorRef.current.removeEventListener('change', onMarkdownChange);
     }, [editorRef]);
 
-    return <fusion-markdown-editor ref={editorRef} {...attr}>{"test"}</fusion-markdown-editor>;
+    return (
+        <fusion-markdown-editor ref={editorRef} {...attr}>
+            {children}
+        </fusion-markdown-editor>
+    );
 };
 
 export default MarkdownEditor;

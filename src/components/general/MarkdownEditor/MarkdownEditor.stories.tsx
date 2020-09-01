@@ -10,7 +10,7 @@ const MarkdownEditorStory = () => {
     const [markdown, setMarkDown] = React.useState(initialMarkdown);
 
     return (
-        <>
+        <div>
             <MarkdownEditor
                 onChange={setMarkDown}
                 menuItems={[
@@ -24,8 +24,10 @@ const MarkdownEditorStory = () => {
                     'h3',
                     'paragraph',
                 ]}
-            />
-        </>
+            >
+                {markdown}
+            </MarkdownEditor>
+        </div>
     );
 };
 
