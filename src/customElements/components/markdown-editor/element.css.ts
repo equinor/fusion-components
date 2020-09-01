@@ -9,8 +9,13 @@ export const style = css`
         --border-radius: 4px;
     }
 
+    .container{
+        height: 100%;
+    }
+
     #editor {
         padding: calc(var(--grid-unit) * 1px);
+        height: calc(100% - 45px);
     }
 
     #editor p {
@@ -32,6 +37,13 @@ export const style = css`
         color: var(--editor-color-text);
         border-bottom: 1px solid var(--color-black-alt3);
         padding: var(--grid-unit);
+        white-space: pre-wrap;
+        height: 100%;
+        overflow: auto;
+    }
+
+    .ProseMirror > *:first-child {
+        margin-top: 0;
     }
 
     .ProseMirror-focused {

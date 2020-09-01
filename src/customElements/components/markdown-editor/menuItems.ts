@@ -55,9 +55,9 @@ export const getMenuitemByType = (type: MdMenuItemType): MenuItem => {
             };
         case 'bullet_list':
             return {
-                command: wrapInList(schema.nodes.ordered_list),
+                command: wrapInList(schema.nodes.bullet_list),
                 dom: icon(bulletListIcon.getHTML(), 'Bullet list'),
-                type: schema.nodes.ordered_list,
+                type: schema.nodes.bullet_list,
             };
         case 'blockquote':
             return {

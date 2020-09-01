@@ -31,15 +31,20 @@ export class MenuView {
         });
     }
 
+    private isMarkActive(state, type) {
+        const { from, $from, to, empty } = state.selection;
+        if (!type.isInSet) {
+            return false;
+        }
+        if (empty) {
+            return type.isInSet(this.editorView.state.storedMarks || $from.marks());
+        }
+        return this.editorView.state.doc.rangeHasMark(from, to, type);
+    }
+
     update() {
         this.items.forEach(({ command, dom, type }) => {
-            const { state } = this.editorView;
-            const { from, $from, to, empty } = state.selection;
-
-            const activeMark = empty
-                ? type.isInSet && type.isInSet(this.editorView.state.storedMarks || $from.marks())
-                : this.editorView.state.doc.rangeHasMark(from, to, type);
-
+            const activeMark = this.isMarkActive(this.editorView.state, type);
             const applicable = command(this.editorView.state, null, this.editorView);
             if (applicable) {
                 dom.classList.remove('disabled');
