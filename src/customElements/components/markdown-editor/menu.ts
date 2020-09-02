@@ -1,6 +1,6 @@
 import { Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
-import { MdMenuItemType, getMenuitemByType } from './menuItems';
+import { MdMenuItemType, getMenuItemByType } from './menuItems';
 
 export type MenuItem = {
     command: Function;
@@ -67,7 +67,7 @@ export class MenuView {
 export default function menuPlugin(menuContainer, itemTypes: Array<MdMenuItemType>) {
     return new Plugin({
         view(editorView) {
-            const items = itemTypes.map((type) => getMenuitemByType(type));
+            const items = itemTypes.map((type) => getMenuItemByType(type));
             let menuView = new MenuView(items, editorView, menuContainer);
             return menuView;
         },

@@ -33,7 +33,7 @@ const heading = (level) => ({
     type: schema.nodes.heading,
 });
 
-export const getMenuitemByType = (type: MdMenuItemType): MenuItem => {
+export const getMenuItemByType = (type: MdMenuItemType): MenuItem => {
     switch (type) {
         case 'em':
             return {
