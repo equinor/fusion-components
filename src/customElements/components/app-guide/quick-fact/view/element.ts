@@ -1,10 +1,10 @@
 import { fusionElement, LitElement, property, html, svg } from '../../../base';
 import { formatDateTime, IFusionContext } from '@equinor/fusion';
-import { ApplicationGuidanceQuickFact } from '../../types';
 import * as marked from 'marked';
 import { formatDistance } from 'date-fns';
 
 import styles from './element.css';
+import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
 
 // @TODO move to fusion-icon service
 const iconEdit = svg`<svg
@@ -37,16 +37,25 @@ const iconCreate = svg`<svg
     />
 </svg>`;
 
-
+/**
+ * element to display a quick fact
+ */
 @fusionElement('fusion-app-guide-quick-fact-view')
 export class AppGuideViewQuickFactElement extends LitElement {
-    @property({ type: Object, attribute: false })
-    quickFact: ApplicationGuidanceQuickFact;
+    static styles = styles;
 
-    @property({ type: Boolean, attribute: false })
+    /**
+     * quick fact to show
+     */
+    @property({ attribute: false })
+    quickFact: QuickFact;
+
+    /**
+     * show skeleton when quick fact is loading
+     */
+    @property({ attribute: false })
     showSkeleton: boolean;
 
-    static styles = styles;
 
     private handleEditClick = () => {
         this.dispatchEvent(new CustomEvent('edit'));
@@ -106,8 +115,12 @@ export class AppGuideViewQuickFactElement extends LitElement {
 
         const body = ([marked(this.quickFact.bodyMarkdown)] as unknown) as TemplateStringsArray;
 
+        // @TODO this should not be here
         const fusionContext = window['74b1613f-f22a-451b-a5c3-1c9391e91e68'] as IFusionContext;
         const fusionUrl = fusionContext.http.serviceResolver.getFusionBaseUrl();
+
+        const modified = this.quickFact.updated || this.quickFact.created;
+        const publisher = this.quickFact.updatedBy || this.quickFact.createdBy;
 
         return html`
             ${this.renderToolbar()}
@@ -115,10 +128,10 @@ export class AppGuideViewQuickFactElement extends LitElement {
                 <h2>${this.quickFact.title}</h2>
                 ${html(body)}
             </div>
-            <div class="date" title="${formatDateTime(this.quickFact.created)}">
-                <span>Last updated ${formatDistance(this.quickFact.created, new Date())} ago by</span>
-                <span class="person-photo" title="${this.quickFact.createdBy.name}">
-                    <img src="${fusionUrl}/images/profiles/${this.quickFact.createdBy.azureUniqueId}" />
+            <div class="date" title="${formatDateTime(modified)}">
+                <span>Last updated ${formatDistance(modified, new Date())} ago by</span>
+                <span class="person-photo" title="${publisher.name}">
+                    <img src="${fusionUrl}/images/profiles/${publisher.azureUniqueId}" />
                     ${/* @TODO: Use the person-photo element when ready */''}
                 </span>
             </div>

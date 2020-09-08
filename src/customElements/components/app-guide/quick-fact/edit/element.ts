@@ -1,41 +1,53 @@
 import { fusionElement, LitElement, property, html } from '../../../base';
 
-import ApplicationGuidanceApi from '../../api';
-
 import '../editor';
 
-import { ApplicationGuidanceQuickFact, QuickFactEvent } from '../../types';
+import { QuickFact } from '../../types';
 
 import styles from './element.css';
 
 export interface AppGuideQuickFactViewElementProps {
-    scope: string;
-    quickFact: ApplicationGuidanceQuickFact;
-    api: ApplicationGuidanceApi;
+    quickFact?: Partial<QuickFact>;
 };
 
+/**
+ * element to show editor for a quick fact
+ */
 @fusionElement('fusion-app-guide-quick-fact-edit')
 export class AppGuideQuickFactViewElement extends LitElement implements AppGuideQuickFactViewElementProps {
     static styles = styles;
 
-    @property({ type: String })
-    scope: string;
-
+    /**
+     * quick fact
+     */
     @property({ type: Object, attribute: false })
-    quickFact: ApplicationGuidanceQuickFact;
-    
-    @property({ type: Object, attribute: false })
-    api: ApplicationGuidanceApi;
+    public quickFact: Partial<QuickFact>;
 
+    /**
+     * modified quick fact
+     */
     @property({ type: Object, attribute: false })
-    protected editQuickFact: ApplicationGuidanceQuickFact | null;
+    protected editQuickFact: Partial<QuickFact> | null;
 
+    /** @TODO make better */
     @property({ type: Boolean, attribute: false })
-    private isSaving: boolean = false;
+    public saving: boolean = false;
 
+    /**
+     * @override focus input on first render
+     */
     firstUpdated() {
         if (!this.quickFact.title) {
             this.shadowRoot.querySelector('input')?.focus();
+        }
+    }
+
+    /**
+     * @override reset modified quick fact when source quick fact change
+     */
+    updated(changedProperties: Map<string, any>) {
+        if (changedProperties.has('quickFact')) {
+            this.editQuickFact = null;
         }
     }
 
@@ -60,21 +72,9 @@ export class AppGuideQuickFactViewElement extends LitElement implements AppGuide
         if (!this.editQuickFact) {
             return;
         }
-
-        this.isSaving = true;
-
-        try {
-            const updatedQuickFact = await this.api.updateQuickFactAsync(
-                this.scope,
-                this.editQuickFact
-            );
-            const event = new QuickFactEvent('quick-fact-updated', updatedQuickFact);
-            this.dispatchEvent(event);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            this.isSaving = false;
-        }
+        this.dispatchEvent(new CustomEvent('update', {
+            detail: this.editQuickFact
+        }));
     };
 
     private handleCancel = () => {
@@ -84,7 +84,7 @@ export class AppGuideQuickFactViewElement extends LitElement implements AppGuide
 
     private canSave = () => {
         return (
-            !this.isSaving &&
+            !this.saving &&
             this.editQuickFact?.title &&
             this.editQuickFact?.bodyMarkdown &&
             (this.editQuickFact?.title !== this.quickFact.title ||
@@ -97,13 +97,13 @@ export class AppGuideQuickFactViewElement extends LitElement implements AppGuide
             <div class="toolbar-header">
                 <button
                     class="button border"
-                    ?disabled="${this.isSaving}"
+                    ?disabled="${this.saving}"
                     @click="${this.handleCancel}"
                 >
                     Cancel
                 </button>
                 <button class="button" ?disabled="${!this.canSave()}" @click="${this.handleSave}">
-                    ${this.isSaving ? 'Saving...' : 'Save'}
+                    ${this.saving ? 'Saving...' : 'Save'}
                 </button>
             </div>
         `;

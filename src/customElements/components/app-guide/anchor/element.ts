@@ -1,5 +1,6 @@
-import { ApplicationGuidanceMessage, ApplicationGuidanceAnchorRect } from '../types';
 import { fusionElement, LitElement, property } from '../../base';
+import { AppGuideAnchorConnectEvent } from './events';
+import { ApplicationGuidanceAnchorRect } from './anchor-bounds';
 
 export type QuickFactToggleEventData = {
     anchorId: string;
@@ -13,131 +14,88 @@ export interface AppGuideAnchorElementProps {
 };
 
 /** @TODO move me to a util? */
-const getElemetsBounds = (elements: Element[]) => {
+const getElementsBounds = (elements: Element[]) => {
     const rects = elements.map((child) => child.getBoundingClientRect());
-    const top = Math.min(...rects.map((r) => r.top));
-    const bottom = Math.max(...rects.map((r) => r.bottom));
-    const left = Math.min(...rects.map((r) => r.left));
-    const right = Math.max(...rects.map((r) => r.right));
-
-    return {
-        top, bottom, left, right,
-        get width() { return this.right - this.left },
-        get height() { return this.bottom - this.top }
-    }
+    return new ApplicationGuidanceAnchorRect(
+        Math.min(...rects.map((r) => r.top)),
+        Math.max(...rects.map((r) => r.right)),
+        Math.max(...rects.map((r) => r.bottom)),
+        Math.min(...rects.map((r) => r.left)),
+    );
 }
 
 /**
- * @TODO this element is constantly updating client rect...
+ * element for marking anchor in application guidance
  */
 @fusionElement('fusion-app-guide-anchor')
 export class AppGuideAnchorElement extends LitElement implements AppGuideAnchorElementProps {
-
+    /**
+     * id/tag of the element
+     */
     @property()
     id: string;
 
+    /**
+     * the scope which this anchor should appear in
+     */
     @property()
     scope?: string;
 
+    /**
+     * apply padding to container of anchor
+     */
     @property({ type: Boolean })
     snug: boolean = false;
 
-    createRenderRoot(){
+    /**
+     * subscriber collection of this element
+     */
+    protected _disconnectedCallbacks: VoidFunction[] = [];
+
+    /**
+     * calculated bounds for the element and children.
+     * applies padding if not snug
+     */
+    get anchorBounds(): ApplicationGuidanceAnchorRect {
+        const bounds = getElementsBounds([...this.children]);
+        !this.snug && bounds.applyPadding(16);
+        return bounds;
+    }
+
+    /**
+     * @override this element does not need a shadow dom
+     */
+    createRenderRoot() {
         return this;
     }
 
+    /**
+     * @override add default styling and notify observers
+     */
     connectedCallback() {
         super.connectedCallback();
-        window.addEventListener('message', this.handleMessage, false);
-    }
+        (this.renderRoot as AppGuideAnchorElement).style.display = "contents";
 
+        this._disconnectedCallbacks = [];
+        this.dispatchEvent(new AppGuideAnchorConnectEvent({
+            detail: {
+                id: this.id,
+                scope: this.scope,
+                bounds: () => this.anchorBounds,
+                disconnectedCallback: cb => this._disconnectedCallbacks.push(cb),
+            },
+            bubbles: true,
+            composed: true,
+        }));
+    }
+    
+    /**
+     * @override callback all observers when removed from dom
+     */
     disconnectedCallback() {
         super.disconnectedCallback();
-        const message: ApplicationGuidanceMessage = {
-            type: 'application-guidance-anchor-unmounted',
-            anchorId: this.id,
-        };
-
-        window.postMessage(message, window.location.origin);
-        window.removeEventListener('message', this.handleMessage);
+        this._disconnectedCallbacks.forEach(cb => cb());
     }
-
-    updated() {
-        this.calculateRects();
-    }
-
-    private handleMessage = (e: MessageEvent) => {
-        const data = e.data as ApplicationGuidanceMessage;
-        if (!data.type || e.origin !== window.location.origin) {
-            return;
-        }
-
-        switch (data.type) {
-            case 'application-guidance-anchor-activated':
-                const event = new CustomEvent<QuickFactToggleEventData>('toggle', {
-                    detail: {
-                        anchorId: this.id,
-                        isActive: data.anchorId === this.id,
-                    },
-                });
-                this.dispatchEvent(event);
-                break;
-        }
-    };
-
-    private applySnugness(rect: ApplicationGuidanceAnchorRect) {
-        if (this.snug) {
-            return rect;
-        }
-
-        const snugnessFactor = 16;
-
-        return {
-            top: rect.top - snugnessFactor,
-            left: rect.left - snugnessFactor,
-            width: rect.width + (snugnessFactor * 2),
-            height: rect.height + (snugnessFactor * 2),
-        };
-    }
-
-    private currentRect: ApplicationGuidanceAnchorRect | null = null;
-    private idleCallback: NodeJS.Timeout;
-    private animationFrame: number;
-    private calculateRects = () => {
-        if (this.idleCallback) {
-            window.cancelIdleCallback(this.idleCallback);
-        }
-
-        if (this.animationFrame) {
-            window.cancelAnimationFrame(this.animationFrame);
-        }
-
-        this.idleCallback = window.requestIdleCallback(() => {
-
-            const bounds = getElemetsBounds([...this.children]);
-            
-            const rect = this.applySnugness(bounds);
-
-            if (
-                !this.currentRect ||
-                rect.top !== this.currentRect.top ||
-                rect.left !== this.currentRect.left ||
-                rect.width !== this.currentRect.width ||
-                rect.height !== this.currentRect.height
-            ) {
-                this.currentRect = rect;
-                const message: ApplicationGuidanceMessage = {
-                    type: 'application-guide-anchor-rect',
-                    rect,
-                    anchorId: this.id,
-                    scope: this.scope,
-                };
-                window.postMessage(message, window.location.origin);
-            }
-
-            this.animationFrame = window.requestAnimationFrame(this.calculateRects);
-        });
-    };    
 }
 
 declare global {

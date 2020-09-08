@@ -1,30 +1,18 @@
-import { fusionElement, LitElement, property, html } from '../../base';
+import { fusionElement, LitElement, property, html, directives } from '../../base';
 
-import { ApplicationGuidanceQuickFact, QuickFactEvent } from '../types';
 
-import ApplicationGuidanceApi from '../api';
+import { infoApi } from '../api';
 
 import styles from './element.css';
 
 import iconSettings from './settings.svg';
 
-// imported elements
 import '../quick-fact';
 
+/** @TODO - fix export in api */
+import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
+
 type ViewMode = 'view' | 'edit';
-
-const createEmptyQuickFact = (id: string, scope: string): ApplicationGuidanceQuickFact => ({
-    anchor: id,
-    title: '',
-    bodyMarkdown: '',
-    contentUrl: '',
-    created: new Date(),
-    createdBy: { azureUniqueId: '', name: '', mail: '' },
-    path: '',
-    slug: '',
-    collectionPath: scope,
-});
-
 
 
 export interface AppGuidePopoverProps {
@@ -32,15 +20,24 @@ export interface AppGuidePopoverProps {
     scope: string;
 }
 
+/**
+ * element for displaying a quick fact
+ */
 @fusionElement('fusion-app-guide-popover')
 export class AppGuidePopover extends LitElement {
     static styles = styles;
 
+    /**
+     * popover active
+     */
     @property({ type: Boolean })
     active?: boolean;
 
-    @property()
-    scope: string;
+    /**
+     * scope of quick fact
+     */
+    @property({ type: String })
+    scope?: string;
 
     /**
      * active anchor id
@@ -48,28 +45,83 @@ export class AppGuidePopover extends LitElement {
     @property()
     anchor?: string;
 
-    @property({ type: Array })
-    quickFacts: ApplicationGuidanceQuickFact[] = [];
-
-    
-    @property({ type: Object })
-    api: ApplicationGuidanceApi;
-    
-    @property({ type: Boolean, attribute: 'is-fetching-active-quick-fact' })
-    isFetchingActiveQuickFact: boolean;
-    
-
-    @property({ type: String, attribute: false })
+    /**
+     * display mode of quick fact
+     */
+    @property({ attribute: false })
     viewMode: ViewMode = 'view';
 
+    @property({ attribute: false })
+    quickFact?: QuickFact;
+
+    @property({ attribute: false })
+    fetching?: boolean;
+
+    @property({ attribute: false })
+    saving?: boolean;
+
+
+    public async fetchQuickFact() {
+        this.quickFact = await this._fetchQuickFact();
+    }
+
+    /**
+     * fetch quick fact from server
+     */
+    protected async _fetchQuickFact(): Promise<QuickFact | null> {
+        const { scope, anchor } = this;
+        if (!scope) throw Error('fetchQuickFact: missing scope');
+        if (!anchor) throw Error('fetchQuickFact: missing entity');
+
+        try {
+            this.fetching = true;
+            const quickFact = await infoApi.client.getQuickFact(scope, anchor);
+            return quickFact.data;
+        } catch (err) {
+            if (err.response?.status === 404) {
+                return undefined;
+            }
+            console.error(err);
+            throw Error('Failed to fetch quick fact');
+        } finally {
+            this.fetching = false;
+        }
+    }
+
+    /**
+     * @override listen for changes of scope, anchor and quick fact
+     * @param changedProperties - changed properties
+     */
     updated(changedProperties: Map<string, any>) {
-        if (
-            changedProperties.has('activeAnchorId') &&
-            this.anchor !== changedProperties.get('activeAnchorId')
-        ) {
+        /**
+         * clear and load quick fact if scope or anchor change
+         */
+        if (changedProperties.has('scope') || changedProperties.has('anchor')) {
+            this.quickFact = null;
+            this.scope && this.anchor && this.fetchQuickFact();
+        }
+
+        /**
+         * change to view mode when quick fact has changed
+         */
+        if (changedProperties.has('quickFact')) {
             this.enterViewMode();
         }
     }
+
+    private handleSave = async (e: CustomEvent<QuickFact>) => {
+        try {
+            this.saving = true;
+            const { collectionPath, ...data } = e.detail;
+            const res = await infoApi.client.updateQuickFact(collectionPath, data as QuickFact);
+            this.quickFact = res.data;
+            this.enterViewMode();
+        } catch (err) {
+            console.error(err);
+        } finally {
+            this.saving = false;
+        }
+    };
 
     private handleEditClick = () => {
         this.enterEditMode();
@@ -79,18 +131,8 @@ export class AppGuidePopover extends LitElement {
         this.enterViewMode();
     };
 
-    private handleQuickFactUpdated = (e: QuickFactEvent) => {
-        const event = new QuickFactEvent('quick-fact-updated', e.detail.quickFact);
-        this.dispatchEvent(event);
-        this.enterViewMode();
-    };
-
     private enterEditMode() {
-        if (!this.anchor) {
-            return;
-        }
-
-        this.viewMode = 'edit';
+        this.viewMode = this.anchor ? 'edit' : 'view';
     }
 
     private enterViewMode() {
@@ -110,25 +152,24 @@ export class AppGuidePopover extends LitElement {
     }
 
     private renderContent() {
-        const activeQuickFact =
-            this.quickFacts.find((quickFact) => quickFact.anchor === this.anchor) || null;
+
+        const { quickFact, anchor } = this;
 
         if (this.viewMode === 'edit' && this.anchor) {
             return html`
                 <fusion-app-guide-quick-fact-edit
-                    .quickFact="${activeQuickFact ||
-                createEmptyQuickFact(this.anchor, this.scope)}"
-                    .api="${this.api}"
-                    scope="${this.scope}"
-                    @quick-fact-updated="${this.handleQuickFactUpdated}"
+                    .quickFact="${quickFact || { anchor, collectionPath: this.scope }}"
+                    .scope="${this.scope}"
+                    .saving="${this.saving}"
+                    @update=${this.handleSave}
                     @cancel="${this.handleEditCancel}"
                 ></fusion-app-guide-quick-fact-edit>
             `;
         } else if (this.anchor) {
             return html`
                 <fusion-app-guide-quick-fact-view
-                    .quickFact="${activeQuickFact}"
-                    .showSkeleton="${this.isFetchingActiveQuickFact}"
+                    .quickFact="${quickFact}"
+                    .showSkeleton="${this.fetching}"
                     @edit="${this.handleEditClick}"
                 ></fusion-app-guide-quick-fact-view>
             `;
@@ -150,9 +191,9 @@ export class AppGuidePopover extends LitElement {
     render() {
         return html`
             <div class="popover ${this.active ? 'active' : ''}">
-                ${this.renderHeader()} 
+                <!-- ${this.renderHeader()}  -->
                 ${this.renderContent()} 
-                ${this.renderToolbar()}
+                <!-- ${this.renderToolbar()} -->
             </div>
         `;
     }

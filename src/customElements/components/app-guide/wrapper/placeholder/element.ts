@@ -1,9 +1,12 @@
-import { fusionElement, LitElement, property, html } from '../../../base';
+import { fusionElement, LitElement, property, html, directives } from '../../../base';
 
-import { ApplicationGuidanceAnchorRect, ApplicationGuidanceMessage } from '../../types';
+import { ApplicationGuidanceAnchorRect } from '../../anchor';
 
 import styles from './element.css';
 
+/**
+ * element to render a placeholder for an anchor
+ */
 @fusionElement('fusion-app-guide-placeholder')
 export class AppGuidePlaceholderElement extends LitElement {
     static styles = styles;
@@ -12,27 +15,19 @@ export class AppGuidePlaceholderElement extends LitElement {
     rect: ApplicationGuidanceAnchorRect;
 
     @property({ type: Boolean, attribute: 'active' })
-    isActive?: boolean;
-
-    private handleClick = (e: MouseEvent) => {
-        e.stopPropagation();
-
-        const message: ApplicationGuidanceMessage = {
-            type: 'application-guidance-anchor-activated',
-            anchorId: this.id,
-        };
-
-        window.postMessage(message, window.location.origin);
-    };
+    active?: boolean;
 
     render() {
+        const { active, rect } = this;
+        const classes = directives.classMap({ active, anchor: true });
+        const style = directives.styleMap({
+            top: `${rect.top}px`,
+            left: `${rect.left}px`,
+            width: `${rect.width}px`,
+            height: `${rect.height}px`,
+        });
         return html`
-            <div
-                @click=${this.handleClick}
-                class="anchor ${this.isActive ? 'active' : ''}"
-                style="width: ${this.rect.width}px; height: ${this.rect.height}px; top: ${this.rect
-                    .top}px; left: ${this.rect.left}px; "
-            ></div>
+            <div class="${classes}" style="${style}"></div>
         `;
     }
 }
