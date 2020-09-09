@@ -1,8 +1,9 @@
 import 'babel-polyfill';
 
 class JestTestDate extends Date {
-    constructor(...date) {
-        super(...date || "2020-07-10T10:12:58.135Z"); 
+    constructor(...dateArgs) {
+        const args = dateArgs.length > 0 ? dateArgs : ["2020-06-10T10:12:58.135Z"]
+        super(...args); 
     }
 }
 

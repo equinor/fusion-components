@@ -47,7 +47,7 @@ exports[`General|Calendar Default 1`] = `
             </span>
           </button>
           <h4>
-            September 2020
+            June 2020
           </h4>
           <button
             className="container comfortable"
@@ -100,11 +100,6 @@ exports[`General|Calendar Default 1`] = `
             Sun
           </header>
           <span
-            className="day notSelectedMonth"
-          >
-            31
-          </span>
-          <span
             className="day"
           >
             01
@@ -145,12 +140,12 @@ exports[`General|Calendar Default 1`] = `
             08
           </span>
           <span
-            className="day isToday"
+            className="day"
           >
             09
           </span>
           <span
-            className="day"
+            className="day isToday"
           >
             10
           </span>
@@ -274,6 +269,11 @@ exports[`General|Calendar Default 1`] = `
           >
             04
           </span>
+          <span
+            className="day notSelectedMonth"
+          >
+            05
+          </span>
         </div>
       </div>
     </div>
@@ -337,7 +337,7 @@ exports[`General|Calendar Interactive 1`] = `
             </span>
           </button>
           <h4>
-            September 2020
+            June 2020
           </h4>
           <button
             className="container comfortable"
@@ -389,22 +389,6 @@ exports[`General|Calendar Interactive 1`] = `
           <header>
             Sun
           </header>
-          <span
-            className="day notSelectedMonth"
-          >
-            <button
-              className="container comfortable isDisabled"
-              disabled={true}
-              onClick={[Function]}
-              onMouseDown={[Function]}
-            >
-              <span
-                className="iconContainer"
-              >
-                31
-              </span>
-            </button>
-          </span>
           <span
             className="day"
           >
@@ -534,10 +518,10 @@ exports[`General|Calendar Interactive 1`] = `
             </button>
           </span>
           <span
-            className="day isToday"
+            className="day"
           >
             <button
-              className="container comfortable isToggler"
+              className="container comfortable"
               disabled={false}
               onClick={[Function]}
               onMouseDown={[Function]}
@@ -550,10 +534,10 @@ exports[`General|Calendar Interactive 1`] = `
             </button>
           </span>
           <span
-            className="day"
+            className="day isToday"
           >
             <button
-              className="container comfortable"
+              className="container comfortable isToggler"
               disabled={false}
               onClick={[Function]}
               onMouseDown={[Function]}
@@ -946,6 +930,22 @@ exports[`General|Calendar Interactive 1`] = `
                 className="iconContainer"
               >
                 04
+              </span>
+            </button>
+          </span>
+          <span
+            className="day notSelectedMonth"
+          >
+            <button
+              className="container comfortable isDisabled"
+              disabled={true}
+              onClick={[Function]}
+              onMouseDown={[Function]}
+            >
+              <span
+                className="iconContainer"
+              >
+                05
               </span>
             </button>
           </span>
