@@ -49,7 +49,7 @@ const SliderPercentageStory = () => {
 };
 
 const SliderDateStory = () => {
-    const [value, setValue] = React.useState(new Date());
+    const [value, setValue] = React.useState(new Date(2020, 9, 9));
 
     const markers = [
         {
@@ -93,7 +93,7 @@ const SliderDateStory = () => {
 const RangedSliderStory = () => {
     const [value, setValue] = React.useState<[number, number]>([
         new Date(2019, 10, 15).getTime(),
-        new Date().getTime(),
+        new Date(2020, 9, 9).getTime(),
     ]);
 
     const markers = [

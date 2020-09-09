@@ -92,9 +92,9 @@ const Calendar: React.FC<CalendarProps> = ({
                 {weekDays.map(weekDay => (
                     <header key={weekDay}>{weekDay}</header>
                 ))}
-                {calendar.dates.map(d => (
+                {calendar.dates.map((d, i) => (
                     <Day
-                        key={d.value + d.year + d.month}
+                        key={d.value + d.year + d.month + i}
                         date={d}
                         selectedDate={selectedDate}
                         interactive={interactive}
