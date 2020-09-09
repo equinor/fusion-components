@@ -15,6 +15,8 @@ import CurrentUserButton from './components/CurrentUserButton';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
 import NotificationsButton from './components/NotificationsButton';
 import useHorizontalBreakpoint from 'hooks/useHorizontalBreakpoint';
+import { ApplicationGuidanceAnchor } from 'components/general/ApplicationGuidance';
+
 
 enum Breakpoints {
     medium = 'medium',
@@ -40,9 +42,10 @@ type FusionHeaderProps = {
     start: React.ReactElement | null;
     content: React.FC<HeaderContentProps> | null;
     aside: React.ReactElement | null;
+    quickFactScope?: string;
 };
 
-const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) => {
+const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quickFactScope }) => {
     const {
         refs: { headerContent },
     } = useFusionContext();
@@ -89,10 +92,16 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside }) =>
             </div>
 
             <aside className={styles.asideContainer}>
-                <ComponentDisplayToggleButton />
+                <ApplicationGuidanceAnchor id={'display-toggle-btn'} scope={quickFactScope} snug>
+                    <ComponentDisplayToggleButton />
+                </ApplicationGuidanceAnchor>
                 {aside}
-                <NotificationsButton />
-                <CurrentUserButton />
+                <ApplicationGuidanceAnchor id={'notification'} scope={quickFactScope} snug>
+                    <NotificationsButton />
+                </ApplicationGuidanceAnchor>
+                <ApplicationGuidanceAnchor id={'current-user-btn'} scope={quickFactScope} snug>
+                    <CurrentUserButton />
+                </ApplicationGuidanceAnchor>
             </aside>
         </header>
     );

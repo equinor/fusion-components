@@ -16,6 +16,7 @@
         "paths": {
             "@equinor/fusion-components": ["./src/index.ts"]
         },
+        "experimentalDecorators": true
     },
     "include": [
         "src/**/*",

@@ -78,7 +78,7 @@ const FusionStory = () => {
             body:
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in fringilla magna, nec posuere justo.',
             cancelLabel: 'Cancel',
-            confirmLabel: 'I\'m sure',
+            confirmLabel: "I'm sure",
         });
 
         dialog(response);
@@ -94,13 +94,16 @@ const FusionStory = () => {
                 }
                 content={null}
                 aside={null}
+                quickFactScope={'storybook'}
             />
             <FusionContent>
                 <div style={{ maxWidth: 800, margin: '20px auto' }}>
                     <p>
                         <Button onClick={onSnackbarClick}>Show low priority notification</Button>
                         <Button onClick={onBannerClick}>Show medium priority notification</Button>
-                        <Button onClick={onDialogClick}>Show high priority blocking notification</Button>
+                        <Button onClick={onDialogClick}>
+                            Show high priority blocking notification
+                        </Button>
                     </p>
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis in fringilla

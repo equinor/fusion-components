@@ -58,6 +58,7 @@ export type DataTableProps<T> = {
     listComponent?: React.FC<DataItemComponentProps<T>>;
     listSkeleton?: React.FC;
     noColumnsCollapse?: boolean;
+    quickFactScope?: string;
 };
 
 export type DataTableTableProps<T> = {
@@ -77,6 +78,7 @@ export type DataTableTableProps<T> = {
     onRowClick?: OnDataTableRowClickHandler<T>;
     onExpand?: (item: T) => void;
     noColumnsCollapse?: boolean;
+    quickFactScope?: string;
 };
 
 export type DataTableListProps<T> = {
@@ -103,6 +105,7 @@ export type DataTableHeaderProps<T> = {
     onSelectAll: () => void;
     isAllSelected: boolean;
     isSomeSelected: boolean;
+    quickFactScope?: string;
 };
 
 export type DataTableBodyProps<T> = {

@@ -34,7 +34,7 @@ export type ButtonProps = {
     onClick?: React.EventHandler<React.SyntheticEvent>;
 };
 
-const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<ButtonProps>>(
+export const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<ButtonProps>>(
     (props, ref) => {
         // Used to apply "radar" animation on mouse up
         const [mouseHasBeenDown, setMouseHasBeenDown] = React.useState(false);

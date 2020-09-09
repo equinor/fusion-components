@@ -4,6 +4,8 @@ import { withTests } from '@storybook/addon-jest';
 import theme from './theme';
 import { withFusionContext } from './withFusionContext.tsx';
 
+import '../src/customElements/index.ts';
+
 addDecorator(withFusionContext());
 addDecorator(withTests({ results }));
 

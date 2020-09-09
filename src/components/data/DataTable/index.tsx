@@ -42,6 +42,7 @@ function DataTable<T>({
     listSkeleton,
     onRowClick,
     noColumnsCollapse,
+    quickFactScope,
 }: DataTableProps<T>) {
     const showSkeleton = isFetching && !data.length;
 
@@ -88,6 +89,7 @@ function DataTable<T>({
                     selectedItems={selectedItems}
                     onRowClick={onRowClick}
                     noColumnsCollapse={noColumnsCollapse}
+                    quickFactScope={quickFactScope}
                 />
             )}
         </div>

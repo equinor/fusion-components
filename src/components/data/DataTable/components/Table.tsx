@@ -25,6 +25,7 @@ function Table<T>({
     expandedComponent,
     onRowClick,
     noColumnsCollapse: noColumnsCollapse,
+    quickFactScope,
 }: DataTableTableProps<T>) {
     const tableRef = useRef<HTMLDivElement>(null);
     const skeletonRows = pagination ? pagination.perPage : 10;
@@ -105,6 +106,7 @@ function Table<T>({
                         selectedItems.length > 0 &&
                         selectedItems.length !== data.length
                     }
+                    quickFactScope={quickFactScope}
                 />
                 {showSkeleton ? (
                     <DataTableSkeleton columns={visibleColumns} rowCount={skeletonRows} />

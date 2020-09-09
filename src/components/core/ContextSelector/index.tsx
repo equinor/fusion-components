@@ -63,7 +63,7 @@ const ContextSelector: React.FC = () => {
         (ref, isOpen, setIsOpen) => {
             const selectedItem = React.useMemo(() => {
                 const mergedItems = mergeDropdownSectionItems(dropdownSections);
-                const selectedItem = mergedItems.find(option => option.isSelected === true);
+                const selectedItem = mergedItems.find((option) => option.isSelected === true);
                 return selectedItem as SearchableContextDropdownOption;
             }, [dropdownSections]);
 
@@ -170,12 +170,12 @@ const ContextSelector: React.FC = () => {
     }, [currentApp, contextManifest, exchangeContext]);
 
     const onSelect = React.useCallback(
-        item => {
+        (item) => {
             if (item.key && item.key === 'empty') {
                 return;
             }
             if (isOpen) {
-                const selectedContext = contexts.find(c => c.id === item.key);
+                const selectedContext = contexts.find((c) => c.id === item.key);
                 setIsOpen(false);
                 setQueryText('');
                 if (selectedContext) contextManager.setCurrentContextAsync(selectedContext);
