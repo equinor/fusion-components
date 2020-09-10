@@ -8,7 +8,7 @@ import { AddAlertIcon, WarningIcon, ErrorIcon, NotificationIcon } from '../compo
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Alert', module);
+const stories = storiesOf('Icons/Alert', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory("Alert"));
 

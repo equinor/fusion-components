@@ -6,7 +6,7 @@ import PersonPicker from '../index';
 import { useFusionContext, PersonDetails } from '@equinor/fusion';
 import { getDefaultPerson } from '../../utils';
 
-const stories = storiesOf('People|PersonPicker', module);
+const stories = storiesOf('People/PersonPicker', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('PersonPicker'));
 

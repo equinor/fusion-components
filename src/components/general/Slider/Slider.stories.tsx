@@ -141,7 +141,7 @@ const RangedSliderStory = () => {
     );
 };
 
-storiesOf('General|Slider', module)
+storiesOf('General/Slider', module)
     .addDecorator(withKnobs)
     .addDecorator(withFusionStory('Slider'))
     .add('Percentage', () => <SliderPercentageStory />)

@@ -48,6 +48,6 @@ const AccordionStory = () => {
     );
 };
 
-storiesOf('General|Accordion', module)
+storiesOf('General/Accordion', module)
     .addDecorator(withFusionStory('Accordion'))
     .add('Default', () => <AccordionStory />);

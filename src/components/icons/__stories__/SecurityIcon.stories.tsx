@@ -10,7 +10,7 @@ import {
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Security', module);
+const stories = storiesOf('Icons/Security', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Security'));
 

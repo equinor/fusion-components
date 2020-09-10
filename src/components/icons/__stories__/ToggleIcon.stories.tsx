@@ -10,7 +10,7 @@ import {
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Toggle', module);
+const stories = storiesOf('Icons/Toggle', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Toggle'));
 

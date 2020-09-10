@@ -81,6 +81,6 @@ const NullableAndPlaceHolderContextSelectorStory = () => {
     );
 };
 
-storiesOf('Core|Context Selector', module)
+storiesOf('Core/Context Selector', module)
     .add('PDP', () => <PDPContextSelectorStory />)
     .add('PDP Nullable And Placeholder', () => <NullableAndPlaceHolderContextSelectorStory />);

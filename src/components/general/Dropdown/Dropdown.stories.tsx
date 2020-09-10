@@ -21,6 +21,6 @@ const DropdownStory = () => {
     );
 };
 
-storiesOf('General|Dropdown', module)
+storiesOf('General/Dropdown', module)
     .addDecorator(withFusionStory('Dropdown'))
     .add('Default', () => <DropdownStory />);

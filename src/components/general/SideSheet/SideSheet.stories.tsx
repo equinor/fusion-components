@@ -243,7 +243,7 @@ const StandardSideSheetStory = () => {
     );
 };
 
-storiesOf('General|SideSheet', module)
+storiesOf('General/SideSheet', module)
     .addDecorator(withKnobs)
     .addDecorator(withFusionStory('Side Sheet', 0))
     .add('Modal', () => <ModalSideSheetStory />)

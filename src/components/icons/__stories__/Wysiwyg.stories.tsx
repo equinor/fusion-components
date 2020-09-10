@@ -9,7 +9,7 @@ import { LinkIcon, TitleIcon, FormatItalicsIcon, FormatBoldIcon, FormatBulletedL
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Wysiwyg', module);
+const stories = storiesOf('Icons/Wysiwyg', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory("Wysiwyg"));
 

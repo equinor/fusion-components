@@ -27,7 +27,7 @@ const MenuStory = () => {
             key: '4',
             title: 'Last',
         },
-    ]
+    ];
 
     return (
         <React.Fragment>
@@ -42,7 +42,7 @@ const MenuStory = () => {
                     },
                 ]}
             />
-            <div style={{width: '300px'}}>
+            <div style={{ width: '300px' }}>
                 <input placeholder="Narrow menu" ref={setRef} />
                 <Menu
                     onClick={action('click')}
@@ -93,7 +93,7 @@ const CustomItemsMenuStory = () => {
 
     const toggleItem = (item: Item) => {
         setItems(
-            items.map(i =>
+            items.map((i) =>
                 i.key === item.key
                     ? {
                           ...item,
@@ -137,7 +137,7 @@ const CustomItemsMenuStory = () => {
     );
 };
 
-storiesOf('General|Menu', module)
+storiesOf('General/Menu', module)
     .addDecorator(withFusionStory('Menu'))
     .add('Default', () => <MenuStory />)
     .add('Custom items', () => <CustomItemsMenuStory />);

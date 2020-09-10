@@ -267,7 +267,7 @@ const SingleSelectable: React.FC = () => {
     );
 };
 
-storiesOf('Data|Data Table', module)
+storiesOf('Data/Data Table', module)
     .addParameters({ jest: ['DataTable.stories.jsx'] })
     .addDecorator(withFusionStory('Data Table'))
     .add('Default', () => <WithoutSkeleton />)

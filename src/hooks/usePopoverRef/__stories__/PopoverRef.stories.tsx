@@ -37,7 +37,7 @@ const PopoverStory = () => {
     );
 };
 
-storiesOf('Hooks|Popover', module)
+storiesOf('Hooks/Popover', module)
     .addDecorator(withFusionStory('Popover'))
     .addDecorator(withKnobs)
     .add('Default', () => {

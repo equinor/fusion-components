@@ -9,7 +9,7 @@ import { ListViewIcon, GridViewIcon, ColumnViewIcon, WorkIcon } from '../compone
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|List', module);
+const stories = storiesOf('Icons/List', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory("List"));
 

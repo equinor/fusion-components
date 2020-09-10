@@ -9,7 +9,7 @@ import { EditIcon } from '../components/image';
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Image', module);
+const stories = storiesOf('Icons/Image', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory("Image"));
 

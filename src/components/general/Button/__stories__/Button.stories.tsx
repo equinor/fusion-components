@@ -20,7 +20,7 @@ const createButtonStory = (props) => () => (
     </React.Fragment>
 );
 
-storiesOf('General|Button', module)
+storiesOf('General/Button', module)
     .addParameters({ jest: ['Button.stories.jsx'] })
     .addDecorator(withFusionStory('Buttons'))
     .add('Contained', createButtonStory({ contained: true }))

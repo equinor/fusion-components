@@ -64,7 +64,7 @@ const PersonRoleListStory = () => {
     return <PersonRoleList personRoles={roles} roleType={roleType} />;
 };
 
-storiesOf('People|PersonRoleList', module)
+storiesOf('People/PersonRoleList', module)
     .addDecorator(withKnobs)
     .addDecorator(withFusionStory('PersonRoleList'))
     .add('Default', () => <PersonRoleListStory />);
