@@ -139,14 +139,14 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
     const getCharTexture = React.useCallback(
         (char: string) => {
-            let texture = getTextureFromCache(TEXTURE_CACHE_KEYS.CHARS, char) as PIXI.Texture;
+            let texture = getTextureFromCache('chars', char) as PIXI.Texture;
             if (!texture) {
                 const text = new PIXI.Text(char, DEFAULT_ITEM_TEXT_STYLE);
                 stage.current.addChild(text);
                 text.x = -text.width;
                 text.y = -text.height;
                 texture = text.texture;
-                addTextureToCache(TEXTURE_CACHE_KEYS.CHARS, char, texture);
+                addTextureToCache('chars', char, texture);
             }
 
             return texture;
@@ -156,10 +156,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
     const createTextNode = React.useCallback(
         (text: string, color: number) => {
-            let cachedText = getTextureFromCache(
-                TEXTURE_CACHE_KEYS.TEXTS,
-                text + color
-            ) as PIXI.RenderTexture;
+            let cachedText = getTextureFromCache('texts', text + color) as PIXI.RenderTexture;
 
             if (!cachedText) {
                 const chars = text.split('');
@@ -183,7 +180,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                 });
                 pixiApp?.renderer.render(textContainer, cachedText);
 
-                addTextureToCache(TEXTURE_CACHE_KEYS.TEXTS, text + color, cachedText);
+                addTextureToCache('texts', text + color, cachedText);
             }
 
             return new PIXI.Sprite(cachedText);
@@ -194,10 +191,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     const createRect = React.useCallback(
         (x: number, y: number, width: number, height: number, color: number) => {
             const key = '' + color + x + y + width + height;
-            let cachedRect = getTextureFromCache(
-                TEXTURE_CACHE_KEYS.RECTS,
-                key
-            ) as PIXI.RenderTexture;
+            let cachedRect = getTextureFromCache('rects', key) as PIXI.RenderTexture;
 
             if (!cachedRect) {
                 const graphics = new PIXI.Graphics();
@@ -206,7 +200,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                 graphics.endFill();
                 cachedRect = PIXI.RenderTexture.create({ width, height });
                 pixiApp?.renderer.render(graphics, cachedRect);
-                addTextureToCache(TEXTURE_CACHE_KEYS.RECTS, key, cachedRect);
+                addTextureToCache('rects', key, cachedRect);
             }
 
             return new PIXI.Sprite(cachedRect);
@@ -246,7 +240,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     const processRenderer = React.useCallback(
         (renderer: RenderItem) => {
             let graphicsContainer = getTextureFromCache(
-                TEXTURE_CACHE_KEYS.GRAPHICS,
+                'graphics',
                 renderer.key
             ) as PIXI.RenderTexture;
 
@@ -263,7 +257,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                     height: renderer.context.height,
                 });
                 pixiApp?.renderer.render(graphics, graphicsContainer);
-                addTextureToCache(TEXTURE_CACHE_KEYS.GRAPHICS, renderer.key, graphicsContainer);
+                addTextureToCache('graphics', renderer.key, graphicsContainer);
             }
 
             renderer.context.container.addChild(new PIXI.Sprite(graphicsContainer));
@@ -273,20 +267,13 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
     const getRenderedItemDescription = React.useCallback(
         (item: T) => {
-            let itemDescription = getTextureFromCache(
-                TEXTURE_CACHE_KEYS.DESCRIPTIONS,
-                item[itemKeyProp]
-            );
+            let itemDescription = getTextureFromCache('descriptions', item[itemKeyProp]);
 
             if (!itemDescription) {
                 const description = getItemDescription(item);
                 const textNode = createTextNode(description, 0x243746);
                 itemDescription = createRenderedItemDescription(backgroundColor, textNode);
-                addTextureToCache(
-                    TEXTURE_CACHE_KEYS.DESCRIPTIONS,
-                    item[itemKeyProp],
-                    itemDescription
-                );
+                addTextureToCache('descriptions', item[itemKeyProp], itemDescription);
             }
             return itemDescription as PIXI.Container;
         },
@@ -330,10 +317,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
             const x = getColumnX(columnIndex, expandedColumns, itemWidth);
             const y = headerHeight + index * itemHeight;
 
-            let renderedItem = getTextureFromCache(
-                TEXTURE_CACHE_KEYS.ITEMS,
-                item[itemKeyProp]
-            ) as PIXI.Container;
+            let renderedItem = getTextureFromCache('items', item[itemKeyProp]) as PIXI.Container;
             if (!renderedItem) {
                 renderedItem = new PIXI.Container();
                 renderedItem;
@@ -374,12 +358,12 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                 window.cancelAnimationFrame(processRenderQueueAnimationFrame);
                 processRenderQueueAnimationFrame = window.requestAnimationFrame(processRenderQueue);
 
-                addTextureToCache(TEXTURE_CACHE_KEYS.ITEMS, item[itemKeyProp], renderedItem);
+                addTextureToCache('items', item[itemKeyProp], renderedItem);
             }
 
             if (highlightedItem && highlightedItem[itemKeyProp] === item[itemKeyProp]) {
                 let renderedHighlightedItem = getTextureFromCache(
-                    TEXTURE_CACHE_KEYS.ITEMS,
+                    'items',
                     HIGHLIGHTED_ITEM_KEY
                 ) as PIXI.Graphics;
                 if (!renderedHighlightedItem) {
@@ -423,7 +407,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     const renderHighlightedItem = React.useCallback(() => {
         if (!highlightedItem) {
             const renderedHighlightedItem = getTextureFromCache(
-                TEXTURE_CACHE_KEYS.ITEMS,
+                'items',
                 HIGHLIGHTED_ITEM_KEY
             ) as PIXI.Container;
 
@@ -484,10 +468,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
     const renderHeader = React.useCallback(
         (key: string, index: number) => {
-            let renderedHeader = getTextureFromCache(
-                TEXTURE_CACHE_KEYS.HEADERS,
-                key
-            ) as PIXI.Container;
+            let renderedHeader = getTextureFromCache('headers', key) as PIXI.Container;
 
             if (!renderedHeader) {
                 const headerWidth = getHeaderWidth(columns[index]?.key, expandedColumns, itemWidth);
@@ -525,7 +506,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                     isExpanded,
                 });
 
-                addTextureToCache(TEXTURE_CACHE_KEYS.HEADERS, key, renderedHeader);
+                addTextureToCache('headers', key, renderedHeader);
             }
 
             // Fixed header when scrolling

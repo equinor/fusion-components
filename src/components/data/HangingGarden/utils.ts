@@ -1,5 +1,10 @@
 import * as PIXI from 'pixi.js';
-import { ExpandedColumns, ItemRenderContext, HangingGardenColumn } from './HangingGardenModels';
+import {
+    ExpandedColumns,
+    ItemRenderContext,
+    HangingGardenColumn,
+    ExpandedColumn,
+} from './HangingGardenModels';
 
 export const DEFAULT_ITEM_HEIGHT = 24;
 export const DEFAULT_HEADER_HEIGHT = 32;
@@ -23,36 +28,32 @@ export const getMaxRowCount = (columns: HangingGardenColumn<any>[]) => {
     );
 };
 
+export const getExpandedWith = (width: number, c: ExpandedColumn) =>
+    (width += c.maxWidth + EXPANDED_COLUMN_PADDING * 2);
+
 export const getColumnX = (
     index: number,
     currentExpandedColumns: ExpandedColumns,
     defaultWidth: number
 ) => {
-    let expandedWidthBeforeIndex = 0;
-    for (const key in currentExpandedColumns) {
-        const expandedColumn = currentExpandedColumns[key];
-        if (expandedColumn.index < index && expandedColumn.isExpanded) {
-            expandedWidthBeforeIndex += expandedColumn.maxWidth + EXPANDED_COLUMN_PADDING * 2;
-        }
-    }
+    const expandedWidthBeforeIndex = Object.values(currentExpandedColumns)
+        .filter((c) => c.index < index && c.isExpanded)
+        .reduce(getExpandedWith, 0);
 
     return index * defaultWidth + expandedWidthBeforeIndex;
 };
 
-export const isHeaderExpanded = (columnKey: string, expandedColumns: ExpandedColumns) => {
-    const expandedColumn = expandedColumns && expandedColumns[columnKey];
-    return expandedColumn?.isExpanded;
-};
+export const isHeaderExpanded = (columnKey: string, expandedColumns: ExpandedColumns) =>
+    (expandedColumns && expandedColumns[columnKey])?.isExpanded;
 
 export const getHeaderWidth = (
     columnKey: string,
     expandedColumns: ExpandedColumns,
     defaultWidth: number
-) => {
-    return isHeaderExpanded(columnKey, expandedColumns)
+) =>
+    isHeaderExpanded(columnKey, expandedColumns)
         ? defaultWidth + expandedColumns[columnKey].maxWidth + EXPANDED_COLUMN_PADDING * 2
         : defaultWidth;
-};
 
 export const getCalculatedHeight = (
     headerHeight: number,
@@ -81,13 +82,9 @@ export const getCalculatedWidth = (
     columnsLength: number,
     itemWidth: number
 ) => {
-    let expandedWidth = 0;
-    for (const key in currentExpandedColumns) {
-        const expandedColumn = currentExpandedColumns[key];
-        if (expandedColumn.isExpanded) {
-            expandedWidth = expandedWidth + expandedColumn.maxWidth + EXPANDED_COLUMN_PADDING * 2;
-        }
-    }
+    const expandedWidth = Object.values(currentExpandedColumns)
+        .filter((c) => c.isExpanded)
+        .reduce(getExpandedWith, 0);
     return columnsLength * itemWidth + expandedWidth;
 };
 

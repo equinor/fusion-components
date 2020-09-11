@@ -6,7 +6,7 @@ export type ExpandedColumn = {
     index: number;
 };
 
-export type ExpandedColumns = { [key: string]: ExpandedColumn };
+export type ExpandedColumns = Record<string, ExpandedColumn>;
 
 export type RenderContext = {
     container: PIXI.Container;
@@ -39,7 +39,7 @@ export type HangingGardenColumn<T> = {
     data: T[];
 };
 
-export type HangingGardenColumnIndex = { [key: string]: any };
+export type HangingGardenColumnIndex = Record<string, any>;
 
 export type HangingGardenProps<T extends HangingGardenColumnIndex> = {
     columns: HangingGardenColumn<T>[];

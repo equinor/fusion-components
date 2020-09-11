@@ -1,21 +1,20 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 
-export const TEXTURE_CACHE_KEYS: { [i: string]: keyof TextureCaches } = {
-    HEADERS: 'headers',
-    ITEMS: 'items',
-    CHARS: 'chars',
-    GRAPHICS: 'graphics',
-    DESCRIPTIONS: 'descriptions',
-    MASKS: 'masks',
-    TEXTS: 'texts',
-    RECTS: 'rects',
-};
+export type TEXTURE_CACHE_KEYS =
+    | 'headers'
+    | 'items'
+    | 'chars'
+    | 'graphics'
+    | 'descriptions'
+    | 'masks'
+    | 'texts'
+    | 'rects';
 
-export type RenderTextureCache = { [key: string]: PIXI.RenderTexture };
-export type TextureCache = { [key: string]: PIXI.Texture };
-export type ContainerCache = { [key: string]: PIXI.Container };
-export type GraphicsCache = { [key: string]: PIXI.RenderTexture };
+export type RenderTextureCache = Record<string, PIXI.RenderTexture>;
+export type TextureCache = Record<string, PIXI.Texture>;
+export type ContainerCache = Record<string, PIXI.Container>;
+export type GraphicsCache = Record<string, PIXI.RenderTexture>;
 export type TooltipsCache = PIXI.Container;
 
 export type TextureCaches = {
