@@ -3,7 +3,14 @@ import {
     AppGuideAnchorElement,
     AppGuideAnchorElementProps,
     QuickFactToggleEventData,
+    AppGuideAnchorConnectEvent,
+    getElementsBounds,
 } from '../../../../customElements/components/app-guide/anchor';
+
+export interface AppGuideAnchorRef {
+    id: string;
+    scope: string;
+}
 
 export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<AppGuideAnchorElementProps>;
 
@@ -47,6 +54,42 @@ export const useOnAnchorToggle = (callback: (isActive: boolean) => void) => {
             return () => ref.current.removeEventListener('toggle', handleOnToggle);
         }
     }, [ref.current]);
+
+    return ref;
+};
+
+export const useAnchorRef = (anchor: AppGuideAnchorRef) => {
+    const ref = React.useRef<HTMLElement | null>(null);
+    const callBackRef = React.useRef<VoidFunction>();
+
+    const disconnectedCallback = React.useCallback((cb: VoidFunction) => {
+        console.log('connected');
+        callBackRef.current = cb;
+    }, []);
+
+    const bounds = React.useCallback(() => {
+        console.log('bound');
+        const bounds = ref.current ? getElementsBounds([...ref.current.children]) : null;
+        bounds.applyPadding(8);
+        return bounds;
+    }, [ref]);
+
+    React.useEffect(() => {
+        if (!ref.current) {
+            return;
+        }
+        const event = new AppGuideAnchorConnectEvent({
+            detail: { ...anchor, bounds, disconnectedCallback },
+            bubbles: true,
+            composed: true,
+            cancelable: false,
+        });
+        ref.current.dispatchEvent(event);
+
+        console.log('current', ref.current);
+
+        return callBackRef.current;
+    }, [ref]);
 
     return ref;
 };

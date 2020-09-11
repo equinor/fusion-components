@@ -2,6 +2,7 @@ export {
     AppGuideAnchorElement, 
     AppGuideAnchorElementProps, 
     QuickFactToggleEventData,
+    getElementsBounds,
     AppGuideAnchorElement as default 
 } from './element';
 

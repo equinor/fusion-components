@@ -14,7 +14,7 @@ export interface AppGuideAnchorElementProps {
 };
 
 /** @TODO move me to a util? */
-const getElementsBounds = (elements: Element[]) => {
+export const getElementsBounds = (elements: Element[]) => {
     const rects = elements.map((child) => child.getBoundingClientRect());
     return new ApplicationGuidanceAnchorRect(
         Math.min(...rects.map((r) => r.top)),
