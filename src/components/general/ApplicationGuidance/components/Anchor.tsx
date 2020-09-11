@@ -7,9 +7,10 @@ import {
     getElementsBounds,
 } from '../../../../customElements/components/app-guide/anchor';
 
-export interface AppGuideAnchorRef {
+export interface AppGuideAnchorRef<R extends HTMLElement> {
     id: string;
     scope: string;
+    ref: React.RefObject<R>;
 }
 
 export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<AppGuideAnchorElementProps>;
@@ -58,17 +59,16 @@ export const useOnAnchorToggle = (callback: (isActive: boolean) => void) => {
     return ref;
 };
 
-export const useAnchorRef = (anchor: AppGuideAnchorRef) => {
-    const ref = React.useRef<HTMLElement | null>(null);
+export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
+
+    const {ref, scope, id} = anchor;
     const callBackRef = React.useRef<VoidFunction>();
 
     const disconnectedCallback = React.useCallback((cb: VoidFunction) => {
-        console.log('connected');
         callBackRef.current = cb;
     }, []);
 
     const bounds = React.useCallback(() => {
-        console.log('bound');
         const bounds = ref.current ? getElementsBounds([...ref.current.children]) : null;
         bounds.applyPadding(8);
         return bounds;
@@ -79,14 +79,12 @@ export const useAnchorRef = (anchor: AppGuideAnchorRef) => {
             return;
         }
         const event = new AppGuideAnchorConnectEvent({
-            detail: { ...anchor, bounds, disconnectedCallback },
+            detail: { id, scope, bounds, disconnectedCallback },
             bubbles: true,
             composed: true,
             cancelable: false,
         });
         ref.current.dispatchEvent(event);
-
-        console.log('current', ref.current);
 
         return callBackRef.current;
     }, [ref]);
