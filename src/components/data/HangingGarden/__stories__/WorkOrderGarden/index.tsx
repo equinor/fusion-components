@@ -8,7 +8,7 @@ import {
     Spinner,
 } from '../../../../../index';
 import * as styles from './styles.less';
-import { useCurrentContext, useAppSettings, useFusionContext } from '@equinor/fusion';
+import { useCurrentContext, useAppSettings } from '@equinor/fusion';
 import WorkOrderType from './models/WorkOrderType';
 
 import { getItemSearchableValues, SortWorkOrdersByFilterTerms } from './filter/filter';
@@ -18,7 +18,6 @@ import WorkOrderSideSheet from './sideSheet';
 import { useHangingGardenData } from '../../';
 
 import FilterSectionDefinitions from './models/FilterSectionDefinitions';
-import { getDataProxyBaseUrl } from './env';
 import { ErrorMessageProps } from '../../../../general/ErrorMessage';
 import { FilterOptions } from '../../../../general/FilterPane/applyFilters';
 
@@ -32,16 +31,6 @@ const defaultFilterTerms = [
 ];
 
 const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
-    const fusionContext = useFusionContext();
-    const dataProxyBaseUrl = React.useMemo(() => getDataProxyBaseUrl(fusionContext.environment), [
-        fusionContext.environment,
-    ]);
-
-    fusionContext.auth.container.registerAppAsync(
-        (window as any).clientId || '5a842df8-3238-415d-b168-9f16a6a6031b',
-        [dataProxyBaseUrl]
-    );
-
     const currentContext = useCurrentContext();
     const [localAppSettings, setAppSettingAsync] = useAppSettings();
 

@@ -137,7 +137,7 @@ const Garden: React.FC<GardenProps> = ({
     const renderItem = (item: WorkOrderType, context: ItemRenderContext) => {
         const status = getStatus(item, filterTerms);
         const color = getColor(status);
-        context.createRect(0, 0, context.width, context.height, color);
+        context.createRect({ x: 0, y: 0 }, { width: context.width, height: context.height }, color);
 
         context.enquedRender(item.workOrderNumber, (context) => {
             const textNode = context.createTextNode(
@@ -151,8 +151,8 @@ const Garden: React.FC<GardenProps> = ({
         renderItemFlag(item, context);
         renderItemSize(item, context);
 
-        context.addDot(getMatStatusColor(item), context.width - 12, 8);
-        context.addDot(getMccrStatusColor(item), context.width - 12, context.height - 8);
+        context.addDot(getMatStatusColor(item), { x: context.width - 12, y: 8 });
+        context.addDot(getMccrStatusColor(item), { x: context.width - 12, y: context.height - 8 });
         renderItemProgress(item, context);
         context.addPopover(new PIXI.Rectangle(0, 0, 32, context.height), () => {
             return (

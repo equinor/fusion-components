@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 import * as PIXI from 'pixi.js';
-import useTextureCaches, { TEXTURE_CACHE_KEYS } from './hooks/useTextureCaches';
+import useTextureCaches from './hooks/useTextureCaches';
 import {
     HangingGardenColumnIndex,
     HangingGardenProps,
@@ -9,6 +9,8 @@ import {
     HangingGardenColumn,
     ItemRenderContext,
     RenderItem,
+    Size,
+    Position,
 } from './HangingGardenModels';
 import {
     getMaxRowCount,
@@ -189,7 +191,10 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     );
 
     const createRect = React.useCallback(
-        (x: number, y: number, width: number, height: number, color: number) => {
+        (position: Position, size: Size, color: number) => {
+            const { x, y } = position;
+            const { width, height } = size;
+
             const key = '' + color + x + y + width + height;
             let cachedRect = getTextureFromCache('rects', key) as PIXI.RenderTexture;
 
@@ -316,7 +321,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
         (item: T, index: number, columnIndex: number) => {
             const x = getColumnX(columnIndex, expandedColumns, itemWidth);
             const y = headerHeight + index * itemHeight;
-
             let renderedItem = getTextureFromCache('items', item[itemKeyProp]) as PIXI.Container;
             if (!renderedItem) {
                 renderedItem = new PIXI.Container();
@@ -340,12 +344,12 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                     height: itemHeight,
                     graphics: graphicsContext,
                     createTextNode: createTextNode,
-                    createRect: (x, y, width, height, color) =>
-                        graphicsContext.addChild(createRect(x, y, width, height, color)),
-                    addDot: (color, x, y, borderColor) =>
+                    createRect: (position, size, color) =>
+                        graphicsContext.addChild(createRect(position, size, color)),
+                    addDot: (color, position, borderColor) =>
                         enqueueRenderer(
-                            '' + color + x + y + borderColor,
-                            (context) => addDot(context, color, x, y, borderColor),
+                            '' + color + position.x + position.y + borderColor,
+                            (context) => addDot(context, color, position, borderColor),
                             itemRenderContext
                         ),
                     addPopover: (hitArea, renderPopover) =>

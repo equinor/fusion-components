@@ -21,9 +21,19 @@ export type HeaderRenderContext = RenderContext & {
     isExpanded: boolean;
 };
 
+export type Position = {
+    x: number;
+    y: number;
+};
+
+export type Size = {
+    width: number;
+    height: number;
+};
+
 export type ItemRenderContext = RenderContext & {
-    createRect: (x: number, y: number, width: number, height: number, color: number) => void;
-    addDot: (color: number, x: number, y?: number, borderColor?: number) => void;
+    createRect: (position: Position, size: Size, color: number) => void;
+    addDot: (color: number, position: Position, borderColor?: number) => void;
     addPopover: (hitArea: any, renderPopover: () => JSX.Element) => void;
     enquedRender: (key: string, render: (context: ItemRenderContext) => void) => void;
 };

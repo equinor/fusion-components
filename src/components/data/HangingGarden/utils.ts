@@ -4,6 +4,7 @@ import {
     ItemRenderContext,
     HangingGardenColumn,
     ExpandedColumn,
+    Position,
 } from './HangingGardenModels';
 
 export const DEFAULT_ITEM_HEIGHT = 24;
@@ -64,11 +65,10 @@ export const getCalculatedHeight = (
 export const addDot = (
     context: ItemRenderContext,
     color: number,
-    x: number,
-    y?: number,
+    position: Position,
     borderColor = 0xffffff
 ) => {
-    const circle = new PIXI.Circle(x, y, 2);
+    const circle = new PIXI.Circle(position.x, position.y, 2);
 
     context.graphics.lineStyle(1, borderColor, 1, 1);
     context.graphics.beginFill(color);
