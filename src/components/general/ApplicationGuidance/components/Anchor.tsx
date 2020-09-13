@@ -1,97 +1,85 @@
 import React from 'react';
 import {
-    AppGuideAnchorElement,
-    AppGuideAnchorElementProps,
-    QuickFactToggleEventData,
-    AppGuideAnchorConnectEvent,
-    getElementsBounds,
-} from '../../../../customElements/components/app-guide/anchor';
+    AnchorDOMRect,
+    OverlayAnchorElement,
+    OverlayAnchorElementTag,
+    OverlayAnchorElementProps,
+    OverlayAnchorConnectEvent
+} from '../../../../customElements/components/overlay/anchor';
 
-export interface AppGuideAnchorRef {
+export interface AppGuideAnchorRef<R extends HTMLElement> {
     id: string;
-    scope: string;
+    scope?: string;
+    snug?: boolean;
+    ref: React.RefObject<R>;
 }
 
-export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<AppGuideAnchorElementProps>;
-
-declare global {
-    namespace JSX {
-        interface ReactHTML {
-            'fusion-app-guide-anchor': React.DetailedHTMLFactory<
-                ApplicationGuidanceAnchorProps,
-                AppGuideAnchorElement
-            >;
-        }
-        interface IntrinsicElements {
-            'fusion-app-guide-anchor': React.DetailedHTMLProps<
-                ApplicationGuidanceAnchorProps,
-                AppGuideAnchorElement
-            >;
-        }
-    }
-}
-
-export const ApplicationGuidanceAnchor: React.FC<ApplicationGuidanceAnchorProps> = (
-    props: ApplicationGuidanceAnchorProps
-) => {
-    return <fusion-app-guide-anchor {...props}></fusion-app-guide-anchor>;
-};
-
-export const useOnAnchorToggle = (callback: (isActive: boolean) => void) => {
-    const ref = React.useRef<AppGuideAnchorElement>(null);
-
-    const handleOnToggle = React.useCallback(
-        (e: CustomEvent<QuickFactToggleEventData>) => {
-            callback(e.detail.isActive);
-        },
-        [callback]
-    );
-
-    React.useEffect(() => {
-        if (ref.current) {
-            ref.current.addEventListener('toggle', handleOnToggle);
-
-            return () => ref.current.removeEventListener('toggle', handleOnToggle);
-        }
-    }, [ref.current]);
-
+export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<R>, 'ref'>) => {
+    const ref = React.useRef<R>(null);
+    useAnchorRef({ ...anchor, ref });
     return ref;
 };
 
-export const useAnchorRef = (anchor: AppGuideAnchorRef) => {
-    const ref = React.useRef<HTMLElement | null>(null);
+export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
+    const { id, ref, scope, snug } = anchor;
     const callBackRef = React.useRef<VoidFunction>();
-
-    const disconnectedCallback = React.useCallback((cb: VoidFunction) => {
-        console.log('connected');
-        callBackRef.current = cb;
-    }, []);
-
-    const bounds = React.useCallback(() => {
-        console.log('bound');
-        const bounds = ref.current ? getElementsBounds([...ref.current.children]) : null;
-        bounds.applyPadding(8);
-        return bounds;
-    }, [ref]);
+    const padding = React.useRef<number>(snug && 16);
 
     React.useEffect(() => {
         if (!ref.current) {
             return;
         }
-        const event = new AppGuideAnchorConnectEvent({
-            detail: { ...anchor, bounds, disconnectedCallback },
-            bubbles: true,
-            composed: true,
-            cancelable: false,
-        });
-        ref.current.dispatchEvent(event);
-
-        console.log('current', ref.current);
-
-        return callBackRef.current;
+        requestAnimationFrame(() => {
+            const event = new OverlayAnchorConnectEvent({
+                detail: {
+                    id,
+                    scope,
+                    bounds: () => {
+                        return AnchorDOMRect.create(
+                            ref.current.getBoundingClientRect(),
+                            padding.current
+                        );
+                    },
+                    disconnectedCallback: (cb: VoidFunction) => {
+                        callBackRef.current = cb;
+                    },
+                },
+                cancelable: false,
+                bubbles: true,
+                composed: true,
+            });
+            ref.current.dispatchEvent(event);
+        })
+        return () => callBackRef.current();
     }, [ref]);
-
-    return ref;
 };
+
+export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<
+    Omit<OverlayAnchorElementProps, 'bounds'> &
+    React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
+>;
+
+export const ApplicationGuidanceAnchor: React.FC<ApplicationGuidanceAnchorProps> = (
+    props: ApplicationGuidanceAnchorProps
+) => {
+    return <fusion-overlay-anchor {...props}></fusion-overlay-anchor>;
+};
+
+declare global {
+    namespace JSX {
+        interface ReactHTML {
+            [OverlayAnchorElementTag]: React.DetailedHTMLFactory<
+                ApplicationGuidanceAnchorProps,
+                OverlayAnchorElement
+            >;
+        }
+        interface IntrinsicElements {
+            [OverlayAnchorElementTag]: React.DetailedHTMLProps<
+                ApplicationGuidanceAnchorProps,
+                OverlayAnchorElement
+            >;
+        }
+    }
+}
 
 export default ApplicationGuidanceAnchor;

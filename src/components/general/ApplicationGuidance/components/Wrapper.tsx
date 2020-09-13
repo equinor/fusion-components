@@ -1,23 +1,27 @@
 import React from 'react';
 import {
-    AppGuideWrapperElement,
-    AppGuideWrapperElementProps,
-} from '../../../../customElements/components/app-guide/wrapper';
+    ApplicationGuideElement,
+    ApplicationGuideElementProps,
+    ApplicationGuideElementTag,
+} from '../../../../customElements/components/application-guide';
 
-export type ApplicationGuidanceWrapperProps = React.PropsWithChildren<AppGuideWrapperElementProps>;
+export type ApplicationGuidanceWrapperProps = React.PropsWithChildren<
+    ApplicationGuideElementProps &
+    React.DetailedHTMLProps<React.HTMLAttributes<ApplicationGuideElement>, ApplicationGuideElement>
+>;
 
 declare global {
     namespace JSX {
         interface ReactHTML {
-            'fusion-app-guide-wrapper': React.DetailedHTMLFactory<
+            [ApplicationGuideElementTag]: React.DetailedHTMLFactory<
                 ApplicationGuidanceWrapperProps,
-                AppGuideWrapperElement
+                ApplicationGuideElement
             >;
         }
         interface IntrinsicElements {
-            'fusion-app-guide-wrapper': React.DetailedHTMLProps<
+            [ApplicationGuideElementTag]: React.DetailedHTMLProps<
                 ApplicationGuidanceWrapperProps,
-                AppGuideWrapperElement
+                ApplicationGuideElement
             >;
         }
     }
@@ -26,7 +30,7 @@ declare global {
 export const ApplicationGuidanceWrapper: React.FC<ApplicationGuidanceWrapperProps> = (
     props: ApplicationGuidanceWrapperProps
 ) => {
-    return <fusion-app-guide-wrapper {...props}></fusion-app-guide-wrapper>;
+    return <fusion-application-guide {...props}></fusion-application-guide>;
 };
 
 export default ApplicationGuidanceWrapper;
