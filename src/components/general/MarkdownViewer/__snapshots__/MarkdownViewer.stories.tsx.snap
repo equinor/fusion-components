@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Markdown Viewer Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "margin": "8px",
+        }
+      }
+    >
+      <textarea
+        onChange={[Function]}
+        placeholder="Type markdown here"
+        style={
+          Object {
+            "height": 150,
+            "width": 500,
+          }
+        }
+        value="# This is markdown 
+ ## This is also markdown 
+ ### This is also markdown 
+
+ * Some 
+ * List 
+ * Items"
+      />
+      <div
+        className="container"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "<h1 id=\\"this-is-markdown\\">This is markdown</h1>
+<h2 id=\\"this-is-also-markdown\\">This is also markdown</h2>
+<h3 id=\\"this-is-also-markdown-1\\">This is also markdown</h3>
+<ul>
+<li>Some </li>
+<li>List </li>
+<li>Items</li>
+</ul>
+",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

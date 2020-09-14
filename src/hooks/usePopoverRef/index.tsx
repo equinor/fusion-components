@@ -1,17 +1,12 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 
-import {
-    useClickToggleController,
-    useRelativePositioning,
-    useOverlayPortal,
-    useHoverToggleController,
-    PopoverContainer,
-    PopoverContainerProps,
-    PopoverPlacement,
-    PopoverJustification,
-} from '@equinor/fusion-components';
 import useClickOutside from '../useClickOutside';
+import PopoverContainer, { PopoverPlacement, PopoverJustification, PopoverContainerProps } from 'components/general/PopoverContainer';
+import useHoverToggleController from 'hooks/useHoverToggleController';
+import useClickToggleController from 'hooks/useClickToggleController';
+import useRelativePositioning from 'hooks/useRelativePositioning';
+import useOverlayPortal from 'hooks/useOverlayPortal';
 export { PopoverPlacement, PopoverJustification };
 
 export default <T extends HTMLElement>(

@@ -1,9 +1,11 @@
 import React from 'react';
 import * as styles from './styles.less';
-import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';
 import classNames from 'classnames';
+import IconButton from '../IconButton';
+import ArrowBackIcon from 'components/icons/components/navigation/ArrowBackIcon';
+import ArrowForwardIcon from 'components/icons/components/navigation/ArrowForwardIcon';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;

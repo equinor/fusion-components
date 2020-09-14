@@ -1,17 +1,14 @@
 import * as React from 'react';
-import {
-    IconButton,
-    useIcon,
-    IconProps,
-    NotificationsIcon,
-    styling,
-    NotificationsSideSheet,
-    OverlayPortal,
-} from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames, useNotificationCards } from '@equinor/fusion';
 import NotificationCardsPresenter from '../../../NotificationCardsPresenter';
+import useIcon, { IconProps } from 'hooks/useIcon';
+import styling from 'styles/styling';
+import IconButton from 'components/general/IconButton';
+import { NotificationsIcon } from 'components/icons/components/notification';
+import NotificationsSideSheet from 'components/general/NotificationsSideSheet';
+import OverlayPortal from 'components/utils/OverlayPortal';
 
 type NotificationNumberBadgeProps = IconProps & {
     numberOfUnread: number;

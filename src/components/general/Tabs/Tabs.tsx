@@ -1,9 +1,8 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import { PaginationSkeleton } from '../Pagination';
-import { useEventListener } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import useEventListener from 'hooks/useEventListener';
 
 type TabsProps = {
     onChange: (tabKey: string) => void;

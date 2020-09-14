@@ -3,8 +3,8 @@ import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { useEventListener } from '@equinor/fusion-components';
 import useSliderTrack from './useSliderTrack';
+import useEventListener from 'hooks/useEventListener';
 export { SliderMarker };
 
 type SliderProps = {

@@ -1,13 +1,10 @@
 import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
-import {
-    TextInput,
-    DropdownArrow,
-    Menu,
-    Dropdown,
-    useDropdownController,
-    useOverlayContainer,
-} from '@equinor/fusion-components';
 import styles from './styles.less';
+import Dropdown, { useDropdownController } from '../Dropdown';
+import DropdownArrow from 'components/icons/components/action/DropdownArrow';
+import useOverlayContainer from 'hooks/useOverlayContainer';
+import TextInput from '../TextInput';
+import Menu from '../Menu';
 
 export type SearchableDropdownOption = {
     title: string;

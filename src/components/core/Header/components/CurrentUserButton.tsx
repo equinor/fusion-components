@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCurrentPersonDetails } from '@equinor/fusion';
-import { IconButton, PersonPhoto } from '@equinor/fusion-components';
-
+import IconButton from 'components/general/IconButton';
+import PersonPhoto from 'components/people/PersonPhoto';
 import AccountManagerSideSheet from './AccountManagerSideSheet';
 
 const CurrentUserButton: React.FC = () => {

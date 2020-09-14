@@ -2,14 +2,6 @@ import React, { ReactNode, useCallback, useMemo, useState, useEffect } from 'rea
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
-    IconButton,
-    CloseIcon,
-    useElevationClassName,
-    OverlayPortal,
-    Scrim,
-    PaginationArrow,
-} from '@equinor/fusion-components';
-import {
     useComponentDisplayClassNames,
     useNotificationCenter,
     NotificationContextProvider,
@@ -17,6 +9,12 @@ import {
 import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
 import BannerPresenter from './BannerPresenter';
 import SnackbarPresenter from './SnackbarPresenter';
+import useElevationClassName from 'hooks/useElevationClassName';
+import OverlayPortal from 'components/utils/OverlayPortal';
+import Scrim from 'components/general/Scrim';
+import PaginationArrow from 'components/icons/components/navigation/PaginationArrow';
+import IconButton from 'components/general/IconButton';
+import CloseIcon from 'components/icons/components/navigation/CloseIcon';
 
 type SideSheetSize = 'fullscreen' | 'xlarge' | 'large' | 'medium' | 'small';
 

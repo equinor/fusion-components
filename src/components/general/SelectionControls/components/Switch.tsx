@@ -1,8 +1,8 @@
 import React, { forwardRef, MutableRefObject } from 'react';
 import classNames from 'classnames';
 import styles from '../styles.less';
-import { useElevationClassName } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import useElevationClassName from 'hooks/useElevationClassName';
 
 type SwitchProps = {
     active?: boolean;

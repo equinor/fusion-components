@@ -1,17 +1,22 @@
 import React from 'react';
 import styles from './styles.less';
-import { Pagination, Page, useComponentDisplayClassNames } from '@equinor/fusion';
+import { Pagination as PaginationType, Page, useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
-import { Button, IconButton,  SkeletonButton, SkeletonBar, styling, PaginationArrow } from '@equinor/fusion-components';
+import Button from '../Button';
+import IconButton from '../IconButton';
+import PaginationArrow from 'components/icons/components/navigation/PaginationArrow';
+import SkeletonBar from 'components/feedback/Skeleton/Bar';
+import SkeletonButton from 'components/feedback/Skeleton/Button';
+import styling from 'styles/styling';
 
 export type PaginationChangeHandler = (newPage: Page, perPage: number) => void;
 
 type SkeletonPaginationProps = {
-    pagination: Pagination;
+    pagination: PaginationType;
 };
 
 type PaginationProps = {
-    pagination: Pagination;
+    pagination: PaginationType;
     onChange: PaginationChangeHandler;
 };
 

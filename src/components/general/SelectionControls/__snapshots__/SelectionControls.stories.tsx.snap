@@ -1,0 +1,329 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Selection Controls Checkbox 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "padding": "8px",
+        }
+      }
+    >
+      <div
+        className="container checkbox comfortable"
+        onClick={[Function]}
+      >
+        <input
+          checked={false}
+          readOnly={true}
+          type="checkbox"
+        />
+        <label
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+            }
+          }
+        >
+          <span
+            className="checkmark"
+          />
+        </label>
+      </div>
+      <div
+        className="container checkbox comfortable"
+      >
+        <input
+          readOnly={true}
+          type="checkbox"
+        />
+        <label
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+            }
+          }
+        >
+          <span
+            className="checkmark"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M7 11H17C17.55 11 18 11.45 18 12C18 12.55 17.55 13 17 13H7C6.45 13 6 12.55 6 12C6 11.45 6.45 11 7 11Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </label>
+      </div>
+      <div
+        className="container checkbox comfortable disabled"
+      >
+        <input
+          disabled={true}
+          readOnly={true}
+          type="checkbox"
+        />
+        <label
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+            }
+          }
+        >
+          <span
+            className="checkmark"
+          />
+        </label>
+      </div>
+      <div
+        className="container checkbox comfortable disabled"
+      >
+        <input
+          checked={true}
+          disabled={true}
+          readOnly={true}
+          type="checkbox"
+        />
+        <label
+          style={
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+            }
+          }
+        >
+          <span
+            className="checkmark"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M8.80004 15.905L5.30004 12.405C5.11519 12.2179 4.86309 12.1125 4.60004 12.1125C4.33699 12.1125 4.0849 12.2179 3.90004 12.405C3.51004 12.795 3.51004 13.415 3.90004 13.805L8.09004 17.995C8.48004 18.385 9.11004 18.385 9.50004 17.995L20.1 7.40501C20.49 7.01501 20.49 6.39501 20.1 6.00501C19.9152 5.81786 19.6631 5.71252 19.4 5.71252C19.137 5.71252 18.8849 5.81786 18.7 6.00501L8.80004 15.905Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Selection Controls Radio Button 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "padding": "8px",
+        }
+      }
+    >
+      <div
+        className="container radio comfortable"
+        onClick={[Function]}
+      >
+        <input
+          checked={false}
+          readOnly={true}
+          type="radio"
+        />
+        <label
+          style={
+            Object {
+              "borderColor": undefined,
+            }
+          }
+        >
+          <span
+            className="dot"
+            style={
+              Object {
+                "backgroundColor": undefined,
+              }
+            }
+          />
+        </label>
+      </div>
+      <div
+        className="container radio comfortable disabled"
+        onClick={[Function]}
+      >
+        <input
+          disabled={true}
+          readOnly={true}
+          type="radio"
+        />
+        <label
+          style={
+            Object {
+              "borderColor": undefined,
+            }
+          }
+        >
+          <span
+            className="dot"
+            style={
+              Object {
+                "backgroundColor": undefined,
+              }
+            }
+          />
+        </label>
+      </div>
+      <div
+        className="container radio comfortable disabled"
+        onClick={[Function]}
+      >
+        <input
+          checked={true}
+          disabled={true}
+          readOnly={true}
+          type="radio"
+        />
+        <label
+          style={
+            Object {
+              "borderColor": undefined,
+            }
+          }
+        >
+          <span
+            className="dot"
+            style={
+              Object {
+                "backgroundColor": undefined,
+              }
+            }
+          />
+        </label>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Selection Controls Switch 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "padding": "8px",
+        }
+      }
+    >
+      <div
+        className="container switch comfortable"
+        onClick={[Function]}
+      >
+        <input
+          checked={false}
+          readOnly={true}
+          type="checkbox"
+        />
+        <label>
+          <span
+            className="activator elevation2"
+          />
+        </label>
+      </div>
+      <div
+        className="container switch comfortable disabled"
+      >
+        <input
+          disabled={true}
+          readOnly={true}
+          type="checkbox"
+        />
+        <label>
+          <span
+            className="activator elevation2"
+          />
+        </label>
+      </div>
+      <div
+        className="container switch comfortable disabled"
+      >
+        <input
+          checked={true}
+          disabled={true}
+          readOnly={true}
+          type="checkbox"
+        />
+        <label>
+          <span
+            className="activator elevation2"
+          />
+        </label>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

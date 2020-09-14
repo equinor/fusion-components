@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { CalendarDate, isSameDate } from '@equinor/fusion';
 
 import styles from './styles.less';
-import { IconButton } from '@equinor/fusion-components';
+import IconButton from '../IconButton';
 
 type DayProps = {
     date: CalendarDate;

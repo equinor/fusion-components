@@ -67,6 +67,7 @@ module.exports = {
     moduleNameMapper: {
         '\\.(css|less)$': 'identity-obj-proxy',
         '^@storybook/react$': '<rootDir>/__mocks__/@storybook/react',
+        '@equinor/fusion-components': '<rootDir>/src/index',
     },
 
     // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -135,14 +136,16 @@ module.exports = {
     // The glob patterns Jest uses to detect test files
     testMatch: [
         '**/__tests__/**/*.js?(x)',
-        '**/__stories__/**/*.js?(x)',
+        '**/*.stories.js?(x)',
+        '**/*.stories.ts?(x)',
         //   "**/?(*.)+(spec|test).js?(x)"
     ],
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-    // testPathIgnorePatterns: [
-    //   "\\\\node_modules\\\\"
-    // ],
+    testPathIgnorePatterns: [
+        "/node_modules/",
+      '<rootDir>/src/components/data/PowerBIReport/__stories__/Reports.stories.tsx' // The powerbi client does not allow for unit testing at the moment
+    ],
 
     // The regexp pattern Jest uses to detect test files
     // testRegex: "",
@@ -166,8 +169,9 @@ module.exports = {
 
     // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
     transformIgnorePatterns: [
-        '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
+        '[/\\\\]node_modules[/\\\\].+?!(@equinor)\\.(js|jsx|ts|tsx)$',
         '^.+\\.module\\.(css|sass|scss)$',
+        '@equinor/fusion-components',
     ],
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them

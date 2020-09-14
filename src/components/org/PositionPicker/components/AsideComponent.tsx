@@ -1,6 +1,6 @@
 import React from 'react';
-import { PersonPhoto } from '@equinor/fusion-components';
 import ItemComponentProps from './itemComponentProps';
+import PersonPhoto from 'components/people/PersonPhoto';
 
 const AsideComponent: React.FC<ItemComponentProps> = ({ item }) => {
     if (item.key === 'empty') {

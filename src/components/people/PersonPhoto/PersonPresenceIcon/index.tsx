@@ -2,13 +2,9 @@ import * as React from 'react';
 import classNames from 'classnames';
 import * as styles from './styles.less';
 import { useComponentDisplayClassNames, PersonPresenceAvailability } from '@equinor/fusion';
-import {
-    useTooltipRef,
-    CheckCircleIcon,
-    CloseCircleIcon,
-    ScheduleIcon,
-    PhotoSize,
-} from '@equinor/fusion-components';
+import { PhotoSize } from 'components/people/PersonCard';
+import { CheckCircleIcon, ScheduleIcon, CloseCircleIcon } from 'components/icons/components/action';
+import useTooltipRef from 'hooks/useTooltipRef';
 
 type PersonPresenceProps = {
     presence: PersonPresenceAvailability;

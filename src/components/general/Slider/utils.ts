@@ -7,13 +7,13 @@ export const createPositionCalculator = (start: number, end: number) => {
         throw new Error('No range');
     }
 
-    return (marker: number) => Math.min(Math.max(((marker - start) / full) * 100, 0), 100) + '%';
+    return (marker: number) => Math.min(Math.max(((marker - start) / full) * 100, 0), 100).toFixed(1) + '%';
 };
 
 export const createValueCalculator = (start: number, end: number) => {
     const onePercent = end - start;
 
-    return (percentage: number) => Math.max((onePercent * (percentage / 100)) + start, 0);
+    return (percentage: number) => parseFloat(Math.max((onePercent * (percentage / 100)) + start, 0).toFixed(1));
 };
 
 export const createMarkerFinder = (
@@ -24,7 +24,7 @@ export const createMarkerFinder = (
 ) => {
     return (pageX: number) => {
         const position = pageX - trackLeft;
-        const percentage = Math.min(Math.max((position / trackWidth) * 100, 0), 100);
+        const percentage = parseFloat(Math.min(Math.max((position / trackWidth) * 100, 0), 100).toFixed(1));
         const newValue = calculateValue(percentage);
         return (
             markers.find(m => m.value === newValue) || {

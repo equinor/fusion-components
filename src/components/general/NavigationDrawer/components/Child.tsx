@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import styles from './styles.less';
 import { NavigationComponentProps } from '..';
 import NavigationItem from './NavigationItem';
-import { useTooltipRef } from '@equinor/fusion-components';
+import useTooltipRef from 'hooks/useTooltipRef';
 
 const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
     const { id, isActive, title, onClick, aside } = navigationItem;

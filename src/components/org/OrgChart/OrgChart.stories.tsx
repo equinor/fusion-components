@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
-import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
+import { OrgStructure, OrgChartItemProps, BreadCrumb as BreadCrumbType } from './orgChartTypes';
 import { useComponentDisplayType, Position } from '@equinor/fusion';
-import { PositionCard } from '@equinor/fusion-components';
+import PositionCard from '../PositionCard';
 
 type PositionStructure = OrgStructure & {
     name?: string;
@@ -198,7 +198,7 @@ const breadCrumbStyle = {
     height: '32px',
 } as React.CSSProperties;
 
-const BreadCrumb: React.FC<BreadCrumb> = ({ label }) => {
+const BreadCrumb: React.FC<BreadCrumbType> = ({ label }) => {
     return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
 };
 
@@ -221,7 +221,7 @@ const PositionCardComponent: React.FC<OrgChartItemProps<PositionStructure>> = ({
     );
 };
 
-const breadCrumbs: BreadCrumb[] = [
+const breadCrumbs: BreadCrumbType[] = [
     {
         childId: '1',
         label: 'Boss',

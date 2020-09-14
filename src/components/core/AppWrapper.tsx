@@ -2,7 +2,9 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Router } from 'react-router-dom';
 import { History, createBrowserHistory } from 'history';
 import { useFusionContext, combineUrls, HistoryContext } from '@equinor/fusion';
-import { Spinner, ErrorMessage, ErrorBoundary } from '@equinor/fusion-components';
+import Spinner from 'components/feedback/Spinner';
+import ErrorMessage from 'components/general/ErrorMessage';
+import ErrorBoundary from 'components/general/ErrorBoundary';
 
 
 const createAppHistory = (appKey?: string): History => {

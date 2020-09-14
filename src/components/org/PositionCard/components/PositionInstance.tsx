@@ -2,8 +2,10 @@ import React, { useCallback } from 'react';
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
-import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
 import PositionTimeline from './PositionTimeline';
+import useTooltipRef from 'hooks/useTooltipRef';
+import IconButton from 'components/general/IconButton';
+import { ExpandMoreIcon } from 'components/icons/components/navigation';
 
 type PositionInstanceProps = {
     position: Position;

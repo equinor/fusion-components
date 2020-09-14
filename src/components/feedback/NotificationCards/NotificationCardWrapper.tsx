@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { NotificationCard, useNotificationCardActions } from '@equinor/fusion';
-import {
-    StandardNotificationCard,
-    useElevationClassName,
-    Button,
-    Spinner,
-    IconButton,
-    CloseIcon,
-} from '@equinor/fusion-components';
 import classNames from 'classnames';
 import * as styles from './styles.less';
+import useElevationClassName from 'hooks/useElevationClassName';
+import Button from 'components/general/Button';
+import Spinner from '../Spinner';
+import IconButton from 'components/general/IconButton';
+import CloseIcon from 'components/icons/components/navigation/CloseIcon';
+import StandardNotificationCard from 'components/general/NotificationCardComponent/StandardNotificationCard';
 
 type NotificationCardWrapperProps = {
     notification: NotificationCard;

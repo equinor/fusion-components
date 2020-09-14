@@ -2,8 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import NavigationDrawer, { NavigationStructure } from '../index';
-import { ErrorIcon, WarningIcon } from '@equinor/fusion-components';
 import Chip from "../../Chip";
+import ErrorIcon from 'components/icons/components/alert/ErrorIcon';
+import WarningIcon from 'components/icons/components/alert/WarningIcon';
 
 const navStructure = [
     {

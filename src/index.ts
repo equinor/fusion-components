@@ -15,15 +15,15 @@ export { default as NotificationDialog } from './components/core/NotificationDia
 
 // Data components
 export { default as DataTable, DataTableColumn } from './components/data/DataTable';
-export {
-    default as PowerBIReport,
-    ReportLevelFilters,
-    IBasicFilter,
-    IBasicFilterWithKeys,
-    IAdvancedFilter,
-    IRelativeDateFuilter,
-    ITupleFilter,
-} from './components/data/PowerBIReport';
+// export {
+//     default as PowerBIReport,
+//     ReportLevelFilters,
+//     IBasicFilter,
+//     IBasicFilterWithKeys,
+//     IAdvancedFilter,
+//     IRelativeDateFuilter,
+//     ITupleFilter,
+// } from './components/data/PowerBIReport';
 
 // General components
 export { default as Button, ButtonProps } from './components/general/Button';

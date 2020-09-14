@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 
-import {
-    useRelativePositioning,
-    useHoverToggleController,
-    useOverlayPortal,
-} from '@equinor/fusion-components';
 import TooltipContainer from './components/Container';
+import useHoverToggleController from 'hooks/useHoverToggleController';
+import useRelativePositioning from 'hooks/useRelativePositioning';
+import useOverlayPortal from 'hooks/useOverlayPortal';
 
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 

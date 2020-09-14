@@ -1,15 +1,13 @@
 import React, { useRef, ReactNode, useState, useCallback } from 'react';
-import {
-    RelativeOverlayPortal,
-    useClickOutsideOverlayPortal,
-    NavigationStructure,
-    useElevationClassName,
-} from '@equinor/fusion-components';
 import styles from './styles.less';
 import CollapsedIcon from './CollapsedIcon';
 import NavigationItem from './NavigationItem';
 import { hasActive } from '../utils';
 import classNames from 'classnames';
+import { NavigationStructure } from '..';
+import useElevationClassName from 'hooks/useElevationClassName';
+import useClickOutsideOverlayPortal from 'hooks/useClickOutsideOverlayPortal';
+import RelativeOverlayPortal from 'components/utils/RelativeOverlayPortal';
 
 type NavigationPopoverProps = {
     icon?: ReactNode;

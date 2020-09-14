@@ -1,15 +1,11 @@
 import { Month, dateMask, formatDate, parseDate } from '@equinor/fusion';
-import {
-    Calendar,
-    CalendarIcon,
-    Dropdown,
-    TextInput,
-    unmaskString,
-    useDropdownController,
-    useOverlayContainer,
-    useStringMask,
-} from '@equinor/fusion-components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import useStringMask, { unmaskString } from 'hooks/useStringMask';
+import Dropdown, { useDropdownController } from '../Dropdown';
+import useOverlayContainer from 'hooks/useOverlayContainer';
+import TextInput from '../TextInput';
+import CalendarIcon from 'components/icons/components/action/CalendarIcon';
+import Calendar from '../Calendar';
 
 type DatePickerProps = {
     disabled?: boolean;

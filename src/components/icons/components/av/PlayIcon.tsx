@@ -1,5 +1,5 @@
-import { IconProps, useIcon } from '@equinor/fusion-components';
 import * as React from 'react';
+import useIcon, { IconProps } from 'hooks/useIcon';
 
 const PlayIcon = (props: IconProps) => {
     const iconFactory = useIcon(

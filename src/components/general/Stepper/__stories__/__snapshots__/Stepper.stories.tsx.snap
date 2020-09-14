@@ -1,0 +1,399 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|Stepper Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <div
+        className=""
+      >
+        <button
+          className="container comfortable isDisabled"
+          disabled={true}
+          onClick={[Function]}
+          onMouseDown={[Function]}
+        >
+          <span
+            className="iconContainer"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M18.7912 11.005H7.62124L12.5012 6.12502C12.8912 5.73502 12.8912 5.09502 12.5012 4.70502C12.3144 4.51777 12.0608 4.41254 11.7962 4.41254C11.5317 4.41254 11.2781 4.51777 11.0912 4.70502L4.50124 11.295C4.11124 11.685 4.11124 12.315 4.50124 12.705L11.0912 19.295C11.4812 19.685 12.1112 19.685 12.5012 19.295C12.8912 18.905 12.8912 18.275 12.5012 17.885L7.62124 13.005H18.7912C19.3412 13.005 19.7912 12.555 19.7912 12.005C19.7912 11.455 19.3412 11.005 18.7912 11.005Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        className=""
+      >
+        <button
+          className="container comfortable"
+          disabled={false}
+          onClick={[Function]}
+          onMouseDown={[Function]}
+        >
+          <span
+            className="iconContainer"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M5.20874 13H16.3787L11.4987 17.88C11.1087 18.27 11.1087 18.91 11.4987 19.3C11.8887 19.69 12.5187 19.69 12.9087 19.3L19.4987 12.71C19.8887 12.32 19.8887 11.69 19.4987 11.3L12.9187 4.70002C12.7319 4.51276 12.4783 4.40753 12.2137 4.40753C11.9492 4.40753 11.6956 4.51276 11.5087 4.70002C11.1187 5.09002 11.1187 5.72002 11.5087 6.11002L16.3787 11H5.20874C4.65874 11 4.20874 11.45 4.20874 12C4.20874 12.55 4.65874 13 5.20874 13Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div>
+        <div>
+          <a
+            className=""
+            onClick={[Function]}
+          >
+            <div
+              className=""
+            >
+              1
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                 
+                Select workspace and do some other work
+              </span>
+              <span />
+            </div>
+            <span />
+            <span>
+              This is a description text
+            </span>
+          </a>
+          <a
+            className=""
+            onClick={[Function]}
+          >
+            <div
+              className=""
+            >
+              2
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                 
+                Select report/dashboard
+              </span>
+              <span />
+            </div>
+            <span />
+            <span>
+              Description
+            </span>
+          </a>
+          <a
+            className=""
+            onClick={[Function]}
+          >
+            <div
+              className=""
+            >
+              3
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                 
+                Fill in details
+              </span>
+              <span />
+            </div>
+            <span />
+            <span />
+          </a>
+          <a
+            className=""
+            onClick={[Function]}
+          >
+            <div
+              className=""
+            >
+              4
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                 
+                Summary
+              </span>
+              <span />
+            </div>
+            <span />
+            <span />
+          </a>
+          <span
+            className="undefined"
+          >
+            <div
+              className=""
+            >
+              5
+            </div>
+            <div
+              className="undefined"
+            >
+              <span>
+                Publish
+              </span>
+            </div>
+            <span />
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`General|Stepper Interactive 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <div
+        className=""
+      >
+        <button
+          className="container comfortable isDisabled"
+          disabled={true}
+          onClick={[Function]}
+          onMouseDown={[Function]}
+        >
+          <span
+            className="iconContainer"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M18.7912 11.005H7.62124L12.5012 6.12502C12.8912 5.73502 12.8912 5.09502 12.5012 4.70502C12.3144 4.51777 12.0608 4.41254 11.7962 4.41254C11.5317 4.41254 11.2781 4.51777 11.0912 4.70502L4.50124 11.295C4.11124 11.685 4.11124 12.315 4.50124 12.705L11.0912 19.295C11.4812 19.685 12.1112 19.685 12.5012 19.295C12.8912 18.905 12.8912 18.275 12.5012 17.885L7.62124 13.005H18.7912C19.3412 13.005 19.7912 12.555 19.7912 12.005C19.7912 11.455 19.3412 11.005 18.7912 11.005Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        className=""
+      >
+        <button
+          className="container comfortable isDisabled"
+          disabled={true}
+          onClick={[Function]}
+          onMouseDown={[Function]}
+        >
+          <span
+            className="iconContainer"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M5.20874 13H16.3787L11.4987 17.88C11.1087 18.27 11.1087 18.91 11.4987 19.3C11.8887 19.69 12.5187 19.69 12.9087 19.3L19.4987 12.71C19.8887 12.32 19.8887 11.69 19.4987 11.3L12.9187 4.70002C12.7319 4.51276 12.4783 4.40753 12.2137 4.40753C11.9492 4.40753 11.6956 4.51276 11.5087 4.70002C11.1187 5.09002 11.1187 5.72002 11.5087 6.11002L16.3787 11H5.20874C4.65874 11 4.20874 11.45 4.20874 12C4.20874 12.55 4.65874 13 5.20874 13Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div>
+        <div>
+          <a
+            className=""
+            onClick={[Function]}
+          >
+            <div
+              className=""
+            >
+              1
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                 
+                Select workspace
+              </span>
+              <span />
+            </div>
+            <span />
+            <span />
+          </a>
+          <span
+            className="undefined"
+          >
+            <div
+              className=""
+            >
+              2
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                Select report/dashboard
+              </span>
+            </div>
+            <span>
+              Description
+            </span>
+          </span>
+          <span
+            className="undefined"
+          >
+            <div
+              className=""
+            >
+              3
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                Fill in details
+              </span>
+            </div>
+            <span />
+          </span>
+          <span
+            className="undefined"
+          >
+            <div
+              className=""
+            >
+              4
+            </div>
+            <div
+              className=""
+            >
+              <span>
+                Summary
+              </span>
+            </div>
+            <span />
+          </span>
+          <span
+            className="undefined"
+          >
+            <div
+              className=""
+            >
+              5
+            </div>
+            <div
+              className="undefined"
+            >
+              <span>
+                Publish
+              </span>
+            </div>
+            <span />
+          </span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        Press the button to enable navigation to next step.
+      </div>
+      <div>
+        <button
+          className="container contained primary comfortable"
+          disabled={false}
+          onClick={[Function]}
+          onClickCapture={[Function]}
+          onMouseDown={[Function]}
+          onMouseUp={[Function]}
+          type="button"
+        >
+          <span
+            className="button"
+          >
+            Do work
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

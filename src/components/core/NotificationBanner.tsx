@@ -4,7 +4,7 @@ import {
     NotificationResponse,
     RegisterNotificationPresenter,
 } from '@equinor/fusion';
-import { Banner } from '@equinor/fusion-components';
+import Banner from 'components/feedback/Banner';
 
 type BannerNotification = {
     request: NotificationRequest;

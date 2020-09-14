@@ -1,11 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {
-    PersonPhoto,
-    PhotoSize,
-    usePopoverRef,
-    PersonPicker,
-    styling,
-} from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
 import {
@@ -18,6 +11,9 @@ import {
 import { getDefaultPerson } from '../utils';
 import PersonDetail from '../PersonDetail';
 import { SkeletonBar } from '../../feedback/Skeleton';
+import PersonPhoto, { PhotoSize } from '../PersonPhoto';
+import usePopoverRef from 'hooks/usePopoverRef';
+import styling from 'styles/styling';
 
 export { PhotoSize };
 

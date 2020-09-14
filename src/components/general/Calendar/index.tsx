@@ -2,9 +2,11 @@ import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/fusion';
 
-import { IconButton, Button, PaginationArrow } from '@equinor/fusion-components';
 import Day from './Day';
 import styles from './styles.less';
+import IconButton from '../IconButton';
+import PaginationArrow from 'components/icons/components/navigation/PaginationArrow';
+import Button from '../Button';
 
 type CalendarProps = {
     initialYear: number;
@@ -90,9 +92,9 @@ const Calendar: React.FC<CalendarProps> = ({
                 {weekDays.map(weekDay => (
                     <header key={weekDay}>{weekDay}</header>
                 ))}
-                {calendar.dates.map(d => (
+                {calendar.dates.map((d, i) => (
                     <Day
-                        key={d.value + d.year + d.month}
+                        key={d.value + d.year + d.month + i}
                         date={d}
                         selectedDate={selectedDate}
                         interactive={interactive}

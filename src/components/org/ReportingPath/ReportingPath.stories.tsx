@@ -2,8 +2,8 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import ReportingPath from '.';
-import { OrgStructure, OrgChartItemProps } from '@equinor/fusion-components';
 import { useComponentDisplayType } from '@equinor/fusion';
+import { OrgStructure, OrgChartItemProps } from '../OrgChart/orgChartTypes';
 
 type Position = OrgStructure & {
     name?: string;

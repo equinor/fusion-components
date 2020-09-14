@@ -20,12 +20,13 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
         const newRect = ref.current.getBoundingClientRect();
 
         if (
-            newRect.bottom !== rect.bottom ||
-            newRect.top !== rect.top ||
-            newRect.left !== rect.left ||
-            newRect.right !== rect.right ||
-            newRect.width !== rect.width ||
-            newRect.height !== rect.height
+            newRect &&
+            (newRect.bottom !== rect.bottom ||
+                newRect.top !== rect.top ||
+                newRect.left !== rect.left ||
+                newRect.right !== rect.right ||
+                newRect.width !== rect.width ||
+                newRect.height !== rect.height)
         ) {
             setRect(newRect);
         }

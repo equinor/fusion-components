@@ -1,5 +1,5 @@
 import { PersonDetails, PersonAccountType } from '@equinor/fusion';
-import { SearchableDropdownSection } from '@equinor/fusion-components';
+import { SearchableDropdownSection } from 'components/general/SearchableDropdown';
 
 const isPersonAccountTypeIn = (person: PersonDetails, accountTypes: PersonAccountType[]) =>
     accountTypes.indexOf(person.accountType) !== -1;

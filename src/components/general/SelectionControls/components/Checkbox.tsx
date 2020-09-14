@@ -1,8 +1,9 @@
 import React, { useRef, MutableRefObject, forwardRef, useEffect } from 'react';
 import styles from '../styles.less';
-import { DoneIcon, MinimizeIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import MinimizeIcon from 'components/icons/components/action/MinimizeIcon';
+import DoneIcon from 'components/icons/components/action/DoneIcon';
 
 type CheckboxProps = {
     selected?: boolean;

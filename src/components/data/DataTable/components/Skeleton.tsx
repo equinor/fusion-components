@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataTableSkeletonProps, DataTableColumn } from '../dataTableTypes';
 import styles from '../styles.less';
-import { SkeletonBar } from '@equinor/fusion-components';
+import SkeletonBar from 'components/feedback/Skeleton/Bar';
 
 function DataTableSkeleton<T>({ columns, rowCount }: DataTableSkeletonProps<T>) {
     const rows: number[] = [];

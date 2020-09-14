@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { SearchableDropdown, SearchableDropdownOption } from '@equinor/fusion-components';
 import { Position } from '@equinor/fusion';
 import usePositionQuery from './hooks/usePositionQuery';
 import ItemComponent from './components/ItemComponent';
@@ -8,6 +7,7 @@ import {
     singlePositionToDropdownOption,
     positionsToDropdownOption,
 } from './positionToDropdownSection';
+import SearchableDropdown, { SearchableDropdownOption } from 'components/general/SearchableDropdown';
 
 type PositionPickerProps = {
     initialPosition?: Position;

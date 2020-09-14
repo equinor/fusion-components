@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { NotificationCards } from '@equinor/fusion-components';
 import { useFusionContext, NotificationCard } from '@equinor/fusion';
+import NotificationCards from 'components/feedback/NotificationCards';
 
 type NotificationCardsPresenterProps = {
     onShowInList: () => void;

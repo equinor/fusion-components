@@ -1,5 +1,6 @@
 import { MutableRefObject, useState, useRef, useCallback, useEffect, SetStateAction } from 'react';
-import { useClickOutsideOverlayPortal, useEventListener } from '@equinor/fusion-components';
+import useClickOutsideOverlayPortal from './useClickOutsideOverlayPortal';
+import useEventListener from './useEventListener';
 
 export default <T extends HTMLElement>(): [
     boolean,

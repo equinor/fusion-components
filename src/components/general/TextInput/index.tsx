@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { ErrorIcon, styling } from '@equinor/fusion-components';
+import ErrorIcon from 'components/icons/components/alert/ErrorIcon';
+import styling from 'styles/styling';
 
 type TextInputProps = {
     disabled?: boolean;

@@ -5,7 +5,7 @@ import {
     NotificationResponse,
     RegisterNotificationPresenter,
 } from '@equinor/fusion';
-import { Snackbar } from '@equinor/fusion-components';
+import SnackBar from 'components/feedback/Snackbar';
 
 type NotificationSnacksProps = {
     registerPresenter: RegisterNotificationPresenter;
@@ -60,7 +60,7 @@ const NotificationSnacks: React.FC<NotificationSnacksProps> = ({ registerPresent
     }
 
     return (
-        <Snackbar
+        <SnackBar
             message={currentNotification.title}
             cancellable={!!currentNotification.cancelLabel}
             cancelLabel={currentNotification.cancelLabel}

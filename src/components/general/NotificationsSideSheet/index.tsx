@@ -1,8 +1,12 @@
 import * as React from 'react';
 import * as styles from './styles.less';
-import { ModalSideSheet, Chip, Button, Spinner, styling } from '@equinor/fusion-components';
 import { NotificationCard, useGlobalNotificationCardsActions } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';
+import Spinner from 'components/feedback/Spinner';
+import Chip from '../Chip';
+import Button from '../Button';
+import { ModalSideSheet } from '../SideSheet';
+import styling from 'styles/styling';
 
 type NotificationsSideSheetProps = {
     open: boolean;

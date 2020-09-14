@@ -1,8 +1,8 @@
-import React, { FC, useRef, useState, useEffect } from 'react';
+import React, { FC } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
-import { SortIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import SortIcon from 'components/icons/components/action/SortIcon';
 
 type AccordionItemProps = {
     isOpen?: boolean;

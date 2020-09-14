@@ -1,0 +1,206 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|TextInput Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "display": "flex",
+          "flexDirection": "column",
+          "padding": "8px",
+        }
+      }
+    >
+      <div
+        className="inputContainer"
+      >
+        <div
+          className="inputContent"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent"
+          >
+            <label>
+              Label text
+            </label>
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          className="helperText"
+        >
+          Helper text - Optional
+        </div>
+      </div>
+      <br />
+      <div
+        className="inputContainer"
+      >
+        <div
+          className="inputContent error"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent error"
+          >
+            <label>
+              Error text
+            </label>
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder=""
+              value=""
+            />
+          </div>
+          <div
+            className="icon"
+          >
+            <svg
+              height={24}
+              style={
+                Object {
+                  "color": "var(--color-red)",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 13C11.45 13 11 12.55 11 12V8C11 7.45 11.45 7 12 7C12.55 7 13 7.45 13 8V12C13 12.55 12.55 13 12 13ZM11 15V17H13V15H11Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          className="helperText error"
+        >
+          An error occurred
+        </div>
+      </div>
+      <br />
+      <div
+        className="inputContainer"
+      >
+        <div
+          className="inputContent disabled"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent disabled"
+          >
+            <label>
+              Disabled
+            </label>
+            <input
+              disabled={true}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <br />
+      <div
+        className="inputContainer"
+      >
+        <div
+          className="inputContent labelLess"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent"
+          >
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder=""
+              value=""
+            />
+          </div>
+          <div
+            className="icon"
+            onClick={[Function]}
+          >
+            <svg
+              cursor="pointer"
+              height={24}
+              style={
+                Object {
+                  "color": "#666666",
+                }
+              }
+              viewBox="0 0 24 24"
+              width={24}
+            >
+              <path
+                clipRule="evenodd"
+                d="M15.1866 14.4716H15.9766L20.2166 18.7316C20.6266 19.1416 20.6266 19.8116 20.2166 20.2216C19.8066 20.6316 19.1366 20.6316 18.7266 20.2216L14.4766 15.9716V15.1816L14.2066 14.9016C12.8066 16.1016 10.8966 16.7216 8.86658 16.3816C6.08658 15.9116 3.86658 13.5916 3.52658 10.7916C3.00658 6.56156 6.56658 3.00156 10.7966 3.52156C13.5966 3.86156 15.9166 6.08156 16.3866 8.86156C16.7266 10.8916 16.1066 12.8016 14.9066 14.2016L15.1866 14.4716ZM5.47658 9.97156C5.47658 12.4616 7.48658 14.4716 9.97658 14.4716C12.4666 14.4716 14.4766 12.4616 14.4766 9.97156C14.4766 7.48156 12.4666 5.47156 9.97658 5.47156C7.48658 5.47156 5.47658 7.48156 5.47658 9.97156Z"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div
+        className="inputContainer"
+      >
+        <div
+          className="inputContent"
+          onClick={[Function]}
+        >
+          <div
+            className="inputTextContent"
+          >
+            <label>
+              Masked text input
+            </label>
+            <input
+              disabled={false}
+              onBlur={[Function]}
+              onChange={[Function]}
+              onFocus={[Function]}
+              placeholder=""
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 import Arrow from './Arrow';
-import { useElevationClassName } from '@equinor/fusion-components';
 import useInViewChecker from '../../../hooks/useInViewChecker';
+import useElevationClassName from 'hooks/useElevationClassName';
 
 export type PopoverPlacement = 'below' | 'above' | 'left' | 'right';
 export type PopoverJustification = 'start' | 'center' | 'end';

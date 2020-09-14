@@ -1,10 +1,10 @@
 import React, { useContext, useMemo, useCallback } from 'react';
 
 import { ReportingPathContext, ReportingPathContextReducer } from '../store';
-import { OrgStructure, OrgNode } from '@equinor/fusion-components';
 
 import styles from './styles.less';
 import classNames from 'classnames';
+import { OrgStructure, OrgNode } from 'components/org/OrgChart/orgChartTypes';
 
 const Links = <T extends OrgStructure>() => {
     const {

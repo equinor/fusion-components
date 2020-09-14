@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Dropdown, { useDropdownController } from './index';
-import { Button } from '@equinor/fusion-components';
 import withFusionStory from '../../../../.storybook/withFusionStory';
+import Button from '../Button';
 
 const DropdownStory = () => {
     const controller = useDropdownController((ref, isOpen, setIsOpen) => (

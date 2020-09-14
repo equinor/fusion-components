@@ -3,7 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import Menu from '../index';
-import { CheckBox, DoneIcon } from '@equinor/fusion-components';
+import DoneIcon from 'components/icons/components/action/DoneIcon';
+import { CheckBox } from 'components/general/SelectionControls';
 
 const MenuStory = () => {
     const [ref, setRef] = React.useState<HTMLElement | null>(null);

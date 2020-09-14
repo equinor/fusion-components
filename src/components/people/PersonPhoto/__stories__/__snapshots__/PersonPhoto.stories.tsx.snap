@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`People|PersonPhoto Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      className="photoContainer comfortable xlarge"
+      style={
+        Object {
+          "backgroundImage": "url()",
+        }
+      }
+    >
+      <div>
+        <div
+          className="popoverDetails hidePopover"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as styles from './styles.less';
-import * as classNames from 'classnames';
-import { useKeyboardNavigation } from '@equinor/fusion-components';
+import classNames from 'classnames';
+import useKeyboardNavigation from 'hooks/useKeyboardNavigation';
 
 type TabProps = {
     isCurrent?: boolean;

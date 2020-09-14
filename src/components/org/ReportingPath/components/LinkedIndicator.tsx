@@ -1,8 +1,10 @@
 import React, { useContext, useCallback, useMemo } from 'react';
 import { ReportingPathContextReducer, ReportingPathContext } from '../store';
-import { OrgNode, LinkIcon, styling } from '@equinor/fusion-components';
 
 import styles from './styles.less';
+import { OrgNode } from 'components/org/OrgChart/orgChartTypes';
+import LinkIcon from 'components/icons/components/wysiwyg/LinkIcon';
+import styling from 'styles/styling';
 
 function LinkedIndicator<T>() {
     const {

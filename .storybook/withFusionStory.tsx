@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../src/components/core/Header';
 import Content from '../src/components/core/Content';
 
-export default (title: string, padding: number = 16) => (stories: () => React.ReactNode) => {
+export default (title: string, padding: number = 16) => (stories: () => React.ReactNode | React.ReactNode) => {
     return (
         <>
             <Header aside={null} start={null} content={null} />
@@ -16,7 +16,7 @@ export default (title: string, padding: number = 16) => (stories: () => React.Re
                         boxSizing: 'border-box',
                     }}
                 >
-                    {stories()}
+                    {typeof stories === 'function' ? stories() : stories}
                 </div>
             </Content>
         </>

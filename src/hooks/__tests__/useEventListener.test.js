@@ -112,7 +112,7 @@ describe('useEventListener', () => {
     it('Should handle undefined node', () => {
         expect(() => {
             hookTestScope(() => {
-                useEventListener(null, 'click', () => {});
+                useEventListener(null, 'click', () => {}, []);
             });
         }).not.toThrow();
     });

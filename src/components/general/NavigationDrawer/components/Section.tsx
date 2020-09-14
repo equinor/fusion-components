@@ -1,11 +1,11 @@
 import React, { FC, useCallback, useMemo, useEffect, useState } from 'react';
 import styles from './styles.less';
-import { DropdownArrow } from '@equinor/fusion-components';
 import { NavigationComponentProps } from '..';
 import { getNavigationComponentForItem } from '../utils';
-import { useTooltipRef } from '@equinor/fusion-components';
 
 import NavigationItem from './NavigationItem';
+import useTooltipRef from 'hooks/useTooltipRef';
+import DropdownArrow from 'components/icons/components/action/DropdownArrow';
 
 const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
     const { id, isActive, title, onClick, navigationChildren, isOpen, aside } = navigationItem;

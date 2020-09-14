@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles.less';
 import { PositionInstance, Position } from '@equinor/fusion';
-import { PersonPhoto } from '@equinor/fusion-components';
+import PersonPhoto from 'components/people/PersonPhoto';
 
 type RotationInstancesProps = {
     allInstances: PositionInstance[];

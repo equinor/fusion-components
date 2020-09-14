@@ -3,8 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import FusionHeader from '../Header';
 import FusionContent from '../Content';
-import { IconButton, Button } from '@equinor/fusion-components';
 import { useFusionContext, useNotificationCenter } from '@equinor/fusion';
+import IconButton from 'components/general/IconButton';
+import Button from 'components/general/Button';
 
 const snackbar = action('snackbar');
 const banner = action('banner');

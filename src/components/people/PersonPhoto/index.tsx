@@ -9,7 +9,6 @@ import {
     PersonPresenceAvailability,
 } from '@equinor/fusion';
 
-import { useTooltipRef, usePopoverRef } from '@equinor/fusion-components';
 import FallbackImage from './FallbackImage';
 import AccountTypeBadge from './AccountTypeBadge';
 import RotationBadge from './RotationBadge';
@@ -17,6 +16,8 @@ import PersonDetail from '../PersonDetail';
 import { SkeletonDisc } from '../../feedback/Skeleton';
 import PersonPresenceIcon from './PersonPresenceIcon';
 import AccountTypeIcon from './AccountTypeIcon';
+import useTooltipRef from 'hooks/useTooltipRef';
+import usePopoverRef from 'hooks/usePopoverRef';
 
 export { PersonPresenceIcon, AccountTypeIcon };
 

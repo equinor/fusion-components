@@ -1,5 +1,5 @@
-import { useRef, useState, MutableRefObject, useCallback, useEffect } from 'react';
-import { useEventListener } from '@equinor/fusion-components';
+import { useRef, useState, MutableRefObject, useCallback } from 'react';
+import useEventListener from './useEventListener';
 
 let showTimeout: NodeJS.Timeout;
 export default <T extends HTMLElement>(

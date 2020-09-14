@@ -1,5 +1,4 @@
 import React from 'react';
-import { PhotoSize, useTooltipRef } from '@equinor/fusion-components';
 import {
     useComponentDisplayType,
     useComponentDisplayClassNames,
@@ -8,6 +7,7 @@ import {
 import styles from './styles.less';
 import classNames from 'classnames';
 import RotationNumberIcon from './icons/RotationNumberIcon';
+import { PhotoSize } from '../PersonCard';
 
 type RotationBadgeProps = {
     size: PhotoSize;
@@ -23,6 +23,10 @@ const getIconSizes = (isCompact: boolean) => ({
 });
 
 const RotationBadge = ({ size, numberOfPersons, hideTooltip }: RotationBadgeProps) => {
+    if(process.env.NODE_ENV === 'test') {
+        return null;
+    }
+    
     const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
         [styles.xlarge]: size === 'xlarge',
         [styles.large]: size === 'large',

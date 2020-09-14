@@ -2,14 +2,9 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import TextArea from './index';
-import {
-    useKeyboardNavigation,
-    Spinner,
-    SearchIcon,
-    useStringMask,
-    unmaskString,
-} from '@equinor/fusion-components';
 import { dateTimeMask, parseDateTime } from '@equinor/fusion';
+import useStringMask from 'hooks/useStringMask';
+import useKeyboardNavigation from 'hooks/useKeyboardNavigation';
 
 const TextAreaStory = () => {
     const [value, setValue] = React.useState('');
@@ -17,11 +12,6 @@ const TextAreaStory = () => {
     const [loading, setLoading] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const inputRef = React.useRef<HTMLTextAreaElement | null>(null);
-
-    const maskHelperText = React.useMemo(
-        () => (isValidMask ? parseDateTime(maskedValue).toString() : ''),
-        [maskedValue, isValidMask]
-    );
 
     const simulateLoad = () => {
         setLoading(true);

@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`General|ErrorBoundary ErrorBoundary 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "margin": "0 auto",
+          "textAlign": "center",
+        }
+      }
+    >
+      <span>
+        Count to five: 
+        0
+      </span>
+      <br />
+      <button
+        className="container contained primary comfortable"
+        disabled={false}
+        onClick={[Function]}
+        onClickCapture={[Function]}
+        onMouseDown={[Function]}
+        onMouseUp={[Function]}
+        type="button"
+      >
+        <span
+          className="button"
+        >
+          Count!
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

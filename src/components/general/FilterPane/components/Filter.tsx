@@ -1,14 +1,18 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { Button, useTooltipRef, DropdownArrow, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
 import SearchFilterComponent from './SearchFilterComponent';
 import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
 import FilterTypes from '../filterTypes';
 import styles from '../styles.less';
-import { FilterTerm, Filter } from '../applyFilters';
+import { FilterTerm, Filter as FilterType } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
+import useTooltipRef from 'hooks/useTooltipRef';
+import Button from 'components/general/Button';
+import DropdownArrow from 'components/icons/components/action/DropdownArrow';
+import { ApplicationGuidanceAnchor } from 'components/general/ApplicationGuidance';
+
 
 const resolveFilterComponent = (type: FilterTypes): React.FC<any> | null => {
     switch (type) {
@@ -25,7 +29,7 @@ const resolveFilterComponent = (type: FilterTypes): React.FC<any> | null => {
     return null;
 };
 
-function getTermPreview<T>(filter: Filter<T>, term: FilterTerm | null) {
+function getTermPreview<T>(filter: FilterType<T>, term: FilterTerm | null) {
     if (!term || !term.value) {
         return null;
     }
@@ -51,7 +55,7 @@ function getTermPreview<T>(filter: Filter<T>, term: FilterTerm | null) {
 }
 
 type FilterTitleProps<T> = {
-    filter: Filter<T>;
+    filter: FilterType<T>;
     term: FilterTerm | null;
 };
 
@@ -76,7 +80,7 @@ function FilterTitle<T>({ filter, term }: FilterTitleProps<T>) {
 }
 
 type FilterProps<T> = {
-    filter: Filter<T>;
+    filter: FilterType<T>;
     term?: FilterTerm;
     filterCount: Count[];
     onChange: (filter: Filter<T>, term: FilterTerm | null) => void;

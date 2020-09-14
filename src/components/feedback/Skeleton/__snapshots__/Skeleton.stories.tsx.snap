@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feedback|Skeleton Bar 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <div
+        className="bar comfortable skeleton"
+        style={
+          Object {
+            "height": undefined,
+            "width": "50%",
+          }
+        }
+      />
+    </div>
+    <div>
+      <div
+        className="bar comfortable skeleton"
+        style={
+          Object {
+            "height": undefined,
+            "width": "50%",
+          }
+        }
+      />
+    </div>
+    <div>
+      <div
+        className="bar comfortable skeleton"
+        style={
+          Object {
+            "height": undefined,
+            "width": "50%",
+          }
+        }
+      />
+    </div>
+    <div>
+      <div
+        className="bar comfortable skeleton"
+        style={
+          Object {
+            "height": undefined,
+            "width": "50%",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Feedback|Skeleton Button 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <div
+        className="skeleton comfortable button"
+        style={
+          Object {
+            "width": "calc(var(--grid-unit) * 10px)",
+          }
+        }
+      />
+    </div>
+    <div>
+      <div
+        className="skeleton comfortable button"
+        style={
+          Object {
+            "width": "calc(var(--grid-unit) * 10px)",
+          }
+        }
+      />
+    </div>
+    <div>
+      <div
+        className="skeleton comfortable button"
+        style={
+          Object {
+            "width": "calc(var(--grid-unit) * 10px)",
+          }
+        }
+      />
+    </div>
+    <div>
+      <div
+        className="skeleton comfortable button"
+        style={
+          Object {
+            "width": "calc(var(--grid-unit) * 10px)",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;
+
+exports[`Feedback|Skeleton Disc 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div>
+      <div
+        className="skeleton disc comfortable xlarge"
+      />
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

@@ -1,6 +1,8 @@
 import React from 'react';
-import { TextInput, SearchIcon, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
 import { FilterTerm, Filter } from '../applyFilters';
+import SearchIcon from 'components/icons/components/action/SearchIcon';
+import TextInput from 'components/general/TextInput';
+import { ApplicationGuidanceAnchor } from 'components/general/ApplicationGuidance';
 
 type SearchFilterProps<T> = {
     term: FilterTerm;

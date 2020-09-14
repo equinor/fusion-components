@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import styles from './styles.less';
 import { PersonPosition, formatDate, useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
-import { useTooltipRef } from '@equinor/fusion-components';
+import useTooltipRef from 'hooks/useTooltipRef';
 
 type PersonPositionCardProps = {
     position: PersonPosition;

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pro org|Org Chart Default 1`] = `
+<div
+  className="container comfortable"
+>
+  <div
+    className="container comfortable"
+  >
+    <div
+      style={
+        Object {
+          "height": "100%",
+          "width": "100%",
+        }
+      }
+    >
+      <svg
+        height={60}
+        viewBox="0 0 0 60"
+        width={0}
+      >
+        <g
+          className="links"
+        />
+        <g
+          className="aside"
+        />
+        <g
+          className="root"
+        />
+        <g
+          className="children"
+        />
+        <g
+          className="label"
+        >
+          0
+          0
+        </g>
+      </svg>
+    </div>
+  </div>
+  <div
+    className="overlay"
+  />
+  <div
+    className="snacks"
+  />
+  <div
+    className="dialog"
+  />
+</div>
+`;

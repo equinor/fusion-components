@@ -1,7 +1,7 @@
 import React from 'react';
 import * as styles from './styles.less';
-import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
+import styling from 'styles/styling';
 
 type StepPaneProps = {
     onChange: (stepKey: string) => void;

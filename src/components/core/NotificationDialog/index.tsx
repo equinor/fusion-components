@@ -1,15 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { NotificationRequest, NotificationResponse, useFusionContext } from '@equinor/fusion';
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-} from '@equinor/fusion-components';
 
 import styles from './styles.less';
+import { Dialog, DialogTitle, DialogActions, DialogContent } from 'components/feedback/Dialog';
+import Button from 'components/general/Button';
 
 const NotificationDialog: React.FC = () => {
     const { notificationCenter } = useFusionContext();

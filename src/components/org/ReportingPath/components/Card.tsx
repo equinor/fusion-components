@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 
 import { ReportingPathContext, ReportingPathContextReducer } from '../store';
-import { OrgNode } from '@equinor/fusion-components';
 
 import styles from './styles.less';
+import { OrgNode } from 'components/org/OrgChart/orgChartTypes';
 
 type CardProps<T> = {
     node: OrgNode<T>;

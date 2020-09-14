@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { AdaptiveCardViewer } from '@equinor/fusion-components';
 import { NotificationCard } from '@equinor/fusion';
 import * as styles from './styles.less';
+import AdaptiveCardViewer from '../AdaptiveCardViewer';
 
 type StandardNotificationCardProps = {
     notification: NotificationCard;

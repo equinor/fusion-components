@@ -3,8 +3,11 @@ import { DataTableHeaderProps, DataTableColumn, DataTableSortedBy } from '../dat
 import styles from '../styles.less';
 import classnames from 'classnames';
 import { SortDirection } from '@equinor/fusion';
-import { SortIcon, useTooltipRef, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
 import SelectionCell from './SelectionCell';
+import SortIcon from 'components/icons/components/action/SortIcon';
+import useTooltipRef from 'hooks/useTooltipRef';
+import { ApplicationGuidanceAnchor } from 'components/general/ApplicationGuidance';
+
 
 function getCellClassNames<T>(base: string, column: DataTableColumn<T>, isInAnchor: boolean) {
     return classnames(base, {
