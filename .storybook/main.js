@@ -7,13 +7,14 @@ const resolve = require('../build/resolve');
 const typescript = require('../build/typescript');
 
 module.exports = {
-    stories: ['../src/**/*.stories.@(jsx|tsx)'],
+    stories: ['../src/**/*.stories.@(jsx|tsx|mdx)'],
     addons: [
         '@storybook/addon-options/register',
         '@storybook/addon-actions/register',
         '@storybook/addon-jest/register',
         '@storybook/addon-knobs/register',
         '@storybook/addon-viewport/register',
+        '@storybook/addon-docs'
     ],
     webpackFinal: async (config) =>
         merge(config, styles, resolve, fonts,eslint,typescript('../'),{
