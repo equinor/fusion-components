@@ -47,6 +47,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
                 column: sortedByColumn,
                 direction,
             }}
+            quickFactScope="storybook"
         />
     );
 };
@@ -120,7 +121,7 @@ const sections: FilterSection<DataItem>[] = [
             },
             {
                 key: 'id',
-                title: 'Id - with custom colors',
+                title: 'Id - with custom colors and very very long title',
                 type: FilterTypes.Checkbox,
                 getValue: (item) => item.id.toString(),
                 isCollapsible: true,
@@ -140,6 +141,11 @@ const sections: FilterSection<DataItem>[] = [
                         key: '3',
                         label: '3 - palevioletred',
                         color: 'palevioletred',
+                    },
+                    {
+                        key: '4',
+                        label: '4 - some weird color with a super super long but awesome name',
+                        color: 'mediumslateblue',
                     },
                 ],
             },
@@ -189,6 +195,7 @@ const FilterPaneStory: React.FC = () => {
                 onChange={onChange}
                 screenPlacement={filterScreenPlacement}
                 headerComponent={filterHeaderComponent}
+                quickFactScope="storybook"
             />
             {filterScreenPlacement === 'left' && (
                 <div style={{ marginRight: styling.grid(4), width: 1, flexGrow: 1 }}>

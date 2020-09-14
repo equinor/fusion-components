@@ -19,7 +19,7 @@ export type ErrorMessageProps = {
     onTakeAction?: (event?: React.SyntheticEvent<Element, Event>) => void;
 };
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({
+export const ErrorMessage: React.FC<ErrorMessageProps> = ({
     hasError,
     errorType = 'error',
     message,
@@ -30,7 +30,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     action,
     onTakeAction,
 }) => {
-    const getErrorMessageForType = errorType => {
+    const getErrorMessageForType = (errorType) => {
         const iconProps = {
             width: 80,
             height: 80,
@@ -62,15 +62,16 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
         }
     };
 
-    if (!hasError) {
-        return children;
-    }
     const error = React.useMemo(() => getErrorMessageForType(errorType), [errorType]);
 
     const messageContainerClasses = classNames(
         styles.messageContainer,
         useComponentDisplayClassNames(styles)
     );
+
+    if (!hasError) {
+        return children;
+    }
 
     return (
         <div className={styles.container}>
@@ -88,4 +89,27 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
     );
 };
 
-export default ErrorMessage;
+class ErrorMessageBoundry extends React.Component<ErrorMessageProps> {
+    state = { didCatch: false };
+    render() {
+        if (this.state.didCatch) {
+            return (
+                <div className={styles.container}>
+                    <div className={styles.messageContainer}>
+                        <div className={styles.title}>Something went wrong</div>
+                        <div className={styles.message}>
+                            Please try refresh browser, if problem persists, please contact support
+                            through service now
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        return <ErrorMessage {...this.props}>{this.props.children}</ErrorMessage>;
+    }
+    componentDidCatch() {
+        this.setState({ didCatch: true });
+    }
+}
+
+export default ErrorMessageBoundry;

@@ -23,6 +23,11 @@ type MenuItemProps<TItem extends MenuItemType> = {
     asideComponent?: React.FC<MenuItemComponentProps<TItem>>;
 };
 
+const scrollElementIntoView = (el: HTMLElement) => {
+    // @ts-ignore
+    el.hasOwnProperty('scrollIntoViewIfNeeded') ? el.scrollIntoViewIfNeeded() : el.scrollIntoView();
+};
+
 function MenuItem<TItem extends MenuItemType>(props: MenuItemProps<TItem>) {
     const ref = React.useRef<HTMLButtonElement>(null);
     const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -65,6 +70,10 @@ function MenuItem<TItem extends MenuItemType>(props: MenuItemProps<TItem>) {
 
         return <span>{props.item.title}</span>;
     };
+
+    React.useEffect(() => {
+        props.isFocused && scrollElementIntoView(ref.current);
+    }, [props.isFocused]);
 
     return (
         <button

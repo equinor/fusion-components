@@ -47,7 +47,7 @@ const filterMultipleSections = (
 ): SearchableDropdownSection[] => {
     const newSections = sections.reduce(
         (acc: SearchableDropdownSection[], curr: SearchableDropdownSection) => {
-            const items = curr.items.filter(option =>
+            const items = curr.items.filter((option) =>
                 option.title.toLowerCase().includes(query.toLowerCase())
             );
 
@@ -101,12 +101,12 @@ const SearchableDropdown = ({
     }, [options, sections]);
 
     const filterSearch = useCallback(
-        inputValue => {
+        (inputValue) => {
             if (onSearchAsync) {
                 onSearchAsync(inputValue);
             } else {
                 if (options) {
-                    const newOptions = options.filter(option =>
+                    const newOptions = options.filter((option) =>
                         option.title.toLowerCase().includes(inputValue.toLowerCase())
                     );
                     setDropdownSections(createSingleSectionFromOptions(newOptions));
@@ -123,7 +123,7 @@ const SearchableDropdown = ({
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => {
         const selectedItem = useMemo(() => {
             const mergedItems = mergeDropdownSectionItems(dropdownSections);
-            const selectedItem = mergedItems.find(option => option.isSelected === true);
+            const selectedItem = mergedItems.find((option) => option.isSelected === true);
             return selectedItem;
         }, [dropdownSections]);
 
@@ -166,16 +166,15 @@ const SearchableDropdown = ({
                     </div>
                 );
             }
-        }, [isOpen, selectedComponent, selectedItem, setIsOpen, aside]);
+        }, [isOpen, setIsOpen, selectedComponent, selectedItem, aside]);
 
         const overlayContainer = useOverlayContainer();
         const handleBlur = useCallback(
             (e: React.FocusEvent<HTMLInputElement>) => {
-                if (isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
-                    setIsOpen(false);
-                }
+                if (overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
+                setIsOpen(false, 250);
             },
-            [isOpen]
+            [isOpen, overlayContainer]
         );
 
         return (
@@ -184,10 +183,8 @@ const SearchableDropdown = ({
                     selected
                 ) : (
                     <TextInput
-                        onChange={value => {
-                            if (!isOpen) {
-                                setIsOpen(true);
-                            }
+                        onChange={(value) => {
+                            !open && setIsOpen(true);
                             setInputValue(value);
                         }}
                         error={error && !isOpen}
@@ -200,7 +197,7 @@ const SearchableDropdown = ({
                         onClick={() => !isOpen && setIsOpen(true)}
                         value={selectedValue}
                         ref={inputRef}
-                        onKeyUp={e => e.keyCode === 27 && setIsOpen(false)}
+                        onKeyUp={(e) => e.keyCode === 27 && setIsOpen(false)}
                         onFocus={() => !isOpen && setIsOpen(true)}
                         onBlur={handleBlur}
                     />
@@ -211,7 +208,7 @@ const SearchableDropdown = ({
 
     const { isOpen, setIsOpen } = dropdownController;
     const select = useCallback(
-        item => {
+        (item) => {
             onSelect && onSelect(item);
             if (isOpen) {
                 setIsOpen(false);

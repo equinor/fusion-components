@@ -99,6 +99,13 @@ const navStructure = [
             },
         ],
     },
+    {
+        id: 'grouping4',
+        type: 'grouping',
+        title: 'Grouping4',
+        icon: <ErrorIcon outline />,
+        aside: <ErrorIcon outline/>
+    }
 ] as NavigationStructure[];
 
 const NavigationDrawerStory = () => {

@@ -5,15 +5,19 @@ import { Spinner, ErrorMessage } from '@equinor/fusion-components';
 import {
     useTelemetryLogger,
     FusionApiHttpErrorResponse,
-    useApiClients,
     useCurrentApp,
     useCurrentContext,
+    useApiClients,
 } from '@equinor/fusion';
-import { ReportType } from './models/reportTypes';
 import { ICustomEvent } from 'service';
 import FusionError from './models/FusionError';
-import FusionErrorMessage from './components/FusionErrorMessage';
-import { Report, EmbedInfo, AccessToken } from '@equinor/fusion/lib/http/apiClients/models/report/';
+import {
+    Report,
+    AccessToken,
+    ResourceType,
+    EmbedInfo,
+    EmbedConfig,
+} from '@equinor/fusion/lib/http/apiClients/models/report/';
 import {
     ReportLevelFilters,
     IBasicFilter,
@@ -26,21 +30,23 @@ import {
 import * as styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
 
+import RlsErrorMessage from './components/RlsErrorMessage';
+
 type PowerBIProps = {
     reportId: string;
     filters?: pbi.models.ReportLevelFilters[] | null;
 };
 
-const getReportOrDashboardId = (embedConfig: any, type: ReportType) => {
+const getReportOrDashboardId = (embedConfig: EmbedConfig, type: ResourceType) => {
     switch (type) {
-        case 'report':
+        case 'Report':
             return embedConfig.reportId;
-        case 'dashboard':
+        case 'Dashboard':
             return embedConfig.dashboardId;
     }
 };
 
-const getTokenType = (embedConfig: any) => {
+const getTokenType = (embedConfig: EmbedConfig) => {
     switch (embedConfig.tokenType) {
         case 'AAD':
             return pbi.models.TokenType.Aad;
@@ -71,10 +77,10 @@ const utcNow = () => {
     return new Date(utc);
 };
 
-let timeout: any;
+let timeout: NodeJS.Timeout;
 
 const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
-    const reportContext = useApiClients().report;
+    const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -88,18 +94,24 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const [timeLoadStart, SetTimeLoadStart] = React.useState<Date>(new Date());
     const telemetryLogger = useTelemetryLogger();
     const [reApplyFilter, setReapplyFilter] = React.useState<boolean>(false);
-
+    const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
 
     const getReportInfo = async () => {
         try {
-            const fetchedReport = await reportContext.getReportAsync(reportId);
+            setLoadingText('Loading Report');
+            const fetchedReport = await reportApiClient.getReportAsync(reportId);
             setReport(fetchedReport.data);
-            const fetchedEmbedInfo = await reportContext.getEmbedInfo(reportId);
+
+            setLoadingText('Loading Report, fetching report info');
+            const fetchedEmbedInfo = await reportApiClient.getEmbedInfo(reportId);
             setEmbedInfo(fetchedEmbedInfo.data);
-            const fetchedAccessToken = await reportContext.getAccessToken(reportId);
+
+            setLoadingText('Loading Report, fetching access token');
+            const fetchedAccessToken = await reportApiClient.getAccessToken(reportId);
             setAccessToken(fetchedAccessToken.data);
+
             setIsFetching(false);
         } catch (error) {
             setFusionError({
@@ -135,22 +147,26 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     }, []);
 
     const getConfig = React.useCallback(
-        (type: ReportType) => {
-            const embedConfig = embedInfo ? embedInfo.embedConfig : undefined;
+        (type: ResourceType) => {
+            if (!embedInfo) return;
+            const embedConfig = embedInfo.embedConfig;
             const token = accessToken ? accessToken.token : undefined;
             let config: pbi.IEmbedConfiguration = {
-                type,
+                type: type.toLowerCase(),
                 id: getReportOrDashboardId(embedConfig, type),
                 embedUrl: embedConfig.embedUrl,
                 tokenType: getTokenType(embedConfig),
                 accessToken: token,
             };
 
-            if (type === 'report') {
+            if (type === 'Report') {
                 const settings = {
                     filterPaneEnabled: false,
                     navContentPaneEnabled: false,
-                    // background: pbi.models.BackgroundType.Transparent,
+                    localeSettings: {
+                        formatLocale: 'en',
+                        language: 'en',
+                    },
                 };
 
                 config.settings = settings;
@@ -167,8 +183,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const embed = React.useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
-                const config = getConfig(embedInfo.embedConfig.embedType.toLowerCase());
-
+                const config = getConfig(embedInfo.embedConfig.embedType);
                 embeddedRef.current = powerbi.embed(node, config);
                 embeddedRef.current.off('loaded');
                 embeddedRef.current.off('error');
@@ -243,7 +258,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             }
 
             timeout = setTimeout(async () => {
-                const access = await reportContext.getAccessToken(reportId);
+                const access = await reportApiClient.getAccessToken(reportId);
                 setAccessToken(access.data);
             }, expires - 2 * 1000);
         }
@@ -265,49 +280,65 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         }
     }, [embedRef, accessToken, isFetching]);
 
-    if (fusionError && report) {
-        return <FusionErrorMessage error={fusionError} report={report} />;
+    if (fusionError && fusionError.statusCode === 403 && report) {
+        return <RlsErrorMessage report={report} />;
     }
 
-    if (fusionError && fusionError.statusCode === 404)
-        if (
-            (powerBIError && powerBIError.detail.errorCode) ||
-            (fusionError && fusionError.statusCode)
-        ) {
-            //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
-            const errorCode = powerBIError
-                ? powerBIError.detail.errorCode
-                : fusionError.statusCode.toString();
+    if (
+        (powerBIError && powerBIError.detail.errorCode) ||
+        (fusionError && fusionError.statusCode)
+    ) {
+        //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
+        const errorCode = powerBIError
+            ? powerBIError.detail.errorCode
+            : fusionError?.statusCode.toString();
 
-            switch (errorCode) {
-                case '401':
-                    return (
-                        <ErrorMessage
-                            hasError={true}
-                            errorType={'accessDenied'}
-                            message={'Access Denied'}
-                        />
-                    );
-                case '404':
-                    return (
-                        <ErrorMessage
-                            hasError={true}
-                            errorType={'notFound'}
-                            resourceName={'report'}
-                            message={
-                                'Report not found. Report might not be available or it does not exist '
-                            }
-                        />
-                    );
-            }
+        switch (errorCode) {
+            case '401':
+                return (
+                    <ErrorMessage
+                        hasError={true}
+                        errorType={'accessDenied'}
+                        message={'Access Denied'}
+                    />
+                );
+            case '404':
+                return (
+                    <ErrorMessage
+                        hasError={true}
+                        errorType={'notFound'}
+                        resourceName={'report'}
+                        message={
+                            'Report not found. Report might not be available or it does not exist '
+                        }
+                    />
+                );
+            case '424':
+                return (
+                    <ErrorMessage
+                        hasError={true}
+                        errorType={'accessDenied'}
+                        resourceName={'report'}
+                        message={
+                            'Not able to secure a token. You might not have access to this report'
+                        }
+                    />
+                );
+            default:
+                return (
+                    <ErrorMessage
+                        hasError={true}
+                        errorType={'error'}
+                        message={'Something went wrong'}
+                    />
+                );
         }
+    }
 
     return (
         <>
-            {isLoading && embedInfo && embedInfo.embedConfig.embedType === 'Dashboard' && (
-                <Spinner floating centered />
-            )}
-            <div className={styles.powerbiContent} ref={embedRef}></div>
+            {isFetching && <Spinner title={loadingText} floating centered />}
+            {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
         </>
     );
 };

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import withFusionStory from "../../../../../.storybook/withFusionStory";
+import withFusionStory from '../../../../../.storybook/withFusionStory';
 import { actions } from '@storybook/addon-actions';
 import Button from '../index';
 
 const eventsFromNames = actions('onClick');
 
-const createButtonStory = props => () => (
+const createButtonStory = (props) => () => (
     <React.Fragment>
         <Button {...props} {...eventsFromNames}>
             Button
@@ -22,7 +22,7 @@ const createButtonStory = props => () => (
 
 storiesOf('General|Button', module)
     .addParameters({ jest: ['Button.stories.jsx'] })
-    .addDecorator(withFusionStory("Buttons"))
+    .addDecorator(withFusionStory('Buttons'))
     .add('Contained', createButtonStory({ contained: true }))
     .add('Outlined', createButtonStory({ outlined: true }))
     .add('Frameless', createButtonStory({ frameless: true }));
