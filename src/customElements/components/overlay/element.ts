@@ -8,7 +8,7 @@ import styles from './element.css';
 
 /** @TODO */
 import { OverlayAnchor, OverlayAnchorConnectEvent } from './anchor';
-import { OverlayElementEventType, OverlayElementEventDetail, OverlayElementEvent } from './events';
+import { OverlayEventType, OverlayEventDetail, OverlayEvent } from './events';
 
 export interface OverlayElementProps {
     scope?: string;
@@ -85,17 +85,17 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     updated(props: PropertyValues) {
         super.update(props);
         props.has('active') && this._dispatchEvent(this.active
-            ? OverlayElementEventType.activated
-            : OverlayElementEventType.deactivated
+            ? OverlayEventType.activated
+            : OverlayEventType.deactivated
         );
-        props.has('scope') && this._dispatchEvent(OverlayElementEventType.scope);
-        props.has('selected') && this._dispatchEvent(OverlayElementEventType.selection);
+        props.has('scope') && this._dispatchEvent(OverlayEventType.scope);
+        props.has('selected') && this._dispatchEvent(OverlayEventType.selection);
     }
 
-    protected _dispatchEvent(type: OverlayElementEventType, init?: CustomEventInit<OverlayElementEventDetail>) {
+    protected _dispatchEvent(type: OverlayEventType, init?: CustomEventInit<OverlayEventDetail>) {
         const { scope, active, selectedAnchor: selected } = this;
         const detail = { ...init?.detail, scope, active, selected }
-        const event = new OverlayElementEvent(type, { ...init, detail });
+        const event = new OverlayEvent(type, { ...init, detail });
         this.dispatchEvent(event);
         return event;
     }
