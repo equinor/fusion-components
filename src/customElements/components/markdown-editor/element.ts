@@ -33,9 +33,20 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
         this.initializeEditor(editor, menu, initialValue);
     }
 
-    private initializeEditor(editor: Element, menu: Element, initialValue: string) {
-        const mdMenuItems = this.menuItems || defaultMenuItem;
-        const state = EditorState.create({
+    protected crateChangeEvent(markdown: string) {
+        return new CustomEvent('change', {
+            detail: markdown,
+            composed: true,
+            bubbles: true,
+        });
+    }
+
+    protected createEditorState(
+        mdMenuItems: MdMenuItemType[],
+        menu: Element,
+        initialValue: string
+    ) {
+        return EditorState.create({
             schema,
             doc: defaultMarkdownParser.parse(initialValue),
             plugins: [
@@ -45,24 +56,25 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
                 menuPlugin(menu, mdMenuItems),
             ],
         });
+    }
 
-        const onChange = (markdown: string) => {
-            const event = new CustomEvent('change', {
-                detail: markdown,
-                composed: true,
-                bubbles: true,
-            });
-            this.dispatchEvent(event);
-        };
-
+    protected createEditorView(editor: Element, state) {
+        const onChange = this.crateChangeEvent;
         let editorView = new EditorView(editor, {
             state,
             dispatchTransaction(transaction) {
-                onChange(defaultMarkdownSerializer.serialize(transaction.doc));
+                const changeEvent = onChange(defaultMarkdownSerializer.serialize(transaction.doc));
+                this.dispatchEvent(changeEvent);
                 const newState = editorView.state.apply(transaction);
                 editorView.updateState(newState);
             },
         });
+    }
+
+    private initializeEditor(editor: Element, menu: Element, initialValue: string) {
+        const mdMenuItems = this.menuItems || defaultMenuItem;
+        const state = this.createEditorState(mdMenuItems, menu, initialValue);
+        this.createEditorView(editor, state);
     }
 
     render() {

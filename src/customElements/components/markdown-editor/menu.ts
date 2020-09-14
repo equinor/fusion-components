@@ -42,10 +42,11 @@ export class MenuView {
         return this.editorView.state.doc.rangeHasMark(from, to, type);
     }
 
-    update() {
-        this.items.forEach(({ command, dom, type }) => {
+    protected updateMeuItem(){
+         this.items.forEach(({ command, dom, type }) => {
             const activeMark = this.isMarkActive(this.editorView.state, type);
             const applicable = command(this.editorView.state, null, this.editorView);
+
             if (applicable) {
                 dom.classList.remove('disabled');
             } else {
@@ -59,6 +60,10 @@ export class MenuView {
         });
     }
 
+    update() {
+       this.updateMeuItem()
+    }
+
     destroy() {
         this.dom.remove();
     }
@@ -68,7 +73,7 @@ export default function menuPlugin(menuContainer, itemTypes: Array<MdMenuItemTyp
     return new Plugin({
         view(editorView) {
             const items = itemTypes.map((type) => getMenuItemByType(type));
-            let menuView = new MenuView(items, editorView, menuContainer);
+            const menuView = new MenuView(items, editorView, menuContainer);
             return menuView;
         },
     });
