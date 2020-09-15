@@ -77,11 +77,7 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
     cacheAge,
     cacheIsInvalid,
 }) => {
-    React.useEffect(() => {
-        updateFilterOptionsAsync();
-    }, [filterTerms, data]);
-
-    const updateFilterOptionsAsync = async () => {
+    const updateFilterOptionsAsync = React.useCallback(async () => {
         const filters: Codes = {
             statuses: [],
         };
@@ -108,7 +104,7 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
         });
 
         setFilterSections(newFilterSections);
-    };
+    }, [data, filterSections, filterTerms, setFilterSections]);
 
     const onFilterChange = React.useCallback(
         (filteredData: WorkOrderType[], terms: FilterTerm[]) => {
@@ -131,6 +127,10 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
         },
         []
     );
+
+    React.useEffect(() => {
+        updateFilterOptionsAsync();
+    }, [filterTerms, data, updateFilterOptionsAsync]);
 
     const refTitle = cacheIsInvalid ? 'Data is old, click to refresh ' : 'Refresh Data';
     const toolTipRef = useTooltipRef(refTitle, 'left');
