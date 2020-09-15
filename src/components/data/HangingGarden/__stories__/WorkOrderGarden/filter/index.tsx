@@ -130,7 +130,7 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
 
     React.useEffect(() => {
         updateFilterOptionsAsync();
-    }, [filterTerms, data, updateFilterOptionsAsync]);
+    }, [filterTerms, data]);
 
     const refTitle = cacheIsInvalid ? 'Data is old, click to refresh ' : 'Refresh Data';
     const toolTipRef = useTooltipRef(refTitle, 'left');
