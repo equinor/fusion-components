@@ -1,6 +1,6 @@
 import WorkOrderType from '../models/WorkOrderType';
 
-export const proCoSysStatuses: { [index: string]: string } = {
+export const proCoSysStatuses: Record<string, string> = {
     NoStatus: 'No status',
     Prepared: 'WO Prepared',
     Cancelled: 'WO Cancelled',
@@ -14,7 +14,7 @@ export const proCoSysStatuses: { [index: string]: string } = {
     ASBuiltCompleted: 'AS Built completed',
 };
 
-export const proCoSysWorkOrderColorMap: { [index: string]: string } = {
+export const proCoSysWorkOrderColorMap: Record<string, string> = {
     [proCoSysStatuses.ASBuiltCompleted]: '#D6E5FF',
     [proCoSysStatuses.SentToPlanning]: '#003CA3',
     [proCoSysStatuses.MCDocsPrepared]: '#F0F04C',
@@ -28,14 +28,14 @@ export const proCoSysWorkOrderColorMap: { [index: string]: string } = {
     [proCoSysStatuses.NoStatus]: '#EC3E13',
 };
 
-export const followUpStatuses: { [index: string]: string } = {
+export const followUpStatuses: Record<string, string> = {
     WOFinished: 'WO Finished',
     MaterialAndWoOk: 'Material and WorkOrder OK',
     MaterialAndWoAvailable: 'Material and WorkOrder Available',
     MaterialAndOrWoNotAvailable: 'Material and/or WorkOrder not Available',
 };
 
-export const proCoSysStatusPriorityMap: { [index: string]: number } = {
+export const proCoSysStatusPriorityMap: Record<string, number> = {
     [proCoSysStatuses.ASBuiltCompleted]: 0,
     [proCoSysStatuses.SentToPlanning]: 1,
     [proCoSysStatuses.SentDC]: 2,
@@ -111,7 +111,7 @@ export const getWoStatus = (workOrder: WorkOrderType): string => {
     return getWoStatusFromDates(workOrder);
 };
 
-export const proCoSysWorkOrderColorMapHex: { [hex: string]: number } = {
+export const proCoSysWorkOrderColorMapHex: Record<string, number> = {
     [proCoSysStatuses.ASBuiltCompleted]: 0xd6e5ff,
     [proCoSysStatuses.SentToPlanning]: 0x003ca3,
     [proCoSysStatuses.MCDocsPrepared]: 0xf0f04c,
@@ -125,7 +125,7 @@ export const proCoSysWorkOrderColorMapHex: { [hex: string]: number } = {
     [proCoSysStatuses.NoStatus]: 0xec3e13,
 };
 
-export const proCoSysWorkOrderProgressColorMap: { [hex: string]: number } = {
+export const proCoSysWorkOrderProgressColorMap: Record<string, number> = {
     [proCoSysStatuses.ASBuiltCompleted]: 0x99beff,
     [proCoSysStatuses.SentToPlanning]: 0x001c4d,
     [proCoSysStatuses.MCDocsPrepared]: 0xecec13,

@@ -6,35 +6,35 @@ import {
 import WorkOrderType from './models/WorkOrderType';
 import { FilterTypes } from '../../../../..';
 
-export const followUpColorMapHex: { [index: string]: number } = {
+export const followUpColorMapHex: Record<string, number> = {
     [followUpStatuses.WOFinished]: 0x1273dd,
     [followUpStatuses.MaterialAndWoOk]: 0x4bb748,
     [followUpStatuses.MaterialAndWoAvailable]: 0xfbca36,
     [followUpStatuses.MaterialAndOrWoNotAvailable]: 0xff3b3b,
 };
 
-export const followUpColorMap: { [index: string]: string } = {
+export const followUpColorMap: Record<string, string> = {
     [followUpStatuses.WOFinished]: '#1273DD',
     [followUpStatuses.MaterialAndWoOk]: '#4BB748',
     [followUpStatuses.MaterialAndWoAvailable]: '#FBCA36',
     [followUpStatuses.MaterialAndOrWoNotAvailable]: '#FF3B3B',
 };
 
-export const followUpProgressColorMap: { [index: string]: number } = {
+export const followUpProgressColorMap: Record<string, number> = {
     [followUpStatuses.WOFinished]: 0x004bcc,
     [followUpStatuses.MaterialAndWoOk]: 0x26d92f,
     [followUpStatuses.MaterialAndWoAvailable]: 0xffe212,
     [followUpStatuses.MaterialAndOrWoNotAvailable]: 0xf06d4c,
 };
 
-export const followUpStatusPriorityMap: { [index: string]: number } = {
+export const followUpStatusPriorityMap: Record<string, number> = {
     [followUpStatuses.MaterialAndOrWoNotAvailable]: 3,
     [followUpStatuses.MaterialAndWoAvailable]: 2,
     [followUpStatuses.MaterialAndWoOk]: 1,
     [followUpStatuses.WOFinished]: 0,
 };
 
-export const materialStatusMap: { [indext: string]: string } = {
+export const materialStatusMap: Record<string, string> = {
     M10: 'Material requested to job site',
     M12: 'Material received on job site',
     M2: 'Materials linked to Smartpack/Jobcard',
@@ -79,7 +79,7 @@ export const columnSorter = ({ key: a }: columnSorterKey, { key: b }: columnSort
 export type StatusFilterType = {
     key: string;
     label: string;
-    color?: string;
+    color?: string | number;
 };
 export const followUpStatusFilters: StatusFilterType[] = [
     {
@@ -127,7 +127,7 @@ export const MAT_STATUS_MAP: { [index: string]: string } = {
     M4: 'NOT_AVAILABLE',
 };
 
-export const MAT_STATUS_COLORS: { [index: string]: number } = {
+export const MAT_STATUS_COLORS: Record<string, number> = {
     OK: 0x00ff00,
     AVAILABLE: 0xffff00,
     NOT_AVAILABLE: 0xff0000,
@@ -138,7 +138,7 @@ export const getMatStatusColor = (workOrder: WorkOrderType) => {
     return MAT_STATUS_COLORS[materialStatus] || 0xafafaf;
 };
 
-export const mccrColorMap: { [index: string]: number } = {
+export const mccrColorMap: Record<string, number> = {
     OS: 0xafafaf,
     PB: 0xffff00,
     PA: 0xf04c90,
