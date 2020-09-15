@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as styles from './styles.less';
 import * as PIXI from 'pixi.js';
 
 import WorkOrderType from '../models/WorkOrderType';
@@ -11,7 +10,7 @@ import {
     ProCoSysStatuses,
     FollowUpStatuses,
 } from '../utils/procosys';
-import { getYearAndWeekFromDate, getYearAndWeek, getColumns } from '../columns/columns';
+import { getYearAndWeekFromDate, getColumns } from '../columns/columns';
 import { FilterTerm, ItemRenderContext, HangingGarden } from '../../../../../..';
 import { HeaderRenderContext } from '../../../HangingGardenModels';
 import MaterialStatusPopover from '../components/MaterialStatusPopover';
@@ -180,7 +179,7 @@ const Garden: React.FC<GardenProps> = ({
     const gardenController: any = React.useRef(null);
 
     return (
-        <div style={{ display: 'flex', flex: '1 1 auto', height: '100%', minWidth: 0 }}>
+        <>
             {columns.length && (
                 <HangingGarden<WorkOrderType>
                     columns={columns}
@@ -197,7 +196,7 @@ const Garden: React.FC<GardenProps> = ({
                     provideController={(controller: any) => (gardenController.current = controller)}
                 />
             )}
-        </div>
+        </>
     );
 };
 

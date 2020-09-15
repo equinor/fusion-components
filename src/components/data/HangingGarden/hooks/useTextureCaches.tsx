@@ -39,7 +39,21 @@ const defaultState = () => ({
     rects: {},
 });
 
-const useTextureCaches = () => {
+export type Caches = {
+    clearTextureCaches: () => void;
+    clearItemTextureCaches: () => void;
+    addTextureToCache: (
+        cacheKey: keyof TextureCaches,
+        key: string,
+        texture: PIXI.RenderTexture | PIXI.Texture | PIXI.Container | PIXI.Graphics
+    ) => void;
+    getTextureFromCache: (
+        cacheKey: keyof TextureCaches,
+        key: string
+    ) => PIXI.RenderTexture | PIXI.Texture | PIXI.Container | PIXI.Graphics;
+};
+
+const useTextureCaches = (): Caches => {
     const textureCaches = React.useRef<TextureCaches>(defaultState());
 
     const clearTextureCaches = React.useCallback(() => {
