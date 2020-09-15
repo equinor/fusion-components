@@ -5,13 +5,7 @@ import * as PIXI from 'pixi.js';
 import WorkOrderType from '../models/WorkOrderType';
 import ColumnType from '../models/ColumnType';
 import { getGroupByOption, getStatus } from '../filter/filter';
-import {
-    getMatStatusColor,
-    getMccrStatusColor,
-    MAT_STATUS_COLORS,
-    mccrColorMap,
-    followUpColorMapHex,
-} from '../helpers';
+import { getMatStatusColor, getMccrStatusColor, followUpColorMapHex } from '../helpers';
 import {
     proCoSysWorkOrderColorMapHex,
     ProCoSysStatuses,
