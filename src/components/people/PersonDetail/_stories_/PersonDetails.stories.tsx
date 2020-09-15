@@ -4,7 +4,7 @@ import withFusionStory from '../../../../../.storybook/withFusionStory';
 import { PersonDetails } from '@equinor/fusion';
 import PersonDetail from '..';
 
-const stories = storiesOf('People|PersonDetails', module);
+const stories = storiesOf('People/PersonDetails', module);
 stories.addDecorator(withFusionStory('PersonDetails'));
 
 export const getDefaultPerson = (): PersonDetails => ({

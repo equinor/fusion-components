@@ -46,13 +46,13 @@ const position: Position = {
                 mobilePhone: '12345678',
                 officeLocation: 'Stavanger',
             },
-            rotationId:null,
+            rotationId: null,
             properties: {},
             parentPositionId: '0',
             taskOwnerIds: null,
             externalId: '800',
-            isDeleted:false,
-            positionId:"1"
+            isDeleted: false,
+            positionId: '1',
         },
     ],
     contractId: null,
@@ -78,7 +78,7 @@ const DefaultStory = () => {
     );
 };
 
-storiesOf('Pro org|Position Picker', module)
+storiesOf('Pro org/Position Picker', module)
     .addParameters({ jest: ['PositionPicker.stories.jsx'] })
     .addDecorator(withFusionStory('Position picker'))
     .add('Default', () => <DefaultStory />);

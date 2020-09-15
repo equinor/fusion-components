@@ -126,6 +126,6 @@ const NavigationDrawerStory = () => {
     );
 };
 
-storiesOf('General|Navigation Drawer', module)
+storiesOf('General/Navigation Drawer', module)
     .addDecorator(withFusionStory('Navigation Drawer'))
     .add('Default', () => <NavigationDrawerStory />);

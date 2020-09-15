@@ -94,7 +94,7 @@ const InteractiveStory = () => {
     );
 };
 
-const stories = storiesOf('General|Stepper', module);
+const stories = storiesOf('General/Stepper', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Stepper'));
 stories.add('Default', () => <DefaultStory />);

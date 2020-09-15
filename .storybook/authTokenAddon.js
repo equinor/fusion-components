@@ -1,6 +1,4 @@
 import * as React from 'react';
-import addons from '@storybook/addons';
-
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
 
 const AuthTokenInput = ({ active }) => {
@@ -46,10 +44,4 @@ const AuthTokenInput = ({ active }) => {
         </div>
     );
 };
-
-addons.register('FUSION', api => {
-    addons.addPanel('FUSION/authtoken', {
-        title: 'Auth',
-        render: ({ active, key }) => <AuthTokenInput key={key} active={active} />,
-    });
-});
+export default AuthTokenInput

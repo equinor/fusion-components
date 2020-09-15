@@ -70,7 +70,7 @@ const PersonPositionListStory = () => {
     );
 };
 
-storiesOf('People|PersonPositionList', module)
+storiesOf('People/PersonPositionList', module)
     .addDecorator(withKnobs)
     .addDecorator(withFusionStory('PersonPositionList'))
     .add('Default', () => <PersonPositionListStory />);

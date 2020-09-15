@@ -206,6 +206,6 @@ const FilterPaneStory: React.FC = () => {
     );
 };
 
-storiesOf('General|Filter Pane', module)
+storiesOf('General/Filter Pane', module)
     .addDecorator(withFusionStory('Filter Pane'))
     .add('Default', () => <FilterPaneStory />);

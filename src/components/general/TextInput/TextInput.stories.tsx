@@ -96,6 +96,6 @@ const TextInputStory = () => {
     );
 };
 
-storiesOf('General|TextInput', module)
+storiesOf('General/TextInput', module)
     .addDecorator(withFusionStory('TextInput'))
     .add('Default', () => <TextInputStory />);

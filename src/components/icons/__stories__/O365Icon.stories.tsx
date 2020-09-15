@@ -10,7 +10,7 @@ import {
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|O365', module);
+const stories = storiesOf('Icons/O365', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('O365'));
 
