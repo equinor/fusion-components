@@ -14,8 +14,8 @@ import {
 } from '../helpers';
 import {
     proCoSysWorkOrderColorMapHex,
-    followUpStatuses,
-    proCoSysStatuses,
+    ProCoSysStatuses,
+    FollowUpStatuses,
 } from '../utils/procosys';
 import { getYearAndWeekFromDate, getYearAndWeek, getColumns } from '../columns/columns';
 import { FilterTerm, ItemRenderContext, HangingGarden } from '../../../../../..';
@@ -117,12 +117,12 @@ const Garden: React.FC<GardenProps> = ({
         });
     };
 
-    const getTextColorForStatus = (status: string) => {
+    const getTextColorForStatus = (status: ProCoSysStatuses | FollowUpStatuses) => {
         switch (status) {
-            case followUpStatuses.MaterialAndOrWoNotAvailable:
-            case followUpStatuses.MaterialAndWoOk:
-            case followUpStatuses.WOFinished:
-            case proCoSysStatuses.ComplByMC:
+            case 'MaterialAndOrWoNotAvailable':
+            case 'MaterialAndWoOk':
+            case 'WOFinished':
+            case 'ComplByMC':
                 return 0xffffff;
             default:
                 return 0x212121;

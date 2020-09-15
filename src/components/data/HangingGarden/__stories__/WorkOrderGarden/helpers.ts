@@ -2,36 +2,37 @@ import {
     followUpStatuses,
     proCoSysStatuses,
     proCoSysWorkOrderColorMap,
+    FollowUpStatuses,
 } from '../WorkOrderGarden/utils/procosys';
 import WorkOrderType from './models/WorkOrderType';
 import { FilterTypes } from '../../../../..';
 
-export const followUpColorMapHex: Record<string, number> = {
-    [followUpStatuses.WOFinished]: 0x1273dd,
-    [followUpStatuses.MaterialAndWoOk]: 0x4bb748,
-    [followUpStatuses.MaterialAndWoAvailable]: 0xfbca36,
-    [followUpStatuses.MaterialAndOrWoNotAvailable]: 0xff3b3b,
+export const followUpColorMapHex: Record<FollowUpStatuses, number> = {
+    WOFinished: 0x1273dd,
+    MaterialAndWoOk: 0x4bb748,
+    MaterialAndWoAvailable: 0xfbca36,
+    MaterialAndOrWoNotAvailable: 0xff3b3b,
 };
 
-export const followUpColorMap: Record<string, string> = {
-    [followUpStatuses.WOFinished]: '#1273DD',
-    [followUpStatuses.MaterialAndWoOk]: '#4BB748',
-    [followUpStatuses.MaterialAndWoAvailable]: '#FBCA36',
-    [followUpStatuses.MaterialAndOrWoNotAvailable]: '#FF3B3B',
+export const followUpColorMap: Record<FollowUpStatuses, string> = {
+    WOFinished: '#1273DD',
+    MaterialAndWoOk: '#4BB748',
+    MaterialAndWoAvailable: '#FBCA36',
+    MaterialAndOrWoNotAvailable: '#FF3B3B',
 };
 
-export const followUpProgressColorMap: Record<string, number> = {
-    [followUpStatuses.WOFinished]: 0x004bcc,
-    [followUpStatuses.MaterialAndWoOk]: 0x26d92f,
-    [followUpStatuses.MaterialAndWoAvailable]: 0xffe212,
-    [followUpStatuses.MaterialAndOrWoNotAvailable]: 0xf06d4c,
+export const followUpProgressColorMap: Record<FollowUpStatuses, number> = {
+    WOFinished: 0x004bcc,
+    MaterialAndWoOk: 0x26d92f,
+    MaterialAndWoAvailable: 0xffe212,
+    MaterialAndOrWoNotAvailable: 0xf06d4c,
 };
 
-export const followUpStatusPriorityMap: Record<string, number> = {
-    [followUpStatuses.MaterialAndOrWoNotAvailable]: 3,
-    [followUpStatuses.MaterialAndWoAvailable]: 2,
-    [followUpStatuses.MaterialAndWoOk]: 1,
-    [followUpStatuses.WOFinished]: 0,
+export const followUpStatusPriorityMap: Record<FollowUpStatuses, number> = {
+    MaterialAndOrWoNotAvailable: 3,
+    MaterialAndWoAvailable: 2,
+    MaterialAndWoOk: 1,
+    WOFinished: 0,
 };
 
 export const materialStatusMap: Record<string, string> = {
@@ -77,30 +78,30 @@ export const columnSorter = ({ key: a }: columnSorterKey, { key: b }: columnSort
 };
 
 export type StatusFilterType = {
-    key: string;
+    key: FollowUpStatuses;
     label: string;
     color?: string | number;
 };
 export const followUpStatusFilters: StatusFilterType[] = [
     {
-        key: followUpStatuses.MaterialAndOrWoNotAvailable,
+        key: 'MaterialAndOrWoNotAvailable',
         label: followUpStatuses.MaterialAndOrWoNotAvailable,
-        color: followUpColorMap[followUpStatuses.MaterialAndOrWoNotAvailable],
+        color: followUpColorMap.MaterialAndOrWoNotAvailable,
     },
     {
-        key: followUpStatuses.MaterialAndWoAvailable,
+        key: 'MaterialAndWoAvailable',
         label: followUpStatuses.MaterialAndWoAvailable,
-        color: followUpColorMap[followUpStatuses.MaterialAndWoAvailable],
+        color: followUpColorMap.MaterialAndWoAvailable,
     },
     {
-        key: followUpStatuses.MaterialAndWoOk,
+        key: 'MaterialAndWoOk',
         label: followUpStatuses.MaterialAndWoOk,
-        color: followUpColorMap[followUpStatuses.MaterialAndWoOk],
+        color: followUpColorMap.MaterialAndWoOk,
     },
     {
-        key: followUpStatuses.WOFinished,
+        key: 'WOFinished',
         label: followUpStatuses.WOFinished,
-        color: followUpColorMap[followUpStatuses.WOFinished],
+        color: followUpColorMap.WOFinished,
     },
 ];
 
@@ -109,11 +110,11 @@ export const proCoSysStatusFilters = Object.keys(proCoSysStatuses).map(
         <StatusFilterType>{
             key: proCoSysStatuses[key],
             label: proCoSysStatuses[key],
-            color: proCoSysWorkOrderColorMap[proCoSysStatuses[key]],
+            color: proCoSysWorkOrderColorMap[key],
         }
 );
 
-export const MAT_STATUS_MAP: { [index: string]: string } = {
+export const MAT_STATUS_MAP: Record<string, string> = {
     MN: 'OK',
     M10: 'OK',
     M11: 'OK',

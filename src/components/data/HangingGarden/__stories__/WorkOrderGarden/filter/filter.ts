@@ -1,5 +1,11 @@
 import WorkOrderType from '../models/WorkOrderType';
-import { getWoStatus, getFollowUpStatus, proCoSysStatusPriorityMap } from '../utils/procosys';
+import {
+    getWoStatus,
+    getFollowUpStatus,
+    proCoSysStatusPriorityMap,
+    ProCoSysStatuses,
+    FollowUpStatuses,
+} from '../utils/procosys';
 import {
     StatusFilterType,
     materialStatusMap,
@@ -35,7 +41,10 @@ export const getGroupBy = (filter: FilterTerm[]) => {
     }
 };
 
-export const getStatus = (workOrder: WorkOrderType, filter?: FilterTerm[]): string => {
+export const getStatus = (
+    workOrder: WorkOrderType,
+    filter?: FilterTerm[]
+): ProCoSysStatuses | FollowUpStatuses => {
     if (filter && getGroupByOption(filter) === 'wp') {
         return getWoStatus(workOrder);
     }

@@ -47,6 +47,34 @@ export const proCoSysWorkOrderColorMap: Record<ProCoSysStatuses, string> = {
     NoStatus: '#EC3E13',
 };
 
+export const proCoSysWorkOrderColorMapHex: Record<ProCoSysStatuses, number> = {
+    ASBuiltCompleted: 0xd6e5ff,
+    SentToPlanning: 0x003ca3,
+    MCDocsPrepared: 0xf0f04c,
+    ToField: 0x2fda37,
+    FromField: 0x86ea8b,
+    ComplByMC: 0x0a64ff,
+    Cancelled: 0xf4937b,
+    SentDC: 0x70a5ff,
+    ToMC: 0xf1beb1,
+    Prepared: 0xb8b8b8,
+    NoStatus: 0xec3e13,
+};
+
+export const proCoSysWorkOrderProgressColorMap: Record<ProCoSysStatuses, number> = {
+    ASBuiltCompleted: 0x99beff,
+    SentToPlanning: 0x001c4d,
+    MCDocsPrepared: 0xecec13,
+    ToField: 0x22c32a,
+    FromField: 0x52e059,
+    ComplByMC: 0x004bcc,
+    Cancelled: 0xf06542,
+    SentDC: 0x337eff,
+    ToMC: 0xe8927d,
+    Prepared: 0x999999,
+    NoStatus: 0xbd320f,
+};
+
 export const followUpStatuses: Record<FollowUpStatuses, string> = {
     WOFinished: 'WO Finished',
     MaterialAndWoOk: 'Material and WorkOrder OK',
@@ -130,34 +158,6 @@ export const getWoStatus = (workOrder: WorkOrderType): ProCoSysStatuses => {
     return getWoStatusFromDates(workOrder);
 };
 
-export const proCoSysWorkOrderColorMapHex: Record<ProCoSysStatuses, number> = {
-    ASBuiltCompleted: 0xd6e5ff,
-    SentToPlanning: 0x003ca3,
-    MCDocsPrepared: 0xf0f04c,
-    ToField: 0x2fda37,
-    FromField: 0x86ea8b,
-    ComplByMC: 0x0a64ff,
-    Cancelled: 0xf4937b,
-    SentDC: 0x70a5ff,
-    ToMC: 0xf1beb1,
-    Prepared: 0xb8b8b8,
-    NoStatus: 0xec3e13,
-};
-
-export const proCoSysWorkOrderProgressColorMap: Record<ProCoSysStatuses, number> = {
-    ASBuiltCompleted: 0x99beff,
-    SentToPlanning: 0x001c4d,
-    MCDocsPrepared: 0xecec13,
-    ToField: 0x22c32a,
-    FromField: 0x52e059,
-    ComplByMC: 0x004bcc,
-    Cancelled: 0xf06542,
-    SentDC: 0x337eff,
-    ToMC: 0xe8927d,
-    Prepared: 0x999999,
-    NoStatus: 0xbd320f,
-};
-
 const prepareMaterialStatus = (status: string): string[] => {
     status = status.toLowerCase();
 
@@ -217,13 +217,13 @@ export const workOrderAvailable = (workOrder: WorkOrderType) =>
                 'SentToPlanning')
     );
 
-export const getFollowUpStatus = (workOrder: WorkOrderType) => {
-    if (workOrder.projectProgress.toString() === '100') return followUpStatuses.WOFinished;
+export const getFollowUpStatus = (workOrder: WorkOrderType): FollowUpStatuses => {
+    if (workOrder.projectProgress.toString() === '100') return 'WOFinished';
 
-    if (materialOk(workOrder) && workOrderOk(workOrder)) return followUpStatuses.MaterialAndWoOk;
+    if (materialOk(workOrder) && workOrderOk(workOrder)) return 'MaterialAndWoOk';
 
     if (materialAvailable(workOrder) && workOrderAvailable(workOrder))
-        return followUpStatuses.MaterialAndWoAvailable;
+        return 'MaterialAndWoAvailable';
 
-    return followUpStatuses.MaterialAndOrWoNotAvailable;
+    return 'MaterialAndOrWoNotAvailable';
 };
