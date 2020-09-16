@@ -32,7 +32,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
             }
             const event = new OverlayAnchorConnectEvent({
                 detail: {
-                    id,
+                    anchor: id,
                     scope,
                     bounds: () => {
                         return AnchorDOMRect.create(

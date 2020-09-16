@@ -1,6 +1,6 @@
 import { LitElement, html, property, eventOptions, PropertyValues } from "../base";
 
-import { OverlayEvent, OverlayEventType } from '../overlay';
+import { OverlayEvent, OverlayEventType, OverLayScope } from '../overlay';
 import { QuickFactEvent, QuickFactEventType } from '../quick-fact';
 import { ApplicationGuideEvent, ApplicationGuideEventType, ApplicationGuideEventDetail } from './events';
 
@@ -11,20 +11,20 @@ import styles from './element.css';
 
 
 export interface ApplicationGuideElementProps {
-    scope?: string;
+    scope?: OverLayScope;
 }
 
 export class ApplicationGuideElement extends LitElement implements ApplicationGuideElementProps {
     static styles = styles;
 
-    @property()
-    scope?: string;
+    @property({ type: Object })
+    scope: OverLayScope = {};
 
     @property({ type: Boolean, reflect: true })
     active: boolean = false;
 
-    @property({ reflect: true })
-    selected?: string;
+    @property({ type: Object })
+    selected?: { scope: string, anchor: string };
 
     toggle() {
         this.active = !this.active;
@@ -56,14 +56,14 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     }
 
     renderQuickFact() {
-        const { active, selected, scope } = this;
+        const { active, selected: { scope, anchor } } = this;
         if (!active) {
             return '';
         }
         return html`
             <fusion-quick-fact
-                .scope=${scope}
-                .anchor=${selected}
+                scope="${scope}"
+                anchor="${anchor}"
                 @quick-fact-show=${this._handleQuickFactShow}
             >
                 <span slot="empty">Click on a highlighted area to view a Quickfact or to add a new</span>
@@ -84,18 +84,29 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
     protected _dispatchEvent(type: ApplicationGuideEventType, init?: CustomEventInit<ApplicationGuideEventDetail>) {
         const { scope, active, selected } = this;
-        const detail = { ...init?.detail, scope, active, selected }
+        const detail: ApplicationGuideEventDetail = {
+            scope,
+            active,
+            selected,
+            ...init?.detail,
+        };
         const event = new ApplicationGuideEvent(type, { ...init, detail });
         this.dispatchEvent(event);
         return event;
     }
 
     protected _handleSelectionChanged(e: OverlayEvent<OverlayEventType.selection>) {
-        this.selected = e.detail.selected.id;
+        const { anchor, scope } = e.detail.selected;
+        this.selected = { anchor, scope };
     }
 
     protected _handleQuickFactShow(e: QuickFactEvent<QuickFactEventType.show>) {
-        this._dispatchEvent(ApplicationGuideEventType.show, {detail: e.detail});
+        const { anchor, scope, info } = e.detail;
+        const detail: ApplicationGuideEventDetail = {
+            selected: { anchor, scope },
+            info
+        };
+        this._dispatchEvent(ApplicationGuideEventType.show, {detail});
     }
 
     // @TODO

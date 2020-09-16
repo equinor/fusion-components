@@ -1,4 +1,5 @@
 import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
+import { OverLayScope } from '../overlay';
 
 export const enum ApplicationGuideEventType {
     activated = 'application-guide-activated',
@@ -9,8 +10,8 @@ export const enum ApplicationGuideEventType {
 }
 
 export type ApplicationGuideEventDetail = {
-    selected?: string;
-    scope?: string;
+    selected?: { scope: string, anchor: string };
+    scope?: OverLayScope;
     active?: boolean;
     info?: QuickFact;
 }

@@ -10,8 +10,10 @@ import styles from './element.css';
 import { OverlayAnchor, OverlayAnchorConnectEvent } from './anchor';
 import { OverlayEventType, OverlayEventDetail, OverlayEvent } from './events';
 
+export type OverLayScope = Record<string, string[] | null>
+
 export interface OverlayElementProps {
-    scope?: string;
+    scope?: OverLayScope;
     active?: boolean;
     selected?: string;
 }
@@ -19,8 +21,8 @@ export interface OverlayElementProps {
 export class OverlayElement extends LitElement implements OverlayElementProps {
     static styles = styles;
 
-    @property()
-    scope?: string;
+    @property({ type: Object })
+    scope: OverLayScope = {};
 
     @property({ type: Boolean, reflect: true })
     active: boolean = false;
@@ -33,7 +35,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     anchors: Record<string, OverlayAnchor> = {};
 
     get scopedAnchors(): OverlayAnchor[] {
-        return Object.values(this.anchors).filter(anchor => anchor.scope === this.scope);
+        return Object.values(this.anchors).filter(({ anchor: id, scope }) => scope in this.scope && (!this.scope[scope] || this.scope[scope].includes(id)));
     }
 
     get selectedAnchor(): OverlayAnchor {
@@ -67,15 +69,15 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     }
 
     renderPlaceholders() {
-        return directives.repeat(this.scopedAnchors, ({ id }) => id, anchor => this.renderPlaceholder(anchor));
+        return directives.repeat(this.scopedAnchors, ({ anchor: id }) => id, anchor => this.renderPlaceholder(anchor));
     }
 
     renderPlaceholder(anchor: OverlayAnchor) {
         return html`
             <fusion-overlay-placeholder
-                id="${anchor.id}"
+                id="${anchor.anchor}"
                 @click=${this._handlePlaceholderClick}
-                ?active="${anchor.id === this.selected}"
+                ?active="${anchor.anchor === this.selected}"
                 .rect="${anchor.bounds()}"
                 slot="placeholders"
             ></fusion-overlay-placeholder>
@@ -106,11 +108,11 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
 
     protected _handleAnchorConnect({ detail }: OverlayAnchorConnectEvent) {
         const { disconnectedCallback, ...anchor } = detail;
-        !this.anchors[anchor.id] && disconnectedCallback(() => {
-            delete this.anchors[anchor.id];
+        !this.anchors[anchor.anchor] && disconnectedCallback(() => {
+            delete this.anchors[anchor.anchor];
             this.requestUpdate('anchors');
         });
-        this.anchors = { ...this.anchors, [anchor.id]: anchor };
+        this.anchors = { ...this.anchors, [anchor.anchor]: anchor };
     }
 
     protected _handlePlaceholderClick(e: Event) {

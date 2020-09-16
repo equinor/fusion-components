@@ -1,4 +1,5 @@
 import { OverlayAnchor } from "../overlay/anchor";
+import { OverLayScope } from './element';
 
 export const enum OverlayEventType {
     activated = 'overlay-activated',
@@ -9,7 +10,7 @@ export const enum OverlayEventType {
 
 export type OverlayEventDetail = {
     selected?: OverlayAnchor;
-    scope?: string;
+    scope?: OverLayScope;
     active?: boolean;
 }
 

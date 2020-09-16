@@ -11,7 +11,7 @@ type SearchFilterProps<T> = {
 
 function SearchFilterComponent<T>({ filter, term, onChange, quickFactScope }: SearchFilterProps<T>) {
     return (
-        <ApplicationGuidanceAnchor id={filter.key} scope={quickFactScope}>
+        <ApplicationGuidanceAnchor anchor={filter.key} scope={quickFactScope}>
             <TextInput
                 icon={<SearchIcon />}
                 value={term ? (term.value as string) : ''}

@@ -90,14 +90,14 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quic
             </div>
 
             <aside className={styles.asideContainer}>
-                <ApplicationGuidanceAnchor id={'display-toggle-btn'} scope={quickFactScope} snug>
+                <ApplicationGuidanceAnchor anchor={'display-toggle-btn'} scope={quickFactScope} snug>
                     <ComponentDisplayToggleButton />
                 </ApplicationGuidanceAnchor>
                 {aside}
-                <ApplicationGuidanceAnchor id={'notification'} scope={quickFactScope} snug>
+                <ApplicationGuidanceAnchor anchor={'notification'} scope={quickFactScope} snug>
                     <NotificationsButton />
                 </ApplicationGuidanceAnchor>
-                <ApplicationGuidanceAnchor id={'current-user-btn'} scope={quickFactScope} snug>
+                <ApplicationGuidanceAnchor anchor={'current-user-btn'} scope={quickFactScope} snug>
                     <CurrentUserButton />
                 </ApplicationGuidanceAnchor>
             </aside>
