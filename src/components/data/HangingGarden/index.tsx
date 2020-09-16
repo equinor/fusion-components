@@ -37,8 +37,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     const canvas = React.useRef<HTMLCanvasElement>(null);
     const stage = React.useRef<PIXI.Container>(new PIXI.Container());
     const checkRendererSizeAnimationframe = React.useRef(0);
-    const renderQueue = React.useRef<RenderItem[]>([]);
-    const isRendering = React.useRef(false);
 
     const pixiApp = React.useMemo(() => {
         if (!canvas.current || !container.current) return null;
@@ -64,8 +62,6 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                         canvas,
                         stage,
                         checkRendererSizeAnimationframe,
-                        renderQueue,
-                        isRendering,
                         pixiApp,
                         maxRowCount,
                         setMaxRowCount,

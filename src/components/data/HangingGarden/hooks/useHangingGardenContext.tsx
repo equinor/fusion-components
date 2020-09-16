@@ -10,8 +10,6 @@ export interface IHangingGardenContext {
     canvas: MutableRefObject<HTMLCanvasElement>;
     stage: MutableRefObject<PIXI.Container>;
     checkRendererSizeAnimationframe: MutableRefObject<number>;
-    renderQueue: MutableRefObject<RenderItem[]>;
-    isRendering: MutableRefObject<boolean>;
     pixiApp: PIXI.Application;
     maxRowCount: number;
     setMaxRowCount: Dispatch<React.SetStateAction<number>>;

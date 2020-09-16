@@ -23,9 +23,9 @@ import {
 } from './utils';
 import useScrolling from './hooks/useScrolling';
 import usePopover from './hooks/usePopover';
-import useHangingGardenData from './hooks/useHangingGardenData';
 import { useHangingGardenContext } from './hooks/useHangingGardenContext';
-import { ItemRenderContext, Size, Position, RenderItem } from './models/RenderContext';
+import { ItemRenderContext, Size, Position } from './models/RenderContext';
+import useRenderQueue from './renderHooks/useRenderQueue';
 
 function Garden<T extends HangingGardenColumnIndex>({
     columns,
@@ -47,8 +47,6 @@ function Garden<T extends HangingGardenColumnIndex>({
         canvas,
         stage,
         checkRendererSizeAnimationframe,
-        renderQueue,
-        isRendering,
         pixiApp,
         maxRowCount,
         setMaxRowCount,
@@ -73,6 +71,12 @@ function Garden<T extends HangingGardenColumnIndex>({
     } = useScrolling<T>(canvas, container);
 
     const { popover, addPopover } = usePopover();
+
+    const {
+        enqueueRenderer,
+        processRenderQueue,
+        processRenderQueueAnimationFrame,
+    } = useRenderQueue();
 
     React.useEffect(() => {
         if (!pixiApp) return;
@@ -195,63 +199,6 @@ function Garden<T extends HangingGardenColumnIndex>({
         [pixiApp, getTextureFromCache, addTextureToCache]
     );
 
-    const enqueueRenderer = React.useCallback(
-        (key: string, render: (context: ItemRenderContext) => void, context: ItemRenderContext) => {
-            renderQueue.current.push({
-                key,
-                render,
-                context,
-            });
-        },
-        [renderQueue.current]
-    );
-
-    const processRenderQueue = React.useCallback(() => {
-        if (isRendering.current || !renderQueue.current.length) {
-            if (!renderQueue.current.length) {
-                pixiApp?.render();
-            }
-
-            return;
-        }
-
-        isRendering.current = true;
-
-        const renderers = renderQueue.current.splice(0, 100);
-        renderers.forEach(processRenderer);
-        pixiApp?.render();
-        isRendering.current = false;
-        window.requestAnimationFrame(processRenderQueue);
-    }, [isRendering.current, pixiApp, renderQueue.current]);
-
-    const processRenderer = React.useCallback(
-        (renderer: RenderItem) => {
-            let graphicsContainer = getTextureFromCache(
-                'graphics',
-                renderer.key
-            ) as PIXI.RenderTexture;
-
-            if (!graphicsContainer) {
-                const graphics = new PIXI.Graphics();
-                graphics.cacheAsBitmap = false;
-                renderer.render({
-                    ...renderer.context,
-                    graphics,
-                });
-
-                graphicsContainer = PIXI.RenderTexture.create({
-                    width: renderer.context.width,
-                    height: renderer.context.height,
-                });
-                pixiApp?.renderer.render(graphics, graphicsContainer);
-                addTextureToCache('graphics', renderer.key, graphicsContainer);
-            }
-
-            renderer.context.container.addChild(new PIXI.Sprite(graphicsContainer));
-        },
-        [getTextureFromCache, addTextureToCache, pixiApp]
-    );
-
     const getRenderedItemDescription = React.useCallback(
         (item: T) => {
             let itemDescription = getTextureFromCache('descriptions', item[itemKeyProp]);
@@ -298,7 +245,7 @@ function Garden<T extends HangingGardenColumnIndex>({
         ]
     );
 
-    let processRenderQueueAnimationFrame: number = 0;
+    //let processRenderQueueAnimationFrame: number = 0;
     const renderItem = React.useCallback(
         (item: T, index: number, columnIndex: number) => {
             const x = getColumnX(columnIndex, expandedColumns, itemWidth);
@@ -341,8 +288,10 @@ function Garden<T extends HangingGardenColumnIndex>({
 
                 renderItemContext(item, itemRenderContext);
 
-                window.cancelAnimationFrame(processRenderQueueAnimationFrame);
-                processRenderQueueAnimationFrame = window.requestAnimationFrame(processRenderQueue);
+                window.cancelAnimationFrame(processRenderQueueAnimationFrame.current);
+                processRenderQueueAnimationFrame.current = window.requestAnimationFrame(
+                    processRenderQueue
+                );
 
                 addTextureToCache('items', item[itemKeyProp], renderedItem);
             }
