@@ -10,7 +10,7 @@ import {
 export interface AppGuideAnchorRef<R extends HTMLElement> {
     id: string;
     scope?: string;
-    snug?: boolean;
+    padding?: number;
     ref: React.RefObject<R>;
 }
 
@@ -21,15 +21,15 @@ export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<
 };
 
 export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
-    const { id, ref, scope, snug } = anchor;
+    const { id, ref, scope } = anchor;
     const callBackRef = React.useRef<VoidFunction>();
-    const padding = React.useRef<number>(snug && 16);
+    const padding = React.useRef<number>(anchor.padding);
 
     React.useEffect(() => {
-        if (!ref.current) {
-            return;
-        }
         requestAnimationFrame(() => {
+            if (!ref.current) {
+                return;
+            }
             const event = new OverlayAnchorConnectEvent({
                 detail: {
                     id,
@@ -50,7 +50,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
             });
             ref.current.dispatchEvent(event);
         })
-        return () => callBackRef.current();
+        return () => callBackRef.current && callBackRef.current();
     }, [ref]);
 };
 
