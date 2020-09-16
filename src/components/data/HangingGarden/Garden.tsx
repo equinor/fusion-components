@@ -5,11 +5,7 @@ import {
     HangingGardenColumnIndex,
     HangingGardenProps,
     HangingGardenColumn,
-    ItemRenderContext,
-    RenderItem,
-    Size,
-    Position,
-} from './HangingGardenModels';
+} from './models/HangingGarden';
 import {
     getMaxRowCount,
     createRenderedItemDescription,
@@ -29,6 +25,7 @@ import useScrolling from './hooks/useScrolling';
 import usePopover from './hooks/usePopover';
 import useHangingGardenData from './hooks/useHangingGardenData';
 import { useHangingGardenContext } from './hooks/useHangingGardenContext';
+import { ItemRenderContext, Size, Position, RenderItem } from './models/RenderContext';
 
 function Garden<T extends HangingGardenColumnIndex>({
     columns,
@@ -635,11 +632,4 @@ function Garden<T extends HangingGardenColumnIndex>({
     );
 }
 
-export {
-    HangingGardenProps,
-    HangingGardenColumn,
-    ItemRenderContext,
-    RenderItem,
-} from './HangingGardenModels';
-export { useHangingGardenData };
 export default Garden;

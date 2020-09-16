@@ -1,11 +1,7 @@
 import * as PIXI from 'pixi.js';
-import {
-    ExpandedColumns,
-    ItemRenderContext,
-    HangingGardenColumn,
-    ExpandedColumn,
-    Position,
-} from './HangingGardenModels';
+import { HangingGardenColumn } from './models/HangingGarden';
+import { ExpandedColumn, ExpandedColumns } from './models/ExpandedColumn';
+import { ItemRenderContext, Position } from './models/RenderContext';
 
 export const DEFAULT_ITEM_HEIGHT = 24;
 export const DEFAULT_HEADER_HEIGHT = 32;

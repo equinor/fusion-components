@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HangingGardenColumn, HangingGardenColumnIndex } from '../HangingGardenModels';
+import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 
 const useScrolling = <T extends HangingGardenColumnIndex>(
     canvas: React.RefObject<HTMLCanvasElement> | null,

@@ -1,37 +1,13 @@
 import * as React from 'react';
-import * as styles from './styles.less';
 import * as PIXI from 'pixi.js';
 import useTextureCaches from './hooks/useTextureCaches';
-import {
-    HangingGardenColumnIndex,
-    HangingGardenProps,
-    ExpandedColumns,
-    HangingGardenColumn,
-    ItemRenderContext,
-    RenderItem,
-    Size,
-    Position,
-} from './HangingGardenModels';
-import {
-    getMaxRowCount,
-    createRenderedItemDescription,
-    getColumnX,
-    addDot,
-    isHeaderExpanded,
-    getHeaderWidth,
-    getCalculatedWidth,
-    getCalculatedHeight,
-    DEFAULT_ITEM_HEIGHT,
-    DEFAULT_HEADER_HEIGHT,
-    DEFAULT_ITEM_TEXT_STYLE,
-    EXPANDED_COLUMN_PADDING,
-    HIGHLIGHTED_ITEM_KEY,
-} from './utils';
-import useScrolling from './hooks/useScrolling';
-import usePopover from './hooks/usePopover';
+import { HangingGardenColumnIndex, HangingGardenProps } from './models/HangingGarden';
+import { DEFAULT_ITEM_HEIGHT, DEFAULT_HEADER_HEIGHT } from './utils';
 import useHangingGardenData from './hooks/useHangingGardenData';
 import Garden from './Garden';
 import HangingGardenContext from './hooks/useHangingGardenContext';
+import { ExpandedColumns } from './models/ExpandedColumn';
+import { RenderItem } from './models/RenderContext';
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
@@ -119,11 +95,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     );
 }
 
-export {
-    HangingGardenProps,
-    HangingGardenColumn,
-    ItemRenderContext,
-    RenderItem,
-} from './HangingGardenModels';
+export { HangingGardenProps, HangingGardenColumn } from './models/HangingGarden';
+export { ItemRenderContext, RenderItem } from './models/RenderContext';
 export { useHangingGardenData };
 export default HangingGarden;

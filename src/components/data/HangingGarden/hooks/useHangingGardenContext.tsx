@@ -1,7 +1,9 @@
 import { createContext, useContext, MutableRefObject, Dispatch, SetStateAction } from 'react';
 import * as PIXI from 'pixi.js';
-import { RenderItem, ExpandedColumns, ExpandedColumn } from '../HangingGardenModels';
+
 import { Caches } from './useTextureCaches';
+import { ExpandedColumns, ExpandedColumn } from '../models/ExpandedColumn';
+import { RenderItem } from '../models/RenderContext';
 
 export interface IHangingGardenContext {
     container: MutableRefObject<HTMLDivElement>;
