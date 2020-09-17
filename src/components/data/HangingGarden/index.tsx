@@ -7,7 +7,6 @@ import useHangingGardenData from './hooks/useHangingGardenData';
 import Garden from './Garden';
 import HangingGardenContext from './hooks/useHangingGardenContext';
 import { ExpandedColumns } from './models/ExpandedColumn';
-import { RenderItem } from './models/RenderContext';
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
@@ -68,6 +67,12 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                         expandedColumns,
                         setExpandedColumns,
                         textureCaches,
+                        backgroundColor,
+                        columns,
+                        itemKeyProp,
+                        itemHeight,
+                        itemWidth,
+                        headerHeight,
                     }}
                 >
                     <Garden<T>

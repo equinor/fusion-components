@@ -196,7 +196,6 @@ function Garden<T extends HangingGardenColumnIndex>({
         ]
     );
 
-    //let processRenderQueueAnimationFrame: number = 0;
     const renderItem = React.useCallback(
         (item: T, index: number, columnIndex: number) => {
             const x = getColumnX(columnIndex, expandedColumns, itemWidth);
