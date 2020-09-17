@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
+import * as styles from './styles.less';
 import useTextureCaches from './hooks/useTextureCaches';
 import { HangingGardenColumnIndex, HangingGardenProps } from './models/HangingGarden';
 import { DEFAULT_ITEM_HEIGHT, DEFAULT_HEADER_HEIGHT } from './utils';
@@ -7,6 +8,9 @@ import useHangingGardenData from './hooks/useHangingGardenData';
 import Garden from './Garden';
 import HangingGardenContext from './hooks/useHangingGardenContext';
 import { ExpandedColumns } from './models/ExpandedColumn';
+import useScrolling from './hooks/useScrolling';
+import usePixiApp from './renderHooks/usePixiApp';
+import usePopover from './hooks/usePopover';
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
@@ -23,45 +27,33 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     provideController,
     backgroundColor = 0xffffff,
 }: HangingGardenProps<T>) {
-    PIXI.utils.skipHello(); // Don't output the pixi message to the console
-    PIXI.Ticker.shared.autoStart = false;
-    PIXI.settings.ROUND_PIXELS = true;
-
     const [maxRowCount, setMaxRowCount] = React.useState(0);
     const [expandedColumns, setExpandedColumns] = React.useState<ExpandedColumns>({});
-
-    const textureCaches = useTextureCaches();
 
     const container = React.useRef<HTMLDivElement>(null);
     const canvas = React.useRef<HTMLCanvasElement>(null);
     const stage = React.useRef<PIXI.Container>(new PIXI.Container());
-    const checkRendererSizeAnimationframe = React.useRef(0);
 
-    const pixiApp = React.useMemo(() => {
-        if (!canvas.current || !container.current) return null;
+    const scroll = useScrolling<T>(canvas, container, itemKeyProp);
+    const textureCaches = useTextureCaches();
+    const popover = usePopover();
 
-        return new PIXI.Application({
-            view: canvas.current,
-            width: container.current?.offsetWidth,
-            height: container.current?.offsetHeight,
-            backgroundColor,
-            resolution: 1,
-            antialias: true,
-            transparent: true,
-            sharedTicker: true,
-        });
-    }, [canvas.current, container.current, backgroundColor]);
+    const { pixiApp } = usePixiApp(canvas, container, backgroundColor);
+
+    React.useEffect(() => {
+        textureCaches.clearItemTextureCaches();
+    }, [itemHeight, itemWidth]);
 
     return (
-        <div style={{ display: 'flex', flex: '1 1 auto', height: '100%', minWidth: 0 }}>
+        <div className={styles.container}>
             {columns.length && (
                 <HangingGardenContext.Provider
                     value={{
                         container,
                         canvas,
                         stage,
-                        checkRendererSizeAnimationframe,
                         pixiApp,
+                        scroll,
                         maxRowCount,
                         setMaxRowCount,
                         expandedColumns,
@@ -73,23 +65,16 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
                         itemHeight,
                         itemWidth,
                         headerHeight,
+                        highlightedItem,
+                        highlightedColumnKey,
+                        getItemDescription,
+                        onItemClick,
+                        renderItemContext,
+                        renderHeaderContext,
+                        popover,
                     }}
                 >
-                    <Garden<T>
-                        columns={columns}
-                        highlightedColumnKey={highlightedColumnKey}
-                        highlightedItem={highlightedItem}
-                        itemKeyProp={itemKeyProp}
-                        itemWidth={itemWidth}
-                        itemHeight={itemHeight}
-                        renderItemContext={renderItemContext}
-                        getItemDescription={getItemDescription}
-                        onItemClick={onItemClick}
-                        headerHeight={headerHeight}
-                        renderHeaderContext={renderHeaderContext}
-                        provideController={provideController}
-                        backgroundColor={backgroundColor}
-                    />
+                    <Garden<T> provideController={provideController} />
                 </HangingGardenContext.Provider>
             )}
         </div>

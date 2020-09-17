@@ -7,6 +7,10 @@ export type HangingGardenColumn<T> = {
 
 export type HangingGardenColumnIndex = Record<string, any>;
 
+export type GardenController = {
+    clearGarden: () => void;
+};
+
 export type HangingGardenProps<T extends HangingGardenColumnIndex> = {
     columns: HangingGardenColumn<T>[];
     highlightedColumnKey: string;

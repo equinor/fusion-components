@@ -3,14 +3,16 @@ import * as PIXI from 'pixi.js';
 
 import { Caches } from './useTextureCaches';
 import { ExpandedColumns, ExpandedColumn } from '../models/ExpandedColumn';
-import { HangingGardenColumn } from '../models/HangingGarden';
+import { ItemRenderContext, HeaderRenderContext } from '../models/RenderContext';
+import { Scroll } from './useScrolling';
+import { UsePopover } from './usePopover';
 
 export interface IHangingGardenContext {
     container: MutableRefObject<HTMLDivElement>;
     canvas: MutableRefObject<HTMLCanvasElement>;
     stage: MutableRefObject<PIXI.Container>;
-    checkRendererSizeAnimationframe: MutableRefObject<number>;
     pixiApp: PIXI.Application;
+    scroll: Scroll<unknown>;
     maxRowCount: number;
     setMaxRowCount: Dispatch<React.SetStateAction<number>>;
     expandedColumns: ExpandedColumns;
@@ -22,6 +24,13 @@ export interface IHangingGardenContext {
     itemHeight: number;
     itemWidth: number;
     headerHeight: number;
+    highlightedItem: unknown;
+    highlightedColumnKey: unknown;
+    getItemDescription: (item: unknown) => string;
+    onItemClick: (item: unknown) => void;
+    renderItemContext: (item: unknown, context: ItemRenderContext) => void;
+    renderHeaderContext: (key: string, context: HeaderRenderContext) => void;
+    popover: UsePopover;
 }
 
 const HangingGardenContext = createContext<IHangingGardenContext>({} as IHangingGardenContext);

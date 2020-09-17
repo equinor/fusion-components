@@ -1,10 +1,28 @@
 import * as React from 'react';
 import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 
+export type Scroll<T extends HangingGardenColumnIndex> = {
+    isScrolling: React.MutableRefObject<boolean>;
+    scrollLeft: React.MutableRefObject<number>;
+    scrollTop: React.MutableRefObject<number>;
+    onScroll: (e: React.UIEvent<HTMLDivElement>, renderGarden: () => void) => void;
+    scrollToHighlightedColumn: (
+        columns: HangingGardenColumn<T>[],
+        highlightedColumnKey: string,
+        itemWidth: number
+    ) => boolean;
+    scrollToHighlightedItem: (
+        columns: HangingGardenColumn<T>[],
+        highlightedItem: T,
+        itemWidth: number
+    ) => boolean;
+};
+
 const useScrolling = <T extends HangingGardenColumnIndex>(
     canvas: React.RefObject<HTMLCanvasElement> | null,
-    container: React.RefObject<HTMLDivElement> | null
-) => {
+    container: React.RefObject<HTMLDivElement> | null,
+    itemKeyProp: keyof T
+): Scroll<T> => {
     const isScrolling = React.useRef(false);
     const scrollTop = React.useRef(0);
     const scrollLeft = React.useRef(0);
@@ -65,21 +83,24 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
         (
             columns: HangingGardenColumn<T>[],
             highlightedItem: T | null,
-            itemKeyProp: keyof T,
             itemWidth: number
         ): boolean => {
             if (!highlightedItem) return false;
 
-            const highlightedIndex = columns.findIndex(
-                (column) =>
-                    column.data.findIndex(
-                        (item) => item[itemKeyProp] === highlightedItem[itemKeyProp]
-                    ) > -1
+            const highlightedIndex = columns.findIndex((column) =>
+                column.data.some((item) => {
+                    console.log(
+                        'highlightedIndex:',
+                        item[itemKeyProp] === highlightedItem[itemKeyProp]
+                    );
+                    return item[itemKeyProp] === highlightedItem[itemKeyProp];
+                })
             );
-
+            console.log('scrollToHighlightedItem:', highlightedIndex);
+            console.log('scrollToHighlightedItem:', highlightedItem);
             return highlightedIndex === -1 ? false : scrollTo(highlightedIndex, itemWidth);
         },
-        [scrollTo]
+        [scrollTo, itemKeyProp]
     );
 
     return {

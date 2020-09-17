@@ -6,10 +6,7 @@ import useTextNode from './useTextNode';
 import { createRenderedItemDescription, getColumnX, EXPANDED_COLUMN_PADDING } from '../utils';
 import { HangingGardenColumnIndex } from '../models/HangingGarden';
 
-const useItemDescription = <T extends HangingGardenColumnIndex>(
-    getItemDescription: (item: T) => string,
-    itemKeyProp: keyof T
-) => {
+const useItemDescription = <T extends HangingGardenColumnIndex>() => {
     const {
         stage,
         backgroundColor,
@@ -18,6 +15,8 @@ const useItemDescription = <T extends HangingGardenColumnIndex>(
         headerHeight,
         itemHeight,
         itemWidth,
+        itemKeyProp,
+        getItemDescription,
         textureCaches: { getTextureFromCache, addTextureToCache },
     } = useHangingGardenContext();
 
@@ -25,13 +24,13 @@ const useItemDescription = <T extends HangingGardenColumnIndex>(
 
     const getRenderedItemDescription = React.useCallback(
         (item: T) => {
-            let itemDescription = getTextureFromCache('descriptions', item[itemKeyProp]);
+            let itemDescription = getTextureFromCache('descriptions', item[itemKeyProp as keyof T]);
 
             if (!itemDescription) {
                 const description = getItemDescription(item);
                 const textNode = createTextNode(description, 0x243746);
                 itemDescription = createRenderedItemDescription(backgroundColor, textNode);
-                addTextureToCache('descriptions', item[itemKeyProp], itemDescription);
+                addTextureToCache('descriptions', item[itemKeyProp as keyof T], itemDescription);
             }
             return itemDescription as PIXI.Container;
         },
@@ -69,7 +68,7 @@ const useItemDescription = <T extends HangingGardenColumnIndex>(
         ]
     );
 
-    return { renderItemDescription };
+    return { renderItemDescription, getRenderedItemDescription };
 };
 
 export default useItemDescription;

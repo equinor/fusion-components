@@ -4,13 +4,22 @@ import { PopoverContainer } from '@equinor/fusion-components';
 
 const POPOVER_MARGIN = 8;
 
+export type UsePopover = {
+    popover: JSX.Element;
+    addPopover: (
+        hitContainer: PIXI.Container,
+        hitArea: PIXI.Rectangle,
+        renderPopover: () => JSX.Element
+    ) => void;
+};
+
 export type Popover = {
     top: number;
     left: number;
     render: () => JSX.Element;
 };
 
-const usePopover = (delay?: number) => {
+const usePopover = (delay?: number): UsePopover => {
     const [selectedPopover, setSelectedPopover] = React.useState<Popover | null>(null);
 
     const addPopover = React.useCallback(

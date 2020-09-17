@@ -12,10 +12,10 @@ import {
 } from '../utils/procosys';
 import { getYearAndWeekFromDate, getColumns } from '../columns/columns';
 import { FilterTerm, ItemRenderContext, HangingGarden } from '../../../../../..';
-import { HeaderRenderContext } from '../../../HangingGardenModels';
 import MaterialStatusPopover from '../components/MaterialStatusPopover';
 import ProjectPopover from '../components/ProjectPopover';
 import HoldStatusPopover from '../components/HoldStatusPopover';
+import { HeaderRenderContext } from '../../../models/RenderContext';
 
 type GardenProps = {
     filteredData: WorkOrderType[];
