@@ -4,7 +4,7 @@ import { AnchorDOMRect } from './anchor-rect';
 
 export type OverlayAnchor = {
     anchor: string;
-    scope?: string;
+    scope: string;
     bounds: () => DOMRect,
 }
 
@@ -26,7 +26,7 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
      * the scope which this anchor should appear in
      */
     @property({ type: String })
-    scope?: string;
+    scope: string;
 
     /**
      * apply padding to container of anchor

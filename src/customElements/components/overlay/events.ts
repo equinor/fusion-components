@@ -6,6 +6,7 @@ export const enum OverlayEventType {
     deactivated = 'overlay-deactivated',
     scope = 'overlay-scope',
     selection = 'overlay-selection',
+    anchor = 'overlay-anchor',
 }
 
 export type OverlayEventDetail = {
@@ -26,5 +27,6 @@ declare global {
         [OverlayEventType.deactivated]: OverlayEvent<OverlayEventType.deactivated>;
         [OverlayEventType.scope]: OverlayEvent<OverlayEventType.scope>;
         [OverlayEventType.selection]: OverlayEvent<OverlayEventType.selection>;
+        [OverlayEventType.anchor]: OverlayEvent<OverlayEventType.anchor>;
     }
 }

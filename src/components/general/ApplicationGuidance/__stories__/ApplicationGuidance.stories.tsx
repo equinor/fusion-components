@@ -14,8 +14,8 @@ const Story: React.FC = () => {
     return (
         <div style={{ display: 'flex', height: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }}>
-                <Button ref={useAnchor({ scope, id: 'button', snug: true })}>This button has snuggly fitted anchor</Button>
-                <ApplicationGuidanceAnchor id="another-button" scope={scope} style={{ display: 'block'}}>
+                <Button ref={useAnchor({ scope, id: 'button' })}>This button has snuggly fitted anchor</Button>
+                <ApplicationGuidanceAnchor anchor="another-button" scope={scope} style={{ display: 'block'}}>
                     <Button>Another button</Button>
                     <p>This anchor contains multiple components</p>
                 </ApplicationGuidanceAnchor>
@@ -26,7 +26,7 @@ const Story: React.FC = () => {
                 isOpen={showSideSheet}
                 onClose={setShowSideSheet}
             >
-                <fusion-overlay-anchor id="just-text" scope={scope}>
+                <fusion-overlay-anchor anchor="just-text" scope={scope}>
                     <p style={{ margin: 32, display: 'block' }}>
                         Text needs to be wrapped in something. This text is wrapped with
                         &lt;p&gt;&lt;/p&gt;

@@ -10,7 +10,7 @@ import styles from './element.css';
 import { OverlayAnchor, OverlayAnchorConnectEvent } from './anchor';
 import { OverlayEventType, OverlayEventDetail, OverlayEvent } from './events';
 
-export type OverLayScope = Record<string, string[] | null>
+export type OverLayScope = Record<string, string[]>
 
 export interface OverlayElementProps {
     scope?: OverLayScope;
@@ -22,7 +22,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     static styles = styles;
 
     @property({ type: Object })
-    scope: OverLayScope = {};
+    scope: OverLayScope;
 
     @property({ type: Boolean, reflect: true })
     active: boolean = false;
@@ -35,7 +35,15 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     anchors: Record<string, OverlayAnchor> = {};
 
     get scopedAnchors(): OverlayAnchor[] {
-        return Object.values(this.anchors).filter(({ anchor: id, scope }) => scope in this.scope && (!this.scope[scope] || this.scope[scope].includes(id)));
+        const { scope } = this;
+        const anchors = Object.values(this.anchors);
+        const hasScope = !!scope && !!Object.keys(scope).length;
+        return hasScope ? anchors.filter(
+            (anchor) => {
+                const scopeAnchors = scope[anchor.scope];
+                return scopeAnchors && (!scopeAnchors.length || scopeAnchors.includes(anchor.anchor))
+            }
+        ) : anchors;
     }
 
     get selectedAnchor(): OverlayAnchor {
@@ -92,6 +100,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         );
         props.has('scope') && this._dispatchEvent(OverlayEventType.scope);
         props.has('selected') && this._dispatchEvent(OverlayEventType.selection);
+        props.has('anchors') && this._dispatchEvent(OverlayEventType.anchor);
     }
 
     protected _dispatchEvent(type: OverlayEventType, init?: CustomEventInit<OverlayEventDetail>) {

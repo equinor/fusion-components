@@ -9,7 +9,7 @@ import {
 
 export interface AppGuideAnchorRef<R extends HTMLElement> {
     id: string;
-    scope?: string;
+    scope: string;
     padding?: number;
     ref: React.RefObject<R>;
 }

@@ -77,6 +77,17 @@ export class QuickFactElement extends LitElement {
             if (err.response?.status === 404) {
                 return undefined;
             }
+            if (err.response?.status === 401) {
+                return undefined;
+            }
+
+            switch (err.response?.status) {
+                case 404: return undefined;
+                /** @todo handle not allowed */
+                case 401:
+                    console.warn('not authorized!', err);
+                    return undefined;
+            }
             console.error(err);
             throw Error('Failed to fetch quick fact');
         } finally {
@@ -94,10 +105,10 @@ export class QuickFactElement extends LitElement {
          */
         if (changedProperties.has('scope') || changedProperties.has('anchor')) {
             this.quickFact = null;
-            if(this.scope && this.anchor){
+            if (!!this.scope && !!this.anchor) {
                 this.fetchQuickFact();
                 this._dispatchEvent(QuickFactEventType.show);
-            } 
+            }
         }
 
         /**
@@ -137,7 +148,7 @@ export class QuickFactElement extends LitElement {
             return html`<slot name="empty"></slot>`;
         }
 
-        
+
         if (this.view === 'edit') {
             return html`
                 <fusion-quick-fact-edit

@@ -1,4 +1,4 @@
-import { LitElement, html, property, eventOptions, PropertyValues } from "../base";
+import { LitElement, html, property, eventOptions, PropertyValues, query } from "../base";
 
 import { OverlayEvent, OverlayEventType, OverLayScope } from '../overlay';
 import { QuickFactEvent, QuickFactEventType } from '../quick-fact';
@@ -18,7 +18,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     static styles = styles;
 
     @property({ type: Object })
-    scope: OverLayScope = {};
+    scope?: OverLayScope;
 
     @property({ type: Boolean, reflect: true })
     active: boolean = false;
@@ -28,9 +28,11 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
     toggle() {
         this.active = !this.active;
-        // @ts-ignore
-        this.renderRoot.querySelector('#popover').style = null;
+        this._resetDrag();
     }
+
+    @query('#popover')
+    popover!: HTMLDivElement;
 
     render() {
         const { scope, active } = this;
@@ -56,14 +58,16 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     }
 
     renderQuickFact() {
-        const { active, selected: { scope, anchor } } = this;
+        const { active, selected } = this;
         if (!active) {
             return '';
         }
+
+        const { scope, anchor } = selected || {};
         return html`
             <fusion-quick-fact
-                scope="${scope}"
-                anchor="${anchor}"
+                .scope="${scope}"
+                .anchor="${anchor}"
                 @quick-fact-show=${this._handleQuickFactShow}
             >
                 <span slot="empty">Click on a highlighted area to view a Quickfact or to add a new</span>
@@ -97,6 +101,8 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
     protected _handleSelectionChanged(e: OverlayEvent<OverlayEventType.selection>) {
         const { anchor, scope } = e.detail.selected;
+        debugger;
+        console.log(e.detail.selected, e);
         this.selected = { anchor, scope };
     }
 
@@ -106,7 +112,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
             selected: { anchor, scope },
             info
         };
-        this._dispatchEvent(ApplicationGuideEventType.show, {detail});
+        this._dispatchEvent(ApplicationGuideEventType.show, { detail });
     }
 
     // @TODO
@@ -132,6 +138,13 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         el.style.left = this._dragStart.eX + (e.x - this._dragStart.dX) + 'px';
         el.style.opacity = null;
 
+    }
+
+    protected _resetDrag() {
+        const { popover } = this;
+        popover.style.top = '';
+        popover.style.left = '';
+        popover.style.opacity = '';
     }
 }
 
