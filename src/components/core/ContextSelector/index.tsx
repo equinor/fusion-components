@@ -5,6 +5,7 @@ import {
     useComponentDisplayClassNames,
     useContextQuery,
     useCurrentApp,
+    useContextHistory,
     ContextType,
     useCurrentContextTypes,
 } from '@equinor/fusion';
@@ -18,7 +19,6 @@ import {
     Spinner,
     IconButton,
     CloseIcon,
-    TextInput,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
@@ -37,21 +37,26 @@ type SearchableContextDropdownOption = SearchableDropdownOption & {
 };
 
 const ContextSelector: React.FC = () => {
-    const [queryText, setQueryText] = React.useState('');
-    const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
-    const inputRef = React.useRef<HTMLInputElement | null>(null);
-    const currentContext = useCurrentContext();
-    const { isQuerying, contexts, search } = useContextQuery();
     const contextManager = useContextManager();
+    const currentContext = useCurrentContext();
+    const contextHistory = useContextHistory();
     const currentContextTypes = useCurrentContextTypes();
     const currentApp = useCurrentApp();
     const contextManifest = currentApp?.context;
+    const { isQuerying, contexts, search } = useContextQuery();
+
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+    const [queryText, setQueryText] = React.useState('');
+    const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
 
     React.useEffect(() => {
+        const selection = queryText && contexts.length ? contexts : contextHistory;
+
         setDropdownSections(
-            contextToDropdownSection(contexts, queryText, isQuerying, currentContext)
+            contextToDropdownSection(selection, queryText, isQuerying, currentContext)
         );
-    }, [contexts, currentContext, queryText, isQuerying]);
+    }, [contexts, currentContext, queryText, isQuerying, contextHistory]);
 
     React.useEffect(() => {
         search(queryText);
@@ -180,20 +185,28 @@ const ContextSelector: React.FC = () => {
                 return;
             }
             if (isOpen) {
-                const selectedContext = contexts.find((c) => c.id === item.key);
+                const selection = queryText && contexts.length ? contexts : contextHistory;
+                const selectedContext = selection.find((c) => c.id === item.key);
                 setIsOpen(false);
                 setQueryText('');
-                if (selectedContext) contextManager.setCurrentContextAsync(selectedContext);
+                if (selectedContext) {
+                    contextManager.setCurrentContextAsync(selectedContext);
+                } else {
+                    contextManager.setCurrentContextIdAsync(item.key);
+                }
             }
         },
-        [isOpen, contexts]
+        [isOpen, contexts, queryText, contextHistory]
     );
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
     const helperText = React.useMemo(
-        () => (!contexts.length && !isQuerying && !queryText ? 'Start typing to search' : null),
-        [contexts, isQuerying, queryText, contextManifest]
+        () =>
+            !dropdownSections[0]?.items?.length && !isQuerying && !queryText
+                ? 'Start typing to search'
+                : null,
+        [dropdownSections]
     );
 
     return (
