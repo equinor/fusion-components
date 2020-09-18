@@ -51,7 +51,7 @@ const ErrorMessageNoAccess = () => {
         />
     );
 };
-storiesOf('General|ErrorMessage', module)
+storiesOf('General/ErrorMessage', module)
     .addParameters({ jest: ['ErrorMessage.stories.tsx'] })
     .addDecorator(withFusionStory('ErrorMessage'))
     .add('Error', () => <ErrorMessageError />)

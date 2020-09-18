@@ -9,8 +9,10 @@ import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
 import { HashRouter } from 'react-router-dom';
 
 import FusionRoot from '../src/components/core/Root';
+import {ApplicationGuidanceWrapper} from '../src/components/general/ApplicationGuidance';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
+
 
 const mockUser = {
     id: '1337',
@@ -118,13 +120,13 @@ const serviceResolver: ServiceResolver = {
     getPeopleBaseUrl: () => 'https://pro-s-people-ci.azurewebsites.net',
     getReportsBaseUrl: () => 'https://pro-s-reports-ci.azurewebsites.net',
     getPowerBiApiBaseUrl: () => 'https://api.powerbi.com/v1.0/myorg',
-    getNotificationBaseUrl:() => 'https://pro-s-notification-ci.azurewebsites.net',
+    getNotificationBaseUrl: () => 'https://pro-s-notification-ci.azurewebsites.net',
 };
 
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
 authContainer.registerAppAsync(
     clientId,
-    Object.keys(serviceResolver).map(key => serviceResolver[key]())
+    Object.keys(serviceResolver).map((key) => serviceResolver[key]())
 );
 
 const FusionWrapper: React.FC = ({ children }) => {
@@ -140,14 +142,19 @@ const FusionWrapper: React.FC = ({ children }) => {
     return (
         <FusionContext.Provider value={fusionContext}>
             <HashRouter>
-                <FusionRoot rootRef={root} overlayRef={overlay}>
-                    {children}
-                </FusionRoot>
+                <ApplicationGuidanceWrapper
+                    scope="storybook"
+                    appId={clientId}
+                >
+                    <FusionRoot rootRef={root} overlayRef={overlay}>
+                        {children}
+                    </FusionRoot>
+                </ApplicationGuidanceWrapper>
             </HashRouter>
         </FusionContext.Provider>
     );
 };
 
-export const withFusionContext = () => stories => {
+export const withFusionContext = () => (stories) => {
     return <FusionWrapper>{stories()}</FusionWrapper>;
 };

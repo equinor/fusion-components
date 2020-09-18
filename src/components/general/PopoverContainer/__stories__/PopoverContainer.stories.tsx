@@ -31,6 +31,6 @@ const PopoverContainerStory = () => {
     );
 };
 
-storiesOf('General|Popover Container', module).add('Default', () => {
+storiesOf('General/Popover Container', module).add('Default', () => {
     return <PopoverContainerStory />;
 });

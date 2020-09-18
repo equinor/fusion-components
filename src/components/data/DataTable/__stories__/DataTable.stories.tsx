@@ -56,6 +56,7 @@ const WithSkeleton: React.FC = () => {
                 direction,
             }}
             listComponent={ExpandedItem}
+            quickFactScope={"storybook"}
         />
     );
 };
@@ -112,6 +113,7 @@ const WithoutSkeleton: React.FC = () => {
             }}
             expandedComponent={ExpandedItem}
             listComponent={ExpandedItem}
+            quickFactScope={"storybook"}
         />
     );
 };
@@ -154,6 +156,7 @@ const NoColumnsCollapse: React.FC = () => {
                 column: sortedByColumn,
                 direction,
             }}
+            quickFactScope={"storybook"}
         />
     );
 };
@@ -201,6 +204,7 @@ const Selectable: React.FC = () => {
             isSelectable
             onSelectionChange={setSelectedItems}
             selectedItems={selectedItems}
+            quickFactScope={"storybook"}
         />
     );
 };
@@ -258,11 +262,12 @@ const SingleSelectable: React.FC = () => {
             listComponent={ExpandedItem}
             onRowClick={handleClick}
             selectedItems={selectedItems}
+            quickFactScope={"storybook"}
         />
     );
 };
 
-storiesOf('Data|Data Table', module)
+storiesOf('Data/Data Table', module)
     .addParameters({ jest: ['DataTable.stories.jsx'] })
     .addDecorator(withFusionStory('Data Table'))
     .add('Default', () => <WithoutSkeleton />)

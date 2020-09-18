@@ -32,7 +32,7 @@ const PersonCardStory = () => {
     return <PersonPositionCard position={position} />;
 };
 
-storiesOf('People|PersonPositinCard', module)
+storiesOf('People/PersonPositinCard', module)
     .addDecorator(withKnobs)
     .addDecorator(withFusionStory('PersonPositionCard'))
     .add('Default', () => <PersonCardStory />);

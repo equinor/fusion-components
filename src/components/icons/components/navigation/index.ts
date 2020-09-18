@@ -8,3 +8,4 @@ export { default as ArrowDownwardIcon } from './ArrowDownwardIcon';
 export { default as MoreIcon } from './MoreIcon';
 export { default as SubdirectoryArrowRightIcon } from './SubdirectoryArrowRightIcon';
 export { default as SubdirectoryArrowLeftIcon } from './SubdirectoryArrowLeftIcon';
+export { default as ExitToAppIcon } from './ExitToAppIcon';

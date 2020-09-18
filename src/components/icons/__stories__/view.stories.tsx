@@ -5,11 +5,11 @@ import { withKnobs, number, color } from '@storybook/addon-knobs';
 
 import withFusionStory from "../../../../.storybook/withFusionStory";
 
-import { ListViewIcon, GridViewIcon, ColumnViewIcon } from '../components/view';
+import { ListViewIcon, GridViewIcon, ColumnViewIcon, WorkIcon } from '../components/view';
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|List', module);
+const stories = storiesOf('Icons/List', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory("List"));
 
@@ -33,6 +33,15 @@ stories.add('Grid', () => (
 
 stories.add('Column', () => (
     <ColumnViewIcon
+        {...eventsFromNames}
+        width={number('width', 24)}
+        height={number('height', 24)}
+        color={color('color', '#000')}
+    />
+));
+
+stories.add('Work', () => (
+    <WorkIcon
         {...eventsFromNames}
         width={number('width', 24)}
         height={number('height', 24)}

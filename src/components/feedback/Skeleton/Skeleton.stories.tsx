@@ -15,7 +15,7 @@ const sizes = {
 
 const size = sizes.xlarge as DiscSize;
 
-const stories = storiesOf('Feedback|Skeleton', module);
+const stories = storiesOf('Feedback/Skeleton', module);
 stories.addDecorator(withFusionStory('Skeleton'));
 
 stories.add('Bar', () => (

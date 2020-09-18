@@ -1,7 +1,7 @@
-import * as React from "react";
-import { storiesOf } from "@storybook/react";
-import withFusionStory from "../../../../.storybook/withFusionStory";
-import useElevationClassName, { Elevation } from "../index";
+import * as React from 'react';
+import { storiesOf } from '@storybook/react';
+import withFusionStory from '../../../../.storybook/withFusionStory';
+import useElevationClassName, { Elevation } from '../index';
 
 type BoxProps = {
     elevation: Elevation;
@@ -11,29 +11,29 @@ const Box: React.FC<BoxProps> = (props) => (
     <div
         className={useElevationClassName(props.elevation)}
         style={{
-            background: "white",
+            background: 'white',
             width: 100,
             height: 100,
             marginBottom: 24,
             borderRadius: 4,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 24
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 24,
         }}
     >
         {props.elevation}
     </div>
-)
+);
 
 const ElevationStory = () => (
     <div
         style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            alignItems: "space-between",
-            margin: 40
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'space-between',
+            margin: 40,
         }}
     >
         <Box elevation={0} />
@@ -49,8 +49,8 @@ const ElevationStory = () => (
     </div>
 );
 
-storiesOf("Hooks", module)
-    .addDecorator(withFusionStory("useElevationClassName"))
-    .add("useElevationClassName", () => {
+storiesOf('Hooks', module)
+    .addDecorator(withFusionStory('useElevationClassName'))
+    .add('useElevationClassName', () => {
         return <ElevationStory />;
     });
