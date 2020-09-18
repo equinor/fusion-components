@@ -8,7 +8,6 @@ const initialMarkdown = `# This is markdown \n ## This is also markdown \n ### T
 
 const MarkdownEditorStory = () => {
     const [markdown, setMarkDown] = React.useState(initialMarkdown);
-
     return (
         <div>
             <MarkdownEditor
@@ -25,12 +24,12 @@ const MarkdownEditorStory = () => {
                     'paragraph',
                 ]}
             >
-                {markdown}
+                {initialMarkdown}
             </MarkdownEditor>
         </div>
     );
 };
 
-storiesOf('General|Markdown Editor', module)
+storiesOf('General/Markdown Editor', module)
     .addDecorator(withFusionStory('Markdown Editor'))
     .add('Default', () => <MarkdownEditorStory />);

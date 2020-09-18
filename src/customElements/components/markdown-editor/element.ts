@@ -59,12 +59,15 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
     }
 
     protected createEditorView(editor: Element, state) {
-        const onChange = this.crateChangeEvent;
-        let editorView = new EditorView(editor, {
+        const onChange = (md: string) => {
+            const event = this.crateChangeEvent(md);
+            this.dispatchEvent(event);
+        };
+
+        const editorView = new EditorView(editor, {
             state,
             dispatchTransaction(transaction) {
-                const changeEvent = onChange(defaultMarkdownSerializer.serialize(transaction.doc));
-                this.dispatchEvent(changeEvent);
+                onChange(defaultMarkdownSerializer.serialize(transaction.doc));
                 const newState = editorView.state.apply(transaction);
                 editorView.updateState(newState);
             },
