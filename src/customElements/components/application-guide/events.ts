@@ -16,9 +16,9 @@ export type ApplicationGuideEventDetail = {
     info?: QuickFact;
 }
 
-export class ApplicationGuideEvent<T extends ApplicationGuideEventType> extends CustomEvent<ApplicationGuideEventDetail> {
+export class ApplicationGuideEvent<T extends ApplicationGuideEventType | unknown = unknown> extends CustomEvent<ApplicationGuideEventDetail> {
     constructor(type: T, init: CustomEventInit<ApplicationGuideEventDetail>) {
-        super(type, init);
+        super(type as ApplicationGuideEventType, init);
     }
 }
 

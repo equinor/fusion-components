@@ -28,7 +28,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
     toggle() {
         this.active = !this.active;
-        this._resetDrag();
+        this.popover.removeAttribute('style');
     }
 
     @query('#popover')
@@ -138,13 +138,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         el.style.left = this._dragStart.eX + (e.x - this._dragStart.dX) + 'px';
         el.style.opacity = null;
 
-    }
-
-    protected _resetDrag() {
-        const { popover } = this;
-        popover.style.top = '';
-        popover.style.left = '';
-        popover.style.opacity = '';
     }
 }
 
