@@ -18,6 +18,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         isActive,
         isOpen,
         aside,
+        isDisabled,
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
@@ -40,13 +41,13 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
     );
 
     const change = useCallback(() => {
-        onChange && onChange(id, !isOpen, true);
-        onClick && onClick();
-    }, [onClick, id, isOpen, onChange]);
+        onChange && onChange(id, !isOpen, !isDisabled);
+        !isDisabled && onClick && onClick();
+    }, [onClick, id, isOpen, onChange, isDisabled]);
 
     const iconClasses = classNames(styles.navigationIcon, {
-        [styles.isOpen]: !isCollapsed
-    })
+        [styles.isOpen]: !isCollapsed,
+    });
 
     const navigationContent = useMemo(
         () => (
@@ -92,7 +93,12 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
 
     return (
         <>
-            <NavigationItem isActive={isActive} type="grouping" isCollapsed={isCollapsed}>
+            <NavigationItem
+                isActive={isActive}
+                type="grouping"
+                isCollapsed={isCollapsed}
+                isDisabled={isDisabled}
+            >
                 {navigationContent}
             </NavigationItem>
             {isOpen && navigationStructure}
