@@ -1,6 +1,8 @@
-import { LitElement, html, property, eventOptions } from "../base";
+import { LitElement, html, property, eventOptions, PropertyValues, query } from "../base";
 
-import { OverlayElementEventType, OverlayElementEvent } from '../overlay/events';
+import { OverlayEvent, OverlayEventType, OverLayScope } from '../overlay';
+import { QuickFactEvent, QuickFactEventType } from '../quick-fact';
+import { ApplicationGuideEvent, ApplicationGuideEventType, ApplicationGuideEventDetail } from './events';
 
 import { iconOpen } from './open.svg';
 import { iconClose } from './close.svg';
@@ -9,26 +11,28 @@ import styles from './element.css';
 
 
 export interface ApplicationGuideElementProps {
-    scope?: string;
+    scope?: OverLayScope;
 }
 
 export class ApplicationGuideElement extends LitElement implements ApplicationGuideElementProps {
     static styles = styles;
 
-    @property()
-    scope?: string;
+    @property({ type: Object })
+    scope?: OverLayScope;
 
     @property({ type: Boolean, reflect: true })
     active: boolean = false;
 
-    @property({ reflect: true })
-    selected?: string;
+    @property({ type: Object })
+    selected?: { scope: string, anchor: string };
 
     toggle() {
         this.active = !this.active;
-        // @ts-ignore
-        this.renderRoot.querySelector('#popover').style = null;
+        this.popover.removeAttribute('style');
     }
+
+    @query('#popover')
+    popover!: HTMLDivElement;
 
     render() {
         const { scope, active } = this;
@@ -54,22 +58,61 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     }
 
     renderQuickFact() {
-        const { active, selected, scope } = this;
+        const { active, selected } = this;
         if (!active) {
             return '';
         }
+
+        const { scope, anchor } = selected || {};
         return html`
             <fusion-quick-fact
                 .scope="${scope}"
-                .anchor="${selected}"
+                .anchor="${anchor}"
+                @quick-fact-show=${this._handleQuickFactShow}
             >
                 <span slot="empty">Click on a highlighted area to view a Quickfact or to add a new</span>
             </fusion-quick-fact>
         `;
     }
 
-    protected _handleSelectionChanged(e: OverlayElementEvent<OverlayElementEventType.selection>) {
-        this.selected = e.detail.selected.id;
+    protected updated(props: PropertyValues) {
+        super.update(props);
+        props.has('active') && this._dispatchEvent(this.active
+            ? ApplicationGuideEventType.activated
+            : ApplicationGuideEventType.deactivated
+        );
+        props.has('scope') && this._dispatchEvent(ApplicationGuideEventType.scope);
+        props.has('selected') && this._dispatchEvent(ApplicationGuideEventType.selection);
+    }
+
+
+    protected _dispatchEvent(type: ApplicationGuideEventType, init?: CustomEventInit<ApplicationGuideEventDetail>) {
+        const { scope, active, selected } = this;
+        const detail: ApplicationGuideEventDetail = {
+            scope,
+            active,
+            selected,
+            ...init?.detail,
+        };
+        const event = new ApplicationGuideEvent(type, { ...init, detail });
+        this.dispatchEvent(event);
+        return event;
+    }
+
+    protected _handleSelectionChanged(e: OverlayEvent<OverlayEventType.selection>) {
+        const { anchor, scope } = e.detail.selected;
+        debugger;
+        console.log(e.detail.selected, e);
+        this.selected = { anchor, scope };
+    }
+
+    protected _handleQuickFactShow(e: QuickFactEvent<QuickFactEventType.show>) {
+        const { anchor, scope, info } = e.detail;
+        const detail: ApplicationGuideEventDetail = {
+            selected: { anchor, scope },
+            info
+        };
+        this._dispatchEvent(ApplicationGuideEventType.show, { detail });
     }
 
     // @TODO
@@ -93,8 +136,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         const el = e.currentTarget as HTMLElement;
         el.style.top = this._dragStart.eY + (e.y - this._dragStart.dY) + 'px';
         el.style.left = this._dragStart.eX + (e.x - this._dragStart.dX) + 'px';
-        // el.style.bottom = window.innerHeight - (e.clientY + el.clientHeight) + 'px';
-        // el.style.right = window.innerWidth - (e.clientX + el.clientWidth) + 'px';
         el.style.opacity = null;
 
     }

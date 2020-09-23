@@ -3,6 +3,7 @@ import Element from './element';
 import { fusionElement } from '../base';
 
 import './view';
+import './edit';
 import './skeleton';
 
 const QuickFactElementTag = 'fusion-quick-fact';
@@ -17,5 +18,5 @@ declare global {
 }
 
 
-export * from './edit';
-export * from './view';
+export * from './element';
+export * from './events';

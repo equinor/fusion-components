@@ -9,12 +9,13 @@ import styles from './element.css';
 import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
 import iconCreate from './create.svg';
 import iconEdit from './edit.svg';
+import { QuickFactEventType, QuickFactEventDetail, QuickFactEvent } from './events';
 
-type ViewMode = 'view' | 'edit';
+export type ViewMode = 'view' | 'edit';
 
 export interface QuickFactElementProps {
-    active?: boolean;
-    scope: string;
+    scope?: string;
+    anchor?: string;
 }
 
 /**
@@ -22,12 +23,6 @@ export interface QuickFactElementProps {
  */
 export class QuickFactElement extends LitElement {
     static styles = styles;
-
-    /**
-     * popover active
-     */
-    @property({ type: Boolean })
-    active?: boolean;
 
     /**
      * scope of quick fact
@@ -45,7 +40,7 @@ export class QuickFactElement extends LitElement {
      * display mode of quick fact
      */
     @property({ attribute: false })
-    viewMode: ViewMode = 'view';
+    view: ViewMode = 'view';
 
     @property({ attribute: false })
     quickFact?: QuickFact;
@@ -59,7 +54,11 @@ export class QuickFactElement extends LitElement {
 
 
     public async fetchQuickFact() {
-        this.quickFact = await this._fetchQuickFact();
+        const event = this._dispatchEvent(QuickFactEventType.fetch, { cancelable: true });
+        if (!event.defaultPrevented) {
+            this.quickFact = await this._fetchQuickFact();
+            this._dispatchEvent(QuickFactEventType.fetched);
+        }
     }
 
     /**
@@ -78,6 +77,17 @@ export class QuickFactElement extends LitElement {
             if (err.response?.status === 404) {
                 return undefined;
             }
+            if (err.response?.status === 401) {
+                return undefined;
+            }
+
+            switch (err.response?.status) {
+                case 404: return undefined;
+                /** @todo handle not allowed */
+                case 401:
+                    console.warn('not authorized!', err);
+                    return undefined;
+            }
             console.error(err);
             throw Error('Failed to fetch quick fact');
         } finally {
@@ -95,7 +105,10 @@ export class QuickFactElement extends LitElement {
          */
         if (changedProperties.has('scope') || changedProperties.has('anchor')) {
             this.quickFact = null;
-            this.scope && this.anchor && this.fetchQuickFact();
+            if (!!this.scope && !!this.anchor) {
+                this.fetchQuickFact();
+                this._dispatchEvent(QuickFactEventType.show);
+            }
         }
 
         /**
@@ -107,6 +120,7 @@ export class QuickFactElement extends LitElement {
     }
 
     private handleSave = async (e: CustomEvent<QuickFact>) => {
+        this._dispatchEvent(this.quickFact ? QuickFactEventType.updated : QuickFactEventType.created);
         this.quickFact = e.detail;
     };
 
@@ -119,11 +133,11 @@ export class QuickFactElement extends LitElement {
     };
 
     private enterEditMode() {
-        this.viewMode = this.anchor ? 'edit' : 'view';
+        this.view = this.anchor ? 'edit' : 'view';
     }
 
     private enterViewMode() {
-        this.viewMode = 'view';
+        this.view = 'view';
     }
 
     private renderContent() {
@@ -134,9 +148,8 @@ export class QuickFactElement extends LitElement {
             return html`<slot name="empty"></slot>`;
         }
 
-        console.log(anchor)
 
-        if (this.viewMode === 'edit') {
+        if (this.view === 'edit') {
             return html`
                 <fusion-quick-fact-edit
                     .quickFact=${quickFact || { anchor, collectionPath: this.scope }}
@@ -192,6 +205,15 @@ export class QuickFactElement extends LitElement {
                 </div>
             </div>
         `;
+    }
+
+
+    protected _dispatchEvent(type: QuickFactEventType, init?: CustomEventInit<QuickFactEventDetail>) {
+        const { scope, anchor, view, quickFact } = this;
+        const detail = { ...init?.detail, scope, anchor, quickFact, view }
+        const event = new QuickFactEvent(type, { ...init, detail });
+        this.dispatchEvent(event);
+        return event;
     }
 }
 

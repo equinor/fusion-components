@@ -3,8 +3,8 @@ import { OverlayAnchorConnectEvent } from './events';
 import { AnchorDOMRect } from './anchor-rect';
 
 export type OverlayAnchor = {
-    id: string;
-    scope?: string;
+    anchor: string;
+    scope: string;
     bounds: () => DOMRect,
 }
 
@@ -20,13 +20,13 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
      * id/tag of the element
      */
     @property({ type: String })
-    id: string;
+    anchor: string;
 
     /**
      * the scope which this anchor should appear in
      */
     @property({ type: String })
-    scope?: string;
+    scope: string;
 
     /**
      * apply padding to container of anchor
@@ -66,10 +66,10 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
         this._disconnectedCallbacks = [];
 
         requestAnimationFrame(() => {
-            const { id, scope, bounds, _disconnectedCallbacks } = this;
+            const { anchor, scope, bounds, _disconnectedCallbacks } = this;
             const event = new OverlayAnchorConnectEvent({
                 detail: {
-                    id,
+                    anchor,
                     scope,
                     bounds: bounds.bind(this),
                     disconnectedCallback: _disconnectedCallbacks.push.bind(this)

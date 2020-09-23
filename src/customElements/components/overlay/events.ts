@@ -1,29 +1,32 @@
-import { OverlayAnchor } from "./anchor";
+import { OverlayAnchor } from "../overlay/anchor";
+import { OverLayScope } from './element';
 
-export const enum OverlayElementEventType {
+export const enum OverlayEventType {
     activated = 'overlay-activated',
     deactivated = 'overlay-deactivated',
     scope = 'overlay-scope',
     selection = 'overlay-selection',
+    anchor = 'overlay-anchor',
 }
 
-export type OverlayElementEventDetail = {
+export type OverlayEventDetail = {
     selected?: OverlayAnchor;
-    scope?: string;
+    scope?: OverLayScope;
     active?: boolean;
 }
 
-export class OverlayElementEvent<T extends OverlayElementEventType> extends CustomEvent<OverlayElementEventDetail> {
-    constructor(type: T, init: CustomEventInit<OverlayElementEventDetail>) {
+export class OverlayEvent<T extends OverlayEventType> extends CustomEvent<OverlayEventDetail> {
+    constructor(type: T, init: CustomEventInit<OverlayEventDetail>) {
         super(type, init);
     }
 }
 
 declare global {
     interface ElementEventMap {
-        [OverlayElementEventType.activated]: OverlayElementEvent<OverlayElementEventType.activated>;
-        [OverlayElementEventType.deactivated]: OverlayElementEvent<OverlayElementEventType.deactivated>;
-        [OverlayElementEventType.scope]: OverlayElementEvent<OverlayElementEventType.scope>;
-        [OverlayElementEventType.selection]: OverlayElementEvent<OverlayElementEventType.selection>;
+        [OverlayEventType.activated]: OverlayEvent<OverlayEventType.activated>;
+        [OverlayEventType.deactivated]: OverlayEvent<OverlayEventType.deactivated>;
+        [OverlayEventType.scope]: OverlayEvent<OverlayEventType.scope>;
+        [OverlayEventType.selection]: OverlayEvent<OverlayEventType.selection>;
+        [OverlayEventType.anchor]: OverlayEvent<OverlayEventType.anchor>;
     }
 }
