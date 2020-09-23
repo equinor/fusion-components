@@ -4,6 +4,7 @@ import marked from 'marked';
 import classNames from 'classnames';
 import styles from './styles.less';
 import getDefaultHostConfig from './defaultHostConfig';
+import { useAnchorRef } from '../ApplicationGuidance';
 
 type AdaptiveCardViewerProps = {
     /** The hostConfig object that is passed along to the native AdaptiveCards. [More Info](https://docs.microsoft.com/en-us/adaptive-cards/display/hostconfig) */
@@ -20,6 +21,7 @@ type AdaptiveCardViewerProps = {
     onActionShowCard?: (action: AdaptiveCards.Action) => void;
     /** CSS classes that will bew applied to the card container */
     className?: string;
+    quickFactScope?: string;
 };
 
 const ACTION_OPEN_URL = 'Action.OpenUrl';
@@ -34,6 +36,7 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
     onActionShowCard,
     onActionSubmit,
     className,
+    quickFactScope,
 }) => {
     const cardContainerRef = React.useRef<HTMLDivElement | null>(null);
     const adaptiveCard = React.useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
@@ -80,6 +83,9 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
         current && current.appendChild(result);
         return () => current && current.firstChild && current.removeChild(current.firstChild);
     }, [result, className]);
+
+
+    useAnchorRef({ ref: cardContainerRef, id: "adaptive-card", scope: quickFactScope });   
 
     return <div ref={cardContainerRef} />;
 };

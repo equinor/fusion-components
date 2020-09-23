@@ -1,13 +1,11 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { DropdownArrow } from '@equinor/fusion-components';
+import { DropdownArrow, useAnchor } from '@equinor/fusion-components';
 import Filter from './Filter';
 import styles from '../styles.less';
 import { FilterTerm, FilterSection, Filter as FilterType } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
-import { ApplicationGuidanceAnchor } from '../../ApplicationGuidance';
 
 type SectionProps<T> = {
     terms: FilterTerm[];
@@ -38,6 +36,12 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         [isCollapsed, section.title]
     );
 
+    const anchorRef = useAnchor<HTMLHeadingElement>({
+        id: section.key,
+        scope: quickFactScope,
+        padding: 8,
+    });
+
     const renderedFilterComponents = section.filters.map((filter) => (
         <Filter
             key={filter.key}
@@ -66,14 +70,8 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         <section className={sectionClassNames}>
             {!filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
-                    <ApplicationGuidanceAnchor id={section.key} scope={quickFactScope} snug>
-                        <h3>{section.title}</h3>
-                    </ApplicationGuidanceAnchor>
-                    {section.isCollapsible && (
-                        <>
-                            <DropdownArrow isOpen={!isCollapsed} />
-                        </>
-                    )}
+                    {section.title && <h3 ref={anchorRef}>{section.title}</h3>}
+                    {section.isCollapsible && <DropdownArrow isOpen={!isCollapsed} />}
                 </header>
             )}
             {(!isCollapsed || filterPaneContext.paneIsCollapsed) && (

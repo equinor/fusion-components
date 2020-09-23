@@ -5,19 +5,30 @@ import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { useEventListener } from '@equinor/fusion-components';
 import useSliderTrack from './useSliderTrack';
+import { useAnchor } from '../ApplicationGuidance';
 export { SliderMarker };
 
 type SliderProps = {
+    quickFactId?: string;
     values: [number, number];
     markers: SliderMarker[];
     disabled?: boolean;
     hideHandle?: boolean;
     onChange: (marker: [number, number]) => void;
+    quickFactScope?: string;
 };
 
 type Handle = 'firstHandle' | 'lastHandle';
 
-const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, onChange }) => {
+const Slider: React.FC<SliderProps> = ({
+    quickFactId,
+    values,
+    markers,
+    disabled,
+    hideHandle,
+    onChange,
+    quickFactScope,
+}) => {
     const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
     const firstValue = React.useMemo(() => values[0], [values]);
@@ -112,8 +123,11 @@ const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, 
         () => parseInt(calculatePosition(lastValue > firstValue ? lastValue : firstValue), 10),
         [calculatePosition, lastValue, firstValue]
     );
+
+    const anchorRef = useAnchor<HTMLDivElement>({ id: quickFactId, scope: quickFactScope });
+
     return (
-        <div className={containerClassNames} onClick={onTrackClick}>
+        <div className={containerClassNames} onClick={onTrackClick} ref={anchorRef}>
             <div className={styles.track} ref={trackRef} />
             <div
                 className={classNames(styles.slider, styles.active)}

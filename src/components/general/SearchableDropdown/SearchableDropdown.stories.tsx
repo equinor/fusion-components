@@ -67,15 +67,15 @@ const DropdownStory = () => {
 
     const [sections, setSections] = React.useState<SearchableDropdownSection[]>(dropdownSections);
 
-    const updateOptions = item =>
-        options.map(option => {
+    const updateOptions = (item) =>
+        options.map((option) => {
             return { ...option, isSelected: item.key === option.key };
         });
 
     const updateSections = (item: SearchableDropdownOption) => {
         const newSections = sections.reduce(
             (acc: SearchableDropdownSection[], curr: SearchableDropdownSection) => {
-                const items = curr.items.map(option => ({
+                const items = curr.items.map((option) => ({
                     ...option,
                     isSelected: option.key === item.key,
                 }));
@@ -93,28 +93,30 @@ const DropdownStory = () => {
     return (
         <div style={{ margin: '8px' }}>
             <SearchableDropdown
+                quickFactId={'searchable-dropdown-1'}
                 error
                 errorMessage="required"
                 options={options}
                 label="Dropdown"
-                onSelect={item => setOptions(updateOptions(item))}
+                onSelect={(item) => setOptions(updateOptions(item))}
+                quickFactScope="storybook"
             />
             <br />
             <SearchableDropdown
                 options={optionsNoLAbel}
-                onSelect={item => setOptionsNoLabel(updateOptions(item))}
+                onSelect={(item) => setOptionsNoLabel(updateOptions(item))}
             />
             <br />
             <SearchableDropdown
                 label="Select food"
-                onSelect={item => updateSections(item)}
+                onSelect={(item) => updateSections(item)}
                 sections={sections}
             />
             <br />
-            <div style={{width: '300px'}}>
+            <div style={{ width: '300px' }}>
                 <SearchableDropdown
                     label="Narrow food"
-                    onSelect={item => updateSections(item)}
+                    onSelect={(item) => updateSections(item)}
                     sections={sections}
                     dropdownMaxHeight={200}
                 />

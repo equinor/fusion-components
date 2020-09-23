@@ -3,17 +3,20 @@ import styles from '../styles.less';
 import { DoneIcon, MinimizeIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { useAnchor } from '../../ApplicationGuidance';
 
 type CheckboxProps = {
+    id?: string;
     selected?: boolean;
     onChange?: (e: React.MouseEvent<HTMLDivElement>) => void;
     disabled?: boolean;
     indeterminate?: boolean;
     color?: string;
+    quickFactScope?: string;
 };
 
 const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
-    ({ selected, onChange, disabled, indeterminate, color }, ref) => {
+    ({ id, selected, onChange, disabled, indeterminate, color, quickFactScope }, ref) => {
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
 
@@ -33,7 +36,11 @@ const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
         }, [indeterminate]);
 
         return (
-            <div className={containerClassNames} onClick={onChange}>
+            <div
+                className={containerClassNames}
+                onClick={onChange}
+                ref={useAnchor({ id, scope: quickFactScope })}
+            >
                 <input
                     type="checkbox"
                     checked={selected}

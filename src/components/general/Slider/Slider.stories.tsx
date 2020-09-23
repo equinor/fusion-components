@@ -31,10 +31,12 @@ const SliderPercentageStory = () => {
     return (
         <div style={{ width: 400, margin: '0 auto' }}>
             <Slider
+                quickFactId="slider-1"
                 value={value}
                 markers={markers}
                 onChange={(marker) => setValue(marker.value)}
                 hideHandle={boolean('Hide handle', false)}
+                quickFactScope="storybook"
             />
             <p>Value: {Math.ceil(value)}%</p>
             <Slider
@@ -131,10 +133,12 @@ const RangedSliderStory = () => {
                     />
                 </div>
                 <RangedSlider
+                    quickFactId="ranged-slider"
                     values={value}
                     markers={markers}
                     onChange={(markers) => setValue(markers)}
                     hideHandle={boolean('Hide handle', false)}
+                    quickFactScope="storybook"
                 />
             </div>
         </div>

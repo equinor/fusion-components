@@ -11,10 +11,10 @@ const TabsStory = () => {
 
     return (
         <Tabs activeTabKey={activeTabKey} onChange={changeTabKey}>
-            <Tab tabKey="Item1" title="Item 1">
+            <Tab tabKey="Item1" title="Item 1" appGuideAnchorScope="storybook">
                 <Item changeItem={changeTabKey} nextItem="Item2" content="This is Item 1" />
             </Tab>
-            <Tab tabKey="Item2" title="Item 2">
+            <Tab tabKey="Item2" title="Item 2" appGuideAnchorScope="storybook">
                 <Item
                     changeItem={changeTabKey}
                     prevItem="Item1"

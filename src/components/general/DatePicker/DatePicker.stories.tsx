@@ -5,14 +5,35 @@ import DatePicker from './index';
 
 const DatePickerStory = () => {
     const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
-
+    const scope = 'storybook';
     return (
         <div style={{ width: 200 }}>
-            <DatePicker label="Select date" onChange={setSelectedDate} selectedDate={selectedDate} />
+            <DatePicker
+                id="date-picker-1"
+                label="Select date"
+                onChange={setSelectedDate}
+                selectedDate={selectedDate}
+                quickFactScope={scope}
+            />
             <br />
-            <DatePicker error errorMessage="Select a date in the future" label="Select date" onChange={setSelectedDate} selectedDate={selectedDate} />
+            <DatePicker
+                id="date-picker-2"
+                error
+                errorMessage="Select a date in the future"
+                label="Select date"
+                onChange={setSelectedDate}
+                selectedDate={selectedDate}
+                quickFactScope={scope}
+            />
             <br />
-            <DatePicker disabled label="Select date" onChange={setSelectedDate} selectedDate={selectedDate} />
+            <DatePicker
+                id="date-picker-3"
+                disabled
+                label="Select date"
+                onChange={setSelectedDate}
+                selectedDate={selectedDate}
+                quickFactScope={scope}
+            />
         </div>
     );
 };

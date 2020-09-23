@@ -3,16 +3,19 @@ import classNames from 'classnames';
 
 import styles from './styles.less';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { useAnchorRef } from '../ApplicationGuidance/components/Anchor';
 
 type IconButtonProps = {
+    id?: string;
     active?: boolean;
     toggler?: boolean;
     disabled?: boolean;
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    quickFactScope?: string;
 };
 
 const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconButtonProps>>(
-    ({ active, toggler, disabled, children, ...props }, ref) => {
+    ({ id, active, toggler, disabled, quickFactScope, children, ...props }, ref) => {
         const buttonClassNames = classNames(
             styles.container,
             useComponentDisplayClassNames(styles),
@@ -28,12 +31,14 @@ const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconBu
             (ref as MutableRefObject<HTMLButtonElement | null>) ||
             useRef<HTMLButtonElement | null>(null);
 
+        useAnchorRef({ ref: buttonRef, id, scope: quickFactScope });
+
         return (
             <button
                 ref={buttonRef}
                 className={buttonClassNames}
                 disabled={disabled}
-                onMouseDown={e => e.preventDefault()}
+                onMouseDown={(e) => e.preventDefault()}
                 {...props}
             >
                 <span className={styles.iconContainer}>{children}</span>

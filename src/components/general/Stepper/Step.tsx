@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import { DoneIcon, styling } from '@equinor/fusion-components';
+import { DoneIcon, styling, useAnchorRef } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import useWindowWidth from './useWindowWidth';
 
@@ -17,6 +17,7 @@ type StepProps = {
     done?: boolean;
     isLastStep?: boolean;
     stepCount?: number;
+    quickFactScope?: string,
 };
 
 type BadgeProps = {
@@ -41,6 +42,7 @@ const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
 
 const Step: React.FC<StepProps> = ({
     title,
+    stepKey,
     description,
     isCurrent,
     disabled,
@@ -50,6 +52,7 @@ const Step: React.FC<StepProps> = ({
     done,
     isLastStep,
     stepCount,
+    quickFactScope
 }) => {
     const stepRef = React.useRef<HTMLAnchorElement>(null);
     const [showStepCount, setShowStepCount] = React.useState(false);
@@ -94,8 +97,10 @@ const Step: React.FC<StepProps> = ({
         );
     }
 
+    const ref = React.useRef<HTMLHeadingElement | null>(null);
+    useAnchorRef({ ref: stepRef, id: stepKey, scope: quickFactScope });
+
     return (
-        <>
             <a
                 onClick={() =>
                     !disabled && onChange && stepRef.current && onChange(stepRef.current)
@@ -117,7 +122,6 @@ const Step: React.FC<StepProps> = ({
                 )}
                 <span className={styles.description}>{description}</span>
             </a>
-        </>
     );
 };
 

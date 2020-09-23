@@ -18,7 +18,6 @@ import {
     Spinner,
     IconButton,
     CloseIcon,
-    TextInput,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';

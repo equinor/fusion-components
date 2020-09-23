@@ -4,13 +4,13 @@ import {
     OverlayAnchorElement,
     OverlayAnchorElementTag,
     OverlayAnchorElementProps,
-    OverlayAnchorConnectEvent
+    OverlayAnchorConnectEvent,
 } from '../../../../customElements/components/overlay/anchor';
 
 export interface AppGuideAnchorRef<R extends HTMLElement> {
     id: string;
     scope?: string;
-    snug?: boolean;
+    padding?: number;
     ref: React.RefObject<R>;
 }
 
@@ -21,9 +21,9 @@ export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<
 };
 
 export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
-    const { id, ref, scope, snug } = anchor;
+    const { id, ref, scope, padding } = anchor;
     const callBackRef = React.useRef<VoidFunction>();
-    const padding = React.useRef<number>(snug && 16);
+    const anchorPadding = React.useRef<number>(padding);
 
     React.useEffect(() => {
         if (!ref.current) {
@@ -37,7 +37,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                     bounds: () => {
                         return AnchorDOMRect.create(
                             ref.current.getBoundingClientRect(),
-                            padding.current
+                            anchorPadding.current
                         );
                     },
                     disconnectedCallback: (cb: VoidFunction) => {
@@ -49,14 +49,14 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                 composed: true,
             });
             ref.current.dispatchEvent(event);
-        })
+        });
         return () => callBackRef.current();
     }, [ref]);
 };
 
 export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<
     Omit<OverlayAnchorElementProps, 'bounds'> &
-    React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
+        React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
 >;
 
 export const ApplicationGuidanceAnchor: React.FC<ApplicationGuidanceAnchorProps> = (

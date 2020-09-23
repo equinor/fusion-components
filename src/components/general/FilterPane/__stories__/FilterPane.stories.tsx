@@ -47,7 +47,6 @@ const Table: React.FC<TableProps> = ({ data }) => {
                 column: sortedByColumn,
                 direction,
             }}
-            quickFactScope="storybook"
         />
     );
 };

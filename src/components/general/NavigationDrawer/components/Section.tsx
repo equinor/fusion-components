@@ -1,13 +1,13 @@
 import React, { FC, useCallback, useMemo, useEffect, useState } from 'react';
 import styles from './styles.less';
-import { DropdownArrow } from '@equinor/fusion-components';
+import { DropdownArrow, useAnchorRef } from '@equinor/fusion-components';
 import { NavigationComponentProps } from '..';
 import { getNavigationComponentForItem } from '../utils';
 import { useTooltipRef } from '@equinor/fusion-components';
 
 import NavigationItem from './NavigationItem';
 
-const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
+const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed, appGuideAnchorScope }) => {
     const { id, isActive, title, onClick, navigationChildren, isOpen, aside } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(shouldHaveTooltip ? title : '', 'right');
@@ -32,6 +32,8 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
         onChange && onChange(id, !isOpen, true);
         onClick && onClick();
     }, [onClick, id, isOpen, onChange]);
+    
+    useAnchorRef({ ref : textRef, id, scope: appGuideAnchorScope });
 
     return (
         <>

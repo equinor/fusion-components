@@ -2,8 +2,12 @@ import * as React from 'react';
 import { useComponentDisplayType } from '@equinor/fusion';
 import ButtonComponent from './components/Button';
 import AnchorComponent from './components/Anchor';
+import { useAnchorRef } from '@equinor/fusion-components';
 
 export type ButtonProps = {
+
+    id?: string; 
+
     disabled?: boolean;
 
     // Variants
@@ -29,6 +33,8 @@ export type ButtonProps = {
     
     /** Set target="_blank" */
     targetBlank?: boolean;
+
+    quickFactScope?: string;
     onMouseDown?: React.EventHandler<React.SyntheticEvent>;
     onClickCapture?: React.EventHandler<React.SyntheticEvent>;
     onClick?: React.EventHandler<React.SyntheticEvent>;
@@ -42,6 +48,8 @@ export const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildr
 
         const buttonRef =
             (ref as React.RefObject<HTMLElement | null>) || React.createRef<HTMLElement | null>();
+
+            useAnchorRef({ ref: buttonRef, id: props.id, scope: props.quickFactScope });   
 
         const handleOnMouseDown = (e: React.SyntheticEvent) => {
             const { onMouseDown } = props;

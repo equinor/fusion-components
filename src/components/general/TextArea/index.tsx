@@ -1,10 +1,11 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { ErrorIcon, styling } from '@equinor/fusion-components';
+import { ErrorIcon, styling, useAnchorRef } from '@equinor/fusion-components';
 import TextareaAutosize from 'react-textarea-autosize';
 
 type TextAreaProps = {
+    quickFactId?: string;
     disabled?: boolean;
     error?: boolean;
     errorMessage?: string;
@@ -17,6 +18,7 @@ type TextAreaProps = {
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     value?: string;
     icon?: React.ReactElement;
+    quickFactScope?: string;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
     onKeyUp?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
@@ -27,6 +29,7 @@ const TextArea = React.forwardRef<
 >(
     (
         {
+            quickFactId,
             disabled = false,
             error,
             errorMessage,
@@ -41,6 +44,7 @@ const TextArea = React.forwardRef<
             onBlur,
             onIconAction,
             helperText = '',
+            quickFactScope,
             ...props
         },
         ref
@@ -123,9 +127,12 @@ const TextArea = React.forwardRef<
             return placeholder && (focus || !label) ? placeholder : '';
         }, [placeholder, focus, label]);
 
+
+        const anchorRef = React.useRef<HTMLDivElement | null>(null);
+        useAnchorRef({ ref: anchorRef, id: quickFactId, scope: quickFactScope });    
+
         return (
-            <>
-                <div className={styles.textAreaContainer}>
+                <div className={styles.textAreaContainer} ref={anchorRef}>
                     <div
                         className={inputContentClasses}
                         onClick={e => {
@@ -152,7 +159,6 @@ const TextArea = React.forwardRef<
                         {inputHelperText}
                     </div>
                 </div>
-            </>
         );
     }
 );

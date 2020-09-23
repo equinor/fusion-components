@@ -121,6 +121,7 @@ const NavigationDrawerStory = () => {
                 onChangeStructure={newStructure => {
                     setStructure(newStructure);
                 }}
+                quickFactScope="storybook"
             />
         </>
     );
