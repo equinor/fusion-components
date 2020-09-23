@@ -98,6 +98,19 @@
         }
     }
 
+    &.isDisabled{
+        background-color: var(--color-white);
+
+        .linkContainer {
+            color: var(--color-black-alt3);
+            cursor: not-allowed;
+        }
+
+        .visualOnClickContainer{
+            opacity: 0;
+        }
+    }
+
     &.menuChild {
         .linkContainer{
             box-shadow: -1px 0px 0px 0px var(--color-black-alt4);
