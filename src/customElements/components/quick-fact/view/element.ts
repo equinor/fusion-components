@@ -81,9 +81,11 @@ export class QuickFactViewElement extends LitElement {
         const publisher = this.quickFact.updatedBy || this.quickFact.createdBy;
 
         return html`
-            <slot name="toolbar"></slot>
             <header>
                 <h2>${this.quickFact.title}</h2>
+                <div id="toolbar">
+                    <slot name="toolbar"></slot>
+                </div>
             </header>
             <section>${html(body)}</section>
             <footer title="${formatDateTime(modified)}">

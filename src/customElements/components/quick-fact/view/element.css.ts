@@ -3,13 +3,12 @@ import { css } from '../../base';
 
 export const style = css`
     
-    slot[name="toolbar"] {
-        display:flex;
-        justify-content: flex-end;
+    header{
+        display: flex;
     }
 
-    slot[name="toolbar"]::slotted(*){
-        margin: 0;
+    #toolbar {
+        margin-left: auto;
     }
 
     footer {
