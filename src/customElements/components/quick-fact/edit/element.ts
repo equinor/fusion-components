@@ -1,10 +1,11 @@
 import { LitElement, property, html } from '../../base';
 
-/** @TODO - fix export in api */
-import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
-import { ApiClients } from '@equinor/fusion';
+import '../../../markdown-editor';
 
 import styles from './element.css';
+import { ApiClients } from '@equinor/fusion';
+// @TODO @odinr
+import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
 
 export interface QuickFactEditElementProps {
     quickFact?: Partial<QuickFact>;
@@ -132,10 +133,10 @@ export class QuickFactEditElement extends LitElement implements QuickFactEditEle
                 />
                 <div>
                     <label>Description</label>
-                    <fusion-app-guide-editor
-                        value="${quickFact?.bodyMarkdown || ''}"
+                    <fusion-markdown-editor
+                        initialValue="${quickFact?.bodyMarkdown || ''}"
                         @change="${this.handleBodyChange}"
-                    ></fusion-app-guide-editor>
+                    ></fusion-markdown-editor>
                     <label>Please write in English</label>
                 </div>
             </div>

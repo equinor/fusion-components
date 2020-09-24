@@ -4,7 +4,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 
 import { PaginationArrow, CloseIcon, ArrowBackIcon, MoreIcon, SubdirectoryArrowRightIcon, SubdirectoryArrowLeftIcon, ExitToAppIcon } from '../components/navigation';
 
-const stories = storiesOf('Icons|Navigation', module);
+const stories = storiesOf('Icons/Navigation', module);
 stories.addDecorator(withFusionStory('Navigation'));
 
 stories.add('Pagination arrows', () => (

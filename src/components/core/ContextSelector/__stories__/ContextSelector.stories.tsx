@@ -38,7 +38,7 @@ const CurrentContext: React.FC = ({ children }) => {
         description: 'pdp',
         tags: ['PDP'],
         context: {
-            types: [ContextTypes.Project, ContextTypes.PDP],
+            types: [ContextTypes.Project, ContextTypes.PDP, ContextTypes.ProjectMaster],
         },
     };
 
@@ -81,6 +81,6 @@ const NullableAndPlaceHolderContextSelectorStory = () => {
     );
 };
 
-storiesOf('Core|Context Selector', module)
+storiesOf('Core/Context Selector', module)
     .add('PDP', () => <PDPContextSelectorStory />)
     .add('PDP Nullable And Placeholder', () => <NullableAndPlaceHolderContextSelectorStory />);

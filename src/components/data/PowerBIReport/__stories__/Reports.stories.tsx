@@ -83,6 +83,6 @@ const ReportWithFilter: React.FC = () => {
     );
 };
 
-storiesOf('Data|PowerBI Report', module)
+storiesOf('Data/PowerBI Report', module)
     .add('Report Standard', () => <ReportStandard />)
     .add('Report with filter', () => <ReportWithFilter />);

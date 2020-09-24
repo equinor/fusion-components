@@ -94,6 +94,7 @@ export {
 } from './components/general/PopoverContainer';
 export { default as NotificationsSideSheet } from './components/general/NotificationsSideSheet';
 export { StandardNotificationCard } from './components/general/NotificationCardComponent';
+export { default as MarkdownEditor } from './components/general/MarkdownEditor';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';

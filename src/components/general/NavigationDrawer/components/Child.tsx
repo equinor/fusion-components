@@ -5,7 +5,7 @@ import NavigationItem from './NavigationItem';
 import { useTooltipRef } from '@equinor/fusion-components';
 
 const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
-    const { id, isActive, title, onClick, aside } = navigationItem;
+    const { id, isActive, title, onClick, aside, isDisabled } = navigationItem;
     const textRef = React.useRef<HTMLElement | null>(null);
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
@@ -18,12 +18,12 @@ const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
     }, [textRef]);
 
     const change = useCallback(() => {
-        onChange && onChange(id, false, true);
-        onClick && onClick();
-    }, [onClick, id, isActive, onChange]);
+        onChange && onChange(id, false, !isDisabled);
+        !isDisabled && onClick && onClick();
+    }, [onClick, id, isActive, onChange, isDisabled]);
 
     return (
-        <NavigationItem type="child" isActive={isActive} onClick={change}>
+        <NavigationItem type="child" isActive={isActive} onClick={change} isDisabled={isDisabled}>
             <div className={styles.linkContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
                 <span className={styles.linkText} ref={textRef}>
                     {title}

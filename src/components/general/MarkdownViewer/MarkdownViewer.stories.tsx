@@ -25,6 +25,6 @@ const MarkdownViewerStory = () => {
     );
 };
 
-storiesOf('General|Markdown Viewer', module)
+storiesOf('General/Markdown Viewer', module)
     .addDecorator(withFusionStory('Markdown Viewer'))
     .add('Default', () => <MarkdownViewerStory />);

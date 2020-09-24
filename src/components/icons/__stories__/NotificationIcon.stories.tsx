@@ -9,7 +9,7 @@ import { SyncDisabledIcon, SyncIcon, NotificationsIcon } from '../components/not
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Notification', module);
+const stories = storiesOf('Icons/Notification', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Notification'));
 

@@ -25,7 +25,7 @@ import {
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Action', module);
+const stories = storiesOf('Icons/Action', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Action'));
 

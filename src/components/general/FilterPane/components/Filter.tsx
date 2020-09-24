@@ -6,7 +6,7 @@ import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
 import FilterTypes from '../filterTypes';
 import styles from '../styles.less';
-import { FilterTerm, Filter } from '../applyFilters';
+import { FilterTerm, Filter as FilterConfig } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
 
@@ -25,7 +25,7 @@ const resolveFilterComponent = (type: FilterTypes): React.FC<any> | null => {
     return null;
 };
 
-function getTermPreview<T>(filter: Filter<T>, term: FilterTerm | null) {
+function getTermPreview<T>(filter: FilterConfig<T>, term: FilterTerm | null) {
     if (!term || !term.value) {
         return null;
     }
@@ -51,7 +51,7 @@ function getTermPreview<T>(filter: Filter<T>, term: FilterTerm | null) {
 }
 
 type FilterTitleProps<T> = {
-    filter: Filter<T>;
+    filter: FilterConfig<T>;
     term: FilterTerm | null;
 };
 
@@ -76,10 +76,10 @@ function FilterTitle<T>({ filter, term }: FilterTitleProps<T>) {
 }
 
 type FilterProps<T> = {
-    filter: Filter<T>;
+    filter: FilterConfig<T>;
     term?: FilterTerm;
     filterCount: Count[];
-    onChange: (filter: Filter<T>, term: FilterTerm | null) => void;
+    onChange: (filter: FilterConfig<T>, term: FilterTerm | null) => void;
     quickFactScope?: string;
 };
 

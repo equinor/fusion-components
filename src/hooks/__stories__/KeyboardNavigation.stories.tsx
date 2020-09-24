@@ -48,7 +48,7 @@ const KeyboardNavigationStory = () => {
     );
 };
 
-storiesOf('Hooks|KeyboardNavigation', module)
+storiesOf('Hooks/KeyboardNavigation', module)
     .addDecorator(withFusionStory("KeyboardNavigation"))
     .add('Default', () => {
         return <KeyboardNavigationStory />;
