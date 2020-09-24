@@ -7,6 +7,7 @@ export const style = css`
         --editor-color-active: var(--color-primary-hover-alt1)
         --grid-unit: 8px;
         --border-radius: 4px;
+        cursor: auto;
     }
 
     .container{
@@ -36,7 +37,7 @@ export const style = css`
         border-radius: var(--border-radius) var(--border-radius) 0 0;
         color: var(--editor-color-text);
         border-bottom: 1px solid var(--color-black-alt3);
-        padding: var(--grid-unit);
+        padding: .5rem;
         white-space: pre-wrap;
         height: 100%;
         overflow: auto;

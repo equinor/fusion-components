@@ -1,7 +1,5 @@
 import { LitElement, property, html } from '../../base';
 
-import '../../../markdown-editor';
-
 import styles from './element.css';
 import { ApiClients } from '@equinor/fusion';
 // @TODO @odinr
