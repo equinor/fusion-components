@@ -6,7 +6,12 @@ declare global {
     interface Window { clientId: string; }
 }
 
-/** @TODO */
+/** 
+ * @todo @odinr
+ * this should be located somewhere else and better document
+ * this also requires changes to the fusion api.
+ * @WIP
+*/
 export const infoApi = {
     get context(): IFusionContext {
         return window[globalEquinorFusionContextKey] as IFusionContext;

@@ -34,6 +34,8 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     @query('#popover')
     popover!: HTMLDivElement;
 
+    protected _dragStart;
+
     render() {
         const { scope, active } = this;
         const fabIcon = active ? iconClose : iconOpen;
@@ -112,10 +114,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         };
         this._dispatchEvent(ApplicationGuideEventType.show, { detail });
     }
-
-    // @TODO
-
-    protected _dragStart;
 
     @eventOptions({ capture: false })
     protected _handleDragStart(e: DragEvent) {
