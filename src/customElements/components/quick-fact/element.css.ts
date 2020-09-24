@@ -3,8 +3,6 @@ import { css } from '../base';
 
 export const style = css`
     :host {
-        --btn-background: #0084c4;
-        --btn-color: #fff;
         color: #243746;
         cursor: move;
     }
@@ -60,6 +58,16 @@ export const style = css`
         border: none;
         cursor: pointer;
     }
+
+    fusion-button > svg {
+        font-size: 1.5rem;
+    }
+
+    .btn-edit {
+        --btn-background: #0084c4;
+    }
+
+
 `;
 
 export const styles = [

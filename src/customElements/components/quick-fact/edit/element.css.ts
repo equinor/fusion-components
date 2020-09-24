@@ -36,6 +36,11 @@ export const style = css`
         line-height: 16px;
         color: #6f6f6f;
     }
+
+    fusion-button {
+        --btn-color: #fff;
+        --btn-background:  #0084c4;
+    }
 `;
 
 export default [style];

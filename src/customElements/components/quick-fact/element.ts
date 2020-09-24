@@ -146,7 +146,6 @@ export class QuickFactElement extends LitElement {
             return html`<slot name="empty"></slot>`;
         }
 
-        console.log(this.error);
         if (!!error) {
             return html`<slot name="error">${error.message}</slot>`
         }
@@ -177,7 +176,7 @@ export class QuickFactElement extends LitElement {
                 .quickFact="${quickFact}"
                 .showSkeleton="${this.fetching}"
             >
-                <fusion-button slot="toolbar" @click="${this.handleEditClick}">
+                <fusion-button class="btn-edit" slot="toolbar" @click="${this.handleEditClick}" outlined>
                     ${iconEdit}
                 </fusion-button>
             </fusion-quick-fact-view>
