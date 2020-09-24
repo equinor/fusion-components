@@ -9,6 +9,7 @@ export const style = css`
     :host {
         --editor-color-background: var(--color-black-alt4);
         --editor-color-text: var(--color-primary);
+        cursor: auto;
     }
 
     #editor {
@@ -21,6 +22,7 @@ export const style = css`
         color: var(--editor-color-text);
         border-bottom: 1px solid var(--color-black-alt3);
         padding: 1rem;
+        cursor: text;
     }
 
     .ProseMirror-focused {
