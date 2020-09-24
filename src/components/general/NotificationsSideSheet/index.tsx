@@ -96,10 +96,10 @@ const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
 
     const sideSheetHeaderIcons = React.useMemo(
         () => [
-            <div className={styles.chipContainer}>
+            <div key="side-sheet-header-unread" className={styles.chipContainer}>
                 <Chip title={`${unReadNotifications.length} unread`} />
             </div>,
-            <div className={styles.markAllAsReadButton}>
+            <div key="side-sheet-header-unread-mark-as-read" className={styles.markAllAsReadButton}>
                 <Button
                     onClick={() =>
                         unReadNotifications.length > 0 &&
