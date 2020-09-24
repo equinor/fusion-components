@@ -132,7 +132,7 @@ export class QuickFactEditElement extends LitElement implements QuickFactEditEle
                 <div>
                     <label>Description</label>
                     <fusion-markdown-editor
-                        initialValue="${quickFact?.bodyMarkdown || ''}"
+                        .value="${quickFact?.bodyMarkdown}"
                         @change="${this.handleBodyChange}"
                     ></fusion-markdown-editor>
                     <label>Please write in English</label>
