@@ -48,8 +48,8 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
                     ${this.renderQuickFact()}
                 </div>
                 <slot></slot>
-                <slot name="fab" @click=${(this.toggle)}>
-                    <fusion-button id="fab" round raised size="large">
+                <slot name="fab" @click=${(this.toggle)} >
+                    <fusion-button id="fab" round raised size="large" title="${active?'close':'open'} quick facts">
                         ${fabIcon}
                     </fusion-button>
                 </slot>
