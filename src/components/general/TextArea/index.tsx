@@ -137,7 +137,7 @@ const TextArea = React.forwardRef<
                         <div className={inputTextContentClasses}>
                             {inputLabel}
                             <TextareaAutosize
-                                ref={inputRef}
+                                inputRef={inputRef}
                                 placeholder={placeholderValue}
                                 onBlur={handleBlur}
                                 value={!disabled ? value : ''}
