@@ -20,7 +20,7 @@ export const style = css`
         border-radius: var(--border-radius, 4px) var(--border-radius, 4px) 0 0;
         color: var(--editor-color-text);
         border-bottom: 1px solid var(--color-black-alt3);
-        padding: var(--grid-unit);
+        padding: 1rem;
     }
 
     .ProseMirror-focused {
