@@ -18,7 +18,7 @@ export const style = css`
         border-radius: var(--app-guide-popover-border-radius, 8px);
         border: 2px solid var(--color-primary);
         z-index: 99999999999999999999;
-        width: 304px;
+        width: 25rem;
         opacity: 0;
         bottom: -100%;
         color: var(--color-primary);
