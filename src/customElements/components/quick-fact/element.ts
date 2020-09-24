@@ -109,6 +109,7 @@ export class QuickFactElement extends LitElement {
                 this.fetchQuickFact();
                 this._dispatchEvent(QuickFactEventType.show);
             }
+            this.enterViewMode();
         }
 
         /**
