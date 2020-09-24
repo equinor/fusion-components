@@ -101,8 +101,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
     protected _handleSelectionChanged(e: OverlayEvent<OverlayEventType.selection>) {
         const { anchor, scope } = e.detail.selected;
-        debugger;
-        console.log(e.detail.selected, e);
         this.selected = { anchor, scope };
     }
 
