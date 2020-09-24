@@ -15,18 +15,23 @@ export const style = css`
     footer {
         display: flex;
         align-items: center;
+        font-size: 0.9rem;
+    }
+    footer .publisher-name{
+        font-weight: bold;
     }
 
     .person-photo {
-        width: calc(var(--grid-unit) * 4);
-        height: calc(var(--grid-unit) * 4);
         display: inline-block;
         border-radius: 50%;
         overflow: hidden;
-        margin-left: calc(var(--grid-unit) * 2);
+        width: 2rem;
+        height: 2rem;
+        margin-left: 1rem;
     }
 
     .person-photo img {
+        height: 100%;
         max-width: 100%;
     }
 `;

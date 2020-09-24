@@ -74,8 +74,8 @@ export class QuickFactViewElement extends LitElement {
         const body = ([marked(this.quickFact.bodyMarkdown)] as unknown) as TemplateStringsArray;
 
         // @TODO this should not be here
-        const fusionContext = window['74b1613f-f22a-451b-a5c3-1c9391e91e68'] as IFusionContext;
-        const fusionUrl = fusionContext.http.serviceResolver.getFusionBaseUrl();
+        // const fusionContext = window['74b1613f-f22a-451b-a5c3-1c9391e91e68'] as IFusionContext;
+        // const fusionUrl = fusionContext.http.serviceResolver.getFusionBaseUrl();
 
         const modified = this.quickFact.updated || this.quickFact.created;
         const publisher = this.quickFact.updatedBy || this.quickFact.createdBy;
@@ -87,11 +87,8 @@ export class QuickFactViewElement extends LitElement {
             </header>
             <section>${html(body)}</section>
             <footer title="${formatDateTime(modified)}">
-                <span>Last updated ${formatDistance(modified, new Date())} ago by</span>
-                <span class="person-photo" title="${publisher.name}">
-                    <img src="${fusionUrl}/images/profiles/${publisher.azureUniqueId}" />
-                    ${/* @TODO: Use the person-photo element when ready */''}
-                </span>
+                <span>Last updated ${formatDistance(modified, new Date())} ago by <span class="publisher-name">${publisher.name}</span> </span>
+                
             </footer>
         `;
     }
