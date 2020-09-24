@@ -14,7 +14,7 @@ type SwitchProps = {
 };
 
 const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
-    ({ id, active, onChange, disabled, quickFactScope }, ref) => {
+    ({ id = 'switch', active, onChange, disabled, quickFactScope }, ref) => {
         const switchRef = ref as MutableRefObject<HTMLInputElement | null>;
 
         const anchorRef = useAnchor<HTMLDivElement>({ id, scope: quickFactScope });

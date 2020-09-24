@@ -13,7 +13,7 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 type DatePickerProps = {
-    id: string;
+    id?: string;
     disabled?: boolean;
     error?: boolean;
     errorMessage?: string;
@@ -24,7 +24,7 @@ type DatePickerProps = {
 };
 
 const DatePicker: React.FC<DatePickerProps> = ({
-    id,
+    id = 'datepicker',
     disabled,
     error,
     errorMessage,
@@ -72,7 +72,6 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
         return (
             <TextInput
-                id="date-text-input"
                 disabled={disabled}
                 error={error}
                 errorMessage={errorMessage}
@@ -109,7 +108,6 @@ const DatePicker: React.FC<DatePickerProps> = ({
         ref: dropdownController.controllerRef,
         id,
         scope: quickFactScope,
-     /*    snug: true, */
     });
 
     return (

@@ -20,7 +20,7 @@ const MarkdownViewerStory = () => {
                 onChange={handleTextareaChanged}
                 placeholder="Type markdown here"
             />
-            <MarkdownViewer markdown={markdown} quickFactScope="storybook"/>
+            <MarkdownViewer id="markdown-viewer" markdown={markdown} quickFactScope="storybook"/>
         </div>
     );
 };

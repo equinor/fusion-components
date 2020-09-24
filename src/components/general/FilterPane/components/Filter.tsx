@@ -132,8 +132,8 @@ function Filter<T>({
     );
 
     const anchorRef = useAnchor<HTMLHeadingElement>({
-        scope: quickFactScope,
         id: filter.key,
+        scope: quickFactScope,
         padding: 8,
     });
 

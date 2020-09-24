@@ -20,10 +20,10 @@ storiesOf('General|Icon Button', module)
     ))
     .add('Toggler', () => (
         <div style={{ padding: 8 }}>
-            <IconButton toggler {...eventsFromNames} quickFactScope={scope}>
+            <IconButton id="toggler-btn-1" toggler {...eventsFromNames} quickFactScope={scope}>
                 <SearchIcon />
             </IconButton>
-            <IconButton toggler active {...eventsFromNames} quickFactScope={scope}>
+            <IconButton id="toggler-btn-2" toggler active {...eventsFromNames} quickFactScope={scope}>
                 <SearchIcon />
             </IconButton>
         </div>

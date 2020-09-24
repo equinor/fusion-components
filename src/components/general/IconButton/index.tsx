@@ -15,7 +15,7 @@ type IconButtonProps = {
 };
 
 const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconButtonProps>>(
-    ({ id, active, toggler, disabled, quickFactScope, children, ...props }, ref) => {
+    ({ id="icon-button", active, toggler, disabled, quickFactScope, children, ...props }, ref) => {
         const buttonClassNames = classNames(
             styles.container,
             useComponentDisplayClassNames(styles),

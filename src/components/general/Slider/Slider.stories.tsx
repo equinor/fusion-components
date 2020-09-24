@@ -31,7 +31,7 @@ const SliderPercentageStory = () => {
     return (
         <div style={{ width: 400, margin: '0 auto' }}>
             <Slider
-                quickFactId="slider-1"
+                id="slider-1"
                 value={value}
                 markers={markers}
                 onChange={(marker) => setValue(marker.value)}
@@ -133,7 +133,7 @@ const RangedSliderStory = () => {
                     />
                 </div>
                 <RangedSlider
-                    quickFactId="ranged-slider"
+                    id="ranged-slider"
                     values={value}
                     markers={markers}
                     onChange={(markers) => setValue(markers)}

@@ -15,7 +15,7 @@ type ChipProps = {
 };
 
 const Chip: React.FC<ChipProps> = ({
-    id,
+    id = "chip",
     isDisabled,
     onRemove,
     title,

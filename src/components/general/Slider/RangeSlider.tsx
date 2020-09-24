@@ -9,7 +9,7 @@ import { useAnchor } from '../ApplicationGuidance';
 export { SliderMarker };
 
 type SliderProps = {
-    quickFactId?: string;
+    id?: string;
     values: [number, number];
     markers: SliderMarker[];
     disabled?: boolean;
@@ -21,7 +21,7 @@ type SliderProps = {
 type Handle = 'firstHandle' | 'lastHandle';
 
 const Slider: React.FC<SliderProps> = ({
-    quickFactId,
+    id = 'range-slider',
     values,
     markers,
     disabled,
@@ -124,7 +124,7 @@ const Slider: React.FC<SliderProps> = ({
         [calculatePosition, lastValue, firstValue]
     );
 
-    const anchorRef = useAnchor<HTMLDivElement>({ id: quickFactId, scope: quickFactScope });
+    const anchorRef = useAnchor<HTMLDivElement>({ id, scope: quickFactScope });
 
     return (
         <div className={containerClassNames} onClick={onTrackClick} ref={anchorRef}>

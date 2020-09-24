@@ -7,6 +7,7 @@ import getDefaultHostConfig from './defaultHostConfig';
 import { useAnchorRef } from '../ApplicationGuidance';
 
 type AdaptiveCardViewerProps = {
+    id?: string;
     /** The hostConfig object that is passed along to the native AdaptiveCards. [More Info](https://docs.microsoft.com/en-us/adaptive-cards/display/hostconfig) */
     hostConfig?: object;
     /** The card schema.  It must comply with the card schema. [More Info](https://docs.microsoft.com/en-us/adaptive-cards/create/cardschema) */
@@ -29,6 +30,7 @@ const ACTION_SHOW_CARD = 'Action.ShowCard';
 const ACTION_SUBMIT = 'Action.Submit';
 
 const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
+    id = "adaptive-card",
     hostConfig,
     payload,
     onExecuteAction,
@@ -85,7 +87,7 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
     }, [result, className]);
 
 
-    useAnchorRef({ ref: cardContainerRef, id: "adaptive-card", scope: quickFactScope });   
+    useAnchorRef({ ref: cardContainerRef, id, scope: quickFactScope });   
 
     return <div ref={cardContainerRef} />;
 };

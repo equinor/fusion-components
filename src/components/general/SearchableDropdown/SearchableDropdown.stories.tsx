@@ -93,7 +93,7 @@ const DropdownStory = () => {
     return (
         <div style={{ margin: '8px' }}>
             <SearchableDropdown
-                quickFactId={'searchable-dropdown-1'}
+                id={'searchable-dropdown-1'}
                 error
                 errorMessage="required"
                 options={options}
@@ -103,8 +103,10 @@ const DropdownStory = () => {
             />
             <br />
             <SearchableDropdown
+                id={'searchable-dropdown-2'}
                 options={optionsNoLAbel}
                 onSelect={(item) => setOptionsNoLabel(updateOptions(item))}
+                quickFactScope="storybook"
             />
             <br />
             <SearchableDropdown

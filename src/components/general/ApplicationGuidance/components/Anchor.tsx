@@ -48,9 +48,14 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                 bubbles: true,
                 composed: true,
             });
-            ref.current.dispatchEvent(event);
+            if (ref.current instanceof HTMLElement) {
+                  ref.current.dispatchEvent(event);
+              }
         });
-        return () => callBackRef.current();
+        return () => {
+            callBackRef.current && callBackRef.current();
+            callBackRef.current = null;
+        };
     }, [ref]);
 };
 

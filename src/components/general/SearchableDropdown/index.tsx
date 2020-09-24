@@ -23,7 +23,7 @@ export type SearchableDropdownSection = {
 };
 
 type SearchableDropdownProps = {
-    quickFactId?: string;
+    id?: string;
     label?: string;
     placeholder?: string;
     options?: SearchableDropdownOption[];
@@ -73,7 +73,7 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     );
 
 const SearchableDropdown = ({
-    quickFactId,
+    id = 'searchable-dropdown',
     options,
     sections,
     label,
@@ -187,7 +187,7 @@ const SearchableDropdown = ({
                     selected
                 ) : (
                     <TextInput
-                        id={quickFactId}
+                        id={id}
                         onChange={(value) => {
                             !open && setIsOpen(true);
                             setInputValue(value);

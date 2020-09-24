@@ -38,7 +38,7 @@ const Table: React.FC<TableProps> = ({ data }) => {
         <DataTable
             columns={columns}
             data={pagedData}
-            pagination={pagination}
+            /*    pagination={pagination}  */
             onPaginationChange={onPaginationChange}
             isFetching={false}
             rowIdentifier={'id'}
@@ -187,7 +187,6 @@ const FilterPaneStory: React.FC = () => {
                 </div>
             )}
             <FilterPane
-                id="story"
                 data={storyData}
                 sectionDefinitions={sections}
                 terms={terms}

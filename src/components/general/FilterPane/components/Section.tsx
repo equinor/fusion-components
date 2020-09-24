@@ -36,11 +36,7 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         [isCollapsed, section.title]
     );
 
-    const anchorRef = useAnchor<HTMLHeadingElement>({
-        id: section.key,
-        scope: quickFactScope,
-        padding: 8,
-    });
+
 
     const renderedFilterComponents = section.filters.map((filter) => (
         <Filter
@@ -57,7 +53,13 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         section.filters.filter((filter) => filter.isVisibleWhenPaneIsCollapsed).length > 0;
 
     const filterPaneContext = useFilterPaneContext();
-
+    
+    const anchorRef = useAnchor<HTMLHeadingElement>({
+        id: section.key,
+        scope: quickFactScope,
+        padding: 8,
+    });
+    
     if (
         !renderedFilterComponents.filter((renderedFilterComponent) => renderedFilterComponent)
             .length ||

@@ -16,7 +16,10 @@ type CheckboxProps = {
 };
 
 const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
-    ({ id, selected, onChange, disabled, indeterminate, color, quickFactScope }, ref) => {
+    (
+        { id = 'checkbox', selected, onChange, disabled, indeterminate, color, quickFactScope },
+        ref
+    ) => {
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
 

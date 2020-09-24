@@ -14,7 +14,7 @@ type RadioProps = {
 };
 
 const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
-    ({ id, selected, onChange, disabled, color, quickFactScope }, ref) => {
+    ({ id = 'radio-button', selected, onChange, disabled, color, quickFactScope }, ref) => {
         const inputRef = ref as MutableRefObject<HTMLInputElement | null>;
         const containerClassNames = classNames(
             styles.container,

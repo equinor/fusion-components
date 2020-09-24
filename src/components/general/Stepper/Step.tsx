@@ -54,75 +54,74 @@ const Step: React.FC<StepProps> = ({
     stepCount,
     quickFactScope
 }) => {
-    const stepRef = React.useRef<HTMLAnchorElement>(null);
-    const [showStepCount, setShowStepCount] = React.useState(false);
+          const stepRef = React.useRef<HTMLAnchorElement>(null);
+          const [showStepCount, setShowStepCount] = React.useState(false);
 
-    const stepClasses = classNames(styles.step, useComponentDisplayClassNames(styles), {
-        [styles.current]: isCurrent,
-        [styles.isClickable]: isClickable,
-        [styles.disabled]: disabled,
-    });
+          const stepClasses = classNames(styles.step, useComponentDisplayClassNames(styles), {
+              [styles.current]: isCurrent,
+              [styles.isClickable]: isClickable,
+              [styles.disabled]: disabled,
+          });
 
-    const titleClasses = classNames(styles.title, useComponentDisplayClassNames(styles), {
-        [styles.isLastStep]: isLastStep,
-    });
+          const titleClasses = classNames(styles.title, useComponentDisplayClassNames(styles), {
+              [styles.isLastStep]: isLastStep,
+          });
 
-    const windowWidth = useWindowWidth();
+          const windowWidth = useWindowWidth();
 
-    useEffect(() => {
-        const mobileMaxWidth = styling.mobileWidth();
+          useEffect(() => {
+              const mobileMaxWidth = styling.mobileWidth();
 
-        if (windowWidth < parseInt(mobileMaxWidth) && !showStepCount) {
-            setShowStepCount(true);
-        } else if (windowWidth > parseInt(mobileMaxWidth) && showStepCount) {
-            setShowStepCount(false);
-        }
-    }, [windowWidth]);
+              if (windowWidth < parseInt(mobileMaxWidth) && !showStepCount) {
+                  setShowStepCount(true);
+              } else if (windowWidth > parseInt(mobileMaxWidth) && showStepCount) {
+                  setShowStepCount(false);
+              }
+          }, [windowWidth]);
 
-    React.useEffect(() => {
-        if (isCurrent && onChange && stepRef.current) {
-            onChange(stepRef.current);
-        }
-    }, [isCurrent, onChange, stepRef]);
+          React.useEffect(() => {
+              if (isCurrent && onChange && stepRef.current) {
+                  onChange(stepRef.current);
+              }
+          }, [isCurrent, onChange, stepRef]);
 
-    if (disabled) {
-        return (
-            <span className={stepClasses}>
-                <Badge position={position} active={isCurrent} done={done} />
-                <div className={titleClasses}>
-                    <span>{title}</span>
-                </div>
-                <span className={styles.description}>{description}</span>
-            </span>
-        );
-    }
+          if (disabled) {
+              return (
+                  <span className={stepClasses}>
+                      <Badge position={position} active={isCurrent} done={done} />
+                      <div className={titleClasses}>
+                          <span>{title}</span>
+                      </div>
+                      <span className={styles.description}>{description}</span>
+                  </span>
+              );
+          }
 
-    const ref = React.useRef<HTMLHeadingElement | null>(null);
-    useAnchorRef({ ref: stepRef, id: stepKey, scope: quickFactScope });
+          useAnchorRef({ ref: stepRef, id: stepKey, scope: quickFactScope });
 
-    return (
-            <a
-                onClick={() =>
-                    !disabled && onChange && stepRef.current && onChange(stepRef.current)
-                }
-                ref={stepRef}
-                className={stepClasses}
-            >
-                <Badge position={position} active={isCurrent} done={done} />
-                <div className={titleClasses}>
-                    <span className={styles.text}> {title}</span>
-                    <span className={styles.stepperLine} />
-                </div>
-                {showStepCount ? (
-                    <span className={classNames(styles.progress)}>
-                        {position} of {stepCount}
-                    </span>
-                ) : (
-                    <span />
-                )}
-                <span className={styles.description}>{description}</span>
-            </a>
-    );
-};
+          return (
+              <a
+                  onClick={() =>
+                      !disabled && onChange && stepRef.current && onChange(stepRef.current)
+                  }
+                  ref={stepRef}
+                  className={stepClasses}
+              >
+                  <Badge position={position} active={isCurrent} done={done} />
+                  <div className={titleClasses}>
+                      <span className={styles.text}> {title}</span>
+                      <span className={styles.stepperLine} />
+                  </div>
+                  {showStepCount ? (
+                      <span className={classNames(styles.progress)}>
+                          {position} of {stepCount}
+                      </span>
+                  ) : (
+                      <span />
+                  )}
+                  <span className={styles.description}>{description}</span>
+              </a>
+          );
+      };
 
 export default Step;
