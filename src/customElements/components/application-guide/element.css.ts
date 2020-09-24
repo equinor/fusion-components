@@ -7,7 +7,30 @@ export const style = css`
         right: 32px;
         z-index: 99999999999999999;
         background: #243746;
-        color: #0084c4;
+        color: white;
+        box-shadow: none;
+        transition: box-shadow 250ms ease;
+        will-change: box-shadow;
+    }
+
+    #fab > svg {
+        opacity: 0.85;
+        transition: opacity 250ms ease;
+        will-change: opacity;
+        padding: .25rem;
+        height: 1.5rem;
+        max-width: 1.5rem;
+    }
+
+    #fab:hover {
+        box-shadow: 
+            1px 1px 10px rgba(0, 0, 0, 0.2), 
+            4px 4px 5px rgba(0, 0, 0, 0.12),
+            2px 2px 4px rgba(0, 0, 0, 0.14);
+    }
+
+    #fab:hover > svg {
+        opacity: .9;
     }
 
     #popover {
