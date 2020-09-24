@@ -30,7 +30,7 @@ import {
 import * as styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
 
-import RlsErrorMessage from './components/RlsErrorMessage';
+import ReportErrorMessage from './components/ReportErrorMessage';
 
 type PowerBIProps = {
     reportId: string;
@@ -279,11 +279,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             }
         }
     }, [embedRef, accessToken, isFetching]);
-
-    if (fusionError && fusionError.statusCode === 403 && report) {
-        return <RlsErrorMessage report={report} />;
-    }
-
     if (
         (powerBIError && powerBIError.detail.errorCode) ||
         (fusionError && fusionError.statusCode)
@@ -294,14 +289,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             : fusionError?.statusCode.toString();
 
         switch (errorCode) {
-            case '401':
-                return (
-                    <ErrorMessage
-                        hasError={true}
-                        errorType={'accessDenied'}
-                        message={'Access Denied'}
-                    />
-                );
             case '404':
                 return (
                     <ErrorMessage
@@ -313,25 +300,8 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                         }
                     />
                 );
-            case '424':
-                return (
-                    <ErrorMessage
-                        hasError={true}
-                        errorType={'accessDenied'}
-                        resourceName={'report'}
-                        message={
-                            'Not able to secure a token. You might not have access to this report'
-                        }
-                    />
-                );
             default:
-                return (
-                    <ErrorMessage
-                        hasError={true}
-                        errorType={'error'}
-                        message={'Something went wrong'}
-                    />
-                );
+                return <ReportErrorMessage report={report} />;
         }
     }
 
