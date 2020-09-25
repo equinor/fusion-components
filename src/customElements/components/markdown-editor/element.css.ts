@@ -5,8 +5,7 @@ export const style = css`
         --editor-color-background: var(--color-black-alt5);
         --editor-color-text: var(--color-primary);
         --editor-color-active: var(--color-primary-hover-alt1)
-        --grid-unit: 8px;
-        --border-radius: 4px;
+        --border-radius: .5rem;
         cursor: auto;
     }
 
@@ -15,13 +14,13 @@ export const style = css`
     }
 
     #editor {
-        padding: calc(var(--grid-unit) * 1px);
-        height: calc(100% - 45px);
+        padding: .5rem;
+        height: calc(100% - 3rem);
     }
 
     #editor p {
         font-size: 16px;
-        margin: var(--grid-unit) 0;
+        margin: .5rem 0;
     }
 
     #editor p:last-child {
@@ -54,7 +53,7 @@ export const style = css`
 
     #menu {
         display: flex;
-        padding: calc(var(--grid-unit) * 0.5);
+        padding: .25rem;
         background: none;
     }
 
