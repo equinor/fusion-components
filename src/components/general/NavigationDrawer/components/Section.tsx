@@ -13,7 +13,16 @@ const Section: FC<NavigationComponentProps> = ({
     isCollapsed,
     quickFactScope,
 }) => {
-    const { id, isActive, title, onClick, navigationChildren, isOpen, aside } = navigationItem;
+    const {
+        id,
+        isActive,
+        title,
+        onClick,
+        navigationChildren,
+        isOpen,
+        aside,
+        isDisabled,
+    } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(shouldHaveTooltip ? title : '', 'right');
     const textRef = React.useRef<HTMLElement | null>(null);

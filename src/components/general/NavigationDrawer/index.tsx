@@ -38,7 +38,7 @@ export type NavigationComponentProps = {
     onChange?: (id: string, toggleOpen: boolean, toggleActive: boolean) => void;
     isCollapsed?: boolean;
     navigationItem: NavigationStructure;
-    appGuideAnchorScope?: string;
+    quickFactScope?: string;
 };
 
 export type NavigationStructure = {

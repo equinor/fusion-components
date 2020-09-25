@@ -1,16 +1,13 @@
 import { LitElement, property, html } from '../../base';
 
-import ApplicationGuidanceApi from '../../api';
-
-import '../../../markdown-editor';
-
-import { ApplicationGuidanceQuickFact, QuickFactEvent } from '../../types';
-
 import styles from './element.css';
+import { ApiClients } from '@equinor/fusion';
+// @TODO @odinr
+import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
 
 export interface QuickFactEditElementProps {
     quickFact?: Partial<QuickFact>;
-}
+};
 
 /**
  * element to show editor for a quick fact
