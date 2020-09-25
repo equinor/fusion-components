@@ -88,6 +88,6 @@ const TextAreaStory = () => {
     );
 };
 
-storiesOf('General|TextArea', module)
+storiesOf('General/TextArea', module)
     .addDecorator(withFusionStory('TextArea'))
     .add('Default', () => <TextAreaStory />);

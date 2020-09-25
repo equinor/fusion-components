@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
-
 import Calendar from '../index';
 import { styling } from '@equinor/fusion-components';
 import { Month } from '@equinor/fusion';
+import { storiesOf } from '@storybook/react';
 
-const stories = storiesOf('General|Calendar', module);
+const stories = storiesOf('General/Calendar', module);
 stories.addDecorator(withFusionStory('Calendar'));
 
 const initialYear = new Date().getFullYear();

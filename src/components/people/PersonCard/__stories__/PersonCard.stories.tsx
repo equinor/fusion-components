@@ -5,7 +5,7 @@ import PersonCard, { PhotoSize } from '../index';
 import { withKnobs, select, boolean } from '@storybook/addon-knobs';
 import { PersonDetails } from '@equinor/fusion';
 
-const stories = storiesOf('People|PersonCard', module);
+const stories = storiesOf('People/PersonCard', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('PersonCard'));
 

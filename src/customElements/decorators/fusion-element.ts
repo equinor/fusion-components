@@ -47,6 +47,6 @@ export const fusionElement = (tagName: string) =>
                 legacyCustomElement(tagName, classOrDescriptor) :
                 standardCustomElement(tagName, classOrDescriptor);
         } else {
-            console.warn(`${tagName} has been defined twice`);
+            console.debug(`${tagName} has been defined twice`);
         }
     };

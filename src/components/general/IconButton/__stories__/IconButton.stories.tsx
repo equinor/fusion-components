@@ -8,7 +8,7 @@ import { SearchIcon, OpenInNewIcon } from '../../../icons/components/action';
 const eventsFromNames = actions('onClick');
 const scope = "storybook";
 
-storiesOf('General|Icon Button', module)
+storiesOf('General/Icon Button', module)
     .addParameters({ jest: ['IconButton.stories.jsx'] })
     .addDecorator(withFusionStory('Icon Button'))
     .add('Default', () => (

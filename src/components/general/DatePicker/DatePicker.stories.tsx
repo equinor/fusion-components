@@ -38,6 +38,6 @@ const DatePickerStory = () => {
     );
 };
 
-storiesOf('General|Date picker', module)
+storiesOf('General/Date picker', module)
     .addDecorator(withFusionStory('Date picker'))
     .add('Default', () => <DatePickerStory />);

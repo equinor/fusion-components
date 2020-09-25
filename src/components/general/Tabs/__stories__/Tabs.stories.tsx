@@ -53,7 +53,7 @@ const TabsStory = () => {
         </Tabs>
     );
 };
-storiesOf('General|Tabs', module)
+storiesOf('General/Tabs', module)
     .addParameters({ jest: ['Tabs.stories.jsx'] })
     .addDecorator(withFusionStory('Tabs'))
     .add('Default', () => <TabsStory />);

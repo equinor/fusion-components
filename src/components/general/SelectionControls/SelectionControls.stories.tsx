@@ -48,7 +48,7 @@ const RadioButtonStory = () => {
         </div>
     );
 };
-storiesOf('General|Selection Controls', module)
+storiesOf('General/Selection Controls', module)
     .addDecorator(withFusionStory('Selection Controls'))
     .add('Switch', () => <SwitchStory />)
     .add('Checkbox', () => <CheckboxStory />)

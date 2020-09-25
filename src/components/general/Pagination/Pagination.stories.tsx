@@ -8,7 +8,7 @@ import { createPagination, Page } from '@equinor/fusion';
 
 const onChangeAction = action('onChange');
 
-const stories = storiesOf('General|Pagination', module);
+const stories = storiesOf('General/Pagination', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Pagination'));
 

@@ -198,7 +198,7 @@ const breadCrumbStyle = {
     height: '32px',
 } as React.CSSProperties;
 
-const BreadCrumb: React.FC<BreadCrumb> = ({ label }) => {
+const BreadCrumbComponent: React.FC<BreadCrumb> = ({ label }) => {
     return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
 };
 
@@ -246,7 +246,7 @@ const OrgChartStory = () => {
             <OrgChart
                 structure={positions}
                 component={PositionCardComponent}
-                breadCrumbComponent={BreadCrumb}
+                breadCrumbComponent={BreadCrumbComponent}
                 breadCrumbs={breadCrumbs}
                 cardWidth={cardWidth}
                 cardHeight={cardHeight}
@@ -260,6 +260,6 @@ const OrgChartStory = () => {
     );
 };
 
-storiesOf('Pro org|Org Chart', module)
+storiesOf('Pro org/Org Chart', module)
     .addDecorator(withFusionStory('Org Chart'))
     .add('Default', () => <OrgChartStory />);

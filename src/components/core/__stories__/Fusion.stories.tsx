@@ -295,4 +295,4 @@ const FusionStory = () => {
     );
 };
 
-storiesOf('Core|Fusion', module).add('Default', () => <FusionStory />);
+storiesOf('Core/Fusion', module).add('Default', () => <FusionStory />);

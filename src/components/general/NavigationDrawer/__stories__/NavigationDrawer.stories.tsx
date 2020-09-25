@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import NavigationDrawer, { NavigationStructure } from '../index';
 import { ErrorIcon, WarningIcon } from '@equinor/fusion-components';
-import Chip from "../../Chip";
+import Chip from '../../Chip';
 
 const navStructure = [
     {
@@ -63,11 +63,13 @@ const navStructure = [
                 id: 'section2',
                 title: 'Section2',
                 type: 'section',
+                isDisabled: true,
                 navigationChildren: [
                     {
                         id: 'child4',
                         type: 'child',
                         title: 'Child4',
+                        isDisabled: true,
                     },
                     {
                         id: 'child5',
@@ -82,7 +84,7 @@ const navStructure = [
         id: 'grouping3',
         type: 'grouping',
         title: 'Grouping 3 with a super long title to show off how neat ellipsis is',
-        icon: "3", 
+        icon: '3',
         navigationChildren: [
             {
                 id: 'section3',
@@ -93,7 +95,7 @@ const navStructure = [
                         id: 's3c1',
                         type: 'child',
                         title: 'Child4 with a super long title to show off how neat ellipsis is',
-                        aside:<Chip title="1"/>
+                        aside: <Chip title="1" />,
                     },
                 ],
             },
@@ -104,21 +106,21 @@ const navStructure = [
         type: 'grouping',
         title: 'Grouping4',
         icon: <ErrorIcon outline />,
-        aside: <ErrorIcon outline/>
-    }
+        aside: <ErrorIcon outline />,
+    },
 ] as NavigationStructure[];
 
 const NavigationDrawerStory = () => {
     const [structure, setStructure] = React.useState<NavigationStructure[]>(navStructure);
-    const [selected, setSelected] = React.useState<string>("child5");
+    const [selected, setSelected] = React.useState<string>('child5');
     return (
         <>
             <NavigationDrawer
                 id="navigation-drawer-story"
                 structure={structure}
                 selectedId={selected}
-                onChangeSelectedId={selectedItem => setSelected(selectedItem)}
-                onChangeStructure={newStructure => {
+                onChangeSelectedId={(selectedItem) => setSelected(selectedItem)}
+                onChangeStructure={(newStructure) => {
                     setStructure(newStructure);
                 }}
                 quickFactScope="storybook"
@@ -127,6 +129,6 @@ const NavigationDrawerStory = () => {
     );
 };
 
-storiesOf('General|Navigation Drawer', module)
+storiesOf('General/Navigation Drawer', module)
     .addDecorator(withFusionStory('Navigation Drawer'))
     .add('Default', () => <NavigationDrawerStory />);

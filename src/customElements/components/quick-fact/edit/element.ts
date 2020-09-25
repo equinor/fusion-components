@@ -1,14 +1,16 @@
 import { LitElement, property, html } from '../../base';
 
-/** @TODO - fix export in api */
-import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
-import { ApiClients } from '@equinor/fusion';
+import ApplicationGuidanceApi from '../../api';
+
+import '../../../markdown-editor';
+
+import { ApplicationGuidanceQuickFact, QuickFactEvent } from '../../types';
 
 import styles from './element.css';
 
 export interface QuickFactEditElementProps {
     quickFact?: Partial<QuickFact>;
-};
+}
 
 /**
  * element to show editor for a quick fact
@@ -78,9 +80,11 @@ export class QuickFactEditElement extends LitElement implements QuickFactEditEle
             this.saving = true;
             const { collectionPath, ...data } = this.editQuickFact;
             const res = await this.api.updateQuickFact(collectionPath, data as QuickFact);
-            this.dispatchEvent(new CustomEvent('update', {
-                detail: res.data
-            }));
+            this.dispatchEvent(
+                new CustomEvent('update', {
+                    detail: res.data,
+                })
+            );
         } catch (err) {
             console.error(err);
         } finally {
@@ -109,7 +113,11 @@ export class QuickFactEditElement extends LitElement implements QuickFactEditEle
                 <fusion-button ?disabled="${this.saving}" @click="${this.handleCancel}" outlined>
                     Cancel
                 </fusion-button>
-                <fusion-button class="button" ?disabled="${!this.canSave()}" @click="${this.handleSave}">
+                <fusion-button
+                    class="button"
+                    ?disabled="${!this.canSave()}"
+                    @click="${this.handleSave}"
+                >
                     ${this.saving ? 'Saving...' : 'Save'}
                 </fusion-button>
             </div>
@@ -132,10 +140,10 @@ export class QuickFactEditElement extends LitElement implements QuickFactEditEle
                 />
                 <div>
                     <label>Description</label>
-                    <fusion-app-guide-editor
-                        value="${quickFact?.bodyMarkdown || ''}"
+                    <fusion-markdown-editor
+                        initialValue="${quickFact?.bodyMarkdown || ''}"
                         @change="${this.handleBodyChange}"
-                    ></fusion-app-guide-editor>
+                    ></fusion-markdown-editor>
                     <label>Please write in English</label>
                 </div>
             </div>
@@ -143,4 +151,4 @@ export class QuickFactEditElement extends LitElement implements QuickFactEditEle
     }
 }
 
-export default QuickFactEditElement
+export default QuickFactEditElement;

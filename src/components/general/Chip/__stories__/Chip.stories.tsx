@@ -7,7 +7,12 @@ const ChipsStory = () => (
     <React.Fragment>
         <Chip id="read-only-chip" title="Read-only" quickFactScope="storybook" />
         <span style={{ paddingLeft: '10px' }}></span>
-        <Chip id="removable-chir" onRemove={() => {}} title="Removable" quickFactScope="storybook"/>
+        <Chip
+            id="removable-chir"
+            onRemove={() => {}}
+            title="Removable"
+            quickFactScope="storybook"
+        />
         <span style={{ paddingLeft: '10px' }}></span>
         <Chip isDisabled title="Disabled" />
         <span style={{ paddingLeft: '10px' }}></span>

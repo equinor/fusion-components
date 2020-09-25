@@ -51,6 +51,7 @@ export type NavigationStructure = {
     isOpen?: boolean;
     navigationChildren?: NavigationStructure[];
     aside?: ReactNode;
+    isDisabled?: boolean;
 };
 
 type NavigationDrawerProps = {
@@ -84,8 +85,8 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
 
     useEffect(() => {
         if (selectedId) {
-            const newStructure = structure.map(item => toggleActiveById(selectedId, item));
-            onChangeStructure(newStructure.map(item => toggleOpenByChildId(selectedId, item)));
+            const newStructure = structure.map((item) => toggleActiveById(selectedId, item));
+            onChangeStructure(newStructure.map((item) => toggleOpenByChildId(selectedId, item)));
         }
     }, [selectedId]);
 
@@ -112,7 +113,7 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
                     if (toggleOpen) {
                         const newStructure =
                             internalStructure &&
-                            internalStructure.map(item => toggleOpenById(id, item));
+                            internalStructure.map((item) => toggleOpenById(id, item));
                         newStructure && onChangeStructure(newStructure);
                     }
                 },

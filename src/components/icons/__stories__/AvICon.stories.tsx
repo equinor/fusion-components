@@ -9,7 +9,7 @@ import { PlayIcon } from '../components/av';
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Av', module);
+const stories = storiesOf('Icons/Av', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory("Av"));
 

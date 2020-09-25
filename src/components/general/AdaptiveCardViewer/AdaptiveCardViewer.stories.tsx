@@ -38,6 +38,6 @@ const AdaptiveCardViewerStory = () => {
     );
 };
 
-storiesOf('General|Adaptive Card Viewer', module)
+storiesOf('General/Adaptive Card Viewer', module)
     .addDecorator(withFusionStory('Adaptive Card Viewer'))
     .add('Default', () => <AdaptiveCardViewerStory />);
