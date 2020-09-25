@@ -4,7 +4,6 @@ import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
 import {
     MarkdownViewer,
     Spinner,
-    Button,
     PersonCard,
     Accordion,
     AccordionItem,
@@ -13,11 +12,11 @@ import {
 import { useCurrentUser, useApiClients } from '@equinor/fusion';
 import classNames from 'classnames';
 
-type RlsErrorMessageProps = {
+type ReportErrorMessageProps = {
     report: Report;
 };
 
-const RlsErrorMessage: React.FC<RlsErrorMessageProps> = ({ report }) => {
+const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report }) => {
     const [isFetching, setIsFetching] = React.useState<boolean>(true);
     const [requirements, setRequirements] = React.useState<string | null>(null);
     const [description, setDescription] = React.useState<string | null>(null);
@@ -31,30 +30,41 @@ const RlsErrorMessage: React.FC<RlsErrorMessageProps> = ({ report }) => {
     const timeStamp = React.useMemo(() => new Date().toString(), []);
 
     React.useEffect(() => {
-        getRlsRequirements();
+        getReportInformation();
     }, [report]);
 
-    const getRlsRequirements = async () => {
-        try {
-            setIsFetching(true);
-            const fetchedRequirements = await reportApiClient.getRlsRequirements(report.id);
-            const fetchedNoAccessMessage = await reportApiClient.getAccessDescription(report.id);
-            const fetchedDescriptions = await reportApiClient.getDescription(report.id);
+    const getReportInformation = React.useCallback(async () => {
+        setIsFetching(true);
 
-            setNoAccessMessage(fetchedNoAccessMessage?.data || null);
-            setDescription(fetchedDescriptions?.data || null);
+        try {
+            const fetchedRequirements = await reportApiClient.getRlsRequirements(report.id);
             setRequirements(fetchedRequirements?.data || null);
         } catch {
-        } finally {
-            setIsFetching(false);
+            setRequirements(null);
         }
-    };
+
+        try {
+            const fetchedNoAccessMessage = await reportApiClient.getAccessDescription(report.id);
+            setNoAccessMessage(fetchedNoAccessMessage?.data || null);
+        } catch {
+            setNoAccessMessage(null);
+        }
+
+        try {
+            const fetchedDescriptions = await reportApiClient.getDescription(report.id);
+            setDescription(fetchedDescriptions?.data || null);
+        } catch {
+            setDescription(null);
+        }
+
+        setIsFetching(false);
+    }, [report.id]);
 
     if (isFetching)
         return <Spinner title={'Retrieving report access specifications '} floating centered />;
 
     return (
-        <div className={styles.rlsErroMessage}>
+        <div className={styles.reportErroMessage}>
             <div className={styles.container}>
                 <h2 className={styles.header}>Restricted Access</h2>
                 <div
@@ -82,7 +92,10 @@ const RlsErrorMessage: React.FC<RlsErrorMessageProps> = ({ report }) => {
                 </div>
 
                 <div className={styles.userIdentityContainer}>
-                    <h4>This report is configured to use Power BI RLS and your identity is:</h4>
+                    <h4>
+                        Your identity does not meet this reports access requirements, your identity
+                        is:
+                    </h4>
                     <div className={styles.info}>
                         <div className={styles.labels}>
                             <div>Username</div>
@@ -118,4 +131,4 @@ const RlsErrorMessage: React.FC<RlsErrorMessageProps> = ({ report }) => {
     );
 };
 
-export default RlsErrorMessage;
+export default ReportErrorMessage;
