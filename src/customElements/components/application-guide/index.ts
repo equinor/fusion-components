@@ -17,3 +17,4 @@ declare global {
 }
 
 export * from './element';
+export * from './events';

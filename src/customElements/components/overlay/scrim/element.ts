@@ -20,7 +20,7 @@ export class OverlayScrimElement extends LitElement implements OverlayScrimEleme
 
     render() {
         const classes = directives.classMap({ active: this.active });
-        const rects = this.anchors.map(el => ({ id: el.id, rect: el.bounds() }));
+        const rects = this.anchors.map(el => ({ id: el.anchor, rect: el.bounds() }));
         return html`
             <div id="overlay" class="${classes}">
                 ${overlay(rects)} 

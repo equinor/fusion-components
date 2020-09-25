@@ -26,13 +26,13 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
     const anchorPadding = React.useRef<number>(padding);
 
     React.useEffect(() => {
-        if (!ref.current) {
-            return;
-        }
         requestAnimationFrame(() => {
+            if (!ref.current) {
+                return;
+            }
             const event = new OverlayAnchorConnectEvent({
                 detail: {
-                    id,
+                    anchor: id,
                     scope,
                     bounds: () => {
                         return AnchorDOMRect.create(

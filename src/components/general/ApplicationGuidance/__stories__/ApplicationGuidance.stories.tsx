@@ -28,7 +28,7 @@ const Story: React.FC = () => {
                 isOpen={showSideSheet}
                 onClose={setShowSideSheet}
             >
-                <fusion-overlay-anchor id="just-text" scope={scope}>
+                <fusion-overlay-anchor anchor="just-text" scope={scope}>
                     <p style={{ margin: 32, display: 'block' }}>
                         Text needs to be wrapped in something. This text is wrapped with
                         &lt;p&gt;&lt;/p&gt;
