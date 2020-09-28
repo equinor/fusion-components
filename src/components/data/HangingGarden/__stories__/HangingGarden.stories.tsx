@@ -38,4 +38,4 @@ const DemoHangingGarden: React.FC = () => {
     );
 };
 
-storiesOf('Data|Hanging Garden', module).add('Default', () => <DemoHangingGarden />);
+storiesOf('Data/Hanging Garden', module).add('Default', () => <DemoHangingGarden />);
