@@ -1,6 +1,6 @@
 import React from 'react';
 import { useFusionContext, useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
-import { IconButton, IconProps, useIcon, useTooltipRef } from '@equinor/fusion-components';
+import { IconButton, IconProps, useIcon, useTooltipRef, useAnchorRef } from '@equinor/fusion-components';
 
 const inverseComponentDisplayType = (componentDisplayType: ComponentDisplayType) =>
     componentDisplayType === ComponentDisplayType.Comfortable
@@ -25,7 +25,11 @@ const ComponentDisplayTypeIcon = (props: IconProps) => {
     return iconFactory(props);
 };
 
-const ComponentDisplayToggleButton: React.FC = () => {
+type ComponentDisplayToggleButtonProps = {
+    quickFactScope?: string,
+}
+
+const ComponentDisplayToggleButton: React.FC<ComponentDisplayToggleButtonProps> = ({quickFactScope}) => {
     const { settings } = useFusionContext();
 
     const componentDisplayType = useComponentDisplayType();
@@ -40,6 +44,8 @@ const ComponentDisplayToggleButton: React.FC = () => {
         getComponentDisplayTypeTooltipText(componentDisplayType),
         'below'
     );
+
+    useAnchorRef({ref: componentDisplayTypeTooltipRef, id: "compact-mode-btn", scope: quickFactScope})
 
     return (
         <IconButton

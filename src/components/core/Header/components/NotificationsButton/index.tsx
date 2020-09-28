@@ -7,6 +7,7 @@ import {
     styling,
     NotificationsSideSheet,
     OverlayPortal,
+    useAnchor,
 } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import classNames from 'classnames';
@@ -29,7 +30,11 @@ const NotificationNumberBadge = (props: NotificationNumberBadgeProps) => {
 
     return iconFactory(props);
 };
-const NotificationsButton: React.FC = () => {
+
+type NotificationsButtonProps = {
+    quickFactScope?: string;
+};
+const NotificationsButton: React.FC<NotificationsButtonProps> = ({ quickFactScope }) => {
     const [showSideSheet, setShowSideSheet] = React.useState<boolean>(false);
     const [hasOpenedSideSheet, setHasOpenedSideSheet] = React.useState<boolean>(false);
 
@@ -62,9 +67,11 @@ const NotificationsButton: React.FC = () => {
         hasOpenedSideSheet && getReadNotificationCardsAsync();
     }, [hasOpenedSideSheet]);
 
+    const ref = useAnchor<HTMLButtonElement>({ id: 'notifications-btn', scope: quickFactScope });
+
     return (
         <>
-            <IconButton onClick={openSideSheet}>
+            <IconButton onClick={openSideSheet} ref={ref}>
                 <div className={styles.notificationsButton}>
                     <NotificationsIcon />
                     {numberOfUnread > 0 && (

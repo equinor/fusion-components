@@ -156,7 +156,7 @@ function Filter<T>({
         <div className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
-                    <ApplicationGuidanceAnchor id={filter.key} scope={quickFactScope} snug>
+                    <ApplicationGuidanceAnchor anchor={filter.key} scope={quickFactScope} snug>
                         <h4>
                             <FilterTitle filter={filter} term={term} />
                         </h4>

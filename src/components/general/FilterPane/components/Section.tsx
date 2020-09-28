@@ -66,7 +66,7 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         <section className={sectionClassNames}>
             {!filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
-                    <ApplicationGuidanceAnchor id={section.key} scope={quickFactScope} snug>
+                    <ApplicationGuidanceAnchor anchor={section.key} scope={quickFactScope} snug>
                         <h3>{section.title}</h3>
                     </ApplicationGuidanceAnchor>
                     {section.isCollapsible && (
