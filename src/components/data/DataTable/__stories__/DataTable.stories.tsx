@@ -267,6 +267,65 @@ const SingleSelectable: React.FC = () => {
     );
 };
 
+const ExpandableRows: React.FC = () => {
+    const [appSettings, setAppSetting] = useAppSettings();
+    const perPage = parseInt(appSettings['perPage'], 10) || 20;
+
+    const [selectedItems, setSelectedItems] = useState<DataItem[]>([]);
+    const { sortedData, setSortBy, sortBy, direction } = useSorting(data, null, null);
+    const { pagination, pagedData, setCurrentPage } = usePagination(
+        sortedData as DataItem[],
+        perPage
+    );
+
+    const onPaginationChange = useCallback((newPage: Page, perPage: number) => {
+        setCurrentPage(newPage.index, perPage);
+        setAppSetting('perPage', perPage);
+    }, []);
+
+    const onSortChange = useCallback(
+        (column: DataTableColumn<DataItem>) => {
+            setSortBy(column.accessor, null);
+        },
+        [sortBy, direction]
+    );
+
+    const sortedByColumn = simpleColumns.find((c) => c.accessor === sortBy) || null;
+
+    const handleClick = React.useCallback(
+        (item) => {
+            if (selectedItems.findIndex((i) => i.id === item.id) !== -1) {
+                setSelectedItems([]);
+            } else {
+                setSelectedItems([item]);
+            }
+        },
+        [selectedItems]
+    );
+
+    return (
+        <DataTable
+            columns={simpleColumns}
+            data={pagedData}
+            pagination={pagination}
+            onPaginationChange={onPaginationChange}
+            isFetching={false}
+            rowIdentifier={'id'}
+            onSortChange={onSortChange}
+            sortedBy={{
+                column: sortedByColumn,
+                direction,
+            }}
+            isExpandable={true}
+            expandedComponent={ExpandedItem}
+            listComponent={ExpandedItem}
+            onRowClick={handleClick}
+            selectedItems={selectedItems}
+            quickFactScope={"storybook"}
+        />
+    );
+};
+
 storiesOf('Data/Data Table', module)
     .addParameters({ jest: ['DataTable.stories.jsx'] })
     .addDecorator(withFusionStory('Data Table'))
@@ -274,4 +333,5 @@ storiesOf('Data/Data Table', module)
     .add('With skeleton', () => <WithSkeleton />)
     .add('Single selectable', () => <SingleSelectable />)
     .add('Multi selectable', () => <Selectable />)
-    .add('No Columns Collapse', () => <NoColumnsCollapse />);
+    .add('No Columns Collapse', () => <NoColumnsCollapse />)
+    .add('With expandable rows', () => <ExpandableRows />);
