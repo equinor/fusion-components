@@ -60,6 +60,10 @@ export const style = css`
         border: none;
         cursor: pointer;
     }
+
+    fusion-button > svg {
+        font-size: 1.5rem;
+    }
 `;
 
 export const styles = [

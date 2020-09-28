@@ -4,26 +4,62 @@ import {
     OverlayAnchorElement,
     OverlayAnchorElementTag,
     OverlayAnchorElementProps,
-    OverlayAnchorConnectEvent,
+    OverlayAnchorConnectEvent
 } from '../../../../customElements/components/overlay/anchor';
 
 export interface AppGuideAnchorRef<R extends HTMLElement> {
+
+    /** 
+     * unique key for the app (within its scope)
+    */ 
     id: string;
-    scope?: string;
+
+    /**
+     * scope of the anchor, sub-scopes are divided by `|` 
+     */
+    scope: string;
+
+    /**
+     * amount of padding added to the calculation of element bounds
+     */
     padding?: number;
+
+    /**
+     * reference to the element [HTMLElement] which displays the anchor
+     */
     ref: React.RefObject<R>;
 }
 
+/**
+ * @see useAnchorRef
+ * 
+ * Creates and ref for [useAnchorRef]
+ * 
+ * @param anchor anchor props
+ * @returns [React.useRef<R>]
+ */
 export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<R>, 'ref'>) => {
     const ref = React.useRef<R>(null);
     useAnchorRef({ ...anchor, ref });
     return ref;
 };
 
+/**
+ * 
+ * Hook for binding an element to a anchor.
+ * When the element attaches to the dom an event is fired for registering the element to the overlay.
+ * The event contains a callback for disconnecting from the over, which is called on un-mount
+ * The event also contain a callback for calculating the bounds of the element and applies provided padding.
+ * 
+ * The element must be within a [ApplicationGuidanceWrapper]
+ * 
+ * @param anchor [AppGuideAnchorRef]
+ * @returns [React.useRef<R>]
+ */
 export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
-    const { id, ref, scope, padding } = anchor;
+    const { id, ref, scope } = anchor;
     const callBackRef = React.useRef<VoidFunction>();
-    const anchorPadding = React.useRef<number>(padding);
+    const padding = React.useRef<number>(anchor.padding);
 
     React.useEffect(() => {
         requestAnimationFrame(() => {
@@ -37,7 +73,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                     bounds: () => {
                         return AnchorDOMRect.create(
                             ref.current.getBoundingClientRect(),
-                            anchorPadding.current
+                            padding.current
                         );
                     },
                     disconnectedCallback: (cb: VoidFunction) => {
@@ -45,6 +81,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                     },
                 },
                 cancelable: false,
+                // allow propagation threw shadow doms
                 bubbles: true,
                 composed: true,
             });
@@ -61,7 +98,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
 
 export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<
     Omit<OverlayAnchorElementProps, 'bounds'> &
-        React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
+    React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
 >;
 
 export const ApplicationGuidanceAnchor: React.FC<ApplicationGuidanceAnchorProps> = (

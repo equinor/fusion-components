@@ -57,7 +57,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     connectedCallback() {
         super.connectedCallback();
         this.addEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
-        window.addEventListener("resize", this._handleResize);
+        window.addEventListener("resize", this._handleResize, false);
     }
 
     disconnectedCallback() {
@@ -94,10 +94,14 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
 
     updated(props: PropertyValues) {
         super.update(props);
-        props.has('active') && this._dispatchEvent(this.active
-            ? OverlayEventType.activated
-            : OverlayEventType.deactivated
-        );
+        if (props.has('active')) {
+            this._dispatchEvent(this.active
+                ? OverlayEventType.activated
+                : OverlayEventType.deactivated
+            );
+            // request update of bounds after display, anchors may jump
+            setTimeout(() => this.requestUpdate('scopedAnchors'), 1000);
+        }
         props.has('scope') && this._dispatchEvent(OverlayEventType.scope);
         props.has('selected') && this._dispatchEvent(OverlayEventType.selection);
         props.has('anchors') && this._dispatchEvent(OverlayEventType.anchor);

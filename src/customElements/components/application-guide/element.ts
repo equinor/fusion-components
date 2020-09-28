@@ -34,6 +34,8 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     @query('#popover')
     popover!: HTMLDivElement;
 
+    protected _dragStart;
+
     render() {
         const { scope, active } = this;
         const fabIcon = active ? iconClose : iconOpen;
@@ -48,8 +50,8 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
                     ${this.renderQuickFact()}
                 </div>
                 <slot></slot>
-                <slot name="fab" @click=${(this.toggle)}>
-                    <fusion-button id="fab" round raised size="large">
+                <slot name="fab" @click=${(this.toggle)} >
+                    <fusion-button id="fab" round raised size="large" title="${active?'close':'open'} quick facts">
                         ${fabIcon}
                     </fusion-button>
                 </slot>
@@ -101,8 +103,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
     protected _handleSelectionChanged(e: OverlayEvent<OverlayEventType.selection>) {
         const { anchor, scope } = e.detail.selected;
-        debugger;
-        console.log(e.detail.selected, e);
         this.selected = { anchor, scope };
     }
 
@@ -114,10 +114,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         };
         this._dispatchEvent(ApplicationGuideEventType.show, { detail });
     }
-
-    // @TODO
-
-    protected _dragStart;
 
     @eventOptions({ capture: false })
     protected _handleDragStart(e: DragEvent) {

@@ -38,8 +38,8 @@ const AuthTokenInput = ({ active }) => {
                     padding: 8,
                     boxSizing: 'border-box',
                 }}
+                value={authToken}
             >
-                {authToken}
             </textarea>
         </div>
     );

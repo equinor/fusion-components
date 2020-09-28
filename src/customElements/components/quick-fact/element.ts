@@ -48,6 +48,9 @@ export class QuickFactElement extends LitElement {
     @property({ attribute: false })
     fetching?: boolean;
 
+    @property({ attribute: false })
+    error?: Error;
+
     get client() {
         return infoApi.getClient('info');
     }
@@ -57,7 +60,7 @@ export class QuickFactElement extends LitElement {
         const event = this._dispatchEvent(QuickFactEventType.fetch, { cancelable: true });
         if (!event.defaultPrevented) {
             this.quickFact = await this._fetchQuickFact();
-            this._dispatchEvent(QuickFactEventType.fetched);
+            this.quickFact && this._dispatchEvent(QuickFactEventType.fetched);
         }
     }
 
@@ -70,22 +73,16 @@ export class QuickFactElement extends LitElement {
         if (!anchor) throw Error('fetchQuickFact: missing entity');
 
         try {
+            delete this.error;
             this.fetching = true;
             const quickFact = await this.client.getQuickFact(scope, anchor);
             return quickFact.data;
         } catch (err) {
-            if (err.response?.status === 404) {
-                return undefined;
-            }
-            if (err.response?.status === 401) {
-                return undefined;
-            }
-
             switch (err.response?.status) {
                 case 404: return undefined;
                 /** @todo handle not allowed */
                 case 401:
-                    console.warn('not authorized!', err);
+                    this.error = Error('Unauthorized to see quick facts');
                     return undefined;
             }
             console.error(err);
@@ -109,6 +106,7 @@ export class QuickFactElement extends LitElement {
                 this.fetchQuickFact();
                 this._dispatchEvent(QuickFactEventType.show);
             }
+            this.enterViewMode();
         }
 
         /**
@@ -142,10 +140,14 @@ export class QuickFactElement extends LitElement {
 
     private renderContent() {
 
-        const { quickFact, anchor, fetching, scope } = this;
+        const { quickFact, anchor, fetching, scope, error } = this;
 
         if (!anchor) {
             return html`<slot name="empty"></slot>`;
+        }
+
+        if (!!error) {
+            return html`<slot name="error">${error.message}</slot>`
         }
 
 
@@ -174,7 +176,7 @@ export class QuickFactElement extends LitElement {
                 .quickFact="${quickFact}"
                 .showSkeleton="${this.fetching}"
             >
-                <fusion-button slot="toolbar" @click="${this.handleEditClick}">
+                <fusion-button class="btn-edit" slot="toolbar" @click="${this.handleEditClick}" outlined>
                     ${iconEdit}
                 </fusion-button>
             </fusion-quick-fact-view>

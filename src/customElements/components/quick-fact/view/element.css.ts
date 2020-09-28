@@ -1,32 +1,41 @@
 import { css } from '../../base';
-// import { buttonStyle, toolbarHeaderStyle, iconButtonStyle, bodyStyle } from '../../styles';
-
 export const style = css`
     
-    slot[name="toolbar"] {
-        display:flex;
-        justify-content: flex-end;
+    header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-
-    slot[name="toolbar"]::slotted(*){
+    header h2 {
         margin: 0;
     }
 
+    header #toolbar {
+        margin-left: 20px;
+        margin-bottom: auto;
+    }
+    
     footer {
         display: flex;
         align-items: center;
+        font-size: 0.9rem;
+        color: #0084c4
+    }
+    footer .publisher-name{
+        font-weight: bold;
     }
 
     .person-photo {
-        width: calc(var(--grid-unit) * 4);
-        height: calc(var(--grid-unit) * 4);
         display: inline-block;
         border-radius: 50%;
         overflow: hidden;
-        margin-left: calc(var(--grid-unit) * 2);
+        width: 2rem;
+        height: 2rem;
+        margin-left: 1rem;
     }
 
     .person-photo img {
+        height: 100%;
         max-width: 100%;
     }
 `;

@@ -1,7 +1,7 @@
 import { fusionElement } from '../../base';
 import Element from './element';
 
-import './editor';
+import '../../markdown-editor';
 
 const QuickFactEditElementTag = 'fusion-quick-fact-edit';
 
