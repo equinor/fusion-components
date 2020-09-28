@@ -59,7 +59,6 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
      * @todo move to function for setState and create a clearState
      */
     public set markdown(value: string) {
-        console.log('changed');
         const { state, view, state: { tr: transaction } } = this;
         const selection = TextSelection.create(transaction.doc, 0, transaction.doc.content.size);
         transaction.setSelection(selection);
