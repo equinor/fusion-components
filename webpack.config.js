@@ -58,7 +58,7 @@ module.exports = merge(
     {
         resolve: {
             alias: {
-                "@equinor/fusion-components": path.resolve(__dirname, 'src', 'index.ts'),
+                '@equinor/fusion-components': path.resolve(__dirname, 'src', 'index.ts'),
             },
         },
     }

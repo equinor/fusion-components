@@ -335,7 +335,7 @@ const DefaultStory = () => {
     );
 };
 
-storiesOf('Pro org|Position Card', module)
+storiesOf('Pro org/Position Card', module)
     .addDecorator(withKnobs)
     .addDecorator(withFusionStory('Pro org position card'))
     .add('Default', () => <DefaultStory />)

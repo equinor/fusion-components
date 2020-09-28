@@ -33,7 +33,7 @@ const Story: React.FC = () => {
     );
 };
 
-storiesOf('Application Guidance|Application Guidance', module)
+storiesOf('Application Guidance/Application Guidance', module)
     .addParameters({ jest: ['DataTable.stories.jsx'] })
     .addDecorator(withFusionStory('Data Table'))
     .add('Default', () => <Story />);

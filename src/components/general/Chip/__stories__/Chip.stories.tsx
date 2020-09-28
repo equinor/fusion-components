@@ -18,6 +18,6 @@ const ChipsStory = () => (
     </React.Fragment>
 );
 
-storiesOf('General|Chip', module)
+storiesOf('General/Chip', module)
     .addDecorator(withFusionStory("Chip"))
     .add('Default', () => <ChipsStory />);

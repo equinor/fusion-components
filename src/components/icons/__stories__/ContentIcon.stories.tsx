@@ -9,7 +9,7 @@ import { BlockIcon, AddIcon, CopyIcon } from '../components/content';
 
 const eventsFromNames = actions('onClick');
 
-const stories = storiesOf('Icons|Content', module);
+const stories = storiesOf('Icons/Content', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory("Content"));
 

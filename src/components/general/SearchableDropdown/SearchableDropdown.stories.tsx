@@ -123,6 +123,6 @@ const DropdownStory = () => {
     );
 };
 
-storiesOf('General|Searchable Dropdown', module)
+storiesOf('General/Searchable Dropdown', module)
     .addDecorator(withFusionStory('Searchable Dropdown'))
     .add('Default', () => <DropdownStory />);

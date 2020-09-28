@@ -41,14 +41,14 @@ const positions: Position[] = [
         personName: 'Sam Test',
         aside: true,
     },
-    
+
     {
         id: '40',
         parentId: '2',
         name: 'Worker',
         positionId: '3',
         personName: 'Sam Test',
-        linked:true,
+        linked: true,
     },
     {
         id: '50',
@@ -56,7 +56,7 @@ const positions: Position[] = [
         name: 'Worker',
         positionId: '3',
         personName: 'Sam Test',
-        linked:true,
+        linked: true,
     },
     {
         id: '501',
@@ -64,9 +64,8 @@ const positions: Position[] = [
         name: 'Worker',
         positionId: '3',
         personName: 'Sam Test',
-        linked:true,
+        linked: true,
     },
-    
 ];
 
 const cardStyle = {
@@ -95,13 +94,21 @@ const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
 
 const ReportingPathStory = () => {
     const componentDisplayType = useComponentDisplayType();
-    const cardHeight = componentDisplayType === "Compact" ? 110 : 142;
-    const rowMargin = componentDisplayType === "Compact" ? 120 : 154;
-    const cardMargin = componentDisplayType === "Compact" ? 16 : 16;
-    
-    return <ReportingPath structure={positions} component={PositionCard} cardHeight={cardHeight} rowMargin={rowMargin} cardMargin={cardMargin} />;
+    const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
+    const rowMargin = componentDisplayType === 'Compact' ? 120 : 154;
+    const cardMargin = componentDisplayType === 'Compact' ? 16 : 16;
+
+    return (
+        <ReportingPath
+            structure={positions}
+            component={PositionCard}
+            cardHeight={cardHeight}
+            rowMargin={rowMargin}
+            cardMargin={cardMargin}
+        />
+    );
 };
 
-storiesOf('Pro org|Reporting Path', module)
+storiesOf('Pro org/Reporting Path', module)
     .addDecorator(withFusionStory('Reporting Path'))
     .add('Default', () => <ReportingPathStory />);

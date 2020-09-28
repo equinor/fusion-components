@@ -32,7 +32,7 @@ const ErrorBoundaryStory = () => {
     );
 };
 
-storiesOf("General|ErrorBoundary", module)
+storiesOf('General/ErrorBoundary', module)
     .addParameters({ jest: ["ErrorBoundary.stories.tsx"] })
     .addDecorator(withFusionStory("ErrorBoundary"))
     .add("ErrorBoundary", () => <ErrorBoundaryStory />);
