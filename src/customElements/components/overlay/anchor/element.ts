@@ -1,11 +1,11 @@
 import { LitElement, property } from '../../base';
 import { OverlayAnchorConnectEvent } from './events';
-import { AnchorDOMRect } from './anchor-rect';
+import { AnchorDOMRect, AnchorRect } from './anchor-rect';
 
 export type OverlayAnchor = {
     anchor: string;
     scope: string;
-    bounds: () => DOMRect,
+    bounds: () => AnchorRect,
 }
 
 export interface OverlayAnchorElementProps extends OverlayAnchor {
@@ -43,7 +43,7 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
      * calculated bounds for the element and children.
      * applies padding if not snug
      */
-    bounds(): DOMRect {
+    bounds(): AnchorRect {
         return AnchorDOMRect.fromUnbound(this, this.snug && 16);
     }
 
