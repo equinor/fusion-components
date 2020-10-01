@@ -1,6 +1,7 @@
 import { svg, directives } from '../../base';
+import { AnchorRect } from '../anchor/anchor-rect';
 
-const mask = (rect: DOMRect) => svg`
+const mask = (rect: AnchorRect) => svg`
     <rect
         x="${rect.left}px"
         y="${rect.top}px"
@@ -11,7 +12,7 @@ const mask = (rect: DOMRect) => svg`
     ></rect>
 `;
 
-export const overlay = (anchors: { id: string, rect: DOMRect }[]) => svg`
+export const overlay = (anchors: { id: string, rect: AnchorRect }[]) => svg`
     <svg width="100%" height="100%">
         <defs>
             <mask id="Mask" width="100vw" height="100vh" x="0" y="0">

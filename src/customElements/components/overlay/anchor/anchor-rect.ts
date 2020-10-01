@@ -1,5 +1,40 @@
-export class AnchorDOMRect extends DOMRect {
-    static create(value: Pick<DOMRect, 'x' | 'y' | 'width' | 'height'>, padding?: number) {
+export interface AnchorRect {
+    readonly bottom: number;
+    readonly height: number;
+    readonly left: number;
+    readonly right: number;
+    readonly top: number;
+    readonly width: number;
+    readonly x: number;
+    readonly y: number;
+}
+
+export class AnchorDOMRect implements ClientRect {
+
+    constructor(
+        public x: number,
+        public y: number,
+        public width: number,
+        public height: number
+    ) { }
+
+    get left() {
+        return this.x;
+    }
+
+    get right() {
+        return this.x + this.width;
+    }
+
+    get top() {
+        return this.y;
+    }
+
+    get bottom() {
+        return this.y + this.height;
+    }
+
+    static create(value: AnchorRect, padding?: number) {
         const rect = new AnchorDOMRect(value.x, value.y, value.width, value.height);
         return padding ? rect.applyPadding(padding) : rect;
     }
@@ -10,15 +45,13 @@ export class AnchorDOMRect extends DOMRect {
         const y = Math.min(...rects.map((r) => r.top));
         const width = Math.max(...rects.map((r) => r.right)) - x;
         const height = Math.max(...rects.map((r) => r.bottom)) - y;
-        return AnchorDOMRect.create({
-            x, y, width, height
-        }, padding);
+        return AnchorDOMRect.create(new AnchorDOMRect(x, y, width, height), padding);
     }
 
     applyPadding(padding: number) {
         return new AnchorDOMRect(
-            this.x - padding,
-            this.y - padding,
+            this.left - padding,
+            this.top - padding,
             this.width + (padding * 2),
             this.height + (padding * 2)
         );

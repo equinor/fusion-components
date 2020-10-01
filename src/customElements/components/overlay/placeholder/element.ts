@@ -1,4 +1,5 @@
 import { LitElement, property, html, directives } from '../../base';
+import { AnchorRect } from '../anchor/anchor-rect';
 
 import styles from './element.css';
 
@@ -9,7 +10,7 @@ export class OverlayPlaceholderElement extends LitElement {
     static styles = styles;
 
     @property({ type: Object })
-    rect: DOMRect;
+    rect: AnchorRect;
 
     @property({ type: Boolean, reflect: true })
     active?: boolean;
