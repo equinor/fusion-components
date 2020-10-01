@@ -10,7 +10,7 @@ type TabProps = {
     disabled?: boolean;
     onChange?: (ref: HTMLElement) => void;
     url?: string;
-    appGuideAnchorScope?: string;
+    quickFactScope?: string;
 };
 
 const Tab: React.FC<TabProps> = ({
@@ -20,7 +20,7 @@ const Tab: React.FC<TabProps> = ({
     disabled,
     onChange,
     url,
-    appGuideAnchorScope,
+    quickFactScope,
 }) => {
     const [isPressed, setIsPressed] = React.useState(false);
     const tabRef = React.useRef<HTMLAnchorElement>(null);
@@ -36,7 +36,7 @@ const Tab: React.FC<TabProps> = ({
         tabRef.current
     );
 
-    useAnchorRef({ref: tabRef, id: tabKey, scope: appGuideAnchorScope }); 
+    useAnchorRef({  ref: tabRef, id: tabKey, scope: quickFactScope });
 
     const tabClasses = classNames(styles.tab, {
         [styles.current]: isCurrent,
@@ -50,7 +50,7 @@ const Tab: React.FC<TabProps> = ({
     if (disabled) {
         return (
             <span className={tabClasses} ref={tabRef}>
-                <div className={titleClasses} >{title}</div>
+                <div className={titleClasses}>{title}</div>
             </span>
         );
     }
