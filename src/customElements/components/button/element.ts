@@ -38,7 +38,9 @@ export class ButtonElement extends LitElement {
     }
 
     protected createRenderRoot() {
-        return this.attachShadow({ mode: 'open', delegatesFocus: true });
+        // don't set delegatesFocus: true due to https://bugs.webkit.org/show_bug.cgi?id=215732
+        // return this.attachShadow({ mode: 'open', delegatesFocus: true });
+        return this.attachShadow({mode: 'open'});
     }
 
     protected render() {

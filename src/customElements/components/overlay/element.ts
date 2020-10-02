@@ -57,13 +57,15 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     connectedCallback() {
         super.connectedCallback();
         this.addEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
-        window.addEventListener("resize", this._handleResize, false);
+        window.addEventListener("resize", this._updateAnchorBounds, false);
+        window.addEventListener("scroll", this._updateAnchorBounds, false);
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
         this.removeEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
-        window.removeEventListener("resize", this._handleResize);
+        window.removeEventListener("resize", this._updateAnchorBounds);
+        window.removeEventListener("scroll", this._updateAnchorBounds);
     }
 
     render() {
@@ -110,12 +112,12 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     protected _dispatchEvent(type: OverlayEventType, init?: CustomEventInit<OverlayEventDetail>) {
         const { scope, active, selectedAnchor: selected } = this;
         const detail = { ...init?.detail, scope, active, selected }
-        const event = new OverlayEvent(type, { ...init, detail });
+        const event = new OverlayEvent(type, { ...init, detail, composed: true, bubbles: true });
         this.dispatchEvent(event);
         return event;
     }
 
-    protected _handleResize = () => {
+    protected _updateAnchorBounds = () => {
         this.active && this.requestUpdate('scopedAnchors');
     }
 
