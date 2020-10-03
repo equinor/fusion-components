@@ -2,16 +2,19 @@ import React, { MutableRefObject, forwardRef } from 'react';
 import styles from '../styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { useAnchor } from '@equinor/fusion-components';
 
 type RadioProps = {
+    id?: string;
     selected?: boolean;
     onChange?: () => void;
     disabled?: boolean;
     color?: string;
+    quickFactScope?: string;
 };
 
 const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
-    ({ selected, onChange, disabled, color }, ref) => {
+    ({ id = 'radio-button', selected, onChange, disabled, color, quickFactScope }, ref) => {
         const inputRef = ref as MutableRefObject<HTMLInputElement | null>;
         const containerClassNames = classNames(
             styles.container,
@@ -21,6 +24,8 @@ const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
                 [styles.disabled]: disabled,
             }
         );
+
+        const anchorRef = useAnchor<HTMLDivElement>({ id, scope: quickFactScope });
 
         const handleOnChange = React.useCallback(() => {
             if (!disabled && onChange) {

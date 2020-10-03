@@ -1,13 +1,18 @@
 import React, { FC, useCallback, useMemo, useEffect, useState } from 'react';
 import styles from './styles.less';
-import { DropdownArrow } from '@equinor/fusion-components';
+import { DropdownArrow, useAnchorRef } from '@equinor/fusion-components';
 import { NavigationComponentProps } from '..';
 import { getNavigationComponentForItem } from '../utils';
 import { useTooltipRef } from '@equinor/fusion-components';
 
 import NavigationItem from './NavigationItem';
 
-const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
+const Section: FC<NavigationComponentProps> = ({
+    navigationItem,
+    onChange,
+    isCollapsed,
+    quickFactScope,
+}) => {
     const {
         id,
         isActive,
@@ -38,9 +43,11 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
     );
 
     const change = useCallback(() => {
-        onChange && onChange(id, !isOpen, !isDisabled);
-        !isDisabled && onClick && onClick();
-    }, [onClick, id, isOpen, onChange, isDisabled]);
+        onChange && onChange(id, !isOpen, true);
+        onClick && onClick();
+    }, [onClick, id, isOpen, onChange]);
+
+    useAnchorRef({ ref: textRef, id, scope: quickFactScope });
 
     return (
         <>

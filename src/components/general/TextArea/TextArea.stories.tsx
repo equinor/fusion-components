@@ -47,12 +47,14 @@ const TextAreaStory = () => {
     return (
         <div style={{ display: 'flex', padding: '8px', flexDirection: 'column' }}>
             <TextArea
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
                 placeholder="Input text"
                 label="Label"
                 isOptional
                 helperText="Helper text"
+                quickFactScope="storybook"
+                quickFactId="t1"
             />
 
             <br />
@@ -61,15 +63,22 @@ const TextAreaStory = () => {
                 label="Error label"
                 placeholder="Input Text"
                 errorMessage="An error occurred"
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
+                quickFactScope="storybook"
+                quickFactId="text-area-2"
             />
 
             <br />
-            <TextArea onChange={value => setValue(value)} value={value} disabled label="Disabled" />
+            <TextArea
+                onChange={(value) => setValue(value)}
+                value={value}
+                disabled
+                label="Disabled"
+            />
             <br />
             <TextArea
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
                 error={hasError}
                 errorMessage="Error: At least 8 characters"

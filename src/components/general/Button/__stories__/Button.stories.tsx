@@ -8,13 +8,13 @@ const eventsFromNames = actions('onClick');
 
 const createButtonStory = (props) => () => (
     <React.Fragment>
-        <Button {...props} {...eventsFromNames}>
+        <Button {...props} {...eventsFromNames} id="button-1" quickFactScope="storybook">
             Button
         </Button>
-        <Button danger {...props} {...eventsFromNames}>
+        <Button danger {...props} {...eventsFromNames} id="button-2" quickFactScope="storybook">
             Button
         </Button>
-        <Button disabled {...props} {...eventsFromNames}>
+        <Button disabled {...props} {...eventsFromNames} id="button-3" quickFactScope="storybook">
             Disabled button
         </Button>
     </React.Fragment>

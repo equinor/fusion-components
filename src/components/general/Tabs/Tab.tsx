@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as styles from './styles.less';
 import * as classNames from 'classnames';
-import { useKeyboardNavigation } from '@equinor/fusion-components';
+import { useKeyboardNavigation, useAnchorRef } from '@equinor/fusion-components';
 
 type TabProps = {
     isCurrent?: boolean;
@@ -10,9 +10,18 @@ type TabProps = {
     disabled?: boolean;
     onChange?: (ref: HTMLElement) => void;
     url?: string;
+    quickFactScope?: string;
 };
 
-const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
+const Tab: React.FC<TabProps> = ({
+    isCurrent,
+    title,
+    tabKey,
+    disabled,
+    onChange,
+    url,
+    quickFactScope,
+}) => {
     const [isPressed, setIsPressed] = React.useState(false);
     const tabRef = React.useRef<HTMLAnchorElement>(null);
 
@@ -27,6 +36,8 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
         tabRef.current
     );
 
+    useAnchorRef({  ref: tabRef, id: tabKey, scope: quickFactScope });
+
     const tabClasses = classNames(styles.tab, {
         [styles.current]: isCurrent,
         [styles.disabled]: disabled,
@@ -38,7 +49,7 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
 
     if (disabled) {
         return (
-            <span className={tabClasses}>
+            <span className={tabClasses} ref={tabRef}>
                 <div className={titleClasses}>{title}</div>
             </span>
         );

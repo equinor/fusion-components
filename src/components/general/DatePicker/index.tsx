@@ -8,19 +8,31 @@ import {
     useDropdownController,
     useOverlayContainer,
     useStringMask,
+    useAnchorRef,
 } from '@equinor/fusion-components';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 type DatePickerProps = {
+    id?: string;
     disabled?: boolean;
     error?: boolean;
     errorMessage?: string;
     label?: string;
     selectedDate?: null | Date;
     onChange: (date: null | Date) => void;
+    quickFactScope?: string;
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, label, onChange, selectedDate  }) => {
+const DatePicker: React.FC<DatePickerProps> = ({
+    id = 'datepicker',
+    disabled,
+    error,
+    errorMessage,
+    label,
+    onChange,
+    selectedDate,
+    quickFactScope,
+}) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [maskedValue, isValidMask] = useStringMask(dateMask, inputValue);
 
@@ -33,25 +45,30 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
             return formatDate(selectedDate);
         }, [selectedDate, isOpen, maskedValue]);
 
-        const handleKeyUp = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-            if(e.keyCode === 13 && isValidMask) {
-                try {
-                    const parsedDate = parseDate(maskedValue);
-                    onChange(parsedDate);
+        const handleKeyUp = useCallback(
+            (e: React.KeyboardEvent<HTMLInputElement>) => {
+                if (e.keyCode === 13 && isValidMask) {
+                    try {
+                        const parsedDate = parseDate(maskedValue);
+                        onChange(parsedDate);
+                        setIsOpen(false);
+                    } catch (e) {}
+                } else if (e.keyCode === 27) {
                     setIsOpen(false);
-                } catch (e) {}
-            } else if(e.keyCode === 27) {
-                setIsOpen(false);
-            }
-        }, [isValidMask, onChange]);
-        
-        const overlayContainer = useOverlayContainer();
-        const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-            if(isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
-                setIsOpen(false);
-            }
-        }, [isOpen]);
+                }
+            },
+            [isValidMask, onChange]
+        );
 
+        const overlayContainer = useOverlayContainer();
+        const handleBlur = useCallback(
+            (e: React.FocusEvent<HTMLInputElement>) => {
+                if (isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                    setIsOpen(false);
+                }
+            },
+            [isOpen]
+        );
 
         return (
             <TextInput
@@ -61,8 +78,8 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
                 icon={<CalendarIcon />}
                 label={label}
                 onBlur={handleBlur}
-                onChange={value => setInputValue(unmaskString(dateMask, value))}
-                onClick={() => (!isOpen && !disabled) && setIsOpen(true)}
+                onChange={(value) => setInputValue(unmaskString(dateMask, value))}
+                onClick={() => !isOpen && !disabled && setIsOpen(true)}
                 onIconAction={() => isOpen && setIsOpen(false)}
                 onKeyUp={handleKeyUp}
                 placeholder={selectedDate ? formatDate(selectedDate) : 'dd/mm/yyyy'}
@@ -72,7 +89,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
     });
 
     useEffect(() => {
-        if(!dropdownController.isOpen) {
+        if (!dropdownController.isOpen) {
             setInputValue('');
         }
     }, [dropdownController.isOpen]);
@@ -86,6 +103,12 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
     );
 
     const today = new Date();
+
+    useAnchorRef({
+        ref: dropdownController.controllerRef,
+        id,
+        scope: quickFactScope,
+    });
 
     return (
         <div

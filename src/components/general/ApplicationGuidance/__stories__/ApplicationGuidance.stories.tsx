@@ -6,7 +6,7 @@ import { Button } from '../../Button';
 import { SideSheet } from '../../SideSheet';
 
 import '../../../../customElements/components/application-guide';
-import { ApplicationGuidanceAnchor, useAnchor } from '../components/Anchor';
+import { useAnchor } from '../components/Anchor';
 
 const Story: React.FC = () => {
     const scope = 'storybook';
@@ -14,11 +14,13 @@ const Story: React.FC = () => {
     return (
         <div style={{ display: 'flex', height: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }}>
-                <Button ref={useAnchor({ scope, id: 'buttonz' })}>This button has snuggly fitted anchor</Button>
-                <ApplicationGuidanceAnchor anchor="another-button" scope={scope} style={{ display: 'block'}}>
+                <Button ref={useAnchor({ scope, id: 'button' })}>
+                    This button has snuggly fitted anchor
+                </Button>
+                <div ref={useAnchor({ scope: scope, id: 'multiple-element' })}>
                     <Button>Another button</Button>
                     <p>This anchor contains multiple components</p>
-                </ApplicationGuidanceAnchor>
+                </div>
             </div>
             <SideSheet
                 id="stoybook"

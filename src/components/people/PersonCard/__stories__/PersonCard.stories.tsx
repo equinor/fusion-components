@@ -97,6 +97,7 @@ const PersonCardStory = () => {
                     photoSize={size}
                     showJobTitle={boolean('Job title', true)}
                     inline={boolean('Inline', false)}
+                    quickFactScope="storybook"
                 />
             </div>
             <div style={{ paddingBottom: '16px' }}>
@@ -106,6 +107,7 @@ const PersonCardStory = () => {
                     photoSize={size}
                     showJobTitle={boolean('Job title', true)}
                     inline={boolean('Inline', false)}
+                    quickFactScope="storybook"
                 />
             </div>
             <div>
@@ -115,6 +117,7 @@ const PersonCardStory = () => {
                     photoSize={size}
                     showJobTitle={boolean('Job title', true)}
                     inline={boolean('Inline', false)}
+                    quickFactScope="storybook"
                 />
             </div>
         </>

@@ -5,17 +5,28 @@ import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { useEventListener } from '@equinor/fusion-components';
 import useSliderTrack from './useSliderTrack';
+import { useAnchor } from '../ApplicationGuidance';
 export { SliderMarker };
 
 type SliderProps = {
+    id?: string;
     value: number;
     markers: SliderMarker[];
     disabled?: boolean;
     hideHandle?: boolean;
     onChange: (marker: SliderMarker) => void;
+    quickFactScope?: string;
 };
 
-const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
+const Slider: React.FC<SliderProps> = ({
+    id = 'slider',
+    value,
+    markers,
+    disabled,
+    hideHandle,
+    onChange,
+    quickFactScope,
+}) => {
     const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
     const onTrackClick = useCallback(
@@ -63,8 +74,10 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
         }
     );
 
+    const anchorRef = useAnchor<HTMLDivElement>({ id, scope: quickFactScope });
+
     return (
-        <div className={containerClassNames} onClick={onTrackClick}>
+        <div className={containerClassNames} onClick={onTrackClick} ref={anchorRef}>
             <div className={styles.track} ref={trackRef} />
             <div
                 className={styles.slider}

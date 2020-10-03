@@ -24,6 +24,7 @@ const DefaultStory = () => {
                 title="Select workspace and do some other work"
                 description="This is a description text"
                 stepKey="step1"
+                quickFactScope="storybook"
             >
                 <Item>Select workspace</Item>
             </Step>

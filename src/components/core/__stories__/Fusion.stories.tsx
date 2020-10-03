@@ -93,7 +93,7 @@ const FusionStory = () => {
                 }
                 content={null}
                 aside={null}
-                quickFactScope={'storybook'}
+                quickFactScope="storybook"
             />
             <FusionContent>
                 <div style={{ maxWidth: 800, margin: '20px auto' }}>

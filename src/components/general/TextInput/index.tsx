@@ -1,9 +1,10 @@
 import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
-import { ErrorIcon, styling } from '@equinor/fusion-components';
+import { ErrorIcon, styling, useAnchor } from '@equinor/fusion-components';
 
 type TextInputProps = {
+    id?: string;
     disabled?: boolean;
     error?: boolean;
     errorMessage?: string;
@@ -20,6 +21,7 @@ type TextInputProps = {
     onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    quickFactScope?: string;
 };
 
 const TextInput = React.forwardRef<
@@ -28,6 +30,7 @@ const TextInput = React.forwardRef<
 >(
     (
         {
+            id,
             disabled = false,
             error,
             errorMessage,
@@ -44,6 +47,7 @@ const TextInput = React.forwardRef<
             onIconAction,
             helperText = '',
             onKeyUp,
+            quickFactScope,
             ...props
         },
         ref
@@ -53,12 +57,15 @@ const TextInput = React.forwardRef<
             (ref as React.MutableRefObject<HTMLInputElement | null>) ||
             React.useRef<HTMLInputElement | null>(null);
 
-        const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-            if (!disabled) {
-                const newValue = event.target.value;
-                onChange(newValue);
-            }
-        }, [disabled, onChange]);
+        const handleChange = React.useCallback(
+            (event: React.ChangeEvent<HTMLInputElement>) => {
+                if (!disabled) {
+                    const newValue = event.target.value;
+                    onChange(newValue);
+                }
+            },
+            [disabled, onChange]
+        );
 
         const handleDivClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
             if (inputRef.current && !disabled) {
@@ -66,22 +73,28 @@ const TextInput = React.forwardRef<
                 setFocus(true);
             }
 
-            onClick && onClick(e)
+            onClick && onClick(e);
         }, []);
 
-        const handleBlur = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-            if (!disabled) {
-                setFocus(false);
-                onBlur && onBlur(event);
-            }
-        }, [onBlur, disabled]);
+        const handleBlur = React.useCallback(
+            (event: React.FocusEvent<HTMLInputElement>) => {
+                if (!disabled) {
+                    setFocus(false);
+                    onBlur && onBlur(event);
+                }
+            },
+            [onBlur, disabled]
+        );
 
-        const handleFocus = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-            if (!disabled) {
-                setFocus(true);
-                onFocus && onFocus(event);
-            }
-        }, [onFocus, disabled]);
+        const handleFocus = React.useCallback(
+            (event: React.FocusEvent<HTMLInputElement>) => {
+                if (!disabled) {
+                    setFocus(true);
+                    onFocus && onFocus(event);
+                }
+            },
+            [onFocus, disabled]
+        );
 
         const inputLabel = label && <label>{label}</label>;
 
@@ -89,7 +102,11 @@ const TextInput = React.forwardRef<
             if (!error && !icon) {
                 return null;
             }
-            const inputIcon = error ? <ErrorIcon outline={false} color={styling.cssColors.red} /> : icon;
+            const inputIcon = error ? (
+                <ErrorIcon outline={false} color={styling.cssColors.red} />
+            ) : (
+                icon
+            );
             return (
                 <div className={styles.icon} onClick={onIconAction}>
                     {inputIcon}
@@ -131,12 +148,11 @@ const TextInput = React.forwardRef<
             return placeholder && (focus || !label) ? placeholder : '';
         }, [placeholder, focus, label]);
 
+        const anchorRef = useAnchor<HTMLDivElement>({ scope: quickFactScope, id });
+
         return (
-            <div className={styles.inputContainer}>
-                <div
-                    className={inputContentClasses}
-                    onClick={handleDivClick}
-                >
+            <div className={styles.inputContainer} ref={anchorRef}>
+                <div className={inputContentClasses} onClick={handleDivClick}>
                     {asideComponent}
                     <div className={inputTextContentClasses}>
                         {inputLabel}

@@ -1,43 +1,48 @@
-import { CloseIcon } from '@equinor/fusion-components';
+import { CloseIcon, useAnchor } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import * as React from 'react';
 
-import * as styles from "./styles.less";
+import * as styles from './styles.less';
 
 type ChipProps = {
-    isDisabled?: boolean,
-    title: string
-    onRemove?: () => void,
+    id?: string;
+    isDisabled?: boolean;
+    title: string;
+    onRemove?: () => void;
     secondary?: boolean;
     primary?: boolean;
-}
+    quickFactScope?: string;
+};
 
-const Chip: React.FC<ChipProps> = ({ isDisabled, onRemove, title, secondary, primary }) => {
+const Chip: React.FC<ChipProps> = ({
+    id = "chip",
+    isDisabled,
+    onRemove,
+    title,
+    secondary,
+    primary,
+    quickFactScope,
+}) => {
+    const chipContainerClassNames = classNames(styles.chipContainer, {
+        [styles.disabled]: isDisabled,
+        [styles.secondary]: secondary,
+        [styles.primary]: primary,
+    });
 
-    const chipContainerClassNames = classNames(
-        styles.chipContainer,
-        {
-            [styles.disabled]: isDisabled,
-            [styles.secondary]: secondary,
-            [styles.primary]: primary
-        }
-    );
+    const ref = useAnchor<HTMLDivElement>({ id, scope: quickFactScope });
 
     return (
-        <div className={chipContainerClassNames}>
+        <div className={chipContainerClassNames} ref={ref}>
             <div className={styles.chip}>
                 <p className={styles.title}>{title}</p>
-                {(onRemove && !isDisabled) &&
+                {onRemove && !isDisabled && (
                     <div className={styles.removeButton} onClick={onRemove}>
-                        <CloseIcon
-                            height={16}
-                            width={16}
-                        />
+                        <CloseIcon height={16} width={16} />
                     </div>
-                }
+                )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Chip;

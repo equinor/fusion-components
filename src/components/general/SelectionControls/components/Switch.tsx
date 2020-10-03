@@ -3,16 +3,21 @@ import classNames from 'classnames';
 import styles from '../styles.less';
 import { useElevationClassName } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { useAnchor } from '../../ApplicationGuidance';
 
 type SwitchProps = {
+    id?: string;
     active?: boolean;
     onChange?: () => void;
     disabled?: boolean;
+    quickFactScope?: string;
 };
 
 const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
-    ({ active, onChange, disabled }, ref) => {
+    ({ id = 'switch', active, onChange, disabled, quickFactScope }, ref) => {
         const switchRef = ref as MutableRefObject<HTMLInputElement | null>;
+
+        const anchorRef = useAnchor<HTMLDivElement>({ id, scope: quickFactScope });
 
         const containerClassNames = classNames(
             styles.container,
@@ -26,7 +31,7 @@ const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
         const activatorClassNames = classNames(styles.activator, useElevationClassName(2));
 
         return (
-            <div className={containerClassNames} onClick={onChange}>
+            <div className={containerClassNames} onClick={onChange} ref={anchorRef}>
                 <input
                     type="checkbox"
                     checked={active}

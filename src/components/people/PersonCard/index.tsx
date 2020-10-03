@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    PersonPhoto,
-    PhotoSize,
-    usePopoverRef,
-    PersonPicker,
-    styling,
-} from '@equinor/fusion-components';
+import { PersonPhoto, PhotoSize, usePopoverRef, styling, useAnchor, useAnchorRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
 import {
@@ -29,6 +23,7 @@ export type PersonCardProps = {
     hidePopover?: boolean;
     showJobTitle?: boolean;
     isFetchingPerson?: boolean;
+    quickFactScope?: string;
 };
 
 export default ({
@@ -39,6 +34,7 @@ export default ({
     hidePopover,
     showJobTitle,
     isFetchingPerson,
+    quickFactScope,
 }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
     const { isFetching, error, personDetails } = personId
@@ -73,6 +69,8 @@ export default ({
         true,
         500
     );
+
+     useAnchorRef({ref: popoverRef, scope: quickFactScope, id: personId});
 
     if (isFetching) {
         return (

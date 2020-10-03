@@ -47,37 +47,42 @@ const TextInputStory = () => {
     return (
         <div style={{ display: 'flex', padding: '8px', flexDirection: 'column' }}>
             <TextInput
-                onChange={value => setValue(value)}
+                id="text-input-1"
+                onChange={(value) => setValue(value)}
                 value={value}
                 label="Label text"
                 isOptional
                 helperText="Helper text"
+                quickFactScope="storybook"
             />
             <br />
             <TextInput
+                id="text-input-2"
                 error
                 label="Error text"
                 errorMessage="An error occurred"
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
             />
             <br />
             <TextInput
-                onChange={value => setValue(value)}
+                id="text-input-3"
+                onChange={(value) => setValue(value)}
                 value={value}
                 disabled
                 label="Disabled"
             />
             <br />
             <TextInput
-                onChange={value => setValue(value)}
+                id="text-input-4"
+                onChange={(value) => setValue(value)}
                 value={value}
                 icon={
                     !loading ? (
                         <SearchIcon color="#666666" cursor="pointer" />
                     ) : (
-                            <Spinner inline primary />
-                        )
+                        <Spinner inline primary />
+                    )
                 }
                 onIconAction={simulateLoad}
                 error={hasError}
@@ -86,7 +91,8 @@ const TextInputStory = () => {
             />
             <br />
             <TextInput
-                onChange={value => setValue(unmaskString(dateTimeMask, value))}
+                id="text-input-5"
+                onChange={(value) => setValue(unmaskString(dateTimeMask, value))}
                 value={maskedValue}
                 placeholder={'dd/mm/yyyy, hh:mm'}
                 label="Masked text input"

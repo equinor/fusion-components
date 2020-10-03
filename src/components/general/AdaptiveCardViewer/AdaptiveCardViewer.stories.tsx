@@ -33,7 +33,7 @@ const payload = {
 const AdaptiveCardViewerStory = () => {
     return (
         <div style={{ margin: '8px' }} >
-            <AdaptiveCardViewer payload={payload} onActionSubmit={action("Submit")} />
+            <AdaptiveCardViewer id="adaptive-card" payload={payload} onActionSubmit={action("Submit")} quickFactScope="storybook"/>
         </div>
     );
 };

@@ -23,6 +23,7 @@ export type SearchableDropdownSection = {
 };
 
 type SearchableDropdownProps = {
+    id?: string;
     label?: string;
     placeholder?: string;
     options?: SearchableDropdownOption[];
@@ -35,6 +36,7 @@ type SearchableDropdownProps = {
     onSelect?: (item: SearchableDropdownOption) => void;
     onSearchAsync?: (query: string) => void;
     dropdownMaxHeight?: number;
+    quickFactScope?: string;
 };
 
 const createSingleSectionFromOptions = (
@@ -71,6 +73,7 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     );
 
 const SearchableDropdown = ({
+    id = 'searchable-dropdown',
     options,
     sections,
     label,
@@ -83,6 +86,7 @@ const SearchableDropdown = ({
     asideComponent,
     selectedComponent,
     dropdownMaxHeight,
+    quickFactScope,
 }: SearchableDropdownProps) => {
     if ((!options && !sections) || (options && sections)) {
         throw new Error("You must supply only one of 'options', 'sections' props");
@@ -183,6 +187,7 @@ const SearchableDropdown = ({
                     selected
                 ) : (
                     <TextInput
+                        id={id}
                         onChange={(value) => {
                             !open && setIsOpen(true);
                             setInputValue(value);
@@ -200,6 +205,7 @@ const SearchableDropdown = ({
                         onKeyUp={(e) => e.keyCode === 27 && setIsOpen(false)}
                         onFocus={() => !isOpen && setIsOpen(true)}
                         onBlur={handleBlur}
+                        quickFactScope={quickFactScope}
                     />
                 )}
             </>

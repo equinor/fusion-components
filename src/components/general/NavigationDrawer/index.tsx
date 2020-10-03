@@ -38,6 +38,7 @@ export type NavigationComponentProps = {
     onChange?: (id: string, toggleOpen: boolean, toggleActive: boolean) => void;
     isCollapsed?: boolean;
     navigationItem: NavigationStructure;
+    quickFactScope?: string;
 };
 
 export type NavigationStructure = {
@@ -59,6 +60,7 @@ type NavigationDrawerProps = {
     onChangeStructure: (newStructure: NavigationStructure[]) => void;
     selectedId?: string;
     onChangeSelectedId?: (newSelected: string) => void;
+    quickFactScope?: string;
 };
 
 const NavigationDrawer: FC<NavigationDrawerProps> = ({
@@ -67,6 +69,7 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
     onChangeStructure,
     onChangeSelectedId,
     selectedId,
+    quickFactScope,
 }) => {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [internalStructure, setInternalStructure] = useState<NavigationStructure[]>();
