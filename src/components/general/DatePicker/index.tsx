@@ -49,10 +49,10 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
         const handleKeyUp = useCallback(
             (e: React.KeyboardEvent<HTMLInputElement>) => {
-                if ((e.keyCode === 13 || e.keyCode == 9) && isValidMask) {
+                if ((e.key === 'Enter' || e.key === 'Tab') && isValidMask) {
                     tryParseDate();
                     setIsOpen(false);
-                } else if (e.keyCode === 27) {
+                } else if (e.key === 'Escape' || e.key === 'Esc') {
                     setIsOpen(false);
                 }
             },
