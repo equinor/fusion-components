@@ -69,7 +69,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
                     setIsOpen(false);
                 }
             },
-            [isOpen, tryParseDate, overlayContainer]
+            [isOpen, tryParseDate, overlayContainer, isValidMask]
         );
 
         const handleClick = useCallback(() => !isOpen && !disabled && setIsOpen(true), [
