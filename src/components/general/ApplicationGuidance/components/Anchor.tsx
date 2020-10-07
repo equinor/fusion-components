@@ -28,6 +28,8 @@ export interface AppGuideAnchorRef<R extends HTMLElement> {
      * reference to the element [HTMLElement] which displays the anchor
      */
     ref: React.RefObject<R>;
+
+    onSelected?: () => void;
 }
 
 /**
@@ -57,7 +59,7 @@ export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<
  * @returns [React.useRef<R>]
  */
 export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
-    const { id, ref, scope } = anchor;
+    const { id, ref, scope, onSelected } = anchor;
     const callBackRef = React.useRef<VoidFunction>();
     const padding = React.useRef<number>(anchor.padding);
 
@@ -79,6 +81,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                     disconnectedCallback: (cb: VoidFunction) => {
                         callBackRef.current = cb;
                     },
+                    selected: onSelected
                 },
                 cancelable: false,
                 // allow propagation threw shadow doms

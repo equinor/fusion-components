@@ -6,6 +6,7 @@ export type OverlayAnchor = {
     anchor: string;
     scope: string;
     bounds: () => AnchorRect,
+    selected?: () => void;
 }
 
 export interface OverlayAnchorElementProps extends OverlayAnchor {
@@ -44,7 +45,7 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
      * applies padding if not snug
      */
     bounds(): AnchorRect {
-        return AnchorDOMRect.fromUnbound(this, this.snug && 16);
+        return AnchorDOMRect.fromUnbound(this, !this.snug && 16);
     }
 
     /**
@@ -72,6 +73,7 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
                     anchor,
                     scope,
                     bounds: bounds.bind(this),
+                    selected: () => this.dispatchEvent(new CustomEvent('selected')),
                     disconnectedCallback: _disconnectedCallbacks.push.bind(this)
                 },
                 bubbles: true,
