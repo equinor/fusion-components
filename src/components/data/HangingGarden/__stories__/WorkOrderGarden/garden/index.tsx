@@ -16,6 +16,7 @@ import MaterialStatusPopover from '../components/MaterialStatusPopover';
 import ProjectPopover from '../components/ProjectPopover';
 import HoldStatusPopover from '../components/HoldStatusPopover';
 import { HeaderRenderContext } from '../../../models/RenderContext';
+import { GardenController } from '../../../models/HangingGarden';
 
 type GardenProps = {
     filteredData: WorkOrderType[];
@@ -176,7 +177,7 @@ const Garden: React.FC<GardenProps> = ({
         textNode.y = 24 / 2 - textNode.height / 2;
     };
 
-    const gardenController: any = React.useRef(null);
+    const gardenController = React.useRef<GardenController>(null);
 
     return (
         <>
@@ -193,7 +194,7 @@ const Garden: React.FC<GardenProps> = ({
                     onItemClick={(item: WorkOrderType) => setSelectedWorkOrder(item)}
                     headerHeight={getHeaderHeight()}
                     renderHeaderContext={renderHeader}
-                    provideController={(controller: any) => (gardenController.current = controller)}
+                    provideController={gardenController}
                 />
             )}
         </>
