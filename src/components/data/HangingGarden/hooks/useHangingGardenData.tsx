@@ -55,9 +55,9 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
             if (!currentContext) return;
 
             const result = await getData(invalidateCache);
-            setData(formatData(result.data as T[]));
-            setCacheAgeDate(result.cacheAge);
-            setCacheDuration(result.cacheDurationInMinutes);
+            setData(formatData((result?.data as T[]) || []));
+            setCacheAgeDate(result?.cacheAge || new Date());
+            setCacheDuration(result?.cacheDurationInMinutes || 30);
         },
         [currentContext, isFetching, error, getData, formatData]
     );
@@ -67,7 +67,7 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
     }, [currentContext?.id]);
 
     const retry = React.useCallback(() => {
-        setData(null);
+        setData([]);
         fetch(true);
     }, [fetch]);
 

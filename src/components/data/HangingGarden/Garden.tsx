@@ -1,12 +1,21 @@
 import * as React from 'react';
 import * as styles from './styles.less';
-import { HangingGardenColumnIndex, HangingGardenColumn } from './models/HangingGarden';
+import {
+    HangingGardenColumnIndex,
+    HangingGardenColumn,
+    GardenController,
+} from './models/HangingGarden';
 import { getCalculatedWidth, getCalculatedHeight } from './utils';
 
 import { useHangingGardenContext } from './hooks/useHangingGardenContext';
 import useGarden from './renderHooks/useGarden';
+import useRendererSize from './renderHooks/useRendererSize';
 
-function Garden<T extends HangingGardenColumnIndex>({ provideController }) {
+type GardenProps = {
+    provideController?: React.MutableRefObject<GardenController | null>;
+};
+
+function Garden<T extends HangingGardenColumnIndex>({ provideController }: GardenProps) {
     const {
         pixiApp,
         container,
@@ -23,19 +32,22 @@ function Garden<T extends HangingGardenColumnIndex>({ provideController }) {
     } = useHangingGardenContext();
 
     const { renderGarden } = useGarden();
+    const { checkRendererSize } = useRendererSize();
 
     React.useEffect(() => {
-        if (!pixiApp) return;
+        if (!pixiApp.current) return;
+
+        checkRendererSize();
 
         if (provideController) {
-            provideController({
+            provideController.current = {
                 clearGarden: () => {
                     clearTextureCaches();
                     clearItemTextureCaches();
                 },
-            });
+            };
         }
-    }, [pixiApp]);
+    }, [pixiApp.current]);
 
     const handleScroll = React.useCallback(
         (e: React.UIEvent<HTMLDivElement>) => {

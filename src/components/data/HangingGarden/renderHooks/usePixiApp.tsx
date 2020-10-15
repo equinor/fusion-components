@@ -1,13 +1,19 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 
-const usePixiApp = (canvas, container, backgroundColor) => {
+const usePixiApp = (
+    canvas: React.RefObject<HTMLCanvasElement> | null,
+    container: React.RefObject<HTMLDivElement> | null,
+    backgroundColor: number
+) => {
     PIXI.utils.skipHello(); // Don't output the pixi message to the console
     PIXI.Ticker.shared.autoStart = false;
     PIXI.settings.ROUND_PIXELS = true;
 
-    const pixiApp = React.useMemo(() => {
-        if (!canvas.current || !container.current) return null;
+    const pixiApp = React.useRef<PIXI.Application | null>(null);
+
+    pixiApp.current = React.useMemo(() => {
+        if (!canvas?.current || !container?.current) return null;
 
         return new PIXI.Application({
             view: canvas.current,
@@ -19,7 +25,7 @@ const usePixiApp = (canvas, container, backgroundColor) => {
             transparent: true,
             sharedTicker: true,
         });
-    }, [canvas.current, container.current, backgroundColor]);
+    }, [canvas?.current, container?.current, backgroundColor]);
 
     return { pixiApp };
 };

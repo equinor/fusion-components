@@ -96,3 +96,12 @@ export const createRenderedItemDescription = (backgroundColor: number, textNode:
     itemDescription.addChild(textNode);
     return itemDescription;
 };
+
+export const createRoundedRectMask = (width: number, height: number) => {
+    const mask = new PIXI.Graphics();
+    mask.cacheAsBitmap = true;
+    mask.beginFill(0xff3300);
+    mask.drawRoundedRect(1, 1, width - 2, height - 2, 4);
+    mask.endFill();
+    return mask;
+};

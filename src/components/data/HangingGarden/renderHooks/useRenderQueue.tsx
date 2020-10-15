@@ -3,7 +3,17 @@ import * as PIXI from 'pixi.js';
 import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
 import { ItemRenderContext, RenderItem } from '..';
 
-const useRenderQueue = () => {
+export type RenderQueue = {
+    enqueueRenderer: (
+        key: string,
+        render: (context: ItemRenderContext) => void,
+        context: ItemRenderContext
+    ) => void;
+    processRenderQueue: () => void;
+    processRenderQueueAnimationFrame: React.MutableRefObject<number>;
+};
+
+const useRenderQueue = (): RenderQueue => {
     const {
         pixiApp,
         textureCaches: { getTextureFromCache, addTextureToCache },
@@ -30,7 +40,7 @@ const useRenderQueue = () => {
     const processRenderQueue = React.useCallback(() => {
         if (isRendering.current || !renderQueue.current.length) {
             if (!renderQueue.current.length) {
-                pixiApp?.render();
+                pixiApp.current?.render();
             }
 
             return;
@@ -39,7 +49,7 @@ const useRenderQueue = () => {
         isRendering.current = true;
         const renderers = renderQueue.current.splice(0, 100);
         renderers.forEach(processRenderer);
-        pixiApp?.render();
+        pixiApp.current?.render();
         isRendering.current = false;
         window.requestAnimationFrame(processRenderQueue);
     }, [isRendering.current, pixiApp, renderQueue.current]);
@@ -63,7 +73,7 @@ const useRenderQueue = () => {
                     width: renderer.context.width,
                     height: renderer.context.height,
                 });
-                pixiApp?.renderer.render(graphics, graphicsContainer);
+                pixiApp.current?.renderer.render(graphics, graphicsContainer);
                 addTextureToCache('graphics', renderer.key, graphicsContainer);
             }
 

@@ -1,3 +1,4 @@
+import { MutableRefObject } from 'react';
 import { ItemRenderContext, HeaderRenderContext } from './RenderContext';
 
 export type HangingGardenColumn<T> = {
@@ -13,7 +14,7 @@ export type GardenController = {
 
 export type HangingGardenProps<T extends HangingGardenColumnIndex> = {
     columns: HangingGardenColumn<T>[];
-    highlightedColumnKey: string;
+    highlightedColumnKey: string | null;
     highlightedItem: T | null;
     itemKeyProp: keyof T;
     itemWidth: number;
@@ -23,6 +24,6 @@ export type HangingGardenProps<T extends HangingGardenColumnIndex> = {
     headerHeight: number;
     renderItemContext: (item: T, context: ItemRenderContext) => void;
     renderHeaderContext: (key: string, context: HeaderRenderContext) => void;
-    provideController?: any;
+    provideController?: MutableRefObject<GardenController | null>;
     backgroundColor?: number;
 };

@@ -49,7 +49,7 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
                 graphics.drawRoundedRect(x, y, width - 2, height - 2, 4);
                 graphics.endFill();
                 cachedRect = PIXI.RenderTexture.create({ width, height });
-                pixiApp?.renderer.render(graphics, cachedRect);
+                pixiApp.current?.renderer.render(graphics, cachedRect);
                 addTextureToCache('rects', key, cachedRect);
             }
 
@@ -113,7 +113,7 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
 
             if (
                 highlightedItem &&
-                highlightedItem[itemKeyProp as keyof T] === item[itemKeyProp as keyof T]
+                (highlightedItem as T)[itemKeyProp as keyof T] === item[itemKeyProp as keyof T]
             ) {
                 let renderedHighlightedItem = getTextureFromCache(
                     'items',

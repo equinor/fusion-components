@@ -51,14 +51,14 @@ const useTextNode = () => {
                     width: textContainer.width,
                     height: textContainer.height,
                 });
-                pixiApp?.renderer.render(textContainer, cachedText);
+                pixiApp.current?.renderer.render(textContainer, cachedText);
 
                 addTextureToCache('texts', text + color, cachedText);
             }
 
             return new PIXI.Sprite(cachedText);
         },
-        [addTextureToCache, getTextureFromCache, pixiApp]
+        [addTextureToCache, getTextureFromCache, pixiApp.current]
     );
 
     return { createTextNode };

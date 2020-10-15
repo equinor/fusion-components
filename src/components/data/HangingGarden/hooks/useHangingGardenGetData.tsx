@@ -13,6 +13,7 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
 
     const fetchData = React.useCallback(
         async (invalidateCache?: boolean) => {
+            if (!currentContext?.id) return;
             setIsFetching(true);
             try {
                 const response = (await (api[client][endpoint] as any)(

@@ -5,7 +5,7 @@ import { PopoverContainer } from '@equinor/fusion-components';
 const POPOVER_MARGIN = 8;
 
 export type UsePopover = {
-    popover: JSX.Element;
+    popover: JSX.Element | null;
     addPopover: (
         hitContainer: PIXI.Container,
         hitArea: PIXI.Rectangle,

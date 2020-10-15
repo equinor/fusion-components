@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
 import useTextNode from './useTextNode';
 import { createRenderedItemDescription, getColumnX, EXPANDED_COLUMN_PADDING } from '../utils';
-import { HangingGardenColumnIndex } from '../models/HangingGarden';
+import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 
 const useItemDescription = <T extends HangingGardenColumnIndex>() => {
     const {
@@ -39,7 +39,7 @@ const useItemDescription = <T extends HangingGardenColumnIndex>() => {
 
     const renderItemDescription = React.useCallback(
         (item: T, index: number, columnIndex: number) => {
-            const column = columns[columnIndex];
+            const column = (columns as HangingGardenColumn<T>[])[columnIndex];
             const expandedColumn = expandedColumns && expandedColumns[column.key];
 
             if (!expandedColumn || !expandedColumn.isExpanded) {

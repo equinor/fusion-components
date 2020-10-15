@@ -43,12 +43,17 @@ const useGarden = <T extends HangingGardenColumnIndex>() => {
     }, [expandedColumns]);
 
     React.useEffect(() => {
-        scrollToHighlightedItem(columns as HangingGardenColumn<T>[], highlightedItem, itemWidth);
-        clearTextureCaches();
-        renderGarden();
+        if (
+            scrollToHighlightedItem(columns as HangingGardenColumn<T>[], highlightedItem, itemWidth)
+        ) {
+            clearTextureCaches();
+            renderGarden();
+        }
     }, [highlightedItem]);
 
     const renderGarden = React.useCallback(() => {
+        if (!pixiApp.current) return;
+
         const oldStage = stage.current;
         stage.current = new PIXI.Container();
         stage.current.x = -scrollLeft.current;
@@ -57,7 +62,7 @@ const useGarden = <T extends HangingGardenColumnIndex>() => {
         const offsetWidth = container.current?.offsetWidth || 0;
         const scrollRight = scrollLeft.current + offsetWidth + 10;
         for (let i = 0; i < (columns as HangingGardenColumn<T>[]).length; i++) {
-            const column = columns[i];
+            const column = (columns as HangingGardenColumn<T>[])[i];
             const columnX = getColumnX(i, expandedColumns, itemWidth);
             const width = getHeaderWidth(column.key, expandedColumns, itemWidth);
 
@@ -68,16 +73,16 @@ const useGarden = <T extends HangingGardenColumnIndex>() => {
 
         renderHighlightedItem();
 
-        pixiApp?.stage.addChild(stage.current);
+        pixiApp.current.stage.addChild(stage.current);
 
         oldStage.destroy();
-        pixiApp?.stage.removeChild(oldStage);
+        pixiApp.current.stage.removeChild(oldStage);
 
-        pixiApp?.render();
+        pixiApp.current.render();
     }, [
         container.current?.offsetWidth,
         stage.current,
-        pixiApp,
+        pixiApp.current,
         scrollLeft.current,
         scrollTop.current,
         expandedColumns,

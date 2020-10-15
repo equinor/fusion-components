@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
-import { getHeaderWidth, isHeaderExpanded, getColumnX } from '../utils';
+import { getHeaderWidth, isHeaderExpanded, getColumnX, createRoundedRectMask } from '../utils';
 import useItemDescription from './useItemDescription';
-import { HangingGardenColumnIndex } from '../models/HangingGarden';
+import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 import useTextNode from './useTextNode';
 
 const useHeader = <T extends HangingGardenColumnIndex>() => {
@@ -26,6 +26,9 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
 
     const onHeaderClick = React.useCallback(
         (key: string, index: number) => {
+            const column = (columns as HangingGardenColumn<T>[])[index];
+            if (!column.data.length) return;
+
             if (expandedColumns && expandedColumns[key]) {
                 setExpandedColumns((prevColumns) => ({
                     ...prevColumns,
@@ -37,8 +40,6 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
 
                 return;
             }
-
-            const column = columns[index];
 
             const renderedDescriptions = column.data.map(getRenderedItemDescription);
 
@@ -59,12 +60,30 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
         [expandedColumns, columns, setExpandedColumns, getRenderedItemDescription]
     );
 
+    const getHeaderMask = React.useCallback(
+        (index: number, headerWidth: number) => {
+            const key = `header-${index}`;
+            let mask = getTextureFromCache('masks', key);
+            if (!mask) {
+                const mask = createRoundedRectMask(headerWidth, headerHeight);
+                addTextureToCache('masks', key, mask);
+            }
+
+            return mask as PIXI.Graphics;
+        },
+        [headerHeight]
+    );
+
     const renderHeader = React.useCallback(
         (key: string, index: number) => {
             let renderedHeader = getTextureFromCache('headers', key) as PIXI.Container;
 
             if (!renderedHeader) {
-                const headerWidth = getHeaderWidth(columns[index]?.key, expandedColumns, itemWidth);
+                const headerWidth = getHeaderWidth(
+                    (columns as HangingGardenColumn<T>[])[index]?.key,
+                    expandedColumns,
+                    itemWidth
+                );
                 const isHighlighted = highlightedColumnKey === key;
                 const isExpanded = isHeaderExpanded(key, expandedColumns);
                 renderedHeader = new PIXI.Container();
@@ -88,6 +107,8 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
                 graphicsContext.beginFill(isHighlighted ? 0x007079 : 0xf7f7f7);
                 graphicsContext.drawRoundedRect(0, 0, headerWidth - 2, headerHeight - 2, 4);
                 graphicsContext.endFill();
+
+                graphicsContext.mask = getHeaderMask(index, headerWidth);
 
                 renderHeaderContext(key, {
                     container: renderedHeader,

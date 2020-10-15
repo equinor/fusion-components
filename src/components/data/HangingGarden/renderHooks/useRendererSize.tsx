@@ -17,7 +17,7 @@ const useRendererSize = () => {
     }, [columns]);
 
     const checkRendererSize = React.useCallback(() => {
-        if (!container.current || !pixiApp) {
+        if (!container.current || !pixiApp.current) {
             checkRendererSizeAnimationframe.current = window.requestAnimationFrame(
                 checkRendererSize
             );
@@ -25,10 +25,10 @@ const useRendererSize = () => {
         }
 
         const { offsetWidth, offsetHeight } = container.current;
-        const { width, height } = pixiApp.renderer;
+        const { width, height } = pixiApp.current?.renderer;
 
         if (width !== offsetWidth || height !== offsetHeight) {
-            pixiApp.renderer.resize(offsetWidth, offsetHeight);
+            pixiApp.current.renderer.resize(offsetWidth, offsetHeight);
             renderGarden();
         }
 
@@ -36,7 +36,7 @@ const useRendererSize = () => {
     }, [
         container.current?.offsetWidth,
         container.current?.offsetHeight,
-        pixiApp,
+        pixiApp.current,
         checkRendererSizeAnimationframe.current,
         renderGarden,
     ]);

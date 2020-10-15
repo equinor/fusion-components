@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as PIXI from 'pixi.js';
 import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
 import { HIGHLIGHTED_ITEM_KEY } from '../utils';
-import { HangingGardenColumnIndex } from '../models/HangingGarden';
+import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 import useRenderItem from './useItem';
 
 const useHightLightedItem = <T extends HangingGardenColumnIndex>() => {
@@ -30,18 +30,20 @@ const useHightLightedItem = <T extends HangingGardenColumnIndex>() => {
             return;
         }
 
-        const column = (columns as T).find((column) =>
+        const column = (columns as HangingGardenColumn<T>[]).find((column) =>
             column.data.find(
-                (item) => item[itemKeyProp as keyof T] === highlightedItem[itemKeyProp as keyof T]
+                (item: T) =>
+                    item[itemKeyProp as keyof T] === (highlightedItem as T)[itemKeyProp as keyof T]
             )
         );
 
         if (column) {
             renderItem(
-                highlightedItem,
+                highlightedItem as T,
                 column.data.findIndex(
                     (item) =>
-                        item[itemKeyProp as keyof T] === highlightedItem[itemKeyProp as keyof T]
+                        item[itemKeyProp as keyof T] ===
+                        (highlightedItem as T)[itemKeyProp as keyof T]
                 ),
                 (columns as T).indexOf(column)
             );

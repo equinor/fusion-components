@@ -8,11 +8,11 @@ import { Scroll } from './useScrolling';
 import { UsePopover } from './usePopover';
 
 export interface IHangingGardenContext {
-    container: MutableRefObject<HTMLDivElement>;
-    canvas: MutableRefObject<HTMLCanvasElement>;
+    container: MutableRefObject<HTMLDivElement | null>;
+    canvas: MutableRefObject<HTMLCanvasElement | null>;
     stage: MutableRefObject<PIXI.Container>;
-    pixiApp: PIXI.Application;
-    scroll: Scroll<unknown>;
+    pixiApp: MutableRefObject<PIXI.Application | null>;
+    scroll: Scroll<any>;
     maxRowCount: number;
     setMaxRowCount: Dispatch<React.SetStateAction<number>>;
     expandedColumns: ExpandedColumns;
@@ -25,10 +25,10 @@ export interface IHangingGardenContext {
     itemWidth: number;
     headerHeight: number;
     highlightedItem: unknown;
-    highlightedColumnKey: unknown;
-    getItemDescription: (item: unknown) => string;
-    onItemClick: (item: unknown) => void;
-    renderItemContext: (item: unknown, context: ItemRenderContext) => void;
+    highlightedColumnKey: string | null;
+    getItemDescription: (item: any) => string;
+    onItemClick: (item: any) => void;
+    renderItemContext: (item: any, context: ItemRenderContext) => void;
     renderHeaderContext: (key: string, context: HeaderRenderContext) => void;
     popover: UsePopover;
 }

@@ -40,7 +40,7 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
                 isScrolling.current = false;
             });
         },
-        [canvas?.current]
+        [canvas?.current, isScrolling?.current]
     );
 
     const scrollTo = React.useCallback(
@@ -52,10 +52,13 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
                 return false;
             }
 
-            scrollLeft.current = container.current.scrollLeft =
-                highlightedColumnIndex * itemWidth -
-                container.current.offsetWidth / 2 +
-                itemWidth / 2;
+            scrollLeft.current =
+                highlightedColumnIndex >= 0
+                    ? (container.current.scrollLeft =
+                          highlightedColumnIndex * itemWidth -
+                          container.current.offsetWidth / 2 +
+                          itemWidth / 2)
+                    : 0;
 
             return scrollLeft.current !== 0;
         },
@@ -72,9 +75,7 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
                 (column) => column.key === highlightedColumnKey
             );
 
-            return highlightedColumnIndex === -1
-                ? false
-                : scrollTo(highlightedColumnIndex, itemWidth);
+            return scrollTo(highlightedColumnIndex, itemWidth);
         },
         [scrollTo]
     );
@@ -86,19 +87,13 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
             itemWidth: number
         ): boolean => {
             if (!highlightedItem) return false;
-
             const highlightedIndex = columns.findIndex((column) =>
                 column.data.some((item) => {
-                    console.log(
-                        'highlightedIndex:',
-                        item[itemKeyProp] === highlightedItem[itemKeyProp]
-                    );
                     return item[itemKeyProp] === highlightedItem[itemKeyProp];
                 })
             );
-            console.log('scrollToHighlightedItem:', highlightedIndex);
-            console.log('scrollToHighlightedItem:', highlightedItem);
-            return highlightedIndex === -1 ? false : scrollTo(highlightedIndex, itemWidth);
+
+            return scrollTo(highlightedIndex, itemWidth);
         },
         [scrollTo, itemKeyProp]
     );
