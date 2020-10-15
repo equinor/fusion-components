@@ -8,14 +8,22 @@ import { SideSheet } from '../../SideSheet';
 import '../../../../customElements/components/application-guide';
 import { ApplicationGuidanceAnchor, useAnchor } from '../components/Anchor';
 
+import { Overlay } from '../components/Overlay';
+
 const Story: React.FC = () => {
     const scope = 'storybook';
     const [showSideSheet, setShowSideSheet] = React.useState(true);
     return (
-        <div style={{ display: 'flex', height: '100%' }}>
+        <div style={{ display: 'flex', height: '2000px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }}>
-                <Button ref={useAnchor({ scope, id: 'buttonz' })}>This button has snuggly fitted anchor</Button>
-                <ApplicationGuidanceAnchor anchor="another-button" scope={scope} style={{ display: 'block'}}>
+                <Button ref={useAnchor({ scope, id: 'buttonz' })}>
+                    This button has snuggly fitted anchor
+                </Button>
+                <ApplicationGuidanceAnchor
+                    anchor="another-button"
+                    scope={scope}
+                    style={{ display: 'block' }}
+                >
                     <Button>Another button</Button>
                     <p>This anchor contains multiple components</p>
                 </ApplicationGuidanceAnchor>

@@ -6,6 +6,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
 import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
 import { useNotificationCenter } from '@equinor/fusion';
+import { useAnchor } from '../ApplicationGuidance';
 
 const snackbar = action('snackbar');
 const banner = action('banner');
@@ -73,16 +74,26 @@ const SidesheetContent = () => {
         dialog(response);
     };
 
+    const btn1 = useAnchor<HTMLButtonElement>({ id: 'btn1', scope: 'storybook|side_sheet' });
+    const btn2 = useAnchor<HTMLButtonElement>({ id: 'btn2', scope: 'storybook|side_sheet' });
+    const btn3 = useAnchor<HTMLButtonElement>({ id: 'btn3', scope: 'storybook|side_sheet' });
+
     return (
         <div style={{ paddingTop: 32, paddingLeft: 32, paddingRight: 32 }}>
-            <div>
-                <Button onClick={onSnackbarClick}>Show low priority notification</Button>
+            <div style={{ margin: '.5rem 0' }}>
+                <Button ref={btn1} onClick={onSnackbarClick}>
+                    Show low priority notification
+                </Button>
             </div>
-            <div>
-                <Button onClick={onBannerClick}>Show medium priority notification</Button>
+            <div style={{ margin: '.5rem 0' }}>
+                <Button ref={btn2} onClick={onBannerClick}>
+                    Show medium priority notification
+                </Button>
             </div>
-            <div>
-                <Button onClick={onDialogClick}>Show high priority blocking notification</Button>
+            <div style={{ margin: '.5rem 0' }}>
+                <Button ref={btn3} onClick={onDialogClick}>
+                    Show high priority blocking notification
+                </Button>
             </div>
             <p>
                 I'm gonna be at the dance. Well yeah, you know we have two of them. Excuse me. Oh
@@ -161,9 +172,17 @@ const ModalSideSheetStory = () => {
         'medium'
     );
 
+    const actionBtn = useAnchor<HTMLButtonElement>({
+        id: 'action',
+        scope: 'storybook|side_sheet',
+        padding: 0,
+        onSelected: () => setIsOpen(true),
+    });
+
     return (
         <div>
             <Button
+                ref={actionBtn}
                 onClick={() => {
                     setIsOpen(true);
                 }}
@@ -226,7 +245,7 @@ const StandardSideSheetStory = () => {
             <SideSheet
                 isOpen={isOpen}
                 size={size}
-                onClose={isOpen => {
+                onClose={(isOpen) => {
                     setIsOpen(isOpen);
                 }}
                 title="This is a title"
