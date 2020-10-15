@@ -1,6 +1,6 @@
 import { useCurrentContext, ApiClients } from '@equinor/fusion';
 import * as React from 'react';
-import moment from 'moment';
+import { formatDistance } from 'date-fns';
 import useHangingGardenGetData from './useHangingGardenGetData';
 
 const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof ApiClients[C]>(
@@ -20,7 +20,7 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
     const cacheCheckTimerRef = React.useRef<NodeJS.Timeout>();
 
     const checkCacheValidity = React.useCallback(() => {
-        setCacheAge(moment(cacheAgeDate).fromNow());
+        setCacheAge(formatDistance(cacheAgeDate, new Date()));
         const isInvalid =
             new Date(cacheAgeDate).setMinutes(cacheAgeDate.getMinutes() + cacheDuration) <
             Date.now();
