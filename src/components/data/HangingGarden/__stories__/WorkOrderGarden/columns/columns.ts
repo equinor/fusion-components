@@ -1,5 +1,5 @@
 import WorkOrderType from '../models/WorkOrderType';
-import { FilterTerm } from '@equinor/fusion-components';
+import { FilterTerm } from '../../../../../..';
 import ColumnType from '../models/ColumnType';
 import { getGroupBy } from '../filter/filter';
 import { columnSorter } from '../helpers';
