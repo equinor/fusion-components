@@ -109,8 +109,7 @@
         "webpack": "^4.39.3",
         "webpack-cli": "^3.3.11",
         "webpack-merge": "^4.2.1",
-        "pixi.js": "^5.2.4",
-        "moment": "^2.27.0"
+        "pixi.js": "^5.2.4"
     },
     "peerDependencies": {
         "react": "^16.13.x",
@@ -118,8 +117,7 @@
         "react-router-dom": "5.x",
         "history": "^4.9.0",
         "powerbi-client": "^2.8.0",
-        "pixi.js": "^5.2.4",
-        "moment": "^2.27.0"
+        "pixi.js": "^5.2.4"
     },
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
