@@ -198,8 +198,8 @@ const getDefaultHostConfig = () => ({
     },
     imageSizes: {
         small: 24,
-        medium: 32,
-        large: 40,
+        medium: 48,
+        large: 160,
     },
     actions: {
         maxActions: 5,
