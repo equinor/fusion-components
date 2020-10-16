@@ -249,7 +249,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     React.useLayoutEffect(() => {
         if (!embeddedRef.current) return;
         switch(embedType){
-            case 'Dashboard':
+            case 'Report':
                 embeddedRef.current.on('pageChanged', setFilter);
                 return () => embeddedRef.current.off('pageChanged');
         }
