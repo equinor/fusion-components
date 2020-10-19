@@ -144,7 +144,15 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
         const report = powerbi.get(embedRef.current) as pbi.Report;
         if (!report) return;
-        filters ? report.setFilters(filters) : report.removeFilters();
+
+        filters ? await report.setFilters(filters) : await report.removeFilters();
+        if (!reApplyFilter) return;
+
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (!currentReport) return;
+
+        captureBookmark(currentReport);
     };
 
     React.useEffect(() => {
@@ -278,10 +286,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 if (button?.detail?.title?.toLowerCase() === 'reset filter') {
                     setReapplyFilter(true);
                 }
-                if (!currentReport) {
-                    return;
-                }
-                captureBookmark(currentReport);
             });
         }
     }, [isLoading]);
