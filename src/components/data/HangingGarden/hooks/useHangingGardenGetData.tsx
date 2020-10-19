@@ -6,18 +6,17 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
     client: C,
     endpoint: E
 ) => {
-    const currentContext = useCurrentContext();
     const api = useApiClients();
     const [error, setError] = React.useState<Error | null>(null);
     const [isFetching, setIsFetching] = React.useState(false);
 
     const fetchData = React.useCallback(
-        async (invalidateCache?: boolean) => {
-            if (!currentContext?.id) return;
+        async (context:string,invalidateCache?: boolean) => {
+           
             setIsFetching(true);
             try {
                 const response = (await (api[client][endpoint] as any)(
-                    currentContext.id,
+                    context,
                     invalidateCache
                 )) as HttpResponse<T[]>;
 
@@ -41,14 +40,14 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
                 return null;
             }
         },
-        [client, endpoint, api, currentContext]
+        [client, endpoint, api]
     );
 
     const getData = React.useCallback(
-        (invalidateCache?: boolean) => {
+        (context:string, invalidateCache?: boolean) => {
             setError(null);
             setIsFetching(false);
-            return fetchData(invalidateCache);
+            return fetchData(context,invalidateCache);
         },
         [fetchData]
     );

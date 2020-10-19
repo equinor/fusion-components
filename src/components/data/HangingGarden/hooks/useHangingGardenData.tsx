@@ -54,7 +54,7 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
         async (invalidateCache: boolean) => {
             if (!currentContext) return;
 
-            const result = await getData(invalidateCache);
+            const result = await getData(currentContext.id, invalidateCache);
             setData(formatData((result?.data as T[]) || []));
             setCacheAgeDate(result?.cacheAge || new Date());
             setCacheDuration(result?.cacheDurationInMinutes || 30);
