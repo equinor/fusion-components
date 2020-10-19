@@ -5,22 +5,22 @@
 */
 
 /*!
- * Application Insights JavaScript SDK - Channel, 2.5.8
+ * Application Insights JavaScript SDK - Channel, 2.5.9
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
 /*!
- * Application Insights JavaScript SDK - Dependencies Plugin, 2.5.8
+ * Application Insights JavaScript SDK - Dependencies Plugin, 2.5.9
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
 /*!
- * Application Insights JavaScript SDK - Web, 2.5.8
+ * Application Insights JavaScript SDK - Web, 2.5.9
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
 /*!
- * Microsoft Dynamic Proto Utility, 1.0.0
+ * Microsoft Dynamic Proto Utility, 1.1.0
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
@@ -66,7 +66,7 @@
 
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 
-/*! powerbi-client v2.14.0 | (c) 2016 Microsoft Corporation MIT */
+/*! powerbi-client v2.14.1 | (c) 2016 Microsoft Corporation MIT */
 
 /*! powerbi-models v1.4.0 | (c) 2016 Microsoft Corporation MIT */
 

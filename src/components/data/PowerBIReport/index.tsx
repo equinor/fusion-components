@@ -84,6 +84,9 @@ type PBIBookmark = {
     bookMark: string | null;
 };
 
+/**
+ * TODO: use native react component from Microsoft
+ */
 const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
@@ -248,14 +251,17 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         [embedInfo, accessToken, reportId]
     );
 
-    React.useEffect(() => {
-        if (embeddedRef.current) {
-            embeddedRef.current.off('pageChanged');
-            embeddedRef.current.on('pageChanged', () => {
-                setFilter();
-            });
+    const embedType = embedInfo.embedConfig.embedType;
+
+    /** TODO: add filters for dashboard if needed? */
+    React.useLayoutEffect(() => {
+        if (!embeddedRef.current) return;
+        switch(embedType){
+            case 'Report':
+                embeddedRef.current.on('pageChanged', setFilter);
+                return () => embeddedRef.current.off('pageChanged');
         }
-    }, [filters, embeddedRef.current]);
+    }, [filters, embeddedRef.current, embedType]);
 
     React.useEffect(() => {
         if (!embeddedRef.current) return;
