@@ -89,7 +89,7 @@
         "lit-element": "^2.3.1",
         "lit-html": "^1.2.1",
         "marked": "^1.0.0",
-        "powerbi-client": "^2.8.0",
+        "powerbi-client": "^2.14.1",
         "prettier": "^2.0.2",
         "prettier-loader": "^3.3.0",
         "prettier-stylelint": "^0.4.2",
