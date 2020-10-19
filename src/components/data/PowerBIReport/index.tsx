@@ -253,7 +253,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 embeddedRef.current.on('pageChanged', setFilter);
                 return () => embeddedRef.current.off('pageChanged');
         }
-    }, [filters, embeddedRef.current, embedInfo]);
+    }, [filters, embeddedRef.current, embedType]);
 
     React.useEffect(() => {
         if (!embeddedRef.current) return;
