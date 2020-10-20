@@ -12,7 +12,8 @@
         "build:storybook": "build-storybook -c .storybook -o ./docs",
         "prebuild": "rm -rf dist",
         "build": "webpack",
-        "postbuild": "tsc --emitDeclarationOnly true"
+        "postbuild": "tsc --emitDeclarationOnly true",
+        "docker:build": "DOCKER_BUILDKIT=1 docker build -o dist ."
     },
     "repository": {
         "type": "git",
