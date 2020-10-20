@@ -147,7 +147,15 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
         const report = powerbi.get(embedRef.current) as pbi.Report;
         if (!report) return;
-        filters ? report.setFilters(filters) : report.removeFilters();
+
+        filters ? await report.setFilters(filters) : await report.removeFilters();
+        if (!reApplyFilter) return;
+
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (!currentReport) return;
+
+        captureBookmark(currentReport);
     };
 
     React.useEffect(() => {
@@ -243,11 +251,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         [embedInfo, accessToken, reportId]
     );
 
-    const embedType = embedInfo.embedConfig.embedType;
+    const embedType = embedInfo?.embedConfig?.embedType;
 
     /** TODO: add filters for dashboard if needed? */
     React.useLayoutEffect(() => {
-        if (!embeddedRef.current) return;
+        if (!embeddedRef.current || !embedType) return;
         switch(embedType){
             case 'Report':
                 embeddedRef.current.on('pageChanged', setFilter);
@@ -284,10 +292,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 if (button?.detail?.title?.toLowerCase() === 'reset filter') {
                     setReapplyFilter(true);
                 }
-                if (!currentReport) {
-                    return;
-                }
-                captureBookmark(currentReport);
             });
         }
     }, [isLoading]);
