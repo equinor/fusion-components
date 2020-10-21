@@ -253,7 +253,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
     /** TODO: add filters for dashboard if needed? */
     React.useLayoutEffect(() => {
-        const embedType = embedInfo.embedConfig?.embedType;
+        const embedType = embedInfo?.embedConfig?.embedType;
         if (!embeddedRef.current || !embedType) return;
         switch(embedType){
             case 'Report':
