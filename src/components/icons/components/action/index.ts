@@ -16,3 +16,4 @@ export { default as LockIcon } from './LockIcon';
 export { default as CheckCircleIcon } from './CheckCircleIcon';
 export { default as CloseCircleIcon } from './CloseCircleIcon';
 export { default as ScheduleIcon } from './ScheduleIcon';
+export { default as BookmarksIcon } from './BookmarksIcon';

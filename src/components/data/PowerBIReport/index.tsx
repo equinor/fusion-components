@@ -32,6 +32,7 @@ import * as styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
+import BookmarkManager from './components/BookmarkManager';
 
 type PowerBIProps = {
     reportId: string;
@@ -148,14 +149,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         const report = powerbi.get(embedRef.current) as pbi.Report;
         if (!report) return;
 
-        filters ? await report.setFilters(filters) : await report.removeFilters();
-        if (!reApplyFilter) return;
-
-        const currentReport =
-            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
-        if (!currentReport) return;
-
-        captureBookmark(currentReport);
+        filters ? report.setFilters(filters) : report.removeFilters();
     };
 
     React.useEffect(() => {
@@ -200,15 +194,13 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         [embedInfo, accessToken]
     );
 
-    const captureBookmark = async (currentReport: pbi.Report | null) => {
-        if (!currentReport || appSettings === null) {
+    const captureBookmark = async () => {
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (!currentReport) {
             return;
         }
-        currentReport.bookmarksManager.capture().then((capturedBookmark) => {
-            if (appSettings.bookMark !== capturedBookmark.state) {
-                setAppSettings({ bookMark: capturedBookmark.state });
-            }
-        });
+        return currentReport.bookmarksManager.capture();
     };
 
     const embed = React.useCallback(
@@ -256,7 +248,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     /** TODO: add filters for dashboard if needed? */
     React.useLayoutEffect(() => {
         if (!embeddedRef.current || !embedType) return;
-        switch(embedType){
+        switch (embedType) {
             case 'Report':
                 embeddedRef.current.on('pageChanged', setFilter);
                 return () => embeddedRef.current.off('pageChanged');
@@ -280,14 +272,8 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             if (currentReport && appSettings?.bookMark) {
                 currentReport.bookmarksManager.applyState(appSettings?.bookMark);
             }
-            embeddedRef.current.off('dataSelected');
             embeddedRef.current.off('buttonClicked');
-            embeddedRef.current.on('dataSelected', () => {
-                if (!currentReport) {
-                    return;
-                }
-                captureBookmark(currentReport);
-            });
+
             embeddedRef.current.on('buttonClicked', (button: ICustomEvent<ButtonClickEvent>) => {
                 if (button?.detail?.title?.toLowerCase() === 'reset filter') {
                     setReapplyFilter(true);
@@ -359,6 +345,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
             {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
+            <BookmarkManager captureBookmark={captureBookmark} />
         </>
     );
 };
