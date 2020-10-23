@@ -8,7 +8,6 @@ import {
     useCurrentApp,
     useCurrentContext,
     useApiClients,
-    useAppContextSettings,
 } from '@equinor/fusion';
 import { ICustomEvent } from 'service';
 import FusionError from './models/FusionError';
@@ -33,6 +32,7 @@ import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
 import BookmarkManager from './components/BookmarkManager';
+import { PBIBookmark } from './components/BookmarkManager/useBookmarks';
 
 type PowerBIProps = {
     reportId: string;
@@ -81,10 +81,6 @@ const utcNow = () => {
 
 let timeout: NodeJS.Timeout;
 
-type PBIBookmark = {
-    bookMark: string | null;
-};
-
 /**
  * TODO: use native react component from Microsoft
  */
@@ -106,10 +102,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
-
-    const [appSettings, setAppSettings] = useAppContextSettings<PBIBookmark>(
-        currentContext?.id || 'global'
-    );
 
     const getReportInfo = async () => {
         try {
@@ -203,6 +195,15 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         return currentReport.bookmarksManager.capture();
     };
 
+    const applyBookmark = async (bookmark: PBIBookmark) => {
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (!currentReport) {
+            return;
+        }
+        return currentReport.bookmarksManager.applyState(bookmark.bookMark);
+    };
+
     const embed = React.useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
@@ -212,7 +213,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 embeddedRef.current.off('error');
                 embeddedRef.current.off('rendered');
                 embeddedRef.current.off('buttonClicked');
-
                 embeddedRef.current.on('loaded', () => {
                     telemetryLogger.trackMetric({
                         name: `${useCurrentApp.name}-EmbedLoadedTime`,
@@ -238,6 +238,14 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                     setPowerBIError(err);
                     setIsLoading(false);
                 });
+                embeddedRef.current.on(
+                    'buttonClicked',
+                    (button: ICustomEvent<ButtonClickEvent>) => {
+                        if (button?.detail?.title?.toLowerCase() === 'reset filter') {
+                            setReapplyFilter(true);
+                        }
+                    }
+                );
             }
         },
         [embedInfo, accessToken, reportId]
@@ -264,23 +272,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             setReapplyFilter(false);
         });
     }, [reApplyFilter]);
-
-    React.useEffect(() => {
-        if (embeddedRef.current && !isLoading) {
-            const currentReport =
-                embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
-            if (currentReport && appSettings?.bookMark) {
-                currentReport.bookmarksManager.applyState(appSettings?.bookMark);
-            }
-            embeddedRef.current.off('buttonClicked');
-
-            embeddedRef.current.on('buttonClicked', (button: ICustomEvent<ButtonClickEvent>) => {
-                if (button?.detail?.title?.toLowerCase() === 'reset filter') {
-                    setReapplyFilter(true);
-                }
-            });
-        }
-    }, [isLoading]);
 
     React.useEffect(() => {
         if (accessToken) {
@@ -345,7 +336,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
             {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
-            <BookmarkManager captureBookmark={captureBookmark} />
+            <BookmarkManager captureBookmark={captureBookmark} applyBookmark={applyBookmark}/>
         </>
     );
 };

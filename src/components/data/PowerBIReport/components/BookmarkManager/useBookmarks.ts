@@ -1,9 +1,4 @@
-import {
-    useAppSettings,
-    useCurrentApp,
-    useCurrentContext,
-    useSettingSelector,
-} from '@equinor/fusion';
+import { useAppSettings, useCurrentApp, useCurrentContext } from '@equinor/fusion';
 import { useCallback, useMemo } from 'react';
 
 export type PBIBookmark = {
@@ -66,10 +61,10 @@ export default (): {
             state?.fusionContext?.find((c) => c.contextId === currentContextId)?.bookmarks || [],
         [currentContextId]
     );
-    const currentContextBookmarks = useSettingSelector<ContextSetting, PBIBookmark[]>(
+    const currentContextBookmarks = useMemo(() => currentContextSelector(appSettings), [
+        appSettings,
         currentContextSelector,
-        appSettings
-    );
+    ]);
 
     const updateBookmarkContext = useCallback(
         (newBookmarkContext: BookmarkContext) => {
@@ -107,7 +102,7 @@ export default (): {
             };
             updateBookmarkContext(updatedContextBookmark);
         },
-        [currentContextId, currentContextBookmarks, appSettings]
+        [currentContextId, currentContextBookmarks, appSettings, updateBookmarkContext]
     );
 
     return {

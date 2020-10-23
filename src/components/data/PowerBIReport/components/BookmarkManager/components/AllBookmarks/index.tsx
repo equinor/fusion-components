@@ -8,6 +8,7 @@ type AllBookmarksProps = {
     allBookmarks: BookmarkContext[];
     currentContextId: string;
     updateBookmark: (bookmark: PBIBookmark, operation: UpdateBookmarkOperation) => void;
+    onBookmarkSelect: (bookmark: PBIBookmark, contextId: string) => void;
 };
 type OpenAccordion = {
     [contextId: string]: boolean;
@@ -17,6 +18,7 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
     allBookmarks,
     currentContextId,
     updateBookmark,
+    onBookmarkSelect,
 }) => {
     const [openAccordions, setOpenAccordions] = React.useState<OpenAccordion>({});
 
@@ -64,6 +66,9 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
                                     bookmark={bookMark}
                                     onDelete={deleteBookmark}
                                     onUpdate={replaceBookmark}
+                                    onSelect={() =>
+                                        onBookmarkSelect(bookMark, contextBookmark.contextId)
+                                    }
                                 />
                             ))}
                     </div>
