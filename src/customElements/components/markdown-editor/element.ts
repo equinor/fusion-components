@@ -1,10 +1,10 @@
-import { fusionElement, LitElement, property, html } from '../base';
+import { fusionElement, LitElement, property, html, internalProperty, query, eventOptions, throttle, queryAsync, PropertyValues } from '../base';
 
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
 import { schema, defaultMarkdownSerializer, defaultMarkdownParser } from 'prosemirror-markdown';
 import { history } from 'prosemirror-history';
-import { EditorState } from 'prosemirror-state';
+import { EditorState, TextSelection, Transaction } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { buildKeymap } from './keymap';
 import menuPlugin from './menu';
@@ -18,69 +18,157 @@ export interface MarkdownEditorElementProps {
 
 const defaultMenuItem: Array<MdMenuItemType> = ['strong', 'em', 'bullet_list', 'ordered_list'];
 
+/**
+ * Element for editing markdown.
+ * 
+ * @example
+ * 
+ * ```html
+ * <fusion-markdown-editor>**some** markdown *text*</fusion-markdown-editor>
+ * ```
+ * 
+ * ```ts
+ * const md = '#my heading';
+ * html`<fusion-markdown-editor .value="md" @change=${console.log}></fusion-markdown-editor>`
+ * ```
+ * 
+ */
 @fusionElement('fusion-markdown-editor')
 export class MarkdownEditorElement extends LitElement implements MarkdownEditorElementProps {
     static styles = styles;
 
     @property({ reflect: false, type: Array, converter: (a) => a.split(',') })
-    menuItems: Array<MdMenuItemType>;
+    menuItems: Array<MdMenuItemType> = defaultMenuItem;
 
-    firstUpdated() {
-        const editor = this.shadowRoot.querySelector('#editor');
-        const menu = this.shadowRoot.querySelector('#menu');
-        const initialValue = this.innerHTML;
+    @property({ type: String, reflect: false })
+    value: string;
+
+    protected view: EditorView;
+
+    @queryAsync('#editor')
+    editor: Promise<HTMLDivElement>;
+
+    @queryAsync('#menu')
+    menu: Promise<HTMLDivElement>;
+
+    // internal state of markdown
+    protected _value: string;
+
+    /**
+     * update editor state with new markdown
+     * @todo move to function for setState and create a clearState
+     */
+    public set markdown(value: string) {
+        const { state, view, state: { tr: transaction } } = this;
+        const selection = TextSelection.create(transaction.doc, 0, transaction.doc.content.size);
+        transaction.setSelection(selection);
+        transaction.replaceSelectionWith(defaultMarkdownParser.parse(value));
+        view.updateState(state.apply(transaction));
+    }
+
+    /**
+     * get markdown from the current state of the editor
+     */
+    public get markdown(): string {
+        const { view } = this;
+        return defaultMarkdownSerializer.serialize(view.state.doc);
+    }
+
+    public get state() {
+        return this.view.state
+    }
+
+
+    firstUpdated(props: PropertyValues) {
+        super.firstUpdated(props);
+
+        /**
+         * @todo this should get content from main slot
+         * if value not provided, look in dom
+         */
+        if (!props.has('value') || !this.value) {
+            this.value = this.innerHTML;
+        }
         this.innerHTML = null;
-        this.initializeEditor(editor, menu, initialValue);
     }
 
-    protected crateChangeEvent(markdown: string) {
-        return new CustomEvent('change', {
-            detail: markdown,
-            composed: true,
-            bubbles: true,
-        });
+    protected updated(props: PropertyValues): void {
+        // update markdown state if editor is created and value has changed
+        if (this.view && props.has('value') && this.value !== this._value) {
+            this.markdown = this.value;
+        }
     }
 
-    protected createEditorState(
-        mdMenuItems: MdMenuItemType[],
-        menu: Element,
-        initialValue: string
-    ) {
+    /**
+     * create editor when element connects to dom
+     */
+    connectedCallback() {
+        super.connectedCallback();
+        this.initializeEditor();
+    }
+
+    /**
+     * teardown editor when element disconnects from dom
+     */
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.view && this.view.destroy();
+    }
+
+    private async initializeEditor() {
+        const state = await this.createEditorState();
+        this.view = await this.createEditorView(state);
+    }
+
+    protected async createEditorState() {
+        const menu = await this.menu;
+        const { menuItems, value } = this;
         return EditorState.create({
             schema,
-            doc: defaultMarkdownParser.parse(initialValue),
+            doc: defaultMarkdownParser.parse(value),
             plugins: [
                 history(),
                 keymap(buildKeymap(schema)),
                 keymap(baseKeymap),
-                menuPlugin(menu, mdMenuItems),
+                menuPlugin(menu, menuItems),
             ],
         });
     }
 
-    protected createEditorView(editor: Element, state) {
-        const onChange = (md: string) => {
-            const event = this.crateChangeEvent(md);
-            this.dispatchEvent(event);
-        };
-
-        const editorView = new EditorView(editor, {
-            state,
-            dispatchTransaction(transaction) {
-                onChange(defaultMarkdownSerializer.serialize(transaction.doc));
-                const newState = editorView.state.apply(transaction);
-                editorView.updateState(newState);
-            },
-        });
+    protected async createEditorView(state: EditorState) {
+        const editor = await this.editor;
+        const options = { state, dispatchTransaction: this.handleTransaction.bind(this) };
+        return new EditorView(editor, options);
     }
 
-    private initializeEditor(editor: Element, menu: Element, initialValue: string) {
-        const mdMenuItems = this.menuItems || defaultMenuItem;
-        const state = this.createEditorState(mdMenuItems, menu, initialValue);
-        this.createEditorView(editor, state);
+    /**
+     *  handle editor transitions
+     */
+    protected handleTransaction(tr: Transaction) {
+        const state = this.view.state.apply(tr);
+        this.view.updateState(state);
+        if (tr.docChanged) {
+            this.dispatchEvent(new CustomEvent('input', { detail: tr }));
+            this.handleChange(tr);
+        }
     }
 
-    render() {
+    /**
+     * this should actually only be handle on blur
+     * throttle incase some one two-way binds this component
+     * cache the current markdown, to compare with incoming values
+     * 
+     * @todo this value might need to be increased
+     */
+    @throttle(250, { leading: false })
+    protected handleChange(tr: Transaction) {
+        const { markdown } = this;
+        this._value = markdown;
+        const event = new CustomEvent('change', { detail: markdown });
+        this.dispatchEvent(event);
+    }
+
+    protected render() {
         return html`
             <div class="container">
                 <div id="menu"></div>

@@ -113,7 +113,7 @@ function DataTableHeader<T>({
                         <ApplicationGuidanceAnchor
                             key={column.key}
                             scope={quickFactScope}
-                            id={column.key}
+                            anchor={column.key}
                             snug
                         >
                             {cell}

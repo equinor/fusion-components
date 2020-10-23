@@ -8,6 +8,7 @@ import {
     useCurrentApp,
     useCurrentContext,
     useApiClients,
+    useAppContextSettings,
 } from '@equinor/fusion';
 import { ICustomEvent } from 'service';
 import FusionError from './models/FusionError';
@@ -79,6 +80,13 @@ const utcNow = () => {
 
 let timeout: NodeJS.Timeout;
 
+type PBIBookmark = {
+    bookMark: string | null;
+};
+
+/**
+ * TODO: use native react component from Microsoft
+ */
 const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
@@ -97,6 +105,10 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
+
+    const [appSettings, setAppSettings] = useAppContextSettings<PBIBookmark>(
+        currentContext?.id || 'global'
+    );
 
     const getReportInfo = async () => {
         try {
@@ -135,7 +147,15 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
 
         const report = powerbi.get(embedRef.current) as pbi.Report;
         if (!report) return;
-        filters ? report.setFilters(filters) : report.removeFilters();
+
+        filters ? await report.setFilters(filters) : await report.removeFilters();
+        if (!reApplyFilter) return;
+
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (!currentReport) return;
+
+        captureBookmark(currentReport);
     };
 
     React.useEffect(() => {
@@ -180,6 +200,17 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         [embedInfo, accessToken]
     );
 
+    const captureBookmark = async (currentReport: pbi.Report | null) => {
+        if (!currentReport || appSettings === null) {
+            return;
+        }
+        currentReport.bookmarksManager.capture().then((capturedBookmark) => {
+            if (appSettings.bookMark !== capturedBookmark.state) {
+                setAppSettings({ bookMark: capturedBookmark.state });
+            }
+        });
+    };
+
     const embed = React.useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
@@ -215,26 +246,21 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                     setPowerBIError(err);
                     setIsLoading(false);
                 });
-                embeddedRef.current.on(
-                    'buttonClicked',
-                    (button: ICustomEvent<ButtonClickEvent>) => {
-                        if (button?.detail?.title?.toLowerCase() === 'reset filter')
-                            setReapplyFilter(true);
-                    }
-                );
             }
         },
         [embedInfo, accessToken, reportId]
     );
 
-    React.useEffect(() => {
-        if (embeddedRef.current) {
-            embeddedRef.current.off('pageChanged');
-            embeddedRef.current.on('pageChanged', () => {
-                setFilter();
-            });
+    /** TODO: add filters for dashboard if needed? */
+    React.useLayoutEffect(() => {
+        const embedType = embedInfo?.embedConfig?.embedType;
+        if (!embeddedRef.current || !embedType) return;
+        switch(embedType){
+            case 'Report':
+                embeddedRef.current.on('pageChanged', setFilter);
+                return () => embeddedRef.current.off('pageChanged');
         }
-    }, [filters, embeddedRef.current]);
+    }, [filters, embeddedRef.current, embedInfo]);
 
     React.useEffect(() => {
         if (!embeddedRef.current) return;
@@ -245,6 +271,29 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             setReapplyFilter(false);
         });
     }, [reApplyFilter]);
+
+    React.useEffect(() => {
+        if (embeddedRef.current && !isLoading) {
+            const currentReport =
+                embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+            if (currentReport && appSettings?.bookMark) {
+                currentReport.bookmarksManager.applyState(appSettings?.bookMark);
+            }
+            embeddedRef.current.off('dataSelected');
+            embeddedRef.current.off('buttonClicked');
+            embeddedRef.current.on('dataSelected', () => {
+                if (!currentReport) {
+                    return;
+                }
+                captureBookmark(currentReport);
+            });
+            embeddedRef.current.on('buttonClicked', (button: ICustomEvent<ButtonClickEvent>) => {
+                if (button?.detail?.title?.toLowerCase() === 'reset filter') {
+                    setReapplyFilter(true);
+                }
+            });
+        }
+    }, [isLoading]);
 
     React.useEffect(() => {
         if (accessToken) {

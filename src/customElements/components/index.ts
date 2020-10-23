@@ -1,1 +1,2 @@
-export * from './app-guide';
+export * from './application-guide';
+export * from './overlay';
