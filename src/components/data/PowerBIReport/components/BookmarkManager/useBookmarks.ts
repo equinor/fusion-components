@@ -44,7 +44,7 @@ export default (): {
 } => {
     const currentContext = useCurrentContext();
     const currentApp = useCurrentApp();
-    const [appSettings, setAppSettings] = useAppSettings<ContextSetting>();
+    const [appSettings, setAppSettings] = useAppSettings<ContextSetting>({ fusionContext: [] });
 
     const currentContextName = useMemo(
         () => currentContext?.title || currentApp?.name || 'Global',
@@ -90,6 +90,7 @@ export default (): {
 
     const updateBookmark = useCallback(
         (bookmark: PBIBookmark, operation: UpdateBookmarkOperation) => {
+            debugger;
             const updatedBookmarks = getUpdatedBookmark(
                 currentContextBookmarks,
                 bookmark,

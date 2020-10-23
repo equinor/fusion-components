@@ -58,7 +58,7 @@ const NewBookmark: React.FC<NewBookmarkProps> = ({ contextName, onCancel, onSave
                     </Button>
                 </div>
                 <div className={styles.save}>
-                    <Button primary onClick={saveBookmark}>
+                    <Button primary onClick={saveBookmark} disabled={name.length === 0}>
                         Save
                     </Button>
                 </div>

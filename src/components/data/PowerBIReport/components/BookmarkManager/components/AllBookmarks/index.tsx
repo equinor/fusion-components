@@ -46,6 +46,7 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
             <ErrorMessage
                 hasError
                 errorType="noData"
+                title="No bookmarks"
                 message="No bookmarks for this app, create a new one in the Add new tab"
             />
         );

@@ -3,6 +3,7 @@ import {
     IconButton,
     BookmarksIcon,
     useTooltipRef,
+    styling,
 } from '@equinor/fusion-components';
 import * as React from 'react';
 import BookmarkSideSheet from './BookmarkSideSheet';
@@ -26,7 +27,7 @@ const BookmarkManager: React.FC<BookmarkManagerProps> = ({ captureBookmark, appl
             <HeaderContentPortal>
                 <div className={styles.bookmarkButton}>
                     <IconButton onClick={openSideSheet} ref={tooltipRef}>
-                        <BookmarksIcon />
+                        <BookmarksIcon color={styling.colors.blackAlt2} />
                     </IconButton>
                 </div>
             </HeaderContentPortal>
