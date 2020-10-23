@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { ModalSideSheet, Tabs, Tab } from '@equinor/fusion-components';
-import NewBookmark from './NewBookmark';
+import NewBookmark from './components/NewBookmark';
 import { models } from 'powerbi-client';
 import useBookmarks from './useBookmarks';
 import * as styles from './styles.less';
-import AllBookmarks from './AllBookmarks';
+import AllBookmarks from './components/AllBookmarks';
 
 type BookmarkSideSheetProps = {
     isOpen: boolean;
@@ -20,7 +20,7 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
     captureBookmark,
 }) => {
     const [selectedTabKey, setSelectedTabKey] = React.useState<TabKey>('add-new');
-    const { currentContextName, updateBookmark, allBookmarks } = useBookmarks();
+    const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks();
 
     const captureAndSaveBookmarkAsync = React.useCallback(
         async (bookmarkName: string) => {
@@ -53,7 +53,11 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
                 </Tab>
                 <Tab tabKey="se-all" title="See all" isCurrent={selectedTabKey === 'see-all'}>
                     <div className={styles.container}>
-                        <AllBookmarks allBookmarks={allBookmarks}/>
+                        <AllBookmarks
+                            allBookmarks={allBookmarks}
+                            currentContextId={currentContextId}
+                            updateBookmark={updateBookmark}
+                        />
                     </div>
                 </Tab>
             </Tabs>

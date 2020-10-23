@@ -47,3 +47,36 @@
     display: flex;
     align-items: center;
 }
+
+.menuContainer{ 
+    pointer-events: all;
+    min-height: calc(var(--grid-unit) * 2px);
+    padding-top: calc(var(--grid-unit) * 1px);
+    display: flex;
+    flex-direction: column;
+
+    .menuItem {
+        display:  flex;
+        height: calc(var(--grid-unit) * 6px);
+        width: calc(var(--grid-unit) * 23px);
+        cursor: pointer;
+
+        &:hover{
+            background-color: var(--color-black-alt4);
+        }
+
+        .icon{
+            color: var(--color-primary);
+            height: calc(var(--grid-unit) * 6px);
+            width: calc(var(--grid-unit) * 6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .label {
+            display: flex;
+            align-items: center;
+        }
+    }
+    
+}

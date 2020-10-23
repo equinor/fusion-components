@@ -1,52 +1,45 @@
 import * as React from 'react';
-import {
-    AccordionItem,
-    Accordion,
-    ErrorMessage,
-    IconButton,
-    MoreIcon,
-} from '@equinor/fusion-components';
+import { AccordionItem, Accordion, ErrorMessage } from '@equinor/fusion-components';
 import * as styles from './styles.less';
-import { BookmarkContext, PBIBookmark } from './useBookmarks';
-import { useCurrentContext } from '@equinor/fusion';
+import { BookmarkContext, PBIBookmark, UpdateBookmarkOperation } from '../../useBookmarks';
+import Bookmark from './Bookmark';
 
 type AllBookmarksProps = {
     allBookmarks: BookmarkContext[];
+    currentContextId: string;
+    updateBookmark: (bookmark: PBIBookmark, operation: UpdateBookmarkOperation) => void;
 };
 type OpenAccordion = {
     [contextId: string]: boolean;
 };
-type BookmarkProps = {
-    bookmark: PBIBookmark;
-};
 
-const Bookmark: React.FC<BookmarkProps> = ({ bookmark }) => {
-    return (
-        <div className={styles.bookmarkContainer}>
-            <IconButton>
-                <MoreIcon />
-            </IconButton>
-            <a>{bookmark.bookmarkName}</a>
-        </div>
-    );
-};
-
-const AllBookmarks: React.FC<AllBookmarksProps> = ({ allBookmarks }) => {
+const AllBookmarks: React.FC<AllBookmarksProps> = ({
+    allBookmarks,
+    currentContextId,
+    updateBookmark,
+}) => {
     const [openAccordions, setOpenAccordions] = React.useState<OpenAccordion>({});
-    const currentContext = useCurrentContext();
 
     const handleOpenAccordionChange = (id: string) => {
         setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
     };
 
+    const deleteBookmark = React.useCallback(
+        (bookMark: PBIBookmark) => updateBookmark(bookMark, 'delete'),
+        [updateBookmark]
+    );
+    const replaceBookmark = React.useCallback(
+        (bookMark: PBIBookmark) => updateBookmark(bookMark, 'update'),
+        [updateBookmark]
+    );
+
     React.useEffect(() => {
-        const contextId = currentContext?.id || 'global';
         setOpenAccordions({
-            [contextId]: true,
+            [currentContextId]: true,
         });
-    }, []);
-    
-    if (allBookmarks.length === 0) {
+    }, [currentContextId]);
+
+    if (!allBookmarks || allBookmarks.length === 0) {
         return (
             <ErrorMessage
                 hasError
@@ -67,7 +60,11 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({ allBookmarks }) => {
                     <div className={styles.contextBookmarks}>
                         {contextBookmark.bookmarks &&
                             contextBookmark.bookmarks.map((bookMark) => (
-                                <Bookmark bookmark={bookMark} />
+                                <Bookmark
+                                    bookmark={bookMark}
+                                    onDelete={deleteBookmark}
+                                    onUpdate={replaceBookmark}
+                                />
                             ))}
                     </div>
                 </AccordionItem>
