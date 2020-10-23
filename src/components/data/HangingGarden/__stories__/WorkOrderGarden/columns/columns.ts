@@ -46,7 +46,7 @@ export const getColumnKeyAccessor = (filterTerms: FilterTerm[]) => {
     switch (groupBy) {
         case 'plannedStartDate':
         case 'plannedFinishDate':
-            return (item: WorkOrderType) => getYearAndWeek(item[groupBy]);
+            return (item: WorkOrderType) => (item[groupBy] ? getYearAndWeek(item[groupBy]) : 'N/A');
 
         default:
             return (item: WorkOrderType) => item[groupBy];

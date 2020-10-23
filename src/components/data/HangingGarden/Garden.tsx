@@ -32,13 +32,10 @@ function Garden<T extends HangingGardenColumnIndex>({ provideController }: Garde
     } = useHangingGardenContext();
 
     const { renderGarden } = useGarden();
-    const { checkRendererSize } = useRendererSize();
+    useRendererSize();
 
     React.useEffect(() => {
         if (!pixiApp.current) return;
-
-        checkRendererSize();
-
         if (provideController) {
             provideController.current = {
                 clearGarden: () => {

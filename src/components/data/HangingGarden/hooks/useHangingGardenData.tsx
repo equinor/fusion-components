@@ -1,7 +1,7 @@
 import { useCurrentContext, ApiClients } from '@equinor/fusion';
 import * as React from 'react';
-import { formatDistance } from 'date-fns';
 import useHangingGardenGetData from './useHangingGardenGetData';
+import { formatDistance } from 'date-fns';
 
 const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof ApiClients[C]>(
     client: C,
@@ -29,17 +29,11 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
     }, [cacheAgeDate, cacheDuration]);
 
     React.useEffect(() => {
-        if (cacheCheckTimerRef.current) {
-            clearTimeout(cacheCheckTimerRef.current);
-        }
+        if (cacheCheckTimerRef.current) clearTimeout(cacheCheckTimerRef.current);
 
         checkCacheValidity();
 
-        return () => {
-            if (cacheCheckTimerRef.current) {
-                clearTimeout(cacheCheckTimerRef.current);
-            }
-        };
+        return () => cacheCheckTimerRef.current && clearTimeout(cacheCheckTimerRef.current);
     }, [checkCacheValidity]);
 
     const formatData = React.useCallback(

@@ -1,24 +1,41 @@
-import { useCurrentContext, Context, useApiClients, ApiClients } from '@equinor/fusion';
+import { useApiClients, ApiClients } from '@equinor/fusion';
 import * as React from 'react';
 import { HttpResponse } from '@equinor/fusion/lib/http/HttpClient';
+import { ErrorTypes } from 'src/components/general/ErrorMessage';
+
+export type GardenDataError = {
+    errorType: ErrorTypes | 'noCache';
+    error: any;
+};
 
 const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof ApiClients[C]>(
     client: C,
     endpoint: E
 ) => {
     const api = useApiClients();
-    const [error, setError] = React.useState<Error | null>(null);
+    const [error, setError] = React.useState<GardenDataError | null>(null);
     const [isFetching, setIsFetching] = React.useState(false);
 
     const fetchData = React.useCallback(
-        async (context:string,invalidateCache?: boolean) => {
-           
+        async (currentContext: string, invalidateCache?: boolean) => {
             setIsFetching(true);
             try {
                 const response = (await (api[client][endpoint] as any)(
-                    context,
+                    currentContext,
                     invalidateCache
                 )) as HttpResponse<T[]>;
+
+                if (response.status === 202) {
+                    setError({ errorType: 'noCache', error: response.data });
+                    setIsFetching(false);
+                    return null;
+                }
+
+                if (response.status === 200 && !response.data.length) {
+                    setError({ errorType: 'noData', error: response.data });
+                    setIsFetching(false);
+                    return null;
+                }
 
                 const cacheAgeHeader = response.headers.get('x-pp-cache-age');
                 const cacheAge =
@@ -35,7 +52,7 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
                     cacheDurationInMinutes: cacheDuration,
                 };
             } catch (e) {
-                setError(e);
+                setError({ errorType: 'error', error: e });
                 setIsFetching(false);
                 return null;
             }
@@ -44,10 +61,10 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
     );
 
     const getData = React.useCallback(
-        (context:string, invalidateCache?: boolean) => {
+        (currentContext: string, invalidateCache?: boolean) => {
             setError(null);
             setIsFetching(false);
-            return fetchData(context,invalidateCache);
+            return fetchData(currentContext, invalidateCache);
         },
         [fetchData]
     );
