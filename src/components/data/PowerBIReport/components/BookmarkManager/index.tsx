@@ -9,11 +9,10 @@ import * as React from 'react';
 import BookmarkSideSheet from './BookmarkSideSheet';
 import { models } from 'powerbi-client';
 import * as styles from './styles.less';
-import { PBIBookmark } from './useBookmarks';
 
 type BookmarkManagerProps = {
-    captureBookmark: () => Promise<models.IReportBookmark>;
-    applyBookmark: (bookmark: PBIBookmark) => Promise<void>;
+    captureBookmark: () => Promise<models.IReportBookmark | undefined>;
+    applyBookmark: (bookmark: string, awaitForContextSwitch: boolean) => Promise<void>;
 };
 
 const BookmarkManager: React.FC<BookmarkManagerProps> = ({ captureBookmark, applyBookmark }) => {

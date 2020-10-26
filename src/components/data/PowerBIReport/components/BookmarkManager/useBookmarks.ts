@@ -73,7 +73,7 @@ export default (): {
                 !appSettings.fusionContext.find((c) => c.contextId === newBookmarkContext.contextId)
             ) {
                 setAppSettings('fusionContext', [
-                    ...appSettings?.fusionContext,
+                    ...(appSettings.fusionContext || []),
                     newBookmarkContext,
                 ]);
                 return;
@@ -90,7 +90,6 @@ export default (): {
 
     const updateBookmark = useCallback(
         (bookmark: PBIBookmark, operation: UpdateBookmarkOperation) => {
-            debugger;
             const updatedBookmarks = getUpdatedBookmark(
                 currentContextBookmarks,
                 bookmark,
@@ -108,7 +107,7 @@ export default (): {
 
     return {
         currentContextBookmarks,
-        allBookmarks: appSettings.fusionContext,
+        allBookmarks: appSettings.fusionContext || [],
         updateBookmark,
         currentContextName,
         currentContextId,

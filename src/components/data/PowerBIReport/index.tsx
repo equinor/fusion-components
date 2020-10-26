@@ -32,7 +32,6 @@ import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
 import BookmarkManager from './components/BookmarkManager';
-import { PBIBookmark } from './components/BookmarkManager/useBookmarks';
 
 type PowerBIProps = {
     reportId: string;
@@ -102,6 +101,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
+    const [awaitableBookmark, setAwaitableBookmark] = React.useState<string | null>(null);
 
     const getReportInfo = async () => {
         try {
@@ -135,13 +135,39 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         embeddedRef.current.reload();
     }, [currentContext?.id]);
 
+    const applyBookmark = async (bookmark: string, awaitForContextSwitch: boolean) => {
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (awaitForContextSwitch) {
+            setAwaitableBookmark(bookmark);
+            return;
+        }
+        if (!currentReport) {
+            return;
+        }
+        return currentReport.bookmarksManager.applyState(bookmark);
+    };
+
+    const captureBookmark = async () => {
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (!currentReport) {
+            return;
+        }
+        return currentReport.bookmarksManager.capture();
+    };
+
     const setFilter = async () => {
         if (!embedRef.current) return;
 
         const report = powerbi.get(embedRef.current) as pbi.Report;
         if (!report) return;
 
-        filters ? report.setFilters(filters) : report.removeFilters();
+        filters ? await report.setFilters(filters) : await report.removeFilters();
+        if (awaitableBookmark) {
+            applyBookmark(awaitableBookmark, false);
+            setAwaitableBookmark(null);
+        }
     };
 
     React.useEffect(() => {
@@ -185,24 +211,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         },
         [embedInfo, accessToken]
     );
-
-    const captureBookmark = async () => {
-        const currentReport =
-            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
-        if (!currentReport) {
-            return;
-        }
-        return currentReport.bookmarksManager.capture();
-    };
-
-    const applyBookmark = async (bookmark: PBIBookmark) => {
-        const currentReport =
-            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
-        if (!currentReport) {
-            return;
-        }
-        return currentReport.bookmarksManager.applyState(bookmark.bookMark);
-    };
 
     const embed = React.useCallback(
         (node: HTMLDivElement) => {
@@ -259,7 +267,8 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         switch (embedType) {
             case 'Report':
                 embeddedRef.current.on('pageChanged', setFilter);
-                return () => embeddedRef.current.off('pageChanged');
+                return () =>
+                    embeddedRef?.current ? embeddedRef.current.off('pageChanged') : undefined;
         }
     }, [filters, embeddedRef.current, embedType]);
 
@@ -328,7 +337,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                     />
                 );
             default:
-                return <ReportErrorMessage report={report} />;
+                return report ? (
+                    <ReportErrorMessage report={report} />
+                ) : (
+                    <ErrorMessage hasError={true} />
+                );
         }
     }
 
@@ -336,7 +349,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
             {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
-            <BookmarkManager captureBookmark={captureBookmark} applyBookmark={applyBookmark}/>
+            <BookmarkManager captureBookmark={captureBookmark} applyBookmark={applyBookmark} />
         </>
     );
 };

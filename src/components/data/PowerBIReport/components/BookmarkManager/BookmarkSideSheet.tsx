@@ -10,8 +10,8 @@ import { useContextManager } from '@equinor/fusion';
 type BookmarkSideSheetProps = {
     isOpen: boolean;
     onClose: () => void;
-    captureBookmark: () => Promise<models.IReportBookmark>;
-    applyBookmark: (bookmark: PBIBookmark) => Promise<void>;
+    captureBookmark: () => Promise<models.IReportBookmark | undefined>;
+    applyBookmark: (bookmark: string, awaitForContextSwitch: boolean) => Promise<void>;
 };
 
 type TabKey = 'add-new' | 'see-all' | string;
@@ -30,6 +30,9 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
         async (bookmarkName: string) => {
             try {
                 const bookmark = await captureBookmark();
+                if (!bookmark?.state) {
+                    return;
+                }
                 updateBookmark(
                     {
                         bookMark: bookmark.state,
@@ -44,12 +47,18 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
     );
 
     const selectBookmark = React.useCallback(
-        async (bookmark: PBIBookmark, contextId:string) => {
+        async (bookmark: PBIBookmark, contextId: string) => {
             onClose();
-            if(currentContextId !== contextId) {
-                await contextManager.setCurrentContextIdAsync(contextId);
+            if (!bookmark.bookMark) {
+                return;
             }
-            applyBookmark(bookmark);
+            if (currentContextId !== contextId) {
+                await contextManager.setCurrentContextIdAsync(contextId);
+                applyBookmark(bookmark.bookMark, true);
+                return;
+            }
+
+            applyBookmark(bookmark.bookMark, false);
         },
         [applyBookmark, currentContextId]
     );
