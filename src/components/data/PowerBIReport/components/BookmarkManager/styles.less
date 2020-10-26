@@ -1,10 +1,16 @@
+@import '~styles/variables.less';
+
 .bookmarkButton {
     display: flex;
     justify-content: flex-end;
     border-right: 1px solid var(--color-black-alt3);
     margin-right: calc(var(--grid-unit) * 2px);
     padding-right: calc(var(--grid-unit) * 1px);
-    width: 100%;
+    width: calc(100% - var(--grid-unit) * 2px);
+
+    @media (max-width: @mobile-max-width) {
+        border-right: none;
+    }
 }
 
 .container {

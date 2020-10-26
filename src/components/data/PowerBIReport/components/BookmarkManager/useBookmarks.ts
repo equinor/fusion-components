@@ -18,11 +18,16 @@ type ContextSetting = {
 
 export type UpdateBookmarkOperation = 'update' | 'add' | 'delete';
 
+const powerBIContextSelector = (state: ContextSetting, contextId: string) =>
+    state?.fusionContext?.find((c) => c.contextId === contextId)?.bookmarks || [];
+
 const getUpdatedBookmark = (
-    currentContextBookmarks: PBIBookmark[],
+    appSettings: ContextSetting,
     bookmark: PBIBookmark,
-    operation: UpdateBookmarkOperation
+    operation: UpdateBookmarkOperation,
+    contextId: string
 ) => {
+    const currentContextBookmarks = powerBIContextSelector(appSettings, contextId);
     switch (operation) {
         case 'update':
             return currentContextBookmarks.map((b) =>
@@ -35,10 +40,15 @@ const getUpdatedBookmark = (
     }
 };
 
-export default (): {
-    currentContextBookmarks: PBIBookmark[];
+export default (
+    hasContext?: boolean
+): {
     allBookmarks: BookmarkContext[];
-    updateBookmark: (bookmark: PBIBookmark, operation: UpdateBookmarkOperation) => void;
+    updateBookmark: (
+        bookmark: PBIBookmark,
+        operation: UpdateBookmarkOperation,
+        contextId?: string
+    ) => void;
     currentContextName: string;
     currentContextId: string;
 } => {
@@ -47,30 +57,20 @@ export default (): {
     const [appSettings, setAppSettings] = useAppSettings<ContextSetting>({ fusionContext: [] });
 
     const currentContextName = useMemo(
-        () => currentContext?.title || currentApp?.name || 'Global',
-        [currentContext, currentApp]
+        () => (hasContext ? currentContext?.title : currentApp?.name) || 'Global',
+        [currentContext, currentApp, hasContext]
     );
 
-    const currentContextId = useMemo(() => currentContext?.id || currentApp?.key || 'global', [
-        currentContext,
-        currentApp,
-    ]);
-
-    const currentContextSelector = useCallback(
-        (state: ContextSetting) =>
-            state?.fusionContext?.find((c) => c.contextId === currentContextId)?.bookmarks || [],
-        [currentContextId]
+    const currentContextId = useMemo(
+        () => (hasContext ? currentContext?.id : currentApp?.key) || 'global',
+        [currentContext, currentApp, hasContext]
     );
-    const currentContextBookmarks = useMemo(() => currentContextSelector(appSettings), [
-        appSettings,
-        currentContextSelector,
-    ]);
 
     const updateBookmarkContext = useCallback(
         (newBookmarkContext: BookmarkContext) => {
             if (
                 appSettings?.fusionContext === undefined ||
-                !appSettings.fusionContext.find((c) => c.contextId === newBookmarkContext.contextId)
+                !appSettings.fusionContext.some((c) => c.contextId === newBookmarkContext.contextId)
             ) {
                 setAppSettings('fusionContext', [
                     ...(appSettings.fusionContext || []),
@@ -89,24 +89,30 @@ export default (): {
     );
 
     const updateBookmark = useCallback(
-        (bookmark: PBIBookmark, operation: UpdateBookmarkOperation) => {
+        (bookmark: PBIBookmark, operation: UpdateBookmarkOperation, contextId?: string) => {
+            const contextIdentification = contextId || currentContextId;
+            const contextName = contextId
+                ? appSettings.fusionContext.find((c) => c.contextId === contextId)?.contextName ||
+                  currentContextName
+                : currentContextName;
+
             const updatedBookmarks = getUpdatedBookmark(
-                currentContextBookmarks,
+                appSettings,
                 bookmark,
-                operation
+                operation,
+                contextIdentification
             );
             const updatedContextBookmark: BookmarkContext = {
                 bookmarks: updatedBookmarks,
-                contextId: currentContextId,
-                contextName: currentContextName,
+                contextId: contextIdentification,
+                contextName: contextName,
             };
             updateBookmarkContext(updatedContextBookmark);
         },
-        [currentContextId, currentContextBookmarks, appSettings, updateBookmarkContext]
+        [currentContextId, appSettings, updateBookmarkContext, currentContextName]
     );
 
     return {
-        currentContextBookmarks,
         allBookmarks: appSettings.fusionContext || [],
         updateBookmark,
         currentContextName,

@@ -13,9 +13,14 @@ import * as styles from './styles.less';
 type BookmarkManagerProps = {
     captureBookmark: () => Promise<models.IReportBookmark | undefined>;
     applyBookmark: (bookmark: string, awaitForContextSwitch: boolean) => Promise<void>;
+    hasContext?: boolean;
 };
 
-const BookmarkManager: React.FC<BookmarkManagerProps> = ({ captureBookmark, applyBookmark }) => {
+const BookmarkManager: React.FC<BookmarkManagerProps> = ({
+    captureBookmark,
+    applyBookmark,
+    hasContext,
+}) => {
     const [isSideSheetOpen, setIsSideSheetOpen] = React.useState<boolean>(false);
     const openSideSheet = React.useCallback(() => setIsSideSheetOpen(true), []);
     const closeSideSheet = React.useCallback(() => setIsSideSheetOpen(false), []);
@@ -35,6 +40,7 @@ const BookmarkManager: React.FC<BookmarkManagerProps> = ({ captureBookmark, appl
                 onClose={closeSideSheet}
                 captureBookmark={captureBookmark}
                 applyBookmark={applyBookmark}
+                hasContext={hasContext}
             />
         </>
     );

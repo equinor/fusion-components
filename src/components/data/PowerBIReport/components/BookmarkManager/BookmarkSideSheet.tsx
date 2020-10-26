@@ -12,6 +12,7 @@ type BookmarkSideSheetProps = {
     onClose: () => void;
     captureBookmark: () => Promise<models.IReportBookmark | undefined>;
     applyBookmark: (bookmark: string, awaitForContextSwitch: boolean) => Promise<void>;
+    hasContext?: boolean;
 };
 
 type TabKey = 'add-new' | 'see-all' | string;
@@ -21,9 +22,12 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
     onClose,
     captureBookmark,
     applyBookmark,
+    hasContext,
 }) => {
     const [selectedTabKey, setSelectedTabKey] = React.useState<TabKey>('add-new');
-    const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks();
+    const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
+        hasContext
+    );
     const contextManager = useContextManager();
 
     const captureAndSaveBookmarkAsync = React.useCallback(

@@ -7,7 +7,11 @@ import Bookmark from './Bookmark';
 type AllBookmarksProps = {
     allBookmarks: BookmarkContext[];
     currentContextId: string;
-    updateBookmark: (bookmark: PBIBookmark, operation: UpdateBookmarkOperation) => void;
+    updateBookmark: (
+        bookmark: PBIBookmark,
+        operation: UpdateBookmarkOperation,
+        contextId: string
+    ) => void;
     onBookmarkSelect: (bookmark: PBIBookmark, contextId: string) => void;
 };
 type OpenAccordion = {
@@ -27,11 +31,11 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
     };
 
     const deleteBookmark = React.useCallback(
-        (bookMark: PBIBookmark) => updateBookmark(bookMark, 'delete'),
+        (bookMark: PBIBookmark, contextId: string) => updateBookmark(bookMark, 'delete', contextId),
         [updateBookmark]
     );
     const replaceBookmark = React.useCallback(
-        (bookMark: PBIBookmark) => updateBookmark(bookMark, 'update'),
+        (bookMark: PBIBookmark, contextId: string) => updateBookmark(bookMark, 'update', contextId),
         [updateBookmark]
     );
 
@@ -65,11 +69,16 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
                             contextBookmark.bookmarks.map((bookMark) => (
                                 <Bookmark
                                     bookmark={bookMark}
-                                    onDelete={deleteBookmark}
-                                    onUpdate={replaceBookmark}
+                                    onDelete={() =>
+                                        deleteBookmark(bookMark, contextBookmark.contextId)
+                                    }
+                                    onUpdate={(updatedBookmark) =>
+                                        replaceBookmark(updatedBookmark, contextBookmark.contextId)
+                                    }
                                     onSelect={() =>
                                         onBookmarkSelect(bookMark, contextBookmark.contextId)
                                     }
+                                    accordionOpen={openAccordions[contextBookmark.contextId]}
                                 />
                             ))}
                     </div>

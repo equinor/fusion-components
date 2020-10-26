@@ -12,9 +12,10 @@ import * as styles from './styles.less';
 type BookmarkOptionsProps = {
     onEdit: () => void;
     onDelete: () => void;
+    accordionOpen?: boolean;
 };
 
-const BookmarkOptions: React.FC<BookmarkOptionsProps> = ({ onDelete, onEdit }) => {
+const BookmarkOptions: React.FC<BookmarkOptionsProps> = ({ onDelete, onEdit, accordionOpen }) => {
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => (
         <IconButton
             ref={ref as React.MutableRefObject<HTMLButtonElement>}
@@ -34,6 +35,13 @@ const BookmarkOptions: React.FC<BookmarkOptionsProps> = ({ onDelete, onEdit }) =
         },
         [isOpen]
     );
+
+    React.useEffect(() => {
+        if (!accordionOpen) {
+            setIsOpen(false);
+        }
+    }, [accordionOpen]);
+
     const onEditClick = React.useCallback(() => select(onEdit), [onEdit, select]);
     const onDeleteClick = React.useCallback(() => select(onDelete), [onDelete, select]);
 

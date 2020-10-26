@@ -9,6 +9,7 @@ type BookmarkProps = {
     onDelete: (bookmark: PBIBookmark) => void;
     onUpdate: (bookmark: PBIBookmark) => void;
     onSelect: () => void;
+    accordionOpen?: boolean;
 };
 
 type EditBookmarkProps = {
@@ -43,7 +44,13 @@ const EditBookmark: React.FC<EditBookmarkProps> = ({ name, onExit, onSave }) => 
     );
 };
 
-const Bookmark: React.FC<BookmarkProps> = ({ bookmark, onUpdate, onDelete, onSelect }) => {
+const Bookmark: React.FC<BookmarkProps> = ({
+    bookmark,
+    onUpdate,
+    onDelete,
+    onSelect,
+    accordionOpen,
+}) => {
     const [isEditing, setIsEditing] = React.useState<boolean>(false);
 
     const enableEditing = React.useCallback(() => setIsEditing(true), []);
@@ -69,7 +76,11 @@ const Bookmark: React.FC<BookmarkProps> = ({ bookmark, onUpdate, onDelete, onSel
                 />
             ) : (
                 <>
-                    <BookmarkOptions onDelete={deleteBookmark} onEdit={enableEditing} />
+                    <BookmarkOptions
+                        onDelete={deleteBookmark}
+                        onEdit={enableEditing}
+                        accordionOpen={accordionOpen}
+                    />
                     <span className={styles.bookmarkLink} onClick={onSelect}>
                         {bookmark.bookmarkName}
                     </span>

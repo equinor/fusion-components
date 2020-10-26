@@ -36,6 +36,7 @@ import BookmarkManager from './components/BookmarkManager';
 type PowerBIProps = {
     reportId: string;
     filters?: pbi.models.ReportLevelFilters[] | null;
+    hasContext?: boolean;
 };
 
 const getReportOrDashboardId = (embedConfig: EmbedConfig, type: ResourceType) => {
@@ -83,7 +84,7 @@ let timeout: NodeJS.Timeout;
 /**
  * TODO: use native react component from Microsoft
  */
-const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
+const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
     const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
 
@@ -349,7 +350,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
             {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
-            <BookmarkManager captureBookmark={captureBookmark} applyBookmark={applyBookmark} />
+            <BookmarkManager
+                captureBookmark={captureBookmark}
+                applyBookmark={applyBookmark}
+                hasContext={hasContext}
+            />
         </>
     );
 };
