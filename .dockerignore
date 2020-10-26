@@ -1,0 +1,8 @@
+.dependabot
+.git
+.github
+.yalc
+.storybook
+dist
+docs
+node_modules

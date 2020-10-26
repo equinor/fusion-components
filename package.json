@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "1.4.10",
+    "version": "1.4.12",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -12,7 +12,8 @@
         "build:storybook": "build-storybook -c .storybook -o ./docs",
         "prebuild": "rm -rf dist",
         "build": "webpack",
-        "postbuild": "tsc --emitDeclarationOnly true"
+        "postbuild": "tsc --emitDeclarationOnly true",
+        "docker:build": "DOCKER_BUILDKIT=1 docker build -o dist ."
     },
     "repository": {
         "type": "git",
@@ -36,7 +37,7 @@
         "@babel/preset-env": "^7.4.3",
         "@babel/preset-react": "^7.0.0",
         "@babel/preset-typescript": "^7.3.3",
-        "@equinor/fusion": "^2.4.0",
+        "@equinor/fusion": "^2.4.4",
         "@storybook/addon-actions": "^6.0.21",
         "@storybook/addon-docs": "^6.0.21",
         "@storybook/addon-jest": "^6.0.21",
