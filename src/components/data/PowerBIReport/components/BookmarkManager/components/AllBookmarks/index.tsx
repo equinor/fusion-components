@@ -30,15 +30,6 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
         setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
     };
 
-    const deleteBookmark = React.useCallback(
-        (bookMark: PBIBookmark, contextId: string) => updateBookmark(bookMark, 'delete', contextId),
-        [updateBookmark]
-    );
-    const replaceBookmark = React.useCallback(
-        (bookMark: PBIBookmark, contextId: string) => updateBookmark(bookMark, 'update', contextId),
-        [updateBookmark]
-    );
-
     React.useEffect(() => {
         setOpenAccordions({
             [currentContextId]: true,
@@ -70,10 +61,18 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
                                 <Bookmark
                                     bookmark={bookMark}
                                     onDelete={() =>
-                                        deleteBookmark(bookMark, contextBookmark.contextId)
+                                        updateBookmark(
+                                            bookMark,
+                                            'delete',
+                                            contextBookmark.contextId
+                                        )
                                     }
                                     onUpdate={(updatedBookmark) =>
-                                        replaceBookmark(updatedBookmark, contextBookmark.contextId)
+                                        updateBookmark(
+                                            updatedBookmark,
+                                            'update',
+                                            contextBookmark.contextId
+                                        )
                                     }
                                     onSelect={() =>
                                         onBookmarkSelect(bookMark, contextBookmark.contextId)
