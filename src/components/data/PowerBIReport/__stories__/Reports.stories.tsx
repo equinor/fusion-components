@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { IBasicFilter } from '../models/ReportLevelFilters';
 import PowerBIReport from '../index';
 import Button from '../../../general/Button';
+import withFusionStory from '../../../../../.storybook/withFusionStory';
 
 const ReportStandard: React.FC = () => {
     return (
@@ -84,5 +85,6 @@ const ReportWithFilter: React.FC = () => {
 };
 
 storiesOf('Data/PowerBI Report', module)
+    .addDecorator(withFusionStory('PowerBI Report'))
     .add('Report Standard', () => <ReportStandard />)
     .add('Report with filter', () => <ReportWithFilter />);

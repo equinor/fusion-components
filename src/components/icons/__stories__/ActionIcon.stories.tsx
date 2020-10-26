@@ -21,6 +21,7 @@ import {
     CheckCircleIcon,
     CloseCircleIcon,
     ScheduleIcon,
+    BookmarksIcon,
 } from '../components/action';
 
 const eventsFromNames = actions('onClick');
@@ -163,3 +164,12 @@ stories.add('Schedule', () => (
         width={number('width', 24)}
     />
 ));
+stories.add('Bookmarks', () => (
+    <BookmarksIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+

@@ -169,6 +169,7 @@ export {
     CheckCircleIcon,
     CloseCircleIcon,
     ScheduleIcon,
+    BookmarksIcon
 } from './components/icons/components/action';
 export {
     PaginationArrow,
