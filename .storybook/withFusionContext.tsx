@@ -9,10 +9,9 @@ import AuthUser from '@equinor/fusion/lib/auth/AuthUser';
 import { HashRouter } from 'react-router-dom';
 
 import FusionRoot from '../src/components/core/Root';
-import {ApplicationGuidanceWrapper} from '../src/components/general/ApplicationGuidance';
+import { ApplicationGuidanceWrapper } from '../src/components/general/ApplicationGuidance';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
-
 
 const mockUser = {
     id: '1337',
@@ -134,16 +133,19 @@ const FusionWrapper: React.FC = ({ children }) => {
     const overlay = React.useRef<HTMLElement | null>(null);
     const root = React.useRef<HTMLElement | null>(null);
     const headerContent = React.useRef<HTMLElement | null>(null);
+    const headerAppAside = React.useRef<HTMLElement | null>(null);
+
     const fusionContext = createFusionContext(authContainer, serviceResolver, {
         overlay,
         root,
         headerContent,
+        headerAppAside,
     });
 
     return (
         <FusionContext.Provider value={fusionContext}>
             <HashRouter>
-                <ApplicationGuidanceWrapper scope={{storybook:[]}}>
+                <ApplicationGuidanceWrapper scope={{ storybook: [] }}>
                     <FusionRoot rootRef={root} overlayRef={overlay}>
                         {children}
                     </FusionRoot>

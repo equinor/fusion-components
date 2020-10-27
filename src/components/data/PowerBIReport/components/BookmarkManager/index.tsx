@@ -4,6 +4,7 @@ import {
     BookmarksIcon,
     useTooltipRef,
     styling,
+    HeaderAppAsidePortal,
 } from '@equinor/fusion-components';
 import * as React from 'react';
 import BookmarkSideSheet from './BookmarkSideSheet';
@@ -28,13 +29,11 @@ const BookmarkManager: React.FC<BookmarkManagerProps> = ({
     const tooltipRef = useTooltipRef('Power BI bookmarks');
     return (
         <>
-            <HeaderContentPortal>
-                <div className={styles.bookmarkButton}>
-                    <IconButton onClick={openSideSheet} ref={tooltipRef}>
-                        <BookmarksIcon color={styling.colors.blackAlt2} />
-                    </IconButton>
-                </div>
-            </HeaderContentPortal>
+            <HeaderAppAsidePortal>
+                <IconButton onClick={openSideSheet} ref={tooltipRef}>
+                    <BookmarksIcon color={styling.colors.blackAlt2} />
+                </IconButton>
+            </HeaderAppAsidePortal>
             <BookmarkSideSheet
                 isOpen={isSideSheetOpen}
                 onClose={closeSideSheet}
