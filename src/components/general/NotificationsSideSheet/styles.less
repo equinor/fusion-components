@@ -4,7 +4,6 @@
     height: 100%;
 
     .tabContent {
-        /* height: 100%; */
         overflow: auto;
         padding: 0 1rem 1rem 1rem;
             
@@ -44,6 +43,17 @@
        border-bottom: 1px solid var(--color-black-alt4);
        padding-bottom: 0.5rem;
     }
+}
+
+.notificationWrapper {
+    border-radius: 4px;
+    margin-bottom: calc(var(--grid-unit) * 2px);
+    border-collapse: separate; 
+    border: 1px solid var(--color-black-alt4);
+
+    &.unSeen{
+        border: 1px solid var(--color-primary);
+    }    
 }
 
 .row {
