@@ -5,11 +5,11 @@ import {
     useTooltipRef,
     styling,
     HeaderAppAsidePortal,
+    useAnchor,
 } from '@equinor/fusion-components';
 import * as React from 'react';
 import BookmarkSideSheet from './BookmarkSideSheet';
 import { models } from 'powerbi-client';
-import * as styles from './styles.less';
 
 type BookmarkManagerProps = {
     captureBookmark: () => Promise<models.IReportBookmark | undefined>;
@@ -27,12 +27,16 @@ const BookmarkManager: React.FC<BookmarkManagerProps> = ({
     const closeSideSheet = React.useCallback(() => setIsSideSheetOpen(false), []);
 
     const tooltipRef = useTooltipRef('Power BI bookmarks');
+    const ref = useAnchor<HTMLButtonElement>({ id: 'bookmarks-btn', scope: 'portal' });
+
     return (
         <>
             <HeaderAppAsidePortal>
-                <IconButton onClick={openSideSheet} ref={tooltipRef}>
-                    <BookmarksIcon color={styling.colors.blackAlt2} />
-                </IconButton>
+                <div ref={tooltipRef}>
+                    <IconButton onClick={openSideSheet} ref={ref}>
+                        <BookmarksIcon color={styling.colors.blackAlt2} />
+                    </IconButton>
+                </div>
             </HeaderAppAsidePortal>
             <BookmarkSideSheet
                 isOpen={isSideSheetOpen}
