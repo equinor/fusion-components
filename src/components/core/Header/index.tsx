@@ -40,10 +40,12 @@ type FusionHeaderProps = {
     start: React.ReactElement | null;
     content: React.FC<HeaderContentProps> | null;
     aside: React.ReactElement | null;
+    settings: React.ReactElement | null;
     quickFactScope?: string;
+    showSettings?: boolean;
 };
 
-const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quickFactScope }) => {
+const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, settings, quickFactScope, showSettings }) => {
     const {
         refs: { headerContent },
     } = useFusionContext();
@@ -92,7 +94,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quic
             <aside className={styles.asideContainer}>
                 <ComponentDisplayToggleButton quickFactScope={quickFactScope} />
                 {aside}
-                <NotificationsButton quickFactScope={quickFactScope} />
+                <NotificationsButton quickFactScope={quickFactScope} settings={settings} showSettings={showSettings} />
                 <CurrentUserButton quickFactScope={quickFactScope} />
             </aside>
         </header>
