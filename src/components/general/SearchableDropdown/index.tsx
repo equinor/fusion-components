@@ -8,6 +8,7 @@ import {
     useOverlayContainer,
 } from '@equinor/fusion-components';
 import styles from './styles.less';
+import classNames from 'classnames';
 
 export type SearchableDropdownOption = {
     title: string;
@@ -32,6 +33,7 @@ type SearchableDropdownProps = {
     itemComponent?: any;
     asideComponent?: any;
     selectedComponent?: any;
+    showSearchInput?: boolean;
     onSelect?: (item: SearchableDropdownOption) => void;
     onSearchAsync?: (query: string) => void;
     dropdownMaxHeight?: number;
@@ -69,7 +71,6 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
             acc.concat(curr.items),
         []
     );
-
 const SearchableDropdown = ({
     options,
     sections,
@@ -81,6 +82,7 @@ const SearchableDropdown = ({
     onSearchAsync,
     itemComponent,
     asideComponent,
+    showSearchInput = true,
     selectedComponent,
     dropdownMaxHeight,
 }: SearchableDropdownProps) => {
@@ -91,7 +93,6 @@ const SearchableDropdown = ({
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [inputValue, setInputValue] = useState('');
     const [dropdownSections, setDropdownSections] = useState<SearchableDropdownSection[]>([]);
-
     useEffect(() => {
         if (sections) {
             setDropdownSections(sections);
@@ -99,7 +100,6 @@ const SearchableDropdown = ({
             setDropdownSections(createSingleSectionFromOptions(options));
         }
     }, [options, sections]);
-
     const filterSearch = useCallback(
         (inputValue) => {
             if (onSearchAsync) {
@@ -176,32 +176,54 @@ const SearchableDropdown = ({
             },
             [isOpen, overlayContainer]
         );
-
+        const [focus, setFocus] = React.useState(false);
+        useEffect(() => {
+            if (isOpen) {
+                setFocus(true);
+            } else {
+                setFocus(false);
+            }
+        }, [isOpen]);
+        const dropdownContentClasses = classNames(styles.dropdownContent, {
+            [styles.focus]: focus,
+        });
+        if (!showSearchInput) {
+            return (
+                <span className={styles.dropdownContainer}
+                    onClick={() => !isOpen && setIsOpen(true)}
+                >
+                    <div className={dropdownContentClasses}>
+                        {selectedItem?.title}
+                        <DropdownArrow cursor="pointer" isOpen={isOpen} />
+                    </div>
+                </span>
+            )
+        }
         return (
             <>
                 {!isOpen && selectedComponent && selectedItem ? (
                     selected
                 ) : (
-                    <TextInput
-                        onChange={(value) => {
-                            !open && setIsOpen(true);
-                            setInputValue(value);
-                        }}
-                        error={error && !isOpen}
-                        errorMessage={errorMessage}
-                        asideComponent={aside}
-                        placeholder={placeholder || 'Type to search...'}
-                        label={label}
-                        icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
-                        onIconAction={() => isOpen && setIsOpen(false)}
-                        onClick={() => !isOpen && setIsOpen(true)}
-                        value={selectedValue}
-                        ref={inputRef}
-                        onKeyUp={(e) => e.keyCode === 27 && setIsOpen(false)}
-                        onFocus={() => !isOpen && setIsOpen(true)}
-                        onBlur={handleBlur}
-                    />
-                )}
+                        <TextInput
+                            onChange={(value) => {
+                                !open && setIsOpen(true);
+                                setInputValue(value);
+                            }}
+                            error={error && !isOpen}
+                            errorMessage={errorMessage}
+                            asideComponent={aside}
+                            placeholder={placeholder || 'Type to search...'}
+                            label={label}
+                            icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
+                            onIconAction={() => isOpen && setIsOpen(false)}
+                            onClick={() => !isOpen && setIsOpen(true)}
+                            value={selectedValue}
+                            ref={inputRef}
+                            onKeyUp={(e) => e.keyCode === 27 && setIsOpen(false)}
+                            onFocus={() => !isOpen && setIsOpen(true)}
+                            onBlur={handleBlur}
+                        />
+                    )}
             </>
         );
     });
@@ -246,16 +268,16 @@ const SearchableDropdown = ({
                             asideComponent={asideComponent}
                         />
                     ) : (
-                        <div className={styles.noResultsContainer}>
-                            {inputValue ? (
-                                <span>
-                                    No matches for <strong> {inputValue}</strong>
-                                </span>
-                            ) : (
-                                'Start typing to search'
-                            )}
-                        </div>
-                    )}
+                            <div className={styles.noResultsContainer}>
+                                {inputValue ? (
+                                    <span>
+                                        No matches for <strong> {inputValue}</strong>
+                                    </span>
+                                ) : (
+                                        'Start typing to search'
+                                    )}
+                            </div>
+                        )}
                 </div>
             </Dropdown>
         </div>

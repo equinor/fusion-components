@@ -5,6 +5,7 @@ import { ErrorIcon, styling } from '@equinor/fusion-components';
 
 type TextInputProps = {
     disabled?: boolean;
+    hideTextInput?: boolean;
     error?: boolean;
     errorMessage?: string;
     isOptional?: boolean;
@@ -29,6 +30,7 @@ const TextInput = React.forwardRef<
     (
         {
             disabled = false,
+            hideTextInput = false,
             error,
             errorMessage,
             isOptional = false,
@@ -118,12 +120,14 @@ const TextInput = React.forwardRef<
             [styles.focus]: focus,
             [styles.error]: error,
             [styles.disabled]: disabled,
+            [styles.hideTextInput]: hideTextInput,
             [styles.labelLess]: !label,
         });
 
         const inputTextContentClasses = classNames(styles.inputTextContent, {
             [styles.moveLabel]: value.length || focus,
             [styles.disabled]: disabled,
+            [styles.hideTextInput]: hideTextInput,
             [styles.error]: error,
         });
 
@@ -147,7 +151,7 @@ const TextInput = React.forwardRef<
                             onFocus={handleFocus}
                             value={value}
                             onChange={handleChange}
-                            disabled={disabled}
+                            disabled={disabled || hideTextInput}
                             onKeyUp={onKeyUp}
                             {...props}
                         />

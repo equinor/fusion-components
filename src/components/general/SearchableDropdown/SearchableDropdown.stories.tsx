@@ -106,12 +106,18 @@ const DropdownStory = () => {
             />
             <br />
             <SearchableDropdown
+                options={optionsNoLAbel}
+                showSearchInput={false}
+                onSelect={item => setOptionsNoLabel(updateOptions(item))}
+            />
+            <br />
+            <SearchableDropdown
                 label="Select food"
                 onSelect={item => updateSections(item)}
                 sections={sections}
             />
             <br />
-            <div style={{width: '300px'}}>
+            <div style={{ width: '300px' }}>
                 <SearchableDropdown
                     label="Narrow food"
                     onSelect={item => updateSections(item)}
