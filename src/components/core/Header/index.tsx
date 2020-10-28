@@ -45,7 +45,7 @@ type FusionHeaderProps = {
 
 const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quickFactScope }) => {
     const {
-        refs: { headerContent },
+        refs: { headerContent, headerAppAside },
     } = useFusionContext();
     const currentApp = useCurrentApp();
 
@@ -90,6 +90,10 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quic
             </div>
 
             <aside className={styles.asideContainer}>
+                <div
+                    ref={headerAppAside as React.MutableRefObject<HTMLDivElement | null>}
+                    className={styles.asideAppContainer}
+                ></div>
                 <ComponentDisplayToggleButton quickFactScope={quickFactScope} />
                 {aside}
                 <NotificationsButton quickFactScope={quickFactScope} />
