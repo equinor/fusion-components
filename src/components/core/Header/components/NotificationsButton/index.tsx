@@ -33,8 +33,10 @@ const NotificationNumberBadge = (props: NotificationNumberBadgeProps) => {
 
 type NotificationsButtonProps = {
     quickFactScope?: string;
+    settings: React.ReactElement | null;
+    showSettings?: boolean;
 };
-const NotificationsButton: React.FC<NotificationsButtonProps> = ({ quickFactScope }) => {
+const NotificationsButton: React.FC<NotificationsButtonProps> = ({ quickFactScope, settings, showSettings }) => {
     const [showSideSheet, setShowSideSheet] = React.useState<boolean>(false);
     const [hasOpenedSideSheet, setHasOpenedSideSheet] = React.useState<boolean>(false);
 
@@ -86,6 +88,8 @@ const NotificationsButton: React.FC<NotificationsButtonProps> = ({ quickFactScop
                 </div>
             </IconButton>
             <NotificationsSideSheet
+                showSettings={showSettings}
+                settings={settings}
                 open={showSideSheet}
                 onClose={closeSideSheet}
                 notifications={notificationCards}

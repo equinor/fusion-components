@@ -1,46 +1,43 @@
-.notificationsContainer {
+ .notificationsContainer {
     display: flex;
-    flex-direction: column;
-    padding: 0 calc(var(--grid-unit) * 2px);
+    flex-direction: column;    
+    height: 100%;
 
-    .noNotificationMessage {
-        display: flex;
-        justify-content: center;
-        font-weight: 500;
-        padding-top: calc(var(--grid-unit) * 2px);
-    }
-
-    .notifications{ 
-        display: flex;
-        flex-direction: column;
-
-        .divisionTitle {
-            padding-left: calc(var(--grid-unit) * 1px);
+    .tabContent {
+        overflow: auto;
+        padding: 0 1rem 1rem 1rem;
+            
+        .noNotificationMessage {
+            display: flex;
+            justify-content: center;
+            font-weight: 500;
+            padding-top: 1rem;
         }
 
-        .division{
-            padding-top: calc(var(--grid-unit) * 2px);
-
+        .divisionTitle {
+            padding-left: 0.5rem;
+        }
+    
+        .division {
+            padding-bottom: 1rem;
+            
             .dateMarker {
                 width: 100%;
                 display: flex;
                 justify-content: flex-end;
-                padding: calc(var(--grid-unit) * 1px) 0;
+                padding: 0.5rem 0;
                 font-size: 12px;
                 color: var(--color-black-alt2);
             }
         }
-       
+           
     }
-    
+
 }
-.markAllAsReadButton {
-    padding-left: calc(var(--grid-unit) * 1px) ;
-}
-.chipContainer {
-    display: flex;
-    align-items: center;
-}
+
+.settingsTab {
+    margin-left: auto;
+ }
 
 .notificationWrapper {
     border-radius: 4px;
@@ -50,6 +47,15 @@
 
     &.unSeen{
         border: 1px solid var(--color-primary);
-    }
-    
+    }    
+}
+
+.chip {
+    background-color: var(--color-danger);
+    border-radius: 50%;
+    width: 1rem;
+    display: inline;
+    margin: 0.5rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    color: #FFF;
 }
