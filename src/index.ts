@@ -56,6 +56,7 @@ export {
     useDropdownController,
     DropdownController,
 } from './components/general/Dropdown';
+export { default as Select, SelectOption, SelectSection } from './components/general/Select';
 export {
     default as SearchableDropdown,
     SearchableDropdownOption,
@@ -170,7 +171,7 @@ export {
     CheckCircleIcon,
     CloseCircleIcon,
     ScheduleIcon,
-    BookmarksIcon
+    BookmarksIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
