@@ -1,29 +1,28 @@
 import * as React from 'react';
 import { ModalSideSheet, Tabs, Tab } from '@equinor/fusion-components';
 import NewBookmark from './components/NewBookmark';
-import { models } from 'powerbi-client';
-import useBookmarks, { PBIBookmark } from './useBookmarks';
+import useBookmarks, { Bookmark } from './useBookmarks';
 import * as styles from './styles.less';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
+import { BookmarkManagerProps } from '.';
 
-type BookmarkSideSheetProps = {
+type BookmarkSideSheetProps<T> = BookmarkManagerProps<T> & {
     isOpen: boolean;
     onClose: () => void;
-    captureBookmark: () => Promise<models.IReportBookmark | undefined>;
-    applyBookmark: (bookmark: string, awaitForContextSwitch: boolean) => Promise<void>;
-    hasContext?: boolean;
 };
 
 type TabKey = 'add-new' | 'see-all' | string;
 
-const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
+function BookmarkSideSheet<T>({
     isOpen,
     onClose,
     captureBookmark,
     applyBookmark,
     hasContext,
-}) => {
+    name,
+    anchorId,
+}: BookmarkSideSheetProps<T>) {
     const [selectedTabKey, setSelectedTabKey] = React.useState<TabKey>('add-new');
     const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
         hasContext
@@ -34,12 +33,12 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
         async (bookmarkName: string) => {
             try {
                 const bookmark = await captureBookmark();
-                if (!bookmark?.state) {
+                if (!bookmark) {
                     return;
                 }
                 updateBookmark(
                     {
-                        bookMark: bookmark.state,
+                        bookMark: bookmark,
                         bookmarkId: (new Date().getTime() + Math.random()).toString(),
                         bookmarkName,
                     },
@@ -51,7 +50,7 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
     );
 
     const selectBookmark = React.useCallback(
-        async (bookmark: PBIBookmark, contextId: string) => {
+        async (bookmark: Bookmark<T>, contextId: string) => {
             onClose();
             if (!bookmark.bookMark) {
                 return;
@@ -70,7 +69,7 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
     const updateSelectedTab = React.useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
 
     return (
-        <ModalSideSheet header="Power BI bookmarks" onClose={onClose} show={isOpen} size="medium">
+        <ModalSideSheet header={name} onClose={onClose} show={isOpen} size="medium" id={anchorId}>
             <Tabs activeTabKey={selectedTabKey} onChange={updateSelectedTab}>
                 <Tab tabKey="add-new" title="Add new" isCurrent={selectedTabKey === 'add-new'}>
                     <NewBookmark
@@ -92,5 +91,5 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
             </Tabs>
         </ModalSideSheet>
     );
-};
+}
 export default BookmarkSideSheet;

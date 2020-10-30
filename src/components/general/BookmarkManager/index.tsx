@@ -1,5 +1,4 @@
 import {
-    HeaderContentPortal,
     IconButton,
     BookmarksIcon,
     useTooltipRef,
@@ -9,25 +8,22 @@ import {
 } from '@equinor/fusion-components';
 import * as React from 'react';
 import BookmarkSideSheet from './BookmarkSideSheet';
-import { models } from 'powerbi-client';
 
-type BookmarkManagerProps = {
-    captureBookmark: () => Promise<models.IReportBookmark | undefined>;
-    applyBookmark: (bookmark: string, awaitForContextSwitch: boolean) => Promise<void>;
+export type BookmarkManagerProps<T> = {
+    captureBookmark: () => Promise<T>;
+    applyBookmark: (bookmark: T, awaitForContextSwitch: boolean) => Promise<void>;
+    name: string;
+    anchorId: string;
     hasContext?: boolean;
 };
 
-const BookmarkManager: React.FC<BookmarkManagerProps> = ({
-    captureBookmark,
-    applyBookmark,
-    hasContext,
-}) => {
+function BookmarkManager<T>(props: BookmarkManagerProps<T>) {
     const [isSideSheetOpen, setIsSideSheetOpen] = React.useState<boolean>(false);
     const openSideSheet = React.useCallback(() => setIsSideSheetOpen(true), []);
     const closeSideSheet = React.useCallback(() => setIsSideSheetOpen(false), []);
 
-    const tooltipRef = useTooltipRef('Power BI bookmarks');
-    const ref = useAnchor<HTMLButtonElement>({ id: 'bookmarks-btn', scope: 'portal' });
+    const tooltipRef = useTooltipRef(props.name);
+    const ref = useAnchor<HTMLButtonElement>({ id: props.anchorId, scope: 'portal' });
 
     return (
         <>
@@ -38,15 +34,9 @@ const BookmarkManager: React.FC<BookmarkManagerProps> = ({
                     </IconButton>
                 </div>
             </HeaderAppAsidePortal>
-            <BookmarkSideSheet
-                isOpen={isSideSheetOpen}
-                onClose={closeSideSheet}
-                captureBookmark={captureBookmark}
-                applyBookmark={applyBookmark}
-                hasContext={hasContext}
-            />
+            <BookmarkSideSheet isOpen={isSideSheetOpen} onClose={closeSideSheet} {...props} />
         </>
     );
-};
+}
 
 export default BookmarkManager;

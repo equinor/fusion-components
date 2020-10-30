@@ -1,29 +1,45 @@
 import * as React from 'react';
 import { AccordionItem, Accordion, ErrorMessage } from '@equinor/fusion-components';
 import * as styles from './styles.less';
-import { BookmarkContext, PBIBookmark, UpdateBookmarkOperation } from '../../useBookmarks';
-import Bookmark from './Bookmark';
+import { BookmarkContext, Bookmark, UpdateBookmarkOperation } from '../../useBookmarks';
+import BookmarkComponent from './Bookmark';
 
-type AllBookmarksProps = {
-    allBookmarks: BookmarkContext[];
+type AllBookmarksProps<T> = {
+    allBookmarks: BookmarkContext<T>[];
     currentContextId: string;
     updateBookmark: (
-        bookmark: PBIBookmark,
+        bookmark: Bookmark<T>,
         operation: UpdateBookmarkOperation,
         contextId: string
     ) => void;
-    onBookmarkSelect: (bookmark: PBIBookmark, contextId: string) => void;
+    onBookmarkSelect: (bookmark: Bookmark<T>, contextId: string) => void;
 };
 type OpenAccordion = {
     [contextId: string]: boolean;
 };
 
-const AllBookmarks: React.FC<AllBookmarksProps> = ({
+function sortByString<K>(list: K[], accessor: (listItem: K) => string) {
+    return [
+        ...list.sort((a, b) => {
+            const itemA = accessor(a).toUpperCase();
+            const itemB = accessor(b).toUpperCase();
+            if (itemA < itemB) {
+                return -1;
+            }
+            if (itemA > itemB) {
+                return 1;
+            }
+            return 0;
+        }),
+    ];
+}
+
+function AllBookmarks<T>({
     allBookmarks,
     currentContextId,
     updateBookmark,
     onBookmarkSelect,
-}) => {
+}: AllBookmarksProps<T>) {
     const [openAccordions, setOpenAccordions] = React.useState<OpenAccordion>({});
 
     const handleOpenAccordionChange = (id: string) => {
@@ -46,9 +62,10 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
             />
         );
     }
+
     return (
         <Accordion>
-            {allBookmarks.map((contextBookmark) => (
+            {sortByString(allBookmarks, (b) => b.contextName).map((contextBookmark) => (
                 <AccordionItem
                     label={contextBookmark.contextName}
                     key={contextBookmark.contextId}
@@ -57,8 +74,11 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
                 >
                     <div className={styles.contextBookmarks}>
                         {contextBookmark.bookmarks &&
-                            contextBookmark.bookmarks.map((bookMark) => (
-                                <Bookmark
+                            sortByString(
+                                contextBookmark.bookmarks,
+                                (b) => b.bookmarkName
+                            ).map((bookMark) => (
+                                <BookmarkComponent
                                     bookmark={bookMark}
                                     onDelete={() =>
                                         updateBookmark(
@@ -85,6 +105,6 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
             ))}
         </Accordion>
     );
-};
+}
 
 export default AllBookmarks;
