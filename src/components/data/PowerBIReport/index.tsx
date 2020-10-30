@@ -129,6 +129,27 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     };
 
+    const checkContextAccess = async () => {
+        if (!currentContext?.externalId || !embedInfo?.embedConfig.rlsConfiguration) return;
+
+        try {
+            await reportApiClient.checkContextAccess(
+                reportId,
+                currentContext.externalId,
+                currentContext.type.id
+            );
+        } catch (error) {
+            setFusionError({
+                statusCode: error.statusCode,
+                fusionError: error.response as FusionApiHttpErrorResponse,
+            });
+        }
+    };
+
+    React.useEffect(() => {
+        checkContextAccess();
+    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
+
     React.useEffect(() => {
         if (!embeddedRef.current) return;
         setIsLoading(true);
@@ -315,32 +336,38 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
             }
         }
     }, [embedRef, accessToken, isFetching]);
-    if (
-        (powerBIError && powerBIError.detail.errorCode) ||
-        (fusionError && fusionError.statusCode)
-    ) {
+
+    if (powerBIError || fusionError) {
         //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
         const errorCode = powerBIError
-            ? powerBIError.detail.errorCode
-            : fusionError?.statusCode.toString();
+            ? powerBIError?.detail?.errorCode
+            : fusionError?.fusionError?.error.code;
 
         switch (errorCode) {
             case '404':
+            case 'notFound':
                 return (
                     <ErrorMessage
                         hasError={true}
                         errorType={'notFound'}
                         resourceName={'report'}
                         message={
+                            fusionError?.fusionError?.error?.message ||
                             'Report not found. Report might not be available or it does not exist '
                         }
                     />
                 );
             default:
                 return report ? (
-                    <ReportErrorMessage report={report} />
+                    <ReportErrorMessage
+                        report={report}
+                        contextError={fusionError?.statusCode === 403}
+                    />
                 ) : (
-                    <ErrorMessage hasError={true} />
+                    <ErrorMessage
+                        hasError={true}
+                        message={fusionError?.fusionError?.error?.message || null}
+                    />
                 );
         }
     }
