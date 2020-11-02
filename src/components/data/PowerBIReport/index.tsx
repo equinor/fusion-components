@@ -152,6 +152,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
     React.useEffect(() => {
         if (!embeddedRef.current) return;
+
         setIsLoading(true);
 
         embeddedRef.current.reload();
@@ -337,7 +338,10 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     }, [embedRef, accessToken, isFetching]);
 
-    if (powerBIError || fusionError) {
+    if (
+        (powerBIError && powerBIError.detail.errorCode) ||
+        (fusionError && fusionError.fusionError?.error?.code)
+    ) {
         //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
         const errorCode = powerBIError
             ? powerBIError?.detail?.errorCode
