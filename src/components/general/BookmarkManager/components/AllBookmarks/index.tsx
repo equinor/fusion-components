@@ -21,8 +21,11 @@ type OpenAccordion = {
 function sortByString<K>(list: K[], accessor: (listItem: K) => string) {
     return [
         ...list.sort((a, b) => {
-            const itemA = accessor(a).toUpperCase();
-            const itemB = accessor(b).toUpperCase();
+            const itemA = accessor(a)?.toUpperCase();
+            const itemB = accessor(b)?.toUpperCase();
+            if (!itemA || !itemB) {
+                return 0;
+            }
             if (itemA < itemB) {
                 return -1;
             }
