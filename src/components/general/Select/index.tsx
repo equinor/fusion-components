@@ -80,6 +80,15 @@ const Select = ({
             }
         }, [isOpen, disabled]);
 
+        const handleClick = React.useCallback(() => {
+            if (!isOpen && !disabled) {
+                setIsOpen(true)
+            } else {
+                setIsOpen(false);
+            }
+
+        }, [isOpen, disabled])
+
         const selectContentClasses = classNames(styles.selectContent, {
             [styles.focus]: focus,
             [styles.disabled]: disabled,
@@ -87,7 +96,7 @@ const Select = ({
 
         return (
             <span className={styles.selectContainer}
-                onClick={() => !isOpen && !disabled && setIsOpen(true)}
+                onClick={handleClick}
             >
                 <div className={selectContentClasses}>
                     {selectedItem ? selectedItem.title : placeholder}
