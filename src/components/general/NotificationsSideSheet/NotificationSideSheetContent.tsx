@@ -111,7 +111,7 @@ const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps
                     </div>
                 </Tab>
                 {showSettings ? (
-                    <Tab className={styles.settingsTab} tabKey={"settings"} title={<Button outlined> Settings <SettingsIcon /> </Button>}>
+                    <Tab className={styles.settingsTab} tabKey={"settings"} title={<Button outlined> Settings <div className={styles.settingsIcon}><SettingsIcon /></div> </Button>}>
                         {settings}
                     </Tab>) : <Tab title="" tabKey="settings"></Tab>}
             </Tabs>
