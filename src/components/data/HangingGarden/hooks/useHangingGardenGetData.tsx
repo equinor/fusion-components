@@ -1,13 +1,20 @@
 import { useApiClients, ApiClients } from '@equinor/fusion';
 import * as React from 'react';
 import { HttpResponse } from '@equinor/fusion/lib/http/HttpClient';
-import { ErrorTypes } from 'src/components/general/ErrorMessage';
-
-export type GardenDataError = {
-    errorType: ErrorTypes | 'noCache';
-    error: any;
-};
-
+import { GardenDataError } from '../models/GardenDataError';
+/**
+ * The useHangingGardenGetData is used by useHangingGardenData for the acutal api call, but can be used on it own.
+ *
+ * @param client Name of ApiClient to be used when fetching data.
+ * @param endpoint Name of endpoint on given ApiClient to be used when fetching data.
+ * @returns getData: takes in currentContext Id and InvalidateCache boolean. Does the api call and return the raw data. error: handles errors gives a GardenDataError or null. isFetching: a fetching flag boolean
+ * @example
+ * const { isFetching, error, getData } = useHangingGardenGetData('ApiClient', 'endpoint');
+ *
+ * const currentContext = useCurrentContext();
+ * const data = await getData(currentContext.id, true);
+ *
+ */
 const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof ApiClients[C]>(
     client: C,
     endpoint: E
@@ -26,13 +33,13 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
                 )) as HttpResponse<T[]>;
 
                 if (response.status === 202) {
-                    setError({ errorType: 'noCache', error: response.data });
+                    setError({ errorType: 'noCache' });
                     setIsFetching(false);
                     return null;
                 }
 
                 if (response.status === 200 && !response.data.length) {
-                    setError({ errorType: 'noData', error: response.data });
+                    setError({ errorType: 'noData' });
                     setIsFetching(false);
                     return null;
                 }
@@ -52,7 +59,10 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
                     cacheDurationInMinutes: cacheDuration,
                 };
             } catch (e) {
-                setError({ errorType: 'error', error: e });
+                setError({
+                    errorType: e?.response?.error?.code || 'error',
+                    errorResponse: e?.response?.error || null,
+                });
                 setIsFetching(false);
                 return null;
             }

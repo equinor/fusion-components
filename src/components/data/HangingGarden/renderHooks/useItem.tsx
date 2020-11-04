@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import useTextNode from './useTextNode';
 import { getColumnX, addDot, HIGHLIGHTED_ITEM_KEY } from '../utils';
 import { HangingGardenColumnIndex } from '../models/HangingGarden';
@@ -9,6 +9,15 @@ import { Size, Position, ItemRenderContext } from '../models/RenderContext';
 import useRenderQueue from './useRenderQueue';
 import useItemDescription from './useItemDescription';
 
+/**
+ * Handles rendering of items in the Garden.
+ * This is based on the renderItemContext supplied.
+ * This will take care of rendering the look and interactivity off the item.
+ * This included click handling and popovers.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useItem = <T extends HangingGardenColumnIndex>() => {
     const {
         pixiApp,
@@ -76,8 +85,7 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
                 renderedItem.buttonMode = true;
                 renderedItem.interactive = true;
                 renderedItem.on('click', () => onItemClick(item));
-                renderedItem.on('tap', () => onItemClick(item));
-
+                renderedItem.on('touchend', () => onItemClick(item));
                 const graphicsContext = new PIXI.Graphics();
                 graphicsContext.cacheAsBitmap = true;
                 renderedItem.addChild(graphicsContext);

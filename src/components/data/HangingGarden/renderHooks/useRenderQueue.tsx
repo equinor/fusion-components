@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import { ItemRenderContext, RenderItem } from '..';
 
 export type RenderQueue = {
@@ -13,6 +13,12 @@ export type RenderQueue = {
     processRenderQueueAnimationFrame: React.MutableRefObject<number>;
 };
 
+/**
+ * A queue for all items the renderGarden creates that needs to be rendered.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useRenderQueue = (): RenderQueue => {
     const {
         pixiApp,

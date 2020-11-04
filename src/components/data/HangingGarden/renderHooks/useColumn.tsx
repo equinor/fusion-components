@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import { HangingGardenColumn } from '../models/HangingGarden';
 import useRenderItem from './useItem';
 import useHeader from './useHeader';
 
+/**
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useColumn = <T,>() => {
     const {
         scroll: { scrollTop },

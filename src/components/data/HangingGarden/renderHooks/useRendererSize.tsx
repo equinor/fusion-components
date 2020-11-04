@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import useGarden from './useGarden';
 
 declare class ResizeObserver {
@@ -12,6 +12,14 @@ type ResizeObserverArray = {
     contentRect: { width: number; height: number };
 };
 
+/**
+ * Handles rendersize of the garden canvas.
+ * Will recalculate when window size are changed, or some other item changes the viewport.
+ * Example of this is minimizing a filter pane is used.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useRendererSize = () => {
     const { pixiApp, container } = useHangingGardenContext();
     const { renderGarden } = useGarden();

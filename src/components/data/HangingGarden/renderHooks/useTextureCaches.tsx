@@ -52,7 +52,14 @@ export type Caches = {
         key: string
     ) => PIXI.RenderTexture | PIXI.Texture | PIXI.Container | PIXI.Graphics;
 };
-
+/**
+ * Cache of all textures and texts that are created by other rendering hooks.
+ * The cache will keep these between renderes. This makes it possible to reuse similar items and text.
+ * Making the rendering of the garden alot faster.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useTextureCaches = (): Caches => {
     const textureCaches = React.useRef<TextureCaches>(defaultState());
 

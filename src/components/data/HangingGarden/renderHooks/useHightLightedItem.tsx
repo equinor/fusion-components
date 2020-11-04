@@ -1,10 +1,16 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import { HIGHLIGHTED_ITEM_KEY } from '../utils';
 import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 import useRenderItem from './useItem';
 
+/**
+ * Handles highlitedItem. Sets highlighted item when an item is selected.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useHightLightedItem = <T extends HangingGardenColumnIndex>() => {
     const {
         columns,

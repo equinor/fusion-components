@@ -1,11 +1,20 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import { getColumnX, getHeaderWidth, getMaxRowCount } from '../utils';
 import useColumn from './useColumn';
 import { HangingGardenColumnIndex, HangingGardenColumn } from '../models/HangingGarden';
 import useHightLightedItem from './useHightLightedItem';
 
+/**
+ * Main hook and starting point for a Garden.
+ * Setup and triggers new rerenders off a garden.
+ *
+ * @returns renderGarden: triggers a rerender of the garden.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useGarden = <T extends HangingGardenColumnIndex>() => {
     const {
         pixiApp,

@@ -1,8 +1,15 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import { DEFAULT_ITEM_TEXT_STYLE } from '../utils';
 
+/**
+ * Handles Text in items and header.
+ * This is all text that are written on each item in the garden and the header.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useTextNode = () => {
     const {
         pixiApp,

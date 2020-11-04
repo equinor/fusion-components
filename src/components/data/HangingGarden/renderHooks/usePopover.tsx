@@ -18,7 +18,13 @@ export type Popover = {
     left: number;
     render: () => JSX.Element;
 };
-
+/**
+ * Handles popovers.
+ * Holds the state of weither a popover should be shown and where.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const usePopover = (delay?: number): UsePopover => {
     const [selectedPopover, setSelectedPopover] = React.useState<Popover | null>(null);
 

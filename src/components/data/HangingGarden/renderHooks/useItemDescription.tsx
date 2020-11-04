@@ -1,11 +1,19 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import useTextNode from './useTextNode';
 import { createRenderedItemDescription, getColumnX, EXPANDED_COLUMN_PADDING } from '../utils';
 import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 
+/**
+ * Handles extended descriptions for item when columns is expanded.
+ * Only apply if expanded columns are in use.
+ *
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useItemDescription = <T extends HangingGardenColumnIndex>() => {
     const {
         stage,

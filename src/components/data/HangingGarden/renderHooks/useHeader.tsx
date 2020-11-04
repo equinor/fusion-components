@@ -1,11 +1,18 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
-import { useHangingGardenContext } from '../hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './useHangingGardenContext';
 import { getHeaderWidth, isHeaderExpanded, getColumnX, createRoundedRectMask } from '../utils';
 import useItemDescription from './useItemDescription';
 import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 import useTextNode from './useTextNode';
 
+/**
+ * Renders the header based on the renderHeaderContext.
+ * Handles both the visual and interactivity
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useHeader = <T extends HangingGardenColumnIndex>() => {
     const {
         stage,

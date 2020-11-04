@@ -1,6 +1,12 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 
+/**
+ * set up for the PIXI.js api
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const usePixiApp = (
     canvas: React.RefObject<HTMLCanvasElement> | null,
     container: React.RefObject<HTMLDivElement> | null,
@@ -26,6 +32,11 @@ const usePixiApp = (
             sharedTicker: true,
         });
     }, [canvas?.current, container?.current, backgroundColor]);
+
+    if (pixiApp.current) {
+        pixiApp.current.renderer.plugins.interaction.autoPreventDefault = false;
+        pixiApp.current.renderer.view.style.touchAction = 'auto';
+    }
 
     return { pixiApp };
 };

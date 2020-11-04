@@ -7,7 +7,7 @@ import {
 } from './models/HangingGarden';
 import { getCalculatedWidth, getCalculatedHeight } from './utils';
 
-import { useHangingGardenContext } from './hooks/useHangingGardenContext';
+import { useHangingGardenContext } from './renderHooks/useHangingGardenContext';
 import useGarden from './renderHooks/useGarden';
 import useRendererSize from './renderHooks/useRendererSize';
 

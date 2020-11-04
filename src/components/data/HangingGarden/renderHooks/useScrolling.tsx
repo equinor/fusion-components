@@ -17,7 +17,13 @@ export type Scroll<T extends HangingGardenColumnIndex> = {
         itemWidth: number
     ) => boolean;
 };
-
+/**
+ * Handles scrolling off the garden canvas. Also handles scroll to functionality.
+ * Scrolling to highlighted Item and Header.
+ *
+ * This hook is used by the Garden and is not intended to be used or implemented
+ * outside the Garden component.
+ */
 const useScrolling = <T extends HangingGardenColumnIndex>(
     canvas: React.RefObject<HTMLCanvasElement> | null,
     container: React.RefObject<HTMLDivElement> | null,

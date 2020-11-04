@@ -1,16 +1,34 @@
 import * as React from 'react';
 import * as PIXI from 'pixi.js';
 import * as styles from './styles.less';
-import useTextureCaches from './hooks/useTextureCaches';
+import useTextureCaches from './renderHooks/useTextureCaches';
 import { HangingGardenColumnIndex, HangingGardenProps } from './models/HangingGarden';
 import { DEFAULT_ITEM_HEIGHT, DEFAULT_HEADER_HEIGHT } from './utils';
 import useHangingGardenData from './hooks/useHangingGardenData';
 import Garden from './Garden';
-import HangingGardenContext from './hooks/useHangingGardenContext';
+import HangingGardenContext from './renderHooks/useHangingGardenContext';
 import { ExpandedColumns } from './models/ExpandedColumn';
-import useScrolling from './hooks/useScrolling';
+import useScrolling from './renderHooks/useScrolling';
 import usePixiApp from './renderHooks/usePixiApp';
-import usePopover from './hooks/usePopover';
+import usePopover from './renderHooks/usePopover';
+
+/**
+ * The Hanging Garden component renders you a Garden based on supplied parameters.
+ *
+ * @param columns The data to be used by the Garden, sorted into Columns.
+ * @param highlightedColumnKey The Header key of the column that should be highlighted.
+ * @param highlightedItem The item object of the Item that should be highlighted.
+ * @param itemKeyProp An key in the item object that should be used as an identifier. preferably unique.
+ * @param itemHeight The height of items in the garden. All items will be same height. Defaults to 24
+ * @param itemWidth  The width of items in the garden. All items will be same widht.
+ * @param renderHeaderContext Instructions telling the garden how the headers should look.
+ * @param renderItemContext Instructions telling the garden how the items should look.
+ * @param getItemDescription Instruction telling the garden how to get what is shown in expanded columns
+ * @param onItemClick click handler that will be attached to each item in the garden.
+ * @param headerHeight The height of the column header. Defaults to 32,
+ * @param provideController Returns a ref. this contains the renderGarden function. Used to trigger rerenders at will.
+ * @param backgroundColor Backgroun color for the garden. Defaults to  white(0xffffff),
+ */
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
     columns,
