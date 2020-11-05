@@ -32,13 +32,13 @@ function AppSettingsSideSheet<T>({
     const captureAndSaveBookmarkAsync = React.useCallback(
         async (bookmarkName: string) => {
             try {
-                const bookmark = await captureAppSetting();
-                if (!bookmark) {
+                const bookMark = await captureAppSetting();
+                if (!bookMark) {
                     return;
                 }
                 updateBookmark(
                     {
-                        bookmark,
+                        bookMark,
                         bookmarkId: (new Date().getTime() + Math.random()).toString(),
                         bookmarkName,
                     },
@@ -52,16 +52,16 @@ function AppSettingsSideSheet<T>({
     const selectBookmark = React.useCallback(
         async (bookmark: Bookmark<T>, contextId: string) => {
             onClose();
-            if (!bookmark.bookmark) {
+            if (!bookmark.bookMark) {
                 return;
             }
             if (currentContextId !== contextId) {
                 await contextManager.setCurrentContextIdAsync(contextId);
-                applyAppSetting(bookmark.bookmark, true);
+                applyAppSetting(bookmark.bookMark, true);
                 return;
             }
 
-            applyAppSetting(bookmark.bookmark, false);
+            applyAppSetting(bookmark.bookMark, false);
         },
         [applyAppSetting, currentContextId]
     );
