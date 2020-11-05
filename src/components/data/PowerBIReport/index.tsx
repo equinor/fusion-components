@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
-import { Spinner, ErrorMessage, BookmarkManager } from '@equinor/fusion-components';
+import { Spinner, ErrorMessage, AppSettingsManager } from '@equinor/fusion-components';
 import {
     useTelemetryLogger,
     FusionApiHttpErrorResponse,
@@ -349,9 +349,9 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
             {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
-            <BookmarkManager
-                captureBookmark={captureBookmark}
-                applyBookmark={applyBookmark}
+            <AppSettingsManager
+                captureAppSetting={captureBookmark}
+                applyAppSetting={applyBookmark}
                 hasContext={hasContext}
                 anchorId="pbi-bookmarks-btn"
                 name="Power BI bookmarks"

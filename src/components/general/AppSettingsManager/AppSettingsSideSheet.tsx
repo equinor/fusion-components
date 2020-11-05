@@ -5,24 +5,24 @@ import useBookmarks, { Bookmark } from './useBookmarks';
 import * as styles from './styles.less';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
-import { BookmarkManagerProps } from '.';
+import { AppSettingsManagerProps } from '.';
 
-type BookmarkSideSheetProps<T> = BookmarkManagerProps<T> & {
+type AppSettingsSideSheetProps<T> = AppSettingsManagerProps<T> & {
     isOpen: boolean;
     onClose: () => void;
 };
 
 type TabKey = 'add-new' | 'see-all' | string;
 
-function BookmarkSideSheet<T>({
+function AppSettingsSideSheet<T>({
     isOpen,
     onClose,
-    captureBookmark,
-    applyBookmark,
+    captureAppSetting,
+    applyAppSetting,
     hasContext,
     name,
     anchorId,
-}: BookmarkSideSheetProps<T>) {
+}: AppSettingsSideSheetProps<T>) {
     const [selectedTabKey, setSelectedTabKey] = React.useState<TabKey>('add-new');
     const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
         hasContext
@@ -32,13 +32,13 @@ function BookmarkSideSheet<T>({
     const captureAndSaveBookmarkAsync = React.useCallback(
         async (bookmarkName: string) => {
             try {
-                const bookmark = await captureBookmark();
+                const bookmark = await captureAppSetting();
                 if (!bookmark) {
                     return;
                 }
                 updateBookmark(
                     {
-                        bookMark: bookmark,
+                        bookmark,
                         bookmarkId: (new Date().getTime() + Math.random()).toString(),
                         bookmarkName,
                     },
@@ -46,24 +46,24 @@ function BookmarkSideSheet<T>({
                 );
             } catch (e) {}
         },
-        [updateBookmark, captureBookmark]
+        [updateBookmark, captureAppSetting]
     );
 
     const selectBookmark = React.useCallback(
         async (bookmark: Bookmark<T>, contextId: string) => {
             onClose();
-            if (!bookmark.bookMark) {
+            if (!bookmark.bookmark) {
                 return;
             }
             if (currentContextId !== contextId) {
                 await contextManager.setCurrentContextIdAsync(contextId);
-                applyBookmark(bookmark.bookMark, true);
+                applyAppSetting(bookmark.bookmark, true);
                 return;
             }
 
-            applyBookmark(bookmark.bookMark, false);
+            applyAppSetting(bookmark.bookmark, false);
         },
-        [applyBookmark, currentContextId]
+        [applyAppSetting, currentContextId]
     );
 
     const updateSelectedTab = React.useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
@@ -92,4 +92,4 @@ function BookmarkSideSheet<T>({
         </ModalSideSheet>
     );
 }
-export default BookmarkSideSheet;
+export default AppSettingsSideSheet;

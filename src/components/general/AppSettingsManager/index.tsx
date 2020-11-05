@@ -7,17 +7,17 @@ import {
     useAnchor,
 } from '@equinor/fusion-components';
 import * as React from 'react';
-import BookmarkSideSheet from './BookmarkSideSheet';
+import AppSettingsSideSheet from './AppSettingsSideSheet';
 
-export type BookmarkManagerProps<T> = {
-    captureBookmark: () => Promise<T>;
-    applyBookmark: (bookmark: T, awaitForContextSwitch: boolean) => Promise<void>;
+export type AppSettingsManagerProps<T> = {
+    captureAppSetting: () => Promise<T>;
+    applyAppSetting: (appSetting: T, awaitForContextSwitch: boolean) => Promise<void>;
     name: string;
     anchorId: string;
     hasContext?: boolean;
 };
 
-function BookmarkManager<T>(props: BookmarkManagerProps<T>) {
+function AppSettingsManager<T>(props: AppSettingsManagerProps<T>) {
     const [isSideSheetOpen, setIsSideSheetOpen] = React.useState<boolean>(false);
     const openSideSheet = React.useCallback(() => setIsSideSheetOpen(true), []);
     const closeSideSheet = React.useCallback(() => setIsSideSheetOpen(false), []);
@@ -34,9 +34,9 @@ function BookmarkManager<T>(props: BookmarkManagerProps<T>) {
                     </IconButton>
                 </div>
             </HeaderAppAsidePortal>
-            <BookmarkSideSheet isOpen={isSideSheetOpen} onClose={closeSideSheet} {...props} />
+            <AppSettingsSideSheet isOpen={isSideSheetOpen} onClose={closeSideSheet} {...props} />
         </>
     );
 }
 
-export default BookmarkManager;
+export default AppSettingsManager;

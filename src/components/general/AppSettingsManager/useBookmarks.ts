@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react';
 export type Bookmark<T> = {
     bookmarkName: string;
     bookmarkId: string;
-    bookMark: T | null;
+    bookmark: T | null;
 };
 
 export type BookmarkContext<T> = {
