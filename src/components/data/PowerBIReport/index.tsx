@@ -129,9 +129,8 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     };
 
-    const checkContextAccess = async () => {
+    const checkContextAccess = React.useCallback(async () => {
         if (!currentContext?.externalId || !embedInfo?.embedConfig.rlsConfiguration) return;
-
         try {
             await reportApiClient.checkContextAccess(
                 reportId,
@@ -144,7 +143,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
                 fusionError: error.response as FusionApiHttpErrorResponse,
             });
         }
-    };
+    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
 
     React.useEffect(() => {
         checkContextAccess();
@@ -338,14 +337,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     }, [embedRef, accessToken, isFetching]);
 
-    if (
-        (powerBIError && powerBIError.detail.errorCode) ||
-        (fusionError && fusionError.fusionError?.error?.code)
-    ) {
+    if (powerBIError || fusionError) {
         //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
         const errorCode = powerBIError
             ? powerBIError?.detail?.errorCode
-            : fusionError?.fusionError?.error.code;
+            : fusionError?.fusionError?.error?.code;
 
         switch (errorCode) {
             case '404':
@@ -365,7 +361,10 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
                 return report ? (
                     <ReportErrorMessage
                         report={report}
-                        contextError={fusionError?.statusCode === 403}
+                        contextError={
+                            fusionError?.statusCode === 403 &&
+                            !Boolean(fusionError?.fusionError?.error?.code === 'NotAuthorized')
+                        }
                     />
                 ) : (
                     <ErrorMessage
