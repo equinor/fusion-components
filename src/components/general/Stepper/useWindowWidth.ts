@@ -4,7 +4,7 @@ import { useFusionContext } from '@equinor/fusion';
 export default () => {
     const fusionContext = useFusionContext();
     const rootElement = fusionContext.refs.root;
-    const [windowWidth, setWindowWidth] = useState<Number>(0);
+    const [windowWidth, setWindowWidth] = useState<number>(0);
 
     useEffect(() => {
         let animationFrame = 0;

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
 import * as styles from './styles.less';
 
 import {
@@ -24,7 +25,7 @@ export default <T extends HTMLElement>(
     boolean,
     React.Dispatch<React.SetStateAction<boolean>> | undefined
 ] => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const [isPopoverOpen, ref, setIsPopoverOpen] = hover
         ? useHoverToggleController<T>()
@@ -34,7 +35,7 @@ export default <T extends HTMLElement>(
 
     const rect = useRelativePositioning(ref);
 
-    const close = React.useCallback(() => {
+    const close = useCallback(() => {
         if (hover) {
             setTimeout(() => {
                 !isContentOpen && setIsOpen(false);
@@ -44,7 +45,7 @@ export default <T extends HTMLElement>(
         }
     }, [isContentOpen, setIsOpen, delay, isPopoverOpen, hover]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const timer = setTimeout(() => {
             setIsOpen(isPopoverOpen || isContentOpen);
         }, delay || 0);

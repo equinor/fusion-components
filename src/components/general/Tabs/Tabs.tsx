@@ -1,9 +1,9 @@
-import * as React from 'react';
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import { PaginationSkeleton } from '../Pagination';
 import { useEventListener } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import React, { useRef, useState, useEffect, cloneElement } from 'react';
 
 type TabsProps = {
     onChange: (tabKey: string) => void;
@@ -20,21 +20,21 @@ type GradientType = 'left' | 'right' | 'leftAndRight' | null;
 
 const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
     const active = React.Children.toArray(children).find(
-        child => (child as React.ReactElement).props.tabKey === activeTabKey
+        (child) => (child as React.ReactElement).props.tabKey === activeTabKey
     ) as React.ReactElement | null;
     if (!active) {
         return null;
     }
 
-    const clonedChildren = React.Children.map(active.props.children, child =>
+    const clonedChildren = React.Children.map(active.props.children, (child) =>
         React.cloneElement(child)
     );
     return <div className={styles.tabContent}>{clonedChildren}</div>;
 };
 
 const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
-    const tabsPaneRef = React.useRef<HTMLDivElement | null>(null);
-    const activeTabRef = React.useRef<HTMLElement | null>(null);
+    const tabsPaneRef = useRef<HTMLDivElement | null>(null);
+    const activeTabRef = useRef<HTMLElement | null>(null);
 
     const checkForGradient = (): GradientType => {
         if (!tabsPaneRef.current) {
@@ -56,7 +56,7 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
         return null;
     };
 
-    const [gradient, setGradient] = React.useState<GradientType>(checkForGradient);
+    const [gradient, setGradient] = useState<GradientType>(checkForGradient);
 
     const containerClassNames = classNames(styles.tabsPane, useComponentDisplayClassNames(styles), {
         [styles.showGradientLeft]: gradient === 'left' || gradient === 'leftAndRight',
@@ -80,17 +80,17 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
         activeTabKey,
     ]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         scrollToTab(activeTabRef.current);
         setGradient(checkForGradient);
     }, [activeTabKey, tabsPaneRef]);
 
-    const clonedChildren = React.Children.map(children, child => {
+    const clonedChildren = React.Children.map(children, (child) => {
         const { tabKey } = child.props;
         if (!tabKey) {
             return null;
-        } 
-        return React.cloneElement(child, {
+        }
+        return cloneElement(child, {
             onChange: (ref: HTMLElement) => {
                 activeTabRef.current = ref;
                 onChange(tabKey);
@@ -114,7 +114,7 @@ const Tabs: React.FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
             <TabPane
                 children={children}
                 activeTabKey={activeTabKey}
-                onChange={tabKey => onChange(tabKey)}
+                onChange={(tabKey) => onChange(tabKey)}
             />
 
             <TabContent children={children} activeTabKey={activeTabKey} />

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ModalSideSheet, Tabs, Tab } from '@equinor/fusion-components';
 import NewBookmark from './components/NewBookmark';
 import { models } from 'powerbi-client';
@@ -6,6 +5,7 @@ import useBookmarks, { PBIBookmark } from './useBookmarks';
 import * as styles from './styles.less';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
+import { useState, useCallback } from 'react';
 
 type BookmarkSideSheetProps = {
     isOpen: boolean;
@@ -24,13 +24,13 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
     applyBookmark,
     hasContext,
 }) => {
-    const [selectedTabKey, setSelectedTabKey] = React.useState<TabKey>('add-new');
+    const [selectedTabKey, setSelectedTabKey] = useState<TabKey>('add-new');
     const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
         hasContext
     );
     const contextManager = useContextManager();
 
-    const captureAndSaveBookmarkAsync = React.useCallback(
+    const captureAndSaveBookmarkAsync = useCallback(
         async (bookmarkName: string) => {
             try {
                 const bookmark = await captureBookmark();
@@ -45,12 +45,14 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
                     },
                     'add'
                 );
-            } catch (e) {}
+            } catch (e) {
+                console.error(e);
+            }
         },
         [updateBookmark, captureBookmark]
     );
 
-    const selectBookmark = React.useCallback(
+    const selectBookmark = useCallback(
         async (bookmark: PBIBookmark, contextId: string) => {
             onClose();
             if (!bookmark.bookMark) {
@@ -67,7 +69,7 @@ const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
         [applyBookmark, currentContextId]
     );
 
-    const updateSelectedTab = React.useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
+    const updateSelectedTab = useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
 
     return (
         <ModalSideSheet header="Power BI bookmarks" onClose={onClose} show={isOpen} size="medium">

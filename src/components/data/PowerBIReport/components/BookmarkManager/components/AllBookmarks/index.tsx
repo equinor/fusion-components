@@ -1,8 +1,8 @@
-import * as React from 'react';
 import { AccordionItem, Accordion, ErrorMessage } from '@equinor/fusion-components';
 import * as styles from './styles.less';
 import { BookmarkContext, PBIBookmark, UpdateBookmarkOperation } from '../../useBookmarks';
 import Bookmark from './Bookmark';
+import { useState, useEffect } from 'react';
 
 type AllBookmarksProps = {
     allBookmarks: BookmarkContext[];
@@ -24,13 +24,13 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
     updateBookmark,
     onBookmarkSelect,
 }) => {
-    const [openAccordions, setOpenAccordions] = React.useState<OpenAccordion>({});
+    const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
 
     const handleOpenAccordionChange = (id: string) => {
         setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         setOpenAccordions({
             [currentContextId]: true,
         });
@@ -48,10 +48,10 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
     }
     return (
         <Accordion>
-            {allBookmarks.map((contextBookmark) => (
+            {allBookmarks.map((contextBookmark, index) => (
                 <AccordionItem
+                    key={`${contextBookmark.contextId}-${index}`}
                     label={contextBookmark.contextName}
-                    key={contextBookmark.contextId}
                     isOpen={openAccordions[contextBookmark.contextId]}
                     onChange={() => handleOpenAccordionChange(contextBookmark.contextId)}
                 >
@@ -59,6 +59,7 @@ const AllBookmarks: React.FC<AllBookmarksProps> = ({
                         {contextBookmark.bookmarks &&
                             contextBookmark.bookmarks.map((bookMark) => (
                                 <Bookmark
+                                    key={bookMark.bookmarkId}
                                     bookmark={bookMark}
                                     onDelete={() =>
                                         updateBookmark(

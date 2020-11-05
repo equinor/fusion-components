@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo, useCallback } from 'react';
+import { Fragment, useEffect, useContext, useMemo, useCallback } from 'react';
 
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
@@ -22,7 +22,7 @@ function Children<T>() {
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
-    const childrenNodes = useMemo(() => allNodes.filter(d => !d.aside && d.parentId), [allNodes]);
+    const childrenNodes = useMemo(() => allNodes.filter((d) => !d.aside && d.parentId), [allNodes]);
 
     const rows = useMemo(
         () =>
@@ -85,7 +85,7 @@ function Children<T>() {
         (cards: OrgNode<T>[], rowNo: number, additionalRowHeight: number) => {
             const startX = getStartXPosition(cards, rowNo);
             return cards.map((card, i) => (
-                <React.Fragment key={card.id}>
+                <Fragment key={card.id}>
                     <Card
                         node={card}
                         x={startX + i * (cardWidth + cardMargin)}
@@ -95,7 +95,7 @@ function Children<T>() {
                             (rowNo + 1) * (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
                         }
                     />
-                </React.Fragment>
+                </Fragment>
             ));
         },
         [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows, width]
@@ -104,9 +104,9 @@ function Children<T>() {
     return (
         <g className="children">
             {rows.map((cards, rowNo) => (
-                <React.Fragment key={rowNo}>
+                <Fragment key={rowNo}>
                     {renderRow(cards, rowNo, additionalRowHeight[rowNo])}
-                </React.Fragment>
+                </Fragment>
             ))}
         </g>
     );

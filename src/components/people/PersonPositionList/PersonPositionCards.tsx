@@ -1,6 +1,6 @@
-import * as React from 'react';
 import { PersonPosition } from '@equinor/fusion';
 import { PersonPositionCard } from '@equinor/fusion-components';
+import { useMemo } from 'react';
 import * as styles from './styles.less';
 
 type PersonPositionCardsProps = {
@@ -44,7 +44,7 @@ const PersonPositionCards: React.FC<PersonPositionCardsProps> = ({ positions, di
         return <div className={styles.noPositions}> No positions </div>;
     }
 
-    const personPositionProject = React.useMemo(
+    const personPositionProject = useMemo(
         () =>
             positions.reduce(
                 (

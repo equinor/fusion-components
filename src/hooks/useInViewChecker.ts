@@ -13,7 +13,7 @@ const isCompletelyInView = (el: HTMLElement, margin = 1) => {
 
 export default <T extends HTMLElement>(
     ref: React.MutableRefObject<T>,
-    margin: number = 1
+    margin = 1
 ): [boolean, React.Dispatch<boolean>] => {
     const getIsInView = () => {
         if (!ref || !ref.current) {

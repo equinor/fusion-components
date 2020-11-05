@@ -1,10 +1,6 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import {
-    DropdownArrow,
-    Menu,
-    Dropdown,
-    useDropdownController,
-} from '@equinor/fusion-components';
+import { useState, useCallback, useEffect, useMemo } from 'react';
+
+import { DropdownArrow, Menu, Dropdown, useDropdownController } from '@equinor/fusion-components';
 import styles from './styles.less';
 import classNames from 'classnames';
 
@@ -31,16 +27,12 @@ type SelectProps = {
     disabled?: boolean;
 };
 
-const createSingleSectionFromOptions = (
-    options: SelectOption[]
-): SelectSection[] => [{ key: 'DropdownSection', items: options }];
+const createSingleSectionFromOptions = (options: SelectOption[]): SelectSection[] => [
+    { key: 'DropdownSection', items: options },
+];
 
 const mergeDropdownSectionItems = (sections: SelectSection[]) =>
-    sections.reduce(
-        (acc: SelectOption[], curr: SelectSection) =>
-            acc.concat(curr.items),
-        []
-    );
+    sections.reduce((acc: SelectOption[], curr: SelectSection) => acc.concat(curr.items), []);
 
 const Select = ({
     options,
@@ -71,7 +63,7 @@ const Select = ({
             return selectedItem;
         }, [dropdownSections]);
 
-        const [focus, setFocus] = React.useState(false);
+        const [focus, setFocus] = useState(false);
         useEffect(() => {
             if (isOpen && !disabled) {
                 setFocus(true);
@@ -86,7 +78,8 @@ const Select = ({
         });
 
         return (
-            <span className={styles.selectContainer}
+            <span
+                className={styles.selectContainer}
                 onClick={() => !isOpen && !disabled && setIsOpen(true)}
             >
                 <div className={selectContentClasses}>
@@ -117,11 +110,7 @@ const Select = ({
                     className={styles.menuContainer}
                     style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
                 >
-                    <Menu
-                        elevation={0}
-                        onClick={select}
-                        sections={dropdownSections}
-                    />
+                    <Menu elevation={0} onClick={select} sections={dropdownSections} />
                 </div>
             </Dropdown>
         </div>

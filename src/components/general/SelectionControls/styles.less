@@ -21,7 +21,7 @@
         cursor: pointer;
     }
 
-    &:hover:not(.disabled){
+    &:hover:not(.disabled) {
         background-color: var(--color-primary-alt4);
         border-radius: 50%;
     }
@@ -34,7 +34,8 @@
     &.disabled {
         cursor: not-allowed;
 
-        label, input {
+        label,
+        input {
             cursor: not-allowed;
         }
     }
@@ -55,7 +56,7 @@
             position: absolute;
             z-index: 1;
             top: 50%;
-            left: 0; 
+            left: 0;
             margin-left: var(--switch-activator-margin);
             transform: translateY(-50%);
             background-color: var(--switch-activator-color);
@@ -83,10 +84,10 @@
             input:checked + label,
             input:checked + label .activator {
                 background-color: var(--color-black-alt4);
+            }
         }
     }
-    }
-    
+
     &.checkbox {
         label {
             width: var(--checkbox-size);
@@ -106,7 +107,7 @@
             color: var(--color-white);
             // transform: scale(0.8);
             background-color: white;
-            transition: all .1s;
+            transition: all 0.1s;
             border-radius: 2px;
 
             svg {
@@ -124,7 +125,7 @@
         input:checked + label,
         input:indeterminate + label {
             border-color: var(--color-primary);
-            background-color:  var(--color-primary);
+            background-color: var(--color-primary);
 
             .checkmark {
                 // transform: scale(1);
@@ -162,7 +163,7 @@
             border-radius: 50%;
             transform: scale(0.8);
             opacity: 0;
-            transition: all .1s;
+            transition: all 0.1s;
             height: var(--radio-dot-size);
             width: var(--radio-dot-size);
         }

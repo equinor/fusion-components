@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
 
@@ -55,20 +56,16 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const isConsultant =
         instance && instance.assignedPerson && instance.assignedPerson.accountType === 'Consultant';
 
-    const containerClassNames = classNames(
-        styles.context,
-        useComponentDisplayClassNames(styles),
-        {
-            [styles.isSelected]: isSelected,
-            [styles.isClickable]: !!onClick,
-            [styles.isExternal]: isExternal,
-            [styles.isConsultant]: isConsultant,
-            [styles.isExternalHire]: isExternalHire,
-            [styles.isLinked]: isLinked,
-            [styles.futurePosition]: isFuture,
-            [styles.pastPosition]: isPast,
-        }
-    );
+    const containerClassNames = classNames(styles.context, useComponentDisplayClassNames(styles), {
+        [styles.isSelected]: isSelected,
+        [styles.isClickable]: !!onClick,
+        [styles.isExternal]: isExternal,
+        [styles.isConsultant]: isConsultant,
+        [styles.isExternalHire]: isExternalHire,
+        [styles.isLinked]: isLinked,
+        [styles.futurePosition]: isFuture,
+        [styles.pastPosition]: isPast,
+    });
 
     const onClickHandler = useCallback(() => {
         if (onClick) {
@@ -86,7 +83,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
-            <div className={styles.container} >
+            <div className={styles.container}>
                 <PositionIconPhoto
                     position={position}
                     currentInstance={current}
@@ -109,7 +106,12 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     selectedDate={selectedDate}
                 />
             </div>
-            {showRotation && rotatingInstances.length > 0 && <RotationInstances allInstances={[...rotatingInstances, current]} position={position}/>}
+            {showRotation && rotatingInstances.length > 0 && (
+                <RotationInstances
+                    allInstances={[...rotatingInstances, current]}
+                    position={position}
+                />
+            )}
         </div>
     );
 };

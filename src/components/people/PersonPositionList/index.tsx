@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useMemo, useCallback } from 'react';
+
 import * as styles from './styles.less';
 import { PersonPosition } from '@equinor/fusion';
 import PersonPositionCards from './PersonPositionCards';
@@ -24,9 +25,9 @@ const PersonPositionList: React.FC<PersonPositionListProps> = ({
 }) => {
     const positionsSortedByTo = sortPositionsByTo(allPositions);
 
-    const date = React.useMemo(() => filterByDate || new Date(), [filterByDate]);
+    const date = useMemo(() => filterByDate || new Date(), [filterByDate]);
 
-    const getPersonPositions = React.useCallback(
+    const getPersonPositions = useCallback(
         (positions: PersonPosition[]) => {
             switch (showPositions) {
                 case 'active':

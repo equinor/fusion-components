@@ -1,7 +1,7 @@
-import * as React from 'react';
 import Content from './Content';
 import getButtonClasses from '../buttonClasses';
 import { ComponentDisplayType } from '@equinor/fusion';
+import React from 'react';
 
 type ButtonProps = {
     disabled?: boolean;
@@ -13,23 +13,22 @@ type ButtonProps = {
     mouseHasBeenDown: boolean;
 };
 
-const ButtonComponent = React.forwardRef<
-    HTMLButtonElement,
-    React.PropsWithChildren<ButtonProps>
->(({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, ...props }, ref) => (
-    <button
-        type="button"
-        className={getButtonClasses(props)}
-        disabled={disabled}
-        onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
-        onClick={onClick}
-        onClickCapture={onClickCapture}
-        ref={ref}
-    >
-        <Content>{children}</Content>
-    </button>
-));
+const ButtonComponent = React.forwardRef<HTMLButtonElement, React.PropsWithChildren<ButtonProps>>(
+    ({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, ...props }, ref) => (
+        <button
+            type="button"
+            className={getButtonClasses(props)}
+            disabled={disabled}
+            onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
+            onClick={onClick}
+            onClickCapture={onClickCapture}
+            ref={ref}
+        >
+            <Content>{children}</Content>
+        </button>
+    )
+);
 
 ButtonComponent.defaultProps = {
     disabled: true,

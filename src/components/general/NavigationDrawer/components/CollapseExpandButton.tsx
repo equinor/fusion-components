@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTooltipRef, CollapseIcon, IconButton } from '@equinor/fusion-components';
 
 type CollapseExpandButtonProps = {

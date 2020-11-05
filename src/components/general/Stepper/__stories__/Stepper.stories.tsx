@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import * as styles from './styles.less';
 
 import { storiesOf } from '@storybook/react';
@@ -44,7 +44,7 @@ const DefaultStory = () => {
 };
 
 const InteractiveStory = () => {
-    const [progress, setProgress] = React.useState<number[]>([]);
+    const [progress, setProgress] = useState<number[]>([]);
 
     return (
         <Stepper

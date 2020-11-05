@@ -42,8 +42,8 @@ export class MenuView {
         return this.editorView.state.doc.rangeHasMark(from, to, type);
     }
 
-    protected updateMeuItem(){
-         this.items.forEach(({ command, dom, type }) => {
+    protected updateMeuItem() {
+        this.items.forEach(({ command, dom, type }) => {
             const activeMark = this.isMarkActive(this.editorView.state, type);
             const applicable = command(this.editorView.state, null, this.editorView);
 
@@ -61,7 +61,7 @@ export class MenuView {
     }
 
     update() {
-       this.updateMeuItem()
+        this.updateMeuItem();
     }
 
     destroy() {

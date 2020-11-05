@@ -1,0 +1,7 @@
+/node_modules
+/lib
+/docs
+
+__stories__
+**/*.stories.tsx
+__tests__

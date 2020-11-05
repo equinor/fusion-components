@@ -9,7 +9,7 @@ import {
     useOverlayContainer,
     useStringMask,
 } from '@equinor/fusion-components';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type DatePickerProps = {
     disabled?: boolean;

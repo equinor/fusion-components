@@ -1,4 +1,3 @@
-import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { useElevationClassName } from '@equinor/fusion-components';
@@ -16,7 +15,7 @@ export const DialogTitle: React.FC<DialogProps> = ({ children }) => (
 );
 
 export const DialogContent: React.FC<DialogProps> = ({ children }) => {
-    return <div className={styles.dialogContent} >{children}</div>;
+    return <div className={styles.dialogContent}>{children}</div>;
 };
 
 export const DialogActions: React.FC<DialogProps> = ({ children }) => (

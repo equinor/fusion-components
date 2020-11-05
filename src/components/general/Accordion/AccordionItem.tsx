@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState, useEffect } from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { SortIcon } from '@equinor/fusion-components';
@@ -40,9 +40,7 @@ const AccordionItem: FC<AccordionItemProps> = ({
                 </div>
             </div>
             <div className={contentContainerClassNames}>
-                <div className={styles.content}>
-                    {children}
-                </div>
+                <div className={styles.content}>{children}</div>
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+
 import classNames from 'classnames';
 import { Button, ErrorBoundary } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -97,7 +98,7 @@ function FilterPane<T>({
         }
     );
 
-    const onClick = React.useCallback(() => {
+    const onClick = useCallback(() => {
         onResetAll;
     }, [onResetAll]);
 

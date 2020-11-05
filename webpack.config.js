@@ -11,9 +11,9 @@ module.exports = merge(
     styles,
     fonts,
     resolve,
-    eslint,
+    // eslint,
     typescript('./src'),
-    prettier,
+    // prettier,
     {
         entry: './src/index.ts',
     },

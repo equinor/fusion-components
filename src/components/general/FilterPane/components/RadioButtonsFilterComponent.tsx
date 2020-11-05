@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { useTooltipRef, RadioButton } from '@equinor/fusion-components';
 import { FilterTerm } from '../applyFilters';
@@ -17,11 +16,7 @@ type RadioButtonProps = {
     isChecked: boolean;
 };
 
-const RadioButtonWrapper: React.FC<RadioButtonProps> = ({
-    option,
-    onClick,
-    isChecked,
-}) => {
+const RadioButtonWrapper: React.FC<RadioButtonProps> = ({ option, onClick, isChecked }) => {
     const filterPaneContext = useFilterPaneContext();
     const tooltipRef = useTooltipRef(option.label, filterPaneContext.tooltipPlacement);
 
@@ -47,13 +42,13 @@ const RadioButtonsFilterComponent: React.FC<RadioButtonsFilterProps> = ({
     onChange,
     paneIsCollapsed,
 }) => {
-    const selectSingleOption = option => {
+    const selectSingleOption = (option) => {
         onChange(option.key);
     };
 
     return (
         <ul>
-            {options.map(option => (
+            {options.map((option) => (
                 <RadioButtonWrapper
                     key={option.key}
                     option={option}

@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import DataTable from '../index';
@@ -56,7 +57,7 @@ const WithSkeleton: React.FC = () => {
                 direction,
             }}
             listComponent={ExpandedItem}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
@@ -113,7 +114,7 @@ const WithoutSkeleton: React.FC = () => {
             }}
             expandedComponent={ExpandedItem}
             listComponent={ExpandedItem}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
@@ -156,7 +157,7 @@ const NoColumnsCollapse: React.FC = () => {
                 column: sortedByColumn,
                 direction,
             }}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
@@ -204,7 +205,7 @@ const Selectable: React.FC = () => {
             isSelectable
             onSelectionChange={setSelectedItems}
             selectedItems={selectedItems}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
@@ -234,7 +235,7 @@ const SingleSelectable: React.FC = () => {
 
     const sortedByColumn = simpleColumns.find((c) => c.accessor === sortBy) || null;
 
-    const handleClick = React.useCallback(
+    const handleClick = useCallback(
         (item) => {
             if (selectedItems.findIndex((i) => i.id === item.id) !== -1) {
                 setSelectedItems([]);
@@ -262,7 +263,7 @@ const SingleSelectable: React.FC = () => {
             listComponent={ExpandedItem}
             onRowClick={handleClick}
             selectedItems={selectedItems}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
@@ -292,7 +293,7 @@ const ExpandableRows: React.FC = () => {
 
     const sortedByColumn = simpleColumns.find((c) => c.accessor === sortBy) || null;
 
-    const handleClick = React.useCallback(
+    const handleClick = useCallback(
         (item) => {
             if (selectedItems.findIndex((i) => i.id === item.id) !== -1) {
                 setSelectedItems([]);
@@ -321,7 +322,7 @@ const ExpandableRows: React.FC = () => {
             listComponent={ExpandedItem}
             onRowClick={handleClick}
             selectedItems={selectedItems}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };

@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 
 type DropdownArrowProps = IconProps & {
@@ -21,9 +19,7 @@ const ClosedArrow: React.FC = () => (
 );
 
 const DropdownArrow = ({ isOpen, ...props }: DropdownArrowProps) => {
-    const iconFactory = useIcon(
-        isOpen ? <OpenArrow /> : <ClosedArrow />
-    );
+    const iconFactory = useIcon(isOpen ? <OpenArrow /> : <ClosedArrow />);
 
     return iconFactory(props);
 };

@@ -7,9 +7,10 @@ import {
     HeaderAppAsidePortal,
     useAnchor,
 } from '@equinor/fusion-components';
-import * as React from 'react';
+
 import BookmarkSideSheet from './BookmarkSideSheet';
 import { models } from 'powerbi-client';
+import { useState, useCallback } from 'react';
 
 type BookmarkManagerProps = {
     captureBookmark: () => Promise<models.IReportBookmark | undefined>;
@@ -22,9 +23,9 @@ const BookmarkManager: React.FC<BookmarkManagerProps> = ({
     applyBookmark,
     hasContext,
 }) => {
-    const [isSideSheetOpen, setIsSideSheetOpen] = React.useState<boolean>(false);
-    const openSideSheet = React.useCallback(() => setIsSideSheetOpen(true), []);
-    const closeSideSheet = React.useCallback(() => setIsSideSheetOpen(false), []);
+    const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
+    const openSideSheet = useCallback(() => setIsSideSheetOpen(true), []);
+    const closeSideSheet = useCallback(() => setIsSideSheetOpen(false), []);
 
     const tooltipRef = useTooltipRef('Power BI bookmarks');
     const ref = useAnchor<HTMLButtonElement>({ id: 'bookmarks-btn', scope: 'portal' });

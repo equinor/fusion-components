@@ -1,4 +1,3 @@
-import React from 'react';
 import { DataTableHeaderProps, DataTableColumn, DataTableSortedBy } from '../dataTableTypes';
 import styles from '../styles.less';
 import classnames from 'classnames';

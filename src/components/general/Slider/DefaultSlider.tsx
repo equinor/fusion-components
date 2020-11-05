@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+
 import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
 import classNames from 'classnames';

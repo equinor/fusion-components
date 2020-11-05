@@ -1,4 +1,3 @@
-import * as React from 'react';
 import classNames from 'classnames';
 import MenuItem, { MenuItemType, MenuItemComponentProps } from './MenuItem';
 import styles from './styles.less';
@@ -7,6 +6,7 @@ import {
     Elevation,
     useElevationClassName,
 } from '@equinor/fusion-components';
+import { useState, useCallback, useEffect } from 'react';
 
 export type MenuSection<TItem extends MenuItemType> = {
     key: string;
@@ -34,13 +34,13 @@ function Menu<TItem extends MenuItemType = MenuItemType>({
     asideComponent,
     keyboardNavigationRef,
 }: MenuProps<TItem>) {
-    const [focusedSectionKey, setFocusedSectionKey] = React.useState<string | null>(null);
-    const [focusedItemKey, setFocusedItemKey] = React.useState<string | null>(null);
-    const [skipDirection, setSkipDirection] = React.useState<number>(0);
+    const [focusedSectionKey, setFocusedSectionKey] = useState<string | null>(null);
+    const [focusedItemKey, setFocusedItemKey] = useState<string | null>(null);
+    const [skipDirection, setSkipDirection] = useState<number>(0);
 
-    const nextOrPrev = React.useCallback(
+    const nextOrPrev = useCallback(
         (direction: number) => {
-            const sectionIndex = sections.findIndex(section => section.key === focusedSectionKey);
+            const sectionIndex = sections.findIndex((section) => section.key === focusedSectionKey);
             let nextSectionIndex = sectionIndex;
 
             if (sectionIndex === -1) {
@@ -49,7 +49,7 @@ function Menu<TItem extends MenuItemType = MenuItemType>({
 
             const items = sections[nextSectionIndex].items;
 
-            const itemIndex = items.findIndex(item => item.key === focusedItemKey);
+            const itemIndex = items.findIndex((item) => item.key === focusedItemKey);
             let nextItemIndex = itemIndex;
 
             if (nextItemIndex === -1) {
@@ -77,14 +77,14 @@ function Menu<TItem extends MenuItemType = MenuItemType>({
         [sections, focusedItemKey, focusedSectionKey]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (skipDirection !== 0) {
             nextOrPrev(skipDirection);
         }
         setSkipDirection(0);
     }, [skipDirection]);
 
-    const reset = React.useCallback(() => {
+    const reset = useCallback(() => {
         setFocusedSectionKey(keyboardNavigationRef && sections.length ? sections[0].key : null);
         setFocusedItemKey(
             keyboardNavigationRef && sections.length && sections[0].items.length
@@ -93,7 +93,7 @@ function Menu<TItem extends MenuItemType = MenuItemType>({
         );
     }, [sections]);
 
-    const onItemClick = React.useCallback(
+    const onItemClick = useCallback(
         (item: TItem) => {
             if (onClick) {
                 onClick(item);
@@ -107,12 +107,12 @@ function Menu<TItem extends MenuItemType = MenuItemType>({
             onUp: () => nextOrPrev(-1),
             onDown: () => nextOrPrev(+1),
             onEnter: () => {
-                const section = sections.find(section => section.key === focusedSectionKey);
+                const section = sections.find((section) => section.key === focusedSectionKey);
                 if (!section) {
                     return;
                 }
 
-                const item = section.items.find(item => item.key === focusedItemKey);
+                const item = section.items.find((item) => item.key === focusedItemKey);
                 if (!item) {
                     return;
                 }
@@ -124,13 +124,13 @@ function Menu<TItem extends MenuItemType = MenuItemType>({
         keyboardNavigationRef
     );
 
-    React.useEffect(reset, [sections]);
+    useEffect(reset, [sections]);
 
     const className = classNames(styles.container, useElevationClassName(elevation));
 
     return (
         <div className={className}>
-            {sections.map(section => (
+            {sections.map((section) => (
                 <section key={section.key}>
                     {!!section.title && <h5>{section.title}</h5>}
                     {section.items.map((item, index) => (

@@ -21,7 +21,7 @@ export type KeyBoardEvents = {
 
 export default (keyBoardEvents: KeyBoardEvents, externalRef: HTMLElement | null = null) => {
     const [ref, setRef] = useState<HTMLElement | null>(externalRef);
-    const handleKeyDown = e => {
+    const handleKeyDown = (e) => {
         const keyCode = e.keyCode;
         const handler = keyBoardEvents[KEY_HANDLERS[keyCode]];
         if (handler) {

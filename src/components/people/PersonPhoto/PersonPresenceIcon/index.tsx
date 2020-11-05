@@ -1,4 +1,3 @@
-import * as React from 'react';
 import classNames from 'classnames';
 import * as styles from './styles.less';
 import { useComponentDisplayClassNames, PersonPresenceAvailability } from '@equinor/fusion';
@@ -9,6 +8,7 @@ import {
     ScheduleIcon,
     PhotoSize,
 } from '@equinor/fusion-components';
+import { useMemo } from 'react';
 
 type PersonPresenceProps = {
     presence: PersonPresenceAvailability;
@@ -23,7 +23,7 @@ const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presence, size }) =
         styles[presence.toLowerCase()]
     );
 
-    const presenceIcon = React.useMemo(() => {
+    const presenceIcon = useMemo(() => {
         if (presence === 'Online') {
             return <CheckCircleIcon />;
         }

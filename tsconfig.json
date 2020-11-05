@@ -3,15 +3,15 @@
         "allowSyntheticDefaultImports": true,
         "declaration": true,
         "importHelpers": true,
-        "module": "esnext",
+        "module": "ESNext",
         "outDir": "dist",
         "rootDir": "src",
         "baseUrl": "./",
         "strict": false,
-        "target": "es2017",
+        "target": "ESNext",
         "composite": false,
         "moduleResolution": "node",
-        "jsx": "react",
+        "jsx": "preserve",
         "noImplicitAny": false,
         "paths": {
             "@equinor/fusion-components": ["./src/index.ts"]

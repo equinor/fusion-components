@@ -2,39 +2,38 @@
 @import '~styles/variables.less';
 
 .container {
-    padding: .grid-unit(2px)[] 0 .grid-unit(1px)[] 0;
+    padding: .grid-unit(2px) [] 0 .grid-unit(1px) [] 0;
     border: 1px solid var(--color-black-alt4);
     border-radius: 4px;
-    width: .grid-unit(70px)[];
+    width: .grid-unit(70px) [];
     // max-height: .grid-unit(29px)[];
-    background: var(--color-white);    
+    background: var(--color-white);
     margin: calc(var(--grid-unit) * 10px) 0;
 
     @media (max-width: @mobile-max-width) {
-        width: .grid-unit(35px)[];
+        width: .grid-unit(35px) [];
         max-height: 80vh;
     }
 
     .dialogTitle {
         margin: 0;
-        padding: 0 .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
+        padding: 0 .grid-unit(3px) [] .grid-unit(2px) [] .grid-unit(3px) [];
         font-size: 20px;
-        line-height: .grid-unit(4px)[];
+        line-height: .grid-unit(4px) [];
     }
-    .dialogContent{
-        margin: .grid-unit(1px)[] .grid-unit(3px)[] .grid-unit(2px)[] .grid-unit(3px)[];
-        line-height: .grid-unit(3px)[];
+    .dialogContent {
+        margin: .grid-unit(1px) [] .grid-unit(3px) [] .grid-unit(2px) [] .grid-unit(3px) [];
+        line-height: .grid-unit(3px) [];
         font-size: 16px;
         // max-height: .grid-unit(9px)[];
         // overflow-y: hidden;
 
         @media (max-width: @mobile-max-width) {
-            max-height: calc(80vh - .grid-unit(18px)[]);
+            max-height: calc(80vh - .grid-unit(18px) []);
         }
- 
     }
-    .dialogActions{
-        padding: .grid-unit(2px)[] .grid-unit(3px)[] .grid-unit(1px)[] .grid-unit(3px)[];
+    .dialogActions {
+        padding: .grid-unit(2px) [] .grid-unit(3px) [] .grid-unit(1px) [] .grid-unit(3px) [];
         display: flex;
         align-items: center;
         justify-content: flex-end;

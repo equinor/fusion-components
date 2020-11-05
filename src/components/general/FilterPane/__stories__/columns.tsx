@@ -1,4 +1,3 @@
-import React from 'react';
 import { actions } from '@storybook/addon-actions';
 import { DataItem } from './storyData';
 import { Button, styling, DataTableColumn } from '@equinor/fusion-components';

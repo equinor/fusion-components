@@ -1,4 +1,5 @@
-import React, { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
+
 import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
 import { useTooltipRef } from '@equinor/fusion-components';
@@ -42,7 +43,7 @@ const createPositionCalculator = (start: number, end: number) => {
 };
 
 const addDaysToDate = (date: Date, days: number): Date => {
-    var result = new Date(date.valueOf());
+    const result = new Date(date.valueOf());
     result.setDate(result.getDate() + days);
     return result;
 };
@@ -63,7 +64,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     const assignedPersons = [instance, ...rotationInstances];
 
     const assignedPersonTooltipRef = useTooltipRef(
-        assignedPersons.map(i => (
+        assignedPersons.map((i) => (
             <>
                 <span>
                     {getName(i)}
@@ -89,7 +90,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     });
 
     const shouldRenderRightDot = useMemo(() => {
-        const currentIndex = allInstances.findIndex(i => i.id === instance.id);
+        const currentIndex = allInstances.findIndex((i) => i.id === instance.id);
         if (currentIndex + 1 === allInstances.length) {
             return true;
         }
@@ -107,7 +108,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     }, [allInstances, instance, activeInstance]);
 
     const shouldRenderLeftDot = useMemo(() => {
-        const currentIndex = allInstances.findIndex(i => i.id === instance.id);
+        const currentIndex = allInstances.findIndex((i) => i.id === instance.id);
         if (!allInstances[currentIndex - 1] || !activeInstance) {
             return true;
         }
@@ -154,7 +155,7 @@ const PositionTimeline: React.FC<PositionTimelineProps> = ({
 
     return (
         <div className={styles.instanceTimelineContainer}>
-            {allInstancesWithRotation.map(instanceByFrom => (
+            {allInstancesWithRotation.map((instanceByFrom) => (
                 <TimelineInstance
                     key={instanceByFrom.id}
                     instance={instanceByFrom}

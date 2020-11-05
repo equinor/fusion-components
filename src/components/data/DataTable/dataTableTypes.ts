@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pagination, SortDirection } from '@equinor/fusion';
 import { PaginationChangeHandler } from '@equinor/fusion-components';
 

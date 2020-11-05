@@ -1,4 +1,3 @@
-import React from 'react';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from './styles.less';

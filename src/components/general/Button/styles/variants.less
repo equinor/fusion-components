@@ -1,8 +1,8 @@
-@import "./variables.less";
+@import './variables.less';
 
 .variant-contained(@name, @background-color, @text-color, @hover-color, @pressed-color) {
     &.@{name} {
-        transition: background-color .2s;
+        transition: background-color 0.2s;
 
         .button {
             background-color: @background-color;
@@ -29,10 +29,10 @@
 
 .variant-outlined(@name, @background-color, @color, @hover-color, @hover-background-color) {
     &.@{name} {
-        transition: background-color .2s;
+        transition: background-color 0.2s;
 
         .button {
-            background-color:  @background-color;
+            background-color: @background-color;
             color: @color;
             border-color: @color;
         }
@@ -44,7 +44,7 @@
                 border-color: @hover-color;
             }
         }
-        &:active{
+        &:active {
             .button {
                 box-shadow: 0 0 0 2px @hover-background-color;
                 color: @hover-color;
@@ -56,7 +56,7 @@
 
 .variant-frameless(@name, @color, @hover-color, @pressed-color) {
     &.@{name} {
-        transition: background-color .2s;
+        transition: background-color 0.2s;
 
         .button {
             background: none;

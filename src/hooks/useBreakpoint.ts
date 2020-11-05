@@ -11,11 +11,11 @@ export const getBreakpoint = <T extends Breakpoint>(
     accessor: (x: T | ClientRect) => number
 ): string => {
     const breakpointValues = breakpoints
-        .filter(breakpoint => accessor(breakpoint) <= accessor(nodeRect))
-        .map(breakpoint => accessor(breakpoint));
+        .filter((breakpoint) => accessor(breakpoint) <= accessor(nodeRect))
+        .map((breakpoint) => accessor(breakpoint));
     const maxBreakpoint = Math.max(...breakpointValues);
 
-    const result = breakpoints.find(breakpoint => accessor(breakpoint) === maxBreakpoint) as T;
+    const result = breakpoints.find((breakpoint) => accessor(breakpoint) === maxBreakpoint) as T;
     return result.key;
 };
 
@@ -35,12 +35,12 @@ const useBreakpoint = (
             const breakpoints = checkSize(nodeRect);
             if (
                 breakpoints.length !== currentBreakpoints.length ||
-                breakpoints.filter(b => currentBreakpoints.indexOf(b) === -1).length > 0
+                breakpoints.filter((b) => currentBreakpoints.indexOf(b) === -1).length > 0
             ) {
                 setCurrentBreakpoints(breakpoints);
             }
             performCheckSize(abortSignal);
-        }, abortSignal).catch(() => {});
+        }, abortSignal).catch(console.error);
     };
 
     useEffect(() => {

@@ -1,5 +1,6 @@
 import { IconButton, SaveIcon, CloseIcon, TextInput } from '@equinor/fusion-components';
-import * as React from 'react';
+import { useState, useCallback } from 'react';
+
 import { PBIBookmark } from '../../useBookmarks';
 import BookmarkOptions from './BookmarkOptions';
 import * as styles from './styles.less';
@@ -19,15 +20,15 @@ type EditBookmarkProps = {
 };
 
 const EditBookmark: React.FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
-    const [bookmarkName, setBookmarkName] = React.useState<string>(name);
-    const updateBookmarkName = React.useCallback((newName: string) => setBookmarkName(newName), []);
+    const [bookmarkName, setBookmarkName] = useState<string>(name);
+    const updateBookmarkName = useCallback((newName: string) => setBookmarkName(newName), []);
 
-    const handleExit = React.useCallback(() => {
+    const handleExit = useCallback(() => {
         setBookmarkName(name);
         onExit();
     }, [onExit, name]);
 
-    const handleSave = React.useCallback(() => onSave(bookmarkName), [bookmarkName]);
+    const handleSave = useCallback(() => onSave(bookmarkName), [bookmarkName]);
 
     return (
         <>
@@ -51,12 +52,12 @@ const Bookmark: React.FC<BookmarkProps> = ({
     onSelect,
     accordionOpen,
 }) => {
-    const [isEditing, setIsEditing] = React.useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    const enableEditing = React.useCallback(() => setIsEditing(true), []);
-    const disableEditing = React.useCallback(() => setIsEditing(false), []);
+    const enableEditing = useCallback(() => setIsEditing(true), []);
+    const disableEditing = useCallback(() => setIsEditing(false), []);
 
-    const saveBookmark = React.useCallback(
+    const saveBookmark = useCallback(
         (newName: string) => {
             disableEditing();
             onUpdate({ ...bookmark, bookmarkName: newName });
@@ -64,7 +65,7 @@ const Bookmark: React.FC<BookmarkProps> = ({
         [bookmark, disableEditing]
     );
 
-    const deleteBookmark = React.useCallback(() => onDelete(bookmark), [bookmark]);
+    const deleteBookmark = useCallback(() => onDelete(bookmark), [bookmark]);
 
     return (
         <div className={styles.bookmarkContainer}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, number, color, select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -18,11 +18,19 @@ const PaginationStory = () => {
     const onChange = (newPage: Page, perPage: number) => {
         onChangeAction(newPage, perPage);
         setCurrentPage(newPage.index);
-    }
+    };
 
-    return <Pagination pagination={createPagination(number('items', 100), number('per page', 10), currentPage, number('padding', 3))} onChange={onChange} />;
+    return (
+        <Pagination
+            pagination={createPagination(
+                number('items', 100),
+                number('per page', 10),
+                currentPage,
+                number('padding', 3)
+            )}
+            onChange={onChange}
+        />
+    );
 };
 
-stories.add('Default', () => (
-    <PaginationStory />
-));
+stories.add('Default', () => <PaginationStory />);

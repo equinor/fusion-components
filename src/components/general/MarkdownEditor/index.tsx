@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import {
     MarkdownEditorElement,
     MarkdownEditorElementProps,
@@ -11,6 +11,7 @@ export type MarkdownEditorProps = React.PropsWithChildren<
 >;
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface ReactHTML {
             'fusion-markdown-editor': React.DetailedHTMLFactory<
@@ -28,17 +29,17 @@ declare global {
 }
 
 export const MarkdownEditor: React.FC<MarkdownEditorProps> = (props: MarkdownEditorProps) => {
-    const editorRef = React.useRef<MarkdownEditorElement>(null);
+    const editorRef = useRef<MarkdownEditorElement>(null);
     const { onChange, children, ...attr } = props;
 
-    const onMarkdownChange = React.useCallback(
+    const onMarkdownChange = useCallback(
         (e: CustomEvent) => {
             onChange(e.detail);
         },
         [onChange]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!editorRef.current) return;
         editorRef.current.addEventListener('change', onMarkdownChange);
         Object.assign(editorRef.current, attr);

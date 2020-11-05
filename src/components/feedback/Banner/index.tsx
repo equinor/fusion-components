@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+
 import styles from './styles.less';
 import classNames from 'classnames';
 import { Button } from '@equinor/fusion-components';

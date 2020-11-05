@@ -1,4 +1,5 @@
-import React from 'react';
+import {useState} from 'react';
+
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 
@@ -10,12 +11,18 @@ import { ApplicationGuidanceAnchor, useAnchor } from '../components/Anchor';
 
 const Story: React.FC = () => {
     const scope = 'storybook';
-    const [showSideSheet, setShowSideSheet] = React.useState(true);
+    const [showSideSheet, setShowSideSheet] = useState(true);
     return (
         <div style={{ display: 'flex', height: '100%' }}>
             <div style={{ display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }}>
-                <Button ref={useAnchor({ scope, id: 'buttonz' })}>This button has snuggly fitted anchor</Button>
-                <ApplicationGuidanceAnchor anchor="another-button" scope={scope} style={{ display: 'block'}}>
+                <Button ref={useAnchor({ scope, id: 'buttonz' })}>
+                    This button has snuggly fitted anchor
+                </Button>
+                <ApplicationGuidanceAnchor
+                    anchor="another-button"
+                    scope={scope}
+                    style={{ display: 'block' }}
+                >
                     <Button>Another button</Button>
                     <p>This anchor contains multiple components</p>
                 </ApplicationGuidanceAnchor>

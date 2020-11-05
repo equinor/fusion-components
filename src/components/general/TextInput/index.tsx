@@ -1,7 +1,7 @@
-import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 
 type TextInputProps = {
     disabled?: boolean;
@@ -48,48 +48,61 @@ const TextInput = React.forwardRef<
         },
         ref
     ) => {
-        const [focus, setFocus] = React.useState(false);
+        const [focus, setFocus] = useState(false);
         const inputRef =
             (ref as React.MutableRefObject<HTMLInputElement | null>) ||
-            React.useRef<HTMLInputElement | null>(null);
+            useRef<HTMLInputElement | null>(null);
 
-        const handleChange = React.useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-            if (!disabled) {
-                const newValue = event.target.value;
-                onChange(newValue);
-            }
-        }, [disabled, onChange]);
+        const handleChange = useCallback(
+            (event: React.ChangeEvent<HTMLInputElement>) => {
+                if (!disabled) {
+                    const newValue = event.target.value;
+                    onChange(newValue);
+                }
+            },
+            [disabled, onChange]
+        );
 
-        const handleDivClick = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        const handleDivClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
             if (inputRef.current && !disabled) {
                 inputRef.current.focus();
                 setFocus(true);
             }
 
-            onClick && onClick(e)
+            onClick && onClick(e);
         }, []);
 
-        const handleBlur = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-            if (!disabled) {
-                setFocus(false);
-                onBlur && onBlur(event);
-            }
-        }, [onBlur, disabled]);
+        const handleBlur = useCallback(
+            (event: React.FocusEvent<HTMLInputElement>) => {
+                if (!disabled) {
+                    setFocus(false);
+                    onBlur && onBlur(event);
+                }
+            },
+            [onBlur, disabled]
+        );
 
-        const handleFocus = React.useCallback((event: React.FocusEvent<HTMLInputElement>) => {
-            if (!disabled) {
-                setFocus(true);
-                onFocus && onFocus(event);
-            }
-        }, [onFocus, disabled]);
+        const handleFocus = useCallback(
+            (event: React.FocusEvent<HTMLInputElement>) => {
+                if (!disabled) {
+                    setFocus(true);
+                    onFocus && onFocus(event);
+                }
+            },
+            [onFocus, disabled]
+        );
 
         const inputLabel = label && <label>{label}</label>;
 
-        const inputIcon = React.useMemo(() => {
+        const inputIcon = useMemo(() => {
             if (!error && !icon) {
                 return null;
             }
-            const inputIcon = error ? <ErrorIcon outline={false} color={styling.cssColors.red} /> : icon;
+            const inputIcon = error ? (
+                <ErrorIcon outline={false} color={styling.cssColors.red} />
+            ) : (
+                icon
+            );
             return (
                 <div className={styles.icon} onClick={onIconAction}>
                     {inputIcon}
@@ -97,7 +110,7 @@ const TextInput = React.forwardRef<
             );
         }, [icon, error]);
 
-        const inputHelperText = React.useMemo(() => {
+        const inputHelperText = useMemo(() => {
             if (errorMessage && error) {
                 return (
                     <div className={classNames(styles.helperText, styles.error)}>
@@ -127,16 +140,13 @@ const TextInput = React.forwardRef<
             [styles.error]: error,
         });
 
-        const placeholderValue = React.useMemo(() => {
+        const placeholderValue = useMemo(() => {
             return placeholder && (focus || !label) ? placeholder : '';
         }, [placeholder, focus, label]);
 
         return (
             <div className={styles.inputContainer}>
-                <div
-                    className={inputContentClasses}
-                    onClick={handleDivClick}
-                >
+                <div className={inputContentClasses} onClick={handleDivClick}>
                     {asideComponent}
                     <div className={inputTextContentClasses}>
                         {inputLabel}

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useCallback } from 'react';
+import { Fragment, useContext, useMemo, useCallback } from 'react';
 
 import { ReportingPathContext, ReportingPathContextReducer } from '../store';
 import { OrgStructure, OrgNode } from '@equinor/fusion-components';
@@ -11,11 +11,11 @@ const Links = <T extends OrgStructure>() => {
         state: { allNodes, cardHeight, width, cardMargin, cardWidth },
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
-    const allChildren = useMemo(() => allNodes.filter(node => node.parentId), [allNodes]);
+    const allChildren = useMemo(() => allNodes.filter((node) => node.parentId), [allNodes]);
 
     const getPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
-            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+            if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
             return `
@@ -28,7 +28,7 @@ const Links = <T extends OrgStructure>() => {
 
     const getLinkedPath = useCallback(
         (node: OrgNode<T>, parent: OrgNode<T>) => {
-            if(node.x === null || node.y === null || parent.x === null || parent.y === null) {
+            if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
             return `
@@ -47,16 +47,16 @@ const Links = <T extends OrgStructure>() => {
             }
 
             const parentId = node.parentId;
-            const parent = allNodes.find(d => d.id === parentId);
+            const parent = allNodes.find((d) => d.id === parentId);
 
             if (!parent) {
                 return null;
             }
 
-            const path = node.linked ? getLinkedPath(node,parent) : getPath(node, parent);
+            const path = node.linked ? getLinkedPath(node, parent) : getPath(node, parent);
             const linkClassNames = classNames(styles.link, {
-                [styles.isLinked]: node.linked
-            })
+                [styles.isLinked]: node.linked,
+            });
 
             return <path d={path} className={linkClassNames} />;
         },
@@ -65,8 +65,8 @@ const Links = <T extends OrgStructure>() => {
 
     return (
         <g className="links">
-            {allChildren.map(node => (
-                <React.Fragment key={node.id}>{renderLink(node)}</React.Fragment>
+            {allChildren.map((node) => (
+                <Fragment key={node.id}>{renderLink(node)}</Fragment>
             ))}
         </g>
     );

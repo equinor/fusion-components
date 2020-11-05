@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './styles.less';
 
 import FusionContainer from '../Container';
@@ -6,6 +5,7 @@ import NotificationSnacks from '../NotificationSnacks';
 import NotificationDialog from '../NotificationDialog';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
 import classNames from 'classnames';
+import { useCallback } from 'react';
 
 type FusionRootProps = {
     rootRef: React.MutableRefObject<HTMLElement | null>;
@@ -21,7 +21,7 @@ const FusionRoot: React.FC<FusionRootProps> = ({
 }) => {
     const { notificationCenter } = useFusionContext();
 
-    const registerPresenter = React.useCallback(
+    const registerPresenter = useCallback(
         (level, present) => notificationCenter.registerPresenter(level, present),
         [notificationCenter]
     );

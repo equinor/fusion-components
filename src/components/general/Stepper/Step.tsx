@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import { DoneIcon, styling } from '@equinor/fusion-components';
@@ -51,8 +52,8 @@ const Step: React.FC<StepProps> = ({
     isLastStep,
     stepCount,
 }) => {
-    const stepRef = React.useRef<HTMLAnchorElement>(null);
-    const [showStepCount, setShowStepCount] = React.useState(false);
+    const stepRef = useRef<HTMLAnchorElement>(null);
+    const [showStepCount, setShowStepCount] = useState(false);
 
     const stepClasses = classNames(styles.step, useComponentDisplayClassNames(styles), {
         [styles.current]: isCurrent,
@@ -76,7 +77,7 @@ const Step: React.FC<StepProps> = ({
         }
     }, [windowWidth]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isCurrent && onChange && stepRef.current) {
             onChange(stepRef.current);
         }

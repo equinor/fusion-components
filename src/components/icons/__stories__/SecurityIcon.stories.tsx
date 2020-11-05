@@ -1,12 +1,9 @@
 import { actions } from '@storybook/addon-actions';
-import {color, number, withKnobs } from '@storybook/addon-knobs';
+import { color, number, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import * as React from 'react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 
-import {
-    SecurityIcon,
-} from '../components/security';
+import { SecurityIcon } from '../components/security';
 
 const eventsFromNames = actions('onClick');
 

@@ -1,8 +1,8 @@
-import * as React from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
 import TextareaAutosize from 'react-textarea-autosize';
+import React, { useState, useRef, useMemo } from 'react';
 
 type TextAreaProps = {
     disabled?: boolean;
@@ -45,10 +45,10 @@ const TextArea = React.forwardRef<
         },
         ref
     ) => {
-        const [focus, setFocus] = React.useState(false);
+        const [focus, setFocus] = useState(false);
         const inputRef =
             (ref as React.MutableRefObject<HTMLTextAreaElement | null>) ||
-            React.useRef<HTMLTextAreaElement | null>(null);
+            useRef<HTMLTextAreaElement | null>(null);
 
         const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
             if (!disabled) {
@@ -73,7 +73,7 @@ const TextArea = React.forwardRef<
 
         const inputLabel = label && <label>{label}</label>;
 
-        const inputIcon = React.useMemo(() => {
+        const inputIcon = useMemo(() => {
             if (!error && !icon) {
                 return null;
             }
@@ -89,7 +89,7 @@ const TextArea = React.forwardRef<
             );
         }, [icon, error]);
 
-        const inputHelperText = React.useMemo(() => {
+        const inputHelperText = useMemo(() => {
             if (errorMessage && error) {
                 return (
                     <div className={classNames(styles.helperText, styles.error)}>
@@ -119,7 +119,7 @@ const TextArea = React.forwardRef<
             [styles.error]: error,
         });
 
-        const placeholderValue = React.useMemo(() => {
+        const placeholderValue = useMemo(() => {
             return placeholder && (focus || !label) ? placeholder : '';
         }, [placeholder, focus, label]);
 
@@ -128,7 +128,7 @@ const TextArea = React.forwardRef<
                 <div className={styles.textAreaContainer}>
                     <div
                         className={inputContentClasses}
-                        onClick={e => {
+                        onClick={(e) => {
                             setInputFocus();
                             onClick && onClick(e);
                         }}

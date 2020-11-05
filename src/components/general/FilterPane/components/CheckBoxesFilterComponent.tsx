@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTooltipRef, CheckBox } from '@equinor/fusion-components';
 import { FilterTerm } from '../applyFilters';
 import { Count } from '../countFilters';

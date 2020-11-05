@@ -1,8 +1,18 @@
-import React from 'react';
 import styles from './styles.less';
-import { Pagination as PaginationConfig, Page, useComponentDisplayClassNames } from '@equinor/fusion';
+import {
+    Pagination as PaginationConfig,
+    Page,
+    useComponentDisplayClassNames,
+} from '@equinor/fusion';
 import classNames from 'classnames';
-import { Button, IconButton,  SkeletonButton, SkeletonBar, styling, PaginationArrow } from '@equinor/fusion-components';
+import {
+    Button,
+    IconButton,
+    SkeletonButton,
+    SkeletonBar,
+    styling,
+    PaginationArrow,
+} from '@equinor/fusion-components';
 
 export type PaginationChangeHandler = (newPage: Page, perPage: number) => void;
 
@@ -49,7 +59,7 @@ const Pagination: React.FC<PaginationProps> = ({ pagination, onChange }) => {
                 </IconButton>
                 {head.length > 0 && (
                     <>
-                        {pagination.head.map(page => (
+                        {pagination.head.map((page) => (
                             <PaginationButton
                                 key={page.value}
                                 page={page}
@@ -61,7 +71,7 @@ const Pagination: React.FC<PaginationProps> = ({ pagination, onChange }) => {
                     </>
                 )}
 
-                {center.map(page => (
+                {center.map((page) => (
                     <PaginationButton
                         key={page.value}
                         page={page}
@@ -73,7 +83,7 @@ const Pagination: React.FC<PaginationProps> = ({ pagination, onChange }) => {
                 {tail.length > 0 && (
                     <>
                         <Padding />
-                        {pagination.tail.map(page => (
+                        {pagination.tail.map((page) => (
                             <PaginationButton
                                 key={page.value}
                                 page={page}

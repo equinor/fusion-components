@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import TextInput from './index';
@@ -12,13 +12,13 @@ import {
 import { dateTimeMask, parseDateTime } from '@equinor/fusion';
 
 const TextInputStory = () => {
-    const [value, setValue] = React.useState('');
+    const [value, setValue] = useState('');
     const [maskedValue, isValidMask] = useStringMask(dateTimeMask, value);
-    const [loading, setLoading] = React.useState(false);
-    const [hasError, setHasError] = React.useState(false);
-    const inputRef = React.useRef<HTMLInputElement | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [hasError, setHasError] = useState(false);
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const maskHelperText = React.useMemo(
+    const maskHelperText = useMemo(
         () => (isValidMask ? parseDateTime(maskedValue).toString() : ''),
         [maskedValue, isValidMask]
     );
@@ -31,7 +31,7 @@ const TextInputStory = () => {
         }, 3000);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (hasError) {
             setHasError(false);
         }
@@ -47,7 +47,7 @@ const TextInputStory = () => {
     return (
         <div style={{ display: 'flex', padding: '8px', flexDirection: 'column' }}>
             <TextInput
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
                 label="Label text"
                 isOptional
@@ -58,26 +58,26 @@ const TextInputStory = () => {
                 error
                 label="Error text"
                 errorMessage="An error occurred"
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
             />
             <br />
             <TextInput
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
                 disabled
                 label="Disabled"
             />
             <br />
             <TextInput
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
                 icon={
                     !loading ? (
                         <SearchIcon color="#666666" cursor="pointer" />
                     ) : (
-                            <Spinner inline primary />
-                        )
+                        <Spinner inline primary />
+                    )
                 }
                 onIconAction={simulateLoad}
                 error={hasError}
@@ -86,7 +86,7 @@ const TextInputStory = () => {
             />
             <br />
             <TextInput
-                onChange={value => setValue(unmaskString(dateTimeMask, value))}
+                onChange={(value) => setValue(unmaskString(dateTimeMask, value))}
                 value={maskedValue}
                 placeholder={'dd/mm/yyyy, hh:mm'}
                 label="Masked text input"

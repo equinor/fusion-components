@@ -1,12 +1,13 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import Menu from '../index';
 import { CheckBox, DoneIcon } from '@equinor/fusion-components';
 
+import {useState, Fragment} from 'react';
+
 const MenuStory = () => {
-    const [ref, setRef] = React.useState<HTMLElement | null>(null);
+    const [ref, setRef] = useState<HTMLElement | null>(null);
 
     const items = [
         {
@@ -30,7 +31,7 @@ const MenuStory = () => {
     ];
 
     return (
-        <React.Fragment>
+        <Fragment>
             <input placeholder="Focus here to navigate" ref={setRef} />
             <Menu
                 onClick={action('click')}
@@ -55,7 +56,7 @@ const MenuStory = () => {
                     ]}
                 />
             </div>
-        </React.Fragment>
+        </Fragment>
     );
 };
 
@@ -67,7 +68,7 @@ const CustomItemsMenuStory = () => {
         isChecked?: boolean;
     };
 
-    const [items, setItems] = React.useState<Item[]>([
+    const [items, setItems] = useState<Item[]>([
         {
             key: '1',
             title: 'Some option',

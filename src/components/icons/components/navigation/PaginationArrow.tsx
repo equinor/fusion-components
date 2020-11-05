@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconProps, useIcon } from '@equinor/fusion-components';
 
 type PaginationArrowIconProps = {

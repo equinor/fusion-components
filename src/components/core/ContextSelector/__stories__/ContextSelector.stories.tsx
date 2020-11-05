@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import ContextSelector from '../index';
 import FusionHeader from '../../Header';

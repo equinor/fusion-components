@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 
 type CollapseIconProps = IconProps & {
@@ -25,7 +23,11 @@ const ArrowPointingLeft: React.FC = () => (
     />
 );
 
-const CollapseIcon = ({ isCollapsed, screenPlacement: screenPosition = 'right', ...props }: CollapseIconProps) => {
+const CollapseIcon = ({
+    isCollapsed,
+    screenPlacement: screenPosition = 'right',
+    ...props
+}: CollapseIconProps) => {
     const Collapsed = screenPosition === 'left' ? ArrowPointingRight : ArrowPointingLeft;
     const Expanded = screenPosition === 'left' ? ArrowPointingLeft : ArrowPointingRight;
     const iconFactory = useIcon(isCollapsed ? <Collapsed /> : <Expanded />);

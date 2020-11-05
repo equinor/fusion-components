@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import useElevationClassName, { Elevation } from '../index';

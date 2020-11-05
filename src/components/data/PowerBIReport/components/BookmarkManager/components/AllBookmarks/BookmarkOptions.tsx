@@ -6,7 +6,8 @@ import {
     MoreIcon,
     useDropdownController,
 } from '@equinor/fusion-components';
-import * as React from 'react';
+import { useCallback, useEffect } from 'react';
+
 import * as styles from './styles.less';
 
 type BookmarkOptionsProps = {
@@ -26,7 +27,7 @@ const BookmarkOptions: React.FC<BookmarkOptionsProps> = ({ onDelete, onEdit, acc
     ));
     const { isOpen, setIsOpen } = dropdownController;
 
-    const select = React.useCallback(
+    const select = useCallback(
         (onClick: () => void) => {
             onClick();
             if (isOpen) {
@@ -36,14 +37,14 @@ const BookmarkOptions: React.FC<BookmarkOptionsProps> = ({ onDelete, onEdit, acc
         [isOpen]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!accordionOpen) {
             setIsOpen(false);
         }
     }, [accordionOpen]);
 
-    const onEditClick = React.useCallback(() => select(onEdit), [onEdit, select]);
-    const onDeleteClick = React.useCallback(() => select(onDelete), [onDelete, select]);
+    const onEditClick = useCallback(() => select(onEdit), [onEdit, select]);
+    const onDeleteClick = useCallback(() => select(onDelete), [onDelete, select]);
 
     return (
         <div>

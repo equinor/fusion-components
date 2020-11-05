@@ -1,5 +1,5 @@
-import * as React from 'react';
 import classNames from 'classnames';
+import { Children } from 'react';
 import styles from './styles.less';
 
 type SpinnerProps = {
@@ -85,7 +85,7 @@ const Spinner: React.FC<SpinnerProps> = ({
                 </svg>
             </div>
             {title ? <h2 className={styles.spinnerTitle}>{title}</h2> : null}
-            {React.Children.count(children) > 0 ? <p>{children}</p> : null}
+            {Children.count(children) > 0 ? <p>{children}</p> : null}
         </div>
     );
 };

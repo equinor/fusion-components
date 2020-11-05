@@ -1,7 +1,7 @@
 import { QuickFact } from '@equinor/fusion/lib/http/apiClients/models/info/QuickFact';
 import { ViewMode } from './element';
 
-export const enum QuickFactEventType {
+export enum QuickFactEventType {
     show = 'quick-fact-show',
     fetch = 'quick-fact-fetch',
     fetched = 'quick-fact-fetched',
@@ -14,9 +14,11 @@ export type QuickFactEventDetail = {
     scope?: string;
     info?: QuickFact;
     view?: ViewMode;
-}
+};
 
-export class QuickFactEvent<T extends QuickFactEventType> extends CustomEvent<QuickFactEventDetail> {
+export class QuickFactEvent<T extends QuickFactEventType> extends CustomEvent<
+    QuickFactEventDetail
+> {
     constructor(type: T, init: CustomEventInit<QuickFactEventDetail>) {
         super(type, init);
     }

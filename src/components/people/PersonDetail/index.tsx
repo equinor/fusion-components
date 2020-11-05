@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
 import styles from './styles.less';
 import { PersonDetails, usePersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
-import { useState } from 'react';
 import {
     PersonPhoto,
     PersonPresenceIcon,
@@ -32,7 +32,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
         }
     }, [error, personDetails]);
 
-    const fetchPresenceStatus = React.useCallback(
+    const fetchPresenceStatus = useCallback(
         async (mail: string) => {
             setIsFetchingPresence(true);
             setPresenceError(null);
@@ -49,7 +49,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
         [apiClients]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (currentPerson && currentPerson.mail) {
             fetchPresenceStatus(currentPerson.mail);
         }

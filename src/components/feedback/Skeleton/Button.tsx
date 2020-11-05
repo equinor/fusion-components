@@ -1,4 +1,3 @@
-import React from 'react';
 import { ButtonProps } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';

@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
+
 import { SelectionCellProps } from '../dataTableTypes';
 import { CheckBox } from '@equinor/fusion-components';
 import classNames from 'classnames';

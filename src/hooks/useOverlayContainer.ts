@@ -1,4 +1,4 @@
-import { useFusionContext } from "@equinor/fusion";
+import { useFusionContext } from '@equinor/fusion';
 
 export default (): HTMLElement | null => {
     const fusionContext = useFusionContext();

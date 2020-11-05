@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
 import { Spinner, ErrorMessage } from '@equinor/fusion-components';
@@ -32,6 +31,7 @@ import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
 import BookmarkManager from './components/BookmarkManager';
+import { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'react';
 
 type PowerBIProps = {
     reportId: string;
@@ -88,21 +88,21 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
     const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
 
-    const [isLoading, setIsLoading] = React.useState<boolean>(true);
-    const [isFetching, setIsFetching] = React.useState<boolean>(true);
-    const [powerBIError, setPowerBIError] = React.useState<ICustomEvent<IError>>();
-    const [fusionError, setFusionError] = React.useState<FusionError>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isFetching, setIsFetching] = useState<boolean>(true);
+    const [powerBIError, setPowerBIError] = useState<ICustomEvent<IError>>();
+    const [fusionError, setFusionError] = useState<FusionError>();
 
-    const [report, setReport] = React.useState<Report>();
-    const [embedInfo, setEmbedInfo] = React.useState<EmbedInfo>();
-    const [accessToken, setAccessToken] = React.useState<AccessToken>();
-    const [timeLoadStart, SetTimeLoadStart] = React.useState<Date>(new Date());
+    const [report, setReport] = useState<Report>();
+    const [embedInfo, setEmbedInfo] = useState<EmbedInfo>();
+    const [accessToken, setAccessToken] = useState<AccessToken>();
+    const [timeLoadStart, SetTimeLoadStart] = useState<Date>(new Date());
     const telemetryLogger = useTelemetryLogger();
-    const [reApplyFilter, setReapplyFilter] = React.useState<boolean>(false);
-    const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
-    const embedRef = React.useRef<HTMLDivElement>(null);
-    const embeddedRef = React.useRef<pbi.Embed | null>(null);
-    const [awaitableBookmark, setAwaitableBookmark] = React.useState<string | null>(null);
+    const [reApplyFilter, setReapplyFilter] = useState<boolean>(false);
+    const [loadingText, setLoadingText] = useState<string>('Loading Report');
+    const embedRef = useRef<HTMLDivElement>(null);
+    const embeddedRef = useRef<pbi.Embed | null>(null);
+    const [awaitableBookmark, setAwaitableBookmark] = useState<string | null>(null);
 
     const getReportInfo = async () => {
         try {
@@ -129,7 +129,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!embeddedRef.current) return;
         setIsLoading(true);
 
@@ -171,20 +171,20 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isLoading) setFilter();
     }, [isLoading]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         getReportInfo();
     }, []);
 
-    const getConfig = React.useCallback(
+    const getConfig = useCallback(
         (type: ResourceType) => {
             if (!embedInfo) return;
             const embedConfig = embedInfo.embedConfig;
             const token = accessToken ? accessToken.token : undefined;
-            let config: pbi.IEmbedConfiguration = {
+            const config: pbi.IEmbedConfiguration = {
                 type: type.toLowerCase(),
                 id: getReportOrDashboardId(embedConfig, type),
                 embedUrl: embedConfig.embedUrl,
@@ -213,7 +213,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         [embedInfo, accessToken]
     );
 
-    const embed = React.useCallback(
+    const embed = useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
                 const config = getConfig(embedInfo.embedConfig.embedType);
@@ -261,7 +261,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
     );
 
     /** TODO: add filters for dashboard if needed? */
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         const embedType = embedInfo?.embedConfig?.embedType;
         if (!embeddedRef.current || !embedType) return;
         switch (embedType) {
@@ -272,7 +272,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     }, [filters, embeddedRef.current, embedInfo]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!embeddedRef.current) return;
 
         embeddedRef.current.off('rendered');
@@ -282,7 +282,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         });
     }, [reApplyFilter]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (accessToken) {
             const now = utcNow();
             const expiration = accessToken.expirationUtc;
@@ -300,13 +300,13 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
         }
     }, [accessToken, reportId]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isFetching && embedRef.current !== null) {
             embed(embedRef.current);
         }
     }, [embedRef, isFetching, reportId]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isFetching && embedRef.current !== null) {
             const embededReport = powerbi.get(embedRef.current);
 

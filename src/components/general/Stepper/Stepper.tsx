@@ -1,9 +1,9 @@
-import React from 'react';
 import * as styles from './styles.less';
 import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';
 import classNames from 'classnames';
+import React, { useState, useEffect, useCallback } from 'react';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;
@@ -28,14 +28,14 @@ const Stepper: React.FC<StepperProps> = ({
     onChange,
     hideNavButtons,
 }) => {
-    const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
-    const [currentStepKey, setCurrentStepKey] = React.useState<string | null>(null);
-    const [activeStepPosition, setActiveStepPosition] = React.useState<number | null>(null);
+    const [stepKeys, setStepKeys] = useState<StepKey[]>([]);
+    const [currentStepKey, setCurrentStepKey] = useState<string | null>(null);
+    const [activeStepPosition, setActiveStepPosition] = useState<number | null>(null);
 
-    const [canNext, setCanNext] = React.useState(true);
-    const [canPrev, setCanPrev] = React.useState(false);
+    const [canNext, setCanNext] = useState(true);
+    const [canPrev, setCanPrev] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const steps: StepKey[] = React.Children.toArray(children).map((c, i) => ({
             key: (c as React.ReactElement).props.stepKey,
             position: i + 1,
@@ -45,46 +45,46 @@ const Stepper: React.FC<StepperProps> = ({
         setStepKeys(steps);
     }, [children]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setCurrentStepKey(activeStepKey);
     }, [activeStepKey]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (onChange && currentStepKey) {
             onChange(currentStepKey);
         }
     }, [onChange, currentStepKey]);
 
-    React.useEffect(() => {
-        const current = stepKeys.find(sk => sk.key === currentStepKey);
+    useEffect(() => {
+        const current = stepKeys.find((sk) => sk.key === currentStepKey);
 
         if (current) {
             setActiveStepPosition(current.position);
 
-            const next = stepKeys.find(sk => sk.position === current.position + 1);
-            const prev = stepKeys.find(sk => sk.position === current.position - 1);
+            const next = stepKeys.find((sk) => sk.position === current.position + 1);
+            const prev = stepKeys.find((sk) => sk.position === current.position - 1);
 
             setCanNext(next !== undefined && !next.disabled);
             setCanPrev(prev !== undefined && !prev.disabled);
         }
     }, [stepKeys, currentStepKey]);
 
-    const findStepKey = React.useCallback(
+    const findStepKey = useCallback(
         (direction: StepDirection) => {
-            const current = stepKeys.find(sk => sk.key === currentStepKey);
+            const current = stepKeys.find((sk) => sk.key === currentStepKey);
 
             if (!current) {
                 return;
             }
 
             const newPosition = direction === 'next' ? current.position + 1 : current.position - 1;
-            const prevOrNext = stepKeys.find(sk => sk.position === newPosition);
+            const prevOrNext = stepKeys.find((sk) => sk.position === newPosition);
             return prevOrNext;
         },
         [currentStepKey, stepKeys]
     );
 
-    const handleClickPrev = React.useCallback(() => {
+    const handleClickPrev = useCallback(() => {
         const prevKey = findStepKey('prev');
         if (!prevKey) {
             return;
@@ -93,7 +93,7 @@ const Stepper: React.FC<StepperProps> = ({
         setCurrentStepKey(prevKey.key);
     }, [currentStepKey, stepKeys]);
 
-    const handleClickNext = React.useCallback(() => {
+    const handleClickNext = useCallback(() => {
         const nextKey = findStepKey('next');
 
         if (!nextKey) {
@@ -103,7 +103,7 @@ const Stepper: React.FC<StepperProps> = ({
         setCurrentStepKey(nextKey.key);
     }, [currentStepKey, stepKeys]);
 
-    const handleChange = React.useCallback(
+    const handleChange = useCallback(
         (stepKey: string) => {
             if (!forceOrder) {
                 setCurrentStepKey(stepKey);
@@ -135,7 +135,7 @@ const Stepper: React.FC<StepperProps> = ({
                     activeStepKey={currentStepKey}
                     activeStepPosition={activeStepPosition}
                     onChange={handleChange}
-                />
+                ></StepPane>
             </div>
             <StepContent children={children} activeStepKey={currentStepKey} />
         </>

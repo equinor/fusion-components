@@ -1,4 +1,5 @@
-import React, { FC, useState, useCallback, useRef, useEffect, ReactNode, useMemo } from 'react';
+import { FC, useState, useCallback, useRef, useEffect, ReactNode, useMemo } from 'react';
+
 import classNames from 'classnames';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
 import styles from './styles.less';
@@ -105,7 +106,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     maxWidth,
     children,
 }) => {
-    const [windowWidth, setWindowWidth] = useState<Number>(0);
+    const [windowWidth, setWindowWidth] = useState<number>(0);
     const fusionContext = useFusionContext();
     const rootElement = fusionContext.refs.root;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef, useEffect } from 'react';
 import {
     ApplicationGuideElement,
     ApplicationGuideElementProps,
@@ -20,6 +20,7 @@ export type ApplicationGuidanceWrapperProps = React.PropsWithChildren<
 >;
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface ReactHTML {
             [ApplicationGuideElementTag]: React.DetailedHTMLFactory<
@@ -40,8 +41,8 @@ export const ApplicationGuidanceWrapper: React.FC<ApplicationGuidanceWrapperProp
     args: ApplicationGuidanceWrapperProps
 ) => {
     const { scope, onOpen, onClose, onShow, ...props } = args;
-    const ref = React.useRef<ApplicationGuideElement>();
-    React.useEffect(() => {
+    const ref = useRef<ApplicationGuideElement>();
+    useEffect(() => {
         if (!ref.current) return;
         const el = ref.current;
         el.scope = scope;
@@ -55,7 +56,7 @@ export const ApplicationGuidanceWrapper: React.FC<ApplicationGuidanceWrapperProp
         };
     }, [ref]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!ref.current) return;
         ref.current.scope = scope;
     }, [ref, scope]);

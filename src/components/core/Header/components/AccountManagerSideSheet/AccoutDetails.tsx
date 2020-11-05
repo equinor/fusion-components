@@ -1,7 +1,7 @@
-import * as React from 'react';
 import * as styles from './styles.less';
 import { PersonDetails, UserMenuSectionItem, UserMenuSection } from '@equinor/fusion';
 import { MenuItemType, PersonPhoto, PersonDetail, Menu } from '@equinor/fusion-components';
+import { useCallback } from 'react';
 
 type AccountDetailsProps = {
     personDetails: PersonDetails;
@@ -26,7 +26,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({
     personDetails,
     sections,
 }) => {
-    const onMenuItemClick = React.useCallback(
+    const onMenuItemClick = useCallback(
         (item: MenuItemType) => {
             const clickedItem = item as UserMenuSectionItem;
             clickedItem.onClick && clickedItem.onClick(clickedItem, personDetails);

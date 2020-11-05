@@ -1,4 +1,4 @@
-import React, { MutableRefObject, forwardRef } from 'react';
+import { useCallback, MutableRefObject, forwardRef } from 'react';
 import styles from '../styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -22,7 +22,7 @@ const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
             }
         );
 
-        const handleOnChange = React.useCallback(() => {
+        const handleOnChange = useCallback(() => {
             if (!disabled && onChange) {
                 onChange();
             }

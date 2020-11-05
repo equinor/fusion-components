@@ -1,7 +1,6 @@
 import { actions } from '@storybook/addon-actions';
 import { boolean, color, number, select, withKnobs } from '@storybook/addon-knobs';
 import { storiesOf } from '@storybook/react';
-import * as React from 'react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 
 import {
@@ -172,4 +171,3 @@ stories.add('Bookmarks', () => (
         width={number('width', 24)}
     />
 ));
-

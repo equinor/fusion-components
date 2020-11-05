@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { IBasicFilter } from '../models/ReportLevelFilters';
 import PowerBIReport from '../index';
@@ -14,7 +13,7 @@ const ReportStandard: React.FC = () => {
 };
 
 const ReportWithFilter: React.FC = () => {
-    const [filterStrings, setFilterStrings] = React.useState<string[]>(null);
+    const [filterStrings, setFilterStrings] = useState<string[]>(null);
 
     const createFilter = (filters: string[]): IBasicFilter => {
         return {
@@ -29,7 +28,7 @@ const ReportWithFilter: React.FC = () => {
         };
     };
 
-    const filter = React.useMemo(() => {
+    const filter = useMemo(() => {
         return filterStrings ? createFilter(filterStrings) : null;
     }, [filterStrings]);
 

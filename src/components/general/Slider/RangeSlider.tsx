@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
 import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
 import classNames from 'classnames';
@@ -20,10 +21,10 @@ type Handle = 'firstHandle' | 'lastHandle';
 const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, onChange }) => {
     const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
-    const firstValue = React.useMemo(() => values[0], [values]);
-    const lastValue = React.useMemo(() => values[values.length - 1], [values]);
+    const firstValue = useMemo(() => values[0], [values]);
+    const lastValue = useMemo(() => values[values.length - 1], [values]);
 
-    const getClosestHandleChange = React.useCallback(
+    const getClosestHandleChange = useCallback(
         (value: number): [number, number] => {
             const firstDifference = Math.abs(firstValue - value);
             const lastDifference = Math.abs(lastValue - value);
@@ -73,7 +74,7 @@ const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, 
         }
     }, [disabled]);
 
-    const createValueHandle = React.useCallback(
+    const createValueHandle = useCallback(
         (value: number, handle: Handle) => {
             if (hideHandle) {
                 return null;
@@ -108,7 +109,7 @@ const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, 
         }
     );
 
-    const rightPosition = React.useMemo(
+    const rightPosition = useMemo(
         () => parseInt(calculatePosition(lastValue > firstValue ? lastValue : firstValue), 10),
         [calculatePosition, lastValue, firstValue]
     );

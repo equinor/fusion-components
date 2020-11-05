@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
+
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
@@ -76,18 +77,18 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const instances = position ? position.instances : [];
-    const instancesByFrom = React.useMemo(
+    const instancesByFrom = useMemo(
         () => [...instances].sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime()),
         [instances]
     );
-    const instancesByTo = React.useMemo(
+    const instancesByTo = useMemo(
         () => [...instances].sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime()),
         [instances]
     );
 
-    const firstInstance = React.useMemo(() => instancesByFrom[0], [instancesByFrom]);
-    const lastInstance = React.useMemo(
-        () => instancesByTo.find(i => i.appliesTo.getTime !== undefined),
+    const firstInstance = useMemo(() => instancesByFrom[0], [instancesByFrom]);
+    const lastInstance = useMemo(
+        () => instancesByTo.find((i) => i.appliesTo.getTime !== undefined),
         [instancesByTo]
     );
 

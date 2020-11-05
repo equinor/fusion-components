@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ModalSideSheet, styling } from '@equinor/fusion-components';
 import {
     PersonDetails,
@@ -8,10 +7,11 @@ import {
 } from '@equinor/fusion';
 import AccountDetails from './AccoutDetails';
 import MenuComponent from './MenuComponent';
+import { useState, useCallback } from 'react';
 
 type AccountManagerSideSheet = {
     show: boolean;
-    onClose: VoidFunction
+    onClose: VoidFunction;
     personDetails: PersonDetails;
 };
 
@@ -20,9 +20,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
     onClose,
     personDetails,
 }) => {
-    const [selectedMenuItem, setSelectedMenuItem] = React.useState<UserMenuSectionItem | null>(
-        null
-    );
+    const [selectedMenuItem, setSelectedMenuItem] = useState<UserMenuSectionItem | null>(null);
 
     const { userMenuSectionsContainer } = useFusionContext();
     const [customSections] = useEventEmitterValue(
@@ -32,7 +30,7 @@ const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
         userMenuSectionsContainer.sections
     );
 
-    const removeSelectedMenuItem = React.useCallback(() => setSelectedMenuItem(null), []);
+    const removeSelectedMenuItem = useCallback(() => setSelectedMenuItem(null), []);
 
     return (
         <ModalSideSheet

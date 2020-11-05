@@ -1,4 +1,3 @@
-import React from 'react';
 import { PhotoSize } from '@equinor/fusion-components';
 import FallbackIcon from './icons/FallbackIcon';
 import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';

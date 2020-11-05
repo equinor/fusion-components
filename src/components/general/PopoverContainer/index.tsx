@@ -1,9 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 import Arrow from './Arrow';
 import { useElevationClassName } from '@equinor/fusion-components';
 import useInViewChecker from '../../../hooks/useInViewChecker';
+import React, { useState, useEffect } from 'react';
 
 export type PopoverPlacement = 'below' | 'above' | 'left' | 'right';
 export type PopoverJustification = 'start' | 'center' | 'end';
@@ -57,10 +57,8 @@ const PopoverContainer = React.forwardRef<
     HTMLDivElement | null,
     React.PropsWithChildren<PopoverContainerProps>
 >(({ placement: preferredPlacement, justify, title, fillWithContent, centered, children }, ref) => {
-    const [placement, setPlacement] = React.useState<PopoverPlacement>(
-        preferredPlacement || 'below'
-    );
-    React.useEffect(() => {
+    const [placement, setPlacement] = useState<PopoverPlacement>(preferredPlacement || 'below');
+    useEffect(() => {
         if (preferredPlacement) {
             setPlacement(preferredPlacement);
         }
@@ -81,8 +79,8 @@ const PopoverContainer = React.forwardRef<
         ref as React.MutableRefObject<HTMLDivElement>,
         4
     );
-    const [testedPlacements, setTestedPlacements] = React.useState<PopoverPlacement[]>([]);
-    React.useEffect(() => {
+    const [testedPlacements, setTestedPlacements] = useState<PopoverPlacement[]>([]);
+    useEffect(() => {
         if (isInView || testedPlacements.length >= 4) {
             return;
         }

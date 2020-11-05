@@ -1,4 +1,5 @@
-import React, { useState, useRef, useCallback, FC, useMemo, useEffect, useReducer } from 'react';
+import { useState, useRef, useCallback, FC, useMemo, useEffect, useReducer } from 'react';
+
 import classNames from 'classnames';
 import {
     useClickOutsideOverlayPortal,

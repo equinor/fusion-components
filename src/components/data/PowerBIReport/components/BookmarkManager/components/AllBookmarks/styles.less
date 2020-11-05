@@ -6,19 +6,19 @@
         width: calc(100% - var(--grid-unit) * 12px);
     }
 
-    .bookmarkLink{
+    .bookmarkLink {
         cursor: pointer;
         color: var(--color-primary);
         width: 100%;
         padding-left: calc(var(--grid-unit) * 1px);
-        
+
         &:hover {
             text-decoration: underline;
         }
     }
 }
 
-.menuContainer{ 
+.menuContainer {
     pointer-events: all;
     min-height: calc(var(--grid-unit) * 2px);
     padding-top: calc(var(--grid-unit) * 1px);
@@ -26,16 +26,16 @@
     flex-direction: column;
 
     .menuItem {
-        display:  flex;
+        display: flex;
         height: calc(var(--grid-unit) * 6px);
         width: calc(var(--grid-unit) * 23px);
         cursor: pointer;
 
-        &:hover{
+        &:hover {
             background-color: var(--color-black-alt4);
         }
 
-        .icon{
+        .icon {
             color: var(--color-primary);
             height: calc(var(--grid-unit) * 6px);
             width: calc(var(--grid-unit) * 6px);
@@ -48,5 +48,4 @@
             align-items: center;
         }
     }
-    
 }

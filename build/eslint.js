@@ -12,7 +12,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'eslint-loader',
                 options: {
-                    configFile: path.resolve(__dirname, '..', '.eslintrc'),
+                    configFile: path.resolve(__dirname, '..', '.eslintrc.js'),
                 },
             },
         ],

@@ -9,7 +9,7 @@ export default <T extends HTMLElement>(): [
     const [isToggled, setIsToggled] = useState(false);
     const [internalRef, setInternalRef] = useState<HTMLElement | null>(null);
 
-    const toggle = () => setIsToggled(prevIsToggled => !prevIsToggled);
+    const toggle = () => setIsToggled((prevIsToggled) => !prevIsToggled);
     const close = useCallback(() => isToggled && setIsToggled(false), [isToggled]);
 
     useClickOutsideOverlayPortal(close);

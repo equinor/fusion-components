@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import AdaptiveCardViewer from '.';
@@ -32,8 +31,8 @@ const payload = {
 };
 const AdaptiveCardViewerStory = () => {
     return (
-        <div style={{ margin: '8px' }} >
-            <AdaptiveCardViewer payload={payload} onActionSubmit={action("Submit")} />
+        <div style={{ margin: '8px' }}>
+            <AdaptiveCardViewer payload={payload} onActionSubmit={action('Submit')} />
         </div>
     );
 };

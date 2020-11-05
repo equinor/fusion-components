@@ -1,5 +1,5 @@
 import { OrgNode, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
-import React, { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
+import { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
 
 type Action<T> =
     | { type: 'UPDATE_SIZE'; width?: number; height?: number }
@@ -119,7 +119,7 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
         case 'UPDATE_POSITION':
             return {
                 ...state,
-                allNodes: state.allNodes.map(prevNode => {
+                allNodes: state.allNodes.map((prevNode) => {
                     if (prevNode.id === action.node.id) {
                         return {
                             ...action.node,

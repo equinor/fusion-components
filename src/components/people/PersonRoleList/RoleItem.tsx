@@ -5,7 +5,8 @@ import {
     useFusionContext,
 } from '@equinor/fusion';
 import { Switch } from '@equinor/fusion-components';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
 import * as styles from './styles.less';
 import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClient';
 import classNames from 'classnames';
@@ -64,7 +65,7 @@ const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchPro
 
     const errorClassNames = classNames(styles.small, { [styles.error]: errorMessage });
 
-    const showExpireDate = React.useMemo(() => role.activeToUtc && showSwitch && !errorMessage, [
+    const showExpireDate = useMemo(() => role.activeToUtc && showSwitch && !errorMessage, [
         role,
         showSwitch,
         errorMessage,

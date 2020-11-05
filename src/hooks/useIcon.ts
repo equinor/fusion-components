@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { createElement } from 'react';
+
 import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
 
 type IconFactoryProps = {
@@ -27,7 +28,7 @@ const useIcon = (content: React.SVGAttributes<SVGElement>) => {
             ...rest,
         };
 
-        return React.createElement('svg', props, content);
+        return createElement('svg', props, content);
     };
 
     return iconFactory;

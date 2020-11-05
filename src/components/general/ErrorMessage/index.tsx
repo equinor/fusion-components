@@ -1,9 +1,9 @@
-import * as React from 'react';
 import Button from '../Button';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { Component, useMemo } from 'react';
 
 export type ErrorTypes = 'error' | 'accessDenied' | 'notFound' | 'noData';
 
@@ -62,7 +62,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({
         }
     };
 
-    const error = React.useMemo(() => getErrorMessageForType(errorType), [errorType]);
+    const error = useMemo(() => getErrorMessageForType(errorType), [errorType]);
 
     const messageContainerClasses = classNames(
         styles.messageContainer,
@@ -89,7 +89,7 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({
     );
 };
 
-class ErrorMessageBoundry extends React.Component<ErrorMessageProps> {
+class ErrorMessageBoundry extends Component<ErrorMessageProps> {
     state = { didCatch: false };
     render() {
         if (this.state.didCatch) {

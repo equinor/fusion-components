@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 
 type HookScopeComponentProps = {

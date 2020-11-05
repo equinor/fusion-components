@@ -2,7 +2,7 @@ import { OverlayAnchor } from './element';
 
 export type OverlayAnchorConnectEventDetail = OverlayAnchor & {
     disconnectedCallback: (cb: VoidFunction) => void;
-}
+};
 
 /**
  * event for notifying observers that element has connected to the dom

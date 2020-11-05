@@ -5,6 +5,4 @@ export * from './api';
 export * from 'lit-element';
 export * from '../../decorators';
 
-export {
-    directives
-};
+export { directives };

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { Slider, RangedSlider } from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
@@ -6,7 +6,7 @@ import { withKnobs, boolean } from '@storybook/addon-knobs';
 import { DatePicker } from '@equinor/fusion-components';
 
 const SliderPercentageStory = () => {
-    const [value, setValue] = React.useState(75);
+    const [value, setValue] = useState(75);
 
     const markers = [
         {
@@ -49,7 +49,7 @@ const SliderPercentageStory = () => {
 };
 
 const SliderDateStory = () => {
-    const [value, setValue] = React.useState(new Date());
+    const [value, setValue] = useState(new Date());
 
     const markers = [
         {
@@ -91,7 +91,7 @@ const SliderDateStory = () => {
     );
 };
 const RangedSliderStory = () => {
-    const [value, setValue] = React.useState<[number, number]>([
+    const [value, setValue] = useState<[number, number]>([
         new Date(2019, 10, 15).getTime(),
         new Date().getTime(),
     ]);

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { NotificationCard, useNotificationCardActions } from '@equinor/fusion';
 import {
     StandardNotificationCard,
@@ -9,6 +8,7 @@ import {
     CloseIcon,
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import * as styles from './styles.less';
 
 type NotificationCardWrapperProps = {
@@ -23,12 +23,12 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
     onDiscard,
     onShowInList,
 }) => {
-    const [isVisible, setIsVisible] = React.useState<boolean | undefined>();
+    const [isVisible, setIsVisible] = useState<boolean | undefined>();
     const { isMarkingNotification, markNotificationsAsSeenAsync } = useNotificationCardActions(
         notification
     );
 
-    const markNotificationAsSeen = React.useCallback(async () => {
+    const markNotificationAsSeen = useCallback(async () => {
         await markNotificationsAsSeenAsync();
         onDiscard(notification);
     }, [onDiscard, markNotificationsAsSeenAsync]);
@@ -37,47 +37,47 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
         [styles.isVisible]: isVisible,
     });
 
-    const startDismissNotificationTimeout = React.useCallback(() => {
+    const startDismissNotificationTimeout = useCallback(() => {
         discardNotificationTimeout = setTimeout(
             () => window.requestAnimationFrame(() => setIsVisible(false)),
             5000
         );
     }, []);
 
-    const stopDismissNotificationTimeout = React.useCallback(
+    const stopDismissNotificationTimeout = useCallback(
         () => clearTimeout(discardNotificationTimeout),
         [discardNotificationTimeout]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         window.requestAnimationFrame(() => setIsVisible(true));
         startDismissNotificationTimeout();
         return () => clearTimeout(discardNotificationTimeout);
     }, []);
 
-    const discardNotification = React.useCallback(() => onDiscard(notification), [
+    const discardNotification = useCallback(() => onDiscard(notification), [
         onDiscard,
         notification,
     ]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isVisible === false) {
             discardNotification();
         }
     }, [isVisible]);
 
-    const actionableComponents = React.useMemo(
+    const actionableComponents = useMemo(
         () => [
-            <Button outlined onClick={markNotificationAsSeen}>
+            <Button key={'markNotificationAsSeen'} outlined onClick={markNotificationAsSeen}>
                 {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
             </Button>,
-            <Button outlined onClick={onShowInList}>
+            <Button key={'onShowInList'} outlined onClick={onShowInList}>
                 Show in list
             </Button>,
         ],
         [markNotificationAsSeen, onShowInList, isMarkingNotification]
     );
-    const discardComponent = React.useMemo(
+    const discardComponent = useMemo(
         () => (
             <IconButton onClick={discardNotification}>
                 <CloseIcon />

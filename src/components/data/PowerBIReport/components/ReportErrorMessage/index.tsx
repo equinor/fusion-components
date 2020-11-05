@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as styles from './styles.less';
 import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
 import {
@@ -11,29 +10,28 @@ import {
 } from '@equinor/fusion-components';
 import { useCurrentUser, useApiClients } from '@equinor/fusion';
 import classNames from 'classnames';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 
 type ReportErrorMessageProps = {
     report: Report;
 };
 
 const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report }) => {
-    const [isFetching, setIsFetching] = React.useState<boolean>(true);
-    const [requirements, setRequirements] = React.useState<string | null>(null);
-    const [description, setDescription] = React.useState<string | null>(null);
-    const [noAccessMessage, setNoAccessMessage] = React.useState<string | null>(null);
-    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = React.useState(
-        false
-    );
+    const [isFetching, setIsFetching] = useState<boolean>(true);
+    const [requirements, setRequirements] = useState<string | null>(null);
+    const [description, setDescription] = useState<string | null>(null);
+    const [noAccessMessage, setNoAccessMessage] = useState<string | null>(null);
+    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = useState(false);
 
     const reportApiClient = useApiClients().report;
     const user = useCurrentUser();
-    const timeStamp = React.useMemo(() => new Date().toString(), []);
+    const timeStamp = useMemo(() => new Date().toString(), []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         getReportInformation();
     }, [report]);
 
-    const getReportInformation = React.useCallback(async () => {
+    const getReportInformation = useCallback(async () => {
         setIsFetching(true);
 
         try {

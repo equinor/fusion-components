@@ -1,4 +1,3 @@
-import React from 'react';
 import { PersonPhoto } from '@equinor/fusion-components';
 import ItemComponentProps from './itemComponentProps';
 
@@ -9,7 +8,7 @@ const AsideComponent: React.FC<ItemComponentProps> = ({ item }) => {
 
     const now = Date.now();
     const activeInstance = item.position.instances.find(
-        i => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
+        (i) => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
     );
 
     return (

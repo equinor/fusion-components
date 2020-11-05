@@ -2,12 +2,12 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const threadLoader = require('thread-loader');
 
-threadLoader.warmup({}, [
-    "ts-loader",
-    "style-loader",
-    "css-loader",
-    "less-loader"
-]);
+// threadLoader.warmup({}, [
+//     "ts-loader",
+//     // "style-loader",
+//     "css-loader",
+//     "less-loader"
+// ]);
 
 module.exports = rootDir => ({
     module: {
@@ -20,8 +20,8 @@ module.exports = rootDir => ({
                     {
                         loader: 'ts-loader',
                         options: {
-                            transpileOnly: true,
-                            happyPackMode: true,
+                            // transpileOnly: true,
+                            // happyPackMode: true,
                             compilerOptions: {
                                 rootDir,
                             },
@@ -33,7 +33,11 @@ module.exports = rootDir => ({
     },
 
     plugins: [
-        new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true })
+        // new ForkTsCheckerWebpackPlugin({
+        //     eslint: {
+        //         files: './src/**/*.{ts,tsx,js,jsx}' // required - same as command `eslint ./src/**/*.{ts,tsx,js,jsx} --ext .ts,.tsx,.js,.jsx`
+        //     }
+        // })
     ],
 
     stats: {

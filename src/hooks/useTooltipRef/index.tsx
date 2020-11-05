@@ -1,5 +1,6 @@
-import * as React from 'react';
 import * as styles from './styles.less';
+
+import { useRef, useMemo } from 'react';
 
 import {
     useRelativePositioning,
@@ -11,15 +12,15 @@ import TooltipContainer from './components/Container';
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 
 export default (
-    content: String | React.ReactNode,
+    content: string | React.ReactNode,
     placement: TooltipPlacement = 'below',
     delay?: number
 ): React.MutableRefObject<any> => {
     const [isOpen, ref] = useHoverToggleController(delay);
-    const containerRef = React.useRef<HTMLDivElement | null>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const rect = useRelativePositioning(ref);
 
-    const isTooltipOpen = React.useMemo(() => isOpen && content !== '', [isOpen, content]);
+    const isTooltipOpen = useMemo(() => isOpen && content !== '', [isOpen, content]);
     useOverlayPortal(
         isTooltipOpen,
 

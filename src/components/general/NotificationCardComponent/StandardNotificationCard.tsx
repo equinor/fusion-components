@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { AdaptiveCardViewer } from '@equinor/fusion-components';
 import { NotificationCard } from '@equinor/fusion';
 import * as styles from './styles.less';
@@ -16,7 +15,7 @@ const StandardNotificationCard: React.FC<StandardNotificationCardProps> = ({
 }) => {
     return (
         <div className={styles.cardContainer}>
-            <AdaptiveCardViewer payload={notification.card} className={styles.notificationCard}/>
+            <AdaptiveCardViewer payload={notification.card} className={styles.notificationCard} />
             {actionableComponents && actionableComponents.length > 0 && (
                 <div className={styles.actionableComponents}>{actionableComponents}</div>
             )}

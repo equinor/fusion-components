@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { useComponentDisplayType } from '@equinor/fusion';
 import ButtonComponent from './components/Button';
 import AnchorComponent from './components/Anchor';
+import React, { useState } from 'react';
 
 export type ButtonProps = {
     disabled?: boolean;
@@ -26,7 +26,7 @@ export type ButtonProps = {
     url?: string | null;
     /** Provide an url and the button wil use <Link>-tag instead of <button>-tag */
     relativeUrl?: string | null;
-    
+
     /** Set target="_blank" */
     targetBlank?: boolean;
     onMouseDown?: React.EventHandler<React.SyntheticEvent>;
@@ -37,7 +37,7 @@ export type ButtonProps = {
 export const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<ButtonProps>>(
     (props, ref) => {
         // Used to apply "radar" animation on mouse up
-        const [mouseHasBeenDown, setMouseHasBeenDown] = React.useState(false);
+        const [mouseHasBeenDown, setMouseHasBeenDown] = useState(false);
         const displayType = useComponentDisplayType();
 
         const buttonRef =
@@ -77,17 +77,17 @@ export const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildr
                 relativeUrl={props.relativeUrl}
             />
         ) : (
-                <ButtonComponent
-                    {...props}
-                    displayType={displayType}
-                    ref={buttonRef as React.RefObject<HTMLButtonElement>}
-                    mouseHasBeenDown={mouseHasBeenDown}
-                    onMouseDown={handleOnMouseDown}
-                    onMouseUp={handleOnMouseUp}
-                    onClick={props.onClick}
-                    onClickCapture={props.onClickCapture}
-                />
-            );
+            <ButtonComponent
+                {...props}
+                displayType={displayType}
+                ref={buttonRef as React.RefObject<HTMLButtonElement>}
+                mouseHasBeenDown={mouseHasBeenDown}
+                onMouseDown={handleOnMouseDown}
+                onMouseUp={handleOnMouseUp}
+                onClick={props.onClick}
+                onClickCapture={props.onClickCapture}
+            />
+        );
     }
 );
 
@@ -101,9 +101,9 @@ Button.defaultProps = {
     url: null,
     relativeUrl: null,
     targetBlank: false,
-    onMouseDown: () => { },
-    onClickCapture: () => { },
-    onClick: () => { },
+    onMouseDown: () => {},
+    onClickCapture: () => {},
+    onClick: () => {},
 };
 
 export default Button;

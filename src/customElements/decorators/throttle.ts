@@ -1,4 +1,4 @@
-import { throttle as fn, ThrottleSettings } from 'lodash'
+import { throttle as fn, ThrottleSettings } from 'lodash';
 
 export function throttle(wait?: number, options?: ThrottleSettings) {
     return function (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) {
@@ -11,5 +11,5 @@ export function throttle(wait?: number, options?: ThrottleSettings) {
             map.get(this)(...params);
         };
         return descriptor;
-    }
+    };
 }

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import classNames from 'classnames';
+import { useEffect, useRef } from 'react';
 import styles from './styles.less';
 
 export type MenuItemComponentProps<TItem extends MenuItemType> = {
@@ -23,13 +23,12 @@ type MenuItemProps<TItem extends MenuItemType> = {
     asideComponent?: React.FC<MenuItemComponentProps<TItem>>;
 };
 
-const scrollElementIntoView = (el: HTMLElement) => {
-    // @ts-ignore
-    el.hasOwnProperty('scrollIntoViewIfNeeded') ? el.scrollIntoViewIfNeeded() : el.scrollIntoView();
+const scrollElementIntoView = (el: HTMLElement & { scrollIntoViewIfNeeded?: () => void }) => {
+    el.scrollIntoViewIfNeeded ? el.scrollIntoViewIfNeeded() : el.scrollIntoView();
 };
 
 function MenuItem<TItem extends MenuItemType>(props: MenuItemProps<TItem>) {
-    const ref = React.useRef<HTMLButtonElement>(null);
+    const ref = useRef<HTMLButtonElement>(null);
     const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (ref.current) {
             ref.current.blur();
@@ -71,7 +70,7 @@ function MenuItem<TItem extends MenuItemType>(props: MenuItemProps<TItem>) {
         return <span>{props.item.title}</span>;
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         props.isFocused && scrollElementIntoView(ref.current);
     }, [props.isFocused]);
 

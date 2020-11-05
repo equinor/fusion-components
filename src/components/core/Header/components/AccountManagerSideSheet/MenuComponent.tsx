@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as styles from './styles.less';
 import { UserMenuSectionItem, PersonDetails } from '@equinor/fusion';
 import { IconButton, ArrowBackIcon } from '@equinor/fusion-components';

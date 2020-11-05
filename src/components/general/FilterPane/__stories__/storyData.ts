@@ -1,4 +1,11 @@
-import { Pagination, PagedResult, applyPagination, applySorting, PropertyAccessor, SortDirection } from '@equinor/fusion';
+import {
+    Pagination,
+    PagedResult,
+    applyPagination,
+    applySorting,
+    PropertyAccessor,
+    SortDirection,
+} from '@equinor/fusion';
 
 export type DataItem = {
     id: number;
@@ -711,8 +718,12 @@ const data: DataItem[] = [
     },
 ];
 
-export const fakeFetchAsync = (pagination: Pagination, sortBy: PropertyAccessor<DataItem> | null, direction: SortDirection | null) =>
-    new Promise<PagedResult<DataItem>>(resolve => {
+export const fakeFetchAsync = (
+    pagination: Pagination,
+    sortBy: PropertyAccessor<DataItem> | null,
+    direction: SortDirection | null
+) =>
+    new Promise<PagedResult<DataItem>>((resolve) => {
         setTimeout(() => {
             resolve({
                 totalCount: data.length,

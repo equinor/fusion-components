@@ -1,4 +1,3 @@
-import React from 'react';
 import marked from 'marked';
 import styles from './styles.less';
 import dompurify from 'dompurify';

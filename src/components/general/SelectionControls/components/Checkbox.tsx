@@ -1,4 +1,5 @@
-import React, { useRef, MutableRefObject, forwardRef, useEffect } from 'react';
+import { useRef, MutableRefObject, forwardRef, useEffect } from 'react';
+
 import styles from '../styles.less';
 import { DoneIcon, MinimizeIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';

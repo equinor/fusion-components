@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 import {
     PersonPhoto,
