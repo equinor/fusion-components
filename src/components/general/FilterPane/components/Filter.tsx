@@ -1,6 +1,11 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { Button, useTooltipRef, DropdownArrow, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
+import {
+    Button,
+    useTooltipRef,
+    DropdownArrow,
+    ApplicationGuidanceAnchor,
+} from '@equinor/fusion-components';
 import SearchFilterComponent from './SearchFilterComponent';
 import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
@@ -93,6 +98,12 @@ function Filter<T>({
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
+    React.useEffect(() => {
+        if (defaultTerm !== term) {
+            setTerm(defaultTerm);
+        }
+    }, [defaultTerm]);
+
     const handleOnChange = useCallback(
         (newValue) => {
             if (!newValue) {
@@ -145,7 +156,7 @@ function Filter<T>({
         onChange: handleOnChange,
         filterCount: filterCount.find((fc) => fc.key === filter.key),
         filter,
-        quickFactScope
+        quickFactScope,
     });
 
     if (!renderedFilterComponent) {
