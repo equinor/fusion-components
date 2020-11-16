@@ -119,6 +119,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
             setIsFetching(false);
         } catch (error) {
+            console.log('error get report', error);
             setFusionError({
                 statusCode: error.statusCode,
                 fusionError: error.response as FusionApiHttpErrorResponse,
@@ -336,7 +337,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
             }
         }
     }, [embedRef, accessToken, isFetching]);
-    if (powerBIError || fusionError?.fusionError) {
+    if (powerBIError || fusionError) {
         //Only handling selected errors from Power BI. As you might get errors that can be ignored.
         const errorCode = powerBIError
             ? powerBIError?.detail?.errorCode
