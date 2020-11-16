@@ -194,7 +194,7 @@ const ReportEmbed: React.FC<PowerBIProps> = ({
                 return () =>
                     embeddedRef?.current ? embeddedRef.current.off('pageChanged') : undefined;
         }
-    }, [filters, embeddedRef.current, embedInfo]);
+    }, [filters, embeddedRef.current, embedInfo, awaitableBookmark]);
 
     React.useEffect(() => {
         if (!isLoading) setFilter();
