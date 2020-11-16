@@ -291,7 +291,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
                 return () =>
                     embeddedRef?.current ? embeddedRef.current.off('pageChanged') : undefined;
         }
-    }, [filters, embeddedRef.current, embedInfo]);
+    }, [filters, embeddedRef.current, embedInfo, awaitableBookmark]);
 
     React.useEffect(() => {
         if (!embeddedRef.current) return;
@@ -336,9 +336,8 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
             }
         }
     }, [embedRef, accessToken, isFetching]);
-
     if (powerBIError || fusionError) {
-        //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
+        //Only handling selected errors from Power BI. As you might get errors that can be ignored.
         const errorCode = powerBIError
             ? powerBIError?.detail?.errorCode
             : fusionError?.fusionError?.error?.code;
