@@ -90,7 +90,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [isFetching, setIsFetching] = React.useState<boolean>(true);
     const [powerBIError, setPowerBIError] = React.useState<ICustomEvent<IError>>();
-    const [fusionError, setFusionError] = React.useState<FusionError | null>(null);
+    const [fusionError, setFusionError] = React.useState<FusionError>();
 
     const [report, setReport] = React.useState<Report>();
     const [embedInfo, setEmbedInfo] = React.useState<EmbedInfo>();
