@@ -119,7 +119,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
             setIsFetching(false);
         } catch (error) {
-            console.log('error get report', error);
             setFusionError({
                 statusCode: error.statusCode,
                 fusionError: error.response as FusionApiHttpErrorResponse,
