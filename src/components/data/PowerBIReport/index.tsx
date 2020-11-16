@@ -141,7 +141,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({
     }, [accessToken, reportId]);
 
     if (powerBIError || fusionError) {
-        //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
+        //Only handling selected errors from Power BI. As you might get errors that can be ignored.
         const errorCode = powerBIError
             ? powerBIError?.detail?.errorCode
             : fusionError?.fusionError?.error?.code;
