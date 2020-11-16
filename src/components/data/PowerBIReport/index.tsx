@@ -90,7 +90,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [isFetching, setIsFetching] = React.useState<boolean>(true);
     const [powerBIError, setPowerBIError] = React.useState<ICustomEvent<IError>>();
-    const [fusionError, setFusionError] = React.useState<FusionError>();
+    const [fusionError, setFusionError] = React.useState<FusionError | null>(null);
 
     const [report, setReport] = React.useState<Report>();
     const [embedInfo, setEmbedInfo] = React.useState<EmbedInfo>();
@@ -130,6 +130,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
     const checkContextAccess = React.useCallback(async () => {
         if (!currentContext?.externalId || !embedInfo?.embedConfig.rlsConfiguration) return;
+        setFusionError(null);
         try {
             await reportApiClient.checkContextAccess(
                 reportId,
