@@ -130,7 +130,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
     const checkContextAccess = React.useCallback(async () => {
         if (!currentContext?.externalId || !embedInfo?.embedConfig.rlsConfiguration) return;
-        setFusionError(null);
         try {
             await reportApiClient.checkContextAccess(
                 reportId,
