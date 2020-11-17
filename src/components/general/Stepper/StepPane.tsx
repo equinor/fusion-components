@@ -2,6 +2,8 @@ import React from 'react';
 import * as styles from './styles.less';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
+import classNames from 'classnames';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type StepPaneProps = {
     onChange: (stepKey: string) => void;
@@ -9,6 +11,7 @@ type StepPaneProps = {
     activeStepKey: string;
     activeStepPosition: number;
     forceOrder: boolean;
+    verticalSteps?: boolean;
 };
 
 const StepPane: React.FC<StepPaneProps> = ({
@@ -17,6 +20,7 @@ const StepPane: React.FC<StepPaneProps> = ({
     activeStepKey,
     activeStepPosition,
     forceOrder,
+    verticalSteps,
 }) => {
     const stepPaneRef = React.useRef<HTMLDivElement | null>(null);
     const activeStepRef = React.useRef<HTMLElement | null>(null);
@@ -48,7 +52,11 @@ const StepPane: React.FC<StepPaneProps> = ({
 
         const mobileMaxWidth = styling.mobileWidth();
 
-        if (!(stepKey === activeStepKey) && parseInt(mobileMaxWidth) > windowWidth) {
+        if (
+            !verticalSteps &&
+            !(stepKey === activeStepKey) &&
+            parseInt(mobileMaxWidth) > windowWidth
+        ) {
             return null;
         }
 
@@ -66,12 +74,17 @@ const StepPane: React.FC<StepPaneProps> = ({
             disabled: disabled === true,
             isLastStep: index === children.length - 1,
             stepCount: children.length,
+            verticalStep: verticalSteps,
         });
     });
 
+    const stepPaneClasses = classNames(styles.stepPane, useComponentDisplayClassNames(styles), {
+        [styles.verticalSteps]: verticalSteps,
+    });
+
     return (
-        <div className={styles.stepPaneWrapper} ref={stepPaneRef}>
-            <div className={styles.stepPane}>{clonedChildren}</div>
+        <div className={classNames(styles.stepPaneWrapper)} ref={stepPaneRef}>
+            <div className={stepPaneClasses}>{clonedChildren}</div>
         </div>
     );
 };

@@ -4,6 +4,7 @@ import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-com
 import StepPane from './StepPane';
 import StepContent from './StepContent';
 import classNames from 'classnames';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;
@@ -11,6 +12,7 @@ type StepperProps = {
     forceOrder?: boolean;
     activeStepKey: string;
     hideNavButtons?: boolean;
+    verticalSteps?: boolean;
 };
 
 type StepKey = {
@@ -27,6 +29,7 @@ const Stepper: React.FC<StepperProps> = ({
     forceOrder,
     onChange,
     hideNavButtons,
+    verticalSteps,
 }) => {
     const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
     const [currentStepKey, setCurrentStepKey] = React.useState<string | null>(null);
@@ -56,13 +59,13 @@ const Stepper: React.FC<StepperProps> = ({
     }, [onChange, currentStepKey]);
 
     React.useEffect(() => {
-        const current = stepKeys.find(sk => sk.key === currentStepKey);
+        const current = stepKeys.find((sk) => sk.key === currentStepKey);
 
         if (current) {
             setActiveStepPosition(current.position);
 
-            const next = stepKeys.find(sk => sk.position === current.position + 1);
-            const prev = stepKeys.find(sk => sk.position === current.position - 1);
+            const next = stepKeys.find((sk) => sk.position === current.position + 1);
+            const prev = stepKeys.find((sk) => sk.position === current.position - 1);
 
             setCanNext(next !== undefined && !next.disabled);
             setCanPrev(prev !== undefined && !prev.disabled);
@@ -71,14 +74,14 @@ const Stepper: React.FC<StepperProps> = ({
 
     const findStepKey = React.useCallback(
         (direction: StepDirection) => {
-            const current = stepKeys.find(sk => sk.key === currentStepKey);
+            const current = stepKeys.find((sk) => sk.key === currentStepKey);
 
             if (!current) {
                 return;
             }
 
             const newPosition = direction === 'next' ? current.position + 1 : current.position - 1;
-            const prevOrNext = stepKeys.find(sk => sk.position === newPosition);
+            const prevOrNext = stepKeys.find((sk) => sk.position === newPosition);
             return prevOrNext;
         },
         [currentStepKey, stepKeys]
@@ -112,9 +115,20 @@ const Stepper: React.FC<StepperProps> = ({
         [forceOrder, stepKeys]
     );
 
+    const stepperContainerClasses = classNames(
+        styles.stepperContainter,
+        useComponentDisplayClassNames(styles),
+        {
+            [styles.verticalStepperContainer]: verticalSteps,
+        }
+    );
+    const stepperClasses = classNames(styles.stepper, useComponentDisplayClassNames(styles), {
+        [styles.verticalStepper]: verticalSteps,
+    });
+
     return (
-        <>
-            <div className={styles.stepper}>
+        <div className={stepperContainerClasses}>
+            <div className={stepperClasses}>
                 {!hideNavButtons && (
                     <>
                         <div className={classNames(styles.navigation, styles.prev)}>
@@ -135,10 +149,11 @@ const Stepper: React.FC<StepperProps> = ({
                     activeStepKey={currentStepKey}
                     activeStepPosition={activeStepPosition}
                     onChange={handleChange}
+                    verticalSteps={verticalSteps}
                 />
             </div>
             <StepContent children={children} activeStepKey={currentStepKey} />
-        </>
+        </div>
     );
 };
 

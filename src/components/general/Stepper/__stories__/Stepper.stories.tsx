@@ -19,9 +19,10 @@ const DefaultStory = () => {
             forceOrder={boolean('Force order', false)}
             activeStepKey={select('Active step', stepKeys, 'step1')}
             hideNavButtons={boolean('Hide nav buttons', false)}
+            verticalSteps={true}
         >
             <Step
-                title="Select workspace and do some other work"
+                title="Select workspace "
                 description="This is a description text"
                 stepKey="step1"
             >
@@ -33,7 +34,7 @@ const DefaultStory = () => {
             <Step title="Fill in details" stepKey="step3">
                 <Item>Specify details about refresh rate, data source etc.</Item>
             </Step>
-            <Step title="Summary" stepKey="step4">
+            <Step title="Summary" stepKey="step4" disabled>
                 <Item>Summary</Item>
             </Step>
             <Step title="Publish" stepKey="step5" disabled>
@@ -53,19 +54,9 @@ const InteractiveStory = () => {
             hideNavButtons={boolean('Hide nav buttons', false)}
         >
             <Step title="Select workspace" stepKey="step1">
-                <Item>
-                    <div>Press the button to enable navigation to next step.</div>
-                    <div>
-                        <Button onClick={() => setProgress([...progress, 1])}>Do work</Button>
-                    </div>
-                </Item>
+                <DefaultStory />
             </Step>
-            <Step
-                description="Description"
-                title="Select report/dashboard"
-                stepKey="step2"
-                disabled={progress.indexOf(1) === -1}
-            >
+            <Step description="Description" title="Select report/dashboard" stepKey="step2">
                 <Item>
                     <div>Press the button to enable navigation to next step.</div>
                     <div>
@@ -73,21 +64,13 @@ const InteractiveStory = () => {
                     </div>
                 </Item>
             </Step>
-            <Step title="Fill in details" stepKey="step3" disabled={progress.indexOf(2) === -1}>
+            <Step title="Fill in details" stepKey="step3">
                 <Item>You can continue immediately by navigating to the next step.</Item>
             </Step>
-            <Step
-                title="Summary"
-                stepKey="step4"
-                disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}
-            >
+            <Step title="Summary" stepKey="step4">
                 <Item>You can't go any further since maxStep is 4 in this example.</Item>
             </Step>
-            <Step
-                title="Publish"
-                stepKey="step5"
-                disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}
-            >
+            <Step title="Publish" stepKey="step5">
                 <Item>Publish button</Item>
             </Step>
         </Stepper>
