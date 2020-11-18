@@ -19,10 +19,10 @@ const DefaultStory = () => {
             forceOrder={boolean('Force order', false)}
             activeStepKey={select('Active step', stepKeys, 'step1')}
             hideNavButtons={boolean('Hide nav buttons', false)}
-            verticalSteps={true}
+            verticalSteps={boolean('Vertical Steps', false)}
         >
             <Step
-                title="Select workspace "
+                title="Select workspace and do some other work"
                 description="This is a description text"
                 stepKey="step1"
             >
@@ -34,7 +34,7 @@ const DefaultStory = () => {
             <Step title="Fill in details" stepKey="step3">
                 <Item>Specify details about refresh rate, data source etc.</Item>
             </Step>
-            <Step title="Summary" stepKey="step4" disabled>
+            <Step title="Summary" stepKey="step4">
                 <Item>Summary</Item>
             </Step>
             <Step title="Publish" stepKey="step5" disabled>
@@ -52,11 +52,22 @@ const InteractiveStory = () => {
             forceOrder={boolean('Force order', true)}
             activeStepKey="step1"
             hideNavButtons={boolean('Hide nav buttons', false)}
+            verticalSteps={boolean('Vertical Steps', false)}
         >
             <Step title="Select workspace" stepKey="step1">
-                <DefaultStory />
+                <Item>
+                    <div>Press the button to enable navigation to next step.</div>
+                    <div>
+                        <Button onClick={() => setProgress([...progress, 1])}>Do work</Button>
+                    </div>
+                </Item>
             </Step>
-            <Step description="Description" title="Select report/dashboard" stepKey="step2">
+            <Step
+                description="Description"
+                title="Select report/dashboard"
+                stepKey="step2"
+                disabled={progress.indexOf(1) === -1}
+            >
                 <Item>
                     <div>Press the button to enable navigation to next step.</div>
                     <div>
@@ -64,13 +75,52 @@ const InteractiveStory = () => {
                     </div>
                 </Item>
             </Step>
-            <Step title="Fill in details" stepKey="step3">
+            <Step title="Fill in details" stepKey="step3" disabled={progress.indexOf(2) === -1}>
                 <Item>You can continue immediately by navigating to the next step.</Item>
             </Step>
-            <Step title="Summary" stepKey="step4">
+            <Step
+                title="Summary"
+                stepKey="step4"
+                disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}
+            >
                 <Item>You can't go any further since maxStep is 4 in this example.</Item>
             </Step>
-            <Step title="Publish" stepKey="step5">
+            <Step
+                title="Publish"
+                stepKey="step5"
+                disabled={progress.indexOf(1) === -1 || progress.indexOf(2) === -1}
+            >
+                <Item>Publish button</Item>
+            </Step>
+        </Stepper>
+    );
+};
+
+const VerticalStory = () => {
+    return (
+        <Stepper
+            forceOrder={boolean('Force order', false)}
+            activeStepKey={select('Active step', stepKeys, 'step1')}
+            hideNavButtons={boolean('Hide nav buttons', false)}
+            verticalSteps
+        >
+            <Step
+                title="Select workspace and do some other work"
+                description="This is a description text"
+                stepKey="step1"
+            >
+                <Item>Select workspace</Item>
+            </Step>
+            <Step title="Select report/dashboard" description="Description" stepKey="step2">
+                <Item>Select a report or dashboard</Item>
+            </Step>
+            <Step title="Fill in details" stepKey="step3">
+                <Item>Specify details about refresh rate, data source etc.</Item>
+            </Step>
+            <Step title="Summary" stepKey="step4">
+                <Item>Summary</Item>
+            </Step>
+            <Step title="Publish" stepKey="step5" disabled>
                 <Item>Publish button</Item>
             </Step>
         </Stepper>
@@ -82,3 +132,4 @@ stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Stepper'));
 stories.add('Default', () => <DefaultStory />);
 stories.add('Interactive', () => <InteractiveStory />);
+stories.add('Vertical', () => <VerticalStory />);
