@@ -15,7 +15,7 @@ import { getItemSearchableValues, SortWorkOrdersByFilterTerms } from './filter/f
 import WorkorderFilter from './filter';
 import Garden from './garden';
 import WorkOrderSideSheet from './sideSheet';
-import { useHangingGardenData } from '../../';
+import { useHangingGardenData, useHangingGardenErrorMessage } from '../../';
 
 import FilterSectionDefinitions from './models/FilterSectionDefinitions';
 import { ErrorMessageProps } from '../../../../general/ErrorMessage';
@@ -34,7 +34,6 @@ const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
     const currentContext = useCurrentContext();
     const [localAppSettings, setAppSettingAsync] = useAppSettings();
 
-    const [errorMessage, setErrorMessage] = React.useState<ErrorMessageProps | null>(null);
     const [filteredData, setFilteredData] = React.useState<WorkOrderType[]>([]);
     const [filterSections, setFilterSections] = React.useState<FilterSection<WorkOrderType>[]>(
         FilterSectionDefinitions
@@ -65,6 +64,8 @@ const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
         applyToFetchedData,
         getItemSearchableValues
     );
+
+    const { errorMessage } = useHangingGardenErrorMessage('handover', error, retry);
 
     const [selectedWorkOrder, setSelectedWorkOrder] = React.useState<WorkOrderType | null>(null);
     const updateFilterTerms = (terms: FilterTerm[]) => {
@@ -99,45 +100,6 @@ const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
 
         applyFilter();
     }, [data]);
-
-    React.useEffect(() => {
-        error ? setError(error) : setErrorMessage(null);
-    }, [error]);
-
-    const setError = (error: Error) => {
-        setFilteredData([]);
-        switch (error.name) {
-            case 'noData':
-                setErrorMessage({
-                    hasError: true,
-                    errorType: 'noData',
-                    message: 'No workorders found for selected project',
-                    resourceName: 'workorder',
-                    title: 'Workorders',
-                    action: 'Retry',
-                    onTakeAction: retry,
-                });
-                break;
-            case 'noCache':
-                setErrorMessage({
-                    hasError: true,
-                    errorType: 'noData',
-                    message:
-                        'Populating workorders dataset for project on the server. Please try again in a few minutes.',
-                    resourceName: 'workorder',
-                    title: 'Workorders',
-                    action: 'Retry',
-                    onTakeAction: retry,
-                });
-                break;
-            default:
-                setErrorMessage({
-                    hasError: true,
-                    errorType: 'error',
-                    onTakeAction: retry,
-                });
-        }
-    };
 
     return (
         <ErrorBoundary>

@@ -1,5 +1,5 @@
-import { ErrorMessageProps } from '@equinor/fusion-components/dist/components/general/ErrorMessage';
 import { useCallback, useEffect, useState } from 'react';
+import { ErrorMessageProps } from 'src/components/general/ErrorMessage';
 import { GardenDataError } from '../models/GardenDataError';
 
 /**
