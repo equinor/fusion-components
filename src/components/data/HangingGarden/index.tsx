@@ -103,5 +103,5 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
 export { HangingGardenProps, HangingGardenColumn } from './models/HangingGarden';
 export { ItemRenderContext, RenderItem } from './models/RenderContext';
-export { useHangingGardenData, useHangingGardenErrorMessage, useHangingGardenGetData };
+export { useHangingGardenData, useHangingGardenErrorMessage, useHangingGardenGetData, PIXI };
 export default HangingGarden;

@@ -34,6 +34,7 @@ export {
     useHangingGardenData,
     useHangingGardenErrorMessage,
     useHangingGardenGetData,
+    PIXI,
 } from './components/data/HangingGarden';
 
 // General components
