@@ -1,14 +1,13 @@
 import * as React from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
-import { Spinner, ErrorMessage } from '@equinor/fusion-components';
+import { Spinner, ErrorMessage, AppSettingsManager } from '@equinor/fusion-components';
 import {
     useTelemetryLogger,
     FusionApiHttpErrorResponse,
     useCurrentApp,
     useCurrentContext,
     useApiClients,
-    useAppContextSettings,
 } from '@equinor/fusion';
 import { ICustomEvent } from 'service';
 import FusionError from './models/FusionError';
@@ -36,6 +35,7 @@ import ReportErrorMessage from './components/ReportErrorMessage';
 type PowerBIProps = {
     reportId: string;
     filters?: pbi.models.ReportLevelFilters[] | null;
+    hasContext?: boolean;
 };
 
 const getReportOrDashboardId = (embedConfig: EmbedConfig, type: ResourceType) => {
@@ -80,14 +80,10 @@ const utcNow = () => {
 
 let timeout: NodeJS.Timeout;
 
-type PBIBookmark = {
-    bookMark: string | null;
-};
-
 /**
  * TODO: use native react component from Microsoft
  */
-const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
+const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
     const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
 
@@ -105,10 +101,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
     const embedRef = React.useRef<HTMLDivElement>(null);
     const embeddedRef = React.useRef<pbi.Embed | null>(null);
-
-    const [appSettings, setAppSettings] = useAppContextSettings<PBIBookmark>(
-        currentContext?.id || 'global'
-    );
+    const [awaitableBookmark, setAwaitableBookmark] = React.useState<string | null>(null);
 
     const getReportInfo = async () => {
         try {
@@ -135,12 +128,56 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         }
     };
 
+    const checkContextAccess = React.useCallback(async () => {
+        if (!currentContext?.externalId || !embedInfo?.embedConfig.rlsConfiguration) return;
+        try {
+            await reportApiClient.checkContextAccess(
+                reportId,
+                currentContext.externalId,
+                currentContext.type.id
+            );
+        } catch (error) {
+            setFusionError({
+                statusCode: error.statusCode,
+                fusionError: error.response as FusionApiHttpErrorResponse,
+            });
+        }
+    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
+
+    React.useEffect(() => {
+        checkContextAccess();
+    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
+
     React.useEffect(() => {
         if (!embeddedRef.current) return;
+
         setIsLoading(true);
 
         embeddedRef.current.reload();
     }, [currentContext?.id]);
+
+    const applyBookmark = async (bookmark: string, awaitForContextSwitch: boolean) => {
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (awaitForContextSwitch) {
+            setAwaitableBookmark(bookmark);
+            return;
+        }
+        if (!currentReport) {
+            return;
+        }
+        return currentReport.bookmarksManager.applyState(bookmark);
+    };
+
+    const captureBookmark = async () => {
+        const currentReport =
+            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
+        if (!currentReport) {
+            return;
+        }
+        const bookmark = await currentReport.bookmarksManager.capture();
+        return bookmark.state;
+    };
 
     const setFilter = async () => {
         if (!embedRef.current) return;
@@ -149,13 +186,10 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         if (!report) return;
 
         filters ? await report.setFilters(filters) : await report.removeFilters();
-        if (!reApplyFilter) return;
-
-        const currentReport =
-            embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
-        if (!currentReport) return;
-
-        captureBookmark(currentReport);
+        if (awaitableBookmark) {
+            applyBookmark(awaitableBookmark, false);
+            setAwaitableBookmark(null);
+        }
     };
 
     React.useEffect(() => {
@@ -200,17 +234,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         [embedInfo, accessToken]
     );
 
-    const captureBookmark = async (currentReport: pbi.Report | null) => {
-        if (!currentReport || appSettings === null) {
-            return;
-        }
-        currentReport.bookmarksManager.capture().then((capturedBookmark) => {
-            if (appSettings.bookMark !== capturedBookmark.state) {
-                setAppSettings({ bookMark: capturedBookmark.state });
-            }
-        });
-    };
-
     const embed = React.useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
@@ -220,7 +243,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                 embeddedRef.current.off('error');
                 embeddedRef.current.off('rendered');
                 embeddedRef.current.off('buttonClicked');
-
                 embeddedRef.current.on('loaded', () => {
                     telemetryLogger.trackMetric({
                         name: `${useCurrentApp.name}-EmbedLoadedTime`,
@@ -246,6 +268,14 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
                     setPowerBIError(err);
                     setIsLoading(false);
                 });
+                embeddedRef.current.on(
+                    'buttonClicked',
+                    (button: ICustomEvent<ButtonClickEvent>) => {
+                        if (button?.detail?.title?.toLowerCase() === 'reset filter') {
+                            setReapplyFilter(true);
+                        }
+                    }
+                );
             }
         },
         [embedInfo, accessToken, reportId]
@@ -255,12 +285,13 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
     React.useLayoutEffect(() => {
         const embedType = embedInfo?.embedConfig?.embedType;
         if (!embeddedRef.current || !embedType) return;
-        switch(embedType){
+        switch (embedType) {
             case 'Report':
                 embeddedRef.current.on('pageChanged', setFilter);
-                return () => embeddedRef.current.off('pageChanged');
+                return () =>
+                    embeddedRef?.current ? embeddedRef.current.off('pageChanged') : undefined;
         }
-    }, [filters, embeddedRef.current, embedInfo]);
+    }, [filters, embeddedRef.current, embedInfo, awaitableBookmark]);
 
     React.useEffect(() => {
         if (!embeddedRef.current) return;
@@ -271,29 +302,6 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             setReapplyFilter(false);
         });
     }, [reApplyFilter]);
-
-    React.useEffect(() => {
-        if (embeddedRef.current && !isLoading) {
-            const currentReport =
-                embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
-            if (currentReport && appSettings?.bookMark) {
-                currentReport.bookmarksManager.applyState(appSettings?.bookMark);
-            }
-            embeddedRef.current.off('dataSelected');
-            embeddedRef.current.off('buttonClicked');
-            embeddedRef.current.on('dataSelected', () => {
-                if (!currentReport) {
-                    return;
-                }
-                captureBookmark(currentReport);
-            });
-            embeddedRef.current.on('buttonClicked', (button: ICustomEvent<ButtonClickEvent>) => {
-                if (button?.detail?.title?.toLowerCase() === 'reset filter') {
-                    setReapplyFilter(true);
-                }
-            });
-        }
-    }, [isLoading]);
 
     React.useEffect(() => {
         if (accessToken) {
@@ -328,29 +336,41 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
             }
         }
     }, [embedRef, accessToken, isFetching]);
-    if (
-        (powerBIError && powerBIError.detail.errorCode) ||
-        (fusionError && fusionError.statusCode)
-    ) {
-        //Only handling selected errors from Power BI. As you migh get errors that can be ignored.
+    if (powerBIError || fusionError) {
+        //Only handling selected errors from Power BI. As you might get errors that can be ignored.
         const errorCode = powerBIError
-            ? powerBIError.detail.errorCode
-            : fusionError?.statusCode.toString();
+            ? powerBIError?.detail?.errorCode
+            : fusionError?.fusionError?.error?.code;
 
         switch (errorCode) {
             case '404':
+            case 'notFound':
                 return (
                     <ErrorMessage
                         hasError={true}
                         errorType={'notFound'}
                         resourceName={'report'}
                         message={
+                            fusionError?.fusionError?.error?.message ||
                             'Report not found. Report might not be available or it does not exist '
                         }
                     />
                 );
             default:
-                return <ReportErrorMessage report={report} />;
+                return report ? (
+                    <ReportErrorMessage
+                        report={report}
+                        contextError={
+                            fusionError?.statusCode === 403 &&
+                            !Boolean(fusionError?.fusionError?.error?.code === 'NotAuthorized')
+                        }
+                    />
+                ) : (
+                    <ErrorMessage
+                        hasError={true}
+                        message={fusionError?.fusionError?.error?.message || null}
+                    />
+                );
         }
     }
 
@@ -358,6 +378,13 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters }) => {
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
             {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
+            <AppSettingsManager
+                captureAppSetting={captureBookmark}
+                applyAppSetting={applyBookmark}
+                hasContext={hasContext}
+                anchorId="pbi-bookmarks-btn"
+                name="Power BI bookmarks"
+            />
         </>
     );
 };

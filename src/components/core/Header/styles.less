@@ -131,6 +131,7 @@
 
 .contentContainer {
     grid-area: content;
+    display: flex;
 }
 
 .asideContainer {
@@ -141,6 +142,19 @@
     align-items: center;
     margin-left: .grid-unit(1px)[];
     margin-right: .grid-unit(1px)[];
+
+    .asideAppContainer{
+        display: flex;
+        flex-direction: row-reverse;
+        
+        &:first-child {
+            border-right: 1px solid var(--color-black-alt3);
+            margin-right: calc(var(--grid-unit) * 2.5px);
+            padding-right: calc(var(--grid-unit) * 1px);
+
+        }
+
+    }
 }
 
 /* Override the icon button colors */

@@ -4,6 +4,7 @@ import './polyfills';
 // Core components
 export { default as FusionHeader, HeaderContentProps } from './components/core/Header';
 export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
+export { default as HeaderAppAsidePortal } from './components/core/Header/HeaderAppAsidePortal';
 export { default as FusionRoot } from './components/core/Root';
 export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
@@ -63,6 +64,7 @@ export {
     useDropdownController,
     DropdownController,
 } from './components/general/Dropdown';
+export { default as Select, SelectOption, SelectSection } from './components/general/Select';
 export {
     default as SearchableDropdown,
     SearchableDropdownOption,
@@ -103,6 +105,7 @@ export {
 export { default as NotificationsSideSheet } from './components/general/NotificationsSideSheet';
 export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 export { default as MarkdownEditor } from './components/general/MarkdownEditor';
+export { default as AppSettingsManager } from './components/general/AppSettingsManager';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -177,6 +180,7 @@ export {
     CheckCircleIcon,
     CloseCircleIcon,
     ScheduleIcon,
+    BookmarksIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,

@@ -86,10 +86,10 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     }, [activeTabKey, tabsPaneRef]);
 
     const clonedChildren = React.Children.map(children, child => {
-        const { title, tabKey } = child.props;
-        if (!title || !tabKey) {
+        const { tabKey } = child.props;
+        if (!tabKey) {
             return null;
-        }
+        } 
         return React.cloneElement(child, {
             onChange: (ref: HTMLElement) => {
                 activeTabRef.current = ref;

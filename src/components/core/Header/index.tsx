@@ -14,7 +14,6 @@ import ComponentDisplayToggleButton from './components/ComponentDisplayToggleBut
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
-import NotificationsButton from './components/NotificationsButton';
 
 enum Breakpoints {
     medium = 'medium',
@@ -40,12 +39,14 @@ type FusionHeaderProps = {
     start: React.ReactElement | null;
     content: React.FC<HeaderContentProps> | null;
     aside: React.ReactElement | null;
+    settings: React.ReactElement | null;
     quickFactScope?: string;
+    showSettings?: boolean;
 };
 
-const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quickFactScope }) => {
+const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, settings, quickFactScope, showSettings }) => {
     const {
-        refs: { headerContent },
+        refs: { headerContent, headerAppAside },
     } = useFusionContext();
     const currentApp = useCurrentApp();
 
@@ -90,9 +91,12 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quic
             </div>
 
             <aside className={styles.asideContainer}>
+                <div
+                    ref={headerAppAside as React.MutableRefObject<HTMLDivElement | null>}
+                    className={styles.asideAppContainer}
+                ></div>
                 <ComponentDisplayToggleButton quickFactScope={quickFactScope} />
                 {aside}
-                <NotificationsButton quickFactScope={quickFactScope} />
                 <CurrentUserButton quickFactScope={quickFactScope} />
             </aside>
         </header>

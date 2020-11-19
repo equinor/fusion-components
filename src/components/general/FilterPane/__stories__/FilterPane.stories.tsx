@@ -196,6 +196,7 @@ const FilterPaneStory: React.FC = () => {
                 screenPlacement={filterScreenPlacement}
                 headerComponent={filterHeaderComponent}
                 quickFactScope="storybook"
+                showResetAllButton={true}
             />
             {filterScreenPlacement === 'left' && (
                 <div style={{ marginRight: styling.grid(4), width: 1, flexGrow: 1 }}>

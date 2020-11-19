@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
-import { ErrorBoundary } from '@equinor/fusion-components';
+import { Button, ErrorBoundary } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import CollapseExpandButton from './components/CollapseExpandButton';
 import Section from './components/Section';
@@ -39,6 +39,8 @@ export type FilterPaneProps<T> = {
     onToggleCollapse?: (isCollapsed: boolean) => void;
     headerComponent?: React.ReactNode;
     quickFactScope?: string;
+    onResetAll: () => void;
+    showResetAllButton: boolean;
 };
 
 function FilterPane<T>({
@@ -51,6 +53,8 @@ function FilterPane<T>({
     onToggleCollapse,
     headerComponent,
     quickFactScope,
+    onResetAll,
+    showResetAllButton,
 }: FilterPaneProps<T>) {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [filterCount, setFilterCount] = useState<Count[]>([]);
@@ -113,6 +117,13 @@ function FilterPane<T>({
                     {!isCollapsed && headerComponent}
                 </div>
                 <div className={styles.content}>
+                    {showResetAllButton && !isCollapsed && (
+                        <div className={styles.resetButton}>
+                            <Button frameless onClick={onResetAll}>
+                                Reset filters
+                            </Button>
+                        </div>
+                    )}
                     {sectionDefinitions.map((section) => (
                         <Section
                             key={section.key}

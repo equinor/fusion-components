@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { IBasicFilter } from '../models/ReportLevelFilters';
 import PowerBIReport from '../index';
 import Button from '../../../general/Button';
+import withFusionStory from '../../../../../.storybook/withFusionStory';
 
 const ReportStandard: React.FC = () => {
     return (
@@ -15,22 +16,22 @@ const ReportStandard: React.FC = () => {
 const ReportWithFilter: React.FC = () => {
     const [filterStrings, setFilterStrings] = React.useState<string[]>(null);
 
-    const createFilter = (filters: string[]): IBasicFilter => {
-        return {
-            $schema: 'http://powerbi.com/product/schema#basic',
-            target: {
-                table: 'Dim_Commonlibrary_Projects',
-                column: 'Project',
-            },
-            filterType: 1,
-            operator: 'In',
-            values: filters,
-        };
-    };
-
-    const filter = React.useMemo(() => {
-        return filterStrings ? createFilter(filterStrings) : null;
-    }, [filterStrings]);
+    const filter: IBasicFilter = React.useMemo(
+        () =>
+            filterStrings
+                ? {
+                      $schema: 'http://powerbi.com/product/schema#basic',
+                      target: {
+                          table: 'Dim_Commonlibrary_Projects',
+                          column: 'Project',
+                      },
+                      filterType: 1,
+                      operator: 'In',
+                      values: filterStrings,
+                  }
+                : null,
+        [filterStrings]
+    );
 
     return (
         <>
@@ -76,7 +77,7 @@ const ReportWithFilter: React.FC = () => {
             <div style={{ width: '100%', height: '100%' }}>
                 <PowerBIReport
                     reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'}
-                    filters={filter ? [filter] : null}
+                    filters={[filter]}
                 />
             </div>
         </>
@@ -84,5 +85,6 @@ const ReportWithFilter: React.FC = () => {
 };
 
 storiesOf('Data/PowerBI Report', module)
+    .addDecorator(withFusionStory('PowerBI Report'))
     .add('Report Standard', () => <ReportStandard />)
     .add('Report with filter', () => <ReportWithFilter />);
