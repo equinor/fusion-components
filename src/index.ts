@@ -32,6 +32,8 @@ export {
     ItemRenderContext,
     RenderItem,
     useHangingGardenData,
+    useHangingGardenErrorMessage,
+    useHangingGardenGetData,
 } from './components/data/HangingGarden';
 
 // General components

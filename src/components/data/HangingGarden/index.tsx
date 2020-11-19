@@ -5,6 +5,8 @@ import useTextureCaches from './renderHooks/useTextureCaches';
 import { HangingGardenColumnIndex, HangingGardenProps } from './models/HangingGarden';
 import { DEFAULT_ITEM_HEIGHT, DEFAULT_HEADER_HEIGHT } from './utils';
 import useHangingGardenData from './hooks/useHangingGardenData';
+import useHangingGardenErrorMessage from './hooks/useHangingGardenErrorMessage';
+import useHangingGardenGetData from './hooks/useHangingGardenGetData';
 import Garden from './Garden';
 import HangingGardenContext from './renderHooks/useHangingGardenContext';
 import { ExpandedColumns } from './models/ExpandedColumn';
@@ -101,5 +103,5 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
 export { HangingGardenProps, HangingGardenColumn } from './models/HangingGarden';
 export { ItemRenderContext, RenderItem } from './models/RenderContext';
-export { useHangingGardenData };
+export { useHangingGardenData, useHangingGardenErrorMessage, useHangingGardenGetData };
 export default HangingGarden;
