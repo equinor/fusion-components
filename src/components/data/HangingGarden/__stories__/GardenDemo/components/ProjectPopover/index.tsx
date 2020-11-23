@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as styles from '../../garden/styles.less';
+import * as styles from '../../styles.less';
 import WorkOrderType from '../../models/WorkOrderType';
 
 type ProjectPopoverType = {
