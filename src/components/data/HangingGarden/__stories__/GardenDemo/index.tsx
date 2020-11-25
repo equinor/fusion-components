@@ -13,13 +13,17 @@ import {
     ErrorBoundary,
     ErrorMessage,
     Spinner,
+    ContextSelector,
+    FusionHeader,
+    FusionContent,
 } from '../../../../..';
 
 import ProjectPopover from './components/ProjectPopover';
 import { HeaderRenderContext } from '../../models/RenderContext';
 import { GardenController, HangingGardenColumn } from '../../models/HangingGarden';
+import { ContextTypes, useFusionContext } from '@equinor/fusion';
 
-const getItemSearchableValues = (workOrder: WorkOrderType): WorkOrderType => {
+export const getItemSearchableValues = (workOrder: WorkOrderType): WorkOrderType => {
     workOrder.searchableValues = [
         workOrder.workOrderNumber,
         workOrder.description,
@@ -34,10 +38,29 @@ const getItemSearchableValues = (workOrder: WorkOrderType): WorkOrderType => {
     return workOrder;
 };
 
-const SortWorkOrdersByFilterTerms = (workorders: WorkOrderType[]) =>
+export const SortWorkOrdersByFilterTerms = (workorders: WorkOrderType[]) =>
     workorders.sort(
         (a, b) => (parseInt(a.projectProgress) || 0) - (parseInt(b.projectProgress) || 0)
     );
+
+export const CurrentContext: React.FC = ({ children }) => {
+    const { app } = useFusionContext();
+
+    (app.container as any)._currentApp.state = {
+        AppComponent: ContextSelector,
+        key: 'HangingGarden',
+        name: 'HangingGarden',
+        shortName: 'HangingGarden',
+        version: '1',
+        description: 'HangingGarden',
+        tags: ['HangingGarden'],
+        context: {
+            types: [ContextTypes.ProjectMaster],
+        },
+    };
+
+    return <> {children} </>;
+};
 
 const GardenDemo: React.FC = () => {
     const {
@@ -92,10 +115,9 @@ const GardenDemo: React.FC = () => {
         });
 
         context.addDot(getMatStatusColor(item), { x: context.width - 12, y: 8 });
-        context.addPopover(
-            new PIXI.Rectangle(32, 0, context.width - 32 - 24, context.height),
-            () => <ProjectPopover item={item} />
-        );
+        context.addPopover(new PIXI.Rectangle(0, 0, context.width, context.height), () => (
+            <ProjectPopover item={item} />
+        ));
     };
 
     const renderHeader = (key: string, context: HeaderRenderContext) => {
@@ -112,31 +134,36 @@ const GardenDemo: React.FC = () => {
     const gardenController = React.useRef<GardenController>(null);
 
     return (
-        <ErrorBoundary>
-            <ErrorMessage {...errorMessage}>
-                {isFetching && <Spinner title="Fetching Workorders" centered floating />}
-                {!isFetching && data.length && (
-                    <>
-                        <div className={styles.hanginggardenContainer}>
-                            <HangingGarden<WorkOrderType>
-                                columns={columns}
-                                highlightedColumnKey={highlightedKey}
-                                highlightedItem={selectedWorkOrder}
-                                itemKeyProp={'workOrderId'}
-                                itemWidth={getItemWidth()}
-                                itemHeight={24}
-                                renderItemContext={renderItem}
-                                getItemDescription={(item: WorkOrderType) => item.description}
-                                onItemClick={(item: WorkOrderType) => setSelectedWorkOrder(item)}
-                                headerHeight={40}
-                                renderHeaderContext={renderHeader}
-                                provideController={gardenController}
-                            />
-                        </div>
-                    </>
-                )}
-            </ErrorMessage>
-        </ErrorBoundary>
+        <CurrentContext>
+            <FusionHeader start={null} content={ContextSelector} aside={null} settings={null} />
+            <FusionContent>
+                <ErrorBoundary>
+                    <ErrorMessage {...errorMessage}>
+                        {isFetching && <Spinner title="Fetching Workorders" centered floating />}
+                        {!isFetching && data.length && (
+                            <div className={styles.hanginggardenContainer}>
+                                <HangingGarden<WorkOrderType>
+                                    columns={columns}
+                                    highlightedColumnKey={highlightedKey}
+                                    highlightedItem={selectedWorkOrder}
+                                    itemKeyProp={'workOrderId'}
+                                    itemWidth={getItemWidth()}
+                                    itemHeight={24}
+                                    renderItemContext={renderItem}
+                                    getItemDescription={(item: WorkOrderType) => item.description}
+                                    onItemClick={(item: WorkOrderType) =>
+                                        setSelectedWorkOrder(item)
+                                    }
+                                    headerHeight={40}
+                                    renderHeaderContext={renderHeader}
+                                    provideController={gardenController}
+                                />
+                            </div>
+                        )}
+                    </ErrorMessage>
+                </ErrorBoundary>
+            </FusionContent>
+        </CurrentContext>
     );
 };
 

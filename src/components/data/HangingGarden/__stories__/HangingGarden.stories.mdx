@@ -1,15 +1,464 @@
 <!--- HangingGarden.stories.mdx -->
 
 import { Meta, Story, Canvas, ArgsTable } from '@storybook/addon-docs/blocks';
-import GardenDemo from './GardenDemo';
-
+import GardenDemo,{CurrentContext} from './GardenDemo';
 
 <Meta title="Data/Hanging Garden" component={GardenDemo} />
 
-# Hanging Garden
 
-<Story name="Hanging Garden">
-  <div style={{height:'100%' ,width: '100%'}}>  <GardenDemo/>
-  </div>
-</Story>
+
+export const Garden = () => (<GardenDemo/> )
+
+# Hanging Garden Component
+
+  <Story name="Hanging Garden">
+ { Garden}
+  </Story>
+
+<br/><br/>
+
+## Arguments and types
+<ArgsTable of={HangingGarden} />
+
+## Arguments implementations
+  Implementation and use of each argument. What it expects to recive and what its used for. 
+  All example code reflects the Garden implementations in this story. 
+
+### columns
+  An array of columns to be shown in the Garden. 
+  The array should be filled with an object for each columns. 
+  Formatted like this: {key : ColumnName, data : Items[]}
+  
+  A key with name of the column. This can be anything you like. Often used as the text on the header. 
+  Data  has an array of all the items that follows under each header. Data can be empty. 
+
+  You will need to write your own functionality, determening how your columns should be structured. 
+  In the example they are split into week/year. 
+
+  How to set this up will be explored in the section below. 
+
+
+### highlightedColumnKey
+  Name(key) off a column in the columns object. 
+  Highlights the column by giving the header a different color.
+  This Garden will also scroll to this column on load. 
+  
+  HighlightedColumnKey can be null 
+  No column wil be shown and garden will not scroll on initial load.
+
+  
+### highlightedItem
+  Takes entire object of an item you want to hightlight in the garden. 
+  Item will receive be get a black outline when highlighted.
+  The garden will also center the highlitedItem.
+
+  highlightedItem can be null. 
+
+
+### itemKeyProp
+  A field in your item model that will serve as an identifier for renderedItems. 
+  This should preferably be a unique field. 
+
+  This filed is mandatory
+  
+### itemWidth
+  A number of pixels, represeting how wide your rendered items should be. 
+  It is not possible to have variable columns width or variable widths withing same column.
+
+  You will probably want to calculate this field. 
+  As you might not now the length of the text or other objects you show on your rendered items. 
+
+  In the example, we show the workorderNumbers for each item. 
+  To figure the width we find the longest workorderNumber. 
+  then add some additional pixels to it, and also a minimum length
+  ```jsx
+  const getItemWidth = () => {
+        const longestKey = Math.max.apply
+            Math
+            data.map((workOrder) => workOrder.workOrderNumber.length
+        )
+        return Math.max(longestKey * 8 + 35, 102);
+  };
+  ```
+
+  This will be a bit of an iterative process at first when creating your items. 
+  Seeing how big they need to be to fit everything you need. 
+
+  Long header text will override this. 
+  Meaning if there is a header text that is longer longest item. The header length takes precedence.
+
+### itemHeight
+  The height of the rendered item. This follows the same prinsiples as itemWidth.
+  All items in the garden will be same height. 
+  But hight can be controlled in same fasion as itemWidth. 
+
+### headerHeight
+  The height of the header row at the top of the garden. 
+  This follows the same prinsiples as itemWidth.
+  All columns will have a header with the same header height. 
+  But hight can be controlled in same fasion as itemWidth.
+
+
+
+### getItemDescription
+  This is a description of given item, that is shown when Header is expanded. 
+  
+  All headers has a clickEvent. When clicked the header will expand to the right. 
+  Revealing an area where the itemDescription is shown. 
+
+  The arguments takes in a function that receives the items and returns a string. 
+  ```jsx
+  (item: WorkOrderType) => item.description
+  ```
+
+  You can do more complex thing where if needed, but you are limited to returning a string.
+
+### onItemClick
+  A void function that receives the items object. 
+  This function will fire when a rendered item is clicked. 
+
+  in the exmplane this is used to set the selected Item. 
+  ```jsx
+  (item: WorkOrderType) => setSelectedWorkOrder(item)
+  ```
+  This will then highlighted the item, and scroll to this item in the garden. 
+  but this effect gives you alot of possibilities to trigger other effect or UI elemements migh want. 
+  A typical use case is to open a sidesheet with extended information. 
+
+
+
+### provideController
+  Takes in a ref that will give you a way to rerender the garden outside the Garden Component. 
+  In most cases the Garden will trigger its own rendering when needed. 
+  But for some reason your functionality does not trigger a rerender when it should
+  You can use this to trigger yourself. 
+  create yoursel a ref like shown below. When it get populated you can trigger the rerendering by calling clearGarde(). 
+        
+  ```jsx
+  const gardenController = React.useRef<GardenController>(null);
+  gardenController.current.clearGarden()
+  ```
+
+  In most cases you should not need to handling this ourself. 
+
+### backgroundColor
+  Background color of the garden Defaults to white(16777215)
+  
+### renderItemContext
+  A function that takes in the item object and context object. 
+  The function will expand the context object by adding instruction for how items in the garden should be contructed. 
+
+  Recommend looking at the ItemRenderContext model, to see your options here. 
+
+  This is will quickly become a complex function and will be explored in its own section below.
+
+### renderHeaderContext
+  Similar to renderItemContext. 
+  Takes in a key and context. 
+  The key will be the column key that the header will represent. 
+  Context will in similar fasion as renderItemContext be extended to dicated how the header looks. 
+
+  Recommend looking at the HeaderRenderContext model, to see your options here. 
+
+  This is will quickly become a complex function and will be explored in its own section below.
+
+
+
+## Creating your own Hanging Garden 
+  While the Hanging Garden component does alot of the heavy lifting in terms of how and when the garden renders. 
+  Or how to interact with the underlying PIXI.js engine. 
+  It still requires quite a few inputs to get it working properly. 
+
+  This sections will guide you though how to make a similar garden as the one in the example on top. 
+  While also talking about some more advanced features that is not used here. 
+
+  Be aware that it will demand a decent time investment setting up your own Hanging Garden from scratch. 
+
+### Getting Started - Data source 
+  First things firts, you will need a data source. 
+  The data can be what ever you need it to be, but you should be aware of its model.
+  Hanging Garden component is generic and takes in the model of the data you will be using. 
+
+  ```jsx
+  <HangingGarden<T> {...props} />
+  ```
+  We will be working with workorders, giving us a implementations like this.
+
+  ```jsx
+  <HangingGarden<WorkOrderType> {...props} />
+  ```
+
+### Creating Columns 
+  Now that you have data and know what type of data you will be working with. 
+  We can setup the columns structure. 
+
+  This is all up to how its implemented. 
+  The component has no recognision of how the columns are layed out, or how you sorted them. 
+  Its just want an array full off HangingGardenColumn objects.
+
+  in our example we will sort the data by year/week. Meaning each column represents a week in given year. 
+  Then we check a specific field in each item and place it accordingly. 
+
+  ```jsx
+  getColumns = (data: WorkOrderType[]) => {
+    const highlightedKey = getYearAndWeekFromDate(new Date());
+
+    const newColumns = data.reduce<HangingGardenColumn<WorkOrderType>[]>((columns, commpkg) => {
+        const key = commpkg.plannedStartDate ? getYearAndWeek(commpkg.plannedStartDate) : 'N/A';
+        const column = columns.find((c) => c.key === key);
+        column
+            ? column.data.push({ ...commpkg, key })
+            : columns.push({ key, data: [{ ...commpkg, key }] });
+        return columns;
+    }, []);
+
+    const highlightedKeyIndex = newColumns.findIndex((c) => c.key === highlightedKey);
+    if (highlightedKey && highlightedKeyIndex === -1) {
+        newColumns.push({ key: highlightedKey, data: [] });
+    }
+
+    return newColumns.sort(({ key: a }, { key: b }) => a.localeCompare(b));
+  };
+  ```
+  This function takes in all the data we have, then reduces the data into our columns array. 
+  It find our key by getting back the key name fron getYearAndWeek (example 2020/48). 
+  Then decides if the column exists or not. If it exists we push the package into the data array. 
+  Else we create a new object with this key and the item into the data propery. 
+
+  When that is done we have our columns that are technicly ready to be sendt into the Garden. 
+  but we do a couple more things to the array. 
+  First we check if the column we have as highlitedColumn exists, if not we add it. 
+
+  Then we sort the array, so early the year week is ascending. 
+
+  The Garden will not add, remove, sort or manipualte data in anyway on its own. 
+  So make sure all is in order before sending it in. 
+  Sorting the Items withing each columns is also something one should consider. 
+
+#### highlightedColumnKey
+  This is a good time to setup our highlitedColumn key if you want to use one. 
+  Our example uses the current week as a highlited column as shown above. 
+  You want to make sure that this key string is also sendt in to the garden. 
+
+### Creating headers 
+  before creating your header, we should consider our header height. 
+  We might not now how big it should be. 
+  Do we need to calculate it or is it static ?  
+  In our example its a static 40. 
+  This we can easily change if we see that its not the correct size later. 
+
+  #### renderHeaderContext 
+  create a new function with a signature like this.
+  ```jsx
+    const renderHeader = (key: string, context: HeaderRenderContext) => void
+  ```
+  Each column in columns will run this function and be added to the Garden as a Header with the instructions applied. 
+  In our example it looks as follows
+
+  ```jsx
+  const renderHeader = (key: string, context: HeaderRenderContext) => {
+        const textNode = context.createTextNode(
+            context.isExpanded ? key + ' Expanded' || 'NA Expanded' : key || 'NA',
+            context.isHighlighted ? 0xffffff : 0x243746
+        );
+
+        context.container.addChild(textNode);
+        textNode.x = context.width / 2 - textNode.width / 2;
+        textNode.y = textNode.height / 2;
+  };
+  ```
+    createTextNode:
+    function that takes 2 arguments. 
+    String => text we want in our header. 
+    Color => color of the text 
+    returns an object that can be added to the garden. 
+  
+  We create a textNode and send in the text we want. 
+  context.isExpanded is supplid by the context. Telling us if this column is in the expanded state. 
+  Giving us an opportunity to change the text based on the expanded state. 
+  The same goes for context.isHighlighted. We changes text color based on its state. 
+  Highlited is dark green, so we want white text. 
+
+  We then add our textNode to the container. 
+  The container is the column created for the Garden. 
+  If the node is not added as a child it will not show up. 
+  
+  ```jsx
+  context.container.addChild(textNode);
+  textNode.x = context.width / 2 - textNode.width / 2;
+  textNode.y = textNode.height / 2;
+  ```
+  The next two lines we adjust the placement of the text inside our header. 
+  Making it centere both vertical and horizontal. 
+  we use the context.width here. This is the width if our header. 
+  There is also context.height for header height. 
+
+
+  #### Advanced Headers
+  We are free to add children to the context container at this point. 
+  We can create another  textNode with context.CreateTextNode and add that. 
+  Just be aware of the placement of the node. 
+
+  We can also add graphics.  
+  On the context you will find context.graphics. 
+  This is the PIXI.Graphics object. It gives you alof of freedom to create shapes and color in your header. 
+  It would be advisable to look up the documentation for PIXI if you see the need for this. 
+
+  a quick example for this 
+  ```jsx 
+  context.graphics.beginFill(0xffffff);
+  context.graphics.drawRoundedRect(0,context.height - 5,context.widht,5,4);
+  context.graphics.endFill();
+  ```
+  This will draw a green line though your header. 
+  BeginFill to chose color, start the drawing. 
+  drawRoundedRect is a rectangle with rounded corner. You then add its coordinatos inside the header as arguments. 
+  where 0,0 is top left. Last argument is radius (rounded corner degree).
+  This can for example be used to create a progress bar effect. 
+
+### Creating item
+Moving on to the items that will fill each column. 
+Before starting we should consider a few properties.
+What is our itemKeyProp. This needs to be a key in our item model. 
+preferably something unique. 
+Then the itemHeight and itemWidth. but again these can be easily adjusted if we see the need.
+
+#### renderItemContext
+  We again need to create a function similar to renderHeaderContext. 
+  This functions receives the item current item and a context. 
+  context has similiarites with the header context but is not the same. 
+
+  to start of our we items we need to create the rectangle. 
+  ```jsx 
+    const status = getFollowUpStatus(item);
+
+        context.createRect(
+            { x: 0, y: 0 },
+            { width: context.width, height: context.height },
+            followUpColorMapHex[status]
+        );
+  ```
+  createRect creates the rectangle for us. it takes in a position, size and backgroundcolor. 
+  We here set the position to be top left. and use the full height and widht off our container.
+  In most circumstance, this is how we would set this up. 
+  the last argument is color. We here have a function getFollowUpStatus that returns the items status. 
+  We then have an array with different colors based on the items status. 
+  Logic like we use here to get color is all up to us to create as we see fit. 
+  but as with header, this code will run once per item in our garden.
+
+  Next we need to set up the context.enquesRender. 
+  This function takes in a string, this is used as an identifier. Preferably unique. 
+  Then it takes a functions which will received the context object. 
+  
+  In this function you will draw everything you need onto our item. 
+  ```jsx
+  context.enquedRender(item.workOrderNumber, (context) => {
+    const textNode = context.createTextNode(
+        item.workOrderNumber,
+        status === 'MaterialAndWoAvailable' ? 0x212121 : 0xffffff
+    );
+    context.graphics.addChild(textNode);
+    textNode.x = 20;
+    textNode.y = context.height / 2 - textNode.height / 2;
+  });
+  ```
+  This is very similar to how we added text to to the header. Remark that we added the child to graphics here. 
+  We here set the workordernumber as text onto the item, then center it. 
+  we also choose a text color based on status. 
+
+  This is all that is needed to create an item. And our simple garden is now complete. 
+  
+  
+#### Advanced items
+We still have the same advanced options in the items as in th header. 
+Inside enquedRender we can create multiple textNodes and graphics. 
+Drawing graphics can be done in the same format as before. 
+ ```jsx 
+  context.graphics.beginFill(0xffffff);
+  context.graphics.drawRoundedRect(0,context.height - 5,context.widht,5,4);
+  context.graphics.endFill();
+  ```
+
+The ItemRenderContext has a few functions that we have not discussed. 
+This is some built in functionality and graphics. 
+These are used outside of the context.enquesRender function. 
+
+##### context.addDot
+This is a function that will draw a rounded dot indicator on the item.
+it takes in a color and position. 
+In our example : 
+```jsx 
+context.addDot(getMatStatusColor(item), { x: context.width - 12, y: 8 });  
+```
+We get a different color again based on the item. 
+Then place it in the top right corner. 
+
+You can add as multiple context.addDot to your renderItem function
+
+##### context.addPopover 
+This function is a hover effect for your item. 
+It takes in a hit area and a function that returns the component we want to show. 
+
+The hit are will need to be a PIXI shape. In most cases a rectangle will be a good fit. 
+In our example: 
+```jsx
+context.addPopover(new PIXI.Rectangle(0, 0, context.width, context.height), () => (
+            <ProjectPopover item={item} />
+        ));
+```
+We create a PIXI.Rectangle. The rectangle takes in its arguments that decides it placemet and size. 
+In this example it covers our entire item.  
+Then we give it a function that return our popover. 
+The component is just any React component. We can make this anyway we like.
+but it is still a hover and we will not be able to interact with it. 
+
+In the same fashion as addDot, we can add as many popovers as we like. 
+We just need to make sure we get our position and sizes right. 
+
+
+### Some useful hooks 
+The Garden component comes with some hooks that can be usefull. 
+These are not implemented in the garden in anyway, but can be used if you find them helpful. 
+
+#### useHangingGardenData 
+This hooks fetched data based on the currentContext and the supplied endpoint.
+What this hook gives you is cache handling.
+It has built in functionality for cache invalidation and refetching data. 
+It also give you the cache Age. 
+This is used in many Garden to give the user an indication of how old the data is. 
+Also the ability to update the cache at will. 
+
+#### useHangingGardenErrorMessage
+This hook work well along side the useHangingGardenData hook. 
+It take care of all know error or replies that can comeback from typical Hanging Garden endpoints.
+You can take the error from useHangingGardenData and feed it into the hook. 
+It will then either give you a errorMessage object back. That you can use with the standard error message boundry. 
+
+You dont need to do check if there are error as the hook will handle this for you. 
+And return a object with noError flag set. 
+Else it will give back a proper response depening on Error. 
+Outside of normal noData and general errors. 
+It will handle noCache errors and access errors. 
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+
+
+
 
