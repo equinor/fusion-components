@@ -60,15 +60,21 @@ const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps
             return <Spinner centered />;
         } else {
             return (
-                <>
-                    <Button onClick={onReadAll} disabled={unReadNotifications.length <= 0}>
+                <div className={styles.markAsRead}>
+                    <Button
+                        onClick={onReadAll}
+                        disabled={unReadNotifications.length <= 0}
+                    >
                         {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
                     </Button>
                     <NotificationDateDivisions notifications={unReadNotifications} />
-                </>
-            );
-        }
-    }, [unReadNotifications, isFetchingUnReadNotifications]);
+                </div>
+            )
+        };
+    }
+        , [unReadNotifications, isFetchingUnReadNotifications])
+
+    const readNotificationContent = React.useMemo(() => {
 
     const readNotificationContent = useMemo(() => {
         if (readNotifications.length === 0 && !isFetchingReadNotifications) {
@@ -95,16 +101,7 @@ const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps
                     <div className={styles.tabContent}>{readNotificationContent}</div>
                 </Tab>
                 {showSettings ? (
-                    <Tab
-                        className={styles.settingsTab}
-                        tabKey={'settings'}
-                        title={
-                            <Button outlined>
-                                {' '}
-                                Settings <SettingsIcon />{' '}
-                            </Button>
-                        }
-                    >
+                    <Tab className={styles.settingsPlacement} tabKey={"settings"} title={<div className={styles.settingsTab}> Settings <div className={styles.settingsIcon}><SettingsIcon /></div></div>}>
                         {settings}
                     </Tab>
                 ) : (

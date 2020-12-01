@@ -9,6 +9,7 @@ type TabsProps = {
     onChange: (tabKey: string) => void;
     activeTabKey: string;
     children: any;
+    noScrollGradient?: boolean;
 };
 
 type TabContentType = {
@@ -32,27 +33,21 @@ const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
     return <div className={styles.tabContent}>{clonedChildren}</div>;
 };
 
-const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
+const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey, noScrollGradient }) => {
     const tabsPaneRef = useRef<HTMLDivElement | null>(null);
     const activeTabRef = useRef<HTMLElement | null>(null);
 
     const checkForGradient = (): GradientType => {
-        if (!tabsPaneRef.current) {
-            return null;
-        }
+        if (noScrollGradient || !tabsPaneRef.current) return null;
 
-        const pane = tabsPaneRef.current;
+        const { scrollLeft, offsetWidth, scrollWidth } = tabsPaneRef.current;
 
-        if (pane.scrollLeft === 0 && pane.offsetWidth < pane.scrollWidth) {
-            return 'right';
-        }
+        if (scrollLeft === 0 && offsetWidth < scrollWidth) return 'right';
 
-        if (pane.scrollLeft != 0 && pane.scrollLeft + pane.offsetWidth < pane.scrollWidth) {
-            return 'leftAndRight';
-        }
-        if (pane.scrollLeft != 0 && pane.scrollLeft + pane.offsetWidth === pane.scrollWidth) {
-            return 'left';
-        }
+        if (scrollLeft != 0 && scrollLeft + offsetWidth < scrollWidth) return 'leftAndRight';
+
+        if (scrollLeft != 0 && scrollLeft + offsetWidth === scrollWidth) return 'left';
+
         return null;
     };
 
@@ -108,12 +103,13 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     );
 };
 
-const Tabs: React.FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
+const Tabs: React.FC<TabsProps> = ({ onChange, activeTabKey, noScrollGradient, children }) => {
     return (
         <div className={styles.tabs}>
             <TabPane
                 children={children}
                 activeTabKey={activeTabKey}
+                noScrollGradient={noScrollGradient}
                 onChange={(tabKey) => onChange(tabKey)}
             />
 

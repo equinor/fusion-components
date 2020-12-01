@@ -112,7 +112,6 @@ const NotificationCardContainer: FunctionComponent<NotificationCardContainerProp
         const id = notification.id;
         return (
             <AccordionItem
-                actionDirection="right"
                 onChange={() => handleOpenAccordionChange(id)}
                 key={id}
                 isOpen={openAccordions[id]}
