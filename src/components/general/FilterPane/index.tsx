@@ -40,7 +40,7 @@ export type FilterPaneProps<T> = {
     onToggleCollapse?: (isCollapsed: boolean) => void;
     headerComponent?: React.ReactNode;
     quickFactScope?: string;
-    onResetAll: () => void;
+    onResetAll: OnFilterChangeHandler<T>;
     showResetAllButton: boolean;
 };
 
@@ -98,6 +98,10 @@ function FilterPane<T>({
         }
     );
 
+    const onClick = useCallback(() => {
+        onResetAll;
+    }, [onResetAll]);
+
     const filterPaneContext = useMemo<IFilterPaneContext>(
         () => ({
             terms,
@@ -118,9 +122,9 @@ function FilterPane<T>({
                     {!isCollapsed && headerComponent}
                 </div>
                 <div className={styles.content}>
-                    {showResetAllButton && !isCollapsed && (
+                    {showResetAllButton && (
                         <div className={styles.resetButton}>
-                            <Button frameless onClick={onResetAll}>
+                            <Button frameless onClick={onClick}>
                                 Reset filters
                             </Button>
                         </div>

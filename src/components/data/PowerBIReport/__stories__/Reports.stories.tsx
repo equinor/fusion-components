@@ -1,5 +1,4 @@
 import { storiesOf } from '@storybook/react';
-import {useMemo, useState} from "react";
 import { IBasicFilter } from '../models/ReportLevelFilters';
 import PowerBIReport from '../index';
 import Button from '../../../general/Button';
@@ -77,7 +76,7 @@ const ReportWithFilter: React.FC = () => {
             <div style={{ width: '100%', height: '100%' }}>
                 <PowerBIReport
                     reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'}
-                    filters={[filter]}
+                    filters={filter ? [filter] : null}
                 />
             </div>
         </>

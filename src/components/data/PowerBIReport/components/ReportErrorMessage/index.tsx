@@ -14,10 +14,9 @@ import { useState, useMemo, useEffect, useCallback } from 'react';
 
 type ReportErrorMessageProps = {
     report: Report;
-    contextError: boolean;
 };
 
-const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report, contextError }) => {
+const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report }) => {
     const [isFetching, setIsFetching] = useState<boolean>(true);
     const [requirements, setRequirements] = useState<string | null>(null);
     const [description, setDescription] = useState<string | null>(null);
@@ -27,14 +26,6 @@ const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report, context
     const reportApiClient = useApiClients().report;
     const user = useCurrentUser();
     const timeStamp = useMemo(() => new Date().toString(), []);
-
-    const errorHeader = useMemo(
-        () =>
-            contextError
-                ? 'It looks like you do not have access to the selected context'
-                : 'It looks like you do not have access to this report',
-        [contextError]
-    );
 
     useEffect(() => {
         getReportInformation();
@@ -80,7 +71,7 @@ const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report, context
                         styles.restrictedAccessContainer
                     )}
                 >
-                    <h2>{errorHeader}</h2>
+                    <h2>It looks like you do not have access to this report</h2>
                     {noAccessMessage && <MarkdownViewer markdown={noAccessMessage} />}
                     <div className={styles.reportInfoContainer}>
                         {description && (

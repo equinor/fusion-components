@@ -100,12 +100,6 @@ function Filter<T>({
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
-    React.useEffect(() => {
-        if (defaultTerm !== term) {
-            setTerm(defaultTerm);
-        }
-    }, [defaultTerm]);
-
     const handleOnChange = useCallback(
         (newValue) => {
             if (!newValue) {

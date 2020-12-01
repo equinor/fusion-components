@@ -1,13 +1,14 @@
 import { IconButton, SaveIcon, CloseIcon, TextInput } from '@equinor/fusion-components';
 import { useState, useCallback } from 'react';
-import { Bookmark } from '../../useBookmarks';
+
+import { PBIBookmark } from '../../useBookmarks';
 import BookmarkOptions from './BookmarkOptions';
 import * as styles from './styles.less';
 
-type BookmarkProps<T> = {
-    bookmark: Bookmark<T>;
-    onDelete: (bookmark: Bookmark<T>) => void;
-    onUpdate: (bookmark: Bookmark<T>) => void;
+type BookmarkProps = {
+    bookmark: PBIBookmark;
+    onDelete: (bookmark: PBIBookmark) => void;
+    onUpdate: (bookmark: PBIBookmark) => void;
     onSelect: () => void;
     accordionOpen?: boolean;
 };
@@ -44,7 +45,13 @@ const EditBookmark: React.FC<EditBookmarkProps> = ({ name, onExit, onSave }) => 
     );
 };
 
-function Bookmark<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: BookmarkProps<T>) {
+const Bookmark: React.FC<BookmarkProps> = ({
+    bookmark,
+    onUpdate,
+    onDelete,
+    onSelect,
+    accordionOpen,
+}) => {
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
     const enableEditing = useCallback(() => setIsEditing(true), []);
@@ -82,5 +89,5 @@ function Bookmark<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: 
             )}
         </div>
     );
-}
+};
 export default Bookmark;
