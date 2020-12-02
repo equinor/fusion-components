@@ -173,6 +173,8 @@ export {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    CalendarAcceptIcon,
+    CalendarEventIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
