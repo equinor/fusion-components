@@ -201,28 +201,11 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
         );
         switch (Number(code)) {
             case 403: {
-                if (report && error.message === 'NotAuthorizedReport')
-                    return (
-                        <ReportErrorMessage
-                            report={report}
-                            contextErrorType={'NotAuthorizedReport'}
-                        />
-                    );
-
-                if (report && (inner as FusionApiErrorMessage)?.code === 'NotAuthorized')
-                    return (
-                        <ReportErrorMessage report={report} contextErrorType={'NotAuthorized'} />
-                    );
-
-                if (report && (inner as FusionApiErrorMessage)?.code === 'MissingContextRelation')
-                    return (
-                        <ReportErrorMessage
-                            report={report}
-                            contextErrorType={'MissingContextRelation'}
-                            message={(inner as FusionApiErrorMessage)?.message}
-                        />
-                    );
-
+                if (report) {
+                    // TODO: is there not a better way to check this?
+                    const hasContext = (inner as FusionApiErrorMessage)?.code !== 'NotAuthorized';
+                    return <ReportErrorMessage report={report} contextError={hasContext} />;
+                }
                 return renderStandardError('accessDenied');
             }
 
