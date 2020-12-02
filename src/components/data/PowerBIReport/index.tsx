@@ -408,16 +408,15 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
     // only display fusion errors
     if (error && error.type === 'fusion') {
-        const { title, message, code } = error;
+        const { title, message, code, inner } = error;
         const renderStandardError = (type: ErrorTypes = 'error') => (
             <ErrorMessage hasError={true} title={title} message={message} errorType={type} />
         );
         switch (Number(code)) {
             case 403: {
                 if (report) {
-                    const code = (error.inner as FusionApiErrorMessage).code;
                     // TODO: is there not a better way to check this?
-                    const hasContext = code !== 'NotAuthorized';
+                    const hasContext = (inner as FusionApiErrorMessage)?.code !== 'NotAuthorized';
                     return <ReportErrorMessage report={report} contextError={hasContext} />;
                 }
                 return renderStandardError('accessDenied');
