@@ -25,6 +25,17 @@ export {
     IRelativeDateFuilter,
     ITupleFilter,
 } from './components/data/PowerBIReport';
+export {
+    default as HangingGarden,
+    HangingGardenProps,
+    HangingGardenColumn,
+    ItemRenderContext,
+    RenderItem,
+    useHangingGardenData,
+    useHangingGardenErrorMessage,
+    useHangingGardenGetData,
+    PIXI,
+} from './components/data/HangingGarden';
 
 // General components
 export { default as Button, ButtonProps } from './components/general/Button';

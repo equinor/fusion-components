@@ -37,7 +37,7 @@
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@equinor/fusion": "^2.4.10",
+    "@equinor/fusion": "^2.4.12",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-docs": "^6.0.21",
     "@storybook/addon-jest": "^6.0.21",
@@ -90,6 +90,7 @@
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1",
     "marked": "^1.0.0",
+    "pixi.js": "^5.2.4",
     "powerbi-client": "^2.14.1",
     "prettier": "^2.0.2",
     "prettier-loader": "^3.3.0",
@@ -116,7 +117,8 @@
     "@equinor/fusion": "2.2.x",
     "react-router-dom": "5.x",
     "history": "^4.9.0",
-    "powerbi-client": "^2.8.0"
+    "powerbi-client": "^2.8.0",
+    "pixi.js": "^5.2.4"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
