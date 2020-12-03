@@ -2,7 +2,7 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
 import TextareaAutosize from 'react-textarea-autosize';
-import React, { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, forwardRef } from 'react';
 
 type TextAreaProps = {
     disabled?: boolean;
@@ -21,7 +21,7 @@ type TextAreaProps = {
     onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
     onKeyUp?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
 };
-const TextArea = React.forwardRef<
+const TextArea = forwardRef<
     HTMLTextAreaElement | null,
     React.PropsWithChildren<TextAreaProps>
 >(

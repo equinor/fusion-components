@@ -1,7 +1,7 @@
 import * as styles from './styles.less';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
-import React, { cloneElement, useEffect, useRef } from 'react';
+import { cloneElement, useEffect, useRef, Children } from 'react';
 
 type StepPaneProps = {
     onChange: (stepKey: string) => void;
@@ -39,7 +39,7 @@ const StepPane: React.FC<StepPaneProps> = ({
 
     useEffect(() => scrollToStep(activeStepRef.current), [activeStepKey]);
 
-    const clonedChildren = React.Children.map(children, (child, index) => {
+    const clonedChildren = Children.map(children, (child, index) => {
         const { title, stepKey, disabled } = child.props;
 
         if (!title || !stepKey) {
