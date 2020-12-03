@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useEffect } from 'react';
+import { ReactNode, useRef, useEffect } from 'react';
 import { render, unmountComponentAtNode } from 'react-dom';
 import { Router } from 'react-router-dom';
 import { FusionContext, useFusionContext } from '@equinor/fusion';

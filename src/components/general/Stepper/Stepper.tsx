@@ -3,7 +3,7 @@ import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-com
 import StepPane from './StepPane';
 import StepContent from './StepContent';
 import classNames from 'classnames';
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, FC, Children, ReactElement } from 'react';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;
@@ -21,7 +21,7 @@ type StepKey = {
 
 type StepDirection = 'next' | 'prev';
 
-const Stepper: React.FC<StepperProps> = ({
+const Stepper: FC<StepperProps> = ({
     children,
     activeStepKey,
     forceOrder,
@@ -36,10 +36,10 @@ const Stepper: React.FC<StepperProps> = ({
     const [canPrev, setCanPrev] = useState(false);
 
     useEffect(() => {
-        const steps: StepKey[] = React.Children.toArray(children).map((c, i) => ({
-            key: (c as React.ReactElement).props.stepKey,
+        const steps: StepKey[] = Children.toArray(children).map((c, i) => ({
+            key: (c as ReactElement).props.stepKey,
             position: i + 1,
-            disabled: (c as React.ReactElement).props.disabled,
+            disabled: (c as ReactElement).props.disabled,
         }));
 
         setStepKeys(steps);

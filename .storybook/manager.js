@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { create } from '@storybook/theming';
 import { addons } from '@storybook/addons';
 import AuthTokenInput from './authTokenAddon';

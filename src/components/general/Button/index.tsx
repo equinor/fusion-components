@@ -1,7 +1,7 @@
 import { useComponentDisplayType } from '@equinor/fusion';
 import ButtonComponent from './components/Button';
 import AnchorComponent from './components/Anchor';
-import React, { useState } from 'react';
+import { useState, createRef, forwardRef } from 'react';
 
 export type ButtonProps = {
     disabled?: boolean;
@@ -34,14 +34,14 @@ export type ButtonProps = {
     onClick?: React.EventHandler<React.SyntheticEvent>;
 };
 
-export const Button = React.forwardRef<HTMLElement | null, React.PropsWithChildren<ButtonProps>>(
+export const Button = forwardRef<HTMLElement | null, React.PropsWithChildren<ButtonProps>>(
     (props, ref) => {
         // Used to apply "radar" animation on mouse up
         const [mouseHasBeenDown, setMouseHasBeenDown] = useState(false);
         const displayType = useComponentDisplayType();
 
         const buttonRef =
-            (ref as React.RefObject<HTMLElement | null>) || React.createRef<HTMLElement | null>();
+            (ref as React.RefObject<HTMLElement | null>) || createRef<HTMLElement | null>();
 
         const handleOnMouseDown = (e: React.SyntheticEvent) => {
             const { onMouseDown } = props;

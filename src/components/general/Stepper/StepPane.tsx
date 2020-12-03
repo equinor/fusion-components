@@ -1,8 +1,7 @@
 import * as styles from './styles.less';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
-import { cloneElement, useEffect, useRef } from 'react';
-import React from 'react';
+import React, { cloneElement, useEffect, useRef } from 'react';
 
 type StepPaneProps = {
     onChange: (stepKey: string) => void;

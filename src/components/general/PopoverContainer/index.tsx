@@ -3,7 +3,7 @@ import styles from './styles.less';
 import Arrow from './Arrow';
 import { useElevationClassName } from '@equinor/fusion-components';
 import useInViewChecker from '../../../hooks/useInViewChecker';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 
 export type PopoverPlacement = 'below' | 'above' | 'left' | 'right';
 export type PopoverJustification = 'start' | 'center' | 'end';
@@ -53,7 +53,7 @@ const getAlternativePlacement = (
     return getNextAlternativePlacement(alternatives, testedPlacements) || preferredPlacement;
 };
 
-const PopoverContainer = React.forwardRef<
+const PopoverContainer = forwardRef<
     HTMLDivElement | null,
     React.PropsWithChildren<PopoverContainerProps>
 >(({ placement: preferredPlacement, justify, title, fillWithContent, centered, children }, ref) => {

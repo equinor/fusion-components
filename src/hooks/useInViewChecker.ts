@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, MutableRefObject, Dispatch } from 'react';
 
 const isCompletelyInView = (el: HTMLElement, margin = 1) => {
     const rect = el.getBoundingClientRect();
@@ -12,9 +12,9 @@ const isCompletelyInView = (el: HTMLElement, margin = 1) => {
 };
 
 export default <T extends HTMLElement>(
-    ref: React.MutableRefObject<T>,
+    ref: MutableRefObject<T>,
     margin = 1
-): [boolean, React.Dispatch<boolean>] => {
+): [boolean, Dispatch<boolean>] => {
     const getIsInView = () => {
         if (!ref || !ref.current) {
             return true;

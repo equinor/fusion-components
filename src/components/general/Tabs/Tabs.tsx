@@ -1,9 +1,8 @@
 import * as styles from './styles.less';
 import classNames from 'classnames';
-import { PaginationSkeleton } from '../Pagination';
 import { useEventListener } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import React, { useRef, useState, useEffect, cloneElement } from 'react';
+import { useRef, useState, useEffect, cloneElement, FC, Children, ReactElement } from 'react';
 
 type TabsProps = {
     onChange: (tabKey: string) => void;
@@ -18,21 +17,21 @@ type TabContentType = {
 
 type GradientType = 'left' | 'right' | 'leftAndRight' | null;
 
-const TabContent: React.FC<TabContentType> = ({ children, activeTabKey }) => {
-    const active = React.Children.toArray(children).find(
-        (child) => (child as React.ReactElement).props.tabKey === activeTabKey
-    ) as React.ReactElement | null;
+const TabContent: FC<TabContentType> = ({ children, activeTabKey }) => {
+    const active = Children.toArray(children).find(
+        (child) => (child as ReactElement).props.tabKey === activeTabKey
+    ) as ReactElement | null;
     if (!active) {
         return null;
     }
 
-    const clonedChildren = React.Children.map(active.props.children, (child) =>
-        React.cloneElement(child)
+    const clonedChildren = Children.map(active.props.children, (child) =>
+        cloneElement(child)
     );
     return <div className={styles.tabContent}>{clonedChildren}</div>;
 };
 
-const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
+const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     const tabsPaneRef = useRef<HTMLDivElement | null>(null);
     const activeTabRef = useRef<HTMLElement | null>(null);
 
@@ -85,7 +84,7 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
         setGradient(checkForGradient);
     }, [activeTabKey, tabsPaneRef]);
 
-    const clonedChildren = React.Children.map(children, (child) => {
+    const clonedChildren = Children.map(children, (child) => {
         const { tabKey } = child.props;
         if (!tabKey) {
             return null;
@@ -108,7 +107,7 @@ const TabPane: React.FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     );
 };
 
-const Tabs: React.FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
+const Tabs: FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
     return (
         <div className={styles.tabs}>
             <TabPane
