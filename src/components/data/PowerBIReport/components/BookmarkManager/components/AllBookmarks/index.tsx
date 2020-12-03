@@ -2,7 +2,7 @@ import { AccordionItem, Accordion, ErrorMessage } from '@equinor/fusion-componen
 import * as styles from './styles.less';
 import { BookmarkContext, PBIBookmark, UpdateBookmarkOperation } from '../../useBookmarks';
 import Bookmark from './Bookmark';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 
 type AllBookmarksProps = {
     allBookmarks: BookmarkContext[];
@@ -18,7 +18,7 @@ type OpenAccordion = {
     [contextId: string]: boolean;
 };
 
-const AllBookmarks: React.FC<AllBookmarksProps> = ({
+const AllBookmarks: FC<AllBookmarksProps> = ({
     allBookmarks,
     currentContextId,
     updateBookmark,

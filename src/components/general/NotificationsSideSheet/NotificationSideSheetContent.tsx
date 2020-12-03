@@ -2,7 +2,7 @@ import * as styles from './styles.less';
 import { Button, Spinner, Tab, Tabs, SettingsIcon } from '@equinor/fusion-components';
 import { NotificationCard, useGlobalNotificationCardsActions } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, FC } from 'react';
 
 type NotificationsSideSheetContentProps = {
     settings: React.ReactElement | null;
@@ -13,7 +13,7 @@ type NotificationsSideSheetContentProps = {
     isFetchingUnReadNotifications: boolean;
 };
 
-const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps> = ({
+const NotificationsSideSheetContent: FC<NotificationsSideSheetContentProps> = ({
     settings,
     showSettings,
     readNotifications,

@@ -6,7 +6,7 @@ import {
     Elevation,
     useElevationClassName,
 } from '@equinor/fusion-components';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, FC } from 'react';
 
 export type MenuSection<TItem extends MenuItemType> = {
     key: string;
@@ -20,8 +20,8 @@ export type MenuProps<TItem extends MenuItemType> = {
     onClick?: (item: TItem) => void | Promise<void>;
     keyboardNavigationRef?: HTMLElement | null;
     onChange?: (items: MenuSection<TItem>[]) => void | Promise<void>;
-    itemComponent?: React.FC<MenuItemComponentProps<TItem>>;
-    asideComponent?: React.FC<MenuItemComponentProps<TItem>>;
+    itemComponent?: FC<MenuItemComponentProps<TItem>>;
+    asideComponent?: FC<MenuItemComponentProps<TItem>>;
 };
 
 export { MenuItemType };

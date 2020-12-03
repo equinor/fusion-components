@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 
 import { PersonRole } from '@equinor/fusion';
 import * as styles from './styles.less';
@@ -13,7 +13,7 @@ const sortByDisplayName = (a: PersonRole, b: PersonRole) => {
     return a.displayName.localeCompare(b.displayName);
 };
 
-const PersonRoleList: React.FC<PersonRoleListProps> = ({ roleType, personRoles }) => {
+const PersonRoleList: FC<PersonRoleListProps> = ({ roleType, personRoles }) => {
     const roles = useMemo(
         () =>
             personRoles.filter((role) =>

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
@@ -11,7 +11,7 @@ import { styling, DataTable, DataTableColumn, Button } from '@equinor/fusion-com
 type TableProps = {
     data: DataItem[];
 };
-const Table: React.FC<TableProps> = ({ data }) => {
+const Table: FC<TableProps> = ({ data }) => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -154,7 +154,7 @@ const sections: FilterSection<DataItem>[] = [
     },
 ];
 
-const FilterPaneStory: React.FC = () => {
+const FilterPaneStory: FC = () => {
     const [terms, setTerms] = useState<FilterTerm[]>([
         {
             key: 'custom-colors',

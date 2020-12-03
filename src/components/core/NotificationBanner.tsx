@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { FC, useState, useCallback, useEffect, useMemo } from 'react';
 
 import {
     NotificationRequest,
@@ -17,7 +17,7 @@ type NotificationBannerProps = {
     registerPresenter: RegisterNotificationPresenter;
 };
 
-const NotificationBanner: React.FC<NotificationBannerProps> = ({ registerPresenter }) => {
+const NotificationBanner: FC<NotificationBannerProps> = ({ registerPresenter }) => {
     const [banners, setBanners] = useState<BannerNotification[]>([]);
 
     const resolveBanner = useCallback(

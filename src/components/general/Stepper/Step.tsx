@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, FC } from 'react';
 
 import * as styles from './styles.less';
 import classNames from 'classnames';
@@ -26,7 +26,7 @@ type BadgeProps = {
     done?: boolean;
 };
 
-const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
+const Badge: FC<BadgeProps> = ({ position, active, done }) => {
     const badgeClasses = classNames(styles.badge, useComponentDisplayClassNames(styles), {
         [styles.active]: active,
         [styles.done]: done,
@@ -40,7 +40,7 @@ const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
     );
 };
 
-const Step: React.FC<StepProps> = ({
+const Step: FC<StepProps> = ({
     title,
     description,
     isCurrent,

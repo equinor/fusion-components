@@ -10,13 +10,13 @@ import {
 } from '@equinor/fusion-components';
 import { useCurrentUser, useApiClients } from '@equinor/fusion';
 import classNames from 'classnames';
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useEffect, useCallback, FC } from 'react';
 
 type ReportErrorMessageProps = {
     report: Report;
 };
 
-const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report }) => {
+const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report }) => {
     const [isFetching, setIsFetching] = useState<boolean>(true);
     const [requirements, setRequirements] = useState<string | null>(null);
     const [description, setDescription] = useState<string | null>(null);

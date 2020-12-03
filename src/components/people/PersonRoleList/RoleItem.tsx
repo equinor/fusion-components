@@ -5,7 +5,7 @@ import {
     useFusionContext,
 } from '@equinor/fusion';
 import { Switch } from '@equinor/fusion-components';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, FC } from 'react';
 
 import * as styles from './styles.less';
 import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClient';
@@ -27,7 +27,7 @@ const expiresIn = (activeTo: string) => {
     return `Expires in ${Math.ceil(Math.abs(activeToDate - now) / 36e5)} hours`;
 };
 
-const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) => {
+const RoleItem: FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) => {
     const currentUser = useCurrentUser();
     const { peopleContainer } = useFusionContext();
     const [isActive, setIsActive] = useState<boolean>(role.isActive);

@@ -1,13 +1,14 @@
 import styles from '../styles.less';
 import { PositionInstance, Position } from '@equinor/fusion';
 import { PersonPhoto } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 type RotationInstancesProps = {
     allInstances: PositionInstance[];
     position: Position;
 };
 
-const RotationInstances: React.FC<RotationInstancesProps> = ({ allInstances, position }) => {
+const RotationInstances: FC<RotationInstancesProps> = ({ allInstances, position }) => {
     return (
         <div className={styles.rotationInstances}>
             {allInstances.map((instance, index) => (

@@ -9,7 +9,7 @@ import {
     useOverlayContainer,
     useStringMask,
 } from '@equinor/fusion-components';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, FC } from 'react';
 
 type DatePickerProps = {
     disabled?: boolean;
@@ -20,7 +20,7 @@ type DatePickerProps = {
     onChange: (date: null | Date) => void;
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({
+const DatePicker: FC<DatePickerProps> = ({
     disabled,
     error,
     errorMessage,

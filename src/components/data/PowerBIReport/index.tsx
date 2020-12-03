@@ -31,7 +31,7 @@ import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
 import BookmarkManager from './components/BookmarkManager';
-import { useState, useRef, useEffect, useCallback, useLayoutEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useLayoutEffect, FC } from 'react';
 
 type PowerBIProps = {
     reportId: string;
@@ -84,7 +84,7 @@ let timeout: NodeJS.Timeout;
 /**
  * TODO: use native react component from Microsoft
  */
-const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
+const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
     const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
 

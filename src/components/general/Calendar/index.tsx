@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useCallback, useEffect, FC } from 'react';
 
 import classNames from 'classnames';
 import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/fusion';
@@ -15,7 +15,7 @@ type CalendarProps = {
     onChange?: (date: Date) => void;
 };
 
-const Calendar: React.FC<CalendarProps> = ({
+const Calendar: FC<CalendarProps> = ({
     initialYear,
     initialMonth,
     selectedDate,

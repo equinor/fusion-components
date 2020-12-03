@@ -1,6 +1,7 @@
 import { AdaptiveCardViewer } from '@equinor/fusion-components';
 import { NotificationCard } from '@equinor/fusion';
 import * as styles from './styles.less';
+import { FC } from 'react';
 
 type StandardNotificationCardProps = {
     notification: NotificationCard;
@@ -8,7 +9,7 @@ type StandardNotificationCardProps = {
     actionableComponents?: React.ReactNode[];
 };
 
-const StandardNotificationCard: React.FC<StandardNotificationCardProps> = ({
+const StandardNotificationCard: FC<StandardNotificationCardProps> = ({
     notification,
     discardComponent,
     actionableComponents,

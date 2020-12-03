@@ -8,14 +8,14 @@ import {
     DeleteIcon,
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, FC } from 'react';
 import * as styles from './styles.less';
 
 type NotificationCardWrapperProps = {
     notification: NotificationCard;
 };
 
-const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notification }) => {
+const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({ notification }) => {
     const {
         isMarkingNotification,
         markNotificationsAsSeenAsync,

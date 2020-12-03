@@ -5,7 +5,7 @@ import useBookmarks, { PBIBookmark } from './useBookmarks';
 import * as styles from './styles.less';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
 
 type BookmarkSideSheetProps = {
     isOpen: boolean;
@@ -17,7 +17,7 @@ type BookmarkSideSheetProps = {
 
 type TabKey = 'add-new' | 'see-all' | string;
 
-const BookmarkSideSheet: React.FC<BookmarkSideSheetProps> = ({
+const BookmarkSideSheet: FC<BookmarkSideSheetProps> = ({
     isOpen,
     onClose,
     captureBookmark,

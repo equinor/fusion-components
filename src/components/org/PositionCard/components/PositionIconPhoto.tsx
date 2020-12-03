@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, FC } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 import {
@@ -19,7 +19,7 @@ type PositionPhotoIconProps = {
     rotationInstances: PositionInstance[];
 };
 
-const PositionPhotoIcon: React.FC<PositionPhotoIconProps> = ({
+const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     currentInstance,
     isLinked,
     rotationInstances,

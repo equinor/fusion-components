@@ -2,8 +2,9 @@ import classNames from 'classnames';
 import styles from '../styles.less';
 import { ExpandCellProps } from '../dataTableTypes';
 import { DropdownArrow } from '@equinor/fusion-components';
+import { FC } from 'react';
 
-const ExpandCell: React.FC<ExpandCellProps> = ({
+const ExpandCell: FC<ExpandCellProps> = ({
     isExpandable,
     isExpanded,
     isHovering,

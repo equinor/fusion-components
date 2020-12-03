@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, FC } from 'react';
 
 import {
     NotificationRequest,
@@ -11,7 +11,7 @@ type NotificationSnacksProps = {
     registerPresenter: RegisterNotificationPresenter;
 };
 
-const NotificationSnacks: React.FC<NotificationSnacksProps> = ({ registerPresenter }) => {
+const NotificationSnacks: FC<NotificationSnacksProps> = ({ registerPresenter }) => {
     const [currentNotification, setCurrentNotification] = useState<NotificationRequest | null>(
         null
     );

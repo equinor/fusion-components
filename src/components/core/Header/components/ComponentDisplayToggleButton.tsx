@@ -6,6 +6,7 @@ import {
     useTooltipRef,
     useAnchorRef,
 } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 const inverseComponentDisplayType = (componentDisplayType: ComponentDisplayType) =>
     componentDisplayType === ComponentDisplayType.Comfortable
@@ -34,7 +35,7 @@ type ComponentDisplayToggleButtonProps = {
     quickFactScope?: string;
 };
 
-const ComponentDisplayToggleButton: React.FC<ComponentDisplayToggleButtonProps> = ({
+const ComponentDisplayToggleButton: FC<ComponentDisplayToggleButtonProps> = ({
     quickFactScope,
 }) => {
     const { settings } = useFusionContext();

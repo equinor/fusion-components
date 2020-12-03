@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, FC } from 'react';
 
 import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
@@ -16,7 +16,7 @@ type SliderProps = {
     onChange: (marker: SliderMarker) => void;
 };
 
-const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
+const Slider: FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
     const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
     const onTrackClick = useCallback(

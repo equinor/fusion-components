@@ -1,12 +1,12 @@
 import { NotificationCards } from '@equinor/fusion-components';
 import { useFusionContext, NotificationCard } from '@equinor/fusion';
-import { useState, useEffect, useCallback } from 'react';
+import { FC, useState, useEffect, useCallback } from 'react';
 
 type NotificationCardsPresenterProps = {
     onShowInList: () => void;
 };
 
-const NotificationCardsPresenter: React.FC<NotificationCardsPresenterProps> = ({
+const NotificationCardsPresenter: FC<NotificationCardsPresenterProps> = ({
     onShowInList,
 }) => {
     const { notificationCenter } = useFusionContext();

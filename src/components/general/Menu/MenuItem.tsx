@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, FC } from 'react';
 import styles from './styles.less';
 
 export type MenuItemComponentProps<TItem extends MenuItemType> = {
@@ -19,8 +19,8 @@ type MenuItemProps<TItem extends MenuItemType> = {
     index: number;
     isFocused: boolean;
     onClick: (e: TItem) => void;
-    itemComponent?: React.FC<MenuItemComponentProps<TItem>>;
-    asideComponent?: React.FC<MenuItemComponentProps<TItem>>;
+    itemComponent?: FC<MenuItemComponentProps<TItem>>;
+    asideComponent?: FC<MenuItemComponentProps<TItem>>;
 };
 
 const scrollElementIntoView = (el: HTMLElement & { scrollIntoViewIfNeeded?: () => void }) => {

@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Children } from 'react';
 import styles from './styles.less';
+import { FC } from 'react';
 
 type SpinnerProps = {
     floating?: boolean;
@@ -23,7 +24,7 @@ type SpinnerProps = {
     size?: number;
 };
 
-const Spinner: React.FC<SpinnerProps> = ({
+const Spinner: FC<SpinnerProps> = ({
     floating,
     centered,
     primary,

@@ -1,8 +1,8 @@
 import ItemComponentProps from './itemComponentProps';
 import styles from '../styles.less';
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 
-const ItemComponent: React.FC<ItemComponentProps> = ({ item }) => {
+const ItemComponent: FC<ItemComponentProps> = ({ item }) => {
     if (item.key === 'empty') {
         return <div>{item.title}</div>;
     }

@@ -1,12 +1,13 @@
 import marked from 'marked';
 import styles from './styles.less';
 import dompurify from 'dompurify';
+import { FC } from 'react';
 
 type MarkdownViewerProps = {
     markdown: string;
 };
 
-const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ markdown }) => {
+const MarkdownViewer: FC<MarkdownViewerProps> = ({ markdown }) => {
     return (
         <div
             className={styles.container}

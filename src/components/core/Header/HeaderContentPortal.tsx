@@ -1,7 +1,8 @@
 import { createPortal } from 'react-dom';
 import { useFusionContext } from '@equinor/fusion';
+import { FC } from 'react';
 
-const HeaderContentPortal: React.FC = ({ children }) => {
+const HeaderContentPortal: FC = ({ children }) => {
     const {
         refs: { headerContent },
     } = useFusionContext();

@@ -1,4 +1,4 @@
-import { FC, useState, useCallback, useRef, useEffect, ReactNode, useMemo } from 'react';
+import { FC, useState, useCallback, useEffect, ReactNode, useMemo } from 'react';
 
 import classNames from 'classnames';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
@@ -24,7 +24,7 @@ export type StandardSideSheetProps = ResizablePaneOptions & {
     children: ReactNode;
 };
 
-const SideSheet: React.FC<StandardSideSheetProps> = ({
+const SideSheet: FC<StandardSideSheetProps> = ({
     id,
     title,
     isOpen,

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, FC } from 'react';
 
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
@@ -21,7 +21,7 @@ type PositionInstanceProps = {
     selectedDate?: Date;
 };
 
-const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
+const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     position,
     instance,
     showLocation,

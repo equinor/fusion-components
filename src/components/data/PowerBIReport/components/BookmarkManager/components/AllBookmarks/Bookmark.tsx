@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { PBIBookmark } from '../../useBookmarks';
 import BookmarkOptions from './BookmarkOptions';
 import * as styles from './styles.less';
+import { FC } from 'react';
 
 type BookmarkProps = {
     bookmark: PBIBookmark;
@@ -19,7 +20,7 @@ type EditBookmarkProps = {
     onSave: (newName: string) => void;
 };
 
-const EditBookmark: React.FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
+const EditBookmark: FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
     const [bookmarkName, setBookmarkName] = useState<string>(name);
     const updateBookmarkName = useCallback((newName: string) => setBookmarkName(newName), []);
 
@@ -45,7 +46,7 @@ const EditBookmark: React.FC<EditBookmarkProps> = ({ name, onExit, onSave }) => 
     );
 };
 
-const Bookmark: React.FC<BookmarkProps> = ({
+const Bookmark: FC<BookmarkProps> = ({
     bookmark,
     onUpdate,
     onDelete,

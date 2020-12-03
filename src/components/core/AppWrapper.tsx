@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, FC } from 'react';
 
 import { Router } from 'react-router-dom';
 import { History, createBrowserHistory } from 'history';
@@ -14,7 +14,7 @@ type AppWrapperProps = {
     appKey?: string;
 };
 
-const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
+const AppWrapper: FC<AppWrapperProps> = ({ appKey }) => {
     const {
         app: { container: appContainer },
         history,

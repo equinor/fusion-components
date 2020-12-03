@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, FC } from 'react';
 
 import styles from './styles.less';
 import classNames from 'classnames';
@@ -18,7 +18,7 @@ type SliderMarkerProps = {
     onClick: (marker: SliderMarker) => void;
 };
 
-const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, disabled, position, onClick }) => {
+const Marker: FC<SliderMarkerProps> = ({ marker, isActive, disabled, position, onClick }) => {
     const onClickHandler = useCallback(
         (e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();

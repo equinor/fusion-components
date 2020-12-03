@@ -1,13 +1,13 @@
 import { useCurrentPersonDetails } from '@equinor/fusion';
 import { IconButton, PersonPhoto, useAnchor } from '@equinor/fusion-components';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
 
 import AccountManagerSideSheet from './AccountManagerSideSheet';
 
 type CurrentUserButtonProp = {
     quickFactScope?: string;
 };
-const CurrentUserButton: React.FC<CurrentUserButtonProp> = ({ quickFactScope }) => {
+const CurrentUserButton: FC<CurrentUserButtonProp> = ({ quickFactScope }) => {
     const { personDetails } = useCurrentPersonDetails();
     const [showAccountManager, setShowAccountManager] = useState<boolean>(false);
 

@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback, useEffect, FC } from 'react';
 import {
     MarkdownEditorElement,
     MarkdownEditorElementProps,
@@ -28,7 +28,7 @@ declare global {
     }
 }
 
-export const MarkdownEditor: React.FC<MarkdownEditorProps> = (props: MarkdownEditorProps) => {
+export const MarkdownEditor: FC<MarkdownEditorProps> = (props: MarkdownEditorProps) => {
     const editorRef = useRef<MarkdownEditorElement>(null);
     const { onChange, children, ...attr } = props;
 

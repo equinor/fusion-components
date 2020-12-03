@@ -1,6 +1,6 @@
 import { CloseIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
-
+import { FC } from 'react';
 import * as styles from './styles.less';
 
 type ChipProps = {
@@ -11,7 +11,7 @@ type ChipProps = {
     primary?: boolean;
 };
 
-const Chip: React.FC<ChipProps> = ({ isDisabled, onRemove, title, secondary, primary }) => {
+const Chip: FC<ChipProps> = ({ isDisabled, onRemove, title, secondary, primary }) => {
     const chipContainerClassNames = classNames(styles.chipContainer, {
         [styles.disabled]: isDisabled,
         [styles.secondary]: secondary,

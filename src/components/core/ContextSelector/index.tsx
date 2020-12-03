@@ -23,7 +23,7 @@ import * as styles from './styles.less';
 import classNames from 'classnames';
 
 import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
-import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
+import { useRef, useState, useEffect, useCallback, useMemo, FC } from 'react';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -36,7 +36,7 @@ type SearchableContextDropdownOption = SearchableDropdownOption & {
     contextType: ContextType;
 };
 
-const ContextSelector: React.FC = () => {
+const ContextSelector: FC = () => {
     const contextManager = useContextManager();
     const currentContext = useCurrentContext();
     const contextHistory = useContextHistory();

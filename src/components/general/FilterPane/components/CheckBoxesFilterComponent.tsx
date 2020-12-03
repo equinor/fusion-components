@@ -2,6 +2,7 @@ import { useTooltipRef, CheckBox } from '@equinor/fusion-components';
 import { FilterTerm } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
+import { FC } from 'react';
 
 type CheckBoxOption = {
     key: string;
@@ -40,7 +41,7 @@ const getCountForOption = (option: CheckBoxOption, filterCount: Count) => {
     return countForOption.count;
 };
 
-const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
+const CheckboxWrapper: FC<CheckBoxWrapperProps> = ({
     option,
     term,
     filterCount,
@@ -100,7 +101,7 @@ const CheckboxWrapper: React.FC<CheckBoxWrapperProps> = ({
     );
 };
 
-const CheckBoxesFilterComponent: React.FC<CheckBoxesFilterProps> = ({
+const CheckBoxesFilterComponent: FC<CheckBoxesFilterProps> = ({
     options,
     term,
     filterCount,

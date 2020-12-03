@@ -6,7 +6,7 @@ import {
 import * as styles from './styles.less';
 import classNames from 'classnames';
 import NotificationCardWrapper from './NotificationCardWrapper';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, FC } from 'react';
 
 type NotificationCardsProps = {
     notifications: NotificationCard[];
@@ -15,7 +15,7 @@ type NotificationCardsProps = {
 };
 type GradientType = 'top' | 'bottom' | 'topAndBottom' | null;
 
-const NotificationCards: React.FC<NotificationCardsProps> = ({
+const NotificationCards: FC<NotificationCardsProps> = ({
     notifications,
     onDiscardNotification,
     onShowInList,

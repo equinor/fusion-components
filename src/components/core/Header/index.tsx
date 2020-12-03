@@ -13,7 +13,7 @@ import ComponentDisplayToggleButton from './components/ComponentDisplayToggleBut
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
-import { createElement } from 'react';
+import { createElement, FC } from 'react';
 
 enum Breakpoints {
     medium = 'medium',
@@ -37,14 +37,14 @@ export type HeaderContentProps = {
 
 type FusionHeaderProps = {
     start: React.ReactElement | null;
-    content: React.FC<HeaderContentProps> | null;
+    content: FC<HeaderContentProps> | null;
     aside: React.ReactElement | null;
     settings: React.ReactElement | null;
     quickFactScope?: string;
     showSettings?: boolean;
 };
 
-const FusionHeader: React.FC<FusionHeaderProps> = ({
+const FusionHeader: FC<FusionHeaderProps> = ({
     start,
     content,
     aside,

@@ -7,7 +7,7 @@ import {
 } from '@equinor/fusion';
 import AccountDetails from './AccoutDetails';
 import MenuComponent from './MenuComponent';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
 
 type AccountManagerSideSheet = {
     show: boolean;
@@ -15,7 +15,7 @@ type AccountManagerSideSheet = {
     personDetails: PersonDetails;
 };
 
-const AccountManagerSideSheet: React.FC<AccountManagerSideSheet> = ({
+const AccountManagerSideSheet: FC<AccountManagerSideSheet> = ({
     show,
     onClose,
     personDetails,

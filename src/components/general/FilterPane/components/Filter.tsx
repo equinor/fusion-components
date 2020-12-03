@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, FC } from 'react';
 
 import classNames from 'classnames';
 import {
@@ -16,7 +16,7 @@ import { FilterTerm, Filter as FilterConfig } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
 
-const resolveFilterComponent = (type: FilterTypes): React.FC<any> | null => {
+const resolveFilterComponent = (type: FilterTypes): FC<any> | null => {
     switch (type) {
         case FilterTypes.Search:
             return SearchFilterComponent;

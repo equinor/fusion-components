@@ -1,7 +1,7 @@
 import * as styles from './styles.less';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
-import { cloneElement, useEffect, useRef, Children } from 'react';
+import { cloneElement, useEffect, useRef, Children, FC } from 'react';
 
 type StepPaneProps = {
     onChange: (stepKey: string) => void;
@@ -11,7 +11,7 @@ type StepPaneProps = {
     forceOrder: boolean;
 };
 
-const StepPane: React.FC<StepPaneProps> = ({
+const StepPane: FC<StepPaneProps> = ({
     children,
     onChange,
     activeStepKey,

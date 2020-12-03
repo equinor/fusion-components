@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState, FC } from 'react';
 
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
@@ -9,7 +9,7 @@ import { SideSheet } from '../../SideSheet';
 import '../../../../customElements/components/application-guide';
 import { ApplicationGuidanceAnchor, useAnchor } from '../components/Anchor';
 
-const Story: React.FC = () => {
+const Story: FC = () => {
     const scope = 'storybook';
     const [showSideSheet, setShowSideSheet] = useState(true);
     return (

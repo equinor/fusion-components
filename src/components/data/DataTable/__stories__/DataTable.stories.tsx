@@ -14,9 +14,10 @@ import {
     Pagination,
 } from '@equinor/fusion';
 import { DataTableColumn } from '../dataTableTypes';
+import { FC } from 'react';
 
 const emptyArray = [];
-const WithSkeleton: React.FC = () => {
+const WithSkeleton: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -62,7 +63,7 @@ const WithSkeleton: React.FC = () => {
     );
 };
 
-const ExpandedItem: React.FC<DataItemProps> = ({ item }) => {
+const ExpandedItem: FC<DataItemProps> = ({ item }) => {
     return (
         <>
             <h3>
@@ -75,7 +76,7 @@ const ExpandedItem: React.FC<DataItemProps> = ({ item }) => {
     );
 };
 
-const WithoutSkeleton: React.FC = () => {
+const WithoutSkeleton: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -119,7 +120,7 @@ const WithoutSkeleton: React.FC = () => {
     );
 };
 
-const NoColumnsCollapse: React.FC = () => {
+const NoColumnsCollapse: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -162,7 +163,7 @@ const NoColumnsCollapse: React.FC = () => {
     );
 };
 
-const Selectable: React.FC = () => {
+const Selectable: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -210,7 +211,7 @@ const Selectable: React.FC = () => {
     );
 };
 
-const SingleSelectable: React.FC = () => {
+const SingleSelectable: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -268,7 +269,7 @@ const SingleSelectable: React.FC = () => {
     );
 };
 
-const ExpandableRows: React.FC = () => {
+const ExpandableRows: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, FC } from 'react';
 
 import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
@@ -18,7 +18,7 @@ type SliderProps = {
 
 type Handle = 'firstHandle' | 'lastHandle';
 
-const Slider: React.FC<SliderProps> = ({ values, markers, disabled, hideHandle, onChange }) => {
+const Slider: FC<SliderProps> = ({ values, markers, disabled, hideHandle, onChange }) => {
     const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
     const firstValue = useMemo(() => values[0], [values]);

@@ -43,13 +43,13 @@ export type OrgChartContextType<T> = {
     initialCardWidth: number;
     rowMargin: number;
     allNodes: OrgNode<T>[];
-    component: React.FC<OrgChartItemProps<T>> | null;
+    component: FC<OrgChartItemProps<T>> | null;
     asideRows: number;
     childrenRows: number;
     childrenLabel: string | null;
     asideLabel: string | null;
     breadCrumbs: BreadCrumb[] | null;
-    breadCrumbComponent: React.FC<BreadCrumb> | null;
+    breadCrumbComponent: FC<BreadCrumb> | null;
     numberOfCardsPerRow: number;
     breadCrumbWidth: number;
     breadCrumbHeight: number;

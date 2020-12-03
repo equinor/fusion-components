@@ -3,9 +3,9 @@ import ContextSelector from '../index';
 import FusionHeader from '../../Header';
 import FusionContent from '../../Content';
 import { ContextTypes, useFusionContext } from '@equinor/fusion';
-import { Fragment } from "react";
+import { Fragment, FC } from "react";
 
-const CurrentContextNullableAndPlaceholder: React.FC = ({ children }) => {
+const CurrentContextNullableAndPlaceholder: FC = ({ children }) => {
     const { app } = useFusionContext();
 
     (app.container as any)._currentApp.state = {
@@ -26,7 +26,7 @@ const CurrentContextNullableAndPlaceholder: React.FC = ({ children }) => {
     return <> {children} </>;
 };
 
-const CurrentContext: React.FC = ({ children }) => {
+const CurrentContext: FC = ({ children }) => {
     const { app } = useFusionContext();
 
     (app.container as any)._currentApp.state = {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 
 import styles from './styles.less';
 import classNames from 'classnames';
@@ -13,7 +13,7 @@ type BannerProps = {
     onAction?: () => void;
 };
 
-const Banner: React.FC<BannerProps> = ({
+const Banner: FC<BannerProps> = ({
     message,
     icon,
     onDismiss,

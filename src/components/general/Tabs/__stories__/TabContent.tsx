@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import { useEffect, FC } from 'react';
 
 import Button from '../../Button';
 import styles from './styles.less';
@@ -10,7 +10,7 @@ type ItemProps = {
     content?: string;
 };
 
-export const Item: React.FC<ItemProps> = ({ changeItem, prevItem, nextItem, content }) => {
+export const Item: FC<ItemProps> = ({ changeItem, prevItem, nextItem, content }) => {
     const prevButton = prevItem ? (
         <Button onClick={() => prevItem && changeItem(prevItem)}>Previous Item</Button>
     ) : null;

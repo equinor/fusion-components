@@ -3,6 +3,7 @@ import { CalendarDate, isSameDate } from '@equinor/fusion';
 
 import styles from './styles.less';
 import { IconButton } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 type DayProps = {
     date: CalendarDate;
@@ -11,7 +12,7 @@ type DayProps = {
     onClick?: (date: Date) => void;
 };
 
-const Day: React.FC<DayProps> = ({ date, interactive, onClick, selectedDate }) => {
+const Day: FC<DayProps> = ({ date, interactive, onClick, selectedDate }) => {
     const dayClassNames = classNames(styles.day, {
         [styles.isToday]: date.isToday,
         [styles.notSelectedMonth]: !date.isSelectedMonth,

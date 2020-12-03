@@ -8,7 +8,7 @@ import {
     CloseIcon,
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, FC } from 'react';
 import * as styles from './styles.less';
 
 type NotificationCardWrapperProps = {
@@ -18,7 +18,7 @@ type NotificationCardWrapperProps = {
 };
 let discardNotificationTimeout;
 
-const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({
+const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({
     notification,
     onDiscard,
     onShowInList,

@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, FC } from 'react';
 
 import styles from './styles.less';
 import classNames from 'classnames';
-import { useElevationClassName, useEventListener } from '@equinor/fusion-components';
+import { useElevationClassName } from '@equinor/fusion-components';
 
 export enum VerticalPositions {
     Top = 'top',
@@ -25,7 +25,7 @@ type SnackBarProps = {
     onDismiss: () => void;
 };
 
-const SnackBar: React.FC<SnackBarProps> = ({
+const SnackBar: FC<SnackBarProps> = ({
     verticalPosition = VerticalPositions.Bottom,
     horizontalPosition = HorizontalPositions.Left,
     message,

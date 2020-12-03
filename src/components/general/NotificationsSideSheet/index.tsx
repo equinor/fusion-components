@@ -1,7 +1,7 @@
 import { ModalSideSheet, styling } from '@equinor/fusion-components';
 import { NotificationCard } from '@equinor/fusion';
 import NotificationsSideSheetContent from './NotificationSideSheetContent';
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 
 type NotificationsSideSheetProps = {
     settings: React.ReactElement | null;
@@ -13,7 +13,7 @@ type NotificationsSideSheetProps = {
     isFetchingUnReadNotifications: boolean;
 };
 
-const NotificationsSideSheet: React.FC<NotificationsSideSheetProps> = ({
+const NotificationsSideSheet: FC<NotificationsSideSheetProps> = ({
     settings,
     showSettings,
     open,

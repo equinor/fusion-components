@@ -8,14 +8,14 @@ import {
     ScheduleIcon,
     PhotoSize,
 } from '@equinor/fusion-components';
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 
 type PersonPresenceProps = {
     presence: PersonPresenceAvailability;
     size: PhotoSize;
 };
 
-const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presence, size }) => {
+const PersonPresenceIcon: FC<PersonPresenceProps> = ({ presence, size }) => {
     const presenceClasses = classNames(
         styles.presenceContainer,
         useComponentDisplayClassNames(styles),

@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, FC } from 'react';
 
 import styles from '../styles.less';
 import { PositionInstance, formatDate } from '@equinor/fusion';
@@ -48,7 +48,7 @@ const addDaysToDate = (date: Date, days: number): Date => {
     return result;
 };
 
-const TimelineInstance: React.FC<TimelineInstanceProps> = ({
+const TimelineInstance: FC<TimelineInstanceProps> = ({
     instance,
     activeInstance,
     allInstances,
@@ -140,7 +140,7 @@ const TimelineInstance: React.FC<TimelineInstanceProps> = ({
     );
 };
 
-const PositionTimeline: React.FC<PositionTimelineProps> = ({
+const PositionTimeline: FC<PositionTimelineProps> = ({
     activeInstance,
     allInstances,
     firstInstance,

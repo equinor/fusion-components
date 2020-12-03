@@ -4,6 +4,7 @@ import OrgChart from '.';
 import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 import { useComponentDisplayType, Position } from '@equinor/fusion';
 import { PositionCard } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 type PositionStructure = OrgStructure & {
     name?: string;
@@ -197,11 +198,11 @@ const breadCrumbStyle = {
     height: '32px',
 } as React.CSSProperties;
 
-const BreadCrumbComponent: React.FC<BreadCrumb> = ({ label }) => {
+const BreadCrumbComponent: FC<BreadCrumb> = ({ label }) => {
     return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
 };
 
-const PositionCardComponent: React.FC<OrgChartItemProps<PositionStructure>> = ({ item }) => {
+const PositionCardComponent: FC<OrgChartItemProps<PositionStructure>> = ({ item }) => {
     return (
         <div style={{ margin: '12px' }}>
             <PositionCard

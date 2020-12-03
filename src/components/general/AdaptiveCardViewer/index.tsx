@@ -1,4 +1,4 @@
-import { useRef, useMemo, useCallback, useEffect } from 'react';
+import { useRef, useMemo, useCallback, useEffect, FC } from 'react';
 
 import * as AdaptiveCards from 'adaptivecards';
 
@@ -28,7 +28,7 @@ const ACTION_OPEN_URL = 'Action.OpenUrl';
 const ACTION_SHOW_CARD = 'Action.ShowCard';
 const ACTION_SUBMIT = 'Action.Submit';
 
-const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
+const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
     hostConfig,
     payload,
     onExecuteAction,

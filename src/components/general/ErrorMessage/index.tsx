@@ -3,7 +3,7 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { Component, useMemo } from 'react';
+import { Component, useMemo, FC } from 'react';
 
 export type ErrorTypes = 'error' | 'accessDenied' | 'notFound' | 'noData';
 
@@ -19,7 +19,7 @@ export type ErrorMessageProps = {
     onTakeAction?: (event?: React.SyntheticEvent<Element, Event>) => void;
 };
 
-export const ErrorMessage: React.FC<ErrorMessageProps> = ({
+export const ErrorMessage: FC<ErrorMessageProps> = ({
     hasError,
     errorType = 'error',
     message,

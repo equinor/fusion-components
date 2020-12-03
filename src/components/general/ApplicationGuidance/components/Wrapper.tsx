@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, FC } from 'react';
 import {
     ApplicationGuideElement,
     ApplicationGuideElementProps,
@@ -37,7 +37,7 @@ declare global {
     }
 }
 
-export const ApplicationGuidanceWrapper: React.FC<ApplicationGuidanceWrapperProps> = (
+export const ApplicationGuidanceWrapper: FC<ApplicationGuidanceWrapperProps> = (
     args: ApplicationGuidanceWrapperProps
 ) => {
     const { scope, onOpen, onClose, onShow, ...props } = args;

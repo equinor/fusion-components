@@ -1,12 +1,13 @@
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import useElevationClassName, { Elevation } from '../index';
+import { FC } from 'react';
 
 type BoxProps = {
     elevation: Elevation;
 };
 
-const Box: React.FC<BoxProps> = (props) => (
+const Box: FC<BoxProps> = (props) => (
     <div
         className={useElevationClassName(props.elevation)}
         style={{

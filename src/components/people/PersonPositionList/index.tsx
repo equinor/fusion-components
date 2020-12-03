@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, FC } from 'react';
 
 import * as styles from './styles.less';
 import { PersonPosition } from '@equinor/fusion';
@@ -17,7 +17,7 @@ type PersonPositionListProps = {
     disableOrgLink?: boolean;
 };
 
-const PersonPositionList: React.FC<PersonPositionListProps> = ({
+const PersonPositionList: FC<PersonPositionListProps> = ({
     allPositions,
     showPositions,
     filterByDate,

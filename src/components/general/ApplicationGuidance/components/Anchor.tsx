@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, FC } from 'react';
 import {
     AnchorDOMRect,
     OverlayAnchorElement,
@@ -95,7 +95,7 @@ export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<
         React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
 >;
 
-export const ApplicationGuidanceAnchor: React.FC<ApplicationGuidanceAnchorProps> = (
+export const ApplicationGuidanceAnchor: FC<ApplicationGuidanceAnchorProps> = (
     props: ApplicationGuidanceAnchorProps
 ) => {
     return <fusion-overlay-anchor {...props}></fusion-overlay-anchor>;

@@ -10,7 +10,7 @@ import {
 
 import BookmarkSideSheet from './BookmarkSideSheet';
 import { models } from 'powerbi-client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
 
 type BookmarkManagerProps = {
     captureBookmark: () => Promise<models.IReportBookmark | undefined>;
@@ -18,7 +18,7 @@ type BookmarkManagerProps = {
     hasContext?: boolean;
 };
 
-const BookmarkManager: React.FC<BookmarkManagerProps> = ({
+const BookmarkManager: FC<BookmarkManagerProps> = ({
     captureBookmark,
     applyBookmark,
     hasContext,

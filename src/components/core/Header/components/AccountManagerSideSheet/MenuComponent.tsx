@@ -1,6 +1,7 @@
 import * as styles from './styles.less';
 import { UserMenuSectionItem, PersonDetails } from '@equinor/fusion';
 import { IconButton, ArrowBackIcon } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 type MenuComponentProps = {
     selectedMenuItem: UserMenuSectionItem;
@@ -8,7 +9,7 @@ type MenuComponentProps = {
     personDetails: PersonDetails;
 };
 
-const MenuComponent: React.FC<MenuComponentProps> = ({
+const MenuComponent: FC<MenuComponentProps> = ({
     selectedMenuItem,
     onBackClick,
     personDetails,

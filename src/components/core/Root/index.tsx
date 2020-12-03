@@ -5,7 +5,7 @@ import NotificationSnacks from '../NotificationSnacks';
 import NotificationDialog from '../NotificationDialog';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
 import classNames from 'classnames';
-import { useCallback } from 'react';
+import { useCallback, FC, MutableRefObject } from 'react';
 
 type FusionRootProps = {
     rootRef: React.MutableRefObject<HTMLElement | null>;
@@ -13,7 +13,7 @@ type FusionRootProps = {
     noHeader?: boolean;
 };
 
-const FusionRoot: React.FC<FusionRootProps> = ({
+const FusionRoot: FC<FusionRootProps> = ({
     children,
     rootRef,
     overlayRef,
@@ -29,14 +29,14 @@ const FusionRoot: React.FC<FusionRootProps> = ({
     return (
         <div className={classNames(styles.container, useComponentDisplayClassNames(styles))}>
             <FusionContainer
-                ref={rootRef as React.MutableRefObject<HTMLDivElement>}
+                ref={rootRef as MutableRefObject<HTMLDivElement>}
                 noHeader={noHeader}
             >
                 {children}
             </FusionContainer>
             <div
                 className={styles.overlay}
-                ref={overlayRef as React.MutableRefObject<HTMLDivElement>}
+                ref={overlayRef as MutableRefObject<HTMLDivElement>}
             />
             <div className={styles.snacks}>
                 <NotificationSnacks registerPresenter={registerPresenter} />

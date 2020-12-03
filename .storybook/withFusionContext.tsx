@@ -12,7 +12,7 @@ import FusionRoot from '../src/components/core/Root';
 import { ApplicationGuidanceWrapper } from '../src/components/general/ApplicationGuidance';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
-import { useRef } from 'react';
+import { useRef, FC } from 'react';
 
 const mockUser = {
     id: '1337',
@@ -130,7 +130,7 @@ authContainer.registerAppAsync(
     Object.keys(serviceResolver).map((key) => serviceResolver[key]())
 );
 
-const FusionWrapper: React.FC = ({ children }) => {
+const FusionWrapper: FC = ({ children }) => {
     const overlay =  useRef<HTMLElement | null>(null);
     const root =  useRef<HTMLElement | null>(null);
     const headerContent =  useRef<HTMLElement | null>(null);

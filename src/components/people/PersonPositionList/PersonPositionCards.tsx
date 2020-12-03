@@ -1,6 +1,6 @@
 import { PersonPosition } from '@equinor/fusion';
 import { PersonPositionCard } from '@equinor/fusion-components';
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 import * as styles from './styles.less';
 
 type PersonPositionCardsProps = {
@@ -19,7 +19,7 @@ type CardLinkProps = {
     disableOrgLink: boolean;
 };
 
-const CardLink: React.FC<React.PropsWithChildren<CardLinkProps>> = ({
+const CardLink: FC<React.PropsWithChildren<CardLinkProps>> = ({
     children,
     disableOrgLink,
     position,
@@ -39,7 +39,7 @@ const CardLink: React.FC<React.PropsWithChildren<CardLinkProps>> = ({
     );
 };
 
-const PersonPositionCards: React.FC<PersonPositionCardsProps> = ({ positions, disableOrgLink }) => {
+const PersonPositionCards: FC<PersonPositionCardsProps> = ({ positions, disableOrgLink }) => {
     if (positions.length === 0) {
         return <div className={styles.noPositions}> No positions </div>;
     }

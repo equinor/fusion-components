@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, FC } from 'react';
 
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
@@ -28,7 +28,7 @@ type PositionCardProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
 };
 
-const PositionCard: React.FC<PositionCardProps> = ({
+const PositionCard: FC<PositionCardProps> = ({
     position,
     instance,
     isSelected,

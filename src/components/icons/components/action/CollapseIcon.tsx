@@ -1,11 +1,12 @@
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
+import { FC } from 'react';
 
 type CollapseIconProps = IconProps & {
     isCollapsed: boolean;
     screenPlacement?: 'right' | 'left';
 };
 
-const ArrowPointingRight: React.FC = () => (
+const ArrowPointingRight: FC = () => (
     <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -14,7 +15,7 @@ const ArrowPointingRight: React.FC = () => (
     />
 );
 
-const ArrowPointingLeft: React.FC = () => (
+const ArrowPointingLeft: FC = () => (
     <path
         fillRule="evenodd"
         clipRule="evenodd"

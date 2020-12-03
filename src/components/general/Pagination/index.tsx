@@ -13,6 +13,7 @@ import {
     styling,
     PaginationArrow,
 } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 export type PaginationChangeHandler = (newPage: Page, perPage: number) => void;
 
@@ -31,15 +32,15 @@ type PaginationButtonProps = {
     onClick: () => void;
 };
 
-const PaginationButton: React.FC<PaginationButtonProps> = ({ page, isCurrent, onClick }) => (
+const PaginationButton: FC<PaginationButtonProps> = ({ page, isCurrent, onClick }) => (
     <Button frameless={!isCurrent} onClick={onClick}>
         {page.value}
     </Button>
 );
 
-const Padding: React.FC = () => <span className={styles.padding}>...</span>;
+const Padding: FC = () => <span className={styles.padding}>...</span>;
 
-const Pagination: React.FC<PaginationProps> = ({ pagination, onChange }) => {
+const Pagination: FC<PaginationProps> = ({ pagination, onChange }) => {
     const { currentPage, head, center, tail } = pagination;
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
@@ -106,7 +107,7 @@ const Pagination: React.FC<PaginationProps> = ({ pagination, onChange }) => {
     );
 };
 
-export const PaginationSkeleton: React.FC<SkeletonPaginationProps> = ({ pagination }) => {
+export const PaginationSkeleton: FC<SkeletonPaginationProps> = ({ pagination }) => {
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     return (
         <div className={containerClassNames}>

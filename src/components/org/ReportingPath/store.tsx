@@ -28,7 +28,7 @@ export type ReportingPathContextType<T> = {
     initialCardWidth: number;
     rowMargin: number;
     allNodes: OrgNode<T>[];
-    component: React.FC<OrgChartItemProps<T>> | null;
+    component: FC<OrgChartItemProps<T>> | null;
     childrenRows: number;
 };
 
