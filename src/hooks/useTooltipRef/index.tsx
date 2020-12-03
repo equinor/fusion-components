@@ -1,6 +1,6 @@
 import * as styles from './styles.less';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, ReactNode } from 'react';
 
 import {
     useRelativePositioning,
@@ -12,7 +12,7 @@ import TooltipContainer from './components/Container';
 export type TooltipPlacement = 'below' | 'above' | 'left' | 'right';
 
 export default (
-    content: string | React.ReactNode,
+    content: string | ReactNode,
     placement: TooltipPlacement = 'below',
     delay?: number
 ): React.MutableRefObject<any> => {

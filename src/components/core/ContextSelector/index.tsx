@@ -23,7 +23,7 @@ import * as styles from './styles.less';
 import classNames from 'classnames';
 
 import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
-import { useRef, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(

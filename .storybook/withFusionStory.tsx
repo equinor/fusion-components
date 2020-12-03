@@ -5,7 +5,7 @@ import Content from '../src/components/core/Content';
 export default (title: string, padding: number = 16) => (stories: () => React.ReactNode) => {
     return (
         <Fragment>
-            <Header aside={null} start={null} content={null} />
+            <Header aside={null} start={null} content={null} settings={null}/>
             <Content>
                 <div
                     style={{

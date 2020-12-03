@@ -1,6 +1,7 @@
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../.storybook/withFusionStory';
 import useKeyboardNavigation from '../useKeyboardNavigation';
+import {useState, Fragment} from "react";
 
 const KeyboardNavigationStory = () => {
     const listItems = ['Item 1', 'Item 2', 'Item 3'];
@@ -23,7 +24,7 @@ const KeyboardNavigationStory = () => {
         ref
     );
     return (
-        <React.Fragment>
+        <Fragment>
             <input
                 ref={setRef}
                 placeholder={
@@ -43,7 +44,7 @@ const KeyboardNavigationStory = () => {
                     </li>
                 ))}
             </ul>
-        </React.Fragment>
+        </Fragment>
     );
 };
 

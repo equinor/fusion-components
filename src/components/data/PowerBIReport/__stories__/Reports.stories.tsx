@@ -3,6 +3,7 @@ import { IBasicFilter } from '../models/ReportLevelFilters';
 import PowerBIReport from '../index';
 import Button from '../../../general/Button';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
+import {useState, useMemo} from "react";
 
 const ReportStandard: React.FC = () => {
     return (

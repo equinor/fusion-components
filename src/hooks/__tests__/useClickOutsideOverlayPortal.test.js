@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { hookTestScope } from './hookTestScope';
 import useClickOutsideOverlayPortal from '../useClickOutsideOverlayPortal';
 import useOverlayPortal from '../useOverlayPortal';
+import React from 'react';
 
 describe('useClickOutsideOverlayPortal', () => {
     it('Should trigger on click outside overlay portal', () => {

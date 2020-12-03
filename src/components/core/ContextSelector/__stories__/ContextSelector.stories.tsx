@@ -3,6 +3,7 @@ import ContextSelector from '../index';
 import FusionHeader from '../../Header';
 import FusionContent from '../../Content';
 import { ContextTypes, useFusionContext } from '@equinor/fusion';
+import { Fragment } from "react";
 
 const CurrentContextNullableAndPlaceholder: React.FC = ({ children }) => {
     const { app } = useFusionContext();
@@ -46,37 +47,39 @@ const CurrentContext: React.FC = ({ children }) => {
 
 const PDPContextSelectorStory = () => {
     return (
-        <React.Fragment>
+        <Fragment>
             <CurrentContext>
                 <FusionHeader
                     start={null}
                     content={ContextSelector}
                     aside={null}
+                    settings={null}
                     quickFactScope={'storybook'}
                 />
                 <FusionContent>
                     <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
                 </FusionContent>
             </CurrentContext>
-        </React.Fragment>
+        </Fragment>
     );
 };
 
 const NullableAndPlaceHolderContextSelectorStory = () => {
     return (
-        <React.Fragment>
+        <Fragment>
             <CurrentContextNullableAndPlaceholder>
                 <FusionHeader
                     start={null}
                     content={ContextSelector}
                     aside={null}
+                    settings={null}
                     quickFactScope={'storybook'}
                 />
                 <FusionContent>
                     <h1 style={{ textAlign: 'center', margin: 16 }}>PDP</h1>
                 </FusionContent>
             </CurrentContextNullableAndPlaceholder>
-        </React.Fragment>
+        </Fragment>
     );
 };
 
