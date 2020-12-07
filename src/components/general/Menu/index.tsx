@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useState, useCallback, useEffect, FC } from 'react';
 import MenuItem, { MenuItemType, MenuItemComponentProps } from './MenuItem';
 import styles from './styles.less';
 import {
@@ -6,7 +7,7 @@ import {
     Elevation,
     useElevationClassName,
 } from '@equinor/fusion-components';
-import { useState, useCallback, useEffect, FC } from 'react';
+
 
 export type MenuSection<TItem extends MenuItemType> = {
     key: string;

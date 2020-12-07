@@ -1,6 +1,6 @@
 import * as styles from './styles.less';
 
-import { useRef, useMemo, ReactNode } from 'react';
+import { useRef, useMemo, ReactNode, MutableRefObject, RefObject } from 'react';
 
 import {
     useRelativePositioning,
@@ -15,7 +15,7 @@ export default (
     content: string | ReactNode,
     placement: TooltipPlacement = 'below',
     delay?: number
-): React.MutableRefObject<any> => {
+): MutableRefObject<any> => {
     const [isOpen, ref] = useHoverToggleController(delay);
     const containerRef = useRef<HTMLDivElement | null>(null);
     const rect = useRelativePositioning(ref);
@@ -34,7 +34,7 @@ export default (
             }}
         >
             <TooltipContainer
-                ref={containerRef as React.RefObject<HTMLDivElement>}
+                ref={containerRef as RefObject<HTMLDivElement>}
                 content={content}
                 placement={placement}
             >

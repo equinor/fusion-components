@@ -1,11 +1,11 @@
 import * as styles from './styles.less';
 import * as classNames from 'classnames';
 import { useKeyboardNavigation } from '@equinor/fusion-components';
-import { useState, useRef, FC } from 'react';
+import { useState, useRef, FC, ReactNode, AnchorHTMLAttributes } from 'react';
 
-type TabProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'title'> & {
+type TabProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'title'> & {
     isCurrent?: boolean;
-    title: string | React.ReactNode;
+    title: string | ReactNode;
     tabKey: string;
     disabled?: boolean;
     onChange?: (ref: HTMLElement) => void;

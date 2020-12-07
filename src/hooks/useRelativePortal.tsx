@@ -1,6 +1,7 @@
 import { useRelativePositioning, useOverlayPortal } from '@equinor/fusion-components';
+import { ReactNode, RefObject } from 'react';
 
-export default (content: React.ReactNode, ref: React.RefObject<any>, isVisible = true) => {
+export default (content: ReactNode, ref: RefObject<any>, isVisible = true) => {
     const rect = useRelativePositioning(ref);
 
     useOverlayPortal(

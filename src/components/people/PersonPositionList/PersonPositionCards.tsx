@@ -1,6 +1,6 @@
 import { PersonPosition } from '@equinor/fusion';
 import { PersonPositionCard } from '@equinor/fusion-components';
-import { useMemo, FC } from 'react';
+import { useMemo, FC, PropsWithChildren } from 'react';
 import * as styles from './styles.less';
 
 type PersonPositionCardsProps = {
@@ -19,7 +19,7 @@ type CardLinkProps = {
     disableOrgLink: boolean;
 };
 
-const CardLink: FC<React.PropsWithChildren<CardLinkProps>> = ({
+const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({
     children,
     disableOrgLink,
     position,

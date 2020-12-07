@@ -1,8 +1,7 @@
-import { useState, useEffect, FC } from 'react';
-
 import styles from './styles.less';
 import classNames from 'classnames';
 import { Button } from '@equinor/fusion-components';
+import { useState, useEffect, FC } from 'react';
 
 type BannerProps = {
     message: string;

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, FC } from 'react';
+import { useCallback, useMemo, FC, MouseEvent } from 'react';
 
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
@@ -57,7 +57,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     });
 
     const onClickHandler = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
+        (e: MouseEvent<HTMLDivElement>) => {
             if (onClick) {
                 e.stopPropagation();
                 onClick(position, instance);
@@ -67,7 +67,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     );
 
     const onExpandHandler = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: MouseEvent<HTMLButtonElement>) => {
             if (onExpand) {
                 e.stopPropagation();
                 onExpand(position, instance);

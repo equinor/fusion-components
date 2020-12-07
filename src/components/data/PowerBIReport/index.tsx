@@ -28,10 +28,10 @@ import {
 
 import * as styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
+import { useState, useRef, useEffect, useCallback, useLayoutEffect, FC } from 'react';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
 import BookmarkManager from './components/BookmarkManager';
-import { useState, useRef, useEffect, useCallback, useLayoutEffect, FC } from 'react';
 
 type PowerBIProps = {
     reportId: string;

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, MutableRefObject } from 'react';
 
 import { DropdownArrow, Menu, Dropdown, useDropdownController } from '@equinor/fusion-components';
 import styles from './styles.less';
@@ -101,7 +101,7 @@ const Select = ({
         [isOpen, onSelect]
     );
 
-    const containerRef = dropdownController.controllerRef as React.MutableRefObject<HTMLDivElement | null>;
+    const containerRef = dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     return (
         <div ref={containerRef}>

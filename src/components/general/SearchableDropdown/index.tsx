@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo, FocusEvent, MutableRefObject } from 'react';
 
 import {
     TextInput,
@@ -171,7 +171,7 @@ const SearchableDropdown = ({
 
         const overlayContainer = useOverlayContainer();
         const handleBlur = useCallback(
-            (e: React.FocusEvent<HTMLInputElement>) => {
+            (e: FocusEvent<HTMLInputElement>) => {
                 if (overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
                 setIsOpen(false, 250);
             },
@@ -219,7 +219,7 @@ const SearchableDropdown = ({
         [isOpen, onSelect]
     );
 
-    const containerRef = dropdownController.controllerRef as React.MutableRefObject<HTMLDivElement | null>;
+    const containerRef = dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     const hasResults = useMemo(() => {
         return (

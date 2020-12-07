@@ -1,5 +1,4 @@
 import { FC, useState, useCallback, useEffect, useMemo } from 'react';
-
 import {
     NotificationRequest,
     NotificationResponse,

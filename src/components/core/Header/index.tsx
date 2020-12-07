@@ -13,7 +13,7 @@ import ComponentDisplayToggleButton from './components/ComponentDisplayToggleBut
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
-import { createElement, FC } from 'react';
+import { createElement, FC, ReactElement, MutableRefObject } from 'react';
 
 enum Breakpoints {
     medium = 'medium',
@@ -36,10 +36,10 @@ export type HeaderContentProps = {
 };
 
 type FusionHeaderProps = {
-    start: React.ReactElement | null;
+    start: ReactElement | null;
     content: FC<HeaderContentProps> | null;
-    aside: React.ReactElement | null;
-    settings: React.ReactElement | null;
+    aside: ReactElement | null;
+    settings: ReactElement | null;
     quickFactScope?: string;
     showSettings?: boolean;
 };
@@ -92,14 +92,14 @@ const FusionHeader: FC<FusionHeaderProps> = ({
             </div>
             <div
                 className={styles.contentContainer}
-                ref={headerContent as React.MutableRefObject<HTMLDivElement | null>}
+                ref={headerContent as MutableRefObject<HTMLDivElement | null>}
             >
                 {content && createElement(content, { app: currentApp })}
             </div>
 
             <aside className={styles.asideContainer}>
                 <div
-                    ref={headerAppAside as React.MutableRefObject<HTMLDivElement | null>}
+                    ref={headerAppAside as MutableRefObject<HTMLDivElement | null>}
                     className={styles.asideAppContainer}
                 ></div>
                 <ComponentDisplayToggleButton quickFactScope={quickFactScope} />

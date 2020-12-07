@@ -1,6 +1,6 @@
-import { FC, ReactNode, MouseEvent } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
+import { FC, ReactNode, MouseEvent } from 'react';
 
 type ScrimProps = {
     children: ReactNode;

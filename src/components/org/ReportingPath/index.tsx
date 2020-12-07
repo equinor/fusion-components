@@ -1,4 +1,3 @@
-import { FC, useRef, useMemo, useContext } from 'react';
 import { OrgStructure, OrgChartItemProps, useParentSize } from '@equinor/fusion-components';
 import useReportingPathActions from './actions';
 import {
@@ -9,6 +8,7 @@ import {
 import Children from './components/Children';
 import Links from './components/Links';
 import LinkedIndicator from './components/LinkedIndicator';
+import { FC, useRef, useMemo, useContext } from 'react';
 
 export type ReportingPathProps<T> = {
     structure: T[];

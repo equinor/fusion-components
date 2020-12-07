@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import styles from './styles.less';
 import {
     Pagination as PaginationConfig,
@@ -13,7 +14,6 @@ import {
     styling,
     PaginationArrow,
 } from '@equinor/fusion-components';
-import { FC } from 'react';
 
 export type PaginationChangeHandler = (newPage: Page, perPage: number) => void;
 

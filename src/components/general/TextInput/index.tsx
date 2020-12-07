@@ -1,7 +1,7 @@
 import styles from './styles.less';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo, forwardRef, FocusEvent, KeyboardEvent, PropsWithChildren, MutableRefObject, ChangeEvent } from 'react';
 
 type TextInputProps = {
     disabled?: boolean;
@@ -15,16 +15,16 @@ type TextInputProps = {
     onChange: (newValue: string) => void;
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     value?: string;
-    icon?: React.ReactElement;
-    onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
-    onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+    icon?: Element;
+    onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onKeyUp?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+    onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
 };
 
-const TextInput = React.forwardRef<
+const TextInput = forwardRef<
     HTMLInputElement | null,
-    React.PropsWithChildren<TextInputProps>
+    PropsWithChildren<TextInputProps>
 >(
     (
         {
@@ -50,11 +50,11 @@ const TextInput = React.forwardRef<
     ) => {
         const [focus, setFocus] = useState(false);
         const inputRef =
-            (ref as React.MutableRefObject<HTMLInputElement | null>) ||
+            (ref as MutableRefObject<HTMLInputElement | null>) ||
             useRef<HTMLInputElement | null>(null);
 
         const handleChange = useCallback(
-            (event: React.ChangeEvent<HTMLInputElement>) => {
+            (event: ChangeEvent<HTMLInputElement>) => {
                 if (!disabled) {
                     const newValue = event.target.value;
                     onChange(newValue);
@@ -73,7 +73,7 @@ const TextInput = React.forwardRef<
         }, []);
 
         const handleBlur = useCallback(
-            (event: React.FocusEvent<HTMLInputElement>) => {
+            (event: FocusEvent<HTMLInputElement>) => {
                 if (!disabled) {
                     setFocus(false);
                     onBlur && onBlur(event);
@@ -83,7 +83,7 @@ const TextInput = React.forwardRef<
         );
 
         const handleFocus = useCallback(
-            (event: React.FocusEvent<HTMLInputElement>) => {
+            (event: FocusEvent<HTMLInputElement>) => {
                 if (!disabled) {
                     setFocus(true);
                     onFocus && onFocus(event);

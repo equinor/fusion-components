@@ -1,9 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
 
 import styles from './styles.less';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
-import { FC } from 'react';
 
 type SkeletonBarProps = {
     width?: number | string;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, ReactNode, MutableRefObject, Dispatch, SetStateAction, RefObject } from 'react';
 
 import * as styles from './styles.less';
 
@@ -16,14 +16,14 @@ import useClickOutside from '../useClickOutside';
 export { PopoverPlacement, PopoverJustification };
 
 export default <T extends HTMLElement>(
-    content: React.ReactNode,
+    content: ReactNode,
     props?: PopoverContainerProps,
     hover?: boolean,
     delay?: number
 ): [
-    React.MutableRefObject<T | null>,
+    MutableRefObject<T | null>,
     boolean,
-    React.Dispatch<React.SetStateAction<boolean>> | undefined
+    Dispatch<SetStateAction<boolean>> | undefined
 ] => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -67,7 +67,7 @@ export default <T extends HTMLElement>(
                 }}
             >
                 <PopoverContainer
-                    ref={popoverContentRef as React.RefObject<HTMLDivElement>}
+                    ref={popoverContentRef as RefObject<HTMLDivElement>}
                     {...props}
                 >
                     {content}

@@ -1,7 +1,7 @@
 import { useComponentDisplayType } from '@equinor/fusion';
 import ButtonComponent from './components/Button';
 import AnchorComponent from './components/Anchor';
-import { useState, createRef, forwardRef } from 'react';
+import { useState, createRef, forwardRef, EventHandler, SyntheticEvent, PropsWithChildren, RefObject } from 'react';
 
 export type ButtonProps = {
     disabled?: boolean;
@@ -29,21 +29,21 @@ export type ButtonProps = {
 
     /** Set target="_blank" */
     targetBlank?: boolean;
-    onMouseDown?: React.EventHandler<React.SyntheticEvent>;
-    onClickCapture?: React.EventHandler<React.SyntheticEvent>;
-    onClick?: React.EventHandler<React.SyntheticEvent>;
+    onMouseDown?: EventHandler<SyntheticEvent>;
+    onClickCapture?: EventHandler<SyntheticEvent>;
+    onClick?: EventHandler<SyntheticEvent>;
 };
 
-export const Button = forwardRef<HTMLElement | null, React.PropsWithChildren<ButtonProps>>(
+export const Button = forwardRef<HTMLElement | null, PropsWithChildren<ButtonProps>>(
     (props, ref) => {
         // Used to apply "radar" animation on mouse up
         const [mouseHasBeenDown, setMouseHasBeenDown] = useState(false);
         const displayType = useComponentDisplayType();
 
         const buttonRef =
-            (ref as React.RefObject<HTMLElement | null>) || createRef<HTMLElement | null>();
+            (ref as RefObject<HTMLElement | null>) || createRef<HTMLElement | null>();
 
-        const handleOnMouseDown = (e: React.SyntheticEvent) => {
+        const handleOnMouseDown = (e: SyntheticEvent) => {
             const { onMouseDown } = props;
 
             setMouseHasBeenDown(false);
@@ -67,7 +67,7 @@ export const Button = forwardRef<HTMLElement | null, React.PropsWithChildren<But
             <AnchorComponent
                 {...props}
                 displayType={displayType}
-                ref={buttonRef as React.RefObject<HTMLAnchorElement>}
+                ref={buttonRef as RefObject<HTMLAnchorElement>}
                 mouseHasBeenDown={mouseHasBeenDown}
                 onMouseDown={handleOnMouseDown}
                 onMouseUp={handleOnMouseUp}
@@ -80,7 +80,7 @@ export const Button = forwardRef<HTMLElement | null, React.PropsWithChildren<But
             <ButtonComponent
                 {...props}
                 displayType={displayType}
-                ref={buttonRef as React.RefObject<HTMLButtonElement>}
+                ref={buttonRef as RefObject<HTMLButtonElement>}
                 mouseHasBeenDown={mouseHasBeenDown}
                 onMouseDown={handleOnMouseDown}
                 onMouseUp={handleOnMouseUp}

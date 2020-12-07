@@ -1,8 +1,8 @@
+import { FC } from 'react';
 import { ButtonProps } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import { FC } from 'react';
 
 type SkeletonButtonProps = ButtonProps & {
     width: number | string;

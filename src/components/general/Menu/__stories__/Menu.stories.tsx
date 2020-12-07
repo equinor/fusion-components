@@ -4,7 +4,7 @@ import withFusionStory from '../../../../../.storybook/withFusionStory';
 import Menu from '../index';
 import { CheckBox, DoneIcon } from '@equinor/fusion-components';
 
-import {useState, Fragment} from 'react';
+import { useState, Fragment, ReactNode } from 'react';
 
 const MenuStory = () => {
     const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -63,7 +63,7 @@ const MenuStory = () => {
 const CustomItemsMenuStory = () => {
     type Item = {
         key: string;
-        title: string | React.ReactNode;
+        title: string | ReactNode;
         isDisabled?: boolean;
         isChecked?: boolean;
     };
@@ -97,9 +97,9 @@ const CustomItemsMenuStory = () => {
             items.map((i) =>
                 i.key === item.key
                     ? {
-                          ...item,
-                          isChecked: !item.isChecked,
-                      }
+                        ...item,
+                        isChecked: !item.isChecked,
+                    }
                     : i
             )
         );
