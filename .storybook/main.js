@@ -1,3 +1,5 @@
+const merge = require('webpack-merge');
+
 module.exports = {
     stories: ['../src/**/*.stories.@(jsx|tsx|mdx)'],
     addons: [
