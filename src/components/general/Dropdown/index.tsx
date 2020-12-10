@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, FC, useMemo, useEffect, useReducer } from 'react';
+import React, { useState, useRef, useCallback, FC, useEffect, MutableRefObject, ReactNode } from 'react';
 
 import classNames from 'classnames';
 import {
@@ -13,8 +13,8 @@ import { enqueueAsyncOperation, AsyncOperation } from '@equinor/fusion';
 export type DropdownController = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
-    node: React.ReactNode;
-    controllerRef: React.MutableRefObject<HTMLElement | null>;
+    node: ReactNode;
+    controllerRef: MutableRefObject<HTMLElement | null>;
 };
 type DropdownJustification = 'left' | 'right';
 
@@ -25,10 +25,10 @@ type DropdownProps = {
 
 export const useDropdownController = (
     controller: (
-        ref: React.MutableRefObject<HTMLElement | null>,
+        ref: MutableRefObject<HTMLElement | null>,
         isOpen: boolean,
         setIsOpen: (isOpen: boolean, delay?: number) => void
-    ) => React.ReactNode
+    ) => ReactNode
 ): DropdownController => {
     const [isOpen, _setIsOpen] = useState(false);
     const controllerRef = useRef<HTMLElement | null>(null);
@@ -101,8 +101,8 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
             setTop(undefined);
         }
 
-        const dropdownRect = dropdownRef.current?.getBoundingClientRect();
-        setMaxHeight(`calc(100vh - ${dropdownRect?.top}px - (var(--grid-unit) * 3px))`);
+        const dropdownRect = dropdownRef.current.getBoundingClientRect();
+        setMaxHeight(`calc(100vh - ${dropdownRect.top}px - (var(--grid-unit) * 3px))`);
     }, [rect, isOpen]);
 
     return (

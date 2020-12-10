@@ -109,7 +109,7 @@
     "thread-loader": "^3.0.1",
     "ts-jest": "^26.4.3",
     "ts-loader": "^4.0.0-beta.0",
-    "typescript": "^4.1.0-beta",
+    "typescript": "^4.1.2",
     "url-loader": "^4.1.1",
     "uuid": "^8.3.1",
     "webpack": "^4.44.2",

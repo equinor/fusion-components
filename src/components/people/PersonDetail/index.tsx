@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, Fragment } from 'react';
 
 import styles from './styles.less';
 import { PersonDetails, usePersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
@@ -56,7 +56,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
     }, [currentPerson]);
 
     return (
-        <>
+        <Fragment>
             {currentPerson && (
                 <div className={styles.personDetails}>
                     <div className={styles.detailsContainer}>
@@ -66,11 +66,11 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                         <div className={styles.presenceSection}>
                             <div className={styles.iconContainer}>
                                 <PersonPresenceIcon
-                                    presence={presence?.availability || 'None'}
+                                    presence={presence.availability || 'None'}
                                     size="xlarge"
                                 />
                             </div>
-                            {presence?.availability || 'Unknown'}
+                            {presence.availability || 'Unknown'}
                         </div>
                         <div className={styles.detailSection}>
                             {isFetching ? (
@@ -136,6 +136,6 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                     )}
                 </div>
             )}
-        </>
+        </Fragment>
     );
 };

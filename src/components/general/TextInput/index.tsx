@@ -1,7 +1,7 @@
 import styles from './styles.less';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
-import { useState, useRef, useCallback, useMemo, forwardRef, FocusEvent, KeyboardEvent, PropsWithChildren, MutableRefObject, ChangeEvent } from 'react';
+import { useState, useRef, useCallback, useMemo, forwardRef, FocusEvent, KeyboardEvent, PropsWithChildren, MutableRefObject, ChangeEvent, ReactElement } from 'react';
 
 type TextInputProps = {
     disabled?: boolean;
@@ -15,7 +15,7 @@ type TextInputProps = {
     onChange: (newValue: string) => void;
     onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     value?: string;
-    icon?: Element;
+    icon?: ReactElement;
     onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
     onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
     onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
