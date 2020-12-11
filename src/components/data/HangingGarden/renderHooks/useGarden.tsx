@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { getColumnX, getHeaderWidth, getMaxRowCount } from '../utils';
 import useColumn from './useColumn';
