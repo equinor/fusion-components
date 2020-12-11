@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
 export type TEXTURE_CACHE_KEYS =
     | 'headers'
