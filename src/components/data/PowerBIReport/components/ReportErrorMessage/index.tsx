@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback, useMemo, FC } from 'react';
 import * as styles from './styles.less';
 import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
 import {
@@ -10,22 +11,32 @@ import {
 } from '@equinor/fusion-components';
 import { useCurrentUser, useApiClients } from '@equinor/fusion';
 import classNames from 'classnames';
-import { useState, useMemo, useEffect, useCallback, FC } from 'react';
 
 type ReportErrorMessageProps = {
     report: Report;
+    contextError: boolean;
 };
 
-const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report }) => {
+const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextError }) => {
     const [isFetching, setIsFetching] = useState<boolean>(true);
     const [requirements, setRequirements] = useState<string | null>(null);
     const [description, setDescription] = useState<string | null>(null);
     const [noAccessMessage, setNoAccessMessage] = useState<string | null>(null);
-    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = useState(false);
+    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = useState(
+        false
+    );
 
     const reportApiClient = useApiClients().report;
     const user = useCurrentUser();
     const timeStamp = useMemo(() => new Date().toString(), []);
+
+    const errorHeader = useMemo(
+        () =>
+            contextError
+                ? 'It looks like you do not have access to the selected context'
+                : 'It looks like you do not have access to this report',
+        [contextError]
+    );
 
     useEffect(() => {
         getReportInformation();
@@ -71,7 +82,7 @@ const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report }) => {
                         styles.restrictedAccessContainer
                     )}
                 >
-                    <h2>It looks like you do not have access to this report</h2>
+                    <h2>{errorHeader}</h2>
                     {noAccessMessage && <MarkdownViewer markdown={noAccessMessage} />}
                     <div className={styles.reportInfoContainer}>
                         {description && (

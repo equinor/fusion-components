@@ -1,6 +1,7 @@
+import { useEffect, useCallback, useState, useRef, useLayoutEffect, FC } from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
-import { Spinner, ErrorMessage } from '@equinor/fusion-components';
+import { Spinner, ErrorMessage, AppSettingsManager } from '@equinor/fusion-components';
 import {
     useTelemetryLogger,
     FusionApiHttpErrorResponse,
@@ -27,10 +28,9 @@ import {
 
 import * as styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
-import { useState, useRef, useEffect, useCallback, useLayoutEffect, FC } from 'react';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
-import BookmarkManager from './components/BookmarkManager';
+import { ErrorTypes } from '../../general/ErrorMessage';
 
 type PowerBIProps = {
     reportId: string;
@@ -192,6 +192,7 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
 
     useEffect(() => {
         if (!embeddedRef.current) return;
+
         setIsLoading(true);
 
         embeddedRef.current.reload();
@@ -216,7 +217,8 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
         if (!currentReport) {
             return;
         }
-        return currentReport.bookmarksManager.capture();
+        const bookmark = await currentReport.bookmarksManager.capture();
+        return bookmark.state;
     };
 
     const setFilter = async () => {
@@ -245,7 +247,7 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
             if (!embedInfo) return;
             const embedConfig = embedInfo.embedConfig;
             const token = accessToken ? accessToken.token : undefined;
-            const config: pbi.IEmbedConfiguration = {
+            let config: pbi.IEmbedConfiguration = {
                 type: type.toLowerCase(),
                 id: getReportOrDashboardId(embedConfig, type),
                 embedUrl: embedConfig.embedUrl,
@@ -347,7 +349,7 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
                 return () =>
                     embeddedRef?.current ? embeddedRef.current.off('pageChanged') : undefined;
         }
-    }, [filters, embeddedRef.current, embedInfo]);
+    }, [filters, embeddedRef.current, embedInfo, awaitableBookmark]);
 
     useEffect(() => {
         if (!embeddedRef.current) return;
@@ -471,10 +473,12 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
             {!isFetching && <div className={styles.powerbiContent} ref={embedRef}></div>}
-            <BookmarkManager
-                captureBookmark={captureBookmark}
-                applyBookmark={applyBookmark}
+            <AppSettingsManager
+                captureAppSetting={captureBookmark}
+                applyAppSetting={applyBookmark}
                 hasContext={hasContext}
+                anchorId="pbi-bookmarks-btn"
+                name="Power BI bookmarks"
             />
         </>
     );
