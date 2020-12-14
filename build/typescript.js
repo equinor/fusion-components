@@ -21,7 +21,7 @@ module.exports = rootDir => ({
                         loader: 'ts-loader',
                         options: {
                             // transpileOnly: true,
-                            // happyPackMode: true,
+                            happyPackMode: true,
                             compilerOptions: {
                                 rootDir,
                             },

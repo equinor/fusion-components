@@ -11,7 +11,7 @@
         "target": "ESNext",
         "composite": false,
         "moduleResolution": "node",
-        "jsx": "preserve",
+        "jsx": "react-jsx",
         "noImplicitAny": false,
         "paths": {
             "@equinor/fusion-components": ["./src/index.ts"]
