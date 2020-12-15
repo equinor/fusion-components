@@ -75,7 +75,7 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
                 'items',
                 item[itemKeyProp as keyof T]
             ) as PIXI.Container;
-            if (!renderedItem) {
+            if (!renderedItem || Object.keys(item).some((key) => item[key] !== renderedItem[key])) {
                 renderedItem = new PIXI.Container();
                 renderedItem;
                 renderedItem.x = x;
