@@ -184,6 +184,8 @@ export {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    RemoveCircleIcon,
+    CircleIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,

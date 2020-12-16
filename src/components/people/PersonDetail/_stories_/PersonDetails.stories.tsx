@@ -8,9 +8,9 @@ const stories = storiesOf('People/PersonDetails', module);
 stories.addDecorator(withFusionStory('PersonDetails'));
 
 export const getDefaultPerson = (): PersonDetails => ({
-    azureUniqueId: 'string',
+    azureUniqueId: '88bd13bb-d0f3-42fa-8755-eeb3d4f2b147',
     name: 'No name',
-    mail: 'eslsa@equinor.com',
+    mail: 'inkle@equinor.com',
     jobTitle: 'www',
     department: 'string',
     mobilePhone: 'string',

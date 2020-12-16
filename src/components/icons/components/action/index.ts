@@ -17,3 +17,5 @@ export { default as CheckCircleIcon } from './CheckCircleIcon';
 export { default as CloseCircleIcon } from './CloseCircleIcon';
 export { default as ScheduleIcon } from './ScheduleIcon';
 export { default as BookmarksIcon } from './BookmarksIcon';
+export { default as RemoveCircleIcon } from './RemoveCircleIcon';
+export { default as CircleIcon } from './CircleIcon';

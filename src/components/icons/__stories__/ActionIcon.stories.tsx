@@ -7,6 +7,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import {
     DoneIcon,
     DropdownArrow,
+    CircleIcon,
     HistoryIcon,
     InfoIcon,
     MinimizeIcon,
@@ -22,6 +23,7 @@ import {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    RemoveCircleIcon,
 } from '../components/action';
 
 const eventsFromNames = actions('onClick');
@@ -41,6 +43,24 @@ stories.add('Search', () => (
 
 stories.add('Done', () => (
     <DoneIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+
+stories.add('Disturb', () => (
+    <RemoveCircleIcon
+        {...eventsFromNames}
+        color={color('color', '#000')}
+        height={number('height', 24)}
+        width={number('width', 24)}
+    />
+));
+
+stories.add('CircleIcon', () => (
+    <CircleIcon
         {...eventsFromNames}
         color={color('color', '#000')}
         height={number('height', 24)}
