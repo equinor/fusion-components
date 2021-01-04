@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useCallback } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { getColumnX, getHeaderWidth, getMaxRowCount } from '../utils';
@@ -34,7 +34,7 @@ const useGarden = <T extends HangingGardenColumnIndex>() => {
     const { renderColumn } = useColumn<T>();
     const { renderHighlightedItem } = useHightLightedItem();
 
-    React.useEffect(() => {
+    useEffect(() => {
         clearTextureCaches();
         setExpandedColumns({});
         setMaxRowCount(getMaxRowCount(columns as HangingGardenColumn<T>[]));
@@ -46,12 +46,12 @@ const useGarden = <T extends HangingGardenColumnIndex>() => {
         renderGarden();
     }, [columns]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         clearTextureCaches();
         renderGarden();
     }, [expandedColumns]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (
             scrollToHighlightedItem(columns as HangingGardenColumn<T>[], highlightedItem, itemWidth)
         ) {
@@ -60,7 +60,7 @@ const useGarden = <T extends HangingGardenColumnIndex>() => {
         }
     }, [highlightedItem]);
 
-    const renderGarden = React.useCallback(() => {
+    const renderGarden = useCallback(() => {
         if (!pixiApp.current) return;
 
         const oldStage = stage.current;

@@ -1,5 +1,5 @@
 import { useOverlayContainer, useRelativePositioning } from '@equinor/fusion-components';
-import React, { FC, ReactNode, MutableRefObject } from 'react';
+import { FC, ReactNode, MutableRefObject } from 'react';
 import { createPortal } from 'react-dom';
 
 type OverlayProps = {

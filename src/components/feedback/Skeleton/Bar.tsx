@@ -1,4 +1,4 @@
-import React, { useMemo, FC } from 'react';
+import { useMemo, FC } from 'react';
 
 import styles from './styles.less';
 import { useComponentDisplayClassNames } from '@equinor/fusion';

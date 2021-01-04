@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { HIGHLIGHTED_ITEM_KEY } from '../utils';
@@ -22,7 +22,7 @@ const useHightLightedItem = <T extends HangingGardenColumnIndex>() => {
 
     const { renderItem } = useRenderItem();
 
-    const renderHighlightedItem = React.useCallback(() => {
+    const renderHighlightedItem = useCallback(() => {
         if (!highlightedItem) {
             const renderedHighlightedItem = getTextureFromCache(
                 'items',

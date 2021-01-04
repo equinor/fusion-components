@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useRef, useEffect } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 import * as styles from './styles.less';
 import useTextureCaches from './renderHooks/useTextureCaches';
@@ -47,12 +47,12 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
     provideController,
     backgroundColor = 0xffffff,
 }: HangingGardenProps<T>) {
-    const [maxRowCount, setMaxRowCount] = React.useState(0);
-    const [expandedColumns, setExpandedColumns] = React.useState<ExpandedColumns>({});
+    const [maxRowCount, setMaxRowCount] = useState(0);
+    const [expandedColumns, setExpandedColumns] = useState<ExpandedColumns>({});
 
-    const container = React.useRef<HTMLDivElement>(null);
-    const canvas = React.useRef<HTMLCanvasElement>(null);
-    const stage = React.useRef<PIXI.Container>(new PIXI.Container());
+    const container = useRef<HTMLDivElement>(null);
+    const canvas = useRef<HTMLCanvasElement>(null);
+    const stage = useRef<PIXI.Container>(new PIXI.Container());
 
     const scroll = useScrolling<T>(canvas, container, itemKeyProp);
     const textureCaches = useTextureCaches();
@@ -60,7 +60,7 @@ function HangingGarden<T extends HangingGardenColumnIndex>({
 
     const { pixiApp } = usePixiApp(canvas, container, backgroundColor);
 
-    React.useEffect(() => {
+    useEffect(() => {
         textureCaches.clearItemTextureCaches();
     }, [itemHeight, itemWidth]);
 

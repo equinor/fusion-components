@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 
 import { useHangingGardenContext } from './useHangingGardenContext';
@@ -44,7 +44,7 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
 
     const { renderItemDescription } = useItemDescription<T>();
 
-    const createRect = React.useCallback(
+    const createRect = useCallback(
         (position: Position, size: Size, color: number) => {
             const { x, y } = position;
             const { width, height } = size;
@@ -67,7 +67,7 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
         [pixiApp, getTextureFromCache, addTextureToCache]
     );
 
-    const renderItem = React.useCallback(
+    const renderItem = useCallback(
         (item: T, index: number, columnIndex: number) => {
             const x = getColumnX(columnIndex, expandedColumns, itemWidth);
             const y = headerHeight + index * itemHeight;

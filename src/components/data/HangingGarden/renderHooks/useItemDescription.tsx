@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 
 import { useHangingGardenContext } from './useHangingGardenContext';
@@ -30,7 +30,7 @@ const useItemDescription = <T extends HangingGardenColumnIndex>() => {
 
     const { createTextNode } = useTextNode();
 
-    const getRenderedItemDescription = React.useCallback(
+    const getRenderedItemDescription = useCallback(
         (item: T) => {
             let itemDescription = getTextureFromCache('descriptions', item[itemKeyProp as keyof T]);
 
@@ -45,7 +45,7 @@ const useItemDescription = <T extends HangingGardenColumnIndex>() => {
         [backgroundColor, getTextureFromCache, addTextureToCache, getItemDescription]
     );
 
-    const renderItemDescription = React.useCallback(
+    const renderItemDescription = useCallback(
         (item: T, index: number, columnIndex: number) => {
             const column = (columns as HangingGardenColumn<T>[])[columnIndex];
             const expandedColumn = expandedColumns && expandedColumns[column.key];
