@@ -6,7 +6,7 @@ import {
     HeaderAppAsidePortal,
     useAnchor,
 } from '@equinor/fusion-components';
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 import AppSettingsSideSheet from './AppSettingsSideSheet';
 
 export type AppSettingsManagerProps<T> = {
@@ -18,9 +18,9 @@ export type AppSettingsManagerProps<T> = {
 };
 
 function AppSettingsManager<T>(props: AppSettingsManagerProps<T>) {
-    const [isSideSheetOpen, setIsSideSheetOpen] = React.useState<boolean>(false);
-    const openSideSheet = React.useCallback(() => setIsSideSheetOpen(true), []);
-    const closeSideSheet = React.useCallback(() => setIsSideSheetOpen(false), []);
+    const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
+    const openSideSheet = useCallback(() => setIsSideSheetOpen(true), []);
+    const closeSideSheet = useCallback(() => setIsSideSheetOpen(false), []);
 
     const tooltipRef = useTooltipRef(props.name);
     const ref = useAnchor<HTMLButtonElement>({ id: props.anchorId, scope: 'portal' });
