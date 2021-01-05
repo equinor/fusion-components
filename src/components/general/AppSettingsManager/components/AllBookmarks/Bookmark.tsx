@@ -44,7 +44,7 @@ const EditBookmark: FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
     );
 };
 
-function Bookmark<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: BookmarkProps<T>) {
+function Bookmarks<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: BookmarkProps<T>) {
     const [isEditing, setIsEditing] = useState<boolean>(false);
 
     const enableEditing = useCallback(() => setIsEditing(true), []);
@@ -83,4 +83,4 @@ function Bookmark<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: 
         </div>
     );
 }
-export default Bookmark;
+export default Bookmarks;

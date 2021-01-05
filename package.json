@@ -12,7 +12,6 @@
     "start": "npm run clear:storybook && start-storybook -p 9001 -c .storybook --no-dll",
     "build:storybook": "build-storybook -c .storybook -o ./docs",
     "prebuild": "rm -rf dist",
-    "preinstall": "npx npm-force-resolutions",
     "build": "webpack",
     "postbuild": "tsc --emitDeclarationOnly true",
     "docker:build": "DOCKER_BUILDKIT=1 docker build -o dist .",
@@ -126,8 +125,7 @@
     "pixi.js-legacy": "^5.3.3"
   },
   "resolutions": {
-    "babel-core": "7.0.0-bridge.0",
-    "acorn": "8.0.1"
+    "babel-core": "7.0.0-bridge.0"
   },
   "files": [
     "/dist"
