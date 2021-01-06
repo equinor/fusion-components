@@ -1,6 +1,6 @@
 {
   "name": "@equinor/fusion-components",
-  "version": "1.4.26-pr-854.0",
+  "version": "1.4.25",
   "description": "Common react components used by fusion core and fusion apps",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,7 +16,8 @@
     "postbuild": "tsc --emitDeclarationOnly true",
     "docker:build": "DOCKER_BUILDKIT=1 docker build -o dist .",
     "format": "prettier --write ./src",
-    "lint": "npx eslint './src/**/*.{js,ts,tsx}' --quiet"
+    "lint": "npx eslint './src/**/*.{js,ts,tsx}' --quiet",
+    "preinstall": "npx npm-force-resolutions"
   },
   "repository": {
     "type": "git",
@@ -125,7 +126,8 @@
     "pixi.js-legacy": "^5.3.3"
   },
   "resolutions": {
-    "babel-core": "7.0.0-bridge.0"
+    "babel-core": "7.0.0-bridge.0",
+    "acorn": "8.0.4"
   },
   "files": [
     "/dist"
