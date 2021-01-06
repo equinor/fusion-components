@@ -1,5 +1,5 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const styles = require('./build/style');
 const fonts = require('./build/fonts');
 /* const eslint = require('./build/eslint');
