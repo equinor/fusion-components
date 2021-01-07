@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { HIGHLIGHTED_ITEM_KEY } from '../utils';
 import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
