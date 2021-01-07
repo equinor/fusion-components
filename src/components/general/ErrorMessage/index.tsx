@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
-export type ErrorTypes = 'error' | 'accessDenied' | 'notFound' | 'noData'|'failedDependency'|'throttle';
+export type ErrorTypes = 'error' | 'accessDenied' | 'notFound' | 'noData';
 
 export type ErrorMessageProps = {
     hasError?: boolean;
@@ -52,16 +52,6 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({
             case 'noData':
                 return {
                     title: `Unfortunately, we could not find any data for this component`,
-                    icon: <SyncDisabledIcon {...iconProps} />,
-                };
-            case 'failedDependency': // 424
-                return {
-                    title: `Unfortunately, we had problem with communicate with dependent system, ${resourceName}`,
-                    icon: <SyncDisabledIcon {...iconProps} />,
-                };
-            case 'throttle': // 429
-                return {
-                    title: `Unfortunately, we experience too many request for resource ${resourceName}`,
                     icon: <SyncDisabledIcon {...iconProps} />,
                 };
             default:

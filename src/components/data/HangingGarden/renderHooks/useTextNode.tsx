@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { DEFAULT_ITEM_TEXT_STYLE } from '../utils';
 
@@ -58,10 +58,7 @@ const useTextNode = () => {
                     width: textContainer.width,
                     height: textContainer.height,
                 });
-
-                const cachedParent = textContainer.enableTempParent();
                 pixiApp.current?.renderer.render(textContainer, cachedText);
-                textContainer.disableTempParent(cachedParent);
 
                 addTextureToCache('texts', text + color, cachedText);
             }

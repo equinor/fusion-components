@@ -1,5 +1,5 @@
 import { createContext, useContext, MutableRefObject, Dispatch, SetStateAction } from 'react';
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 
 import { Caches } from './useTextureCaches';
 import { ExpandedColumns, ExpandedColumn } from '../models/ExpandedColumn';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 import * as styles from './styles.less';
 import useTextureCaches from './renderHooks/useTextureCaches';
 import { HangingGardenColumnIndex, HangingGardenProps } from './models/HangingGarden';

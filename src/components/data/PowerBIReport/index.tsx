@@ -5,9 +5,9 @@ import { Spinner, ErrorMessage, AppSettingsManager } from '@equinor/fusion-compo
 import {
     useTelemetryLogger,
     FusionApiHttpErrorResponse,
+    useCurrentApp,
     useCurrentContext,
     useApiClients,
-    FusionApiErrorMessage,
 } from '@equinor/fusion';
 import { ICustomEvent } from 'service';
 import FusionError from './models/FusionError';
@@ -31,7 +31,6 @@ import * as styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 import ReportErrorMessage from './components/ReportErrorMessage';
-import { ErrorTypes } from '../../general/ErrorMessage';
 
 type PowerBIProps = {
     reportId: string;
@@ -81,15 +80,6 @@ const utcNow = () => {
 
 let timeout: NodeJS.Timeout;
 
-type PowerBIReportErrorDetail = {
-    type: 'pbi' | 'fusion';
-    message: string;
-    code: number;
-    title?: string;
-    url?: string;
-    inner?: FusionApiErrorMessage | ICustomEvent<IError>;
-};
-
 /**
  * TODO: use native react component from Microsoft
  */
@@ -99,12 +89,13 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
     const [isFetching, setIsFetching] = React.useState<boolean>(true);
-    const [error, setError] = React.useState<PowerBIReportErrorDetail | null>(null);
+    const [powerBIError, setPowerBIError] = React.useState<ICustomEvent<IError>>();
+    const [fusionError, setFusionError] = React.useState<FusionError>();
 
     const [report, setReport] = React.useState<Report>();
     const [embedInfo, setEmbedInfo] = React.useState<EmbedInfo>();
     const [accessToken, setAccessToken] = React.useState<AccessToken>();
-    const [timeLoadStart] = React.useState<Date>(new Date());
+    const [timeLoadStart, SetTimeLoadStart] = React.useState<Date>(new Date());
     const telemetryLogger = useTelemetryLogger();
     const [reApplyFilter, setReapplyFilter] = React.useState<boolean>(false);
     const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
@@ -114,57 +105,26 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
 
     const getReportInfo = async () => {
         try {
-            try {
-                setLoadingText('Loading Report');
-                const fetchedReport = await reportApiClient.getReportAsync(reportId);
-                setReport(fetchedReport.data);
-            } catch (error) {
-                const title = 'Sorry we could not show the report';
-                if (error.StatusCode == 403) {
-                    throw { error, title, message: 'You do not have access to VIEW the report' };
-                } else if (error.statusCode === 404) {
-                    throw { error, title, message: 'Could not find requested report' };
-                }
-                throw { error, title, message: 'Could not load general report info' };
-            }
+            setLoadingText('Loading Report');
+            const fetchedReport = await reportApiClient.getReportAsync(reportId);
+            setReport(fetchedReport.data);
 
-            try {
-                setLoadingText('Loading Report, fetching report info');
-                const fetchedEmbedInfo = await reportApiClient.getEmbedInfo(reportId);
-                setEmbedInfo(fetchedEmbedInfo.data);
-            } catch (error) {
-                const title = 'Sorry we could not show the report';
-                if (error.statusCode === 404) {
-                    throw { error, title, message: 'Could not load general report info' };
-                }
-                throw { error, title, message: 'Could not load general report info' };
-            }
+            setLoadingText('Loading Report, fetching report info');
+            const fetchedEmbedInfo = await reportApiClient.getEmbedInfo(reportId);
+            setEmbedInfo(fetchedEmbedInfo.data);
 
-            try {
-                setLoadingText('Loading Report, fetching access token');
-                const fetchedAccessToken = await reportApiClient.getAccessToken(reportId);
-                setAccessToken(fetchedAccessToken.data);
-            } catch (error) {
-                const title = 'Sorry we could not show the report';
-                throw { error, title, message: 'Could not acquire access token' };
-            }
-        } catch (error) {
-            const {
-                title,
-                message,
-                error: { statusCode, response, url },
-            } = error;
-            setError({
-                type: 'fusion',
-                code: statusCode,
-                title,
-                url,
-                message,
-                inner: (response as FusionApiHttpErrorResponse)?.error,
-            });
-            setIsLoading(false);
-        } finally {
+            setLoadingText('Loading Report, fetching access token');
+            const fetchedAccessToken = await reportApiClient.getAccessToken(reportId);
+            setAccessToken(fetchedAccessToken.data);
+
             setIsFetching(false);
+        } catch (error) {
+            setFusionError({
+                statusCode: error.statusCode,
+                fusionError: error.response as FusionApiHttpErrorResponse,
+            });
+            setIsFetching(false);
+            setIsLoading(false);
         }
     };
 
@@ -177,12 +137,9 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
                 currentContext.type.id
             );
         } catch (error) {
-            const { statusCode, response } = error;
-            setError({
-                type: 'fusion',
-                code: statusCode,
-                message: 'Context access check failed',
-                inner: (response as FusionApiHttpErrorResponse)?.error,
+            setFusionError({
+                statusCode: error.statusCode,
+                fusionError: error.response as FusionApiHttpErrorResponse,
             });
         }
     }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
@@ -288,13 +245,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
                 embeddedRef.current.off('buttonClicked');
                 embeddedRef.current.on('loaded', () => {
                     telemetryLogger.trackMetric({
-                        name: `pbi.report.load`,
-                        properties: {
-                            reportName: embedInfo.embedConfig.name,
-                            reportId: config.id,
-                            reportWorkspace: embedInfo.embedConfig.groupId,
-                        },
-                        // name: `${useCurrentApp.name}-EmbedLoadedTime`,
+                        name: `${useCurrentApp.name}-EmbedLoadedTime`,
                         average: (new Date().getTime() - timeLoadStart.getTime()) / 1000,
                         sampleCount: 1,
                     });
@@ -303,28 +254,18 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
                 });
                 embeddedRef.current.on('rendered', () => {
                     telemetryLogger.trackMetric({
-                        name: `pbi.report.render`,
-                        properties: {
-                            reportName: embedInfo.embedConfig.name,
-                            reportId: config.id,
-                            reportWorkspace: embedInfo.embedConfig.groupId,
-                        },
+                        name: `${useCurrentApp.name}-EmbedRenderedTime`,
                         average: (new Date().getTime() - timeLoadStart.getTime()) / 1000,
                         sampleCount: 1,
                     });
                 });
-                embeddedRef.current.on('error', (error: ICustomEvent<IError>) => {
-                    if (error && error.detail) {
+                embeddedRef.current.on('error', (err: ICustomEvent<IError>) => {
+                    if (err && err.detail) {
                         telemetryLogger.trackException({
-                            error: new Error('Power BI: ' + error.detail.message),
+                            error: new Error('Power BI: ' + err.detail.message),
                         });
                     }
-                    setError({
-                        type: 'pbi',
-                        code: Number(error.detail.errorCode),
-                        message: error.detail?.message,
-                        title: 'An error has occurred inside Power BI',
-                    });
+                    setPowerBIError(err);
                     setIsLoading(false);
                 });
                 embeddedRef.current.on(
@@ -395,78 +336,41 @@ const PowerBIReport: React.FC<PowerBIProps> = ({ reportId, filters, hasContext }
             }
         }
     }, [embedRef, accessToken, isFetching]);
+    if (powerBIError || fusionError) {
+        //Only handling selected errors from Power BI. As you might get errors that can be ignored.
+        const errorCode = powerBIError
+            ? powerBIError?.detail?.errorCode
+            : fusionError?.fusionError?.error?.code;
 
-    React.useEffect(() => {
-        if (!error) return;
-        const { message, code, type, url } = error;
-        const name = ['pbi.report.error', type, code].join('.');
-        telemetryLogger.trackException({
-            exception: { name, message },
-            properties: { code, url },
-        });
-    }, [error]);
-
-    // only display fusion errors
-    if (error && error.type === 'fusion') {
-        const { title, message, code, inner } = error;
-        const renderStandardError = (type: ErrorTypes = 'error') => (
-            <ErrorMessage hasError={true} title={title} message={message} errorType={type} />
-        );
-        switch (Number(code)) {
-            case 403: {
-                if (report) {
-                    // TODO: is there not a better way to check this?
-                    const hasContext = (inner as FusionApiErrorMessage)?.code !== 'NotAuthorized';
-                    return <ReportErrorMessage report={report} contextError={hasContext} />;
-                }
-                return renderStandardError('accessDenied');
-            }
-
-            case 404: {
-                return renderStandardError('notFound');
-            }
-
-            // power bi down
-            case 424: {
+        switch (errorCode) {
+            case '404':
+            case 'notFound':
                 return (
                     <ErrorMessage
                         hasError={true}
-                        errorType={'failedDependency'}
-                        resourceName={'PowerBI'}
-                        message={'We had problems communicate with Microsoft Power BI services'}
-                    />
-                );
-            }
-
-            // throttle
-            case 429:
-                return (
-                    <ErrorMessage
-                        hasError={true}
-                        errorType={'throttle'}
-                        resourceName={'PowerBI'}
+                        errorType={'notFound'}
+                        resourceName={'report'}
                         message={
-                            'We recorded too many requests from your client, please try again in one minute'
+                            fusionError?.fusionError?.error?.message ||
+                            'Report not found. Report might not be available or it does not exist '
                         }
                     />
                 );
-
-            default: {
-                // internal server error
-                if (code >= 500) {
-                    return (
-                        <ErrorMessage
-                            hasError={true}
-                            errorType={'error'}
-                            resourceName={'PowerBI'}
-                            message={
-                                'An error occurred while communicating with the fusion services... Please try again in a few minutes. If the problem persists, please raise an incident...'
-                            }
-                        />
-                    );
-                }
-                return renderStandardError();
-            }
+            default:
+                return report ? (
+                    <ReportErrorMessage
+                        report={report}
+                        contextError={
+                            fusionError?.statusCode === 403 &&
+                            !Boolean(fusionError?.fusionError?.error?.code === 'NotAuthorized')
+                        }
+                    />
+                ) : (
+                    <ErrorMessage
+                        hasError={true}
+                        message={fusionError?.fusionError?.error?.message || null}
+                    />
+                );
         }
     }
 

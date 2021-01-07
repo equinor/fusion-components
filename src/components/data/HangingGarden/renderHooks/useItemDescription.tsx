@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 
 import { useHangingGardenContext } from './useHangingGardenContext';
 import useTextNode from './useTextNode';

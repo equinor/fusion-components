@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 
 export type Position = {
     x: number;

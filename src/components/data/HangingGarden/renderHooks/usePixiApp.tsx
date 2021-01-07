@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js-legacy';
+import * as PIXI from 'pixi.js';
 
 /**
  * set up for the PIXI.js api

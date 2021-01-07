@@ -109,6 +109,7 @@ const NotificationCardContainer: React.FC<NotificationCardContainerProps> = ({
         const id = notification.id;
         return (
             <AccordionItem
+                actionDirection="right"
                 onChange={() => handleOpenAccordionChange(id)}
                 key={id}
                 isOpen={openAccordions[id]}
