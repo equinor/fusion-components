@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 import { PopoverContainer } from '@equinor/fusion-components';
 
 const POPOVER_MARGIN = 8;

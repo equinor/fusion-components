@@ -63,7 +63,7 @@ const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps
             )
         } else {
             return (
-                <>
+                <div className={styles.markAsRead}>
                     <Button
                         onClick={onReadAll}
                         disabled={unReadNotifications.length <= 0}
@@ -71,7 +71,7 @@ const NotificationsSideSheetContent: React.FC<NotificationsSideSheetContentProps
                         {isMarkingNotifications ? <Spinner inline /> : 'Mark all as read'}
                     </Button>
                     <NotificationDateDivisions notifications={unReadNotifications} />
-                </>
+                </div>
             )
         };
     }

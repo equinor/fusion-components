@@ -1,4 +1,4 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 import { HangingGardenColumn } from './models/HangingGarden';
 import { ExpandedColumn, ExpandedColumns } from './models/ExpandedColumn';
 import { ItemRenderContext, Position } from './models/RenderContext';
