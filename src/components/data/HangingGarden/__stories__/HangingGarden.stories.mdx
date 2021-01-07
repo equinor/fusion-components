@@ -127,18 +127,22 @@ export const Garden = () => (<GardenDemo/> )
 
 
 ### provideController
-  Takes in a ref that will give you a way to rerender the garden outside the Garden Component. 
-  In most cases the Garden will trigger its own rendering when needed. 
-  But for some reason your functionality does not trigger a rerender when it should
-  You can use this to trigger yourself. 
-  create yourself a ref like shown below. When it get populated you can trigger a rerender by calling clearGarden(). 
-        
+  Takes in a ref that will give you ways to control the garden component. 
+  As of now it only has one functions "clearGarden".
+  This will clear all texture caches in the garden, and with that trigger a rerender of the garden. 
+  
+  A reason to use this is when you source data changes in a way that would change the rendered items. 
+  Because these items are caches they would just use old data. 
+  you can then call clearGarden() and the garden will be rebuilt from ground up. 
+
+  so a general rule if you need to get the items in the garden to update their "look and feel", you would want to run this. 
+  This does not need to be done for column changes, that is handled properly. 
+
   ```jsx
-  const gardenController = React.useRef<GardenController>(null);
+  const gardenController = React.useRef(null); 
+  //Pass gardenController to Garden component in the provideController prop
   gardenController.current.clearGarden()
   ```
-
-  In most cases you should not need to handling this ourself. 
 
 ### backgroundColor
   Background color of the garden Defaults to white(16777215)

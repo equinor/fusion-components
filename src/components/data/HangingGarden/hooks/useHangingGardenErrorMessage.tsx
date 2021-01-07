@@ -7,7 +7,7 @@ import { GardenDataError } from '../models/GardenDataError';
  * Work well in combination with errors from useHangingGardenData hooks
  *
  * @param resourceName Represents the resourceName in errorMessages. Will be used in some of the error messages.
- * @param error The error that has occured when fetching data for the Garden.
+ * @param error The error that has occurred when fetching data for the Garden.
  * @param onTakeAction Supply a function that will be attached to the retry button in error message.
  * @returns An ErrorMessageProps object is returned and can be directly feed to errorMessage component.
  * @example  const {error,retry,} = useHangingGardenData('dataProxy','getHandoverAsync',

@@ -22,14 +22,14 @@ import usePopover from './renderHooks/usePopover';
  * @param highlightedItem The item object of the Item that should be highlighted.
  * @param itemKeyProp An key in the item object that should be used as an identifier. preferably unique.
  * @param itemHeight The height of items in the garden. All items will be same height. Defaults to 24
- * @param itemWidth  The width of items in the garden. All items will be same widht.
+ * @param itemWidth  The width of items in the garden. All items will be same width.s
  * @param renderHeaderContext Instructions telling the garden how the headers should look.
  * @param renderItemContext Instructions telling the garden how the items should look.
  * @param getItemDescription Instruction telling the garden how to get what is shown in expanded columns
  * @param onItemClick click handler that will be attached to each item in the garden.
  * @param headerHeight The height of the column header. Defaults to 32,
- * @param provideController Returns a ref. this contains the renderGarden function. Used to trigger rerenders at will.
- * @param backgroundColor Backgroun color for the garden. Defaults to  white(0xffffff),
+ * @param provideController Returns a ref. this contains the renderGarden function. Used to clear texture caches and rerenders at will.
+ * @param backgroundColor Background color for the garden. Defaults to  white(0xffffff),
  */
 
 function HangingGarden<T extends HangingGardenColumnIndex>({
