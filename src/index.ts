@@ -17,14 +17,15 @@ export { default as NotificationDialog } from './components/core/NotificationDia
 // Data components
 export { default as DataTable, DataTableColumn } from './components/data/DataTable';
 export {
-    default as PowerBIReport,
+    PowerBI as PowerBIReport,
     ReportLevelFilters,
     IBasicFilter,
     IBasicFilterWithKeys,
     IAdvancedFilter,
-    IRelativeDateFuilter,
+    IRelativeDateFilter,
     ITupleFilter,
-} from './components/data/PowerBIReport';
+} from './components/data/PowerBI';
+
 export {
     default as HangingGarden,
     HangingGardenProps,
@@ -41,7 +42,7 @@ export {
 export { default as Button, ButtonProps } from './components/general/Button';
 export { default as IconButton } from './components/general/IconButton';
 export { default as ErrorBoundary } from './components/general/ErrorBoundary';
-export { default as ErrorMessage } from './components/general/ErrorMessage';
+export { default as ErrorMessage, ErrorTypes } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
 export { Stepper, Step } from './components/general/Stepper';

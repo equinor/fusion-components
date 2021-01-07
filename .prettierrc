@@ -1,18 +1,5 @@
 {
-  "printWidth": 100,
+  "printWidth": 120,
   "singleQuote": true,
-  "trailingComma": "es5",
-  "endOfLine": "crlf",
-  "parser": "typescript",
-  "tabWidth": 4,
-  "stylelint": {
-    "extends": [
-        "stylelint-config-idiomatic-order",
-        "./node_modules/prettier-stylelint/config.js"
-    ],
-    "rules": {
-        "indentation": 4,
-        "string-quotes": "single"
-    }
-}
+  "tabWidth": 4
 }
