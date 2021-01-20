@@ -184,6 +184,8 @@ export {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    CalendarAcceptIcon,
+    CalendarEventIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
@@ -199,7 +201,7 @@ export {
     ExitToAppIcon,
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
-export { PlayIcon } from './components/icons/components/av';
+export { PlayIcon, PauseCircleIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
 export {
     FormatBoldIcon,

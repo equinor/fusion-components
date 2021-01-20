@@ -17,3 +17,5 @@ export { default as CheckCircleIcon } from './CheckCircleIcon';
 export { default as CloseCircleIcon } from './CloseCircleIcon';
 export { default as ScheduleIcon } from './ScheduleIcon';
 export { default as BookmarksIcon } from './BookmarksIcon';
+export { default as CalendarAcceptIcon } from './CalendarAcceptIcon';
+export { default as CalendarEventIcon } from './CalendarEventIcon';

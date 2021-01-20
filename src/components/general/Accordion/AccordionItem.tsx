@@ -9,7 +9,7 @@ type AccordionItemProps = {
     disabled?: boolean;
     onChange?: () => void;
     children?: any;
-    label: string;
+    label: string | React.ReactNode;
     actionDirection?: 'left' | 'right';
 };
 
