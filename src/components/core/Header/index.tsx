@@ -14,6 +14,7 @@ import ComponentDisplayToggleButton from './components/ComponentDisplayToggleBut
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
+import FullscreenToggleButton from './components/FullscreenToggleButton';
 
 enum Breakpoints {
     medium = 'medium',
@@ -44,7 +45,14 @@ type FusionHeaderProps = {
     showSettings?: boolean;
 };
 
-const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, settings, quickFactScope, showSettings }) => {
+const FusionHeader: React.FC<FusionHeaderProps> = ({
+    start,
+    content,
+    aside,
+    settings,
+    quickFactScope,
+    showSettings,
+}) => {
     const {
         refs: { headerContent, headerAppAside },
     } = useFusionContext();
@@ -95,6 +103,7 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, sett
                     ref={headerAppAside as React.MutableRefObject<HTMLDivElement | null>}
                     className={styles.asideAppContainer}
                 ></div>
+                <FullscreenToggleButton quickFactScope={quickFactScope} />
                 <ComponentDisplayToggleButton quickFactScope={quickFactScope} />
                 {aside}
                 <CurrentUserButton quickFactScope={quickFactScope} />

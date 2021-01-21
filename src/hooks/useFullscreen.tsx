@@ -2,7 +2,7 @@ import * as React from 'react';
 
 /**
  * Give you tools to handle fullscreen mode using buttons or other means than the usual F11 button.
- * Per default the hook will set entire Fusion into fullscreen, but this can be changed by passing in a ref to another element
+ * Per default the hook will fullscreen the body tag, but this can be changed by passing in a ref to another element
  * @param elementRef a ref to specific element on page you want to set into fullscreen mode.
  */
 
@@ -11,7 +11,7 @@ const useFullscreen = (elementRef?: React.RefObject<HTMLElement> | null) => {
         Boolean(document.fullscreenElement)
     );
 
-    const element = elementRef ?? React.useRef(document.getElementById('app'));
+    const element = elementRef ?? React.useRef(document.body);
 
     const checkIsFullscreenActive = React.useCallback(() => {
         setIsFullscreenActive(Boolean(document.fullscreenElement));

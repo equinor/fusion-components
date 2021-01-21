@@ -19,3 +19,5 @@ export { default as ScheduleIcon } from './ScheduleIcon';
 export { default as BookmarksIcon } from './BookmarksIcon';
 export { default as CalendarAcceptIcon } from './CalendarAcceptIcon';
 export { default as CalendarEventIcon } from './CalendarEventIcon';
+export { default as FullscreenIcon } from './FullscreenIcon';
+export { default as FullscreenExitIcon } from './FullscreenExitIcon';

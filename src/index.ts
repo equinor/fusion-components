@@ -136,6 +136,7 @@ export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpo
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
 export { default as useRootContainer } from './hooks/useRootContainer';
+export { default as useFullscreen } from './hooks/useFullscreen';
 export {
     default as useStringMask,
     applyStringMask,
@@ -186,6 +187,8 @@ export {
     BookmarksIcon,
     CalendarAcceptIcon,
     CalendarEventIcon,
+    FullscreenIcon,
+    FullscreenExitIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
