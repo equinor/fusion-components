@@ -8,29 +8,42 @@ import * as React from 'react';
 
 const useFullscreen = (elementRef?: React.RefObject<HTMLElement> | null) => {
     const [isFullscreenActive, setIsFullscreenActive] = React.useState(
-        Boolean(document.fullscreenElement)
+        Boolean(document?.fullscreenElement ?? (document as any)?.webkitFullscreenElement)
+    );
+
+    const checkIsFullscreenActive = React.useCallback(
+        () =>
+            setIsFullscreenActive(
+                Boolean(document?.fullscreenElement ?? (document as any)?.webkitFullscreenElement)
+            ),
+        [document]
     );
 
     const element = elementRef ?? React.useRef(document.body);
 
-    const checkIsFullscreenActive = React.useCallback(() => {
-        setIsFullscreenActive(Boolean(document.fullscreenElement));
-    }, [document]);
+    const requestFullscreen = React.useCallback(
+        () =>
+            element.current?.requestFullscreen() ??
+            (element.current as any).webkitRequestFullscreen(),
+        [element]
+    );
 
-    const requestFullscreen = React.useCallback(() => element.current?.requestFullscreen(), [
-        element,
-    ]);
-
-    const exitFullscreen = React.useCallback(() => document.exitFullscreen(), [document]);
+    const exitFullscreen = React.useCallback(
+        () => document?.exitFullscreen() ?? (document as any)?.webkitExitFullscreen(),
+        [document]
+    );
 
     const toggleFullscreen = React.useCallback(() => {
         isFullscreenActive ? exitFullscreen() : requestFullscreen();
     }, [isFullscreenActive, requestFullscreen, exitFullscreen]);
 
     React.useEffect(() => {
-        element.current?.addEventListener('fullscreenchange', checkIsFullscreenActive);
-        return () =>
-            element.current?.removeEventListener('fullscreenchange', checkIsFullscreenActive);
+        element.current.addEventListener('fullscreenchange', checkIsFullscreenActive);
+        element.current.addEventListener('webkitfullscreenchange', checkIsFullscreenActive);
+        return () => {
+            element.current.removeEventListener('fullscreenchange', checkIsFullscreenActive);
+            element.current.removeEventListener('webkitfullscreenchange', checkIsFullscreenActive);
+        };
     }, []);
 
     return { toggleFullscreen, requestFullscreen, exitFullscreen, isFullscreenActive };
