@@ -26,13 +26,13 @@ const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presenceAvailabilit
     );
 
     const presenceIcon = React.useMemo(() => {
-        if (presenceAvailability === 'Available' || 'AvailableIdle') {
+        if (presenceAvailability === 'Available' || presenceAvailability === 'AvailableIdle') {
             return <CheckCircleIcon />;
         }
         if (presenceAvailability === 'Away' || presenceAvailability === 'BeRightBack') {
             return <ScheduleIcon />;
         }
-        if (presenceAvailability === 'Busy' || 'BusyIdle') {
+        if (presenceAvailability === 'Busy' || presenceAvailability === 'BusyIdle') {
             return <CircleIcon />
         }
         if (presenceAvailability === 'DoNotDisturb') {
