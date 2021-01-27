@@ -23,13 +23,17 @@ const useFullscreen = (elementRef?: React.RefObject<HTMLElement> | null) => {
 
     const requestFullscreen = React.useCallback(
         () =>
-            element.current?.requestFullscreen() ??
-            (element.current as any).webkitRequestFullscreen(),
+            element.current.requestFullscreen
+                ? element.current.requestFullscreen()
+                : (element.current as any).webkitRequestFullscreen(),
         [element]
     );
 
     const exitFullscreen = React.useCallback(
-        () => document?.exitFullscreen() ?? (document as any)?.webkitExitFullscreen(),
+        () =>
+            document?.exitFullscreen
+                ? document?.exitFullscreen()
+                : (document as any)?.webkitExitFullscreen(),
         [document]
     );
 
