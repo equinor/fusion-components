@@ -131,7 +131,7 @@
     "@types/prosemirror-model": "^1.7.3",
     "@types/prosemirror-state": "^1.2.5",
     "@types/prosemirror-view": "^1.15.1",
-    "@webcomponents/custom-elements": "^1.4.2",
+    "@webcomponents/custom-elements": "^1.4.3",
     "date-fns": "^2.14.0",
     "lodash.throttle": "^4.1.1",
     "pixi.js-legacy": "^5.3.3",
