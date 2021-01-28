@@ -130,7 +130,7 @@
     "@types/lodash.throttle": "^4.1.6",
     "@types/prosemirror-model": "^1.7.3",
     "@types/prosemirror-state": "^1.2.5",
-    "@types/prosemirror-view": "^1.15.1",
+    "@types/prosemirror-view": "^1.16.1",
     "@webcomponents/custom-elements": "^1.4.2",
     "date-fns": "^2.14.0",
     "lodash.throttle": "^4.1.1",
