@@ -8,32 +8,40 @@ import {
     CloseCircleIcon,
     ScheduleIcon,
     PhotoSize,
+    RemoveCircleIcon,
+    CircleIcon
 } from '@equinor/fusion-components';
 
 type PersonPresenceProps = {
-    presence: PersonPresenceAvailability;
+    presenceAvailability: PersonPresenceAvailability;
     size: PhotoSize;
 };
 
-const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presence, size }) => {
+const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presenceAvailability, size }) => {
     const presenceClasses = classNames(
         styles.presenceContainer,
         useComponentDisplayClassNames(styles),
         styles[size],
-        styles[presence.toLowerCase()]
+        styles[presenceAvailability?.toLowerCase()]
     );
 
     const presenceIcon = React.useMemo(() => {
-        if (presence === 'Online') {
+        if (presenceAvailability === 'Available' || presenceAvailability === 'AvailableIdle') {
             return <CheckCircleIcon />;
         }
-        if (presence === 'IdleBusy' || presence === 'BeRightBack') {
+        if (presenceAvailability === 'Away' || presenceAvailability === 'BeRightBack') {
             return <ScheduleIcon />;
         }
+        if (presenceAvailability === 'Busy' || presenceAvailability === 'BusyIdle') {
+            return <CircleIcon />
+        }
+        if (presenceAvailability === 'DoNotDisturb') {
+            return <RemoveCircleIcon />
+        }
         return <CloseCircleIcon />;
-    }, [presence, size]);
+    }, [presenceAvailability, size]);
 
-    const presenceRef = useTooltipRef(presence);
+    const presenceRef = useTooltipRef(presenceAvailability);
 
     return (
         <div className={presenceClasses} ref={presenceRef}>

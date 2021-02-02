@@ -184,6 +184,8 @@ export {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    RemoveCircleIcon,
+    CircleIcon,
     CalendarAcceptIcon,
     CalendarEventIcon,
 } from './components/icons/components/action';
