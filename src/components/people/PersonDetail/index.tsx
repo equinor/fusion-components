@@ -33,12 +33,12 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
     }, [error, personDetails]);
 
     const fetchPresenceStatus = React.useCallback(
-        async (mail: string) => {
+        async (id: string) => {
             setIsFetchingPresence(true);
             setPresenceError(null);
 
             try {
-                const response = await apiClients.people.getPresenceAsync(mail, '1.0-preview');
+                const response = await apiClients.people.getPresenceAsync(id);
                 setPresence(response.data);
             } catch (e) {
                 setPresenceError(e);
@@ -50,8 +50,8 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
     );
 
     React.useEffect(() => {
-        if (currentPerson && currentPerson.mail) {
-            fetchPresenceStatus(currentPerson.mail);
+        if (currentPerson && currentPerson.azureUniqueId) {
+            fetchPresenceStatus(currentPerson.azureUniqueId);
         }
     }, [currentPerson]);
 
@@ -66,7 +66,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                         <div className={styles.presenceSection}>
                             <div className={styles.iconContainer}>
                                 <PersonPresenceIcon
-                                    presence={presence?.availability || 'None'}
+                                    presenceAvailability={presence?.availability}
                                     size="xlarge"
                                 />
                             </div>

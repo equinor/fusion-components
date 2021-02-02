@@ -185,6 +185,8 @@ export {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    RemoveCircleIcon,
+    CircleIcon,
     CalendarAcceptIcon,
     CalendarEventIcon,
     FullscreenIcon,
