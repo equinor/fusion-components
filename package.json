@@ -118,8 +118,8 @@
     "webpack-merge": "^5.7.3"
   },
   "peerDependencies": {
-    "react": "^17.0.x",
-    "@equinor/fusion": "2.4.x",
+    "react": "^17.x",
+    "@equinor/fusion": "3.x",
     "react-router-dom": "5.x",
     "history": "^4.9.0",
     "powerbi-client": "^2.14.1",
