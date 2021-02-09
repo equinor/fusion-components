@@ -1,6 +1,6 @@
 {
   "name": "@equinor/fusion-components",
-  "version": "1.4.27-pr-854.1",
+  "version": "2.0.0-0",
   "description": "Common react components used by fusion core and fusion apps",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
