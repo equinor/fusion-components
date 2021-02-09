@@ -17,6 +17,7 @@ type StepProps = {
     done?: boolean;
     isLastStep?: boolean;
     stepCount?: number;
+    verticalStep?: boolean;
 };
 
 type BadgeProps = {
@@ -50,6 +51,7 @@ const Step: React.FC<StepProps> = ({
     done,
     isLastStep,
     stepCount,
+    verticalStep,
 }) => {
     const stepRef = React.useRef<HTMLAnchorElement>(null);
     const [showStepCount, setShowStepCount] = React.useState(false);
@@ -69,12 +71,12 @@ const Step: React.FC<StepProps> = ({
     useEffect(() => {
         const mobileMaxWidth = styling.mobileWidth();
 
-        if (windowWidth < parseInt(mobileMaxWidth) && !showStepCount) {
+        if (!verticalStep && windowWidth < parseInt(mobileMaxWidth) && !showStepCount) {
             setShowStepCount(true);
         } else if (windowWidth > parseInt(mobileMaxWidth) && showStepCount) {
             setShowStepCount(false);
         }
-    }, [windowWidth]);
+    }, [windowWidth, verticalStep]);
 
     React.useEffect(() => {
         if (isCurrent && onChange && stepRef.current) {
@@ -105,13 +107,17 @@ const Step: React.FC<StepProps> = ({
             >
                 <Badge position={position} active={isCurrent} done={done} />
                 <div className={titleClasses}>
-                    <span className={styles.text}> {title}</span>
-                    <span className={styles.stepperLine} />
+                    <span className={styles.text} title={title}>
+                        {title}
+                    </span>
+                    {!verticalStep && <span className={styles.stepperLine} />}
                 </div>
                 {showStepCount ? (
                     <span className={classNames(styles.progress)}>
                         {position} of {stepCount}
                     </span>
+                ) : verticalStep ? (
+                    <span className={styles.verticalStepperLine} />
                 ) : (
                     <span />
                 )}
