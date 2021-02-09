@@ -1,4 +1,13 @@
-import { useRef, useEffect, FC } from 'react';
+import {
+    useRef,
+    useEffect,
+    FC,
+    RefObject,
+    DetailedHTMLFactory,
+    DetailedHTMLProps,
+    HTMLAttributes,
+    PropsWithChildren,
+} from 'react';
 import {
     AnchorDOMRect,
     OverlayAnchorElement,
@@ -26,7 +35,7 @@ export interface AppGuideAnchorRef<R extends HTMLElement> {
     /**
      * reference to the element [HTMLElement] which displays the anchor
      */
-    ref: React.RefObject<R>;
+    ref: RefObject<R>;
 }
 
 /**
@@ -90,9 +99,9 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
     }, [ref]);
 };
 
-export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<
+export type ApplicationGuidanceAnchorProps = PropsWithChildren<
     Omit<OverlayAnchorElementProps, 'bounds'> &
-        React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
+        DetailedHTMLProps<HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
 >;
 
 export const ApplicationGuidanceAnchor: FC<ApplicationGuidanceAnchorProps> = (
@@ -105,13 +114,13 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface ReactHTML {
-            [OverlayAnchorElementTag]: React.DetailedHTMLFactory<
+            [OverlayAnchorElementTag]: DetailedHTMLFactory<
                 ApplicationGuidanceAnchorProps,
                 OverlayAnchorElement
             >;
         }
         interface IntrinsicElements {
-            [OverlayAnchorElementTag]: React.DetailedHTMLProps<
+            [OverlayAnchorElementTag]: DetailedHTMLProps<
                 ApplicationGuidanceAnchorProps,
                 OverlayAnchorElement
             >;

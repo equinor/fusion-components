@@ -247,7 +247,7 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
             if (!embedInfo) return;
             const embedConfig = embedInfo.embedConfig;
             const token = accessToken ? accessToken.token : undefined;
-            let config: pbi.IEmbedConfiguration = {
+            const config: pbi.IEmbedConfiguration = {
                 type: type.toLowerCase(),
                 id: getReportOrDashboardId(embedConfig, type),
                 embedUrl: embedConfig.embedUrl,

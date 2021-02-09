@@ -14,9 +14,7 @@ const StepContent: FC<StepContentProps> = ({ children, activeStepKey }) => {
         return null;
     }
 
-    const clonedChildren = Children.map(active.props.children, (child) =>
-        cloneElement(child)
-    );
+    const clonedChildren = Children.map(active.props.children, (child) => cloneElement(child));
 
     return <Fragment>{clonedChildren}</Fragment>;
 };

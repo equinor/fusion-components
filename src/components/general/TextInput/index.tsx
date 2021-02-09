@@ -1,7 +1,21 @@
 import styles from './styles.less';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
-import { useState, useRef, useCallback, useMemo, forwardRef, FocusEvent, KeyboardEvent, PropsWithChildren, MutableRefObject, ChangeEvent, ReactElement } from 'react';
+import {
+    useState,
+    useRef,
+    useCallback,
+    useMemo,
+    forwardRef,
+    FocusEvent,
+    KeyboardEvent,
+    PropsWithChildren,
+    MutableRefObject,
+    ChangeEvent,
+    ReactElement,
+    MouseEvent,
+    MouseEventHandler,
+} from 'react';
 
 type TextInputProps = {
     disabled?: boolean;
@@ -13,19 +27,16 @@ type TextInputProps = {
     asideComponent?: any;
     helperText?: string;
     onChange: (newValue: string) => void;
-    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onClick?: MouseEventHandler<HTMLDivElement>;
     value?: string;
     icon?: ReactElement;
     onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
     onFocus?: (event: FocusEvent<HTMLInputElement>) => void;
-    onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onIconAction?: MouseEventHandler<HTMLDivElement>; // (event: MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
 };
 
-const TextInput = forwardRef<
-    HTMLInputElement | null,
-    PropsWithChildren<TextInputProps>
->(
+const TextInput = forwardRef<HTMLInputElement | null, PropsWithChildren<TextInputProps>>(
     (
         {
             disabled = false,
@@ -63,7 +74,7 @@ const TextInput = forwardRef<
             [disabled, onChange]
         );
 
-        const handleDivClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        const handleDivClick = useCallback((e: MouseEvent<HTMLDivElement>) => {
             if (inputRef.current && !disabled) {
                 inputRef.current.focus();
                 setFocus(true);

@@ -6,9 +6,7 @@ type NotificationCardsPresenterProps = {
     onShowInList: () => void;
 };
 
-const NotificationCardsPresenter: FC<NotificationCardsPresenterProps> = ({
-    onShowInList,
-}) => {
+const NotificationCardsPresenter: FC<NotificationCardsPresenterProps> = ({ onShowInList }) => {
     const { notificationCenter } = useFusionContext();
     const [notificationCards, setNotificationCards] = useState<NotificationCard[]>([]);
     const presentCard = (notificationCard: NotificationCard) => {

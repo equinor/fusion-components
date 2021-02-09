@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, FC } from 'react';
+import { useCallback, useMemo, useState, FC, MouseEvent } from 'react';
 
 import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
@@ -39,7 +39,7 @@ const Slider: FC<SliderProps> = ({ values, markers, disabled, hideHandle, onChan
     );
 
     const onTrackClick = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
+        (e: MouseEvent<HTMLDivElement>) => {
             if (!disabled) {
                 const marker = markerFinder(e.pageX);
                 onChange(getClosestHandleChange(marker.value));
@@ -55,7 +55,7 @@ const Slider: FC<SliderProps> = ({ values, markers, disabled, hideHandle, onChan
 
     const handleMouseMove = useCallback(
         (e: Event) => {
-            const mouseEvent = e as MouseEvent;
+            const mouseEvent = e as unknown as MouseEvent;
             if (activeHandle && !disabled) {
                 const marker = markerFinder(mouseEvent.pageX);
                 const value: [number, number] =

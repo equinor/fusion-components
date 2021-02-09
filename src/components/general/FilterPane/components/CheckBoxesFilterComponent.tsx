@@ -2,7 +2,7 @@ import { useTooltipRef, CheckBox } from '@equinor/fusion-components';
 import { FilterTerm } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
 
 type CheckBoxOption = {
     key: string;
@@ -41,12 +41,7 @@ const getCountForOption = (option: CheckBoxOption, filterCount: Count) => {
     return countForOption.count;
 };
 
-const CheckboxWrapper: FC<CheckBoxWrapperProps> = ({
-    option,
-    term,
-    filterCount,
-    onChange,
-}) => {
+const CheckboxWrapper: FC<CheckBoxWrapperProps> = ({ option, term, filterCount, onChange }) => {
     const selectSingleOption = () => {
         let newValue: string[] | null = [option.key];
 
@@ -57,7 +52,7 @@ const CheckboxWrapper: FC<CheckBoxWrapperProps> = ({
         onChange(newValue);
     };
 
-    const toggleOption = (e: React.MouseEvent<HTMLDivElement>) => {
+    const toggleOption = (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
 
         const index = term.value.indexOf(option.key);

@@ -15,11 +15,7 @@ type AccountManagerSideSheet = {
     personDetails: PersonDetails;
 };
 
-const AccountManagerSideSheet: FC<AccountManagerSideSheet> = ({
-    show,
-    onClose,
-    personDetails,
-}) => {
+const AccountManagerSideSheet: FC<AccountManagerSideSheet> = ({ show, onClose, personDetails }) => {
     const [selectedMenuItem, setSelectedMenuItem] = useState<UserMenuSectionItem | null>(null);
 
     const { userMenuSectionsContainer } = useFusionContext();

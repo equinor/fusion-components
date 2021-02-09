@@ -3,9 +3,9 @@ import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/Hanging
 
 export type Scroll<T extends HangingGardenColumnIndex> = {
     isScrolling: MutableRefObject<boolean>;
-    scrollLeft: React.MutableRefObject<number>;
-    scrollTop: React.MutableRefObject<number>;
-    onScroll: (e: React.UIEvent<HTMLDivElement>, renderGarden: () => void) => void;
+    scrollLeft: MutableRefObject<number>;
+    scrollTop: MutableRefObject<number>;
+    onScroll: (e: UIEvent<HTMLDivElement>, renderGarden: () => void) => void;
     scrollToHighlightedColumn: (
         columns: HangingGardenColumn<T>[],
         highlightedColumnKey: string,
@@ -61,9 +61,9 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
             scrollLeft.current =
                 highlightedColumnIndex >= 0
                     ? (container.current.scrollLeft =
-                        highlightedColumnIndex * itemWidth -
-                        container.current.offsetWidth / 2 +
-                        itemWidth / 2)
+                          highlightedColumnIndex * itemWidth -
+                          container.current.offsetWidth / 2 +
+                          itemWidth / 2)
                     : 0;
 
             return scrollLeft.current !== 0;

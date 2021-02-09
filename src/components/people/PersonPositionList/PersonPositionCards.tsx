@@ -19,11 +19,7 @@ type CardLinkProps = {
     disableOrgLink: boolean;
 };
 
-const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({
-    children,
-    disableOrgLink,
-    position,
-}) => {
+const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({ children, disableOrgLink, position }) => {
     if (disableOrgLink) {
         return <>{children}</>;
     }

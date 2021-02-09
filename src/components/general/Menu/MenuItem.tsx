@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useRef, FC } from 'react';
+import { useEffect, useRef, FC, ReactNode, MouseEvent } from 'react';
 import styles from './styles.less';
 
 export type MenuItemComponentProps<TItem extends MenuItemType> = {
@@ -8,8 +8,8 @@ export type MenuItemComponentProps<TItem extends MenuItemType> = {
 
 export type MenuItemType = {
     key: string;
-    title: string | React.ReactNode;
-    aside?: string | React.ReactNode;
+    title: string | ReactNode;
+    aside?: string | ReactNode;
     isSelected?: boolean;
     isDisabled?: boolean;
 };
@@ -29,7 +29,7 @@ const scrollElementIntoView = (el: HTMLElement & { scrollIntoViewIfNeeded?: () =
 
 function MenuItem<TItem extends MenuItemType>(props: MenuItemProps<TItem>) {
     const ref = useRef<HTMLButtonElement>(null);
-    const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const onClick = (e: MouseEvent<HTMLButtonElement>) => {
         if (ref.current) {
             ref.current.blur();
         }

@@ -6,13 +6,15 @@ import {
     useFullscreen,
     useTooltipRef,
 } from '@equinor/fusion-components';
-import * as React from 'react';
+import { FunctionComponent } from 'react';
 
 export type FullscreenToggleButtonProps = {
     quickFactScope?: string;
 };
 
-const FullscreenToggleButton: React.FC<FullscreenToggleButtonProps> = ({ quickFactScope }) => {
+const FullscreenToggleButton: FunctionComponent<FullscreenToggleButtonProps> = ({
+    quickFactScope,
+}) => {
     const { toggleFullscreen, isFullscreenActive } = useFullscreen();
 
     const tooltipRef = useTooltipRef(

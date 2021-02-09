@@ -1,4 +1,12 @@
-import { useState, useRef, useCallback, useEffect, useMemo, FocusEvent, MutableRefObject } from 'react';
+import {
+    useState,
+    useRef,
+    useCallback,
+    useEffect,
+    useMemo,
+    FocusEvent,
+    MutableRefObject,
+} from 'react';
 
 import {
     TextInput,

@@ -25,9 +25,7 @@ const TabContent: FC<TabContentType> = ({ children, activeTabKey }) => {
         return null;
     }
 
-    const clonedChildren = Children.map(active.props.children, (child) =>
-        cloneElement(child)
-    );
+    const clonedChildren = Children.map(active.props.children, (child) => cloneElement(child));
     return <div className={styles.tabContent}>{clonedChildren}</div>;
 };
 

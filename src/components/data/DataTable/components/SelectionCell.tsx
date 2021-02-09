@@ -1,14 +1,11 @@
-import { forwardRef } from 'react';
+import { forwardRef, MutableRefObject, PropsWithChildren } from 'react';
 
 import { SelectionCellProps } from '../dataTableTypes';
 import { CheckBox } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from '../styles.less';
 
-const SelectionCell = forwardRef<
-    HTMLDivElement | null,
-    React.PropsWithChildren<SelectionCellProps>
->(
+const SelectionCell = forwardRef<HTMLDivElement | null, PropsWithChildren<SelectionCellProps>>(
     (
         {
             isSelectable,
@@ -31,7 +28,7 @@ const SelectionCell = forwardRef<
                     [styles.isSelectable]: isSelectable,
                     [styles.isSelected]: isSelected,
                 })}
-                ref={ref as React.MutableRefObject<HTMLDivElement | null>}
+                ref={ref as MutableRefObject<HTMLDivElement | null>}
             >
                 {isSelectable && (
                     <CheckBox

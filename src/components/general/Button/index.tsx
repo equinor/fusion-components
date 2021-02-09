@@ -1,7 +1,15 @@
 import { useComponentDisplayType } from '@equinor/fusion';
 import ButtonComponent from './components/Button';
 import AnchorComponent from './components/Anchor';
-import { useState, createRef, forwardRef, EventHandler, SyntheticEvent, PropsWithChildren, RefObject } from 'react';
+import {
+    useState,
+    createRef,
+    forwardRef,
+    EventHandler,
+    SyntheticEvent,
+    PropsWithChildren,
+    RefObject,
+} from 'react';
 
 export type ButtonProps = {
     disabled?: boolean;
@@ -40,8 +48,7 @@ export const Button = forwardRef<HTMLElement | null, PropsWithChildren<ButtonPro
         const [mouseHasBeenDown, setMouseHasBeenDown] = useState(false);
         const displayType = useComponentDisplayType();
 
-        const buttonRef =
-            (ref as RefObject<HTMLElement | null>) || createRef<HTMLElement | null>();
+        const buttonRef = (ref as RefObject<HTMLElement | null>) || createRef<HTMLElement | null>();
 
         const handleOnMouseDown = (e: SyntheticEvent) => {
             const { onMouseDown } = props;

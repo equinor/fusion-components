@@ -50,10 +50,7 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
 
             const renderedDescriptions = column.data.map(getRenderedItemDescription);
 
-            const maxWidth = Math.max.apply(
-                Math,
-                renderedDescriptions.map((description) => description.width)
-            );
+            const maxWidth = Math.max(...renderedDescriptions.map((description) => description.width));
 
             setExpandedColumns((prevColumns) => ({
                 ...prevColumns,
@@ -70,7 +67,7 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
     const getHeaderMask = useCallback(
         (index: number, headerWidth: number) => {
             const key = `header-${index}`;
-            let mask = getTextureFromCache('masks', key);
+            const mask = getTextureFromCache('masks', key);
             if (!mask) {
                 const mask = createRoundedRectMask(headerWidth, headerHeight);
                 addTextureToCache('masks', key, mask);

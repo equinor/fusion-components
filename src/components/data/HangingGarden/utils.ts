@@ -19,10 +19,7 @@ export const DEFAULT_ITEM_TEXT_STYLE = new PIXI.TextStyle({
 export const createTextStyle = (style: PIXI.TextStyle) => new PIXI.TextStyle(style);
 
 export const getMaxRowCount = (columns: HangingGardenColumn<any>[]) => {
-    return Math.max.apply(
-        Math,
-        columns.map((column) => column.data.length)
-    );
+    return Math.max(...columns.map((column) => column.data.length));
 };
 
 export const getExpandedWith = (width: number, c: ExpandedColumn) =>

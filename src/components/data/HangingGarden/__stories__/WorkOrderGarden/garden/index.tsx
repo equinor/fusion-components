@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
+
 import * as PIXI from 'pixi.js-legacy';
 
 import WorkOrderType from '../models/WorkOrderType';
@@ -25,16 +26,16 @@ type GardenProps = {
     setSelectedWorkOrder: (wo: WorkOrderType) => void;
 };
 
-const Garden: React.FC<GardenProps> = ({
+const Garden: FC<GardenProps> = ({
     filteredData,
     filterTerms,
     selectedWorkOrder,
     setSelectedWorkOrder,
 }) => {
-    const [columns, setColumns] = React.useState<ColumnType[]>([]);
+    const [columns, setColumns] = useState<ColumnType[]>([]);
     const highlightedKey = getYearAndWeekFromDate(new Date());
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (gardenController?.current?.clearGarden) gardenController.current.clearGarden();
 
         setColumns(getColumns(filteredData, filterTerms));
@@ -177,7 +178,7 @@ const Garden: React.FC<GardenProps> = ({
         textNode.y = 24 / 2 - textNode.height / 2;
     };
 
-    const gardenController = React.useRef<GardenController>(null);
+    const gardenController = useRef<GardenController>(null);
 
     return (
         <>

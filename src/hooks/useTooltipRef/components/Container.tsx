@@ -1,4 +1,12 @@
-import { forwardRef, RefObject, useEffect, useState, ReactNode, PropsWithChildren, MutableRefObject } from 'react';
+import {
+    forwardRef,
+    RefObject,
+    useEffect,
+    useState,
+    ReactNode,
+    PropsWithChildren,
+    MutableRefObject,
+} from 'react';
 import classNames from 'classnames';
 import * as styles from '../styles.less';
 import Arrow from './Arrow';
@@ -50,10 +58,7 @@ const TooltipContainer = forwardRef<
     HTMLDivElement | null,
     PropsWithChildren<TooltipContainerProps>
 >(({ placement: preferredPlacement, content }, ref) => {
-    const [isInView, setIsInView] = useInViewChecker(
-        ref as MutableRefObject<HTMLDivElement>,
-        4
-    );
+    const [isInView, setIsInView] = useInViewChecker(ref as MutableRefObject<HTMLDivElement>, 4);
     const [placement, setPlacement] = useState<TooltipPlacement>(preferredPlacement);
     const [testedPlacements, setTestedPlacements] = useState<TooltipPlacement[]>([]);
 

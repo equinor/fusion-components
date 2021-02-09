@@ -2,7 +2,20 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useState, useRef, useMemo, forwardRef } from 'react';
+import {
+    useState,
+    useRef,
+    useMemo,
+    forwardRef,
+    MouseEvent,
+    ReactElement,
+    FocusEvent,
+    KeyboardEvent,
+    PropsWithChildren,
+    MutableRefObject,
+    ChangeEvent,
+    MouseEventHandler,
+} from 'react';
 
 type TextAreaProps = {
     disabled?: boolean;
@@ -14,17 +27,14 @@ type TextAreaProps = {
     asideComponent?: any;
     helperText?: string;
     onChange: (newValue: string) => void;
-    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    onClick?: MouseEventHandler<HTMLDivElement>;
     value?: string;
-    icon?: React.ReactElement;
-    onIconAction?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
-    onKeyUp?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+    icon?: ReactElement;
+    onIconAction?: MouseEventHandler<HTMLDivElement>;
+    onBlur?: (event: FocusEvent<HTMLTextAreaElement>) => void;
+    onKeyUp?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
 };
-const TextArea = forwardRef<
-    HTMLTextAreaElement | null,
-    React.PropsWithChildren<TextAreaProps>
->(
+const TextArea = forwardRef<HTMLTextAreaElement | null, PropsWithChildren<TextAreaProps>>(
     (
         {
             disabled = false,
@@ -47,10 +57,10 @@ const TextArea = forwardRef<
     ) => {
         const [focus, setFocus] = useState(false);
         const inputRef =
-            (ref as React.MutableRefObject<HTMLTextAreaElement | null>) ||
+            (ref as MutableRefObject<HTMLTextAreaElement | null>) ||
             useRef<HTMLTextAreaElement | null>(null);
 
-        const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
             if (!disabled) {
                 const newValue = event.target.value;
                 onChange(newValue);
@@ -64,7 +74,7 @@ const TextArea = forwardRef<
             }
         };
 
-        const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+        const handleBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
             if (!disabled) {
                 setFocus(false);
                 onBlur && onBlur(event);

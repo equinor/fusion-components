@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 
 const CircleIcon = (props: IconProps) => {
@@ -7,7 +5,7 @@ const CircleIcon = (props: IconProps) => {
         <path
             fillRule="evenodd"
             clipRule="evenodd"
-            d='M2 12C2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10S2 17.52 2 12zm2 0c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8-8 3.58-8 8z'
+            d="M2 12C2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10S2 17.52 2 12zm2 0c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8-8 3.58-8 8z"
             fill="currentColor"
         />
     );
@@ -16,4 +14,3 @@ const CircleIcon = (props: IconProps) => {
 };
 
 export default CircleIcon;
-

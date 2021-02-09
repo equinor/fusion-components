@@ -1,10 +1,10 @@
 import { ModalSideSheet, styling } from '@equinor/fusion-components';
 import { NotificationCard } from '@equinor/fusion';
 import NotificationsSideSheetContent from './NotificationSideSheetContent';
-import { useMemo, FC } from 'react';
+import { useMemo, FC, ReactElement } from 'react';
 
 type NotificationsSideSheetProps = {
-    settings: React.ReactElement | null;
+    settings: ReactElement | null;
     showSettings?: boolean;
     open: boolean;
     onClose: () => void;

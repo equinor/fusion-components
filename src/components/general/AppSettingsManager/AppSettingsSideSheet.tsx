@@ -44,7 +44,7 @@ function AppSettingsSideSheet<T>({
                     },
                     'add'
                 );
-            } catch (e) { }
+            } catch (e) {}
         },
         [updateBookmark, captureAppSetting]
     );

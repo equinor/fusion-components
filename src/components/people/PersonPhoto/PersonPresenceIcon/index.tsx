@@ -8,7 +8,7 @@ import {
     ScheduleIcon,
     PhotoSize,
     RemoveCircleIcon,
-    CircleIcon
+    CircleIcon,
 } from '@equinor/fusion-components';
 import { useMemo, FC } from 'react';
 
@@ -33,10 +33,10 @@ const PersonPresenceIcon: FC<PersonPresenceProps> = ({ presenceAvailability, siz
             return <ScheduleIcon />;
         }
         if (presenceAvailability === 'Busy' || presenceAvailability === 'BusyIdle') {
-            return <CircleIcon />
+            return <CircleIcon />;
         }
         if (presenceAvailability === 'DoNotDisturb') {
-            return <RemoveCircleIcon />
+            return <RemoveCircleIcon />;
         }
         return <CloseCircleIcon />;
     }, [presenceAvailability, size]);

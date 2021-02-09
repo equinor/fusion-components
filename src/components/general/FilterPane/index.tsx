@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
 
 import classNames from 'classnames';
 import { Button, ErrorBoundary } from '@equinor/fusion-components';
@@ -38,7 +38,7 @@ export type FilterPaneProps<T> = {
     onChange: OnFilterChangeHandler<T>;
     screenPlacement?: 'right' | 'left';
     onToggleCollapse?: (isCollapsed: boolean) => void;
-    headerComponent?: React.ReactNode;
+    headerComponent?: ReactNode;
     quickFactScope?: string;
     onResetAll: OnFilterChangeHandler<T>;
     showResetAllButton: boolean;

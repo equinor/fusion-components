@@ -12,14 +12,7 @@ type BannerProps = {
     onAction?: () => void;
 };
 
-const Banner: FC<BannerProps> = ({
-    message,
-    icon,
-    onDismiss,
-    action,
-    actionLabel,
-    onAction,
-}) => {
+const Banner: FC<BannerProps> = ({ message, icon, onDismiss, action, actionLabel, onAction }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {

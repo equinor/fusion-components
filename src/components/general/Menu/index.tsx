@@ -8,7 +8,6 @@ import {
     useElevationClassName,
 } from '@equinor/fusion-components';
 
-
 export type MenuSection<TItem extends MenuItemType> = {
     key: string;
     title?: string;

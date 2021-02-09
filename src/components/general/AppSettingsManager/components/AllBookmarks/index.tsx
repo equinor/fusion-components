@@ -82,6 +82,7 @@ function AllBookmarks<T>({
                                 (b) => b.bookmarkName
                             ).map((bookMark) => (
                                 <BookmarkComponent
+                                    key={bookMark.bookmarkId}
                                     bookmark={bookMark}
                                     onDelete={() =>
                                         updateBookmark(

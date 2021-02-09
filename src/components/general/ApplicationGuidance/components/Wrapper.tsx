@@ -1,4 +1,12 @@
-import { useRef, useEffect, FC } from 'react';
+import {
+    useRef,
+    useEffect,
+    FC,
+    PropsWithChildren,
+    DetailedHTMLProps,
+    HTMLAttributes,
+    DetailedHTMLFactory,
+} from 'react';
 import {
     ApplicationGuideElement,
     ApplicationGuideElementProps,
@@ -7,12 +15,9 @@ import {
     ApplicationGuideEventType,
 } from '../../../../customElements/components/application-guide';
 
-export type ApplicationGuidanceWrapperProps = React.PropsWithChildren<
+export type ApplicationGuidanceWrapperProps = PropsWithChildren<
     ApplicationGuideElementProps &
-        React.DetailedHTMLProps<
-            React.HTMLAttributes<ApplicationGuideElement>,
-            ApplicationGuideElement
-        > & {
+        DetailedHTMLProps<HTMLAttributes<ApplicationGuideElement>, ApplicationGuideElement> & {
             onOpen?: (e: ApplicationGuideEvent<ApplicationGuideEventType.activated>) => void;
             onClose?: (e: ApplicationGuideEvent<ApplicationGuideEventType.deactivated>) => void;
             onShow?: (e: ApplicationGuideEvent<ApplicationGuideEventType.show>) => void;
@@ -23,13 +28,13 @@ declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface ReactHTML {
-            [ApplicationGuideElementTag]: React.DetailedHTMLFactory<
+            [ApplicationGuideElementTag]: DetailedHTMLFactory<
                 ApplicationGuidanceWrapperProps,
                 ApplicationGuideElement
             >;
         }
         interface IntrinsicElements {
-            [ApplicationGuideElementTag]: React.DetailedHTMLProps<
+            [ApplicationGuideElementTag]: DetailedHTMLProps<
                 ApplicationGuidanceWrapperProps,
                 ApplicationGuideElement
             >;

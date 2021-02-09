@@ -14,7 +14,7 @@ export interface IHangingGardenContext {
     pixiApp: MutableRefObject<PIXI.Application | null>;
     scroll: Scroll<any>;
     maxRowCount: number;
-    setMaxRowCount: Dispatch<React.SetStateAction<number>>;
+    setMaxRowCount: Dispatch<SetStateAction<number>>;
     expandedColumns: ExpandedColumns;
     setExpandedColumns: Dispatch<SetStateAction<Record<string, ExpandedColumn>>>;
     textureCaches: Caches;

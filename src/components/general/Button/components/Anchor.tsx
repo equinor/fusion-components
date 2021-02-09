@@ -37,6 +37,7 @@ const AnchorComponent = forwardRef<HTMLAnchorElement, AnchorProps>(
                     <Link
                         to={relativeUrl}
                         target={targetBlank ? '_blank' : '_self'}
+                        rel="noreferrer"
                         onMouseDown={onMouseDown}
                         onMouseUp={onMouseUp}
                     >
@@ -50,6 +51,7 @@ const AnchorComponent = forwardRef<HTMLAnchorElement, AnchorProps>(
                     className={getButtonClasses(props)}
                     href={url}
                     target={targetBlank ? '_blank' : '_self'}
+                    rel="noreferrer"
                     onMouseDown={onMouseDown}
                     onMouseUp={onMouseUp}
                     onClick={onClick}

@@ -21,11 +21,7 @@ const AsideComponent: FC<MenuItemComponentProps> = ({ item }) => {
     return <div className={styles.itemComponent}>{item.aside}</div>;
 };
 
-const AccountDetails: FC<AccountDetailsProps> = ({
-    onMenuClick,
-    personDetails,
-    sections,
-}) => {
+const AccountDetails: FC<AccountDetailsProps> = ({ onMenuClick, personDetails, sections }) => {
     const onMenuItemClick = useCallback(
         (item: MenuItemType) => {
             const clickedItem = item as UserMenuSectionItem;

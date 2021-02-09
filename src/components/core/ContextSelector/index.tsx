@@ -23,7 +23,17 @@ import * as styles from './styles.less';
 import classNames from 'classnames';
 
 import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
-import { useRef, useState, useEffect, useCallback, useMemo, FC } from 'react';
+import {
+    useRef,
+    useState,
+    useEffect,
+    useCallback,
+    useMemo,
+    FC,
+    KeyboardEvent,
+    ChangeEvent,
+    MutableRefObject,
+} from 'react';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -62,7 +72,7 @@ const ContextSelector: FC = () => {
         search(queryText);
     }, [queryText]);
 
-    const onKeyUpCloseDropDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    const onKeyUpCloseDropDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         if (e.keyCode !== 27) return; //ESC
 
         setIsOpen(false);
@@ -92,7 +102,7 @@ const ContextSelector: FC = () => {
                 return '';
             }, [isOpen, queryText, selectedItem, currentContext]);
 
-            const onChangeQueryText = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+            const onChangeQueryText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
                 setQueryText(e.target.value);
             }, []);
 
@@ -197,7 +207,7 @@ const ContextSelector: FC = () => {
     );
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
-    const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
+    const containerRef = controllerRef as MutableRefObject<HTMLDivElement | null>;
     const helperText = useMemo(
         () =>
             !dropdownSections[0]?.items?.length && !isQuerying && !queryText

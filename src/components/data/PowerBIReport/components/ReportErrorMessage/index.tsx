@@ -22,9 +22,7 @@ const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextError 
     const [requirements, setRequirements] = useState<string | null>(null);
     const [description, setDescription] = useState<string | null>(null);
     const [noAccessMessage, setNoAccessMessage] = useState<string | null>(null);
-    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = useState(
-        false
-    );
+    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = useState(false);
 
     const reportApiClient = useApiClients().report;
     const user = useCurrentUser();

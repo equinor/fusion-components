@@ -69,17 +69,17 @@ function Bookmarks<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }:
                     name={bookmark.bookmarkName}
                 />
             ) : (
-                    <>
-                        <BookmarkOptions
-                            onDelete={deleteBookmark}
-                            onEdit={enableEditing}
-                            accordionOpen={accordionOpen}
-                        />
-                        <span className={styles.bookmarkLink} onClick={onSelect}>
-                            {bookmark.bookmarkName}
-                        </span>
-                    </>
-                )}
+                <>
+                    <BookmarkOptions
+                        onDelete={deleteBookmark}
+                        onEdit={enableEditing}
+                        accordionOpen={accordionOpen}
+                    />
+                    <span className={styles.bookmarkLink} onClick={onSelect}>
+                        {bookmark.bookmarkName}
+                    </span>
+                </>
+            )}
         </div>
     );
 }

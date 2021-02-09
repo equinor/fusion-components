@@ -1,4 +1,13 @@
-import { useCallback, useEffect, useState, ReactNode, MutableRefObject, Dispatch, SetStateAction, RefObject } from 'react';
+import {
+    useCallback,
+    useEffect,
+    useState,
+    ReactNode,
+    MutableRefObject,
+    Dispatch,
+    SetStateAction,
+    RefObject,
+} from 'react';
 
 import * as styles from './styles.less';
 
@@ -20,11 +29,7 @@ export default <T extends HTMLElement>(
     props?: PopoverContainerProps,
     hover?: boolean,
     delay?: number
-): [
-    MutableRefObject<T | null>,
-    boolean,
-    Dispatch<SetStateAction<boolean>> | undefined
-] => {
+): [MutableRefObject<T | null>, boolean, Dispatch<SetStateAction<boolean>> | undefined] => {
     const [isOpen, setIsOpen] = useState(false);
 
     const [isPopoverOpen, ref, setIsPopoverOpen] = hover
@@ -66,10 +71,7 @@ export default <T extends HTMLElement>(
                     left: rect.left,
                 }}
             >
-                <PopoverContainer
-                    ref={popoverContentRef as RefObject<HTMLDivElement>}
-                    {...props}
-                >
+                <PopoverContainer ref={popoverContentRef as RefObject<HTMLDivElement>} {...props}>
                     {content}
                 </PopoverContainer>
             </div>

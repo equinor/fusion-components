@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { RefObject, useState, useRef, useCallback, useEffect } from 'react';
 
 /**
  * Give you tools to handle fullscreen mode using buttons or other means than the usual F11 button.
@@ -14,29 +14,27 @@ const exitFullscreen = (): void =>
         ? document?.exitFullscreen()
         : (document as any)?.webkitExitFullscreen();
 
-const requestFullscreenForElement = (element: React.RefObject<HTMLElement>): void =>
+const requestFullscreenForElement = (element: RefObject<HTMLElement>): void =>
     element.current.requestFullscreen
         ? element.current.requestFullscreen()
         : (element.current as any).webkitRequestFullscreen();
 
-const useFullscreen = (elementRef?: React.RefObject<HTMLElement> | null) => {
-    const [isFullscreenActive, setIsFullscreenActive] = React.useState(checkIsFullscreenActive());
+const useFullscreen = (elementRef?: RefObject<HTMLElement> | null) => {
+    const [isFullscreenActive, setIsFullscreenActive] = useState(checkIsFullscreenActive());
 
-    const element = elementRef ?? React.useRef(document.body);
+    const element = elementRef ?? useRef(document.body);
 
-    const requestFullscreen = React.useCallback(() => requestFullscreenForElement(element), [
-        element,
-    ]);
+    const requestFullscreen = useCallback(() => requestFullscreenForElement(element), [element]);
 
-    const toggleFullscreen = React.useCallback(() => {
+    const toggleFullscreen = useCallback(() => {
         isFullscreenActive ? exitFullscreen() : requestFullscreen();
     }, [isFullscreenActive, requestFullscreen, exitFullscreen]);
 
-    const onFullscreenChange = React.useCallback(() => {
+    const onFullscreenChange = useCallback(() => {
         setIsFullscreenActive(checkIsFullscreenActive());
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         element.current.addEventListener('fullscreenchange', onFullscreenChange);
         element.current.addEventListener('webkitfullscreenchange', onFullscreenChange);
         return () => {

@@ -8,17 +8,12 @@ import classNames from 'classnames';
 import { useCallback, FC, MutableRefObject } from 'react';
 
 type FusionRootProps = {
-    rootRef: React.MutableRefObject<HTMLElement | null>;
-    overlayRef: React.MutableRefObject<HTMLElement | null>;
+    rootRef: MutableRefObject<HTMLElement | null>;
+    overlayRef: MutableRefObject<HTMLElement | null>;
     noHeader?: boolean;
 };
 
-const FusionRoot: FC<FusionRootProps> = ({
-    children,
-    rootRef,
-    overlayRef,
-    noHeader = false,
-}) => {
+const FusionRoot: FC<FusionRootProps> = ({ children, rootRef, overlayRef, noHeader = false }) => {
     const { notificationCenter } = useFusionContext();
 
     const registerPresenter = useCallback(
@@ -28,16 +23,10 @@ const FusionRoot: FC<FusionRootProps> = ({
 
     return (
         <div className={classNames(styles.container, useComponentDisplayClassNames(styles))}>
-            <FusionContainer
-                ref={rootRef as MutableRefObject<HTMLDivElement>}
-                noHeader={noHeader}
-            >
+            <FusionContainer ref={rootRef as MutableRefObject<HTMLDivElement>} noHeader={noHeader}>
                 {children}
             </FusionContainer>
-            <div
-                className={styles.overlay}
-                ref={overlayRef as MutableRefObject<HTMLDivElement>}
-            />
+            <div className={styles.overlay} ref={overlayRef as MutableRefObject<HTMLDivElement>} />
             <div className={styles.snacks}>
                 <NotificationSnacks registerPresenter={registerPresenter} />
             </div>

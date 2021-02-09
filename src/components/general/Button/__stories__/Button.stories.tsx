@@ -1,4 +1,3 @@
-// import React from 'react';
 import { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
@@ -20,7 +19,6 @@ const createButtonStory = (props) => () => (
         </Button>
     </Fragment>
 );
-const kk = 'elg';
 
 storiesOf('General/Button', module)
     // .addParameters({ jest: ['Button.stories.jsx'] })
@@ -28,8 +26,4 @@ storiesOf('General/Button', module)
     .add('Contained', createButtonStory({ contained: true }))
     .add('Outlined', createButtonStory({ outlined: true }))
     .add('Frameless', createButtonStory({ frameless: true }))
-    .add('dsadads', () => (
-        <div>
-            <p>{kk}</p>
-        </div>
-    ));
+

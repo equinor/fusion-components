@@ -12,15 +12,7 @@ type TabProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'title'> & {
     url?: string;
 };
 
-const Tab: FC<TabProps> = ({
-    isCurrent,
-    title,
-    disabled,
-    onChange,
-    url,
-    tabKey,
-    ...props
-}) => {
+const Tab: FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, tabKey, ...props }) => {
     const [isPressed, setIsPressed] = useState(false);
     const tabRef = useRef<HTMLAnchorElement>(null);
 

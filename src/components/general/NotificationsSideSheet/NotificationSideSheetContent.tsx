@@ -2,10 +2,10 @@ import * as styles from './styles.less';
 import { Button, Spinner, Tab, Tabs, SettingsIcon } from '@equinor/fusion-components';
 import { NotificationCard, useGlobalNotificationCardsActions } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';
-import { useState, useCallback, useMemo, FC } from 'react';
+import { useState, useCallback, useMemo, FC, ReactElement } from 'react';
 
 type NotificationsSideSheetContentProps = {
-    settings: React.ReactElement | null;
+    settings: ReactElement | null;
     showSettings?: boolean;
     readNotifications: NotificationCard[];
     unReadNotifications: NotificationCard[];
