@@ -41,7 +41,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.5",
     "@babel/preset-typescript": "^7.12.1",
-    "@equinor/fusion": "^2.4.5",
+    "@equinor/fusion": "^3.0.1",
     "@storybook/addon-actions": "^6.0.28",
     "@storybook/addon-docs": "^6.0.28",
     "@storybook/addon-essentials": "^6.1.0-beta.2",
@@ -119,7 +119,7 @@
   },
   "peerDependencies": {
     "react": "^17.0.x",
-    "@equinor/fusion": "2.4.x",
+    "@equinor/fusion": "3.x",
     "react-router-dom": "5.x",
     "history": "^4.9.0",
     "powerbi-client": "^2.14.1",
