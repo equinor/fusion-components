@@ -1,4 +1,4 @@
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
 import { cloneElement, useEffect, useRef, Children, FC } from 'react';

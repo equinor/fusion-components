@@ -1,7 +1,7 @@
 import { CloseIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { FC } from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 type ChipProps = {
     isDisabled?: boolean;

@@ -7,7 +7,7 @@ import {
     useDropdownController,
 } from '@equinor/fusion-components';
 import { useCallback, useEffect, FC, MutableRefObject } from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 type BookmarkOptionsProps = {
     onEdit: () => void;

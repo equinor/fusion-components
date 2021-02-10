@@ -1,5 +1,5 @@
 import { useEffect, useCallback, MutableRefObject, UIEvent } from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import {
     HangingGardenColumnIndex,
     HangingGardenColumn,

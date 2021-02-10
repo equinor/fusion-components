@@ -1,4 +1,4 @@
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { PersonDetails, UserMenuSectionItem, UserMenuSection } from '@equinor/fusion';
 import { MenuItemType, PersonPhoto, PersonDetail, Menu } from '@equinor/fusion-components';
 import { useCallback, FC } from 'react';

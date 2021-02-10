@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, FC } from 'react';
 
-import * as styles from './styles.less';
+import styles from './styles.less';
 import classNames from 'classnames';
 import { DoneIcon, styling } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';

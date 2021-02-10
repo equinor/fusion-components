@@ -1,4 +1,4 @@
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { Button, Spinner, Tab, Tabs, SettingsIcon } from '@equinor/fusion-components';
 import { NotificationCard, useGlobalNotificationCardsActions } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';

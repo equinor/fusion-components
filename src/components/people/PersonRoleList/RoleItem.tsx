@@ -7,7 +7,7 @@ import {
 import { Switch } from '@equinor/fusion-components';
 import { useCallback, useMemo, useState, FC } from 'react';
 
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClient';
 import classNames from 'classnames';
 

@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 
 import { PBIBookmark } from '../../useBookmarks';
 import BookmarkOptions from './BookmarkOptions';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { FC } from 'react';
 
 type BookmarkProps = {

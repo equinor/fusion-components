@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { useComponentDisplayClassNames, PersonPresenceAvailability } from '@equinor/fusion';
 import {
     useTooltipRef,

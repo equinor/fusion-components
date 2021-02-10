@@ -26,7 +26,7 @@ import {
     ITupleFilter,
 } from './models/ReportLevelFilters';
 
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { ButtonClickEvent } from './models/EventHandlerTypes';
 
 import ReportErrorMessage from './components/ReportErrorMessage';

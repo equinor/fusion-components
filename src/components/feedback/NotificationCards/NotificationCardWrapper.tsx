@@ -9,7 +9,7 @@ import {
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { useState, useCallback, useEffect, useMemo, FC } from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 type NotificationCardWrapperProps = {
     notification: NotificationCard;

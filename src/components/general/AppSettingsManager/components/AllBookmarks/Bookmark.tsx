@@ -2,7 +2,7 @@ import { IconButton, SaveIcon, CloseIcon, TextInput } from '@equinor/fusion-comp
 import { useState, useCallback, FC } from 'react';
 import { Bookmark } from '../../useBookmarks';
 import BookmarkOptions from './BookmarkOptions';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 type BookmarkProps<T> = {
     bookmark: Bookmark<T>;

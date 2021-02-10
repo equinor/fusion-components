@@ -2,7 +2,7 @@ import { ModalSideSheet, Tabs, Tab } from '@equinor/fusion-components';
 import NewBookmark from './components/NewBookmark';
 import { models } from 'powerbi-client';
 import useBookmarks, { PBIBookmark } from './useBookmarks';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
 import { useState, useCallback, FC } from 'react';

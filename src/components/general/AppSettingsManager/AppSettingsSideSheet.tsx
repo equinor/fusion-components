@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { ModalSideSheet, Tabs, Tab } from '@equinor/fusion-components';
 import NewBookmark from './components/NewBookmark';
 import useBookmarks, { Bookmark } from './useBookmarks';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
 import { AppSettingsManagerProps } from '.';

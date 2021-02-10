@@ -1,4 +1,4 @@
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';

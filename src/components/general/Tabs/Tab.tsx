@@ -1,4 +1,4 @@
-import * as styles from './styles.less';
+import styles from './styles.less';
 import * as classNames from 'classnames';
 import { useKeyboardNavigation } from '@equinor/fusion-components';
 import { useState, useRef, FC, ReactNode, AnchorHTMLAttributes } from 'react';

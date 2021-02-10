@@ -1,6 +1,6 @@
 import { useMemo, useCallback, FC } from 'react';
 
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { PersonPosition } from '@equinor/fusion';
 import PersonPositionCards from './PersonPositionCards';
 import {

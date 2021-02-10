@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';

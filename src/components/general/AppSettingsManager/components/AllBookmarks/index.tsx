@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AccordionItem, Accordion, ErrorMessage } from '@equinor/fusion-components';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { BookmarkContext, Bookmark, UpdateBookmarkOperation } from '../../useBookmarks';
 import BookmarkComponent from './Bookmark';
 

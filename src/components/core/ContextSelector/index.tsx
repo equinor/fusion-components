@@ -19,7 +19,7 @@ import {
     IconButton,
     CloseIcon,
 } from '@equinor/fusion-components';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import classNames from 'classnames';
 
 import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';

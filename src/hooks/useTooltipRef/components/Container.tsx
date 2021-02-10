@@ -8,7 +8,7 @@ import {
     MutableRefObject,
 } from 'react';
 import classNames from 'classnames';
-import * as styles from '../styles.less';
+import styles from '../styles.less';
 import Arrow from './Arrow';
 import useInViewChecker from '../../useInViewChecker';
 import { TooltipPlacement } from '..';

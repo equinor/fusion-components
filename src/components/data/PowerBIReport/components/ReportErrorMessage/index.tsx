@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, FC } from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
 import {
     MarkdownViewer,

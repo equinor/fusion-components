@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import * as PIXI from 'pixi.js-legacy';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import useTextureCaches from './renderHooks/useTextureCaches';
 import { HangingGardenColumnIndex, HangingGardenProps } from './models/HangingGarden';
 import { DEFAULT_ITEM_HEIGHT, DEFAULT_HEADER_HEIGHT } from './utils';

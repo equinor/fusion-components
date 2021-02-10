@@ -1,5 +1,5 @@
 import { AccordionItem, Accordion, ErrorMessage } from '@equinor/fusion-components';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { BookmarkContext, PBIBookmark, UpdateBookmarkOperation } from '../../useBookmarks';
 import Bookmark from './Bookmark';
 import { useState, useEffect, FC } from 'react';

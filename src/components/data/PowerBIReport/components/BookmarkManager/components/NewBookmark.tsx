@@ -2,7 +2,7 @@ import { useNotificationCenter } from '@equinor/fusion';
 import { Button, TextInput } from '@equinor/fusion-components';
 import { useState, useCallback, FC } from 'react';
 
-import * as styles from './../styles.less';
+import styles from './../styles.less';
 
 type NewBookmarkProps = {
     contextName: string;

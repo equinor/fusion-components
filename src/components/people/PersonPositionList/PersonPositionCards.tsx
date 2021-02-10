@@ -1,7 +1,7 @@
 import { PersonPosition } from '@equinor/fusion';
 import { PersonPositionCard } from '@equinor/fusion-components';
 import { useMemo, FC, PropsWithChildren } from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 type PersonPositionCardsProps = {
     positions: PersonPosition[];

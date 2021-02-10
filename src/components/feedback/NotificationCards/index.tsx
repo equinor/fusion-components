@@ -3,7 +3,7 @@ import {
     useComponentDisplayClassNames,
     enqueueAsyncOperation,
 } from '@equinor/fusion';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import classNames from 'classnames';
 import NotificationCardWrapper from './NotificationCardWrapper';
 import { useRef, useState, useEffect, FC } from 'react';

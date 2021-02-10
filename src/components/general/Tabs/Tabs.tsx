@@ -1,4 +1,4 @@
-import * as styles from './styles.less';
+import styles from './styles.less';
 import classNames from 'classnames';
 import { useEventListener } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -8,6 +8,7 @@ type TabsProps = {
     onChange: (tabKey: string) => void;
     activeTabKey: string;
     children: any;
+    noScrollGradient?: boolean;
 };
 
 type TabContentType = {
@@ -105,12 +106,13 @@ const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     );
 };
 
-const Tabs: FC<TabsProps> = ({ onChange, activeTabKey, children }) => {
+const Tabs: FC<TabsProps> = ({ onChange, activeTabKey, noScrollGradient, children }) => {
     return (
         <div className={styles.tabs}>
             <TabPane
                 children={children}
                 activeTabKey={activeTabKey}
+                noScrollGradient={noScrollGradient}
                 onChange={(tabKey) => onChange(tabKey)}
             />
 

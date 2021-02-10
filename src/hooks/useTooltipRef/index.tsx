@@ -1,4 +1,4 @@
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 import { useRef, useMemo, ReactNode, MutableRefObject, RefObject } from 'react';
 

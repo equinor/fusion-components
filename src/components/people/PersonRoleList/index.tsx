@@ -1,7 +1,7 @@
 import { useMemo, FC } from 'react';
 
 import { PersonRole } from '@equinor/fusion';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import RoleItem from './RoleItem';
 
 type PersonRoleListProps = {
