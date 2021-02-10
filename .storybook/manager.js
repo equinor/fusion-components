@@ -14,13 +14,14 @@ addons.setConfig({
     }),
 });
 
+/* 
 addons.register('FUSION', (api) => {
     addons.addPanel('FUSION/authtoken', {
         title: 'Auth',
-        render: () => ({ active, key }) => <AuthTokenInput key={key} active={active} />,
+        render: ({ active, key }) => (<AuthTokenInput key={key} active={active} />)
     });
 });
-
+*/
 
 
 
