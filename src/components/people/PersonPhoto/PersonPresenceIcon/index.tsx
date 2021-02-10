@@ -22,7 +22,7 @@ const PersonPresenceIcon: FC<PersonPresenceProps> = ({ presenceAvailability, siz
         styles.presenceContainer,
         useComponentDisplayClassNames(styles),
         styles[size],
-        styles[presenceAvailability?.toLowerCase()]
+        styles[presenceAvailability?.toLowerCase()|| 'offline']
     );
 
     const presenceIcon = useMemo(() => {

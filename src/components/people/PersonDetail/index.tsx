@@ -70,7 +70,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                                     size="xlarge"
                                 />
                             </div>
-                            {presence.availability || 'Unknown'}
+                            {presence?.availability || 'Unknown'}
                         </div>
                         <div className={styles.detailSection}>
                             {isFetching ? (
