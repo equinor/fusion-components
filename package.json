@@ -42,7 +42,7 @@
     "@babel/preset-env": "^7.12.13",
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.12.13",
-    "@equinor/fusion": "^3.0.1",
+    "@equinor/fusion": "^3.1.1",
     "@storybook/addon-actions": "^6.1.17",
     "@storybook/addon-docs": "^6.1.17",
     "@storybook/addon-essentials": "^6.1.17",
@@ -111,6 +111,7 @@
     "react-test-renderer": "^17.0.1",
     "storybook": "^6.1.17",
     "style-loader": "^2.0.0",
+    "terser-webpack-plugin": "^5.1.1",
     "thread-loader": "^3.0.1",
     "ts-jest": "^26.5.0",
     "ts-loader": "^8.0.16",
@@ -119,8 +120,7 @@
     "uuid": "^8.3.2",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0",
-    "webpack-merge": "^5.7.3",
-    "terser-webpack-plugin": "^5.1.1"
+    "webpack-merge": "^5.7.3"
   },
   "peerDependencies": {
     "react": "^17.0.x",
