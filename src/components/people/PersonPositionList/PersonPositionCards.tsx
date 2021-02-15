@@ -25,7 +25,7 @@ const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({ children, disableOrgLi
     }
     return (
         <a
-            href={`/apps/pro-org/${position.project.id}/${
+            href={`/apps/pro-org/${position.project.id}/chart/${
                 position.parentPositionId ? position.parentPositionId : ' '
             }`}
             className={styles.orgChartLink}
