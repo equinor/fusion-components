@@ -15,7 +15,6 @@ module.exports = {
         check: true,
         reactDocgen: 'react-docgen-typescript',
     },
-    // webpackFinal: async (config) => merge(config, require('./config')),
 
     webpackFinal: async (config) =>
         merge(
