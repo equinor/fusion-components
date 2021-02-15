@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useCallback, useEffect, useState } from 'react';
+import { useRef, FC, useMemo, useCallback, useEffect, useState } from 'react';
 import styles from './styles.less';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
@@ -22,7 +22,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
-    const textRef = React.useRef<HTMLElement | null>(null);
+    const textRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         if (textRef.current) {

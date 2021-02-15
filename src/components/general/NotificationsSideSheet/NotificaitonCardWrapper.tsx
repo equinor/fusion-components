@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { NotificationCard, useNotificationCardActions } from '@equinor/fusion';
 import {
     StandardNotificationCard,
@@ -9,13 +8,14 @@ import {
     DeleteIcon,
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import * as styles from './styles.less';
+import { useCallback, useMemo, FC } from 'react';
+import styles from './styles.less';
 
 type NotificationCardWrapperProps = {
     notification: NotificationCard;
 };
 
-const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notification }) => {
+const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({ notification }) => {
     const {
         isMarkingNotification,
         markNotificationsAsSeenAsync,
@@ -25,11 +25,11 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notif
 
     const isSeen = notification.seenByUser;
 
-    const markNotificationAsSeen = React.useCallback(async () => {
+    const markNotificationAsSeen = useCallback(async () => {
         await markNotificationsAsSeenAsync();
     }, [markNotificationsAsSeenAsync]);
 
-    const removeNotificationCard = React.useCallback(async () => {
+    const removeNotificationCard = useCallback(async () => {
         await deleteNotificationCard();
     }, [deleteNotificationCard]);
 
@@ -38,11 +38,11 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notif
         [useElevationClassName(3)]: !isSeen,
     });
 
-    const actionableComponents = React.useMemo(
+    const actionableComponents = useMemo(
         () =>
             !isSeen
                 ? [
-                      <Button outlined onClick={markNotificationAsSeen}>
+                      <Button key="btn-notification-seen" outlined onClick={markNotificationAsSeen}>
                           {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
                       </Button>,
                   ]
@@ -50,7 +50,7 @@ const NotificationCardWrapper: React.FC<NotificationCardWrapperProps> = ({ notif
         [isSeen, markNotificationAsSeen, isMarkingNotification]
     );
 
-    const discardComponent = React.useMemo(
+    const discardComponent = useMemo(
         () => (
             <IconButton onClick={removeNotificationCard}>
                 {isDeletingNotification ? <Spinner inline /> : <DeleteIcon outline />}

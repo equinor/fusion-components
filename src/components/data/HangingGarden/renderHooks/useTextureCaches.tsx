@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useCallback } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 
 export type TEXTURE_CACHE_KEYS =
@@ -61,9 +61,9 @@ export type Caches = {
  * outside the Garden component.
  */
 const useTextureCaches = (): Caches => {
-    const textureCaches = React.useRef<TextureCaches>(defaultState());
+    const textureCaches = useRef<TextureCaches>(defaultState());
 
-    const clearTextureCaches = React.useCallback(() => {
+    const clearTextureCaches = useCallback(() => {
         const newState = defaultState();
 
         textureCaches.current = {
@@ -74,7 +74,7 @@ const useTextureCaches = (): Caches => {
         };
     }, [textureCaches]);
 
-    const clearItemTextureCaches = React.useCallback(() => {
+    const clearItemTextureCaches = useCallback(() => {
         textureCaches.current = {
             ...textureCaches.current,
             items: {},
@@ -83,7 +83,7 @@ const useTextureCaches = (): Caches => {
         };
     }, [textureCaches]);
 
-    const addTextureToCache = React.useCallback(
+    const addTextureToCache = useCallback(
         (
             cacheKey: keyof TextureCaches,
             key: string,
@@ -94,7 +94,7 @@ const useTextureCaches = (): Caches => {
         [textureCaches]
     );
 
-    const getTextureFromCache = React.useCallback(
+    const getTextureFromCache = useCallback(
         (
             cacheKey: keyof TextureCaches,
             key: string

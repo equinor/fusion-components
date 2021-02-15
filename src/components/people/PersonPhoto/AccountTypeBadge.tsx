@@ -1,4 +1,3 @@
-import React from 'react';
 import { PhotoSize, useTooltipRef } from '@equinor/fusion-components';
 import {
     PersonDetails,

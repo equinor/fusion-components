@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { HangingGardenColumn } from '../models/HangingGarden';
 import useRenderItem from './useItem';
@@ -19,7 +19,7 @@ const useColumn = <T,>() => {
     const { renderItem } = useRenderItem();
     const { renderHeader } = useHeader();
 
-    const renderColumn = React.useCallback(
+    const renderColumn = useCallback(
         (column: HangingGardenColumn<T>, index: number) => {
             const startRow = Math.floor(scrollTop.current / itemHeight);
             const offSetHeigth = container.current?.offsetHeight || 0;

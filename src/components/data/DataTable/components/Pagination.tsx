@@ -1,9 +1,9 @@
-import React from 'react';
 import { DataTablePaginationProps } from '../dataTableTypes';
 import styles from '../styles.less';
 import { Pagination, PaginationSkeleton } from '@equinor/fusion-components';
+import { FC } from 'react';
 
-const DataTablePagination: React.FC<DataTablePaginationProps> = ({
+const DataTablePagination: FC<DataTablePaginationProps> = ({
     pagination,
     onChange,
     showSkeleton,

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, select, boolean, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -147,7 +147,7 @@ const SidesheetContent = () => {
 };
 
 const ModalSideSheetStory = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const size = select(
         'Size',
@@ -198,7 +198,7 @@ const ModalSideSheetStory = () => {
 };
 
 const StandardSideSheetStory = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const size = select(
         'Size',
@@ -226,7 +226,7 @@ const StandardSideSheetStory = () => {
             <SideSheet
                 isOpen={isOpen}
                 size={size}
-                onClose={isOpen => {
+                onClose={(isOpen) => {
                     setIsOpen(isOpen);
                 }}
                 title="This is a title"

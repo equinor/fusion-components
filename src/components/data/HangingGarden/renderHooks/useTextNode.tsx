@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { DEFAULT_ITEM_TEXT_STYLE } from '../utils';
@@ -17,7 +17,7 @@ const useTextNode = () => {
         textureCaches: { getTextureFromCache, addTextureToCache },
     } = useHangingGardenContext();
 
-    const getCharTexture = React.useCallback(
+    const getCharTexture = useCallback(
         (char: string) => {
             let texture = getTextureFromCache('chars', char) as PIXI.Texture;
             if (!texture) {
@@ -34,7 +34,7 @@ const useTextNode = () => {
         [getTextureFromCache, addTextureToCache, stage.current]
     );
 
-    const createTextNode = React.useCallback(
+    const createTextNode = useCallback(
         (text: string, color: number) => {
             let cachedText = getTextureFromCache('texts', text + color) as PIXI.RenderTexture;
 

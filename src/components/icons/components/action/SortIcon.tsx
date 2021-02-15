@@ -1,4 +1,3 @@
-import React from 'react';
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 import { SortDirection } from '@equinor/fusion';
 

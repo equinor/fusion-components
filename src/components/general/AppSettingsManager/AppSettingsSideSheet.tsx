@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useCallback, useState } from 'react';
 import { ModalSideSheet, Tabs, Tab } from '@equinor/fusion-components';
 import NewBookmark from './components/NewBookmark';
 import useBookmarks, { Bookmark } from './useBookmarks';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
 import { AppSettingsManagerProps } from '.';
@@ -23,13 +23,13 @@ function AppSettingsSideSheet<T>({
     name,
     anchorId,
 }: AppSettingsSideSheetProps<T>) {
-    const [selectedTabKey, setSelectedTabKey] = React.useState<TabKey>('add-new');
+    const [selectedTabKey, setSelectedTabKey] = useState<TabKey>('add-new');
     const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
         hasContext
     );
     const contextManager = useContextManager();
 
-    const captureAndSaveBookmarkAsync = React.useCallback(
+    const captureAndSaveBookmarkAsync = useCallback(
         async (bookmarkName: string) => {
             try {
                 const bookMark = await captureAppSetting();
@@ -49,7 +49,7 @@ function AppSettingsSideSheet<T>({
         [updateBookmark, captureAppSetting]
     );
 
-    const selectBookmark = React.useCallback(
+    const selectBookmark = useCallback(
         async (bookmark: Bookmark<T>, contextId: string) => {
             onClose();
             if (!bookmark.bookMark) {
@@ -66,7 +66,7 @@ function AppSettingsSideSheet<T>({
         [applyAppSetting, currentContextId]
     );
 
-    const updateSelectedTab = React.useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
+    const updateSelectedTab = useCallback((tabKey: string) => setSelectedTabKey(tabKey), []);
 
     return (
         <ModalSideSheet header={name} onClose={onClose} show={isOpen} size="medium" id={anchorId}>

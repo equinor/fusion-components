@@ -1,5 +1,5 @@
+import { useState, useCallback } from 'react';
 import { useApiClients, ApiClients } from '@equinor/fusion';
-import * as React from 'react';
 import { HttpResponse } from '@equinor/fusion/lib/http/HttpClient';
 import { GardenDataError } from '../models/GardenDataError';
 /**
@@ -20,10 +20,10 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
     endpoint: E
 ) => {
     const api = useApiClients();
-    const [error, setError] = React.useState<GardenDataError | null>(null);
-    const [isFetching, setIsFetching] = React.useState(false);
+    const [error, setError] = useState<GardenDataError | null>(null);
+    const [isFetching, setIsFetching] = useState(false);
 
-    const fetchData = React.useCallback(
+    const fetchData = useCallback(
         async (currentContext: string, invalidateCache?: boolean) => {
             setIsFetching(true);
             try {
@@ -70,7 +70,7 @@ const useHangingGardenGetData = <T, C extends keyof ApiClients, E extends keyof 
         [client, endpoint, api]
     );
 
-    const getData = React.useCallback(
+    const getData = useCallback(
         (currentContext: string, invalidateCache?: boolean) => {
             setError(null);
             setIsFetching(false);

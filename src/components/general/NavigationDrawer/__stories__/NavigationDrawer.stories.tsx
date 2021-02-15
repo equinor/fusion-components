@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import NavigationDrawer, { NavigationStructure } from '../index';
@@ -111,8 +111,8 @@ const navStructure = [
 ] as NavigationStructure[];
 
 const NavigationDrawerStory = () => {
-    const [structure, setStructure] = React.useState<NavigationStructure[]>(navStructure);
-    const [selected, setSelected] = React.useState<string>('child5');
+    const [structure, setStructure] = useState<NavigationStructure[]>(navStructure);
+    const [selected, setSelected] = useState<string>('child5');
     return (
         <>
             <NavigationDrawer

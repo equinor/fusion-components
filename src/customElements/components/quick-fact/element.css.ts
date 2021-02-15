@@ -9,7 +9,7 @@ export const style = css`
         cursor: move;
     }
 
-    slot[name="empty"] {
+    slot[name='empty'] {
         margin-top: 0px;
         font-size: 18px;
         font-weight: 500;
@@ -19,7 +19,7 @@ export const style = css`
         padding: 1rem 1.5rem;
     }
 
-    #not-found header{
+    #not-found header {
         font-size: 1.1rem;
     }
 
@@ -27,17 +27,15 @@ export const style = css`
         margin: 1rem 0;
     }
 
-
     .header {
         padding: 0 calc(var(--grid-unit) * 1) calc(var(--grid-unit) * 1);
-        margin: calc(var(--grid-unit) * -2) calc(var(--grid-unit) * -3)
-            calc(var(--grid-unit) * 3);
+        margin: calc(var(--grid-unit) * -2) calc(var(--grid-unit) * -3) calc(var(--grid-unit) * 3);
         border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .content {
-        padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 3)
-            calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 3);
+        padding: calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 3) calc(var(--grid-unit) * 3)
+            calc(var(--grid-unit) * 3);
     }
 
     .toolbar {
@@ -69,7 +67,7 @@ export const style = css`
 export const styles = [
     // cssVariables,
     // buttonStyle,
-    style
+    style,
 ];
 
 export default styles;

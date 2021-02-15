@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { PersonPosition } from '@equinor/fusion';
 import { PersonPositionCard } from '@equinor/fusion-components';
-import * as styles from './styles.less';
+import { useMemo, FC, PropsWithChildren } from 'react';
+import styles from './styles.less';
 
 type PersonPositionCardsProps = {
     positions: PersonPosition[];
@@ -19,11 +19,7 @@ type CardLinkProps = {
     disableOrgLink: boolean;
 };
 
-const CardLink: React.FC<React.PropsWithChildren<CardLinkProps>> = ({
-    children,
-    disableOrgLink,
-    position,
-}) => {
+const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({ children, disableOrgLink, position }) => {
     if (disableOrgLink) {
         return <>{children}</>;
     }
@@ -39,12 +35,12 @@ const CardLink: React.FC<React.PropsWithChildren<CardLinkProps>> = ({
     );
 };
 
-const PersonPositionCards: React.FC<PersonPositionCardsProps> = ({ positions, disableOrgLink }) => {
+const PersonPositionCards: FC<PersonPositionCardsProps> = ({ positions, disableOrgLink }) => {
     if (positions.length === 0) {
         return <div className={styles.noPositions}> No positions </div>;
     }
 
-    const personPositionProject = React.useMemo(
+    const personPositionProject = useMemo(
         () =>
             positions.reduce(
                 (

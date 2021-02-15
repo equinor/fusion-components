@@ -1,17 +1,23 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
 import { withKnobs, number, color } from '@storybook/addon-knobs';
 
-import withFusionStory from "../../../../.storybook/withFusionStory";
+import withFusionStory from '../../../../.storybook/withFusionStory';
 
-import { LinkIcon, TitleIcon, FormatItalicsIcon, FormatBoldIcon, FormatBulletedListIcon, FormatNumberedListIcon } from '../components/wysiwyg';
+import {
+    LinkIcon,
+    TitleIcon,
+    FormatItalicsIcon,
+    FormatBoldIcon,
+    FormatBulletedListIcon,
+    FormatNumberedListIcon,
+} from '../components/wysiwyg';
 
 const eventsFromNames = actions('onClick');
 
 const stories = storiesOf('Icons/Wysiwyg', module);
 stories.addDecorator(withKnobs);
-stories.addDecorator(withFusionStory("Wysiwyg"));
+stories.addDecorator(withFusionStory('Wysiwyg'));
 
 stories.add('Link', () => (
     <LinkIcon

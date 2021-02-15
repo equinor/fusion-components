@@ -1,6 +1,6 @@
-import React from 'react';
 import { Pagination, SortDirection } from '@equinor/fusion';
 import { PaginationChangeHandler } from '@equinor/fusion-components';
+import { FC, CSSProperties } from 'react';
 
 export type DataItemPropertyAccessorFunction<T> = (item: T) => string;
 export type DataItemPropertyAccessor<T> = keyof T | DataItemPropertyAccessorFunction<T>;
@@ -19,10 +19,10 @@ export type DataTableColumn<T> = {
     key: string;
     label: string;
     accessor: DataItemPropertyAccessor<T>;
-    component?: React.FC<DataItemComponentProps<T>>;
+    component?: FC<DataItemComponentProps<T>>;
     width?: number | string;
-    skeleton?: React.FC<DataItemSkeletonComponentProps>;
-    style?: React.CSSProperties;
+    skeleton?: FC<DataItemSkeletonComponentProps>;
+    style?: CSSProperties;
     sortable?: DataItemBooleanAccessor<T>;
 
     /** High value or falsy value will be collapsed first when there's no space for all columns */
@@ -52,11 +52,11 @@ export type DataTableProps<T> = {
     onSortChange?: SortChangeHandler<T>;
     sortedBy?: DataTableSortedBy<T>;
     isExpandable?: DataItemBooleanAccessor<T>;
-    expandedComponent?: React.FC<DataItemComponentProps<T>>;
+    expandedComponent?: FC<DataItemComponentProps<T>>;
     onRowClick?: OnDataTableRowClickHandler<T>;
     onExpand?: (item: T) => void;
-    listComponent?: React.FC<DataItemComponentProps<T>>;
-    listSkeleton?: React.FC;
+    listComponent?: FC<DataItemComponentProps<T>>;
+    listSkeleton?: FC;
     noColumnsCollapse?: boolean;
     quickFactScope?: string;
 };
@@ -74,7 +74,7 @@ export type DataTableTableProps<T> = {
     onSortChange?: SortChangeHandler<T>;
     sortedBy?: DataTableSortedBy<T>;
     isExpandable?: DataItemBooleanAccessor<T>;
-    expandedComponent?: React.FC<DataItemComponentProps<T>>;
+    expandedComponent?: FC<DataItemComponentProps<T>>;
     onRowClick?: OnDataTableRowClickHandler<T>;
     onExpand?: (item: T) => void;
     noColumnsCollapse?: boolean;
@@ -85,7 +85,7 @@ export type DataTableListProps<T> = {
     data: T[];
     rowIdentifier: DataItemPropertyAccessor<T>;
     showSkeleton: boolean;
-    skeleton?: React.FC<DataItemSkeletonComponentProps>;
+    skeleton?: FC<DataItemSkeletonComponentProps>;
     isSelectable?: boolean;
     onSelectionChange?: OnSelectionChange<T>;
     selectedItems?: T[];
@@ -93,8 +93,8 @@ export type DataTableListProps<T> = {
     onPaginationChange?: PaginationChangeHandler;
     onSortChange?: SortChangeHandler<T>;
     sortedBy?: DataTableSortedBy<T>;
-    listComponent: React.FC<DataItemComponentProps<T>>;
-    listSkeleton?: React.FC;
+    listComponent: FC<DataItemComponentProps<T>>;
+    listSkeleton?: FC;
 };
 
 export type DataTableHeaderProps<T> = {
@@ -113,7 +113,7 @@ export type DataTableBodyProps<T> = {
     rowIdentifier: DataItemPropertyAccessor<T>;
     data: T[];
     isExpandable?: DataItemBooleanAccessor<T>;
-    expandedComponent?: React.FC<DataItemComponentProps<T>>;
+    expandedComponent?: FC<DataItemComponentProps<T>>;
     onExpand: (item: T, rowIndex: number) => void;
     expandedItems: T[];
     collapsedColumns: DataTableColumn<T>[];
@@ -128,7 +128,7 @@ export type DataTableRowProps<T> = {
     item: T;
     index: number;
     isExpandable: boolean;
-    expandedComponent?: React.FC<DataItemComponentProps<T>>;
+    expandedComponent?: FC<DataItemComponentProps<T>>;
     isExpanded: boolean;
     onExpand: () => void;
     collapsedColumns: DataTableColumn<T>[];
@@ -171,7 +171,7 @@ export type ExpandedContentProps<T> = {
     item: T;
     rowIndex: number;
     isExpanded: boolean;
-    expandedComponent?: React.FC<DataItemComponentProps<T>>;
+    expandedComponent?: FC<DataItemComponentProps<T>>;
     collapsedColumns: DataTableColumn<T>[];
 };
 

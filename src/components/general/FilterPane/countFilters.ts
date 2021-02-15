@@ -36,14 +36,14 @@ const countFilter = async <T>(
 
     switch (filter.type) {
         case FilterTypes.Checkbox:
-            return filter.options.map(option => {
+            return filter.options.map((option) => {
                 return {
                     key: option.key,
-                    count: filteredData.filter(item => {
+                    count: filteredData.filter((item) => {
                         const itemValue = filter.getValue(item);
 
                         if (Array.isArray(itemValue)) {
-                            return itemValue.filter(iv => iv === option.key).length > 0;
+                            return itemValue.filter((iv) => iv === option.key).length > 0;
                         }
 
                         return itemValue === option.key;
@@ -68,7 +68,7 @@ const countFilters = async <T>(data: T[] = [], { sectionDefinitions, terms }: Fi
         const count = await countFilter(
             data,
             currentFilter,
-            allFilters.filter(filter => filter.key !== currentFilter.key),
+            allFilters.filter((filter) => filter.key !== currentFilter.key),
             terms
         );
         result.push({
@@ -81,7 +81,7 @@ const countFilters = async <T>(data: T[] = [], { sectionDefinitions, terms }: Fi
 };
 
 const countFiltersAsync = <T>(data: T[], options: FilterOptions<T>) =>
-    new Promise<Count[]>(resolve => {
+    new Promise<Count[]>((resolve) => {
         window.requestAnimationFrame(async () => {
             const result = await countFilters(data, options);
             resolve(result);

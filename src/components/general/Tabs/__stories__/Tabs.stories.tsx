@@ -1,13 +1,13 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import { Tabs, Tab } from '../index';
 import { Item } from './TabContent';
 
 const TabsStory = () => {
-    const [activeTabKey, setActiveTabKey] = React.useState('Item1');
+    const [activeTabKey, setActiveTabKey] = useState('Item1');
 
-    const changeTabKey = tabKey => setActiveTabKey(tabKey);
+    const changeTabKey = (tabKey) => setActiveTabKey(tabKey);
 
     return (
         <Tabs activeTabKey={activeTabKey} onChange={changeTabKey}>

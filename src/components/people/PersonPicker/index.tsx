@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     PersonPhoto,
     SearchableDropdown,
@@ -79,8 +79,7 @@ export default ({
     useEffect(() => {
         if (initialPerson && !isInitialized) {
             setSections(singlePersonToDropdownSection(initialPerson));
-        }
-        else {
+        } else {
             setSections([]);
         }
     }, [isInitialized, initialPerson]);
@@ -108,17 +107,20 @@ export default ({
         }
     }, [peopleMatch, searchQuery, selectedPerson, isQuerying]);
 
-    const handleSelect = useCallback(item => {
-        if (onSelect) {
-            onSelect(item.person);
-        }
-    }, [onSelect]);
+    const handleSelect = useCallback(
+        (item) => {
+            if (onSelect) {
+                onSelect(item.person);
+            }
+        },
+        [onSelect]
+    );
 
     return (
         <SearchableDropdown
             sections={sections}
             onSelect={handleSelect}
-            onSearchAsync={query => setSearchQuery(query)}
+            onSearchAsync={(query) => setSearchQuery(query)}
             error={hasError}
             errorMessage={errorMessage}
             itemComponent={ItemComponent}

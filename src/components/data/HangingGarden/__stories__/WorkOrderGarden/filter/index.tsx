@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import {useCallback, useEffect} from 'react';
 import WorkOrderType from '../models/WorkOrderType';
 import {
     addIfNotExist,
@@ -66,7 +65,7 @@ const buildFiltersSection = (
     };
 };
 
-const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
+const WorkorderFilter: FC<WorkorderFilterProps> = ({
     data,
     onFilter,
     filterTerms,
@@ -77,7 +76,7 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
     cacheAge,
     cacheIsInvalid,
 }) => {
-    const updateFilterOptionsAsync = React.useCallback(async () => {
+    const updateFilterOptionsAsync = useCallback(async () => {
         const filters: Codes = {
             statuses: [],
         };
@@ -106,7 +105,7 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
         setFilterSections(newFilterSections);
     }, [data, filterSections, filterTerms, setFilterSections]);
 
-    const onFilterChange = React.useCallback(
+    const onFilterChange = useCallback(
         (filteredData: WorkOrderType[], terms: FilterTerm[]) => {
             const groupBy = getGroupByOption(filterTerms);
             const nextGroupBy = getGroupByOption(terms);
@@ -128,7 +127,7 @@ const WorkorderFilter: React.FC<WorkorderFilterProps> = ({
         []
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         updateFilterOptionsAsync();
     }, [filterTerms, data]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { SearchableDropdown, SearchableDropdownOption } from '@equinor/fusion-components';
 import { Position } from '@equinor/fusion';
 import usePositionQuery from './hooks/usePositionQuery';
@@ -29,7 +29,11 @@ const PositionPicker = ({
     placeholder,
 }: PositionPickerProps) => {
     const [options, setOptions] = useState<SearchableDropdownOption[]>([]);
-    const [error, isFetching, filteredPositions, search] = usePositionQuery(selectedPosition, projectId, contractId);
+    const [error, isFetching, filteredPositions, search] = usePositionQuery(
+        selectedPosition,
+        projectId,
+        contractId
+    );
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
@@ -49,7 +53,7 @@ const PositionPicker = ({
     }, [filteredPositions, isFetching, selectedPosition]);
 
     const handleSelect = useCallback(
-        item => {
+        (item) => {
             if (onSelect) {
                 onSelect(item.position);
             }

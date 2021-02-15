@@ -5,17 +5,16 @@ import { css } from '../../base';
  * @TODO variables
  */
 export const style = css`
-
     #toolbar {
         display: grid;
-        grid-gap: .5rem;
+        grid-gap: 0.5rem;
         grid-auto-flow: column;
         justify-content: flex-end;
     }
 
     input {
         background: var(--color-black-alt4);
-        padding: .5rem;
+        padding: 0.5rem;
         border: none;
         border-bottom: 1px solid var(--color-black-alt3);
         border-radius: var(--border-radius, 4px) var(--border-radius, 4px) 0 0;

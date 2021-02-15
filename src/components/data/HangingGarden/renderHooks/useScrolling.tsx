@@ -1,11 +1,11 @@
-import * as React from 'react';
+import { useRef, RefObject, MutableRefObject, useCallback, UIEvent } from 'react';
 import { HangingGardenColumn, HangingGardenColumnIndex } from '../models/HangingGarden';
 
 export type Scroll<T extends HangingGardenColumnIndex> = {
-    isScrolling: React.MutableRefObject<boolean>;
-    scrollLeft: React.MutableRefObject<number>;
-    scrollTop: React.MutableRefObject<number>;
-    onScroll: (e: React.UIEvent<HTMLDivElement>, renderGarden: () => void) => void;
+    isScrolling: MutableRefObject<boolean>;
+    scrollLeft: MutableRefObject<number>;
+    scrollTop: MutableRefObject<number>;
+    onScroll: (e: UIEvent<HTMLDivElement>, renderGarden: () => void) => void;
     scrollToHighlightedColumn: (
         columns: HangingGardenColumn<T>[],
         highlightedColumnKey: string,
@@ -25,16 +25,16 @@ export type Scroll<T extends HangingGardenColumnIndex> = {
  * outside the Garden component.
  */
 const useScrolling = <T extends HangingGardenColumnIndex>(
-    canvas: React.RefObject<HTMLCanvasElement> | null,
-    container: React.RefObject<HTMLDivElement> | null,
+    canvas: RefObject<HTMLCanvasElement> | null,
+    container: RefObject<HTMLDivElement> | null,
     itemKeyProp: keyof T
 ): Scroll<T> => {
-    const isScrolling = React.useRef(false);
-    const scrollTop = React.useRef(0);
-    const scrollLeft = React.useRef(0);
+    const isScrolling = useRef(false);
+    const scrollTop = useRef(0);
+    const scrollLeft = useRef(0);
 
-    const onScroll = React.useCallback(
-        (e: React.UIEvent<HTMLDivElement>, renderGarden: () => void) => {
+    const onScroll = useCallback(
+        (e: UIEvent<HTMLDivElement>, renderGarden: () => void) => {
             if (isScrolling.current || !canvas?.current) return;
 
             isScrolling.current = true;
@@ -49,7 +49,7 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
         [canvas?.current, isScrolling?.current]
     );
 
-    const scrollTo = React.useCallback(
+    const scrollTo = useCallback(
         (highlightedColumnIndex: number, itemWidth: number): boolean => {
             if (!container?.current) return false;
 
@@ -71,7 +71,7 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
         [container?.current]
     );
 
-    const scrollToHighlightedColumn = React.useCallback(
+    const scrollToHighlightedColumn = useCallback(
         (
             columns: HangingGardenColumn<T>[],
             highlightedColumnKey: string,
@@ -86,7 +86,7 @@ const useScrolling = <T extends HangingGardenColumnIndex>(
         [scrollTo]
     );
 
-    const scrollToHighlightedItem = React.useCallback(
+    const scrollToHighlightedItem = useCallback(
         (
             columns: HangingGardenColumn<T>[],
             highlightedItem: T | null,

@@ -58,13 +58,22 @@ const useHangingGardenErrorMessage = (
                         resourceName: resourceName,
                     };
                 case 'UnexpectedError':
-                    if (error?.errorResponse?.message.includes('Unable to resolve context'))
+                    if (error?.errorResponse?.message.includes('Unable to resolve context')) {
                         return {
                             hasError: true,
                             errorType: 'noData',
                             title: 'Unable to find any related projects to selected context. ',
                             message: error?.errorResponse?.message,
                         };
+                    } else {
+                        return {
+                            hasError: true,
+                            errorType: 'error',
+                            message: error?.errorResponse?.message,
+                            action: 'Retry',
+                            onTakeAction: onTakeAction,
+                        };
+                    }
                 default:
                     return {
                         hasError: true,

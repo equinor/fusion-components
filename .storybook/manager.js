@@ -1,7 +1,7 @@
 import { create } from '@storybook/theming';
 import { addons } from '@storybook/addons';
 import AuthTokenInput from './authTokenAddon';
-import * as React from "react";
+
 
 addons.setConfig({
     theme: create({
@@ -14,9 +14,14 @@ addons.setConfig({
     }),
 });
 
+/* 
 addons.register('FUSION', (api) => {
     addons.addPanel('FUSION/authtoken', {
         title: 'Auth',
-        render: ({ active, key }) => <AuthTokenInput key={key} active={active} />,
+        render: ({ active, key }) => (<AuthTokenInput key={key} active={active} />)
     });
 });
+*/
+
+
+

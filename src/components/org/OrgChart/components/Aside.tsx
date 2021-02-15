@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo, useCallback } from 'react';
+import { Fragment, useEffect, useContext, useMemo, useCallback } from 'react';
 
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
@@ -21,7 +21,7 @@ function Aside<T>() {
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
-    const asideNodes = useMemo(() => allNodes.filter(d => d.aside), [allNodes]);
+    const asideNodes = useMemo(() => allNodes.filter((d) => d.aside), [allNodes]);
 
     const rows = useMemo(
         () =>
@@ -42,7 +42,7 @@ function Aside<T>() {
             ),
         [asideNodes, numberOfCardsPerRow]
     );
-    
+
     useEffect(() => {
         if (rows.length !== asideRows) {
             dispatch({
@@ -63,7 +63,6 @@ function Aside<T>() {
             });
         }
     }, [additionalRowHeight]);
-
 
     const getStartXPosition = () => {
         if (numberOfCardsPerRow === 1) {
@@ -94,7 +93,9 @@ function Aside<T>() {
     return (
         <g className="aside">
             {rows.map((cards, rowNo) => (
-                <React.Fragment key={rowNo}>{renderRow(cards, rowNo, additionalRowHeight[rowNo])}</React.Fragment>
+                <Fragment key={rowNo}>
+                    {renderRow(cards, rowNo, additionalRowHeight[rowNo])}
+                </Fragment>
             ))}
         </g>
     );

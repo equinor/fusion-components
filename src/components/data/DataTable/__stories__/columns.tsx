@@ -1,8 +1,8 @@
-import React from 'react';
 import { actions } from '@storybook/addon-actions';
 import { DataTableColumn } from '../index';
 import { DataItem } from './storyData';
 import { Button, styling } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 const eventsFromNames = actions('onClick');
 
@@ -13,7 +13,7 @@ export type DataItemProps = {
     rowIndex: number;
 };
 
-const DeleteColumn: React.FC<DataItemProps> = ({ item }) => (
+const DeleteColumn: FC<DataItemProps> = ({ item }) => (
     <Button {...eventsFromNames}>Delete #{item.id}</Button>
 );
 const DeleteColumnSkeleton = () => <Button disabled>Delete #</Button>;

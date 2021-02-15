@@ -1,5 +1,4 @@
-import * as React from 'react';
-import * as styles from '../../garden/styles.less';
+import styles from '../../garden/styles.less';
 import { MAT_STATUS_COLORS, mccrColorMap } from '../../helpers';
 
 const MaterialStatusPopover = () => {

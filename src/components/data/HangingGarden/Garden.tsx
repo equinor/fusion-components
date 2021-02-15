@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as styles from './styles.less';
+import { useEffect, useCallback, MutableRefObject, UIEvent } from 'react';
+import styles from './styles.less';
 import {
     HangingGardenColumnIndex,
     HangingGardenColumn,
@@ -12,7 +12,7 @@ import useGarden from './renderHooks/useGarden';
 import useRendererSize from './renderHooks/useRendererSize';
 
 type GardenProps = {
-    provideController?: React.MutableRefObject<GardenController | null>;
+    provideController?: MutableRefObject<GardenController | null>;
 };
 
 function Garden<T extends HangingGardenColumnIndex>({ provideController }: GardenProps) {
@@ -34,7 +34,7 @@ function Garden<T extends HangingGardenColumnIndex>({ provideController }: Garde
     const { renderGarden } = useGarden();
     useRendererSize();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!pixiApp.current) return;
         if (provideController) {
             provideController.current = {
@@ -46,8 +46,8 @@ function Garden<T extends HangingGardenColumnIndex>({ provideController }: Garde
         }
     }, [pixiApp.current]);
 
-    const handleScroll = React.useCallback(
-        (e: React.UIEvent<HTMLDivElement>) => {
+    const handleScroll = useCallback(
+        (e: UIEvent<HTMLDivElement>) => {
             onScroll(e, renderGarden);
         },
         [renderGarden, onScroll]

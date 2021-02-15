@@ -1,12 +1,12 @@
-import * as React from 'react';
-import * as styles from '../../garden/styles.less';
+import { FC } from 'react';
+import styles from '../../garden/styles.less';
 import WorkOrderType from '../../models/WorkOrderType';
 
 type ProjectPopoverType = {
     item: WorkOrderType;
 };
 
-const ProjectPopover: React.FC<ProjectPopoverType> = ({ item }) => {
+const ProjectPopover: FC<ProjectPopoverType> = ({ item }) => {
     return (
         <div className={styles.woPopover}>
             <section>

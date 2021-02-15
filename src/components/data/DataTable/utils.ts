@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, createElement } from 'react';
+
 import {
     DataItemPropertyAccessor,
     DataItemPropertyAccessorFunction,
@@ -34,7 +35,7 @@ export const getCellContent = <T>(
 ): React.ReactElement | string => {
     const CustomComponent = column.component;
     if (CustomComponent) {
-        return React.createElement(CustomComponent, { item, rowIndex });
+        return createElement(CustomComponent, { item, rowIndex });
     }
 
     return getString(item, column.accessor);
@@ -171,7 +172,7 @@ export const useVisibleColumns = <T>(
 
     // We can't rely on the window resize event since expanding/collapsing/resizing other elements on the page
     // might affect the size of the table/it's parent. Therefore we use requestAnimationFrame to check periodically
-    let animationFrame: number = 0;
+    let animationFrame = 0;
     const checkResize = () => {
         window.cancelAnimationFrame(animationFrame);
 

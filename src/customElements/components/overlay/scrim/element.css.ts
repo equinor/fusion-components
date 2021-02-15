@@ -1,4 +1,4 @@
-import { css } from "../../base";
+import { css } from '../../base';
 
 export const style = css`
     #overlay {

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
     FilterTerm,
     FilterSection,
@@ -7,7 +6,7 @@ import {
     ErrorMessage,
     Spinner,
 } from '../../../../../index';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { useCurrentContext, useAppSettings } from '@equinor/fusion';
 import WorkOrderType from './models/WorkOrderType';
 
@@ -18,8 +17,8 @@ import WorkOrderSideSheet from './sideSheet';
 import { useHangingGardenData, useHangingGardenErrorMessage } from '../../';
 
 import FilterSectionDefinitions from './models/FilterSectionDefinitions';
-import { ErrorMessageProps } from '../../../../general/ErrorMessage';
 import { FilterOptions } from '../../../../general/FilterPane/applyFilters';
+import { FC, useState, useCallback, useEffect } from 'react';
 
 export type WorkOrderGardenProps = {};
 
@@ -30,21 +29,21 @@ const defaultFilterTerms = [
     },
 ];
 
-const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
+const WorkOrderGarden: FC<WorkOrderGardenProps> = () => {
     const currentContext = useCurrentContext();
     const [localAppSettings, setAppSettingAsync] = useAppSettings();
 
-    const [filteredData, setFilteredData] = React.useState<WorkOrderType[]>([]);
-    const [filterSections, setFilterSections] = React.useState<FilterSection<WorkOrderType>[]>(
+    const [filteredData, setFilteredData] = useState<WorkOrderType[]>([]);
+    const [filterSections, setFilterSections] = useState<FilterSection<WorkOrderType>[]>(
         FilterSectionDefinitions
     );
-    const [filterTerms, setFilterTerms] = React.useState<FilterTerm[]>(
+    const [filterTerms, setFilterTerms] = useState<FilterTerm[]>(
         currentContext && currentContext?.id in localAppSettings
             ? localAppSettings[currentContext.id]
             : defaultFilterTerms
     );
 
-    const applyToFetchedData = React.useCallback(
+    const applyToFetchedData = useCallback(
         ((filterTerms: FilterTerm[]) => (data: WorkOrderType[]) =>
             data.sort(SortWorkOrdersByFilterTerms(filterTerms)))(filterTerms),
         [filterTerms]
@@ -67,7 +66,7 @@ const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
 
     const { errorMessage } = useHangingGardenErrorMessage('handover', error, retry);
 
-    const [selectedWorkOrder, setSelectedWorkOrder] = React.useState<WorkOrderType | null>(null);
+    const [selectedWorkOrder, setSelectedWorkOrder] = useState<WorkOrderType | null>(null);
     const updateFilterTerms = (terms: FilterTerm[]) => {
         setFilterTerms(terms);
         if (currentContext?.id)
@@ -86,7 +85,7 @@ const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
         applyFilters<WorkOrderType>(data, filterOptions).then((r) => setFilteredData(r));
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         invalidate();
         setFilterTerms(
             currentContext && currentContext?.id in localAppSettings
@@ -95,7 +94,7 @@ const WorkOrderGarden: React.FC<WorkOrderGardenProps> = () => {
         );
     }, [currentContext?.id]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (data.length <= 0) return;
 
         applyFilter();

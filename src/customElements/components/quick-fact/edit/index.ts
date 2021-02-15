@@ -6,10 +6,10 @@ import '../../markdown-editor';
 const QuickFactEditElementTag = 'fusion-quick-fact-edit';
 
 @fusionElement(QuickFactEditElementTag)
-export default class _element extends Element { }
+export default class _element extends Element {}
 declare global {
     interface HTMLElementTagNameMap {
-        [QuickFactEditElementTag]: _element
+        [QuickFactEditElementTag]: _element;
     }
 }
 

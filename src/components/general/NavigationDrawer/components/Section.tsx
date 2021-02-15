@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useEffect, useState } from 'react';
+import { useRef, FC, useCallback, useMemo, useEffect, useState } from 'react';
 import styles from './styles.less';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { NavigationComponentProps } from '..';
@@ -20,7 +20,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(shouldHaveTooltip ? title : '', 'right');
-    const textRef = React.useRef<HTMLElement | null>(null);
+    const textRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         if (textRef.current) {

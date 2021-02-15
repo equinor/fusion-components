@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useContext } from 'react';
+import { useRef, useMemo, useContext } from 'react';
 import { useParentSize } from '@equinor/fusion-components';
 import { OrgChartContextProvider, OrgChartContextReducer, OrgChartContext } from './store';
 import { OrgStructure, OrgChartProps, OrgChartItemProps, OrgNode } from './orgChartTypes';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { getHeaderWidth, isHeaderExpanded, getColumnX, createRoundedRectMask } from '../utils';
@@ -31,7 +31,7 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
 
     const { createTextNode } = useTextNode();
 
-    const onHeaderClick = React.useCallback(
+    const onHeaderClick = useCallback(
         (key: string, index: number) => {
             const column = (columns as HangingGardenColumn<T>[])[index];
             if (!column.data.length) return;
@@ -50,10 +50,7 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
 
             const renderedDescriptions = column.data.map(getRenderedItemDescription);
 
-            const maxWidth = Math.max.apply(
-                Math,
-                renderedDescriptions.map((description) => description.width)
-            );
+            const maxWidth = Math.max(...renderedDescriptions.map((description) => description.width));
 
             setExpandedColumns((prevColumns) => ({
                 ...prevColumns,
@@ -67,10 +64,10 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
         [expandedColumns, columns, setExpandedColumns, getRenderedItemDescription]
     );
 
-    const getHeaderMask = React.useCallback(
+    const getHeaderMask = useCallback(
         (index: number, headerWidth: number) => {
             const key = `header-${index}`;
-            let mask = getTextureFromCache('masks', key);
+            const mask = getTextureFromCache('masks', key);
             if (!mask) {
                 const mask = createRoundedRectMask(headerWidth, headerHeight);
                 addTextureToCache('masks', key, mask);
@@ -81,7 +78,7 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
         [headerHeight]
     );
 
-    const renderHeader = React.useCallback(
+    const renderHeader = useCallback(
         (key: string, index: number) => {
             let renderedHeader = getTextureFromCache('headers', key) as PIXI.Container;
 

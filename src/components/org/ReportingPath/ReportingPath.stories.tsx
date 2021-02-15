@@ -1,9 +1,9 @@
-import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import ReportingPath from '.';
 import { OrgStructure, OrgChartItemProps } from '@equinor/fusion-components';
 import { useComponentDisplayType } from '@equinor/fusion';
+import { FC, CSSProperties } from 'react';
 
 type Position = OrgStructure & {
     name?: string;
@@ -80,9 +80,9 @@ const cardStyle = {
     flex: '1',
     fontSize: '16px',
     height: 'calc(100% - 16px)',
-} as React.CSSProperties;
+} as CSSProperties;
 
-const PositionCard: React.FC<OrgChartItemProps<Position>> = ({ item }) => {
+const PositionCard: FC<OrgChartItemProps<Position>> = ({ item }) => {
     return (
         <div style={cardStyle}>
             Position : {item.name}

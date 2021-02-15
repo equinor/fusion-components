@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { MutableRefObject, useRef, useCallback } from 'react';
+
 import * as PIXI from 'pixi.js-legacy';
 import { useHangingGardenContext } from './useHangingGardenContext';
 import { ItemRenderContext, RenderItem } from '..';
@@ -10,7 +11,7 @@ export type RenderQueue = {
         context: ItemRenderContext
     ) => void;
     processRenderQueue: () => void;
-    processRenderQueueAnimationFrame: React.MutableRefObject<number>;
+    processRenderQueueAnimationFrame: MutableRefObject<number>;
 };
 
 /**
@@ -25,12 +26,12 @@ const useRenderQueue = (): RenderQueue => {
         textureCaches: { getTextureFromCache, addTextureToCache },
     } = useHangingGardenContext();
 
-    const renderQueue = React.useRef<RenderItem[]>([]);
-    const isRendering = React.useRef(false);
+    const renderQueue = useRef<RenderItem[]>([]);
+    const isRendering = useRef(false);
 
-    const processRenderQueueAnimationFrame = React.useRef(0);
+    const processRenderQueueAnimationFrame = useRef(0);
 
-    const enqueueRenderer = React.useCallback(
+    const enqueueRenderer = useCallback(
         (key: string, render: (context: ItemRenderContext) => void, context: ItemRenderContext) => {
             renderQueue.current.push({
                 key,
@@ -43,7 +44,7 @@ const useRenderQueue = (): RenderQueue => {
         [renderQueue.current]
     );
 
-    const processRenderQueue = React.useCallback(() => {
+    const processRenderQueue = useCallback(() => {
         if (isRendering.current || !renderQueue.current.length) {
             if (!renderQueue.current.length) {
                 pixiApp.current?.render();
@@ -60,7 +61,7 @@ const useRenderQueue = (): RenderQueue => {
         window.requestAnimationFrame(processRenderQueue);
     }, [isRendering.current, pixiApp, renderQueue.current]);
 
-    const processRenderer = React.useCallback(
+    const processRenderer = useCallback(
         (renderer: RenderItem) => {
             let graphicsContainer = getTextureFromCache(
                 'graphics',

@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import DataTable from '../index';
@@ -13,9 +14,10 @@ import {
     Pagination,
 } from '@equinor/fusion';
 import { DataTableColumn } from '../dataTableTypes';
+import { FC } from 'react';
 
 const emptyArray = [];
-const WithSkeleton: React.FC = () => {
+const WithSkeleton: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -56,12 +58,12 @@ const WithSkeleton: React.FC = () => {
                 direction,
             }}
             listComponent={ExpandedItem}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
 
-const ExpandedItem: React.FC<DataItemProps> = ({ item }) => {
+const ExpandedItem: FC<DataItemProps> = ({ item }) => {
     return (
         <>
             <h3>
@@ -74,7 +76,7 @@ const ExpandedItem: React.FC<DataItemProps> = ({ item }) => {
     );
 };
 
-const WithoutSkeleton: React.FC = () => {
+const WithoutSkeleton: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -113,12 +115,12 @@ const WithoutSkeleton: React.FC = () => {
             }}
             expandedComponent={ExpandedItem}
             listComponent={ExpandedItem}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
 
-const NoColumnsCollapse: React.FC = () => {
+const NoColumnsCollapse: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -156,12 +158,12 @@ const NoColumnsCollapse: React.FC = () => {
                 column: sortedByColumn,
                 direction,
             }}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
 
-const Selectable: React.FC = () => {
+const Selectable: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -204,12 +206,12 @@ const Selectable: React.FC = () => {
             isSelectable
             onSelectionChange={setSelectedItems}
             selectedItems={selectedItems}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
 
-const SingleSelectable: React.FC = () => {
+const SingleSelectable: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -234,7 +236,7 @@ const SingleSelectable: React.FC = () => {
 
     const sortedByColumn = simpleColumns.find((c) => c.accessor === sortBy) || null;
 
-    const handleClick = React.useCallback(
+    const handleClick = useCallback(
         (item) => {
             if (selectedItems.findIndex((i) => i.id === item.id) !== -1) {
                 setSelectedItems([]);
@@ -262,12 +264,12 @@ const SingleSelectable: React.FC = () => {
             listComponent={ExpandedItem}
             onRowClick={handleClick}
             selectedItems={selectedItems}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };
 
-const ExpandableRows: React.FC = () => {
+const ExpandableRows: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -292,7 +294,7 @@ const ExpandableRows: React.FC = () => {
 
     const sortedByColumn = simpleColumns.find((c) => c.accessor === sortBy) || null;
 
-    const handleClick = React.useCallback(
+    const handleClick = useCallback(
         (item) => {
             if (selectedItems.findIndex((i) => i.id === item.id) !== -1) {
                 setSelectedItems([]);
@@ -321,7 +323,7 @@ const ExpandableRows: React.FC = () => {
             listComponent={ExpandedItem}
             onRowClick={handleClick}
             selectedItems={selectedItems}
-            quickFactScope={"storybook"}
+            quickFactScope={'storybook'}
         />
     );
 };

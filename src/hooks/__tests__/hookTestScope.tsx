@@ -1,11 +1,11 @@
-import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
+import { FC } from 'react';
 
 type HookScopeComponentProps = {
     useHook: (props: any) => void;
 };
 
-const HookScopeComponent: React.FC<HookScopeComponentProps> = ({ useHook, ...props }) => {
+const HookScopeComponent: FC<HookScopeComponentProps> = ({ useHook, ...props }) => {
     useHook(props);
     return null;
 };

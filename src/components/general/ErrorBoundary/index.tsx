@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { Component } from 'react';
 import { ErrorMessage, ErrorMessageProps } from '../ErrorMessage';
 
-export default class ErrorBoundary extends React.Component<ErrorMessageProps> {
+export default class ErrorBoundary extends Component<ErrorMessageProps> {
     static defaultProps = {
         errorType: 'error',
     };

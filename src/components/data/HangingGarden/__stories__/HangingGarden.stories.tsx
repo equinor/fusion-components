@@ -1,12 +1,12 @@
-import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ContextTypes, useFusionContext } from '@equinor/fusion';
 import ContextSelector from '../../../core/ContextSelector';
 import FusionHeader from '../../../core/Header';
 import FusionContent from '../../../core/Content';
 import WorkOrderGarden from './WorkOrderGarden';
+import { FC } from 'react';
 
-const CurrentContext: React.FC = ({ children }) => {
+const CurrentContext: FC = ({ children }) => {
     const { app } = useFusionContext();
 
     (app.container as any)._currentApp.state = {
@@ -25,10 +25,10 @@ const CurrentContext: React.FC = ({ children }) => {
     return <> {children} </>;
 };
 
-const DemoHangingGarden: React.FC = () => {
+const DemoHangingGarden: FC = () => {
     return (
         <CurrentContext>
-            <FusionHeader start={null} content={ContextSelector} aside={null} />
+            <FusionHeader start={null} content={ContextSelector} aside={null} settings={null} />
             <FusionContent>
                 <div style={{ display: 'flex', flex: '1 1 auto', height: '100%', minWidth: 0 }}>
                     <WorkOrderGarden />

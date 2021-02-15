@@ -1,4 +1,3 @@
-import React from 'react';
 import { DataTableProps } from './dataTableTypes';
 import Table from './components/Table';
 import List from './components/List';

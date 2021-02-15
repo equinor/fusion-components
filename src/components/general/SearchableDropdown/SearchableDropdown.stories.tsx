@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import SearchableDropdown, { SearchableDropdownOption, SearchableDropdownSection } from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
@@ -60,22 +60,22 @@ const dropdownSections: SearchableDropdownSection[] = [
 ];
 
 const DropdownStory = () => {
-    const [options, setOptions] = React.useState<SearchableDropdownOption[]>(dropdownOptions);
-    const [optionsNoLAbel, setOptionsNoLabel] = React.useState<SearchableDropdownOption[]>(
+    const [options, setOptions] = useState<SearchableDropdownOption[]>(dropdownOptions);
+    const [optionsNoLAbel, setOptionsNoLabel] = useState<SearchableDropdownOption[]>(
         dropdownOptions
     );
 
-    const [sections, setSections] = React.useState<SearchableDropdownSection[]>(dropdownSections);
+    const [sections, setSections] = useState<SearchableDropdownSection[]>(dropdownSections);
 
-    const updateOptions = item =>
-        options.map(option => {
+    const updateOptions = (item) =>
+        options.map((option) => {
             return { ...option, isSelected: item.key === option.key };
         });
 
     const updateSections = (item: SearchableDropdownOption) => {
         const newSections = sections.reduce(
             (acc: SearchableDropdownSection[], curr: SearchableDropdownSection) => {
-                const items = curr.items.map(option => ({
+                const items = curr.items.map((option) => ({
                     ...option,
                     isSelected: option.key === item.key,
                 }));
@@ -97,24 +97,24 @@ const DropdownStory = () => {
                 errorMessage="required"
                 options={options}
                 label="Dropdown"
-                onSelect={item => setOptions(updateOptions(item))}
+                onSelect={(item) => setOptions(updateOptions(item))}
             />
             <br />
             <SearchableDropdown
                 options={optionsNoLAbel}
-                onSelect={item => setOptionsNoLabel(updateOptions(item))}
+                onSelect={(item) => setOptionsNoLabel(updateOptions(item))}
             />
             <br />
             <SearchableDropdown
                 label="Select food"
-                onSelect={item => updateSections(item)}
+                onSelect={(item) => updateSections(item)}
                 sections={sections}
             />
             <br />
-            <div style={{width: '300px'}}>
+            <div style={{ width: '300px' }}>
                 <SearchableDropdown
                     label="Narrow food"
-                    onSelect={item => updateSections(item)}
+                    onSelect={(item) => updateSections(item)}
                     sections={sections}
                     dropdownMaxHeight={200}
                 />

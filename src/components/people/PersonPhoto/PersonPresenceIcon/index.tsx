@@ -1,6 +1,5 @@
-import * as React from 'react';
 import classNames from 'classnames';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { useComponentDisplayClassNames, PersonPresenceAvailability } from '@equinor/fusion';
 import {
     useTooltipRef,
@@ -9,23 +8,24 @@ import {
     ScheduleIcon,
     PhotoSize,
     RemoveCircleIcon,
-    CircleIcon
+    CircleIcon,
 } from '@equinor/fusion-components';
+import { useMemo, FC } from 'react';
 
 type PersonPresenceProps = {
     presenceAvailability: PersonPresenceAvailability;
     size: PhotoSize;
 };
 
-const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presenceAvailability, size }) => {
+const PersonPresenceIcon: FC<PersonPresenceProps> = ({ presenceAvailability, size }) => {
     const presenceClasses = classNames(
         styles.presenceContainer,
         useComponentDisplayClassNames(styles),
         styles[size],
-        styles[presenceAvailability?.toLowerCase()]
+        styles[presenceAvailability?.toLowerCase()|| 'offline']
     );
 
-    const presenceIcon = React.useMemo(() => {
+    const presenceIcon = useMemo(() => {
         if (presenceAvailability === 'Available' || presenceAvailability === 'AvailableIdle') {
             return <CheckCircleIcon />;
         }
@@ -33,10 +33,10 @@ const PersonPresenceIcon: React.FC<PersonPresenceProps> = ({ presenceAvailabilit
             return <ScheduleIcon />;
         }
         if (presenceAvailability === 'Busy' || presenceAvailability === 'BusyIdle') {
-            return <CircleIcon />
+            return <CircleIcon />;
         }
         if (presenceAvailability === 'DoNotDisturb') {
-            return <RemoveCircleIcon />
+            return <RemoveCircleIcon />;
         }
         return <CloseCircleIcon />;
     }, [presenceAvailability, size]);

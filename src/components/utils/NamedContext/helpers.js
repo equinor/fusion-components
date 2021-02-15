@@ -3,7 +3,7 @@ const FUSION_NAMED_CONTEXT_MOUNTED_EVENT_TYPE = 'FUSION_NAMED_CONTEXT_MOUNTED';
 const FUSION_NAMED_CONTEXT_UNMOUNTED_EVENT_TYPE = 'FUSION_NAMED_CONTEXT_UNMOUNTED';
 const FUSION_NAMED_CONTEXT_UPDATED_EVENT_TYPE = 'FUSION_NAMED_CONTEXT_UPDATED';
 
-const getContextName = name => FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name;
+const getContextName = (name) => FUSION_NAMED_CONTEXT_GLOBAL_PREFIX + name;
 
 export const ensureContext = (name, defaultValue) => {
     const contextName = getContextName(name);
@@ -20,12 +20,12 @@ export const ensureContext = (name, defaultValue) => {
     return window[contextName];
 };
 
-const notifyConsumers = name => {
+const notifyConsumers = (name) => {
     const context = ensureContext(name);
-    context.listners.forEach(listner => listner(context.value));
+    context.listners.forEach((listner) => listner(context.value));
 };
 
-export const handleMessage = message => {
+export const handleMessage = (message) => {
     const mountedContext = ensureContext(message.context.name);
 
     switch (message.type) {
@@ -69,7 +69,7 @@ export const contextUpdated = (name, value) => {
     );
 };
 
-export const contextMounted = name => {
+export const contextMounted = (name) => {
     handleMessage(
         {
             type: FUSION_NAMED_CONTEXT_MOUNTED_EVENT_TYPE,
@@ -81,7 +81,7 @@ export const contextMounted = name => {
     );
 };
 
-export const contextUnmounted = name => {
+export const contextUnmounted = (name) => {
     handleMessage(
         {
             type: FUSION_NAMED_CONTEXT_UNMOUNTED_EVENT_TYPE,

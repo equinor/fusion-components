@@ -7,7 +7,7 @@ import { OverlayAnchor } from '../anchor';
 
 export interface OverlayScrimElementProps {
     active?: boolean;
-};
+}
 
 export class OverlayScrimElement extends LitElement implements OverlayScrimElementProps {
     static styles = styles;
@@ -20,10 +20,10 @@ export class OverlayScrimElement extends LitElement implements OverlayScrimEleme
 
     render() {
         const classes = directives.classMap({ active: this.active });
-        const rects = this.anchors.map(el => ({ id: el.anchor, rect: el.bounds() }));
+        const rects = this.anchors.map((el) => ({ id: el.anchor, rect: el.bounds() }));
         return html`
             <div id="overlay" class="${classes}">
-                ${overlay(rects)} 
+                ${overlay(rects)}
                 <slot name="placeholders"></slot>
                 <slot></slot>
             </div>

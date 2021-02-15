@@ -1,6 +1,7 @@
-import * as React from 'react';
 import classNames from 'classnames';
+import { Children } from 'react';
 import styles from './styles.less';
+import { FC } from 'react';
 
 type SpinnerProps = {
     floating?: boolean;
@@ -23,7 +24,7 @@ type SpinnerProps = {
     size?: number;
 };
 
-const Spinner: React.FC<SpinnerProps> = ({
+const Spinner: FC<SpinnerProps> = ({
     floating,
     centered,
     primary,
@@ -85,7 +86,7 @@ const Spinner: React.FC<SpinnerProps> = ({
                 </svg>
             </div>
             {title ? <h2 className={styles.spinnerTitle}>{title}</h2> : null}
-            {React.Children.count(children) > 0 ? <p>{children}</p> : null}
+            {Children.count(children) > 0 ? <p>{children}</p> : null}
         </div>
     );
 };

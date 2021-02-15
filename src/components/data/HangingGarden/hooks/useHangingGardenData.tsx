@@ -1,5 +1,5 @@
 import { useCurrentContext, ApiClients } from '@equinor/fusion';
-import * as React from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import useHangingGardenGetData from './useHangingGardenGetData';
 import { formatDistance } from 'date-fns';
 
@@ -51,15 +51,15 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
 ) => {
     const currentContext = useCurrentContext();
     const { isFetching, error, getData } = useHangingGardenGetData(client, endpoint);
-    const [data, setData] = React.useState<T[]>([]);
+    const [data, setData] = useState<T[]>([]);
 
-    const [cacheAgeDate, setCacheAgeDate] = React.useState<Date>(new Date());
-    const [cacheDuration, setCacheDuration] = React.useState<number>(30);
-    const [cacheAge, setCacheAge] = React.useState('');
-    const [cacheIsInvalid, setCacheIsInvalid] = React.useState(true);
-    const cacheCheckTimerRef = React.useRef<NodeJS.Timeout>();
+    const [cacheAgeDate, setCacheAgeDate] = useState<Date>(new Date());
+    const [cacheDuration, setCacheDuration] = useState<number>(30);
+    const [cacheAge, setCacheAge] = useState('');
+    const [cacheIsInvalid, setCacheIsInvalid] = useState(true);
+    const cacheCheckTimerRef = useRef<NodeJS.Timeout>();
 
-    const checkCacheValidity = React.useCallback(() => {
+    const checkCacheValidity = useCallback(() => {
         setCacheAge(formatDistance(cacheAgeDate, new Date()));
         const isInvalid =
             new Date(cacheAgeDate).setMinutes(cacheAgeDate.getMinutes() + cacheDuration) <
@@ -68,7 +68,7 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
         cacheCheckTimerRef.current = setTimeout(checkCacheValidity, 60000);
     }, [cacheAgeDate, cacheDuration]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (cacheCheckTimerRef.current) clearTimeout(cacheCheckTimerRef.current);
 
         checkCacheValidity();
@@ -76,7 +76,7 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
         return () => cacheCheckTimerRef.current && clearTimeout(cacheCheckTimerRef.current);
     }, [checkCacheValidity]);
 
-    const formatData = React.useCallback(
+    const formatData = useCallback(
         (data: T[]) => {
             const formattedData = applyToFetchedData ? applyToFetchedData(data) : data;
             return searchableValues ? formattedData.map(searchableValues) : formattedData;
@@ -84,7 +84,7 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
         [searchableValues, applyToFetchedData]
     );
 
-    const fetch = React.useCallback(
+    const fetch = useCallback(
         async (invalidateCache: boolean) => {
             if (!currentContext) return;
 
@@ -96,17 +96,17 @@ const useHangingGardenData = <T, C extends keyof ApiClients, E extends keyof Api
         [currentContext, isFetching, error, getData, formatData]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         setData([]);
         fetch(false);
     }, [currentContext?.id]);
 
-    const retry = React.useCallback(() => {
+    const retry = useCallback(() => {
         setData([]);
         fetch(true);
     }, [fetch]);
 
-    const invalidate = React.useCallback(() => {
+    const invalidate = useCallback(() => {
         fetch(true);
     }, [fetch]);
 

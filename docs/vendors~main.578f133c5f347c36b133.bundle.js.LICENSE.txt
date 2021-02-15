@@ -5,8 +5,16 @@
 */
 
 /*!
+<<<<<<< HEAD:docs/vendors~main.c7f6675d681e9958b779.bundle.js.LICENSE.txt
+<<<<<<< HEAD:docs/vendors~main.36dc4c117cb8a759881c.bundle.js.LICENSE.txt
+ * Application Insights JavaScript SDK - Channel, 2.5.9
+=======
+ * @pixi/app - v5.2.4
+ * Compiled Sun, 03 May 2020 22:38:52 UTC
+=======
  * @pixi/canvas-display - v5.3.3
  * Compiled Tue, 04 Aug 2020 16:23:09 UTC
+>>>>>>> master:docs/vendors~main.694b6b2828d8b2cbc762.bundle.js.LICENSE.txt
  *
  * @pixi/canvas-display is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
@@ -198,6 +206,7 @@
 
 /*!
  * Application Insights JavaScript SDK - Channel, 2.5.10
+>>>>>>> master:docs/vendors~main.c7f6675d681e9958b779.bundle.js.LICENSE.txt
  * Copyright (c) Microsoft and contributors. All rights reserved.
  */
 
@@ -252,6 +261,8 @@
  * Released under the MIT License.
  */
 
+<<<<<<< HEAD:docs/vendors~main.c7f6675d681e9958b779.bundle.js.LICENSE.txt
+=======
 /*!
  * pixi.js - v5.3.3
  * Compiled Tue, 04 Aug 2020 16:23:09 UTC
@@ -292,6 +303,7 @@ See the Apache Version 2.0 License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
+>>>>>>> master:docs/vendors~main.694b6b2828d8b2cbc762.bundle.js.LICENSE.txt
 /*! @license DOMPurify | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.0.8/LICENSE */
 
 /*! http-post-message v0.2.3 | (c) 2016 Microsoft Corporation MIT */

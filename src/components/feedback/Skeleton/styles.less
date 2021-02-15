@@ -1,73 +1,78 @@
 .skeleton {
     display: inline-block;
-    background-image: linear-gradient(90deg, var(--color-black-alt4), var(--color-black-alt5), var(--color-black-alt4));
+    background-image: linear-gradient(
+        90deg,
+        var(--color-black-alt4),
+        var(--color-black-alt5),
+        var(--color-black-alt4)
+    );
     background-size: 200% calc(var(--grid-unit) * 2px);
     animation: skeleton-slide 2s infinite forwards linear;
     border-radius: 4px;
 }
 
-.bar{
+.bar {
     height: calc(var(--grid-unit) * 2px);
 }
 
-.button{
+.button {
     height: calc(var(--grid-unit) * 4px);
 }
 
-.disc{
+.disc {
     border-radius: 50%;
     display: flex;
     position: relative;
     width: var(--disc-size);
     height: var(--disc-size);
-    
-        &.xlarge {
-            &.comfortable {
-                // 56x56
-                --disc-size: calc(var(--grid-unit) * 7px);
-            }
-    
-            &.compact {
-                // 48x48
-                --disc-size: calc(var(--grid-unit) * 6px);
-            }
+
+    &.xlarge {
+        &.comfortable {
+            // 56x56
+            --disc-size: calc(var(--grid-unit) * 7px);
         }
-    
-        &.large {
-            &.comfortable {
-                // 40x40
-                --disc-size: calc(var(--grid-unit) * 5px);
-            }
-    
-            &.compact {
-                // 32x32
-                --disc-size: calc(var(--grid-unit) * 4px);
-            }
+
+        &.compact {
+            // 48x48
+            --disc-size: calc(var(--grid-unit) * 6px);
         }
-    
-        &.medium {
-            &.comfortable {
-                // 32x32
-                --disc-size: calc(var(--grid-unit) * 4px);
-            }
-    
-            &.compact {
-                // 24x24
-                --disc-size: calc(var(--grid-unit) * 3px);
-            }
+    }
+
+    &.large {
+        &.comfortable {
+            // 40x40
+            --disc-size: calc(var(--grid-unit) * 5px);
         }
-    
-        &.small {
-            &.comfortable {
-                // 24x24
-                --disc-size: calc(var(--grid-unit) * 3px);
-            }
-    
-            &.compact {
-                // 16x16
-                --disc-size: calc(var(--grid-unit) * 2px);
-            }
+
+        &.compact {
+            // 32x32
+            --disc-size: calc(var(--grid-unit) * 4px);
         }
+    }
+
+    &.medium {
+        &.comfortable {
+            // 32x32
+            --disc-size: calc(var(--grid-unit) * 4px);
+        }
+
+        &.compact {
+            // 24x24
+            --disc-size: calc(var(--grid-unit) * 3px);
+        }
+    }
+
+    &.small {
+        &.comfortable {
+            // 24x24
+            --disc-size: calc(var(--grid-unit) * 3px);
+        }
+
+        &.compact {
+            // 16x16
+            --disc-size: calc(var(--grid-unit) * 2px);
+        }
+    }
 }
 
 @keyframes skeleton-slide {

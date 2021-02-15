@@ -9,7 +9,16 @@ import {
     useOverlayContainer,
     useStringMask,
 } from '@equinor/fusion-components';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+    FC,
+    KeyboardEvent,
+    FocusEvent,
+    MutableRefObject,
+} from 'react';
 
 type DatePickerProps = {
     disabled?: boolean;
@@ -20,7 +29,7 @@ type DatePickerProps = {
     onChange: (date: null | Date) => void;
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({
+const DatePicker: FC<DatePickerProps> = ({
     disabled,
     error,
     errorMessage,
@@ -48,7 +57,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
         }, [maskedValue, parseDate]);
 
         const handleKeyUp = useCallback(
-            (e: React.KeyboardEvent<HTMLInputElement>) => {
+            (e: KeyboardEvent<HTMLInputElement>) => {
                 if ((e.key === 'Enter' || e.key === 'Tab') && isValidMask) {
                     tryParseDate();
                     setIsOpen(false);
@@ -61,7 +70,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
         const overlayContainer = useOverlayContainer();
         const handleBlur = useCallback(
-            (e: React.FocusEvent<HTMLInputElement>) => {
+            (e: FocusEvent<HTMLInputElement>) => {
                 if (isValidMask) {
                     tryParseDate();
                 }
@@ -124,9 +133,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
     const today = new Date();
 
     return (
-        <div
-            ref={dropdownController.controllerRef as React.MutableRefObject<HTMLDivElement | null>}
-        >
+        <div ref={dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>}>
             <Dropdown controller={dropdownController}>
                 <Calendar
                     initialMonth={today.getMonth() as Month}

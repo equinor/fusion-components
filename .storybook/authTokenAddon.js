@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useState } from 'react'
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
 
 const AuthTokenInput = ({ active }) => {
-    const [authToken, setAuthToken] = React.useState(
+    const [authToken, setAuthToken] = useState(
         localStorage.getItem('FUSION_STORYBOOK_AUTH_TOKEN') || ''
     );
 

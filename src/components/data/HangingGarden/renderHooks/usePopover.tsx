@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 import { PopoverContainer } from '@equinor/fusion-components';
 
@@ -26,9 +26,9 @@ export type Popover = {
  * outside the Garden component.
  */
 const usePopover = (delay?: number): UsePopover => {
-    const [selectedPopover, setSelectedPopover] = React.useState<Popover | null>(null);
+    const [selectedPopover, setSelectedPopover] = useState<Popover | null>(null);
 
-    const addPopover = React.useCallback(
+    const addPopover = useCallback(
         (
             hitContainer: PIXI.Container,
             hitArea: PIXI.Rectangle,
@@ -60,7 +60,7 @@ const usePopover = (delay?: number): UsePopover => {
         []
     );
 
-    const popover = React.useMemo(() => {
+    const popover = useMemo(() => {
         if (!selectedPopover) return null;
 
         return (

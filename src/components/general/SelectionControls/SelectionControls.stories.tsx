@@ -1,10 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { Switch, CheckBox, RadioButton } from './index';
 
 const SwitchStory = () => {
-    const [active, setActive] = React.useState(false);
+    const [active, setActive] = useState(false);
     return (
         <div style={{ padding: '8px' }}>
             <Switch active={active} onChange={() => setActive(!active)} />
@@ -14,7 +14,7 @@ const SwitchStory = () => {
     );
 };
 const CheckboxStory = () => {
-    const [selected, setSelected] = React.useState(false);
+    const [selected, setSelected] = useState(false);
 
     return (
         <div style={{ padding: '8px' }}>
@@ -27,7 +27,7 @@ const CheckboxStory = () => {
 };
 
 const RadioButtonStory = () => {
-    const [active, setActive] = React.useState(false);
+    const [active, setActive] = useState(false);
 
     return (
         <div style={{ padding: '8px' }}>

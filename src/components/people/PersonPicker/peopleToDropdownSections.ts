@@ -17,13 +17,13 @@ const filterPeopleByAccountType = (
     }, []);
 };
 
-const getPrimarySection = items => ({
+const getPrimarySection = (items) => ({
     key: 'primary',
     title: 'Employees and consultants',
     items,
 });
 
-const getSecondarySection = items => ({
+const getSecondarySection = (items) => ({
     key: 'secondary',
     title: 'External',
     items,
@@ -41,7 +41,7 @@ const getEmptySection = (isQuerying: boolean) => ({
 });
 
 export function singlePersonToDropdownSection(person: PersonDetails): SearchableDropdownSection[] {
-    const items = [person].map(p => ({
+    const items = [person].map((p) => ({
         key: p.azureUniqueId,
         title: p.name,
         person: p,
@@ -55,7 +55,7 @@ export function singlePersonToDropdownSection(person: PersonDetails): Searchable
     }
 }
 
-export default function(
+export default function (
     people: PersonDetails[],
     selectedId: string,
     searchQuery: string,

@@ -1,22 +1,22 @@
-import * as React from 'react';
 import { AdaptiveCardViewer } from '@equinor/fusion-components';
 import { NotificationCard } from '@equinor/fusion';
-import * as styles from './styles.less';
+import styles from './styles.less';
+import { FC, ReactNode } from 'react';
 
 type StandardNotificationCardProps = {
     notification: NotificationCard;
-    discardComponent?: React.ReactNode;
-    actionableComponents?: React.ReactNode[];
+    discardComponent?: ReactNode;
+    actionableComponents?: ReactNode[];
 };
 
-const StandardNotificationCard: React.FC<StandardNotificationCardProps> = ({
+const StandardNotificationCard: FC<StandardNotificationCardProps> = ({
     notification,
     discardComponent,
     actionableComponents,
 }) => {
     return (
         <div className={styles.cardContainer}>
-            <AdaptiveCardViewer payload={notification.card} className={styles.notificationCard}/>
+            <AdaptiveCardViewer payload={notification.card} className={styles.notificationCard} />
             {actionableComponents && actionableComponents.length > 0 && (
                 <div className={styles.actionableComponents}>{actionableComponents}</div>
             )}

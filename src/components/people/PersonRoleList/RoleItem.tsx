@@ -5,8 +5,9 @@ import {
     useFusionContext,
 } from '@equinor/fusion';
 import { Switch } from '@equinor/fusion-components';
-import React, { useCallback, useState } from 'react';
-import * as styles from './styles.less';
+import { useCallback, useMemo, useState, FC } from 'react';
+
+import styles from './styles.less';
 import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClient';
 import classNames from 'classnames';
 
@@ -26,7 +27,7 @@ const expiresIn = (activeTo: string) => {
     return `Expires in ${Math.ceil(Math.abs(activeToDate - now) / 36e5)} hours`;
 };
 
-const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) => {
+const RoleItem: FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) => {
     const currentUser = useCurrentUser();
     const { peopleContainer } = useFusionContext();
     const [isActive, setIsActive] = useState<boolean>(role.isActive);
@@ -64,7 +65,7 @@ const RoleItem: React.FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchPro
 
     const errorClassNames = classNames(styles.small, { [styles.error]: errorMessage });
 
-    const showExpireDate = React.useMemo(() => role.activeToUtc && showSwitch && !errorMessage, [
+    const showExpireDate = useMemo(() => role.activeToUtc && showSwitch && !errorMessage, [
         role,
         showSwitch,
         errorMessage,

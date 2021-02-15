@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { MarkdownEditor } from '.';
@@ -7,7 +7,7 @@ import '.';
 const initialMarkdown = `# This is markdown \n ## This is also markdown \n ### This is also markdown \n\n * Some \n * List \n * Items`;
 
 const MarkdownEditorStory = () => {
-    const [markdown, setMarkDown] = React.useState(initialMarkdown);
+    const [markdown, setMarkDown] = useState(initialMarkdown);
     return (
         <div>
             <MarkdownEditor

@@ -20,7 +20,7 @@ interface Window {
 window.requestIdleCallback =
     window.requestIdleCallback ||
     ((callback) => {
-        var start = Date.now();
+        const start = Date.now();
         return setTimeout(function () {
             callback({
                 didTimeout: false,

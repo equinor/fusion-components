@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { DataTableRowProps } from '../dataTableTypes';
 import Cell from './Cell';
 import ExpandCell from './ExpandCell';

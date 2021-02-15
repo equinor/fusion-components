@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback, FC, MouseEvent } from 'react';
 
 import styles from './styles.less';
 import classNames from 'classnames';
@@ -18,9 +18,9 @@ type SliderMarkerProps = {
     onClick: (marker: SliderMarker) => void;
 };
 
-const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, disabled, position, onClick }) => {
+const Marker: FC<SliderMarkerProps> = ({ marker, isActive, disabled, position, onClick }) => {
     const onClickHandler = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
             onClick(marker);
         },
@@ -37,7 +37,7 @@ const Marker: React.FC<SliderMarkerProps> = ({ marker, isActive, disabled, posit
         <button
             className={markerClassNames}
             style={{ left: position }}
-            onClick={e => !disabled && onClickHandler(e)}
+            onClick={(e) => !disabled && onClickHandler(e)}
         >
             <div className={styles.dot} />
             <label>{marker.label}</label>

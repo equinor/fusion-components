@@ -1,12 +1,12 @@
- .notificationsContainer {
+.notificationsContainer {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     height: 100%;
 
     .tabContent {
         overflow: auto;
         padding: 0 1rem 1rem 1rem;
-            
+
         .noNotificationMessage {
             display: flex;
             justify-content: center;
@@ -14,17 +14,13 @@
             padding-top: 1rem;
         }
 
-        .markAsRead {
-            padding-top: 0.5rem;
-        }
-
         .divisionTitle {
             padding-left: 0.5rem;
         }
-    
+
         .division {
             padding-bottom: 1rem;
-            
+
             .dateMarker {
                 width: 100%;
                 display: flex;
@@ -34,57 +30,22 @@
                 color: var(--color-black-alt2);
             }
         }
-           
-    }
-
-}
-
-.settingsPlacement {
-    margin-left: auto;     
-
-    .settingsTab {
-        display: flex;
-        align-items: center;
-
-        .settingsIcon {
-            padding-left: 0.5rem;
-        }
     }
 }
 
-.settingsContainer {
-    padding: 1rem;
-
-    .generalHeader {
-        padding-bottom: 0.5rem;
-    }
-
-    .settingsEmail {
-        padding-top: 1rem;
-        padding-bottom: 0.5rem;
-    }
-}
-
-.selectTitle {
-    padding-right: 0.5rem;
-}
-
-.row {
-    display: flex;
-    height: 1.5rem;
-    align-items: center;
-    padding: 1rem 0 1rem 0;
+.settingsTab {
+    margin-left: auto;
 }
 
 .notificationWrapper {
     border-radius: 4px;
     margin-bottom: calc(var(--grid-unit) * 2px);
-    border-collapse: separate; 
+    border-collapse: separate;
     border: 1px solid var(--color-black-alt4);
 
-    &.unSeen{
+    &.unSeen {
         border: 1px solid var(--color-primary);
-    }    
+    }
 }
 
 .chip {
@@ -94,5 +55,5 @@
     display: inline;
     margin: 0.5rem;
     padding: 0.25rem 0.5rem 0.25rem 0.5rem;
-    color: #FFF;
+    color: #fff;
 }

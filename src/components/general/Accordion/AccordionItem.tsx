@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import classNames from 'classnames';
 import styles from './styles.less';
 import { SortIcon } from '@equinor/fusion-components';
@@ -9,7 +9,7 @@ type AccordionItemProps = {
     disabled?: boolean;
     onChange?: () => void;
     children?: any;
-    label: string | React.ReactNode;
+    label: string | ReactNode;
     actionDirection?: 'left' | 'right';
 };
 

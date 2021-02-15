@@ -1,5 +1,7 @@
+import { useRef, useMemo, useCallback, useEffect, FC } from 'react';
+
 import * as AdaptiveCards from 'adaptivecards';
-import React from 'react';
+
 import marked from 'marked';
 import classNames from 'classnames';
 import styles from './styles.less';
@@ -26,7 +28,7 @@ const ACTION_OPEN_URL = 'Action.OpenUrl';
 const ACTION_SHOW_CARD = 'Action.ShowCard';
 const ACTION_SUBMIT = 'Action.Submit';
 
-const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
+const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
     hostConfig,
     payload,
     onExecuteAction,
@@ -35,8 +37,8 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
     onActionSubmit,
     className,
 }) => {
-    const cardContainerRef = React.useRef<HTMLDivElement | null>(null);
-    const adaptiveCard = React.useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
+    const cardContainerRef = useRef<HTMLDivElement | null>(null);
+    const adaptiveCard = useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
 
     AdaptiveCards.AdaptiveCard.onProcessMarkdown = (text, result) => {
         result.outputHtml = marked(text);
@@ -47,7 +49,7 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
         hostConfig ? hostConfig : getDefaultHostConfig()
     );
 
-    const executeAction = React.useCallback(
+    const executeAction = useCallback(
         (action: AdaptiveCards.Action) => {
             switch (action.getJsonTypeName()) {
                 case ACTION_OPEN_URL:
@@ -69,12 +71,12 @@ const AdaptiveCardViewer: React.FC<AdaptiveCardViewerProps> = ({
 
     adaptiveCard.onExecuteAction = executeAction;
 
-    const result = React.useMemo(() => {
+    const result = useMemo(() => {
         adaptiveCard.parse(payload);
         return adaptiveCard.render();
     }, [payload]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const current = cardContainerRef.current;
         result.className = classNames(styles.adaptiveCard, className);
         current && current.appendChild(result);

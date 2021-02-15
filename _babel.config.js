@@ -1,5 +1,9 @@
 module.exports = {
-    presets: ['@babel/preset-typescript', '@babel/preset-env', '@babel/preset-react'],
+    presets: [
+        '@babel/preset-typescript', 
+        '@babel/preset-env', 
+        ['@babel/preset-react', {'runtime': 'automatic'}]
+    ],
     plugins: [
         [
             '@babel/plugin-proposal-decorators',

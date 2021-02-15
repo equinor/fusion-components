@@ -1,6 +1,6 @@
-import * as React from 'react';
 import WorkOrderType from '../models/WorkOrderType';
 import { ModalSideSheet } from '../../../../../..';
+import { useEffect, useState } from 'react';
 
 type workOrderSideSheetProps = {
     workOrder: WorkOrderType;
@@ -11,9 +11,9 @@ const WorkOrderSideSheet: React.FC<workOrderSideSheetProps> = ({
     workOrder,
     setSelectedWorkOrder,
 }) => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setIsOpen(true);
     }, [workOrder]);
 

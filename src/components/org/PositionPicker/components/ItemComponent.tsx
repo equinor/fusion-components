@@ -1,18 +1,18 @@
-import React from 'react';
 import ItemComponentProps from './itemComponentProps';
 import styles from '../styles.less';
+import { useMemo, FC } from 'react';
 
-const ItemComponent: React.FC<ItemComponentProps> = ({ item }) => {
+const ItemComponent: FC<ItemComponentProps> = ({ item }) => {
     if (item.key === 'empty') {
         return <div>{item.title}</div>;
     }
 
     const now = Date.now();
     const activeInstance = item.position.instances.find(
-        i => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
+        (i) => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
     );
 
-    const positionName = React.useMemo(() => {
+    const positionName = useMemo(() => {
         if (!item.position.externalId) {
             return item.position.name;
         }

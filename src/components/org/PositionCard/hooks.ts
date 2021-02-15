@@ -5,13 +5,15 @@ export type PositionInstanceRotation = PositionInstance & {
     rotatingInstances?: PositionInstance[];
 };
 
-export const useInstancesWithRotation = (allInstances: PositionInstance[]): PositionInstanceRotation[] =>
+export const useInstancesWithRotation = (
+    allInstances: PositionInstance[]
+): PositionInstanceRotation[] =>
     useMemo(
         () =>
             allInstances
                 .reduce((instances: PositionInstanceRotation[], instance: PositionInstance) => {
                     const correlatingInstances = allInstances.filter(
-                        i =>
+                        (i) =>
                             i.appliesFrom.getTime() <= instance.appliesTo.getTime() &&
                             i.appliesTo.getTime() >= instance.appliesFrom.getTime() &&
                             i.type === 'Rotation' &&
@@ -20,7 +22,7 @@ export const useInstancesWithRotation = (allInstances: PositionInstance[]): Posi
                     );
                     if (correlatingInstances.length > 0) {
                         const uniqueTimeInstances = !instances.some(
-                            i => instance.appliesFrom.getTime() === i.appliesFrom.getTime()
+                            (i) => instance.appliesFrom.getTime() === i.appliesFrom.getTime()
                         );
 
                         const shortestInstance = [instance, ...correlatingInstances].sort(
@@ -54,10 +56,10 @@ export const useCurrentInstance = (
     const currentInstance =
         (activeInstance &&
             instancesWithRotation.find(
-                i =>
+                (i) =>
                     i.id === activeInstance.id ||
                     (i.rotatingInstances &&
-                        i.rotatingInstances.some(rotation => rotation.id === activeInstance.id) &&
+                        i.rotatingInstances.some((rotation) => rotation.id === activeInstance.id) &&
                         (selectedDate
                             ? selectedDate.getTime() >= i.appliesFrom.getTime() &&
                               selectedDate.getTime() <= i.appliesTo.getTime()

@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import { useCallback, useEffect, useState, Fragment } from 'react';
+
 import styles from './styles.less';
 import { PersonDetails, usePersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
-import { useState } from 'react';
 import {
     PersonPhoto,
     PersonPresenceIcon,
@@ -32,7 +32,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
         }
     }, [error, personDetails]);
 
-    const fetchPresenceStatus = React.useCallback(
+    const fetchPresenceStatus = useCallback(
         async (id: string) => {
             setIsFetchingPresence(true);
             setPresenceError(null);
@@ -49,14 +49,14 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
         [apiClients]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (currentPerson && currentPerson.azureUniqueId) {
             fetchPresenceStatus(currentPerson.azureUniqueId);
         }
     }, [currentPerson]);
 
     return (
-        <>
+        <Fragment>
             {currentPerson && (
                 <div className={styles.personDetails}>
                     <div className={styles.detailsContainer}>
@@ -136,6 +136,6 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                     )}
                 </div>
             )}
-        </>
+        </Fragment>
     );
 };

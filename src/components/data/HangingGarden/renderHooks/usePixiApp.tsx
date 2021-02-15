@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useRef, useMemo, RefObject } from 'react';
 import * as PIXI from 'pixi.js-legacy';
 
 /**
@@ -8,17 +8,17 @@ import * as PIXI from 'pixi.js-legacy';
  * outside the Garden component.
  */
 const usePixiApp = (
-    canvas: React.RefObject<HTMLCanvasElement> | null,
-    container: React.RefObject<HTMLDivElement> | null,
+    canvas: RefObject<HTMLCanvasElement> | null,
+    container: RefObject<HTMLDivElement> | null,
     backgroundColor: number
 ) => {
     PIXI.utils.skipHello(); // Don't output the pixi message to the console
     PIXI.Ticker.shared.autoStart = false;
     PIXI.settings.ROUND_PIXELS = true;
 
-    const pixiApp = React.useRef<PIXI.Application | null>(null);
+    const pixiApp = useRef<PIXI.Application | null>(null);
 
-    pixiApp.current = React.useMemo(() => {
+    pixiApp.current = useMemo(() => {
         if (!canvas?.current || !container?.current) return null;
 
         return new PIXI.Application({
