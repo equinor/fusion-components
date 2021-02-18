@@ -1,9 +1,7 @@
-import * as React from 'react';
 import { useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
-
-import * as styles from './styles.less';
+import styles from './styles.less';
 import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
 import RotationInstances from './components/RotationInstances';
