@@ -79,11 +79,12 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     i.appliesFrom.getTime() <= filterToDate.getTime() &&
                     i.appliesTo.getTime() >= filterToDate.getTime()
             ),
-        [filterToDate]
+        [filterToDate, position]
     );
-    const rotatingInstances: PositionInstance[] = instance
-        ? allInstances.filter((i) => i.id !== instance.id)
-        : [];
+    const rotatingInstances: PositionInstance[] = useMemo(
+        () => (instance ? allInstances.filter((i) => i.id !== instance.id) : []),
+        [instance, allInstances]
+    );
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
