@@ -122,7 +122,7 @@ function FilterPane<T>({
                     {!isCollapsed && headerComponent}
                 </div>
                 <div className={styles.content}>
-                    {showResetAllButton && (
+                    {showResetAllButton && !isCollapsed && (
                         <div className={styles.resetButton}>
                             <Button frameless onClick={onClick}>
                                 Reset filters
