@@ -82,7 +82,10 @@ const PositionCard: React.FC<PositionCardProps> = ({
         [filterToDate, position]
     );
     const rotatingInstances: PositionInstance[] = useMemo(
-        () => (instance ? allInstances.filter((i) => i.id !== instance.id) : []),
+        () =>
+            instance
+                ? allInstances.filter((i) => i.id !== instance.id && i.type === 'Rotation')
+                : [],
         [instance, allInstances]
     );
 
