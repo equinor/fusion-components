@@ -114,7 +114,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     selectedDate={selectedDate}
                 />
             </div>
-            {showRotation && allInstances.length > 1 && (
+            {showRotation && allInstances.length > 1 && rotatingInstances.length > 0 && (
                 <RotationInstances allInstances={allInstances} position={position} />
             )}
         </div>
