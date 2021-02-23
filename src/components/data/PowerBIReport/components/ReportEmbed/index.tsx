@@ -1,6 +1,6 @@
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
-import { useTelemetryLogger, useCurrentApp, Context } from '@equinor/fusion';
+import { useTelemetryLogger, Context } from '@equinor/fusion';
 import { ICustomEvent } from 'service';
 import {
     AccessToken,
@@ -12,22 +12,14 @@ import { AppSettingsManager } from '@equinor/fusion-components';
 
 import styles from '../../styles.less';
 import { ButtonClickEvent } from '../../models/EventHandlerTypes';
-import React, {
-    Dispatch,
-    SetStateAction,
-    FC,
-    useState,
-    useRef,
-    useCallback,
-    useLayoutEffect,
-    useEffect,
-} from 'react';
+import { FC, useState, useRef, useCallback, useLayoutEffect, useEffect } from 'react';
+import { PowerBIReportErrorDetail } from '../..';
 
 type PowerBIProps = {
     reportId: string;
     embedInfo: EmbedInfo;
     accessToken: AccessToken;
-    setError: Dispatch<SetStateAction<pbi.service.ICustomEvent<pbi.models.IError> | null>>;
+    setError: React.Dispatch<React.SetStateAction<PowerBIReportErrorDetail>>;
     currentContext: Context | null;
     filters?: pbi.models.ReportLevelFilters[] | null;
     hasContext?: boolean;
@@ -70,7 +62,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
     hasContext,
 }) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [timeLoadStart, SetTimeLoadStart] = useState<Date>(new Date());
+    const [timeLoadStart] = useState<Date>(new Date());
     const telemetryLogger = useTelemetryLogger();
     const [reApplyFilter, setReapplyFilter] = useState<boolean>(false);
     const embedRef = useRef<HTMLDivElement>(null);
@@ -114,18 +106,19 @@ const ReportEmbed: FC<PowerBIProps> = ({
     };
 
     const getConfig = useCallback(
-        (embedInfo: EmbedInfo) => {
+        (type: ResourceType) => {
+            if (!embedInfo) return;
             const embedConfig = embedInfo.embedConfig;
             const token = accessToken ? accessToken.token : undefined;
-            let config: pbi.IEmbedConfiguration = {
-                type: embedInfo.embedConfig.embedType.toLowerCase(),
-                id: getReportOrDashboardId(embedConfig, embedInfo.embedConfig.embedType),
+            const config: pbi.IEmbedConfiguration = {
+                type: type.toLowerCase(),
+                id: getReportOrDashboardId(embedConfig, type),
                 embedUrl: embedConfig.embedUrl,
                 tokenType: getTokenType(embedConfig),
                 accessToken: token,
             };
 
-            if (embedInfo.embedConfig.embedType === 'Report') {
+            if (type === 'Report') {
                 const settings = {
                     filterPaneEnabled: false,
                     navContentPaneEnabled: false,
@@ -143,14 +136,13 @@ const ReportEmbed: FC<PowerBIProps> = ({
 
             return config;
         },
-        [accessToken]
+        [embedInfo, accessToken]
     );
 
     const embed = useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
-                const config = getConfig(embedInfo);
-
+                const config = getConfig(embedInfo.embedConfig.embedType);
                 embeddedRef.current = powerbi.embed(node, config);
                 embeddedRef.current.off('loaded');
                 embeddedRef.current.off('error');
@@ -158,25 +150,44 @@ const ReportEmbed: FC<PowerBIProps> = ({
                 embeddedRef.current.off('buttonClicked');
                 embeddedRef.current.on('loaded', () => {
                     telemetryLogger.trackMetric({
-                        name: `${useCurrentApp.name}-EmbedLoadedTime`,
+                        name: `pbi.report.load`,
+                        properties: {
+                            reportName: embedInfo.embedConfig.name,
+                            reportId: config.id,
+                            reportWorkspace: embedInfo.embedConfig.groupId,
+                        },
+                        // name: `${useCurrentApp.name}-EmbedLoadedTime`,
                         average: (new Date().getTime() - timeLoadStart.getTime()) / 1000,
                         sampleCount: 1,
                     });
+
+                    setIsLoading(false);
                 });
                 embeddedRef.current.on('rendered', () => {
                     telemetryLogger.trackMetric({
-                        name: `${useCurrentApp.name}-EmbedRenderedTime`,
+                        name: `pbi.report.render`,
+                        properties: {
+                            reportName: embedInfo.embedConfig.name,
+                            reportId: config.id,
+                            reportWorkspace: embedInfo.embedConfig.groupId,
+                        },
                         average: (new Date().getTime() - timeLoadStart.getTime()) / 1000,
                         sampleCount: 1,
                     });
                 });
-                embeddedRef.current.on('error', (err: ICustomEvent<IError>) => {
-                    if (err && err.detail) {
+                embeddedRef.current.on('error', (error: ICustomEvent<IError>) => {
+                    if (error && error.detail) {
                         telemetryLogger.trackException({
-                            error: new Error('Power BI: ' + err.detail.message),
+                            error: new Error('Power BI: ' + error.detail.message),
                         });
                     }
-                    setError(err);
+                    setError({
+                        type: 'pbi',
+                        code: Number(error.detail.errorCode),
+                        message: error.detail?.message,
+                        title: 'An error has occurred inside Power BI',
+                    });
+                    setIsLoading(false);
                 });
                 embeddedRef.current.on(
                     'buttonClicked',
@@ -188,7 +199,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
                 );
             }
         },
-        [embedInfo, getConfig, reportId]
+        [embedInfo, accessToken, reportId]
     );
 
     /** TODO: add filters for dashboard if needed? */
@@ -211,6 +222,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
         if (!embeddedRef.current) return;
 
         setIsLoading(true);
+
         embeddedRef.current.reload();
     }, [currentContext?.id]);
 
@@ -231,10 +243,13 @@ const ReportEmbed: FC<PowerBIProps> = ({
     }, [embedRef?.current, accessToken]);
 
     useEffect(() => {
-        if (!embedRef?.current) return;
+        if (embedRef.current !== null) {
+            const embededReport = powerbi.get(embedRef.current);
 
-        const embededReport = powerbi.get(embedRef.current);
-        if (embededReport && accessToken) embededReport.setAccessToken(accessToken.token);
+            if (embededReport && accessToken) {
+                embededReport.setAccessToken(accessToken.token);
+            }
+        }
     }, [embedRef?.current, accessToken]);
 
     return (
