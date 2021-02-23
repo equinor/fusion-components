@@ -1,4 +1,4 @@
-import React, { forwardRef, MutableRefObject } from 'react';
+import { forwardRef, MutableRefObject } from 'react';
 import classNames from 'classnames';
 import styles from '../styles.less';
 import { useElevationClassName } from '@equinor/fusion-components';

@@ -1,4 +1,3 @@
-import React, { FC, useRef, useMemo, useContext } from 'react';
 import { OrgStructure, OrgChartItemProps, useParentSize } from '@equinor/fusion-components';
 import useReportingPathActions from './actions';
 import {
@@ -9,6 +8,7 @@ import {
 import Children from './components/Children';
 import Links from './components/Links';
 import LinkedIndicator from './components/LinkedIndicator';
+import { FC, useRef, useMemo, useContext } from 'react';
 
 export type ReportingPathProps<T> = {
     structure: T[];
@@ -27,20 +27,19 @@ const ReportingPath = <T extends OrgStructure>(props: ReportingPathProps<T>) => 
 const ReportingPathContent = <T extends OrgStructure>(props: ReportingPathProps<T>) => {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
     const { height, width } = useParentSize(orgContainerRef);
-        
-    useReportingPathActions({ ...props, parentHeight: height, parentWidth: width});
+
+    useReportingPathActions({ ...props, parentHeight: height, parentWidth: width });
 
     const {
-        state: { rowMargin, childrenRows, cardWidth,allNodes },
+        state: { rowMargin, childrenRows, cardWidth, allNodes },
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
     const svgHeight = useMemo(() => {
-
         const childrenMargin = rowMargin * childrenRows;
-        const linkedRows = allNodes.filter(node => node.linked);
+        const linkedRows = allNodes.filter((node) => node.linked);
         const linkedMargin = linkedRows.length ? linkedRows.length * rowMargin : 0;
 
-        return childrenMargin  + linkedMargin;
+        return childrenMargin + linkedMargin;
     }, [rowMargin, childrenRows, allNodes]);
 
     return (

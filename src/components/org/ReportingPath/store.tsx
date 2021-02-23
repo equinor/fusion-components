@@ -1,5 +1,5 @@
 import { OrgChartItemProps, OrgNode } from '@equinor/fusion-components';
-import React, { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
+import { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
 
 type Action<T> =
     | { type: 'UPDATE_SIZE'; width?: number; height?: number }
@@ -28,7 +28,7 @@ export type ReportingPathContextType<T> = {
     initialCardWidth: number;
     rowMargin: number;
     allNodes: OrgNode<T>[];
-    component: React.FC<OrgChartItemProps<T>> | null;
+    component: FC<OrgChartItemProps<T>> | null;
     childrenRows: number;
 };
 
@@ -85,7 +85,7 @@ function reducer<T>(
         case 'UPDATE_POSITION':
             return {
                 ...state,
-                allNodes: state.allNodes.map(prevNode => {
+                allNodes: state.allNodes.map((prevNode) => {
                     if (prevNode.id === action.node.id) {
                         return {
                             ...action.node,

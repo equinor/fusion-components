@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo, useCallback } from 'react';
+import { useEffect, useContext, useMemo, useCallback, Fragment, ReactNode } from 'react';
 
 import Card from './Card';
 import { ReportingPathContext, ReportingPathContextReducer } from '../store';
@@ -10,7 +10,7 @@ function Children<T>() {
         dispatch,
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
-    const childrenNodes = useMemo(() => allNodes.filter(d =>!d.linked), [allNodes]);
+    const childrenNodes = useMemo(() => allNodes.filter((d) => !d.linked), [allNodes]);
 
     useEffect(() => {
         if (childrenNodes.length !== childrenRows) {
@@ -22,10 +22,10 @@ function Children<T>() {
     }, [childrenRows, childrenNodes]);
 
     const renderCard = useCallback(
-        (card: OrgNode<T>, rowNo: number): React.ReactNode => (
-            <React.Fragment key={card.id}>
-                <Card node={card} x={card.linked ? 72 : 0} y={(rowNo)* rowMargin} />
-            </React.Fragment>
+        (card: OrgNode<T>, rowNo: number): ReactNode => (
+            <Fragment key={card.id}>
+                <Card node={card} x={card.linked ? 72 : 0} y={rowNo * rowMargin} />
+            </Fragment>
         ),
         [rowMargin]
     );
@@ -43,32 +43,24 @@ function Children<T>() {
         }
     }, [width]);
 
-    const children = childrenNodes.reduce(
-        (previousChildren, currentChild) => {
-            const linkedNodes = allNodes.filter(node => node.parentId === currentChild.id && node.linked);
-            const linkedNodesComponents = linkedNodes.length
-                ? linkedNodes.map((node, index) => renderCard(node, previousChildren.length + index))
-                : null;
+    const children = childrenNodes.reduce((previousChildren, currentChild) => {
+        const linkedNodes = allNodes.filter(
+            (node) => node.parentId === currentChild.id && node.linked
+        );
+        const linkedNodesComponents = linkedNodes.length
+            ? linkedNodes.map((node, index) => renderCard(node, previousChildren.length + index))
+            : null;
 
-            if (linkedNodesComponents) {
-                previousChildren.push(...linkedNodesComponents);
-            }
-            const childComponent = renderCard(
-                currentChild,
-                previousChildren.length
-            );
-            previousChildren.push(childComponent);
+        if (linkedNodesComponents) {
+            previousChildren.push(...linkedNodesComponents);
+        }
+        const childComponent = renderCard(currentChild, previousChildren.length);
+        previousChildren.push(childComponent);
 
-            return previousChildren;
-        },
-        [] as React.ReactNode[]
-    );
+        return previousChildren;
+    }, [] as ReactNode[]);
 
-    return (
-        <g className="children">
-            {children}
-        </g>
-    );
+    return <g className="children">{children}</g>;
 }
 
 export default Children;

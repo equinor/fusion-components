@@ -1,11 +1,11 @@
-import React from 'react';
 import Header from '../src/components/core/Header';
 import Content from '../src/components/core/Content';
+import { Fragment, ReactNode } from 'react';
 
-export default (title: string, padding: number = 16) => (stories: () => React.ReactNode) => {
+export default (title: string, padding: number = 16) => (stories: () => ReactNode) => {
     return (
-        <>
-            <Header aside={null} start={null} content={null} />
+        <Fragment>
+            <Header aside={null} start={null} content={null} settings={null}/>
             <Content>
                 <div
                     style={{
@@ -15,10 +15,8 @@ export default (title: string, padding: number = 16) => (stories: () => React.Re
                         maxWidth: '100%',
                         boxSizing: 'border-box',
                     }}
-                >
-                    {stories()}
-                </div>
+                >{stories()}</div>
             </Content>
-        </>
+        </Fragment>
     );
 };

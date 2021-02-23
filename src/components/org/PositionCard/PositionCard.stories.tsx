@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, boolean, select, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -260,7 +260,7 @@ const InteractiveStory = () => {
 
     const toggleSelected = useCallback((position, instance) => {
         action('click')(position, instance);
-        setIsSelected(prev => !prev);
+        setIsSelected((prev) => !prev);
     }, []);
 
     const selectedPositionKey = select('position', positionKeys, positionKeys.Standard);
@@ -278,7 +278,7 @@ const InteractiveStory = () => {
     );
     const selectedPositionInstanceId = select('instance', instanceKeys, '1');
     const selectedPositionsInstance = selectedPosition.instances.find(
-        i => i.id === selectedPositionInstanceId
+        (i) => i.id === selectedPositionInstanceId
     );
     return (
         <PositionCard
@@ -296,7 +296,6 @@ const InteractiveStory = () => {
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
             selectedDate={new Date('2022-09-25T00:00:00')}
-
         />
     );
 };
@@ -316,7 +315,7 @@ const DefaultStory = () => {
     );
     const selectedPositionInstanceId = select('instance', instanceKeys, '1');
     const selectedPositionsInstance = selectedPosition.instances.find(
-        i => i.id === selectedPositionInstanceId
+        (i) => i.id === selectedPositionInstanceId
     );
     return (
         <PositionCard
@@ -330,7 +329,7 @@ const DefaultStory = () => {
             isSelected={false}
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
-            showRotation={boolean("Show rotation", true)}
+            showRotation={boolean('Show rotation', true)}
         />
     );
 };

@@ -1,50 +1,58 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 
-import { PaginationArrow, CloseIcon, ArrowBackIcon, MoreIcon, SubdirectoryArrowRightIcon, SubdirectoryArrowLeftIcon, ExitToAppIcon } from '../components/navigation';
+import {
+    PaginationArrow,
+    CloseIcon,
+    ArrowBackIcon,
+    MoreIcon,
+    SubdirectoryArrowRightIcon,
+    SubdirectoryArrowLeftIcon,
+    ExitToAppIcon,
+} from '../components/navigation';
 
 const stories = storiesOf('Icons/Navigation', module);
 stories.addDecorator(withFusionStory('Navigation'));
 
 stories.add('Pagination arrows', () => (
-    <React.Fragment>
+    <Fragment>
         <PaginationArrow prev />
         <PaginationArrow next />
-    </React.Fragment>
+    </Fragment>
 ));
 
 stories.add('Close', () => (
-    <React.Fragment>
+    <Fragment>
         <CloseIcon />
-    </React.Fragment>
+    </Fragment>
 ));
 
 stories.add('Arrow Back', () => (
-    <React.Fragment>
+    <Fragment>
         <ArrowBackIcon />
-    </React.Fragment>
+    </Fragment>
 ));
 
 stories.add('More', () => (
-    <React.Fragment>
+    <Fragment>
         <MoreIcon />
-    </React.Fragment>
+    </Fragment>
 ));
 
 stories.add('Subdirectory right', () => (
-    <React.Fragment>
+    <Fragment>
         <SubdirectoryArrowRightIcon />
-    </React.Fragment>
+    </Fragment>
 ));
 
 stories.add('Subdirectory left', () => (
-    <React.Fragment>
+    <Fragment>
         <SubdirectoryArrowLeftIcon />
-    </React.Fragment>
+    </Fragment>
 ));
 stories.add('Exit to app', () => (
-    <React.Fragment>
+    <Fragment>
         <ExitToAppIcon />
-    </React.Fragment>
+    </Fragment>
 ));

@@ -1,5 +1,6 @@
-import * as React from 'react';
-import * as styles from './styles.less';
+import { useMemo, useCallback, FC } from 'react';
+
+import styles from './styles.less';
 import { PersonPosition } from '@equinor/fusion';
 import PersonPositionCards from './PersonPositionCards';
 import {
@@ -16,7 +17,7 @@ type PersonPositionListProps = {
     disableOrgLink?: boolean;
 };
 
-const PersonPositionList: React.FC<PersonPositionListProps> = ({
+const PersonPositionList: FC<PersonPositionListProps> = ({
     allPositions,
     showPositions,
     filterByDate,
@@ -24,9 +25,9 @@ const PersonPositionList: React.FC<PersonPositionListProps> = ({
 }) => {
     const positionsSortedByTo = sortPositionsByTo(allPositions);
 
-    const date = React.useMemo(() => filterByDate || new Date(), [filterByDate]);
+    const date = useMemo(() => filterByDate || new Date(), [filterByDate]);
 
-    const getPersonPositions = React.useCallback(
+    const getPersonPositions = useCallback(
         (positions: PersonPosition[]) => {
             switch (showPositions) {
                 case 'active':

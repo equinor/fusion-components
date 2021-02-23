@@ -18,10 +18,10 @@ export class ButtonElement extends LitElement {
     @property({ type: String, reflect: true })
     size?: ButtonSize;
 
-    @property({type: Boolean, reflect: true}) 
+    @property({ type: Boolean, reflect: true })
     outlined?: boolean;
 
-    @property({type: Boolean, reflect: true}) 
+    @property({ type: Boolean, reflect: true })
     fullwidth?: boolean;
 
     @query('#button')
@@ -40,7 +40,7 @@ export class ButtonElement extends LitElement {
     protected createRenderRoot() {
         // don't set delegatesFocus: true due to https://bugs.webkit.org/show_bug.cgi?id=215732
         // return this.attachShadow({ mode: 'open', delegatesFocus: true });
-        return this.attachShadow({mode: 'open'});
+        return this.attachShadow({ mode: 'open' });
     }
 
     protected render() {

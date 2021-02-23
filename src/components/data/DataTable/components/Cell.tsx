@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import { DataTableCellProps } from '../dataTableTypes';
 import { getCellContent } from '../utils';
 import classNames from 'classnames';
@@ -15,12 +15,12 @@ function DataTableCell<T>({
     isSelected,
     onClick,
 }: DataTableCellProps<T>) {
-    const handleClick = React.useCallback(() => {
+    const handleClick = useCallback(() => {
         if (onClick) {
             onClick(item, rowIndex);
         }
     }, [onClick, item, rowIndex]);
-    
+
     return (
         <div
             className={classNames(styles.cell, {

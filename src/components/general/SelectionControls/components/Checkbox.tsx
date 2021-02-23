@@ -1,4 +1,5 @@
-import React, { useRef, MutableRefObject, forwardRef, useEffect } from 'react';
+import { useRef, MutableRefObject, forwardRef, useEffect, MouseEvent } from 'react';
+
 import styles from '../styles.less';
 import { DoneIcon, MinimizeIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
@@ -6,7 +7,7 @@ import { useComponentDisplayClassNames } from '@equinor/fusion';
 
 type CheckboxProps = {
     selected?: boolean;
-    onChange?: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onChange?: (e: MouseEvent<HTMLDivElement>) => void;
     disabled?: boolean;
     indeterminate?: boolean;
     color?: string;

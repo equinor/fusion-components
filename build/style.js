@@ -5,6 +5,7 @@ module.exports = {
         rules: [
             {
                 test: /\.less$/,
+                sideEffects: true,
                 use: [
                     {
                         loader: 'style-loader',
@@ -15,15 +16,17 @@ module.exports = {
                             modules: {
                                 mode: 'local',
                                 localIdentName: 'fc--[folder]__[local]--[hash:base64:5]',
-                                context: path.resolve(__dirname, '..', 'src'),
-                                hashPrefix: new Date().getTime().toString(),
+                                // context: path.resolve(__dirname, '..', 'src'),
+                                // hashPrefix: new Date().getTime().toString(),
                             },
                         },
                     },
                     {
                         loader: 'less-loader',
                         options: {
-                            
+                            // lessOptions: {
+                            //     paths: [path.resolve(__dirname, "../src")],
+                            // },
                         }
                     },
                 ],

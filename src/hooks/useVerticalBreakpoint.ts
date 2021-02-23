@@ -8,8 +8,8 @@ export type VerticalBreakpoint = Breakpoint & {
 export default (
     breakpoints: VerticalBreakpoint[]
 ): [MutableRefObject<HTMLDivElement>, string | null] => {
-    const [ref, currentBreakpoints] = useBreakpoint(rect => {
-        return [getBreakpoint(breakpoints, rect, x => x.height)];
+    const [ref, currentBreakpoints] = useBreakpoint((rect) => {
+        return [getBreakpoint(breakpoints, rect, (x) => x.height)];
     });
 
     return [ref, currentBreakpoints[0] || null];

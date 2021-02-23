@@ -1,12 +1,12 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import Accordion from './index';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import AccordionItem from './AccordionItem';
 
 const AccordionStory = () => {
-    const [isOpenFirst, setIsOpenFirst] = React.useState(true);
-    const [isOpenSecond, setIsOpenSecond] = React.useState(true);
+    const [isOpenFirst, setIsOpenFirst] = useState(true);
+    const [isOpenSecond, setIsOpenSecond] = useState(true);
 
     const accordionContent = (
         <div>

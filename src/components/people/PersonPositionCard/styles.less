@@ -1,6 +1,6 @@
 .container {
     max-width: calc(var(--grid-unit) * 40px);
-    padding: calc(var(--grid-unit)* 2px);
+    padding: calc(var(--grid-unit) * 2px);
     box-sizing: border-box;
     display: block;
     background-color: var(--color-white);
@@ -11,9 +11,7 @@
     color: var(--color-primary-accent);
 
     &:hover {
-        box-shadow:
-            0px 1px 10px rgba(0, 0, 0, 0.2),
-            0px 4px 5px rgba(0, 0, 0, 0.12),
+        box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12),
             0px 2px 4px rgba(0, 0, 0, 0.14);
     }
 
@@ -27,14 +25,16 @@
         line-height: var(--text-line-height);
     }
 
-    .personPosition {  
+    .personPosition {
         color: var(--color-primary);
         text-decoration: underline;
         font-size: var(--text-font-size);
         line-height: var(--text-line-height);
     }
 
-    .projectName, .period, .personPosition {
+    .projectName,
+    .period,
+    .personPosition {
         max-width: 100%;
         text-overflow: ellipsis;
         white-space: nowrap;

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { DataTableSkeletonProps, DataTableColumn } from '../dataTableTypes';
 import styles from '../styles.less';
 import { SkeletonBar } from '@equinor/fusion-components';
@@ -22,15 +22,15 @@ function DataTableSkeleton<T>({ columns, rowCount }: DataTableSkeletonProps<T>) 
     return (
         <>
             {rows.map((row, rowIndex) => (
-                <React.Fragment key={rowIndex.toString()}>
+                <Fragment key={rowIndex.toString()}>
                     <div />
                     <div />
-                    {columns.map(column => (
+                    {columns.map((column) => (
                         <div key={column.key} className={styles.cell}>
                             {renderSkeleton(column, rowIndex)}
                         </div>
                     ))}
-                </React.Fragment>
+                </Fragment>
             ))}
         </>
     );

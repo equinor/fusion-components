@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import { useMemo, useEffect, useContext } from 'react';
 
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
@@ -30,7 +30,7 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
 
     const Component = component;
 
-    const additionalCardHeight = React.useMemo(
+    const additionalCardHeight = useMemo(
         () =>
             node.numberOfAssignees
                 ? Math.ceil(node.numberOfAssignees / 3) *
@@ -51,7 +51,12 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
                 height={cardHeight + additionalCardHeight}
                 className={styles.card}
             />
-            <foreignObject x={node.x} y={node.y} width={cardWidth} height={cardHeight + additionalCardHeight}>
+            <foreignObject
+                x={node.x}
+                y={node.y}
+                width={cardWidth}
+                height={cardHeight + additionalCardHeight}
+            >
                 {Component && <Component item={node.data} />}
             </foreignObject>
         </g>

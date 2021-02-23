@@ -1,20 +1,20 @@
 import { useNotificationCenter } from '@equinor/fusion';
 import { Button, TextInput } from '@equinor/fusion-components';
-import * as React from 'react';
-import * as styles from './../styles.less';
+import { useState, useCallback, FC } from 'react';
+import styles from './../styles.less';
 
 type NewBookmarkProps = {
     contextName: string;
     onCancel: () => void;
     onSave: (name: string) => Promise<void>;
 };
-const NewBookmark: React.FC<NewBookmarkProps> = ({ contextName, onCancel, onSave }) => {
-    const [name, setName] = React.useState<string>('');
+const NewBookmark: FC<NewBookmarkProps> = ({ contextName, onCancel, onSave }) => {
+    const [name, setName] = useState<string>('');
     const createNotification = useNotificationCenter();
 
-    const updateName = React.useCallback((newName: string) => setName(newName), []);
+    const updateName = useCallback((newName: string) => setName(newName), []);
 
-    const saveBookmark = React.useCallback(async () => {
+    const saveBookmark = useCallback(async () => {
         try {
             await onSave(name);
             createNotification({
@@ -30,7 +30,7 @@ const NewBookmark: React.FC<NewBookmarkProps> = ({ contextName, onCancel, onSave
         }
     }, [name]);
 
-    const clearAndCancel = React.useCallback(() => {
+    const clearAndCancel = useCallback(() => {
         setName('');
         onCancel();
     }, [onCancel]);

@@ -51,7 +51,8 @@
             }
         }
 
-        .header, .header.isSelected {
+        .header,
+        .header.isSelected {
             background: var(--color-black-alt5);
             position: sticky;
             top: 0;
@@ -70,7 +71,7 @@
             }
         }
 
-        .expandedContent {            
+        .expandedContent {
             grid-column-start: 1;
             grid-column-end: -1;
             padding: calc(var(--grid-unit) * var(--expanded-content-padding-multiplier));
@@ -79,12 +80,11 @@
             td {
                 height: calc(var(--grid-unit) * var(--expanded-content-row-height-multiplier));
             }
-        
+
             .expandedLabel {
-             white-space: nowrap;
+                white-space: nowrap;
             }
         }
-
     }
 
     .pagination {
@@ -170,4 +170,3 @@
         }
     }
 }
-

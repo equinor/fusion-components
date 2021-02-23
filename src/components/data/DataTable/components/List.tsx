@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { DataTableListProps } from '../dataTableTypes';
 import styles from '../styles.less';
 import { IconButton, SkeletonBar, PaginationArrow } from '@equinor/fusion-components';
@@ -19,15 +19,18 @@ function List<T>({
 }: DataTableListProps<T>) {
     const listRef = useRef<HTMLUListElement | null>(null);
 
-    const handlePaginationChange = useCallback((nextPage: Page, perPage: number) => {
-        if(onPaginationChange) {
-            onPaginationChange(nextPage, perPage);
-        }
+    const handlePaginationChange = useCallback(
+        (nextPage: Page, perPage: number) => {
+            if (onPaginationChange) {
+                onPaginationChange(nextPage, perPage);
+            }
 
-        if(listRef.current) {
-            listRef.current.scrollTop = 0;
-        }
-    }, [onPaginationChange, listRef.current]);
+            if (listRef.current) {
+                listRef.current.scrollTop = 0;
+            }
+        },
+        [onPaginationChange, listRef.current]
+    );
 
     const renderPagination = () => {
         if (!pagination || !onPaginationChange) {
@@ -70,7 +73,7 @@ function List<T>({
         return (
             <>
                 <ul className={styles.list}>
-                    {rows.map(i => {
+                    {rows.map((i) => {
                         const SkeletonComponent = listSkeleton || SkeletonBar;
                         return (
                             <li key={i.toString()}>

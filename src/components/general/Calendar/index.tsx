@@ -1,4 +1,5 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react';
+import { useMemo, useState, useCallback, useEffect, FC } from 'react';
+
 import classNames from 'classnames';
 import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/fusion';
 
@@ -14,7 +15,7 @@ type CalendarProps = {
     onChange?: (date: Date) => void;
 };
 
-const Calendar: React.FC<CalendarProps> = ({
+const Calendar: FC<CalendarProps> = ({
     initialYear,
     initialMonth,
     selectedDate,
@@ -24,8 +25,8 @@ const Calendar: React.FC<CalendarProps> = ({
     const [year, setYear] = useState(initialYear);
     const [month, setMonth] = useState(initialMonth);
     const calendar = useMemo(() => createCalendar(year, month), [year, month]);
-    const isCurrentMonth = useMemo(() => calendar.dates.some(d => d.isToday), [calendar]);
-    const weekDays = useMemo(() => calendar.dates.slice(0, 7).map(d => d.weekDay), [calendar]);
+    const isCurrentMonth = useMemo(() => calendar.dates.some((d) => d.isToday), [calendar]);
+    const weekDays = useMemo(() => calendar.dates.slice(0, 7).map((d) => d.weekDay), [calendar]);
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
@@ -40,18 +41,18 @@ const Calendar: React.FC<CalendarProps> = ({
     const prevMonth = useCallback(() => {
         if (month === 0) {
             setMonth(11);
-            setYear(year => year - 1);
+            setYear((year) => year - 1);
         } else {
-            setMonth(month => (month - 1) as Month);
+            setMonth((month) => (month - 1) as Month);
         }
     }, [month]);
 
     const nextMonth = useCallback(() => {
         if (month === 11) {
             setMonth(0);
-            setYear(year => year + 1);
+            setYear((year) => year + 1);
         } else {
-            setMonth(month => (month + 1) as Month);
+            setMonth((month) => (month + 1) as Month);
         }
     }, [month]);
 
@@ -87,10 +88,10 @@ const Calendar: React.FC<CalendarProps> = ({
                 </IconButton>
             </header>
             <div className={styles.grid}>
-                {weekDays.map(weekDay => (
+                {weekDays.map((weekDay) => (
                     <header key={weekDay}>{weekDay}</header>
                 ))}
-                {calendar.dates.map(d => (
+                {calendar.dates.map((d) => (
                     <Day
                         key={d.value + d.year + d.month}
                         date={d}

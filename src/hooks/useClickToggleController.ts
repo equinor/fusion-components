@@ -1,15 +1,23 @@
-import { MutableRefObject, useState, useRef, useCallback, useEffect, SetStateAction } from 'react';
+import {
+    MutableRefObject,
+    useState,
+    useRef,
+    useCallback,
+    useEffect,
+    SetStateAction,
+    Dispatch,
+} from 'react';
 import { useClickOutsideOverlayPortal, useEventListener } from '@equinor/fusion-components';
 
 export default <T extends HTMLElement>(): [
     boolean,
     MutableRefObject<T | null>,
-    React.Dispatch<SetStateAction<boolean>>
+    Dispatch<SetStateAction<boolean>>
 ] => {
     const [isToggled, setIsToggled] = useState(false);
     const [internalRef, setInternalRef] = useState<HTMLElement | null>(null);
 
-    const toggle = () => setIsToggled(prevIsToggled => !prevIsToggled);
+    const toggle = () => setIsToggled((prevIsToggled) => !prevIsToggled);
     const close = useCallback(() => isToggled && setIsToggled(false), [isToggled]);
 
     useClickOutsideOverlayPortal(close);

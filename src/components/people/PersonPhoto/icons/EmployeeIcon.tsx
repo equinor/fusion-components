@@ -1,9 +1,9 @@
-import React from 'react';
+import { Fragment } from 'react';
 import { IconProps, useIcon } from '@equinor/fusion-components';
 
 const EmployeeIcon = (props: IconProps) => {
     const iconFactory = useIcon(
-        <React.Fragment>
+        <Fragment>
             <path
                 fillRule="evenodd"
                 clipRule="evenodd"
@@ -39,7 +39,7 @@ const EmployeeIcon = (props: IconProps) => {
                 stroke="white"
                 strokeWidth="0.2"
             />
-        </React.Fragment>
+        </Fragment>
     );
 
     return iconFactory(props);

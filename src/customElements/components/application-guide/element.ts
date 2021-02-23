@@ -1,14 +1,17 @@
-import { LitElement, html, property, eventOptions, PropertyValues, query } from "../base";
+import { LitElement, html, property, eventOptions, PropertyValues, query } from '../base';
 
 import { OverlayEvent, OverlayEventType, OverLayScope } from '../overlay';
 import { QuickFactEvent, QuickFactEventType } from '../quick-fact';
-import { ApplicationGuideEvent, ApplicationGuideEventType, ApplicationGuideEventDetail } from './events';
+import {
+    ApplicationGuideEvent,
+    ApplicationGuideEventType,
+    ApplicationGuideEventDetail,
+} from './events';
 
 import { iconOpen } from './open.svg';
 import { iconClose } from './close.svg';
 
 import styles from './element.css';
-
 
 export interface ApplicationGuideElementProps {
     scope?: OverLayScope;
@@ -21,10 +24,10 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     scope?: OverLayScope;
 
     @property({ type: Boolean, reflect: true })
-    active: boolean = false;
+    active = false;
 
     @property({ type: Object })
-    selected?: { scope: string, anchor: string };
+    selected?: { scope: string; anchor: string };
 
     toggle() {
         this.active = !this.active;
@@ -40,18 +43,30 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         const { scope, active } = this;
         const fabIcon = active ? iconClose : iconOpen;
         return html`
-            <fusion-overlay 
+            <fusion-overlay
                 ?active=${active}
                 .scope="${scope}"
                 @overlay-selection=${this._handleSelectionChanged}
-                @dragover=${e => e.preventDefault()}
+                @dragover=${(e) => e.preventDefault()}
             >
-                <div id="popover" slot="content" draggable="true" @dragend=${this._handleDragEnd}  @dragstart=${this._handleDragStart}>
+                <div
+                    id="popover"
+                    slot="content"
+                    draggable="true"
+                    @dragend=${this._handleDragEnd}
+                    @dragstart=${this._handleDragStart}
+                >
                     ${this.renderQuickFact()}
                 </div>
                 <slot></slot>
-                <slot name="fab" @click=${(this.toggle)} >
-                    <fusion-button id="fab" round raised size="large" title="${active?'close':'open'} quick facts">
+                <slot name="fab" @click=${this.toggle}>
+                    <fusion-button
+                        id="fab"
+                        round
+                        raised
+                        size="large"
+                        title="${active ? 'close' : 'open'} quick facts"
+                    >
                         ${fabIcon}
                     </fusion-button>
                 </slot>
@@ -72,23 +87,29 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
                 .anchor="${anchor}"
                 @quick-fact-show=${this._handleQuickFactShow}
             >
-                <span slot="empty">Click on a highlighted area to view a Quickfact or to add a new</span>
+                <span slot="empty"
+                    >Click on a highlighted area to view a Quickfact or to add a new</span
+                >
             </fusion-quick-fact>
         `;
     }
 
     protected updated(props: PropertyValues) {
         super.update(props);
-        props.has('active') && this._dispatchEvent(this.active
-            ? ApplicationGuideEventType.activated
-            : ApplicationGuideEventType.deactivated
-        );
+        props.has('active') &&
+            this._dispatchEvent(
+                this.active
+                    ? ApplicationGuideEventType.activated
+                    : ApplicationGuideEventType.deactivated
+            );
         props.has('scope') && this._dispatchEvent(ApplicationGuideEventType.scope);
         props.has('selected') && this._dispatchEvent(ApplicationGuideEventType.selection);
     }
 
-
-    protected _dispatchEvent(type: ApplicationGuideEventType, init?: CustomEventInit<ApplicationGuideEventDetail>) {
+    protected _dispatchEvent(
+        type: ApplicationGuideEventType,
+        init?: CustomEventInit<ApplicationGuideEventDetail>
+    ) {
         const { scope, active, selected } = this;
         const detail: ApplicationGuideEventDetail = {
             scope,
@@ -110,7 +131,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         const { anchor, scope, info } = e.detail;
         const detail: ApplicationGuideEventDetail = {
             selected: { anchor, scope },
-            info
+            info,
         };
         this._dispatchEvent(ApplicationGuideEventType.show, { detail });
     }
@@ -133,8 +154,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         el.style.top = this._dragStart.eY + (e.y - this._dragStart.dY) + 'px';
         el.style.left = this._dragStart.eX + (e.x - this._dragStart.dX) + 'px';
         el.style.opacity = null;
-
     }
 }
 
-export default ApplicationGuideElement
+export default ApplicationGuideElement;

@@ -1,11 +1,11 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { IBasicFilter } from '../models/ReportLevelFilters';
 import PowerBIReport from '../index';
 import Button from '../../../general/Button';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
+import { useState, useMemo, FC } from 'react';
 
-const ReportStandard: React.FC = () => {
+const ReportStandard: FC = () => {
     return (
         <div style={{ width: '100%', height: '100vh' }}>
             <PowerBIReport reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'} />
@@ -13,25 +13,25 @@ const ReportStandard: React.FC = () => {
     );
 };
 
-const ReportWithFilter: React.FC = () => {
-    const [filterStrings, setFilterStrings] = React.useState<string[]>(null);
+const ReportWithFilter: FC = () => {
+    const [filterStrings, setFilterStrings] = useState<string[]>(null);
 
-    const filter: IBasicFilter = React.useMemo(
-        () =>
-            filterStrings
-                ? {
-                      $schema: 'http://powerbi.com/product/schema#basic',
-                      target: {
-                          table: 'Dim_Commonlibrary_Projects',
-                          column: 'Project',
-                      },
-                      filterType: 1,
-                      operator: 'In',
-                      values: filterStrings,
-                  }
-                : null,
-        [filterStrings]
-    );
+    const createFilter = (filters: string[]): IBasicFilter => {
+        return {
+            $schema: 'http://powerbi.com/product/schema#basic',
+            target: {
+                table: 'Dim_Commonlibrary_Projects',
+                column: 'Project',
+            },
+            filterType: 1,
+            operator: 'In',
+            values: filters,
+        };
+    };
+
+    const filter = useMemo(() => {
+        return filterStrings ? createFilter(filterStrings) : null;
+    }, [filterStrings]);
 
     return (
         <>
@@ -77,7 +77,7 @@ const ReportWithFilter: React.FC = () => {
             <div style={{ width: '100%', height: '100%' }}>
                 <PowerBIReport
                     reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'}
-                    filters={[filter]}
+                    filters={filter ? [filter] : null}
                 />
             </div>
         </>

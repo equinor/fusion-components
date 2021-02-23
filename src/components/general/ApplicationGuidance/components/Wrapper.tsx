@@ -1,4 +1,12 @@
-import React from 'react';
+import {
+    useRef,
+    useEffect,
+    FC,
+    PropsWithChildren,
+    DetailedHTMLProps,
+    HTMLAttributes,
+    DetailedHTMLFactory,
+} from 'react';
 import {
     ApplicationGuideElement,
     ApplicationGuideElementProps,
@@ -7,12 +15,9 @@ import {
     ApplicationGuideEventType,
 } from '../../../../customElements/components/application-guide';
 
-export type ApplicationGuidanceWrapperProps = React.PropsWithChildren<
+export type ApplicationGuidanceWrapperProps = PropsWithChildren<
     ApplicationGuideElementProps &
-        React.DetailedHTMLProps<
-            React.HTMLAttributes<ApplicationGuideElement>,
-            ApplicationGuideElement
-        > & {
+        DetailedHTMLProps<HTMLAttributes<ApplicationGuideElement>, ApplicationGuideElement> & {
             onOpen?: (e: ApplicationGuideEvent<ApplicationGuideEventType.activated>) => void;
             onClose?: (e: ApplicationGuideEvent<ApplicationGuideEventType.deactivated>) => void;
             onShow?: (e: ApplicationGuideEvent<ApplicationGuideEventType.show>) => void;
@@ -20,15 +25,16 @@ export type ApplicationGuidanceWrapperProps = React.PropsWithChildren<
 >;
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface ReactHTML {
-            [ApplicationGuideElementTag]: React.DetailedHTMLFactory<
+            [ApplicationGuideElementTag]: DetailedHTMLFactory<
                 ApplicationGuidanceWrapperProps,
                 ApplicationGuideElement
             >;
         }
         interface IntrinsicElements {
-            [ApplicationGuideElementTag]: React.DetailedHTMLProps<
+            [ApplicationGuideElementTag]: DetailedHTMLProps<
                 ApplicationGuidanceWrapperProps,
                 ApplicationGuideElement
             >;
@@ -36,12 +42,12 @@ declare global {
     }
 }
 
-export const ApplicationGuidanceWrapper: React.FC<ApplicationGuidanceWrapperProps> = (
+export const ApplicationGuidanceWrapper: FC<ApplicationGuidanceWrapperProps> = (
     args: ApplicationGuidanceWrapperProps
 ) => {
     const { scope, onOpen, onClose, onShow, ...props } = args;
-    const ref = React.useRef<ApplicationGuideElement>();
-    React.useEffect(() => {
+    const ref = useRef<ApplicationGuideElement>();
+    useEffect(() => {
         if (!ref.current) return;
         const el = ref.current;
         el.scope = scope;
@@ -55,7 +61,7 @@ export const ApplicationGuidanceWrapper: React.FC<ApplicationGuidanceWrapperProp
         };
     }, [ref]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!ref.current) return;
         ref.current.scope = scope;
     }, [ref, scope]);

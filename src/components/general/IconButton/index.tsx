@@ -1,4 +1,4 @@
-import React, { forwardRef, PropsWithChildren, MutableRefObject, useRef, MouseEvent } from 'react';
+import { forwardRef, PropsWithChildren, MutableRefObject, useRef, MouseEvent } from 'react';
 import classNames from 'classnames';
 
 import styles from './styles.less';
@@ -33,7 +33,7 @@ const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconBu
                 ref={buttonRef}
                 className={buttonClassNames}
                 disabled={disabled}
-                onMouseDown={e => e.preventDefault()}
+                onMouseDown={(e) => e.preventDefault()}
                 {...props}
             >
                 <span className={styles.iconContainer}>{children}</span>

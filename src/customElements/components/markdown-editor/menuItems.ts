@@ -20,7 +20,7 @@ export type MdMenuItemType =
     | 'h3';
 
 const icon = (text: string, name: string) => {
-    let button = document.createElement('button');
+    const button = document.createElement('button');
     button.className = 'button small borderless ' + name;
     button.title = name;
     button.innerHTML = text;

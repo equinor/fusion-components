@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useMemo, useState, useEffect } from 'react';
+import { ReactNode, useCallback, useMemo, useState, useEffect } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
@@ -122,7 +122,7 @@ export default ({
                     <div
                         style={{ ...resizedSize }}
                         className={modalSideSheetClassNames}
-                        onClick={e => e.stopPropagation()}
+                        onClick={(e) => e.stopPropagation()}
                         onTransitionEnd={() => {
                             !isShowing && onClose && onClose();
                         }}

@@ -1,7 +1,7 @@
 import { css } from '../base';
 
 export const style = css`
-    :host{
+    :host {
         height: 100%;
         width: 100%;
     }

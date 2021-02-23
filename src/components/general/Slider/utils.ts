@@ -13,7 +13,7 @@ export const createPositionCalculator = (start: number, end: number) => {
 export const createValueCalculator = (start: number, end: number) => {
     const onePercent = end - start;
 
-    return (percentage: number) => Math.max((onePercent * (percentage / 100)) + start, 0);
+    return (percentage: number) => Math.max(onePercent * (percentage / 100) + start, 0);
 };
 
 export const createMarkerFinder = (
@@ -27,7 +27,7 @@ export const createMarkerFinder = (
         const percentage = Math.min(Math.max((position / trackWidth) * 100, 0), 100);
         const newValue = calculateValue(percentage);
         return (
-            markers.find(m => m.value === newValue) || {
+            markers.find((m) => m.value === newValue) || {
                 value: newValue,
                 label: newValue.toString(),
             }

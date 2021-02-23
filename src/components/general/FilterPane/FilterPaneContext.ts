@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext, useContext } from 'react';
 import { FilterTerm } from './applyFilters';
 
 export interface IFilterPaneContext {
@@ -8,7 +8,7 @@ export interface IFilterPaneContext {
     tooltipPlacement: 'right' | 'left';
 }
 
-const FilterPaneContext = React.createContext<IFilterPaneContext>({
+const FilterPaneContext = createContext<IFilterPaneContext>({
     terms: [],
     paneIsCollapsed: false,
     screenPlacement: 'right',
@@ -16,7 +16,7 @@ const FilterPaneContext = React.createContext<IFilterPaneContext>({
 });
 
 export const useFilterPaneContext = () => {
-    return React.useContext<IFilterPaneContext>(FilterPaneContext);
+    return useContext<IFilterPaneContext>(FilterPaneContext);
 };
 
 export default FilterPaneContext;

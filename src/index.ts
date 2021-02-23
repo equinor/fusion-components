@@ -25,6 +25,17 @@ export {
     IRelativeDateFuilter,
     ITupleFilter,
 } from './components/data/PowerBIReport';
+export {
+    default as HangingGarden,
+    HangingGardenProps,
+    HangingGardenColumn,
+    ItemRenderContext,
+    RenderItem,
+    useHangingGardenData,
+    useHangingGardenErrorMessage,
+    useHangingGardenGetData,
+    PIXI,
+} from './components/data/HangingGarden';
 
 // General components
 export { default as Button, ButtonProps } from './components/general/Button';
@@ -125,6 +136,7 @@ export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpo
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
 export { default as useRootContainer } from './hooks/useRootContainer';
+export { default as useFullscreen } from './hooks/useFullscreen';
 export {
     default as useStringMask,
     applyStringMask,
@@ -173,6 +185,12 @@ export {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    RemoveCircleIcon,
+    CircleIcon,
+    CalendarAcceptIcon,
+    CalendarEventIcon,
+    FullscreenIcon,
+    FullscreenExitIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
@@ -188,7 +206,7 @@ export {
     ExitToAppIcon,
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
-export { PlayIcon } from './components/icons/components/av';
+export { PlayIcon, PauseCircleIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
 export {
     FormatBoldIcon,

@@ -5,7 +5,7 @@ export default <T extends EventListenerOrEventListenerObject>(
     eventType: string,
     handler: T,
     dependencies: any[],
-    useCapture: boolean = false
+    useCapture = false
 ) => {
     useEffect(() => {
         if (node == null) {

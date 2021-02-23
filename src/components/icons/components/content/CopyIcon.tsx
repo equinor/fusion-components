@@ -1,5 +1,4 @@
 import { IconProps, useIcon } from '@equinor/fusion-components';
-import * as React from 'react';
 
 const CopyIcon = (props: IconProps) => {
     const iconFactory = useIcon(

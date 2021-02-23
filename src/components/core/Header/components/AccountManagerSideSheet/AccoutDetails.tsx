@@ -1,7 +1,7 @@
-import * as React from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { PersonDetails, UserMenuSectionItem, UserMenuSection } from '@equinor/fusion';
 import { MenuItemType, PersonPhoto, PersonDetail, Menu } from '@equinor/fusion-components';
+import { useCallback, FC } from 'react';
 
 type AccountDetailsProps = {
     personDetails: PersonDetails;
@@ -13,20 +13,16 @@ type MenuItemComponentProps = {
     item: MenuItemType;
 };
 
-const ItemComponent: React.FC<MenuItemComponentProps> = ({ item }) => {
+const ItemComponent: FC<MenuItemComponentProps> = ({ item }) => {
     return <span className={styles.itemComponent}>{item.title}</span>;
 };
 
-const AsideComponent: React.FC<MenuItemComponentProps> = ({ item }) => {
+const AsideComponent: FC<MenuItemComponentProps> = ({ item }) => {
     return <div className={styles.itemComponent}>{item.aside}</div>;
 };
 
-const AccountDetails: React.FC<AccountDetailsProps> = ({
-    onMenuClick,
-    personDetails,
-    sections,
-}) => {
-    const onMenuItemClick = React.useCallback(
+const AccountDetails: FC<AccountDetailsProps> = ({ onMenuClick, personDetails, sections }) => {
+    const onMenuItemClick = useCallback(
         (item: MenuItemType) => {
             const clickedItem = item as UserMenuSectionItem;
             clickedItem.onClick && clickedItem.onClick(clickedItem, personDetails);

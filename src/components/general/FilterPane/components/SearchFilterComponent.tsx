@@ -1,4 +1,3 @@
-import React from 'react';
 import { TextInput, SearchIcon, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
 import { FilterTerm, Filter } from '../applyFilters';
 
@@ -6,10 +5,15 @@ type SearchFilterProps<T> = {
     term: FilterTerm;
     onChange: (value: string) => void;
     quickFactScope?: string;
-    filter: Filter<T>,
+    filter: Filter<T>;
 };
 
-function SearchFilterComponent<T>({ filter, term, onChange, quickFactScope }: SearchFilterProps<T>) {
+function SearchFilterComponent<T>({
+    filter,
+    term,
+    onChange,
+    quickFactScope,
+}: SearchFilterProps<T>) {
     return (
         <ApplicationGuidanceAnchor anchor={filter.key} scope={quickFactScope}>
             <TextInput
@@ -19,6 +23,6 @@ function SearchFilterComponent<T>({ filter, term, onChange, quickFactScope }: Se
             />
         </ApplicationGuidanceAnchor>
     );
-};
+}
 
 export default SearchFilterComponent;

@@ -8,7 +8,7 @@
     overflow: visible;
 
     .iconContainer {
-        border:none;
+        border: none;
         border-radius: 0;
         border-style: solid;
         display: flex;
@@ -64,39 +64,36 @@
             color: var(--color-primary-hover);
         }
         &:not(:active) {
-            .iconContainer{
+            .iconContainer {
                 background-color: var(--color-primary-hover);
-
             }
-            &:not(.isActive){
+            &:not(.isActive) {
                 .iconContainer {
                     background-color: var(--color-primary-hover-alt1);
                 }
             }
         }
-        
     }
 
-    &:focus { 
+    &:focus {
         .iconContainer {
             border: 1px;
-            border-radius: 50%; 
+            border-radius: 50%;
             border-style: dashed;
             border-color: var(--color-primary);
         }
 
-        &.isToggler{
-            .iconContainer{
+        &.isToggler {
+            .iconContainer {
                 border: none;
                 background-color: var(--color-primary-hover-alt1);
             }
 
-            &.isActive{ 
-                .iconContainer{
+            &.isActive {
+                .iconContainer {
                     background-color: var(--color-primary);
                 }
             }
-
         }
     }
 
@@ -111,9 +108,9 @@
             .iconContainer {
                 width: calc(100% - (var(--grid-unit) * 1px));
                 height: calc(100% - (var(--grid-unit) * 1px));
-                margin: calc(var(--grid-unit) * .5px);
+                margin: calc(var(--grid-unit) * 0.5px);
                 border-radius: 4px;
-            }   
+            }
         }
     }
     &:active {
@@ -122,7 +119,7 @@
             border-color: var(--color-primary-alt4);
             color: var(--color-primary) !important;
         }
-        
+
         &.isToggler {
             .iconContainer {
                 margin: auto;

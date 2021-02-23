@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
     PersonPhoto,
     PhotoSize,
@@ -54,7 +54,7 @@ export default ({
     }, [error, personDetails]);
 
     const displayType = useComponentDisplayType();
-    const shouldDisplayEmail = React.useMemo(
+    const shouldDisplayEmail = useMemo(
         () => !inline || (inline && displayType === ComponentDisplayType.Comfortable),
         [displayType, inline]
     );

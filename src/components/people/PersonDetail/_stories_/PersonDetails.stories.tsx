@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import { PersonDetails } from '@equinor/fusion';
@@ -10,7 +10,7 @@ stories.addDecorator(withFusionStory('PersonDetails'));
 export const getDefaultPerson = (): PersonDetails => ({
     azureUniqueId: 'string',
     name: 'No name',
-    mail: 'eslsa@equinor.com',
+    mail: 'inkle@equinor.com',
     jobTitle: 'www',
     department: 'string',
     mobilePhone: 'string',

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { FC, useState, useCallback, useEffect, useMemo } from 'react';
 import {
     NotificationRequest,
     NotificationResponse,
@@ -16,13 +16,13 @@ type NotificationBannerProps = {
     registerPresenter: RegisterNotificationPresenter;
 };
 
-const NotificationBanner: React.FC<NotificationBannerProps> = ({ registerPresenter }) => {
+const NotificationBanner: FC<NotificationBannerProps> = ({ registerPresenter }) => {
     const [banners, setBanners] = useState<BannerNotification[]>([]);
 
     const resolveBanner = useCallback(
         (banner: BannerNotification, response: NotificationResponse) => {
             banner.resolve(response);
-            setBanners(banners => banners.filter(b => b !== banner));
+            setBanners((banners) => banners.filter((b) => b !== banner));
         },
         []
     );
@@ -49,14 +49,14 @@ const NotificationBanner: React.FC<NotificationBannerProps> = ({ registerPresent
         abortSignal: AbortSignal
     ) => {
         const banner = { request, resolve, abortSignal };
-        setBanners(banners => [banner, ...banners]);
+        setBanners((banners) => [banner, ...banners]);
     };
 
     useEffect(() => {
         return registerPresenter('medium', presentBanner);
     }, []);
 
-    const currentBanner = React.useMemo(() => (banners.length ? banners[0] : null), [banners]);
+    const currentBanner = useMemo(() => (banners.length ? banners[0] : null), [banners]);
 
     if (!currentBanner) {
         return null;

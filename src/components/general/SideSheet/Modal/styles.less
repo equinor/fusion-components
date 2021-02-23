@@ -3,7 +3,8 @@
 
 .modalSideSheet {
     position: fixed;
-    top: 0; bottom: 0;
+    top: 0;
+    bottom: 0;
     right: 0;
     width: var(--modal-size);
     transform: translateX(640px);
@@ -12,15 +13,14 @@
     display: flex;
     flex-direction: column;
     pointer-events: all;
-    transition: transform .2s ease;
+    transition: transform 0.2s ease;
     max-width: calc(100vw - (var(--grid-unit) * 4px));
-
 
     @media (max-width: @mobile-max-width) {
         width: 100% !important;
         max-width: 100%;
         left: 0;
-        transition: transform .1s ease-out;
+        transition: transform 0.1s ease-out;
 
         .resizeHandle {
             display: none;
@@ -56,7 +56,7 @@
     }
 
     .header {
-        padding: .grid-unit(1px)[] .grid-unit(3px)[];
+        padding: .grid-unit(1px) [] .grid-unit(3px) [];
         background: var(--color-white);
         display: flex;
 
@@ -69,23 +69,23 @@
             width: 100%;
             flex-wrap: wrap;
 
-            .headerTitle{
+            .headerTitle {
                 font-size: var(--header-font-size);
                 line-height: var(--header-line-height);
-                padding-left: .grid-unit(1px)[];
+                padding-left: .grid-unit(1px) [];
             }
 
-            .headerIcons{
+            .headerIcons {
                 margin-left: auto;
                 display: flex;
             }
         }
     }
-    
+
     &.show {
         transform: translateX(0);
     }
-    
+
     &.comfortable {
         --header-font-size: calc(var(--grid-unit) * 3px);
         --header-line-height: calc(var(--grid-unit) * 6px);
@@ -113,7 +113,7 @@
             left: 50%;
             transform: translateX(-50%);
         }
-    
+
         .indicator {
             position: absolute;
             top: 50%;
@@ -127,13 +127,13 @@
             align-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity .2s;
+            transition: opacity 0.2s;
             z-index: 2;
         }
-    
+
         &:hover {
             .bar {
-                background: rgba(0, 0, 0, .1);
+                background: rgba(0, 0, 0, 0.1);
             }
 
             .indicator {
@@ -148,13 +148,12 @@
 
         .resizeHandle {
             .bar {
-                background: rgba(0, 0, 0, .1);
+                background: rgba(0, 0, 0, 0.1);
             }
-            
+
             .indicator {
                 opacity: 1;
             }
         }
     }
 }
-

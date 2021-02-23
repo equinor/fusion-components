@@ -17,20 +17,18 @@ export const style = css`
         opacity: 0.85;
         transition: opacity 250ms ease;
         will-change: opacity;
-        padding: .25rem;
+        padding: 0.25rem;
         height: 1.5rem;
         max-width: 1.5rem;
     }
 
     #fab:hover {
-        box-shadow: 
-            1px 1px 10px rgba(0, 0, 0, 0.2), 
-            4px 4px 5px rgba(0, 0, 0, 0.12),
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2), 4px 4px 5px rgba(0, 0, 0, 0.12),
             2px 2px 4px rgba(0, 0, 0, 0.14);
     }
 
     #fab:hover > svg {
-        opacity: .9;
+        opacity: 0.9;
     }
 
     #popover {
@@ -45,9 +43,7 @@ export const style = css`
         opacity: 0;
         bottom: -100%;
         color: var(--color-primary);
-        box-shadow: 
-            0px 1px 10px rgba(0, 0, 0, 0.2), 
-            0px 4px 5px rgba(0, 0, 0, 0.12),
+        box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12),
             0px 2px 4px rgba(0, 0, 0, 0.14);
     }
     :host([active]) #popover {

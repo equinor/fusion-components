@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import styles from './styles.less';
 import { NavigationComponentProps } from '..';
 import classNames from 'classnames';

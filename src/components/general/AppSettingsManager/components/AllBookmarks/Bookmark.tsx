@@ -1,8 +1,8 @@
 import { IconButton, SaveIcon, CloseIcon, TextInput } from '@equinor/fusion-components';
-import * as React from 'react';
+import { useState, useCallback, FC } from 'react';
 import { Bookmark } from '../../useBookmarks';
 import BookmarkOptions from './BookmarkOptions';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 type BookmarkProps<T> = {
     bookmark: Bookmark<T>;
@@ -18,16 +18,16 @@ type EditBookmarkProps = {
     onSave: (newName: string) => void;
 };
 
-const EditBookmark: React.FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
-    const [bookmarkName, setBookmarkName] = React.useState<string>(name);
-    const updateBookmarkName = React.useCallback((newName: string) => setBookmarkName(newName), []);
+const EditBookmark: FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
+    const [bookmarkName, setBookmarkName] = useState<string>(name);
+    const updateBookmarkName = useCallback((newName: string) => setBookmarkName(newName), []);
 
-    const handleExit = React.useCallback(() => {
+    const handleExit = useCallback(() => {
         setBookmarkName(name);
         onExit();
     }, [onExit, name]);
 
-    const handleSave = React.useCallback(() => onSave(bookmarkName), [bookmarkName]);
+    const handleSave = useCallback(() => onSave(bookmarkName), [bookmarkName]);
 
     return (
         <>
@@ -44,13 +44,13 @@ const EditBookmark: React.FC<EditBookmarkProps> = ({ name, onExit, onSave }) => 
     );
 };
 
-function Bookmark<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: BookmarkProps<T>) {
-    const [isEditing, setIsEditing] = React.useState<boolean>(false);
+function Bookmarks<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: BookmarkProps<T>) {
+    const [isEditing, setIsEditing] = useState<boolean>(false);
 
-    const enableEditing = React.useCallback(() => setIsEditing(true), []);
-    const disableEditing = React.useCallback(() => setIsEditing(false), []);
+    const enableEditing = useCallback(() => setIsEditing(true), []);
+    const disableEditing = useCallback(() => setIsEditing(false), []);
 
-    const saveBookmark = React.useCallback(
+    const saveBookmark = useCallback(
         (newName: string) => {
             disableEditing();
             onUpdate({ ...bookmark, bookmarkName: newName });
@@ -58,7 +58,7 @@ function Bookmark<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: 
         [bookmark, disableEditing]
     );
 
-    const deleteBookmark = React.useCallback(() => onDelete(bookmark), [bookmark]);
+    const deleteBookmark = useCallback(() => onDelete(bookmark), [bookmark]);
 
     return (
         <div className={styles.bookmarkContainer}>
@@ -83,4 +83,4 @@ function Bookmark<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: 
         </div>
     );
 }
-export default Bookmark;
+export default Bookmarks;

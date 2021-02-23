@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback, useMemo, FC } from 'react';
 import styles from './styles.less';
 import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
 import {
@@ -10,7 +11,6 @@ import {
 } from '@equinor/fusion-components';
 import { useCurrentUser, useApiClients } from '@equinor/fusion';
 import classNames from 'classnames';
-import React, { FC, useState, useMemo, useEffect, useCallback } from 'react';
 
 type ReportErrorMessageProps = {
     report: Report;

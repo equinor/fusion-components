@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState, FC, MouseEvent } from 'react';
+
 import Marker, { SliderMarker } from './Marker';
 import styles from './styles.less';
 import classNames from 'classnames';
@@ -15,11 +16,11 @@ type SliderProps = {
     onChange: (marker: SliderMarker) => void;
 };
 
-const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
+const Slider: FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
     const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
     const onTrackClick = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
+        (e: MouseEvent<HTMLDivElement>) => {
             if (!disabled) {
                 const marker = markerFinder(e.pageX);
                 onChange(marker);
@@ -29,13 +30,13 @@ const Slider: React.FC<SliderProps> = ({ value, markers, disabled, hideHandle, o
     );
 
     const [mouseIsDown, setMouseIsDown] = useState(false);
-    const onHandleMouseDown = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const onHandleMouseDown = useCallback((e: MouseEvent<HTMLButtonElement>) => {
         setMouseIsDown(true);
     }, []);
 
     const handleMouseMove = useCallback(
         (e: Event) => {
-            const mouseEvent = e as MouseEvent;
+            const mouseEvent = e as unknown as MouseEvent;
             if (mouseIsDown && !disabled) {
                 const marker = markerFinder(mouseEvent.pageX);
                 onChange(marker);

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { contextMounted, contextUpdated, contextUnmounted } from './helpers';
 
-export default name => {
+export default (name) => {
     const Provider = ({ value, children }) => {
         const [isMounted, setIsMounted] = useState(false);
 

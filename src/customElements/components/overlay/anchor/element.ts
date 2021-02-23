@@ -5,8 +5,8 @@ import { AnchorDOMRect, AnchorRect } from './anchor-rect';
 export type OverlayAnchor = {
     anchor: string;
     scope: string;
-    bounds: () => AnchorRect,
-}
+    bounds: () => AnchorRect;
+};
 
 export interface OverlayAnchorElementProps extends OverlayAnchor {
     snug?: boolean;
@@ -61,7 +61,7 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
         super.connectedCallback();
 
         const style = (this.renderRoot as OverlayAnchorElement).style;
-        !style.display && (style.display = "contents");
+        !style.display && (style.display = 'contents');
 
         this._disconnectedCallbacks = [];
 
@@ -72,14 +72,14 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
                     anchor,
                     scope,
                     bounds: bounds.bind(this),
-                    disconnectedCallback: _disconnectedCallbacks.push.bind(this)
+                    disconnectedCallback: _disconnectedCallbacks.push.bind(this),
                 },
                 bubbles: true,
                 composed: true,
                 cancelable: false,
             });
             this.dispatchEvent(event);
-        })
+        });
     }
 
     /**
@@ -87,7 +87,7 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
      */
     disconnectedCallback() {
         super.disconnectedCallback();
-        this._disconnectedCallbacks.forEach(cb => cb());
+        this._disconnectedCallbacks.forEach((cb) => cb());
     }
 }
 

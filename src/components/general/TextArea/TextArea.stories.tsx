@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import TextArea from './index';
@@ -12,13 +12,13 @@ import {
 import { dateTimeMask, parseDateTime } from '@equinor/fusion';
 
 const TextAreaStory = () => {
-    const [value, setValue] = React.useState('');
+    const [value, setValue] = useState('');
     const [maskedValue, isValidMask] = useStringMask(dateTimeMask, value);
-    const [loading, setLoading] = React.useState(false);
-    const [hasError, setHasError] = React.useState(false);
-    const inputRef = React.useRef<HTMLTextAreaElement | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [hasError, setHasError] = useState(false);
+    const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
-    const maskHelperText = React.useMemo(
+    const maskHelperText = useMemo(
         () => (isValidMask ? parseDateTime(maskedValue).toString() : ''),
         [maskedValue, isValidMask]
     );
@@ -31,7 +31,7 @@ const TextAreaStory = () => {
         }, 3000);
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (hasError) {
             setHasError(false);
         }
@@ -47,7 +47,7 @@ const TextAreaStory = () => {
     return (
         <div style={{ display: 'flex', padding: '8px', flexDirection: 'column' }}>
             <TextArea
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
                 placeholder="Input text"
                 label="Label"
@@ -61,15 +61,20 @@ const TextAreaStory = () => {
                 label="Error label"
                 placeholder="Input Text"
                 errorMessage="An error occurred"
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
             />
 
             <br />
-            <TextArea onChange={value => setValue(value)} value={value} disabled label="Disabled" />
+            <TextArea
+                onChange={(value) => setValue(value)}
+                value={value}
+                disabled
+                label="Disabled"
+            />
             <br />
             <TextArea
-                onChange={value => setValue(value)}
+                onChange={(value) => setValue(value)}
                 value={value}
                 error={hasError}
                 errorMessage="Error: At least 8 characters"

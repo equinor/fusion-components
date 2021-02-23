@@ -26,7 +26,7 @@ const getButtonVariantClasses = ({ contained, outlined, frameless }: ButtonClass
 
 const getButtonStyleClasses = ({ primary, danger }: ButtonClassesProps) => ({
     [styles.primary]: primary || !danger, // Default to primary
-    [styles.danger]: danger, 
+    [styles.danger]: danger,
 });
 
 const getButtonSizeClasses = ({ displayType }: ButtonClassesProps) => ({

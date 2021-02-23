@@ -44,8 +44,8 @@ const mac = typeof navigator != 'undefined' ? /Mac/.test(navigator.platform) : f
 // argument, which maps key names (say `"Mod-B"` to either `false`, to
 // remove the binding, or a new key name string.
 export function buildKeymap(schema) {
-    let keys = {},
-        type;
+    const keys = {};
+    let type;
     function bind(key, cmd) {
         keys[key] = cmd;
     }
@@ -74,7 +74,7 @@ export function buildKeymap(schema) {
     if ((type = schema.nodes.ordered_list)) bind('Shift-Ctrl-9', wrapInList(type));
     if ((type = schema.nodes.blockquote)) bind('Ctrl->', wrapIn(type));
     if ((type = schema.nodes.hard_break)) {
-        let br = type,
+        const br = type,
             cmd = chainCommands(exitCode, (state, dispatch) => {
                 dispatch(state.tr.replaceSelectionWith(br.create()).scrollIntoView());
                 return true;
@@ -93,7 +93,7 @@ export function buildKeymap(schema) {
     if ((type = schema.nodes.heading))
         for (let i = 1; i <= 6; i++) bind('Shift-Ctrl-' + i, setBlockType(type, { level: i }));
     if ((type = schema.nodes.horizontal_rule)) {
-        let hr = type;
+        const hr = type;
         bind('Mod-_', (state, dispatch) => {
             dispatch(state.tr.replaceSelectionWith(hr.create()).scrollIntoView());
             return true;

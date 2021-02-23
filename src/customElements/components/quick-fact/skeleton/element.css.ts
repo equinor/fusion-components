@@ -1,4 +1,4 @@
-import { css } from "../../base";
+import { css } from '../../base';
 
 /**
  * @TODO variables
@@ -34,7 +34,7 @@ const style = css`
         from {
             background-position: 0% 0%;
         }
-        to{
+        to {
             background-position: -200% 0%;
         }
     }

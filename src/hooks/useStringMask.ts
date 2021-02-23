@@ -64,8 +64,8 @@ export const applyStringMask = (mask: string, value: string) => {
         if (valueIndex >= value.length) {
             return output;
         }
-        
-        const token = maskTokens.find(t => t.mask === maskChar);
+
+        const token = maskTokens.find((t) => t.mask === maskChar);
         if (!token) {
             return output + maskChar;
         }
@@ -83,7 +83,7 @@ export const unmaskString = (mask: string, value: string) => {
     let valueIndex = 0;
 
     return maskChars.reduce((output, maskChar) => {
-        const token = maskTokens.find(t => t.mask === maskChar);
+        const token = maskTokens.find((t) => t.mask === maskChar);
 
         if (!token && value[valueIndex] === maskChar) {
             valueIndex++;
