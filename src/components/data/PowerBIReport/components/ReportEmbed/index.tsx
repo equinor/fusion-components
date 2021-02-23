@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
 import { useTelemetryLogger, useCurrentApp, Context } from '@equinor/fusion';
@@ -11,16 +10,24 @@ import {
 } from '@equinor/fusion/lib/http/apiClients/models/report/';
 import { AppSettingsManager } from '@equinor/fusion-components';
 
-import * as styles from '../../styles.less';
+import styles from '../../styles.less';
 import { ButtonClickEvent } from '../../models/EventHandlerTypes';
+import React, {
+    Dispatch,
+    SetStateAction,
+    FC,
+    useState,
+    useRef,
+    useCallback,
+    useLayoutEffect,
+    useEffect,
+} from 'react';
 
 type PowerBIProps = {
     reportId: string;
     embedInfo: EmbedInfo;
     accessToken: AccessToken;
-    setError: React.Dispatch<
-        React.SetStateAction<pbi.service.ICustomEvent<pbi.models.IError> | null>
-    >;
+    setError: Dispatch<SetStateAction<pbi.service.ICustomEvent<pbi.models.IError> | null>>;
     currentContext: Context | null;
     filters?: pbi.models.ReportLevelFilters[] | null;
     hasContext?: boolean;
@@ -53,7 +60,7 @@ const powerbi = new pbi.service.Service(
 /**
  * TODO: use native react component from Microsoft
  */
-const ReportEmbed: React.FC<PowerBIProps> = ({
+const ReportEmbed: FC<PowerBIProps> = ({
     reportId,
     embedInfo,
     accessToken,
@@ -62,13 +69,13 @@ const ReportEmbed: React.FC<PowerBIProps> = ({
     filters,
     hasContext,
 }) => {
-    const [isLoading, setIsLoading] = React.useState<boolean>(true);
-    const [timeLoadStart, SetTimeLoadStart] = React.useState<Date>(new Date());
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [timeLoadStart, SetTimeLoadStart] = useState<Date>(new Date());
     const telemetryLogger = useTelemetryLogger();
-    const [reApplyFilter, setReapplyFilter] = React.useState<boolean>(false);
-    const embedRef = React.useRef<HTMLDivElement>(null);
-    const embeddedRef = React.useRef<pbi.Embed | null>(null);
-    const [awaitableBookmark, setAwaitableBookmark] = React.useState<string | null>(null);
+    const [reApplyFilter, setReapplyFilter] = useState<boolean>(false);
+    const embedRef = useRef<HTMLDivElement>(null);
+    const embeddedRef = useRef<pbi.Embed | null>(null);
+    const [awaitableBookmark, setAwaitableBookmark] = useState<string | null>(null);
 
     const applyBookmark = async (bookmark: string, awaitForContextSwitch: boolean) => {
         const currentReport =
@@ -106,7 +113,7 @@ const ReportEmbed: React.FC<PowerBIProps> = ({
         }
     };
 
-    const getConfig = React.useCallback(
+    const getConfig = useCallback(
         (embedInfo: EmbedInfo) => {
             const embedConfig = embedInfo.embedConfig;
             const token = accessToken ? accessToken.token : undefined;
@@ -139,7 +146,7 @@ const ReportEmbed: React.FC<PowerBIProps> = ({
         [accessToken]
     );
 
-    const embed = React.useCallback(
+    const embed = useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
                 const config = getConfig(embedInfo);
@@ -185,7 +192,7 @@ const ReportEmbed: React.FC<PowerBIProps> = ({
     );
 
     /** TODO: add filters for dashboard if needed? */
-    React.useLayoutEffect(() => {
+    useLayoutEffect(() => {
         const embedType = embedInfo?.embedConfig?.embedType;
         if (!embeddedRef.current || !embedType) return;
         switch (embedType) {
@@ -196,18 +203,18 @@ const ReportEmbed: React.FC<PowerBIProps> = ({
         }
     }, [filters, embeddedRef.current, embedInfo, awaitableBookmark]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isLoading) setFilter();
     }, [isLoading]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!embeddedRef.current) return;
 
         setIsLoading(true);
         embeddedRef.current.reload();
     }, [currentContext?.id]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!embeddedRef.current) return;
 
         embeddedRef.current.off('rendered');
@@ -217,13 +224,13 @@ const ReportEmbed: React.FC<PowerBIProps> = ({
         });
     }, [reApplyFilter]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!embedRef?.current || !accessToken) return;
 
         embed(embedRef.current);
     }, [embedRef?.current, accessToken]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!embedRef?.current) return;
 
         const embededReport = powerbi.get(embedRef.current);

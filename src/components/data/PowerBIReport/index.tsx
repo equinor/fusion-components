@@ -1,4 +1,3 @@
-import * as React from 'react';
 import * as pbi from 'powerbi-client';
 import { IError } from 'powerbi-models';
 import { Spinner, ErrorMessage } from '@equinor/fusion-components';
@@ -22,6 +21,7 @@ import {
 
 import ReportErrorMessage from './components/ReportErrorMessage';
 import ReportEmbed from './components/ReportEmbed';
+import React, { FC, useState, useCallback, useEffect } from 'react';
 
 type PowerBIProps = {
     reportId: string;
@@ -51,23 +51,18 @@ let timeout: NodeJS.Timeout;
 /**
  * TODO: use native react component from Microsoft
  */
-const PowerBIReport: React.FC<PowerBIProps> = ({
-    reportId,
-    filters,
-    hasContext,
-    contextAccessCheck,
-}) => {
+const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext, contextAccessCheck }) => {
     const reportApiClient = useApiClients().report;
     const currentContext = useCurrentContext();
 
-    const [isFetching, setIsFetching] = React.useState<boolean>(true);
-    const [powerBIError, setPowerBIError] = React.useState<ICustomEvent<IError> | null>(null);
-    const [fusionError, setFusionError] = React.useState<FusionError | null>(null);
-    const [contextError, setContextError] = React.useState<FusionError | null>(null);
-    const [report, setReport] = React.useState<Report>();
-    const [embedInfo, setEmbedInfo] = React.useState<EmbedInfo>();
-    const [accessToken, setAccessToken] = React.useState<AccessToken>();
-    const [loadingText, setLoadingText] = React.useState<string>('Loading Report');
+    const [isFetching, setIsFetching] = useState<boolean>(true);
+    const [powerBIError, setPowerBIError] = useState<ICustomEvent<IError> | null>(null);
+    const [fusionError, setFusionError] = useState<FusionError | null>(null);
+    const [contextError, setContextError] = useState<FusionError | null>(null);
+    const [report, setReport] = useState<Report>();
+    const [embedInfo, setEmbedInfo] = useState<EmbedInfo>();
+    const [accessToken, setAccessToken] = useState<AccessToken>();
+    const [loadingText, setLoadingText] = useState<string>('Loading Report');
 
     const getReportInfo = async () => {
         try {
@@ -93,7 +88,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({
         }
     };
 
-    const checkContextAccess = React.useCallback(
+    const checkContextAccess = useCallback(
         async (contextExternalId: string, contextType: ContextTypes) => {
             setContextError(null);
 
@@ -109,7 +104,7 @@ const PowerBIReport: React.FC<PowerBIProps> = ({
         [reportApiClient]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (
             !contextAccessCheck ||
             !currentContext?.externalId ||
@@ -120,11 +115,11 @@ const PowerBIReport: React.FC<PowerBIProps> = ({
         checkContextAccess(currentContext?.externalId, currentContext.type.id);
     }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         getReportInfo();
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (accessToken) {
             const now = utcNow();
             const expiration = accessToken.expirationUtc;
