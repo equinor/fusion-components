@@ -19,7 +19,7 @@ type PowerBIProps = {
     reportId: string;
     embedInfo: EmbedInfo;
     accessToken: AccessToken;
-    setError: React.Dispatch<React.SetStateAction<PowerBIReportErrorDetail>>;
+    setError: React.Dispatch<React.SetStateAction<PowerBIReportErrorDetail | null>>;
     currentContext: Context | null;
     filters?: pbi.models.ReportLevelFilters[] | null;
     hasContext?: boolean;
@@ -106,19 +106,17 @@ const ReportEmbed: FC<PowerBIProps> = ({
     };
 
     const getConfig = useCallback(
-        (type: ResourceType) => {
-            if (!embedInfo) return;
-            const embedConfig = embedInfo.embedConfig;
-            const token = accessToken ? accessToken.token : undefined;
+        (embedConfig: EmbedConfig) => {
+            const token = accessToken.token;
             const config: pbi.IEmbedConfiguration = {
-                type: type.toLowerCase(),
-                id: getReportOrDashboardId(embedConfig, type),
+                type: embedConfig.embedType.toLowerCase(),
+                id: getReportOrDashboardId(embedConfig, embedConfig.embedType),
                 embedUrl: embedConfig.embedUrl,
                 tokenType: getTokenType(embedConfig),
                 accessToken: token,
             };
 
-            if (type === 'Report') {
+            if (embedConfig.embedType === 'Report') {
                 const settings = {
                     filterPaneEnabled: false,
                     navContentPaneEnabled: false,
@@ -142,7 +140,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
     const embed = useCallback(
         (node: HTMLDivElement) => {
             if (embedInfo) {
-                const config = getConfig(embedInfo.embedConfig.embedType);
+                const config = getConfig(embedInfo.embedConfig);
                 embeddedRef.current = powerbi.embed(node, config);
                 embeddedRef.current.off('loaded');
                 embeddedRef.current.off('error');
@@ -204,7 +202,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
 
     /** TODO: add filters for dashboard if needed? */
     useLayoutEffect(() => {
-        const embedType = embedInfo?.embedConfig?.embedType;
+        const embedType = embedInfo.embedConfig?.embedType;
         if (!embeddedRef.current || !embedType) return;
         switch (embedType) {
             case 'Report':
@@ -237,7 +235,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
     }, [reApplyFilter]);
 
     useEffect(() => {
-        if (!embedRef?.current || !accessToken) return;
+        if (!embedRef?.current) return;
 
         embed(embedRef.current);
     }, [embedRef?.current, accessToken]);
@@ -246,9 +244,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
         if (embedRef.current !== null) {
             const embededReport = powerbi.get(embedRef.current);
 
-            if (embededReport && accessToken) {
-                embededReport.setAccessToken(accessToken.token);
-            }
+            if (embededReport) embededReport.setAccessToken(accessToken.token);
         }
     }, [embedRef?.current, accessToken]);
 

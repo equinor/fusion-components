@@ -150,6 +150,7 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
     }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
 
     useEffect(() => {
+        setError(null);
         checkContextAccess();
     }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
 
@@ -252,7 +253,7 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
     return (
         <>
             {isFetching && <Spinner title={loadingText} floating centered />}
-            {!isFetching && (
+            {!isFetching && embedInfo && accessToken && (
                 <ReportEmbed
                     reportId={reportId}
                     embedInfo={embedInfo}
