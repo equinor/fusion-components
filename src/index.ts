@@ -79,6 +79,7 @@ export { default as Calendar } from './components/general/Calendar';
 export { default as Chip } from './components/general/Chip';
 export { default as DatePicker } from './components/general/DatePicker';
 export { Slider, RangedSlider, SliderMarker } from './components/general/Slider';
+export { default as RequestWorkflow } from './components/general/RequestWorkflow';
 export {
     default as NavigationDrawer,
     NavigationStructure,
