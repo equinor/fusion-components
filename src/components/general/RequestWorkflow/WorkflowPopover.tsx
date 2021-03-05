@@ -25,7 +25,7 @@ const WorkflowPopover: FC<WorkflowPopoverProps> = ({ step, provisioningStatus })
     );
 
     const hasProvisioned = useMemo(
-        () => step.id === 'provisioning' && provisioningStatus.state === 'Provisioned',
+        () => provisioningStatus && step.id === 'provisioning' && provisioningStatus.state === 'Provisioned',
         [provisioningStatus, step]
     );
 

@@ -10,7 +10,7 @@ export type ProvisioningStatus = {
     errorPayload: string | null;
 };
 
-type Person = {
+export type Person = {
     accountType: PersonAccountType;
     azureUniquePersonId?: string;
     jobTitle?: string;
