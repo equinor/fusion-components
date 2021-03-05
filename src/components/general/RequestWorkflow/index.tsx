@@ -30,7 +30,7 @@ const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provision
                 sortedSteps[findWorkflowIndex(currentStep, 0)] = currentStep;
                 return sortedSteps;
             }, new Array(workflow.steps.length).fill(null)),
-        [workflow]
+        [workflow, findWorkflowIndex]
     );
 
     return (
