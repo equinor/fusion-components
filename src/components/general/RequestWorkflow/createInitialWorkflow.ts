@@ -1,5 +1,3 @@
-import { OrgProject, Position } from '@equinor/fusion';
-import { v1 as uuid } from 'uuid';
 import { Person, ProvisioningStatus, Workflow } from './models';
 
 const person: Person = {
