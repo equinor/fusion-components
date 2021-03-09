@@ -1,6 +1,6 @@
-import { Person, ProvisioningStatus, Workflow } from './models';
+import { WorkflowPerson, WorkflowProvisioningStatus, Workflow } from './models';
 
-const person: Person = {
+const person: WorkflowPerson = {
     accountType: 'Consultant',
     mail: 'PERSON@equinor.com',
 };
@@ -72,12 +72,12 @@ export const createInitialWorkflow = (): Workflow => {
     };
 };
 
-export const createInitialProvisioningStatus = (): ProvisioningStatus => {
+export const createInitialProvisioningStatus = (): WorkflowProvisioningStatus => {
     return {
         state: 'NotProvisioned',
         positionId: null,
         provisioned: null,
         errorMessage: null,
         errorPayload: null,
-    }
-}
+    };
+};
