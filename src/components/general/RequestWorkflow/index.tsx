@@ -1,11 +1,11 @@
 import { useCallback, useMemo, FC } from 'react';
-import { ProvisioningStatus, Workflow, WorkflowStep } from './models';
+import { WorkflowProvisioningStatus, Workflow, WorkflowStep } from './models';
 import styles from './styles.less';
 import RequestWorkflowStep from './WorkflowStep';
 
 type RequestWorkflowProps = {
     workflow: Workflow | null;
-    provisioningStatus: ProvisioningStatus;
+    provisioningStatus: WorkflowProvisioningStatus;
     inline?: boolean;
 };
 

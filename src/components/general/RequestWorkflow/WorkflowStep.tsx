@@ -10,11 +10,11 @@ import {
 import { formatDate, useCurrentPersonDetails } from '@equinor/fusion';
 import classNames from 'classnames';
 import WorkflowPopover from './WorkflowPopover';
-import { ProvisioningStatus, WorkflowStep } from './models';
+import { WorkflowProvisioningStatus, WorkflowStep } from './models';
 
 type RequestWorkflowStepProps = {
     step: WorkflowStep;
-    provisioningStatus: ProvisioningStatus;
+    provisioningStatus: WorkflowProvisioningStatus;
     inline: boolean;
 };
 

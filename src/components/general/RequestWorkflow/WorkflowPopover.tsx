@@ -4,11 +4,11 @@ import { FC, useCallback, useMemo } from 'react';
 import styles from './styles.less';
 import { PersonCard } from '@equinor/fusion-components';
 import FusionIcon from './FusionIcon';
-import { ProvisioningStatus, WorkflowStep } from './models';
+import { WorkflowProvisioningStatus, WorkflowStep } from './models';
 
 type WorkflowPopoverProps = {
     step: WorkflowStep;
-    provisioningStatus: ProvisioningStatus;
+    provisioningStatus: WorkflowProvisioningStatus;
 };
 
 const WorkflowPopover: FC<WorkflowPopoverProps> = ({ step, provisioningStatus }) => {

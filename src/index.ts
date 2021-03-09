@@ -81,6 +81,13 @@ export { default as DatePicker } from './components/general/DatePicker';
 export { Slider, RangedSlider, SliderMarker } from './components/general/Slider';
 export { default as RequestWorkflow } from './components/general/RequestWorkflow';
 export {
+    Workflow,
+    WorkflowStep,
+    WorkflowProvisioningStatus,
+    WorkflowProvisioningState,
+    WorkflowPerson
+} from './components/general/RequestWorkflow/models';
+export {
     default as NavigationDrawer,
     NavigationStructure,
 } from './components/general/NavigationDrawer';

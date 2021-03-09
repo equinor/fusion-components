@@ -1,16 +1,16 @@
 import { PersonAccountType } from "@equinor/fusion";
 
-export type ProvisioningState = 'NotProvisioned' | 'Provisioned' | 'Error' | 'Unknown';
+export type WorkflowProvisioningState = 'NotProvisioned' | 'Provisioned' | 'Error' | 'Unknown';
 
-export type ProvisioningStatus = {
-    state: ProvisioningState;
+export type WorkflowProvisioningStatus = {
+    state: WorkflowProvisioningState;
     positionId: string;
     provisioned: string | null;
     errorMessage: string | null;
     errorPayload: string | null;
 };
 
-export type Person = {
+export type WorkflowPerson = {
     accountType: PersonAccountType;
     azureUniquePersonId?: string;
     jobTitle?: string;
@@ -26,7 +26,7 @@ export type WorkflowStep = {
     description: string;
     started: Date | null; 
     completed: Date | null; 
-    completedBy: Person | null;
+    completedBy: WorkflowPerson | null;
     previousStep: string | null ;
     nextStep: string | null;
     dueDate: Date | null;
