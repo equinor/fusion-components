@@ -83,9 +83,9 @@ export { default as RequestWorkflow } from './components/general/RequestWorkflow
 export {
     Workflow,
     WorkflowStep,
-    ProvisioningStatus,
-    ProvisioningState,
-    Person
+    WorkflowProvisioningStatus,
+    WorkflowProvisioningState,
+    WorkflowPerson
 } from './components/general/RequestWorkflow/models';
 export {
     default as NavigationDrawer,
