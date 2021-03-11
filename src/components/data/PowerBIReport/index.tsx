@@ -109,7 +109,14 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
                 setAccessToken(fetchedAccessToken.data);
             } catch (error) {
                 const title = 'Sorry we could not show the report';
-                throw { error, title, message: 'Could not acquire access token' };
+                throw {
+                    error,
+                    title,
+                    message:
+                        error.response.error.code === 'NotAuthorized'
+                            ? 'NotAuthorizedReport'
+                            : 'Could not acquire access token',
+                };
             }
         } catch (error) {
             const {
@@ -147,12 +154,12 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
                 inner: (response as FusionApiHttpErrorResponse)?.error,
             });
         }
-    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
+    }, [currentContext, embedInfo?.embedConfig.rlsConfiguration]);
 
     useEffect(() => {
         setError(null);
-        checkContextAccess();
-    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
+        accessToken ? checkContextAccess() : getReportInfo();
+    }, [currentContext, embedInfo?.embedConfig.rlsConfiguration]);
 
     useEffect(() => {
         getReportInfo();
@@ -194,6 +201,9 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
         );
         switch (Number(code)) {
             case 403: {
+                if (report && error.message === 'NotAuthorizedReport')
+                    return <ReportErrorMessage report={report} contextError={false} />;
+
                 if (report && (inner as FusionApiErrorMessage)?.code === 'NotAuthorized')
                     return <ReportErrorMessage report={report} contextError={true} />;
 
