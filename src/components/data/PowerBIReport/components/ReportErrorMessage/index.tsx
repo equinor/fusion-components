@@ -12,12 +12,15 @@ import {
 import { useCurrentUser, useApiClients } from '@equinor/fusion';
 import classNames from 'classnames';
 
+export type ContextErrorType = 'NotAuthorizedReport' | 'NotAuthorized' | 'MissingContextRelation';
+
 type ReportErrorMessageProps = {
     report: Report;
-    contextError: boolean;
+    contextErrorType: ContextErrorType;
+    message?: string;
 };
 
-const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextError }) => {
+const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextErrorType, message }) => {
     const [isFetching, setIsFetching] = useState<boolean>(true);
     const [requirements, setRequirements] = useState<string | null>(null);
     const [description, setDescription] = useState<string | null>(null);
@@ -27,18 +30,44 @@ const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextError 
     const reportApiClient = useApiClients().report;
     const user = useCurrentUser();
     const timeStamp = useMemo(() => new Date().toString(), []);
+    const accessControlError = useMemo(() => contextErrorType !== 'MissingContextRelation', [
+        contextErrorType,
+    ]);
+
+    const errorHeaderTitle = useMemo(() => {
+        switch (contextErrorType) {
+            case 'NotAuthorized':
+                return 'It looks like you do not have access to the selected context';
+            case 'NotAuthorizedReport':
+                return 'It looks like you do not have access to this report';
+            case 'MissingContextRelation':
+                return 'No data available for selected context';
+        }
+    }, [contextErrorType]);
 
     const errorHeader = useMemo(
-        () =>
-            contextError
-                ? 'It looks like you do not have access to the selected context'
-                : 'It looks like you do not have access to this report',
-        [contextError]
+        () => (accessControlError ? 'Restricted Access' : 'No Context Data'),
+        [contextErrorType]
     );
 
     useEffect(() => {
-        getReportInformation();
-    }, [report]);
+        accessControlError ? getReportInformation() : getBaseInformation();
+    }, [report, accessControlError]);
+
+    const getBaseInformation = useCallback(async () => {
+        setIsFetching(true);
+
+        try {
+            const fetchedDescriptions = await reportApiClient.getDescription(report.id);
+            setDescription(fetchedDescriptions?.data || null);
+        } catch {
+            setDescription(null);
+        }
+
+        setRequirements(null);
+        setNoAccessMessage(message || null);
+        setIsFetching(false);
+    }, [report.id]);
 
     const getReportInformation = useCallback(async () => {
         setIsFetching(true);
@@ -73,14 +102,14 @@ const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextError 
     return (
         <div className={styles.reportErroMessage}>
             <div className={styles.container}>
-                <h2 className={styles.header}>Restricted Access</h2>
+                <h2 className={styles.header}>{errorHeader}</h2>
                 <div
                     className={classNames(
                         useElevationClassName(3),
                         styles.restrictedAccessContainer
                     )}
                 >
-                    <h2>{errorHeader}</h2>
+                    <h2>{errorHeaderTitle}</h2>
                     {noAccessMessage && <MarkdownViewer markdown={noAccessMessage} />}
                     <div className={styles.reportInfoContainer}>
                         {description && (
