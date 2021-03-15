@@ -67,7 +67,7 @@ const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextErrorT
         setRequirements(null);
         setNoAccessMessage(message || null);
         setIsFetching(false);
-    }, [report.id]);
+    }, [report.id, message]);
 
     const getReportInformation = useCallback(async () => {
         setIsFetching(true);
