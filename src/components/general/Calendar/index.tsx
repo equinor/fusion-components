@@ -35,7 +35,7 @@ const Calendar: FC<CalendarProps> = ({
             new Intl.DateTimeFormat('en-gb', { month: 'long', year: 'numeric' }).format(
                 new Date(year, month)
             ),
-        [month]
+        [month, year]
     );
 
     const prevMonth = useCallback(() => {
@@ -45,7 +45,7 @@ const Calendar: FC<CalendarProps> = ({
         } else {
             setMonth((month) => (month - 1) as Month);
         }
-    }, [month]);
+    }, [month, year]);
 
     const nextMonth = useCallback(() => {
         if (month === 11) {
@@ -54,7 +54,7 @@ const Calendar: FC<CalendarProps> = ({
         } else {
             setMonth((month) => (month + 1) as Month);
         }
-    }, [month]);
+    }, [month, year]);
 
     const gotoToday = useCallback(() => {
         const today = new Date();
