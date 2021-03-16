@@ -109,7 +109,14 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
                 setAccessToken(fetchedAccessToken.data);
             } catch (error) {
                 const title = 'Sorry we could not show the report';
-                throw { error, title, message: 'Could not acquire access token' };
+                throw {
+                    error,
+                    title,
+                    message:
+                        error.response.error.code === 'NotAuthorized'
+                            ? 'NotAuthorizedReport'
+                            : 'Could not acquire access token',
+                };
             }
         } catch (error) {
             const {
@@ -132,6 +139,7 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
 
     const checkContextAccess = useCallback(async () => {
         if (!currentContext?.externalId || !embedInfo?.embedConfig.rlsConfiguration) return;
+        setError(null);
         try {
             await reportApiClient.checkContextAccess(
                 reportId,
@@ -147,12 +155,11 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
                 inner: (response as FusionApiHttpErrorResponse)?.error,
             });
         }
-    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
+    }, [currentContext, embedInfo?.embedConfig.rlsConfiguration]);
 
     useEffect(() => {
-        setError(null);
-        checkContextAccess();
-    }, [currentContext?.id, embedInfo?.embedConfig.rlsConfiguration]);
+        accessToken && checkContextAccess();
+    }, [currentContext, accessToken, embedInfo?.embedConfig.rlsConfiguration]);
 
     useEffect(() => {
         getReportInfo();
@@ -194,16 +201,25 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
         );
         switch (Number(code)) {
             case 403: {
-                if (report && (inner as FusionApiErrorMessage)?.code === 'NotAuthorized')
-                    return <ReportErrorMessage report={report} contextError={true} />;
-
-                if ((inner as FusionApiErrorMessage)?.code === 'MissingContextRelation')
+                if (report && error.message === 'NotAuthorizedReport')
                     return (
-                        <ErrorMessage
-                            hasError={true}
-                            errorType={'noData'}
-                            title={'No data available for selected context'}
-                            message={(inner as FusionApiErrorMessage)?.message || message}
+                        <ReportErrorMessage
+                            report={report}
+                            contextErrorType={'NotAuthorizedReport'}
+                        />
+                    );
+
+                if (report && (inner as FusionApiErrorMessage)?.code === 'NotAuthorized')
+                    return (
+                        <ReportErrorMessage report={report} contextErrorType={'NotAuthorized'} />
+                    );
+
+                if (report && (inner as FusionApiErrorMessage)?.code === 'MissingContextRelation')
+                    return (
+                        <ReportErrorMessage
+                            report={report}
+                            contextErrorType={'MissingContextRelation'}
+                            message={(inner as FusionApiErrorMessage)?.message}
                         />
                     );
 
