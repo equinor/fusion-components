@@ -18,6 +18,7 @@ import {
     KeyboardEvent,
     FocusEvent,
     MutableRefObject,
+    useRef,
 } from 'react';
 
 type DatePickerProps = {
@@ -39,7 +40,7 @@ const DatePicker: FC<DatePickerProps> = ({
 }) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [maskedValue, isValidMask] = useStringMask(dateMask, inputValue);
-
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => {
         const value = useMemo(() => {
             if (!selectedDate || isOpen) {
@@ -74,11 +75,15 @@ const DatePicker: FC<DatePickerProps> = ({
                 if (isValidMask) {
                     tryParseDate();
                 }
-                if (isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                if (
+                    isOpen &&
+                    dropdownRef.current &&
+                    !dropdownRef.current.contains(e.relatedTarget as HTMLElement)
+                ) {
                     setIsOpen(false);
                 }
             },
-            [isOpen, tryParseDate, overlayContainer, isValidMask]
+            [isOpen, tryParseDate, isValidMask, dropdownRef]
         );
 
         const handleClick = useCallback(() => !isOpen && !disabled && setIsOpen(true), [
@@ -134,7 +139,7 @@ const DatePicker: FC<DatePickerProps> = ({
 
     return (
         <div ref={dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>}>
-            <Dropdown controller={dropdownController}>
+            <Dropdown controller={dropdownController} ref={dropdownRef}>
                 <Calendar
                     initialMonth={today.getMonth() as Month}
                     initialYear={today.getFullYear()}

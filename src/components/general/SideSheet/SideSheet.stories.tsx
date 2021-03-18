@@ -4,7 +4,7 @@ import { withKnobs, select, boolean, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
-import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
+import { Button, IconButton, WarningIcon, DoneIcon, DatePicker } from '@equinor/fusion-components';
 import { useNotificationCenter } from '@equinor/fusion';
 
 const snackbar = action('snackbar');
@@ -72,9 +72,25 @@ const SidesheetContent = () => {
 
         dialog(response);
     };
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     return (
         <div style={{ paddingTop: 32, paddingLeft: 32, paddingRight: 32 }}>
+            <div style={{ width: 200 }}>
+                <DatePicker
+                    label="Select date"
+                    onChange={setSelectedDate}
+                    selectedDate={selectedDate}
+                />
+                <br />
+                <DatePicker
+                    error
+                    errorMessage="Select a date in the future"
+                    label="Select date"
+                    onChange={setSelectedDate}
+                    selectedDate={selectedDate}
+                />
+            </div>
             <div>
                 <Button onClick={onSnackbarClick}>Show low priority notification</Button>
             </div>
