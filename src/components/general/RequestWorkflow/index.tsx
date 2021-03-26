@@ -10,55 +10,52 @@ type RequestWorkflowProps = {
 };
 
 const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provisioningStatus }) => {
-    // const initialStep = useMemo(() => {
-    //     if (workflow) {
-    //         return workflow.steps.find((step) => step.previousStep === null);
-    //     }
-    // }, [workflow]);
-
-    // const lastStep = useMemo(() => {
-    //     if (workflow) {
-    //         return workflow.steps.find((step) => step.nextStep === null);
-    //     }
-    // }, [workflow]);
-
-    // const sortedWorkflowSteps = useMemo(() => {
-    //     if (workflow && workflow?.steps && initialStep && lastStep) {
-    //         const sortedSteps = [initialStep] as WorkflowStep[];
-    //         let currentStep = initialStep;
-    //         while (currentStep !== lastStep) {
-    //             const nextStep = workflow.steps.find((s) => currentStep.nextStep === s.id);
-    //             sortedSteps.push(nextStep);
-    //             currentStep = nextStep;
-    //         }
-    //         return sortedSteps;
-    //     } else {
-    //         return null;
-    //     }
-    // }, [workflow, initialStep, lastStep]);
 
     const findWorkflowIndex = useCallback(
-        (step: WorkflowStep, index: number): number => {
+        (step: WorkflowStep, index: number, direction: 'back' | 'forward'): number => {
             const previousStep = workflow.steps.find(
                 (workflowStep) => workflowStep.id === step.previousStep
             );
+            const nextStep = workflow.steps.find(
+                (workflowStep) => workflowStep.id === step.nextStep
+            );
+            if (direction === 'back') {
+                if (previousStep === step) {
+                    return findWorkflowIndex(step, index + (workflow.steps.length - 1), 'forward');
+                }
 
-            if (previousStep) {
-                return findWorkflowIndex(previousStep, index + 1);
+                if (previousStep) {
+                    return findWorkflowIndex(previousStep, index + 1, 'back');
+                }
             }
+
+            if (direction === 'forward') {
+                if (nextStep === step) {
+                    return findWorkflowIndex(step, index, 'back');
+                }
+
+                if (nextStep) {
+                    return findWorkflowIndex(nextStep, index - 1, 'forward');
+                }
+            }
+
             return index;
         },
         [workflow]
     );
 
-    const sortedWorkflowSteps = useMemo(
-        () => workflow &&
-            workflow.steps.reduce((sortedSteps: WorkflowStep[], currentStep: WorkflowStep) => {
-                sortedSteps[findWorkflowIndex(currentStep, 0)] = currentStep;
-                return sortedSteps;
-            }, new Array(workflow.steps.length).fill(null)),
-        [workflow, findWorkflowIndex]
-    );
+    const sortedWorkflowSteps = useMemo(() => {
+        if (workflow) {
+            return workflow.steps.reduce(
+                (sortedSteps: WorkflowStep[], currentStep: WorkflowStep) => {
+                    const currentIndex = findWorkflowIndex(currentStep, 0, 'back');
+                    sortedSteps[currentIndex] = currentStep;
+                    return sortedSteps;
+                },
+                new Array(workflow.steps.length).fill(null)
+            );
+        }
+    }, [workflow, findWorkflowIndex]);
 
     return (
         <div className={styles.workflowContainer}>
