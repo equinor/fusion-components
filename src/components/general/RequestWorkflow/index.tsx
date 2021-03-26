@@ -37,32 +37,32 @@ const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provision
     //     }
     // }, [workflow, initialStep, lastStep]);
 
-    // const findWorkflowIndex = useCallback(
-    //     (step: WorkflowStep, index: number): number => {
-    //         const previousStep = workflow.steps.find(
-    //             (workflowStep) => workflowStep.id === step.previousStep
-    //         );
+    const findWorkflowIndex = useCallback(
+        (step: WorkflowStep, index: number): number => {
+            const previousStep = workflow.steps.find(
+                (workflowStep) => workflowStep.id === step.previousStep
+            );
 
-    //         if (previousStep) {
-    //             return findWorkflowIndex(previousStep, index + 1);
-    //         }
-    //         return index;
-    //     },
-    //     [workflow]
-    // );
+            if (previousStep) {
+                return findWorkflowIndex(previousStep, index + 1);
+            }
+            return index;
+        },
+        [workflow]
+    );
 
-    // const sortedWorkflowSteps = useMemo(
-    //     () => workflow &&
-    //         workflow.steps.reduce((sortedSteps: WorkflowStep[], currentStep: WorkflowStep) => {
-    //             sortedSteps[findWorkflowIndex(currentStep, 0)] = currentStep;
-    //             return sortedSteps;
-    //         }, new Array(workflow.steps.length).fill(null)),
-    //     [workflow, findWorkflowIndex]
-    // );
+    const sortedWorkflowSteps = useMemo(
+        () => workflow &&
+            workflow.steps.reduce((sortedSteps: WorkflowStep[], currentStep: WorkflowStep) => {
+                sortedSteps[findWorkflowIndex(currentStep, 0)] = currentStep;
+                return sortedSteps;
+            }, new Array(workflow.steps.length).fill(null)),
+        [workflow, findWorkflowIndex]
+    );
 
     return (
         <div className={styles.workflowContainer}>
-            {/* {sortedWorkflowSteps ? (
+            {sortedWorkflowSteps ? (
                 sortedWorkflowSteps.map((step) => (
                     <RequestWorkflowStep
                         key={step.id}
@@ -73,7 +73,7 @@ const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provision
                 ))
             ) : (
                 <div>Workflow has not been initiated yet</div>
-            )} */}
+            )}
         </div>
     );
 };
