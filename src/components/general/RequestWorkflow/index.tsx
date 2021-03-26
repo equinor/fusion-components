@@ -10,39 +10,47 @@ type RequestWorkflowProps = {
 };
 
 const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provisioningStatus }) => {
-    const findWorkflowIndex = useCallback(
-        (step: WorkflowStep, index: number): number => {
-            const previousStep = workflow.steps.find(
-                (workflowStep) => workflowStep.id === step.previousStep
-            );
+    const initialStep = useMemo(() => {
+        if (workflow) {
+            return workflow.steps.find((step) => step.previousStep === null);
+        }
+    }, [workflow]);
 
-            if (previousStep) {
-                return findWorkflowIndex(previousStep, index + 1);
+    const lastStep = useMemo(() => {
+        if (workflow) {
+            return workflow.steps.find((step) => step.nextStep === null);
+        }
+    }, [workflow]);
+
+    const sortedWorkflowSteps = useMemo(() => {
+        if (workflow && workflow?.steps && initialStep && lastStep) {
+            const sortedSteps = [initialStep] as WorkflowStep[];
+            let currentStep = initialStep;
+            while (currentStep !== lastStep) {
+                const nextStep = workflow.steps.find((s) => currentStep.nextStep === s.id);
+                sortedSteps.push(nextStep);
+                currentStep = nextStep;
             }
-            return index;
-        },
-        [workflow]
-    );
-
-    const sortedWorkflowSteps = useMemo(
-        () => workflow &&
-            workflow.steps.reduce((sortedSteps: WorkflowStep[], currentStep: WorkflowStep) => {
-                sortedSteps[findWorkflowIndex(currentStep, 0)] = currentStep;
-                return sortedSteps;
-            }, new Array(workflow.steps.length).fill(null)),
-        [workflow, findWorkflowIndex]
-    );
+            return sortedSteps;
+        } else {
+            return null;
+        }
+    }, [workflow, initialStep, lastStep]);
 
     return (
         <div className={styles.workflowContainer}>
-            {!!workflow ? sortedWorkflowSteps.map((step) => (
-                <RequestWorkflowStep
-                    key={step.id}
-                    step={step}
-                    inline={!!inline}
-                    provisioningStatus={provisioningStatus}
-                />
-            )) : <div>Workflow has not been initiated yet</div>}
+            {sortedWorkflowSteps ? (
+                sortedWorkflowSteps.map((step) => (
+                    <RequestWorkflowStep
+                        key={step.id}
+                        step={step}
+                        inline={!!inline}
+                        provisioningStatus={provisioningStatus}
+                    />
+                ))
+            ) : (
+                <div>Workflow has not been initiated yet</div>
+            )}
         </div>
     );
 };
