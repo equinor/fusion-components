@@ -21,7 +21,7 @@ export type WorkflowPerson = {
 
 export type WorkflowStep = {
     id: string;
-    state: 'Pending' | 'Active' | 'Approved';
+    state: 'Pending' | 'Active' | 'Approved' | 'Skipped';
     name: string;
     description: string;
     started: Date | null; 

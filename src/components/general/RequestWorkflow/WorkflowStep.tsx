@@ -37,6 +37,7 @@ const RequestWorkflowStep: FC<RequestWorkflowStepProps> = ({
     const icon = useMemo(() => {
         switch (step.state) {
             case 'Approved':
+            case 'Skipped':
                 return <CheckCircleIcon color={styling.colors.green} />;
             case 'Pending':
                 return !!step.started ? (
@@ -78,7 +79,7 @@ const RequestWorkflowStep: FC<RequestWorkflowStepProps> = ({
     });
 
     const connectorClasses = classNames(styles.stepConnectorLine, {
-        [styles.approved]: step.state === 'Approved',
+        [styles.approved]: step.state === 'Approved' || step.state === 'Skipped',
     });
 
     const workflowStepNameClasses = classNames(styles.stepTitle, {
