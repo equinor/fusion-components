@@ -17,6 +17,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
         isOpen,
         aside,
         isDisabled,
+        href,
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(shouldHaveTooltip ? title : '', 'right');
@@ -46,12 +47,16 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
         <>
             <NavigationItem type="section" isActive={isActive} isDisabled={isDisabled}>
                 <div className={styles.sectionContainer} ref={tooltipRef}>
-                    <div className={styles.linkContainer} onClick={change}>
+                    <a
+                        className={styles.linkContainer}
+                        onClick={change}
+                        href={!isDisabled && !isCollapsed ? href : undefined}
+                    >
                         <span className={styles.linkText} ref={textRef}>
                             {title}
                         </span>
                         {aside && <div className={styles.asideContainer}>{aside}</div>}
-                    </div>
+                    </a>
                     <div
                         className={styles.toggleOpenContainer}
                         onClick={() => onChange && onChange(id, true, false)}

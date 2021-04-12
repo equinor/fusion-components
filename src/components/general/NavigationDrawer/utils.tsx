@@ -21,6 +21,7 @@ export const getNavigationComponentForItem = (structure?: NavigationStructure[],
             navigationChildren: item.navigationChildren,
             aside: item.aside,
             isDisabled: item.isDisabled,
+            href: item.href,
         };
         switch (item.type) {
             case 'child':
