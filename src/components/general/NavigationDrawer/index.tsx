@@ -51,6 +51,7 @@ export type NavigationStructure = {
     navigationChildren?: NavigationStructure[];
     aside?: ReactNode;
     isDisabled?: boolean;
+    href?: string;
 };
 
 type NavigationDrawerProps = {
