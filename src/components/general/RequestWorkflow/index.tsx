@@ -10,50 +10,37 @@ type RequestWorkflowProps = {
 };
 
 const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provisioningStatus }) => {
-
     const findWorkflowIndex = useCallback(
-        (step: WorkflowStep, index: number, direction: 'back' | 'forward'): number => {
+        (step: WorkflowStep, index: number, depth?: number): number => {
+            if (depth > 50) {
+                throw 'Exceeding maximum depth';
+            }
             const previousStep = workflow.steps.find(
                 (workflowStep) => workflowStep.id === step.previousStep
             );
-            const nextStep = workflow.steps.find(
-                (workflowStep) => workflowStep.id === step.nextStep
-            );
-            if (direction === 'back') {
-                if (previousStep === step) {
-                    return findWorkflowIndex(step, index + (workflow.steps.length - 1), 'forward');
-                }
 
-                if (previousStep) {
-                    return findWorkflowIndex(previousStep, index + 1, 'back');
-                }
+            if (previousStep) {
+                return findWorkflowIndex(previousStep, index + 1, depth + 1);
             }
-
-            if (direction === 'forward') {
-                if (nextStep === step) {
-                    return findWorkflowIndex(step, index, 'back');
-                }
-
-                if (nextStep) {
-                    return findWorkflowIndex(nextStep, index - 1, 'forward');
-                }
-            }
-
             return index;
         },
         [workflow]
     );
 
     const sortedWorkflowSteps = useMemo(() => {
-        if (workflow) {
-            return workflow.steps.reduce(
-                (sortedSteps: WorkflowStep[], currentStep: WorkflowStep) => {
-                    const currentIndex = findWorkflowIndex(currentStep, 0, 'back');
-                    sortedSteps[currentIndex] = currentStep;
-                    return sortedSteps;
-                },
-                new Array(workflow.steps.length).fill(null)
-            );
+        try {
+            if (workflow) {
+                return workflow.steps.reduce(
+                    (sortedSteps: WorkflowStep[], currentStep: WorkflowStep) => {
+                        const currentIndex = findWorkflowIndex(currentStep, 0, 0);
+                        sortedSteps[currentIndex] = currentStep;
+                        return sortedSteps;
+                    },
+                    new Array(workflow.steps.length).fill(null)
+                );
+            }
+        } catch (err) {
+            return undefined;
         }
     }, [workflow, findWorkflowIndex]);
 
@@ -68,9 +55,9 @@ const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provision
                         provisioningStatus={provisioningStatus}
                     />
                 ))
-            ) : (
-                <div>Workflow has not been initiated yet</div>
-            )}
+            ) : !inline ? (
+                <div>No workflow has been initiated yet</div>
+            ) : null}
         </div>
     );
 };
