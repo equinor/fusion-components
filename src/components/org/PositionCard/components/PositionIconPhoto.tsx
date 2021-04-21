@@ -7,7 +7,7 @@ import {
     styling,
     useTooltipRef,
     SyncIcon,
-    PeopleIcon
+    PeopleIcon,
 } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
@@ -16,15 +16,14 @@ type PositionPhotoIconProps = {
     position: Position;
     currentInstance?: PositionInstance;
     isLinked?: boolean;
-    isTaskOwner?: boolean;
     onClick?: (position: Position, instance: PositionInstance) => void;
     rotationInstances: PositionInstance[];
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
+    position,
     currentInstance,
     isLinked,
-    isTaskOwner,
     rotationInstances,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -33,7 +32,8 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     const rotatingRef = useTooltipRef('Rotating', 'below');
 
     const isRotating = rotationInstances.length > 0;
-    console.log(currentInstance);
+    const isTaskOwner = position.isTaskOwner;
+
     const additionalPersons = rotationInstances.reduce(
         (previousPersons: PersonDetails[], instance) => {
             if (instance.assignedPerson) {

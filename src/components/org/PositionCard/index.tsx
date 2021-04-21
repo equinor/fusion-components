@@ -98,7 +98,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     position={position}
                     currentInstance={instance}
                     isLinked={isLinked}
-                    isTaskOwner={isTaskOwner}
                     onClick={onClick}
                     rotationInstances={rotatingInstances}
                 />
