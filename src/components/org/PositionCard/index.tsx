@@ -18,7 +18,6 @@ type PositionCardProps = {
     isFuture?: boolean;
     isPast?: boolean;
     isLinked?: boolean;
-    isTaskOwner?: boolean;
     childCount?: number;
     selectedDate?: Date;
     showRotation?: boolean;
@@ -40,7 +39,6 @@ const PositionCard: React.FC<PositionCardProps> = ({
     isFuture,
     isPast,
     isLinked,
-    isTaskOwner,
     childCount,
     selectedDate,
     showRotation,
