@@ -85,7 +85,7 @@ export {
     WorkflowStep,
     WorkflowProvisioningStatus,
     WorkflowProvisioningState,
-    WorkflowPerson
+    WorkflowPerson,
 } from './components/general/RequestWorkflow/models';
 export {
     default as NavigationDrawer,
@@ -199,6 +199,7 @@ export {
     CalendarEventIcon,
     FullscreenIcon,
     FullscreenExitIcon,
+    ShareIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
