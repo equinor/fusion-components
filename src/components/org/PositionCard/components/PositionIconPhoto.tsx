@@ -10,7 +10,6 @@ import {
     styling,
     useTooltipRef,
     SyncIcon,
-    PeopleIcon,
 } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
