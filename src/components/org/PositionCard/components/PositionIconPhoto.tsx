@@ -1,6 +1,9 @@
 import { useRef, FC } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
+
+import { IconType } from '@equinor/fusion-wc-icon';
+
 import {
     PersonPhoto,
     LinkIcon,
@@ -56,8 +59,8 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
             {(isTaskOwner || isLinked || isRotating) && (
                 <div className={styles.stateIcons}>
                     {isTaskOwner && (
-                        <span ref={taskOwnerRef}>
-                            <PeopleIcon color={styling.colors.blackAlt2} height={16} width={16} />
+                        <span ref={taskOwnerRef} className={styles.edsIcon}>
+                            <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
                         </span>
                     )}
                     {isLinked && (
