@@ -9,12 +9,22 @@ import {
 import { useCallback, useState } from 'react';
 import BookmarkSideSheet from './BookmarkSideSheet';
 
-export type BookmarksManagerProps<T> = {
-    captureAppSetting: () => Promise<T>;
-    applyAppSetting: (appSetting: T, awaitForContextSwitch: boolean) => Promise<void>;
+export type ApplyBookmark<TPayload> = {
+    id: string;
+    name: string;
+    appKey: string;
+    context: {
+        name: string;
+        id: string;
+    };
+    payload: TPayload;
+};
+
+export type BookmarksManagerProps<TPayload> = {
+    capturePayload: () => Promise<TPayload>;
+    applyBookmark: (bookmarkSetting: ApplyBookmark<TPayload>) => Promise<void>;
     name: string;
     anchorId: string;
-    hasContext?: boolean;
 };
 
 function BookmarksManager<T>(props: BookmarksManagerProps<T>) {

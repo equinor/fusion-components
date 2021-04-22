@@ -1,47 +1,52 @@
-import { useAppSettings, useCurrentApp, useCurrentContext } from '@equinor/fusion';
-import { useMemo } from 'react';
+import { BookmarkResponse, BookmarkRequest, BookmarkListResponse } from '@equinor/fusion';
 
-export type Bookmark<T> = {
-    bookmarkName: string;
-    bookmarkId: string;
-    bookMark: T | null;
-};
-export type BookmarkContext<T> = {
-    contextName: string;
-    contextId: string;
-    bookmarks?: Bookmark<T>[];
-};
-type ContextSetting<T> = {
-    fusionContext?: BookmarkContext<T>[];
+import { useApiClients, useCurrentApp, useCurrentContext } from '@equinor/fusion';
+import { useCallback, useEffect, useState } from 'react';
+
+type UseBookmarksProps = {
+    allBookmarks: BookmarkListResponse[];
+    saveBookmarkAsync: (bookmark: BookmarkRequest) => void;
+    bookmarksError: Error | null;
+    isFetchingBookmarks: boolean;
 };
 
-type UseBookmarksProps<T> = {
-    allBookmarks: BookmarkContext<T>[];
-    currentContextName: string;
-    currentContextId: string;
-};
-
-export default <T>(hasContext?: boolean): UseBookmarksProps<T> => {
-    const currentContext = useCurrentContext();
+export default (): UseBookmarksProps => {
     const currentApp = useCurrentApp();
+    const currentContext = useCurrentContext();
+    const apiClients = useApiClients();
+    const [allBookmarks, setAllBookmarks] = useState<Omit<BookmarkResponse, 'payload'>[]>();
+    const [bookmarksError, setBookmarksError] = useState<Error | null>(null);
+    const [isFetchingBookmarks, setIsFetchingBookmarks] = useState<boolean>(false);
 
-    /**
-     * @todo Different hook for the new bookmark service
-     * @todo change useAppSettings with the new service
-     */
-    const [appSettings, setAppSettings] = useAppSettings<ContextSetting<T>>({ fusionContext: [] });
-    const currentContextName = useMemo(
-        () => (hasContext ? currentContext?.title : currentApp.name) || 'Global',
-        [currentContext, currentApp, hasContext]
-    );
-    const currentContextId = useMemo(
-        () => (hasContext ? currentContext?.id : currentApp?.key) || 'global',
-        [currentContext, currentApp, hasContext]
+    const fetchBookmarksAsync = useCallback(async () => {
+        setIsFetchingBookmarks(true);
+        try {
+            const response = await apiClients.bookmarks.getBookmarks(currentApp.key);
+            setAllBookmarks(response.data);
+        } catch (e) {
+            setBookmarksError(e);
+        } finally {
+            setIsFetchingBookmarks(false);
+        }
+    }, [apiClients, currentApp]);
+
+    useEffect(() => {
+        fetchBookmarksAsync();
+    }, []);
+
+    const saveBookmarkAsync = useCallback(
+        async (bookmark: BookmarkRequest) => {
+            try {
+                const response = await apiClients.bookmarks.addBookmark(bookmark);
+            } catch (e) {}
+        },
+        [apiClients, currentApp, currentContext]
     );
 
     return {
-        allBookmarks: appSettings.fusionContext || [],
-        currentContextId,
-        currentContextName,
+        allBookmarks,
+        isFetchingBookmarks,
+        saveBookmarkAsync,
+        bookmarksError,
     };
 };

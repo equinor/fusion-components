@@ -1,29 +1,34 @@
+import { BookmarkListResponse } from '@equinor/fusion';
 import { Accordion, AccordionItem, ErrorMessage } from '@equinor/fusion-components';
-import { BookmarkContext } from '../../useBookmarks';
+import { useEffect, useState } from 'react';
+import { ApplyBookmark } from '../..';
+import Bookmark from './Bookmark';
 
-type AllBookmarksProps<T> = {
-    allBookmarks: BookmarkContext<T>[];
-    currentContextId: string;
+type OpenAccordion = {
+    [id: string]: boolean;
 };
-function sortByString<K>(list: K[], accessor: (listItem: K) => string) {
-    return [
-        ...list.sort((a, b) => {
-            const itemA = accessor(a)?.toUpperCase();
-            const itemB = accessor(b)?.toUpperCase();
-            if (!itemA || !itemB) {
-                return 0;
-            }
-            if (itemA < itemB) {
-                return -1;
-            }
-            if (itemA > itemB) {
-                return 1;
-            }
-            return 0;
-        }),
-    ];
-}
-function AllBookmarks<T>({ allBookmarks }: AllBookmarksProps<T>) {
+type AllBookmarksProps<TPayload> = {
+    allBookmarks: BookmarkListResponse[];
+    currentContextId: string;
+    applyBookmark: (bookmarkSetting: ApplyBookmark<TPayload>) => Promise<void>;
+};
+type Context = {
+    name: string;
+    id: string;
+};
+function AllBookmarks<T>({ allBookmarks, currentContextId, applyBookmark }: AllBookmarksProps<T>) {
+    const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
+
+    function handleOpenAccordionChange(id: string) {
+        setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
+    }
+
+    useEffect(() => {
+        setOpenAccordions({
+            [currentContextId]: true,
+        });
+    }, [currentContextId]);
+
     if (!allBookmarks || !allBookmarks.length) {
         return (
             <ErrorMessage
@@ -34,13 +39,51 @@ function AllBookmarks<T>({ allBookmarks }: AllBookmarksProps<T>) {
             />
         );
     }
+    const groupedContext: Record<string, Array<BookmarkListResponse>> = {};
+    const groupedContexts: Record<string, Context | undefined> = {};
+    const bookmarksGroupByContextId: Record<
+        string,
+        Array<BookmarkListResponse>
+    > = allBookmarks.reduce((__prev, curr) => {
+        const key = curr.context ? curr.context.id : 'unknown';
+        if (groupedContext[key]) {
+            const bookmarks = groupedContext[key];
+            bookmarks.push(curr);
+        } else {
+            groupedContext[key] = [curr];
+        }
+        return groupedContext;
+    }, {});
+
+    const groupByContextId: Record<string, Context> = allBookmarks.reduce((__prev, curr) => {
+        const key = curr.context ? curr.context.id : 'unknown';
+        if (!groupedContexts[key]) {
+            groupedContexts[key] = curr.context;
+        }
+        return groupedContexts;
+    }, {});
+
     return (
         <Accordion>
-            {sortByString(allBookmarks, (b) => b.contextName).map((contextBookmark) => {
-                <AccordionItem
-                    label={contextBookmark.contextName}
-                    key={contextBookmark.contextId}
-                ></AccordionItem>;
+            {Object.values(groupByContextId).map((context) => {
+                return (
+                    <AccordionItem
+                        label={context.name}
+                        key={context.id}
+                        isOpen={openAccordions[context.id]}
+                        onChange={() => handleOpenAccordionChange(context.id)}
+                    >
+                        {Object.values(bookmarksGroupByContextId[context.id]).map((bookmark) => {
+                            return (
+                                <Bookmark
+                                    bookmark={bookmark}
+                                    applyBookmark={applyBookmark}
+                                    accordionOpen={openAccordions[context.id]}
+                                />
+                            );
+                        })}
+                    </AccordionItem>
+                );
             })}
         </Accordion>
     );
