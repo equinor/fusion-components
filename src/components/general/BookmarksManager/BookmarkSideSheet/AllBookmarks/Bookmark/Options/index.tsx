@@ -12,9 +12,11 @@ import styles from './styles.less';
 type OptionsProps = {
     onEdit: () => void;
     onDelete: () => void;
+    onShare: () => void;
     accordionOpen?: boolean;
+    isShared: boolean;
 };
-function Options({ onEdit, onDelete, accordionOpen }: OptionsProps) {
+function Options({ onEdit, onDelete, accordionOpen, isShared, onShare }: OptionsProps) {
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => (
         <IconButton
             ref={ref as MutableRefObject<HTMLButtonElement>}
@@ -44,6 +46,7 @@ function Options({ onEdit, onDelete, accordionOpen }: OptionsProps) {
 
     const onEditClick = useCallback(() => select(onEdit), [onEdit, select]);
     const onDeleteClick = useCallback(() => select(onDelete), [onDelete, select]);
+    const onShareClick = useCallback(() => select(onShare), [onDelete, select]);
 
     return (
         <div>
@@ -61,12 +64,20 @@ function Options({ onEdit, onDelete, accordionOpen }: OptionsProps) {
                         </div>
                         <span className={styles.label}>Delete bookmark</span>
                     </div>
-                    <div className={styles.menuItem} key="share" onClick={onDeleteClick}>
+                    <div className={styles.menuItem} key="share" onClick={onShareClick}>
                         <div className={styles.icon}>
                             <ShareIcon />
                         </div>
-                        <span className={styles.label}>Share bookmark</span>
+                        <span className={styles.label}>Share URL</span>
                     </div>
+                    {isShared && (
+                        <div className={styles.menuItem} key="share" onClick={onShareClick}>
+                            <div className={styles.icon}>
+                                <ShareIcon />
+                            </div>
+                            <span className={styles.label}>Unshare URL</span>
+                        </div>
+                    )}
                 </div>
             </Dropdown>
         </div>

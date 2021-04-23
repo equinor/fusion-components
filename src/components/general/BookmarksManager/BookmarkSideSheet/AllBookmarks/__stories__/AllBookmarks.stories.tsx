@@ -12,7 +12,7 @@ const createAllBookmarksStory = () => () => {
         {
             id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
             name: 'My bookmark!',
-            description: 'string',
+            description: 'This is a description for the Storybook test bookmark',
             isShared: true,
             appKey: 'string',
             context: {
@@ -20,9 +20,9 @@ const createAllBookmarksStory = () => () => {
                 name: 'Sverdrup',
             },
             createdBy: {
-                azureUniquePersonId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-                mail: 'string',
-                name: 'string',
+                azureUniquePersonId: '92ac0422-5a16-4bec-939c-507ae880b6a4',
+                mail: 'testemail@equinor.com',
+                name: 'Test User Name',
                 phoneNumber: 'string',
                 jobTitle: 'string',
                 accountType: 'Consultant',
@@ -32,8 +32,8 @@ const createAllBookmarksStory = () => () => {
         {
             id: '3fa85f64-5717-4562-b3fc-2c963f66afa12',
             name: 'My second bookmark!',
-            description: 'string',
-            isShared: true,
+
+            isShared: false,
             appKey: 'string',
             context: {
                 id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
