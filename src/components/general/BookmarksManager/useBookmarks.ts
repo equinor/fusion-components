@@ -6,6 +6,11 @@ import { useCallback, useEffect, useState } from 'react';
 type UseBookmarksProps = {
     allBookmarks: BookmarkListResponse[];
     saveBookmarkAsync: (bookmark: BookmarkRequest) => void;
+    editBookmarkAsync: (
+        bookmarkId: string,
+        bookmark: Partial<Omit<BookmarkRequest, 'appkey' | 'contextId'>>
+    ) => void;
+    deleteBookmarkAsync: (bookmarkId: string) => void;
     bookmarksError: Error | null;
     isFetchingBookmarks: boolean;
 };
@@ -43,10 +48,32 @@ export default (): UseBookmarksProps => {
         [apiClients, currentApp, currentContext]
     );
 
+    const editBookmarkAsync = useCallback(
+        async (
+            bookmarkId: string,
+            bookmark: Partial<Omit<BookmarkRequest, 'appkey' | 'contextId'>>
+        ) => {
+            try {
+                await apiClients.bookmarks.updateBookmark(bookmarkId, bookmark);
+            } catch (e) {}
+        },
+        [apiClients, currentApp, currentContext]
+    );
+    const deleteBookmarkAsync = useCallback(
+        async (bookmarkId: string) => {
+            try {
+                await apiClients.bookmarks.deleteBookmark(bookmarkId);
+            } catch (e) {}
+        },
+        [apiClients, currentApp, currentContext]
+    );
+
     return {
         allBookmarks,
         isFetchingBookmarks,
         saveBookmarkAsync,
+        editBookmarkAsync,
+        deleteBookmarkAsync,
         bookmarksError,
     };
 };
