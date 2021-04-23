@@ -1,10 +1,10 @@
 import { useCurrentApp, useCurrentContext } from '.yalc/@equinor/fusion/lib';
-import { ModalSideSheet } from '@equinor/fusion-components';
+import { Button, ModalSideSheet } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import { BookmarksManagerProps } from '..';
+import BookmarkForm from '../components/BookmarkForm';
 import useBookmarks from '../useBookmarks';
 import AllBookmarks from './AllBookmarks';
-import NewBookmark from './NewBookmark';
 
 type BookmarkSideSheetProps<T> = BookmarksManagerProps<T> & {
     isOpen: boolean;
@@ -22,8 +22,8 @@ function BookmarkSideSheet<T>({
     const currentContext = useCurrentContext();
     const { allBookmarks, saveBookmarkAsync } = useBookmarks();
     const [isSaving, setIsSaving] = useState<boolean>(false);
-
-    /**@TODO */
+    const showAllBookmarks = useCallback(() => setIsSaving(false), []);
+    const hideAllBookmarks = useCallback(() => setIsSaving(true), []);
     const onSave = useCallback(
         async (name: string, description: string, isShared: boolean = false) => {
             try {
@@ -45,22 +45,26 @@ function BookmarkSideSheet<T>({
         [currentApp, currentContext]
     );
     return (
-        <ModalSideSheet header={name} onClose={onClose} show={isOpen} size="medium" id={anchorId}>
+        <ModalSideSheet
+            header={name}
+            onClose={onClose}
+            show={isOpen}
+            size="medium"
+            id={anchorId}
+            headerIcons={[<Button onClick={hideAllBookmarks}>New bookmark</Button>]}
+        >
             {isSaving ? (
-                <NewBookmark
-                    onCancel={onClose}
+                <BookmarkForm
+                    onCancel={showAllBookmarks}
                     onSave={onSave}
                     contextName={currentContext.title}
                 />
             ) : (
-                <>
-                    <button onClick={() => setIsSaving(true)}>Save</button>
-                    <AllBookmarks
-                        allBookmarks={allBookmarks}
-                        currentContextId={currentContext.id}
-                        applyBookmark={applyBookmark}
-                    />
-                </>
+                <AllBookmarks
+                    allBookmarks={allBookmarks}
+                    currentContextId={currentContext.id}
+                    applyBookmark={applyBookmark}
+                />
             )}
         </ModalSideSheet>
     );

@@ -2,12 +2,12 @@ import { useNotificationCenter } from '@equinor/fusion';
 import { Button, TextInput } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import styles from './styles.less';
-type NewBookmarkProps = {
+type BookmarkFormProps = {
     contextName: string;
     onCancel: () => void;
     onSave: (name: string, description: string) => Promise<void>;
 };
-function NewBookmark({ contextName, onCancel, onSave }: NewBookmarkProps) {
+function BookmarkForm({ contextName, onCancel, onSave }: BookmarkFormProps) {
     const createNotification = useNotificationCenter();
 
     const [name, setName] = useState<string>('');
@@ -80,4 +80,4 @@ function NewBookmark({ contextName, onCancel, onSave }: NewBookmarkProps) {
     );
 }
 
-export default NewBookmark;
+export default BookmarkForm;
