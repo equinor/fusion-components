@@ -2,6 +2,7 @@ import { BookmarkListResponse } from '@equinor/fusion';
 import { Accordion, AccordionItem, ErrorMessage } from '@equinor/fusion-components';
 import { useEffect, useState } from 'react';
 import { ApplyBookmark } from '../..';
+import BookmarkForm from '../../components/BookmarkForm';
 import Bookmark from './Bookmark';
 
 type OpenAccordion = {
@@ -18,27 +19,11 @@ type Context = {
 };
 function AllBookmarks<T>({ allBookmarks, currentContextId, applyBookmark }: AllBookmarksProps<T>) {
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
-
+    const [isEditing, setIsEditing] = useState<boolean>(false);
     function handleOpenAccordionChange(id: string) {
         setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
     }
 
-    useEffect(() => {
-        setOpenAccordions({
-            [currentContextId]: true,
-        });
-    }, [currentContextId]);
-
-    if (!allBookmarks || !allBookmarks.length) {
-        return (
-            <ErrorMessage
-                hasError
-                errorType="noData"
-                title="No bookmarks"
-                message="No bookmarks for this app"
-            />
-        );
-    }
     const groupedContext: Record<string, Array<BookmarkListResponse>> = {};
     const groupedContexts: Record<string, Context | undefined> = {};
     const bookmarksGroupByContextId: Record<
@@ -62,6 +47,23 @@ function AllBookmarks<T>({ allBookmarks, currentContextId, applyBookmark }: AllB
         }
         return groupedContexts;
     }, {});
+
+    useEffect(() => {
+        setOpenAccordions({
+            [currentContextId]: true,
+        });
+    }, [currentContextId]);
+
+    if (!allBookmarks || !allBookmarks.length) {
+        return (
+            <ErrorMessage
+                hasError
+                errorType="noData"
+                title="No bookmarks"
+                message="No bookmarks for this app"
+            />
+        );
+    }
 
     return (
         <Accordion>

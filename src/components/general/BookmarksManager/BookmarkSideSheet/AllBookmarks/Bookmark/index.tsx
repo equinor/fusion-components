@@ -1,22 +1,11 @@
 import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
-import {
-    SortIcon,
-    AccordionItem,
-    ShareIcon,
-    useTooltipRef,
-    Accordion,
-    PersonPhoto,
-    PersonDetail,
-    NotificationBanner,
-    NotificationDialog,
-} from '@equinor/fusion-components';
-import classNames from 'classnames';
+import { SortIcon, ShareIcon, useTooltipRef, PersonPhoto } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import { ApplyBookmark } from '../../..';
-import useBookmarks from '../../../useBookmarks';
 import EditBookmark from './EditBookmark';
 import Options from './Options';
 import styles from './styles.less';
+
 type BookmarkProps<TPayload> = {
     bookmark: BookmarkListResponse;
     applyBookmark: (bookmarkSetting: ApplyBookmark<TPayload>) => Promise<void>;

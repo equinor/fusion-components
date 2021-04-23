@@ -51,7 +51,7 @@ const createAllBookmarksStory = () => () => {
         },
         {
             id: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
-            name: 'My other bookmark!',
+            name: 'My other bookmark with a very long name',
             description: 'string',
             isShared: true,
             appKey: 'string',

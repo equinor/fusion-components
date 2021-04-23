@@ -4,11 +4,11 @@ import withFusionStory from '../../../../../.storybook/withFusionStory';
 import { BookmarkResponse } from '@equinor/fusion';
 import BookmarkForm from '../components/BookmarkForm';
 import AllBookmarks from '../BookmarkSideSheet/AllBookmarks';
-import useBookmarks from '../useBookmarks';
 import ModalSideSheet from '../../SideSheet/Modal';
 import Button from '../../Button';
+import useTooltipRef from '../../../../hooks/useTooltipRef';
 
-const createAllBookmarksStory = () => () => {
+const createBookmarksManagerStory = () => () => {
     const allBookmarks: Omit<BookmarkResponse, 'payload'>[] = [
         {
             id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -52,7 +52,7 @@ const createAllBookmarksStory = () => () => {
         },
         {
             id: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
-            name: 'My other bookmark!',
+            name: 'My other bookmark with a very, very long title!',
             description: 'string',
             isShared: true,
             appKey: 'string',
@@ -74,24 +74,37 @@ const createAllBookmarksStory = () => () => {
 
     const [isSaving, setIsSaving] = useState<boolean>(false);
 
-    const onSave = async (name: string, description: string, isShared: boolean = false) => {
+    const onSave = async (__name: string, __description: string, __isShared: boolean = false) => {
         try {
-            const payload = {};
+            setIsSaving(false);
         } catch (e) {
             console.error(e);
         }
     };
 
     async function applyBookmark() {}
+    const HeaderIcon = () => {
+        const tooltipRef = useTooltipRef(
+            'Add a bookmark to easily get back to this view later.',
+            'left',
+            1000
+        );
+
+        return (
+            <Button ref={tooltipRef} onClick={() => setIsSaving(true)}>
+                New bookmark
+            </Button>
+        );
+    };
     return (
         <Fragment>
             <ModalSideSheet
-                header={'Bookmarks Manager'}
+                header={isSaving ? 'Save filter as bookmark' : 'Bookmarks Manager'}
                 onClose={() => {}}
                 show={true}
                 size="medium"
                 id={'1'}
-                headerIcons={[<Button onClick={() => setIsSaving(true)}>New Bookmark</Button>]}
+                headerIcons={isSaving ? [] : [<HeaderIcon />]}
             >
                 {isSaving ? (
                     <BookmarkForm
@@ -116,4 +129,4 @@ const createAllBookmarksStory = () => () => {
 storiesOf('BookmarksManager', module)
     // .addParameters({ jest: ['Button.stories.jsx'] })
     .addDecorator(withFusionStory('BookmarksManager'))
-    .add('Default', createAllBookmarksStory());
+    .add('Default', createBookmarksManagerStory());

@@ -60,8 +60,8 @@ function BookmarkForm({ contextName, onCancel, onSave }: BookmarkFormProps) {
                     <TextInput
                         onChange={updateDescription}
                         value={description}
-                        placeholder="Give your bookmark a description"
-                    />{' '}
+                        placeholder="Optional description, helpful when shared"
+                    />
                 </div>
             </div>
             <div className={styles.newItemAction}>

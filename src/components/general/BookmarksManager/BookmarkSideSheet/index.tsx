@@ -1,5 +1,5 @@
 import { useCurrentApp, useCurrentContext } from '.yalc/@equinor/fusion/lib';
-import { Button, ModalSideSheet } from '@equinor/fusion-components';
+import { Button, ModalSideSheet, useTooltipRef } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import { BookmarksManagerProps } from '..';
 import BookmarkForm from '../components/BookmarkForm';
@@ -13,7 +13,6 @@ type BookmarkSideSheetProps<T> = BookmarksManagerProps<T> & {
 function BookmarkSideSheet<T>({
     isOpen,
     onClose,
-    name,
     anchorId,
     capturePayload,
     applyBookmark,
@@ -24,6 +23,10 @@ function BookmarkSideSheet<T>({
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const showAllBookmarks = useCallback(() => setIsSaving(false), []);
     const hideAllBookmarks = useCallback(() => setIsSaving(true), []);
+    const tooltipRef = useTooltipRef(
+        'Add a bookmark to easily get back to this view later.',
+        'below'
+    );
     const onSave = useCallback(
         async (name: string, description: string, isShared: boolean = false) => {
             try {
@@ -37,6 +40,7 @@ function BookmarkSideSheet<T>({
                         contextId: currentContext.id,
                         isShared: isShared,
                     });
+                    setIsSaving(false);
                 }
             } catch (e) {
                 console.error(e);
@@ -44,14 +48,21 @@ function BookmarkSideSheet<T>({
         },
         [currentApp, currentContext]
     );
+    const NewBookmarkButton = () => {
+        return (
+            <Button onClick={hideAllBookmarks} ref={tooltipRef}>
+                New bookmark
+            </Button>
+        );
+    };
     return (
         <ModalSideSheet
-            header={name}
+            header={isSaving ? 'Save filter as bookmark' : 'Bookmarks Manager'}
             onClose={onClose}
             show={isOpen}
             size="medium"
             id={anchorId}
-            headerIcons={[<Button onClick={hideAllBookmarks}>New bookmark</Button>]}
+            headerIcons={isSaving ? [] : [<NewBookmarkButton />]}
         >
             {isSaving ? (
                 <BookmarkForm
