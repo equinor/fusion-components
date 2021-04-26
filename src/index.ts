@@ -117,6 +117,7 @@ export { default as NotificationsSideSheet } from './components/general/Notifica
 export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 export { default as MarkdownEditor } from './components/general/MarkdownEditor';
 export { default as AppSettingsManager } from './components/general/AppSettingsManager';
+export { default as BookmarksManager } from './components/general/BookmarksManager';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
