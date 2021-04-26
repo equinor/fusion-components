@@ -1,7 +1,8 @@
-import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
+import { BookmarkListResponse, useHistory, useNotificationCenter } from '@equinor/fusion';
 import { SortIcon, ShareIcon, useTooltipRef, PersonPhoto } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import { ApplyBookmark } from '../../..';
+import useBookmarks from '../../../useBookmarks';
 import EditBookmark from './EditBookmark';
 import Options from './Options';
 import styles from './styles.less';
@@ -12,15 +13,17 @@ type BookmarkProps<TPayload> = {
     accordionOpen: boolean;
 };
 function Bookmark<T>({ bookmark, applyBookmark, accordionOpen }: BookmarkProps<T>) {
-    const createNotification = useNotificationCenter();
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
     const enableEditing = useCallback(() => setIsEditing(true), []);
     const disableEditing = useCallback(() => setIsEditing(false), []);
+    const { deleteBookmarkAsync, editBookmarkAsync } = useBookmarks();
     const bookmarkRef = useTooltipRef('Shared', 'below');
+    const createNotification = useNotificationCenter();
+    const history = useHistory();
 
     const handleDelete = async () => {
-        await createNotification({
+        const response = await createNotification({
             level: 'high',
             title: `Remove bookmark ${bookmark.name}`,
             confirmLabel: 'Remove',
@@ -28,15 +31,21 @@ function Bookmark<T>({ bookmark, applyBookmark, accordionOpen }: BookmarkProps<T
             body:
                 'By removing this bookmark, it will also be removed from the people you have shared it with.',
         });
+        if (!response.confirmed) return;
+
+        try {
+            deleteBookmarkAsync(bookmark.id);
+        } catch (e) {}
     };
 
     const handleSharing = async () => {
+        editBookmarkAsync(bookmark.id, { isShared: true });
         await createNotification({
             level: 'high',
-            title: 'Coped to clipboard',
+            title: 'Copied to clipboard',
             confirmLabel: 'Close',
             cancelLabel: null,
-            body: `This URL has been copied`,
+            body: `This URL has been copied: ${history.location.pathname}/${bookmark.id}`,
         });
     };
 

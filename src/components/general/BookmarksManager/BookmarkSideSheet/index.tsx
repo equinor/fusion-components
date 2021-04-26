@@ -1,4 +1,4 @@
-import { useCurrentApp, useCurrentContext } from '.yalc/@equinor/fusion/lib';
+import { useCurrentApp, useCurrentContext } from '@equinor/fusion';
 import { Button, ModalSideSheet, useTooltipRef } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import { BookmarksManagerProps } from '..';
@@ -19,7 +19,7 @@ function BookmarkSideSheet<T>({
 }: BookmarkSideSheetProps<T>) {
     const currentApp = useCurrentApp();
     const currentContext = useCurrentContext();
-    const { allBookmarks, saveBookmarkAsync } = useBookmarks();
+    const { allBookmarks, saveBookmarkAsync, bookmarksError } = useBookmarks();
     const [isSaving, setIsSaving] = useState<boolean>(false);
     const showAllBookmarks = useCallback(() => setIsSaving(false), []);
     const hideAllBookmarks = useCallback(() => setIsSaving(true), []);
@@ -55,6 +55,7 @@ function BookmarkSideSheet<T>({
             </Button>
         );
     };
+
     return (
         <ModalSideSheet
             header={isSaving ? 'Save filter as bookmark' : 'Bookmarks Manager'}
@@ -70,13 +71,13 @@ function BookmarkSideSheet<T>({
                     onSave={onSave}
                     contextName={currentContext.title}
                 />
-            ) : (
+            ) : currentContext ? (
                 <AllBookmarks
                     allBookmarks={allBookmarks}
                     currentContextId={currentContext.id}
                     applyBookmark={applyBookmark}
                 />
-            )}
+            ) : null}
         </ModalSideSheet>
     );
 }

@@ -26,27 +26,28 @@ function AllBookmarks<T>({ allBookmarks, currentContextId, applyBookmark }: AllB
 
     const groupedContext: Record<string, Array<BookmarkListResponse>> = {};
     const groupedContexts: Record<string, Context | undefined> = {};
-    const bookmarksGroupByContextId: Record<
-        string,
-        Array<BookmarkListResponse>
-    > = allBookmarks.reduce((__prev, curr) => {
-        const key = curr.context ? curr.context.id : 'unknown';
-        if (groupedContext[key]) {
-            const bookmarks = groupedContext[key];
-            bookmarks.push(curr);
-        } else {
-            groupedContext[key] = [curr];
-        }
-        return groupedContext;
-    }, {});
+    const bookmarksGroupByContextId: Record<string, Array<BookmarkListResponse>> = allBookmarks
+        ? allBookmarks.reduce((__prev, curr) => {
+              const key = curr.context ? curr.context.id : 'unknown';
+              if (groupedContext[key]) {
+                  const bookmarks = groupedContext[key];
+                  bookmarks.push(curr);
+              } else {
+                  groupedContext[key] = [curr];
+              }
+              return groupedContext;
+          }, {})
+        : {};
 
-    const groupByContextId: Record<string, Context> = allBookmarks.reduce((__prev, curr) => {
-        const key = curr.context ? curr.context.id : 'unknown';
-        if (!groupedContexts[key]) {
-            groupedContexts[key] = curr.context;
-        }
-        return groupedContexts;
-    }, {});
+    const groupByContextId: Record<string, Context> = allBookmarks
+        ? allBookmarks.reduce((__prev, curr) => {
+              const key = curr.context ? curr.context.id : 'unknown';
+              if (!groupedContexts[key]) {
+                  groupedContexts[key] = curr.context;
+              }
+              return groupedContexts;
+          }, {})
+        : {};
 
     useEffect(() => {
         setOpenAccordions({
@@ -75,15 +76,17 @@ function AllBookmarks<T>({ allBookmarks, currentContextId, applyBookmark }: AllB
                         isOpen={openAccordions[context.id]}
                         onChange={() => handleOpenAccordionChange(context.id)}
                     >
-                        {Object.values(bookmarksGroupByContextId[context.id]).map((bookmark) => {
-                            return (
-                                <Bookmark
-                                    bookmark={bookmark}
-                                    applyBookmark={applyBookmark}
-                                    accordionOpen={openAccordions[context.id]}
-                                />
-                            );
-                        })}
+                        {Object.values(bookmarksGroupByContextId[context.id]).map(
+                            (bookmark: BookmarkListResponse) => {
+                                return (
+                                    <Bookmark
+                                        bookmark={bookmark}
+                                        applyBookmark={applyBookmark}
+                                        accordionOpen={openAccordions[context.id]}
+                                    />
+                                );
+                            }
+                        )}
                     </AccordionItem>
                 );
             })}
