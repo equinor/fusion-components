@@ -35,14 +35,11 @@ export default (): UseBookmarksProps => {
         }
     }, [apiClients, currentApp]);
 
-    useEffect(() => {
-        fetchBookmarksAsync();
-    }, []);
-
     const saveBookmarkAsync = useCallback(
         async (bookmark: BookmarkRequest) => {
             try {
                 const response = await apiClients.bookmarks.addBookmark(bookmark);
+                return response;
             } catch (e) {}
         },
         [apiClients, currentApp, currentContext]
@@ -54,7 +51,8 @@ export default (): UseBookmarksProps => {
             bookmark: Partial<Omit<BookmarkRequest, 'appkey' | 'contextId'>>
         ) => {
             try {
-                await apiClients.bookmarks.updateBookmark(bookmarkId, bookmark);
+                const response = await apiClients.bookmarks.updateBookmark(bookmarkId, bookmark);
+                return response;
             } catch (e) {}
         },
         [apiClients, currentApp, currentContext]
@@ -67,7 +65,9 @@ export default (): UseBookmarksProps => {
         },
         [apiClients, currentApp, currentContext]
     );
-
+    useEffect(() => {
+        fetchBookmarksAsync();
+    }, []);
     return {
         allBookmarks,
         isFetchingBookmarks,
