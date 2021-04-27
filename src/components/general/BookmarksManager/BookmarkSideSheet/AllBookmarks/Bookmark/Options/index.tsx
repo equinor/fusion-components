@@ -1,3 +1,4 @@
+import { useCurrentUser } from '@equinor/fusion';
 import {
     Dropdown,
     IconButton,
@@ -14,9 +15,13 @@ type OptionsProps = {
     onDelete: () => void;
     onShare: () => void;
     accordionOpen?: boolean;
-    isShared: boolean;
+    bookmarkInfo: {
+        isShared: boolean;
+        bookmarkId: string;
+    };
 };
-function Options({ onEdit, onDelete, accordionOpen, isShared, onShare }: OptionsProps) {
+function Options({ onEdit, onDelete, accordionOpen, bookmarkInfo, onShare }: OptionsProps) {
+    const { id } = useCurrentUser();
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => (
         <IconButton
             ref={ref as MutableRefObject<HTMLButtonElement>}
@@ -70,7 +75,7 @@ function Options({ onEdit, onDelete, accordionOpen, isShared, onShare }: Options
                         </div>
                         <span className={styles.label}>Share URL</span>
                     </div>
-                    {isShared && (
+                    {bookmarkInfo.isShared && (
                         <div className={styles.menuItem} key="share" onClick={onShareClick}>
                             <div className={styles.icon}>
                                 <ShareIcon />

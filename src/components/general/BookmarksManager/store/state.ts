@@ -1,6 +1,7 @@
 import { BookmarkListResponse } from '@equinor/fusion';
-import { Actions, ApiError } from './actions';
-
+// import { Actions, ApiError } from './actions';
+import { BookmarksActions as Actions } from './actions/bookmarks';
+import { ApiError } from './actions/bookmarks';
 export enum Status {
     Fetching,
     Idle,

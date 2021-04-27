@@ -1,6 +1,7 @@
 import { EpicReducer } from '@equinor/fusion/lib/epic';
 import { State } from './state';
-import { Actions, actions } from './actions';
+// import { Actions, actions } from './actions';
+import { BookmarksActions as Actions, actions } from './actions/bookmarks';
 import { BookmarkRequest } from '@equinor/fusion';
 export class Store extends EpicReducer<State, Actions> {
     requestBookmarks(appKey: string): VoidFunction {
@@ -14,6 +15,13 @@ export class Store extends EpicReducer<State, Actions> {
     addBookmark(bookmark: BookmarkRequest): VoidFunction {
         this.dispatch(actions.add.request(bookmark));
         return () => this.dispatch(actions.add.cancel());
+    }
+    updateBookmark(
+        bookmarkId: string,
+        bookmark: Partial<Omit<BookmarkRequest, 'appKey' | 'contextId'>>
+    ): VoidFunction {
+        this.dispatch(actions.update.request({ bookmarkId, bookmark }));
+        return () => this.dispatch(actions.update.cancel());
     }
 }
 

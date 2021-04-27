@@ -1,16 +1,16 @@
-import { Observable, from, of, merge } from 'rxjs';
+import { Observable, from, of } from 'rxjs';
 import { filter, map, switchMap, catchError, takeUntil } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 import { ApiClients } from '@equinor/fusion';
 import { combineEpics, StatefulObserver } from '@equinor/fusion/lib/epic';
-import { actions, Actions } from '../actions';
+import { actions, BookmarksActions as Actions } from '../actions/bookmarks';
 import { State } from '../state';
 
 export type Dependencies = { clients: ApiClients };
 
-export const fetchBookmarks = <S = any>(
+export const fetchBookmarks = (
     action$: Observable<Actions>,
-    _: StatefulObserver<S>,
+    _: StatefulObserver<State>,
     { clients }: Dependencies
 ) => {
     const { request, success, failure, cancel } = actions.fetch;
@@ -106,9 +106,9 @@ const epics = combineEpics<Actions, Actions, State>(
     deleteBookmark,
     addBookmark,
     updateBookmark,
+    onBookmarkUpdated,
     onBookmarkAdded,
-    onBookmarkDeleted,
-    onBookmarkUpdated
+    onBookmarkDeleted
 );
 
 export default epics;

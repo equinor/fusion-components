@@ -7,7 +7,9 @@ import {
     useAnchor,
 } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
+import BookmarkProvider from './BookmarkProvider';
 import BookmarkSideSheet from './BookmarkSideSheet';
+import { ViewProvider } from './components/Provider/BookmarkComponentProvider';
 
 export type ApplyBookmark<TPayload> = {
     id: string;
@@ -35,14 +37,16 @@ function BookmarksManager<T>(props: BookmarksManagerProps<T>) {
     const ref = useAnchor<HTMLButtonElement>({ id: props.anchorId, scope: 'portal' });
     return (
         <>
-            <HeaderAppAsidePortal>
-                <div ref={tooltipRef}>
-                    <IconButton onClick={openSideSheet} ref={ref}>
-                        <BookmarksIcon color={styling.colors.blackAlt2} />
-                    </IconButton>
-                </div>
-            </HeaderAppAsidePortal>
-            <BookmarkSideSheet isOpen={isSideSheetOpen} onClose={closeSideSheet} {...props} />
+            <BookmarkProvider>
+                <HeaderAppAsidePortal>
+                    <div ref={tooltipRef}>
+                        <IconButton onClick={openSideSheet} ref={ref}>
+                            <BookmarksIcon color={styling.colors.blackAlt2} />
+                        </IconButton>
+                    </div>
+                </HeaderAppAsidePortal>
+                <BookmarkSideSheet isOpen={isSideSheetOpen} onClose={closeSideSheet} {...props} />
+            </BookmarkProvider>
         </>
     );
 }

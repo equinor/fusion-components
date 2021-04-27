@@ -8,7 +8,4 @@ export const createStore = (clients: ApiClients): Store => {
     return new Store(reducer, epics, initial, { clients });
 };
 
-// export * from './state';
-// export * from './actions';
-
 export default createStore;

@@ -1,5 +1,5 @@
 import { createReducer } from 'typesafe-actions';
-import { Actions } from '../actions';
+import { BookmarksActions as Actions } from '../actions/bookmarks';
 import { State } from '../state';
 
 import { fetchBookmarksReducer } from './fetch-bookmarks';

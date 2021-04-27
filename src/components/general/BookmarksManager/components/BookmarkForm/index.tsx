@@ -1,22 +1,28 @@
-import { useNotificationCenter } from '@equinor/fusion';
+import { BookmarkListResponse, BookmarkRequest, useNotificationCenter } from '@equinor/fusion';
 import { Button, TextInput } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import styles from './styles.less';
 type BookmarkFormProps = {
     contextName: string;
     onCancel: () => void;
-    onSave: (name: string, description: string) => Promise<void>;
+    onSave?: (name: string, description: string) => Promise<void>;
+    onEditSave?: (
+        bookmarkId: string,
+        bookmarkRequest: Partial<Omit<BookmarkRequest, 'appKey' | 'contextId'>>
+    ) => Promise<void>;
+    bookmark?: BookmarkListResponse;
 };
-function BookmarkForm({ contextName, onCancel, onSave }: BookmarkFormProps) {
-    const createNotification = useNotificationCenter();
-
-    const [name, setName] = useState<string>('');
+function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: BookmarkFormProps) {
+    const [name, setName] = useState<string>(bookmark?.name ? bookmark?.name : '');
+    const [description, setDescription] = useState<string>(
+        bookmark?.description ? bookmark?.description : ''
+    );
     const updateName = useCallback((newName: string) => setName(newName), []);
-    const [description, setDescription] = useState<string>('');
     const updateDescription = useCallback(
         (newDescription: string) => setDescription(newDescription),
         []
     );
+    const createNotification = useNotificationCenter();
 
     const saveBookmark = useCallback(async () => {
         try {
@@ -24,6 +30,22 @@ function BookmarkForm({ contextName, onCancel, onSave }: BookmarkFormProps) {
             createNotification({
                 level: 'low',
                 title: 'New bookmark was added',
+            });
+            setName('');
+        } catch (e) {
+            createNotification({
+                level: 'high',
+                title: 'Unable to create new notification',
+            });
+        }
+    }, [name, description]);
+
+    const saveEditBookmark = useCallback(async () => {
+        try {
+            await onEditSave(bookmark.id, { name, description });
+            createNotification({
+                level: 'low',
+                title: 'Bookmark was successfully edited',
             });
             setName('');
         } catch (e) {
@@ -71,7 +93,11 @@ function BookmarkForm({ contextName, onCancel, onSave }: BookmarkFormProps) {
                     </Button>
                 </div>
                 <div className={styles.save}>
-                    <Button primary onClick={saveBookmark} disabled={name.length === 0}>
+                    <Button
+                        primary
+                        onClick={bookmark ? saveEditBookmark : saveBookmark}
+                        disabled={name.length === 0}
+                    >
                         Save
                     </Button>
                 </div>

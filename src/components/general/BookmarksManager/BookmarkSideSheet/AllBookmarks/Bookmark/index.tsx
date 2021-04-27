@@ -1,9 +1,14 @@
-import { BookmarkListResponse, useHistory, useNotificationCenter } from '@equinor/fusion';
+import {
+    BookmarkListResponse,
+    useCurrentUser,
+    useHistory,
+    useNotificationCenter,
+} from '@equinor/fusion';
 import { SortIcon, ShareIcon, useTooltipRef, PersonPhoto } from '@equinor/fusion-components';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { ApplyBookmark } from '../../..';
-import useBookmarks from '../../../useBookmarks';
-import EditBookmark from './EditBookmark';
+import useBookmarkContext from '../../../hooks/useBookmarkContext';
+
 import Options from './Options';
 import styles from './styles.less';
 
@@ -11,13 +16,18 @@ type BookmarkProps<TPayload> = {
     bookmark: BookmarkListResponse;
     applyBookmark: (bookmarkSetting: ApplyBookmark<TPayload>) => Promise<void>;
     accordionOpen: boolean;
+    setBookmarkState: any;
+    setEditBookmark: any;
 };
-function Bookmark<T>({ bookmark, applyBookmark, accordionOpen }: BookmarkProps<T>) {
-    const [isEditing, setIsEditing] = useState<boolean>(false);
+function Bookmark<T>({
+    bookmark,
+    applyBookmark,
+    accordionOpen,
+    setBookmarkState,
+    setEditBookmark,
+}: BookmarkProps<T>) {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
-    const enableEditing = useCallback(() => setIsEditing(true), []);
-    const disableEditing = useCallback(() => setIsEditing(false), []);
-    const { deleteBookmarkAsync, editBookmarkAsync } = useBookmarks();
+    const { store } = useBookmarkContext();
     const bookmarkRef = useTooltipRef('Shared', 'below');
     const createNotification = useNotificationCenter();
     const history = useHistory();
@@ -34,12 +44,16 @@ function Bookmark<T>({ bookmark, applyBookmark, accordionOpen }: BookmarkProps<T
         if (!response.confirmed) return;
 
         try {
-            deleteBookmarkAsync(bookmark.id);
+            store.deleteBookmark(bookmark.appKey, bookmark.id);
         } catch (e) {}
     };
 
     const handleSharing = async () => {
-        editBookmarkAsync(bookmark.id, { isShared: true });
+        try {
+            store.updateBookmark(bookmark.id, {
+                isShared: true,
+            });
+        } catch (e) {}
         await createNotification({
             level: 'high',
             title: 'Copied to clipboard',
@@ -47,6 +61,11 @@ function Bookmark<T>({ bookmark, applyBookmark, accordionOpen }: BookmarkProps<T
             cancelLabel: null,
             body: `This URL has been copied: ${history.location.pathname}/${bookmark.id}`,
         });
+    };
+
+    const handleEdit = () => {
+        setEditBookmark(bookmark);
+        setBookmarkState('Editing');
     };
 
     const MoreDetails = () => {
@@ -81,43 +100,33 @@ function Bookmark<T>({ bookmark, applyBookmark, accordionOpen }: BookmarkProps<T
     };
     return (
         <div className={styles.container}>
-            {isEditing ? (
-                <EditBookmark
-                    name={bookmark.name}
-                    description={bookmark.description}
-                    onExit={disableEditing}
-                    onSave={() => {}}
+            <div className={styles.accordionContainer}>
+                <Options
+                    onDelete={handleDelete}
+                    onEdit={handleEdit}
+                    onShare={handleSharing}
+                    accordionOpen={accordionOpen}
+                    bookmarkInfo={{ bookmarkId: bookmark.id, isShared: bookmark.isShared }}
                 />
-            ) : (
-                <div className={styles.accordionContainer}>
-                    <Options
-                        onDelete={handleDelete}
-                        onEdit={enableEditing}
-                        onShare={handleSharing}
-                        accordionOpen={accordionOpen}
-                        isShared={bookmark.isShared}
-                    />
-                    <div className={styles.content}>
-                        <div className={styles.link} onClick={() => applyBookmark}>
-                            {bookmark.name}
-                        </div>
-                    </div>
-                    <div className={styles.sharedBookmark}>
-                        {bookmark.isShared && (
-                            <div className={styles.icon} ref={bookmarkRef}>
-                                <ShareIcon />
-                            </div>
-                        )}
-                    </div>
-                    <div
-                        className={styles.viewMore}
-                        onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
-                    >
-                        <SortIcon direction={isDescriptionOpen ? 'asc' : 'desc'} />
+                <div className={styles.content}>
+                    <div className={styles.link} onClick={() => applyBookmark}>
+                        {bookmark.name}
                     </div>
                 </div>
-            )}
-
+                <div className={styles.sharedBookmark}>
+                    {bookmark.isShared && (
+                        <div className={styles.icon} ref={bookmarkRef}>
+                            <ShareIcon />
+                        </div>
+                    )}
+                </div>
+                <div
+                    className={styles.viewMore}
+                    onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
+                >
+                    <SortIcon direction={isDescriptionOpen ? 'asc' : 'desc'} />
+                </div>
+            </div>
             <MoreDetails />
         </div>
     );
