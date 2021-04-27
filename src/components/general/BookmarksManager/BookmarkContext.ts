@@ -4,4 +4,4 @@ export type BookmarkContext = {
     store: Store;
 };
 
-export const context = createContext<BookmarkContext | null>(null);
+export const bookmarkContext = createContext<BookmarkContext | null>(null);
