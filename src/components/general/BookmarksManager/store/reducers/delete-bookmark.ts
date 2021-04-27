@@ -1,6 +1,7 @@
 import { createReducer } from 'typesafe-actions';
-import { BookmarksActions as Actions, deleteBookmark as actions } from '../actions/bookmarks';
 import { removeStatus, removeError, State, Status } from '../state';
+import actions from '../actions/delete';
+import { DeleteActions as Actions } from '../actions/delete';
 
 export const deleteBookmarkReducer = (initial: State) =>
     createReducer<State, Actions>(initial)

@@ -1,11 +1,16 @@
 import { ActionType } from 'typesafe-actions';
 import { HttpClientRequestFailedError } from '@equinor/fusion';
 import { ActionError } from '@equinor/fusion/lib/epic';
-import { deleteBookmark, fetchBookmarks } from '../actions/bookmarks';
+import deleteAction from './delete';
+import fetchAction from './fetch';
+import addAction from './add';
+import updateAction from './update';
 
 export const actions = {
-    ...deleteBookmark,
-    ...fetchBookmarks,
+    add: addAction,
+    fetch: fetchAction,
+    delete: deleteAction,
+    update: updateAction,
 };
 
 export type ApiError = ActionError<HttpClientRequestFailedError<any>>;

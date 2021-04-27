@@ -8,10 +8,8 @@ export enum Status {
 }
 
 export type State = {
-    id: string;
-    appKey: string;
-    status: Array<Status>;
-    errors: Array<ApiError>;
+    status: Status[];
+    errors: ApiError[];
     bookmarks: BookmarkListResponse[];
 };
 

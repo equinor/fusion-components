@@ -3,7 +3,7 @@ import { removeStatus, removeError, State, Status } from '../state';
 import actions from '../actions/fetch';
 import { FetchActions as Actions } from '../actions/fetch';
 
-export const fetchBookmarksReducer = (initial: State) =>
+export const updateBookmarkReducer = (initial: State) =>
     createReducer<State, Actions>(initial)
         .handleAction(actions.request, (state, action) => ({
             ...state,
@@ -13,11 +13,10 @@ export const fetchBookmarksReducer = (initial: State) =>
         .handleAction(actions.success, (state, action) => ({
             ...state,
             status: removeStatus(state, Status.Idle),
-            bookmarks: action.payload,
         }))
         .handleAction(actions.failure, (state, action) => ({
             ...state,
             status: removeStatus(state, Status.Failure),
             errors: [...state.errors, action.payload],
         }));
-export default fetchBookmarksReducer;
+export default updateBookmarkReducer;

@@ -1,34 +1,46 @@
-import { createAsyncAction, ActionType } from 'typesafe-actions';
-import { BookmarkListResponse, HttpClientRequestFailedError } from '@equinor/fusion';
-import { ActionError } from '@equinor/fusion/lib/epic';
+// import { createAsyncAction, ActionType } from 'typesafe-actions';
+// import {
+//     BookmarkListResponse,
+//     BookmarkRequest,
+//     HttpClientRequestFailedError,
+//     BookmarkResponse,
+// } from '@equinor/fusion';
+// import { ActionError } from '@equinor/fusion/lib/epic';
 
-export type BookmarksActions = ActionType<typeof actions>;
+// type FailedErrorType = string | void;
+// type ApiError = ActionError<HttpClientRequestFailedError<any>>;
+// type FetchRequestPayload = {
+//     appKey: string;
+// };
+// export const fetchBookmarks = createAsyncAction(
+//     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_REQUEST',
+//     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_SUCCESS',
+//     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_FAILURE',
+//     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_CANCEL'
+// )<FetchRequestPayload, BookmarkListResponse[], ApiError, FailedErrorType>();
+// type DeletePayload = {
+//     bookmarkId: string;
+//     appKey: string;
+// };
 
-type FetchRequestPayload = {
-    appKey: string;
-};
-export const fetchBookmarks = createAsyncAction(
-    '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_REQUEST',
-    '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_SUCCESS',
-    '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_FAILURE',
-    '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_CANCEL'
-)<
-    FetchRequestPayload,
-    BookmarkListResponse[],
-    ActionError<HttpClientRequestFailedError<any>>,
-    void | string
->();
+// export const deleteBookmark = createAsyncAction(
+//     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_REQUEST',
+//     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_SUCCESS',
+//     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_FAILURE',
+//     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_CANCEL'
+// )<DeletePayload, DeletePayload, ApiError, FailedErrorType>();
 
-type DeleteRequestPayload = {
-    bookmarkId: string;
-    appKey: string;
-};
-export const deleteBookmark = createAsyncAction(
-    '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_REQUEST',
-    '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_SUCCESS',
-    '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_FAILURE',
-    '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_CANCEL'
-)<DeleteRequestPayload, void, ActionError<HttpClientRequestFailedError<any>>, void | string>();
-const actions = { fetchBookmarks, deleteBookmark };
+// export const addBookmark = createAsyncAction(
+//     '@FUSION_COMPONENTS/BOOKMARKS/ADD_BOOKMARK_REQUEST',
+//     '@FUSION_COMPONENTS/BOOKMARKS/ADD_BOOKMARK_SUCCESS',
+//     '@FUSION_COMPONENTS/BOOKMARKS/ADD_BOOKMARK_FAILURE',
+//     '@FUSION_COMPONENTS/BOOKMARKS/ADD_BOOKMARK_CANCEL'
+// )<BookmarkRequest, BookmarkResponse, ApiError, FailedErrorType>();
 
-export default actions;
+// export const actions = {
+//     fetch: fetchBookmarks,
+//     delete: deleteBookmark,
+//     add: addBookmark,
+// };
+// export type BookmarksActions = ActionType<typeof actions>;
+// export default actions;
