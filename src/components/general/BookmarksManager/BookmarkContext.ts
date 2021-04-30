@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { Store } from './store/store';
-export type BookmarkContext = {
+type BookmarkContext = {
     store: Store;
 };
 

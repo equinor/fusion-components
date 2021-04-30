@@ -9,35 +9,48 @@ import {
 import { useCallback, useState } from 'react';
 import BookmarkProvider from './BookmarkProvider';
 import BookmarkSideSheet from './BookmarkSideSheet';
-import { ViewProvider } from './components/Provider/BookmarkComponentProvider';
+import { BookmarkPayloadResponse } from '@equinor/fusion';
 
-export type ApplyBookmark<TPayload> = {
-    id: string;
-    name: string;
-    appKey: string;
-    context: {
-        name: string;
-        id: string;
-    };
+type BookmarkPayload<TPayload> = Omit<BookmarkPayloadResponse, 'payload'> & {
     payload: TPayload;
 };
 
 export type BookmarksManagerProps<TPayload> = {
     capturePayload: () => Promise<TPayload>;
-    applyBookmark: (bookmarkSetting: ApplyBookmark<TPayload>) => Promise<void>;
+    applyBookmark: (
+        bookmarkPayload: BookmarkPayload<TPayload>,
+        awaitForContextSwitch: boolean
+    ) => Promise<void>;
     name: string;
     anchorId: string;
+    bookmarkIdFromUrl?: string | null;
 };
 
 function BookmarksManager<T>(props: BookmarksManagerProps<T>) {
     const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
-    const openSideSheet = useCallback(() => setIsSideSheetOpen(true), []);
-    const closeSideSheet = useCallback(() => setIsSideSheetOpen(false), []);
+
     const tooltipRef = useTooltipRef(props.name);
     const ref = useAnchor<HTMLButtonElement>({ id: props.anchorId, scope: 'portal' });
+
+    const openSideSheet = useCallback(() => setIsSideSheetOpen(true), []);
+    const closeSideSheet = useCallback(() => setIsSideSheetOpen(false), []);
+    const onBookmarkApplied = async (
+        bookmark: BookmarkPayloadResponse,
+        awaitForContextSwitch: boolean
+    ) => {
+        await props.applyBookmark(
+            {
+                id: bookmark.id,
+                context: bookmark.context,
+                payload: bookmark.payload as T,
+            },
+            awaitForContextSwitch
+        );
+    };
+
     return (
         <>
-            <BookmarkProvider>
+            <BookmarkProvider onBookmarkApplied={onBookmarkApplied}>
                 <HeaderAppAsidePortal>
                     <div ref={tooltipRef}>
                         <IconButton onClick={openSideSheet} ref={ref}>
