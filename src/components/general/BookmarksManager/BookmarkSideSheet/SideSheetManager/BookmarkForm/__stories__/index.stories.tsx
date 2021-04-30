@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
-import withFusionStory from '../../../../../../../.storybook/withFusionStory';
+import withFusionStory from '../../../../../../../../.storybook/withFusionStory';
 import BookmarkForm from '../index';
 
 const createAllBookmarksStory = () => () => {
