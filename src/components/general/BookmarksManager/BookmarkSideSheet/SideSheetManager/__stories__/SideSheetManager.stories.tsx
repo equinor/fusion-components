@@ -1,14 +1,12 @@
 import { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../../../.storybook/withFusionStory';
-import { actions } from '@storybook/addon-actions';
-import AllBookmarks from '../index';
 import { BookmarkResponse } from '@equinor/fusion';
+import SideSheetManager from '../index';
 
-const eventsFromNames = actions('onClick');
 async function applyBookmark() {}
 const createAllBookmarksStory = () => () => {
-    const allBookmarks: Omit<BookmarkResponse, 'payload'>[] = [
+    const allBookmark: Omit<BookmarkResponse, 'payload'>[] = [
         {
             id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
             name: 'My bookmark!',
@@ -20,7 +18,7 @@ const createAllBookmarksStory = () => () => {
                 name: 'Sverdrup',
             },
             createdBy: {
-                azureUniquePersonId: '92ac0422-5a16-4bec-939c-507ae880b6a4',
+                azureUniqueId: '92ac0422-5a16-4bec-939c-507ae880b6a4',
                 mail: 'testemail@equinor.com',
                 name: 'Test User Name',
                 phoneNumber: 'string',
@@ -40,7 +38,7 @@ const createAllBookmarksStory = () => () => {
                 name: 'Sverdrup',
             },
             createdBy: {
-                azureUniquePersonId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                azureUniqueId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 mail: 'string',
                 name: 'string',
                 phoneNumber: 'string',
@@ -60,7 +58,7 @@ const createAllBookmarksStory = () => () => {
                 name: 'Sverdrup 2',
             },
             createdBy: {
-                azureUniquePersonId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                azureUniqueId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 mail: 'string',
                 name: 'string',
                 phoneNumber: 'string',
@@ -70,18 +68,10 @@ const createAllBookmarksStory = () => () => {
             },
         },
     ];
-    return (
-        <Fragment>
-            <AllBookmarks
-                allBookmarks={allBookmarks}
-                currentContextId={'3fa85f64-5717-4562-b3fc-2c963f66afa6'}
-                applyBookmark={applyBookmark}
-            />
-        </Fragment>
-    );
+    return <Fragment></Fragment>;
 };
 
 storiesOf('AllBookmarks', module)
     // .addParameters({ jest: ['Button.stories.jsx'] })
-    .addDecorator(withFusionStory('AllBookmarks'))
+    .addDecorator(withFusionStory('SideSheetManager'))
     .add('Default', createAllBookmarksStory());

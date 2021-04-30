@@ -1,16 +1,11 @@
-import { useCurrentApp, useCurrentContext, useSelector } from '@equinor/fusion';
-import { Button, ModalSideSheet, useTooltipRef } from '@equinor/fusion-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCurrentApp, useNotificationCenter, useSelector } from '@equinor/fusion';
+import { ModalSideSheet } from '@equinor/fusion-components';
+import { useEffect, useState } from 'react';
 import { BookmarksManagerProps } from '..';
-import BookmarkForm from '../components/BookmarkForm';
-import AllBookmarks from './AllBookmarks';
+import SideSheetManager from './SideSheetManager';
 import useBookmarkContext from '../hooks/useBookmarkContext';
-import {
-    useViewContext,
-    useViewDispatchContext,
-} from '../components/Provider/BookmarkComponentProvider';
+import { BookmarkView } from '../types';
 
-type BookmarkState = 'AllBookmarks' | 'Creating' | 'Editing';
 type BookmarkSideSheetProps<T> = BookmarksManagerProps<T> & {
     isOpen: boolean;
     onClose: () => void;
@@ -21,52 +16,54 @@ function BookmarkSideSheet<T>({
     onClose,
     anchorId,
     capturePayload,
-    applyBookmark,
+    bookmarkIdFromUrl,
 }: BookmarkSideSheetProps<T>) {
+    const [title, setTitle] = useState<string>('Bookmarks Manager');
     const { store } = useBookmarkContext();
     const currentApp = useCurrentApp();
-
-    // const viewContext = useViewContext();
-    // const dispatch = useViewDispatchContext();
-    // const showAllBookmarks = useCallback(() => dispatch('AllBookmarks'), []);
-    // const hideAllBookmarks = useCallback(() => dispatch('Creating'), []);
-
-    const [bookmarkState, setBookmarkState] = useState<BookmarkState>('AllBookmarks');
-    const tooltipRef = useTooltipRef(
-        'Add a bookmark to easily get back to this view later.',
-        'below'
-    );
+    const createNotification = useNotificationCenter();
     const bookmarks = useSelector(store, 'bookmarks');
-
-    const NewBookmarkButton = () => {
-        return (
-            <Button onClick={() => setBookmarkState('Creating')} ref={tooltipRef}>
-                New bookmark
-            </Button>
-        );
+    const headBookmark = useSelector(store, 'bookmark');
+    const onViewChanged = (view: BookmarkView) => {
+        setTitle(view === 'AllBookmarks' ? 'Bookmarks Manager' : 'Save bookmark');
     };
-
     useEffect(() => {
         store.requestBookmarks(currentApp.key);
     }, [store]);
+    useEffect(() => {
+        if (bookmarkIdFromUrl) {
+            store.headBookmark(bookmarkIdFromUrl);
+        }
+    }, [bookmarkIdFromUrl]);
+
+    useEffect(() => {
+        if (headBookmark) {
+            const addBookmark = async () => {
+                const response = await createNotification({
+                    level: 'high',
+                    title: `Launched bookmark "${headBookmark.name}" `,
+                    confirmLabel: 'Save to my bookmarks',
+                    cancelLabel: 'Cancel',
+                    body: `${headBookmark.description} Created by: ${headBookmark.createdBy.name}`,
+                });
+                if (!response.confirmed) return;
+
+                try {
+                    store.favouriteBookmark(headBookmark.appKey, headBookmark.id);
+                } catch (e) {}
+            };
+            addBookmark();
+        }
+    }, [headBookmark]);
+
     return (
-        <ModalSideSheet
-            header={
-                bookmarkState === 'AllBookmarks' ? 'Bookmarks Manager' : 'Save filter as bookmark'
-            }
-            onClose={onClose}
-            show={isOpen}
-            size="medium"
-            id={anchorId}
-            headerIcons={bookmarkState === 'AllBookmarks' ? [<NewBookmarkButton />] : []}
-        >
-            <AllBookmarks
+        <ModalSideSheet header={title} onClose={onClose} show={isOpen} size="medium" id={anchorId}>
+            <SideSheetManager
                 allBookmarks={bookmarks}
                 currentApp={currentApp}
-                applyBookmark={applyBookmark}
-                bookmarkState={bookmarkState}
-                setBookmarkState={setBookmarkState}
                 capturePayload={capturePayload}
+                onViewChanged={onViewChanged}
+                onClose={onClose}
             />
         </ModalSideSheet>
     );

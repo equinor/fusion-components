@@ -1,36 +1,30 @@
-import {
-    BookmarkListResponse,
-    useCurrentUser,
-    useHistory,
-    useNotificationCenter,
-} from '@equinor/fusion';
+import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
 import { SortIcon, ShareIcon, useTooltipRef, PersonPhoto } from '@equinor/fusion-components';
-import { useState } from 'react';
-import { ApplyBookmark } from '../../..';
+import { Dispatch, SetStateAction, useState } from 'react';
 import useBookmarkContext from '../../../hooks/useBookmarkContext';
-
+import { BookmarkView } from '../../../types';
 import Options from './Options';
 import styles from './styles.less';
 
-type BookmarkProps<TPayload> = {
+type BookmarkProps = {
     bookmark: BookmarkListResponse;
-    applyBookmark: (bookmarkSetting: ApplyBookmark<TPayload>) => Promise<void>;
     accordionOpen: boolean;
-    setBookmarkState: any;
-    setEditBookmark: any;
+    onViewChange: (view: BookmarkView) => void;
+    setEditBookmark: Dispatch<SetStateAction<BookmarkListResponse>>;
+    onClose: () => void;
 };
-function Bookmark<T>({
+function Bookmark({
     bookmark,
-    applyBookmark,
     accordionOpen,
-    setBookmarkState,
+    onViewChange,
     setEditBookmark,
-}: BookmarkProps<T>) {
+    onClose,
+}: BookmarkProps) {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
+
     const { store } = useBookmarkContext();
     const bookmarkRef = useTooltipRef('Shared', 'below');
     const createNotification = useNotificationCenter();
-    const history = useHistory();
 
     const handleDelete = async () => {
         const response = await createNotification({
@@ -38,8 +32,9 @@ function Bookmark<T>({
             title: `Remove bookmark ${bookmark.name}`,
             confirmLabel: 'Remove',
             cancelLabel: 'Cancel',
-            body:
-                'By removing this bookmark, it will also be removed from the people you have shared it with.',
+            body: bookmark.isShared
+                ? 'By removing this bookmark, it will also be removed from the people you have shared it with.'
+                : 'Are you sure you want to delete this bookmark?',
         });
         if (!response.confirmed) return;
 
@@ -47,25 +42,35 @@ function Bookmark<T>({
             store.deleteBookmark(bookmark.appKey, bookmark.id);
         } catch (e) {}
     };
-
-    const handleSharing = async () => {
+    const handleRemove = () => {
+        try {
+            store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
+        } catch (e) {}
+    };
+    const handleSharing = async (share: boolean) => {
         try {
             store.updateBookmark(bookmark.id, {
-                isShared: true,
+                isShared: share,
             });
         } catch (e) {}
-        await createNotification({
-            level: 'high',
-            title: 'Copied to clipboard',
-            confirmLabel: 'Close',
-            cancelLabel: null,
-            body: `This URL has been copied: ${history.location.pathname}/${bookmark.id}`,
-        });
-    };
 
+        if (share) {
+            await createNotification({
+                level: 'high',
+                title: 'Copied to clipboard',
+                confirmLabel: 'Close',
+                cancelLabel: null,
+                body: `This URL has been copied: ${window.location.href}/${bookmark.id}`,
+            });
+        }
+    };
     const handleEdit = () => {
         setEditBookmark(bookmark);
-        setBookmarkState('Editing');
+        onViewChange('Editing');
+    };
+    const handleApply = () => {
+        onClose();
+        store.applyBookmark(bookmark.id);
     };
 
     const MoreDetails = () => {
@@ -79,7 +84,7 @@ function Bookmark<T>({
                     <div className={styles.ownerContainer}>
                         <div className={styles.createdBy}>Created by</div>
                         <div className={styles.personDetailsContainer}>
-                            <PersonPhoto personId={bookmark.createdBy.azureUniquePersonId} />
+                            <PersonPhoto personId={bookmark.createdBy.azureUniqueId} />
                             <div className={styles.personDetails}>
                                 <div className={styles.creator}>{bookmark.createdBy.name}</div>
 
@@ -105,11 +110,15 @@ function Bookmark<T>({
                     onDelete={handleDelete}
                     onEdit={handleEdit}
                     onShare={handleSharing}
+                    onRemove={handleRemove}
                     accordionOpen={accordionOpen}
-                    bookmarkInfo={{ bookmarkId: bookmark.id, isShared: bookmark.isShared }}
+                    bookmarkInfo={{
+                        createdBy: bookmark.createdBy,
+                        isShared: bookmark.isShared,
+                    }}
                 />
                 <div className={styles.content}>
-                    <div className={styles.link} onClick={() => applyBookmark}>
+                    <div className={styles.link} onClick={handleApply}>
                         {bookmark.name}
                     </div>
                 </div>

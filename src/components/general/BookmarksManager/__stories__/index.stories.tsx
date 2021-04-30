@@ -1,13 +1,10 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
-import { BookmarkResponse } from '@equinor/fusion';
-import BookmarkForm from '../components/BookmarkForm';
-import AllBookmarks from '../BookmarkSideSheet/AllBookmarks';
+import { BookmarkResponse, useCurrentApp } from '@equinor/fusion';
 import ModalSideSheet from '../../SideSheet/Modal';
-import Button from '../../Button';
-import useTooltipRef from '../../../../hooks/useTooltipRef';
 
+import SideSheetManager from '../BookmarkSideSheet/SideSheetManager';
 const createBookmarksManagerStory = () => () => {
     const allBookmarks: Omit<BookmarkResponse, 'payload'>[] = [
         {
@@ -21,7 +18,7 @@ const createBookmarksManagerStory = () => () => {
                 name: 'Sverdrup',
             },
             createdBy: {
-                azureUniquePersonId: '92ac0422-5a16-4bec-939c-507ae880b6a4',
+                azureUniqueId: '92ac0422-5a16-4bec-939c-507ae880b6a4',
                 mail: 'testemail@equinor.com',
                 name: 'Test User Name',
                 phoneNumber: 'string',
@@ -41,7 +38,7 @@ const createBookmarksManagerStory = () => () => {
                 name: 'Sverdrup',
             },
             createdBy: {
-                azureUniquePersonId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                azureUniqueId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 mail: 'string',
                 name: 'string',
                 phoneNumber: 'string',
@@ -61,7 +58,7 @@ const createBookmarksManagerStory = () => () => {
                 name: 'Sverdrup 2',
             },
             createdBy: {
-                azureUniquePersonId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+                azureUniqueId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 mail: 'string',
                 name: 'string',
                 phoneNumber: 'string',
@@ -72,55 +69,24 @@ const createBookmarksManagerStory = () => () => {
         },
     ];
 
-    const [isSaving, setIsSaving] = useState<boolean>(false);
+    const currentApp = useCurrentApp();
 
-    const onSave = async (__name: string, __description: string, __isShared: boolean = false) => {
-        try {
-            setIsSaving(false);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
-    async function applyBookmark() {}
-    const HeaderIcon = () => {
-        const tooltipRef = useTooltipRef(
-            'Add a bookmark to easily get back to this view later.',
-            'left',
-            1000
-        );
-
-        return (
-            <Button ref={tooltipRef} onClick={() => setIsSaving(true)}>
-                New bookmark
-            </Button>
-        );
-    };
     return (
         <Fragment>
             <ModalSideSheet
-                header={isSaving ? 'Save filter as bookmark' : 'Bookmarks Manager'}
+                header={'Bookmarks Manager'}
                 onClose={() => {}}
                 show={true}
                 size="medium"
                 id={'1'}
-                headerIcons={isSaving ? [] : [<HeaderIcon />]}
             >
-                {isSaving ? (
-                    <BookmarkForm
-                        onCancel={() => setIsSaving(false)}
-                        onSave={onSave}
-                        contextName={'A storybook context'}
-                    />
-                ) : (
-                    <>
-                        <AllBookmarks
-                            allBookmarks={allBookmarks}
-                            currentContextId={'3fa85f64-5717-4562-b3fc-2c963f66afa1'}
-                            applyBookmark={applyBookmark}
-                        />
-                    </>
-                )}
+                <SideSheetManager
+                    allBookmarks={allBookmarks}
+                    currentApp={currentApp}
+                    capturePayload={async () => {}}
+                    onViewChanged={(view) => {}}
+                    onClose={() => {}}
+                />
             </ModalSideSheet>
         </Fragment>
     );
