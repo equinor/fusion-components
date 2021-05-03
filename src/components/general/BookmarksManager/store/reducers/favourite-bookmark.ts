@@ -1,21 +1,21 @@
 import { createReducer } from 'typesafe-actions';
-import { removeStatus, removeError, State, Status } from '../state';
 import { actions } from '../actions/bookmarks';
+import { removeStatus, removeError, State, Status } from '../state';
 
-export const deleteBookmarkReducer = (initial: State) =>
+export const favouriteBookmarkReducer = (initial: State) =>
     createReducer(initial)
-        .handleAction(actions.delete.request, (state, action) => ({
+        .handleAction(actions.favourite.request, (state, action) => ({
             ...state,
             status: [...state.status, Status.Fetching],
             errors: removeError(state, action),
         }))
-        .handleAction(actions.delete.success, (state, action) => ({
+        .handleAction(actions.favourite.success, (state, action) => ({
             ...state,
             status: removeStatus(state, Status.Idle),
         }))
-        .handleAction(actions.delete.failure, (state, action) => ({
+        .handleAction(actions.favourite.failure, (state, action) => ({
             ...state,
             status: removeStatus(state, Status.Failure),
             errors: [...state.errors, action.payload],
         }));
-export default deleteBookmarkReducer;
+export default favouriteBookmarkReducer;

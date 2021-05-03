@@ -1,10 +1,8 @@
 import { createReducer } from 'typesafe-actions';
 import { removeStatus, removeError, State, Status } from '../state';
-// import actions from '../actions/fetch';
-// import { FetchActions as Actions } from '../actions/fetch';
-import { BookmarksActions as Actions, actions } from '../actions/bookmarks';
+import { actions } from '../actions/bookmarks';
 export const updateBookmarkReducer = (initial: State) =>
-    createReducer<State, Actions>(initial)
+    createReducer(initial)
         .handleAction(actions.update.request, (state, action) => ({
             ...state,
             status: [...state.status, Status.Fetching],
