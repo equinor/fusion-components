@@ -3,7 +3,7 @@ import { Button, TextInput } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import styles from './styles.less';
 type BookmarkFormProps = {
-    contextName: string;
+    contextName?: string;
     onCancel: () => void;
     onSave?: (name: string, description: string) => Promise<void>;
     onEditSave?: (
@@ -21,13 +21,15 @@ function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: B
     const createNotification = useNotificationCenter();
 
     const updateName = useCallback((newName: string) => setName(newName), []);
+
     const updateDescription = useCallback(
         (newDescription: string) => setDescription(newDescription),
         []
     );
+
     const saveBookmark = useCallback(async () => {
         try {
-            await onSave(name, description);
+            await onSave!(name, description);
             createNotification({
                 level: 'low',
                 title: 'New bookmark was added',
@@ -39,10 +41,11 @@ function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: B
                 title: 'Unable to create new notification',
             });
         }
-    }, [name, description]);
+    }, [name, description, onSave, createNotification]);
+
     const saveEditBookmark = useCallback(async () => {
         try {
-            await onEditSave(bookmark.id, { name, description });
+            await onEditSave!(bookmark!.id, { name, description });
             createNotification({
                 level: 'low',
                 title: 'Bookmark was successfully edited',
@@ -54,7 +57,8 @@ function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: B
                 title: 'Unable to create new notification',
             });
         }
-    }, [name, description]);
+    }, [name, description, bookmark, createNotification, onEditSave]);
+
     const clearAndCancel = useCallback(() => {
         setName('');
         onCancel();
@@ -64,7 +68,7 @@ function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: B
         <div className={styles.container}>
             <div className={styles.newItem}>
                 <span className={styles.itemLabel}>Context</span>
-                <div className={styles.itemContent}>{contextName}</div>
+                <div className={styles.itemContent}>{contextName && contextName}</div>
             </div>
             <div className={styles.newItem}>
                 <span className={styles.itemLabel}>Name</span>
