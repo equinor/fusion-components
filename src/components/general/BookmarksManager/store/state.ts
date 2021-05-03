@@ -1,5 +1,4 @@
-import { BookmarkListResponse } from '@equinor/fusion';
-// import { Actions, ApiError } from './actions';
+import { BookmarkListResponse, BookmarkPayloadResponse } from '@equinor/fusion';
 import { BookmarksActions as Actions } from './actions/bookmarks';
 import { ApiError } from './actions/bookmarks';
 export enum Status {
@@ -11,7 +10,9 @@ export enum Status {
 export type State = {
     status: Status[];
     errors: ApiError[];
+    bookmark?: BookmarkListResponse;
     bookmarks: BookmarkListResponse[];
+    bookmarkPayload?: BookmarkPayloadResponse;
 };
 
 export const removeStatus = (state: State, status: Status) =>

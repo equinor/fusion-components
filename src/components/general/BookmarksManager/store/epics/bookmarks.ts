@@ -8,7 +8,7 @@ import { State } from '../state';
 
 export type Dependencies = { clients: ApiClients };
 
-export const fetchBookmarks = (
+const fetchBookmarks = (
     action$: Observable<Actions>,
     _: StatefulObserver<State>,
     { clients }: Dependencies
@@ -26,7 +26,25 @@ export const fetchBookmarks = (
     );
 };
 
-export const deleteBookmark = (
+const fetchBookmark = (
+    action$: Observable<Actions>,
+    _: StatefulObserver<State>,
+    { clients }: Dependencies
+) => {
+    const { request, success, failure, cancel } = actions.fetchBookmark;
+    return action$.pipe(
+        filter(isActionOf(request)),
+        switchMap((action) =>
+            from(clients.bookmarks.getBookmark(action.payload)).pipe(
+                map((res) => success(res.data)),
+                catchError((error) => of(failure({ action, error }))),
+                takeUntil(action$.pipe(filter(isActionOf(cancel))))
+            )
+        )
+    );
+};
+
+const deleteBookmark = (
     action$: Observable<Actions>,
     _: StatefulObserver<State>,
     { clients }: Dependencies
@@ -49,7 +67,7 @@ export const deleteBookmark = (
     );
 };
 
-export const addBookmark = (
+const addBookmark = (
     action$: Observable<Actions>,
     _: StatefulObserver<State>,
     { clients }: Dependencies
@@ -66,7 +84,7 @@ export const addBookmark = (
         )
     );
 };
-export const updateBookmark = (
+const updateBookmark = (
     action$: Observable<Actions>,
     _: StatefulObserver<State>,
     { clients }: Dependencies
@@ -85,6 +103,94 @@ export const updateBookmark = (
         )
     );
 };
+
+const applyBookmark = (
+    action$: Observable<Actions>,
+    _: StatefulObserver<State>,
+    { clients }: Dependencies
+) => {
+    const { request, success, failure, cancel } = actions.apply;
+    return action$.pipe(
+        filter(isActionOf(request)),
+        switchMap((action) =>
+            from(clients.bookmarks.applyBookmark(action.payload)).pipe(
+                map((res) => success(res.data)),
+                catchError((error) => of(failure({ action, error }))),
+                takeUntil(action$.pipe(filter(isActionOf(cancel))))
+            )
+        )
+    );
+};
+
+const favouriteBookmark = (
+    action$: Observable<Actions>,
+    _: StatefulObserver<State>,
+    { clients }: Dependencies
+) => {
+    const { request, success, failure, cancel } = actions.favourite;
+    return action$.pipe(
+        filter(isActionOf(request)),
+        switchMap((action) =>
+            from(clients.bookmarks.addToFavourites({ bookmarkId: action.payload.bookmarkId })).pipe(
+                map((res) =>
+                    success({
+                        bookmarkId: action.payload.bookmarkId,
+                        appKey: action.payload.appKey,
+                    })
+                ),
+                catchError((error) => of(failure({ action, error }))),
+                takeUntil(action$.pipe(filter(isActionOf(cancel))))
+            )
+        )
+    );
+};
+const unFavouriteBookmark = (
+    action$: Observable<Actions>,
+    _: StatefulObserver<State>,
+    { clients }: Dependencies
+) => {
+    const { request, success, failure, cancel } = actions.unFavourite;
+    return action$.pipe(
+        filter(isActionOf(request)),
+        switchMap((action) =>
+            from(clients.bookmarks.deleteFavouriteBookmark(action.payload.bookmarkId)).pipe(
+                map((res) =>
+                    success({
+                        appKey: action.payload.appKey,
+                        bookmarkId: action.payload.bookmarkId,
+                    })
+                ),
+                catchError((error) => of(failure({ action, error }))),
+                takeUntil(action$.pipe(filter(isActionOf(cancel))))
+            )
+        )
+    );
+};
+
+const headBookmark = (
+    action$: Observable<Actions>,
+    _: StatefulObserver<State>,
+    { clients }: Dependencies
+) => {
+    const { request, success, failure, cancel } = actions.head;
+    return action$.pipe(
+        filter(isActionOf(request)),
+        switchMap((action) =>
+            from(clients.bookmarks.headBookmark(action.payload)).pipe(
+                map((res) => success(res.data)),
+                catchError((error) => of(failure({ action, error, bookmarkId: action.payload }))),
+                takeUntil(action$.pipe(filter(isActionOf(cancel))))
+            )
+        )
+    );
+};
+
+const onBookmarkNotExist = (action$: Observable<Actions>) =>
+    action$.pipe(
+        filter(isActionOf(actions.head.failure)),
+        map((action) => actions.fetchBookmark.request(action.payload.bookmarkId))
+    );
+
 const onBookmarkAdded = (action$: Observable<Actions>) =>
     action$.pipe(
         filter(isActionOf(actions.add.success)),
@@ -101,14 +207,35 @@ const onBookmarkUpdated = (action$: Observable<Actions>) =>
         filter(isActionOf(actions.update.success)),
         map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
     );
+
+const onBookmarkFavourited = (action$: Observable<Actions>) =>
+    action$.pipe(
+        filter(isActionOf(actions.favourite.success)),
+        map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
+    );
+
+const onBookmarkUnFavourited = (action$: Observable<Actions>) =>
+    action$.pipe(
+        filter(isActionOf(actions.unFavourite.success)),
+        map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
+    );
+
 const epics = combineEpics<Actions, Actions, State>(
     fetchBookmarks,
+    fetchBookmark,
     deleteBookmark,
     addBookmark,
     updateBookmark,
+    applyBookmark,
+    favouriteBookmark,
+    unFavouriteBookmark,
+    headBookmark,
     onBookmarkUpdated,
     onBookmarkAdded,
-    onBookmarkDeleted
+    onBookmarkDeleted,
+    onBookmarkFavourited,
+    onBookmarkUnFavourited,
+    onBookmarkNotExist
 );
 
 export default epics;
