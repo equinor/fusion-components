@@ -121,11 +121,18 @@
                 }
             }
 
-            .stateIcon {
+            .stateIcons {
                 position: relative;
+                padding-top: calc(var(--grid-unit) * 1px);
                 display: flex;
-                justify-content: center;
-                padding-top: calc(var(--grid-unit) * 0.5px);
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .edsIcon > * {
+                height: 16px;
+                width: 16px;
+                color: var(--color-black-alt2);
             }
         }
 

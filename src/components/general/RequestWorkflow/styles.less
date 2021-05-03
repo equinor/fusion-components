@@ -57,29 +57,30 @@
                 }
             }
         }
-        .stepPerson {
-            display: flex;
-            padding-bottom: calc(var(--grid-unit) * 2px);
+    }
+}
 
-            .stepPersonDetails {
-                display: flex;
-                flex-direction: column;
-                max-width: calc(var(--grid-unit) * 24px);
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                padding-left: calc(var(--grid-unit) * 1px);
-                
-                .completed {
-                    color: var(--color-black-alt3);
-                    font-size: 14px;
-                    line-height: 16px;
-                }
-                .completedDate{
-                    font-size: 14px;
-                    line-height: 16px;
-                }
-            }
+.stepPerson {
+    display: flex;
+    padding-bottom: calc(var(--grid-unit) * 2px);
+
+    .stepPersonDetails {
+        display: flex;
+        flex-direction: column;
+        max-width: calc(var(--grid-unit) * 24px);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-left: calc(var(--grid-unit) * 1px);
+        
+        .completed {
+            color: var(--color-black-alt3);
+            font-size: 14px;
+            line-height: 16px;
+        }
+        .completedDate{
+            font-size: 14px;
+            line-height: 16px;
         }
     }
 }
