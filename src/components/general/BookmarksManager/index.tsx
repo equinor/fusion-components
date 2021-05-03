@@ -26,27 +26,33 @@ export type BookmarksManagerProps<TPayload> = {
     bookmarkIdFromUrl?: string | null;
 };
 
-function BookmarksManager<T>(props: BookmarksManagerProps<T>) {
+function BookmarksManager<T>({
+    capturePayload,
+    applyBookmark,
+    name,
+    anchorId,
+    bookmarkIdFromUrl,
+}: BookmarksManagerProps<T>) {
     const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
 
-    const tooltipRef = useTooltipRef(props.name);
-    const ref = useAnchor<HTMLButtonElement>({ id: props.anchorId, scope: 'portal' });
+    const tooltipRef = useTooltipRef(name);
+    const ref = useAnchor<HTMLButtonElement>({ id: anchorId, scope: 'portal' });
 
     const openSideSheet = useCallback(() => setIsSideSheetOpen(true), []);
     const closeSideSheet = useCallback(() => setIsSideSheetOpen(false), []);
-    const onBookmarkApplied = async (
-        bookmark: BookmarkPayloadResponse,
-        awaitForContextSwitch: boolean
-    ) => {
-        await props.applyBookmark(
-            {
-                id: bookmark.id,
-                context: bookmark.context,
-                payload: bookmark.payload as T,
-            },
-            awaitForContextSwitch
-        );
-    };
+    const onBookmarkApplied = useCallback(
+        async (bookmark: BookmarkPayloadResponse, awaitForContextSwitch: boolean) => {
+            await applyBookmark(
+                {
+                    id: bookmark.id,
+                    context: bookmark.context,
+                    payload: bookmark.payload as T,
+                },
+                awaitForContextSwitch
+            );
+        },
+        [applyBookmark]
+    );
 
     return (
         <>
@@ -58,7 +64,13 @@ function BookmarksManager<T>(props: BookmarksManagerProps<T>) {
                         </IconButton>
                     </div>
                 </HeaderAppAsidePortal>
-                <BookmarkSideSheet isOpen={isSideSheetOpen} onClose={closeSideSheet} {...props} />
+                <BookmarkSideSheet
+                    isOpen={isSideSheetOpen}
+                    onClose={closeSideSheet}
+                    capturePayload={capturePayload}
+                    bookmarkIdFromUrl={bookmarkIdFromUrl}
+                    anchorId={anchorId}
+                />
             </BookmarkProvider>
         </>
     );
