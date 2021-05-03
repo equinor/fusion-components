@@ -1,15 +1,19 @@
-import { useEffect, PropsWithChildren, FunctionComponent, useMemo } from 'react';
+import { useEffect, PropsWithChildren, FunctionComponent, useMemo, useState } from 'react';
 import {
     useApiClients,
     BookmarkPayloadResponse,
     useSelector,
     useCurrentContext,
     useContextManager,
+    useNotificationCenter,
 } from '@equinor/fusion';
 import { bookmarkContext } from './BookmarkContext';
-import { Subscription } from 'rxjs';
 import createStore from './store';
+import { filter } from 'rxjs/operators';
+import { isActionOf } from 'typesafe-actions';
+import { actions } from './store/actions/bookmarks';
 
+type ModalState = 'Show' | 'Close' | 'Open';
 type Props = PropsWithChildren<{
     onBookmarkApplied?: (bookmark: BookmarkPayloadResponse, awaitForContextSwitch: boolean) => void;
 }>;
@@ -23,12 +27,29 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
     const clients = useApiClients();
     const store = useMemo(() => createStore(clients), [clients]);
     const payload = useSelector(store, 'bookmarkPayload');
-
+    const headBookmark = useSelector(store, 'bookmark');
+    const [showModal, setShowModal] = useState<ModalState>('Close');
     const currentContext = useCurrentContext();
     const contextManager = useContextManager();
+    const createNotification = useNotificationCenter();
 
     useEffect(() => {
-        const subscription = new Subscription(() => store.unsubscribe());
+        () => store.unsubscribe();
+    }, [store]);
+
+    useEffect(() => {
+        const subscription = store.action$
+            .pipe(filter(isActionOf(actions.fetchBookmark.success)))
+            .subscribe(() => setShowModal('Show'));
+
+        () => subscription.unsubscribe();
+    }, [store]);
+
+    useEffect(() => {
+        const subscription = store.action$
+            .pipe(filter(isActionOf(actions.favourite.success)))
+            .subscribe(() => setShowModal('Close'));
+
         () => subscription.unsubscribe();
     }, [store]);
 
@@ -39,14 +60,44 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
             }
 
             if (currentContext?.id !== payload?.context?.id) {
-                await contextManager.setCurrentContextIdAsync(payload.context.id);
+                await contextManager.setCurrentContextIdAsync(payload!.context!.id);
                 onBookmarkApplied(payload, true);
             } else {
                 onBookmarkApplied(payload, false);
             }
         };
         apply();
-    }, [payload]);
+    }, [payload, currentContext]);
+
+    useEffect(() => {
+        if (showModal === 'Show' && headBookmark) {
+            setShowModal('Open');
+            const addBookmark = async () => {
+                const response = await createNotification({
+                    level: 'high',
+                    title: `Launched bookmark: "${headBookmark.name}`,
+                    confirmLabel: 'Save to my bookmarks',
+                    cancelLabel: 'Cancel',
+
+                    body: (
+                        <>
+                            <div>{headBookmark.description && headBookmark.description}</div>
+                            <div>Created by: {headBookmark.createdBy.name}</div>
+                        </>
+                    ),
+                });
+                if (!response.confirmed) {
+                    setShowModal('Close');
+                    return;
+                }
+
+                try {
+                    store.favouriteBookmark(headBookmark.appKey, headBookmark.id);
+                } catch (e) {}
+            };
+            addBookmark();
+        }
+    }, [createNotification, showModal, store, headBookmark]);
 
     return <Provider value={{ store }}>{children}</Provider>;
 };
