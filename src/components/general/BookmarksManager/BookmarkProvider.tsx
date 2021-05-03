@@ -6,6 +6,7 @@ import {
     useCurrentContext,
     useContextManager,
     useNotificationCenter,
+    useCurrentPersonDetails,
 } from '@equinor/fusion';
 import { bookmarkContext } from './BookmarkContext';
 import createStore from './store';
@@ -32,6 +33,7 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
     const currentContext = useCurrentContext();
     const contextManager = useContextManager();
     const createNotification = useNotificationCenter();
+    const { personDetails } = useCurrentPersonDetails();
 
     useEffect(() => {
         () => store.unsubscribe();
@@ -70,12 +72,16 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
     }, [payload, currentContext]);
 
     useEffect(() => {
-        if (showModal === 'Show' && headBookmark) {
+        if (
+            showModal === 'Show' &&
+            headBookmark &&
+            personDetails.azureUniqueId !== headBookmark.createdBy.azureUniqueId
+        ) {
             setShowModal('Open');
             const addBookmark = async () => {
                 const response = await createNotification({
                     level: 'high',
-                    title: `Launched bookmark: "${headBookmark.name}`,
+                    title: `Launched bookmark: "${headBookmark.name}"`,
                     confirmLabel: 'Save to my bookmarks',
                     cancelLabel: 'Cancel',
 
@@ -97,7 +103,7 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
             };
             addBookmark();
         }
-    }, [createNotification, showModal, store, headBookmark]);
+    }, [createNotification, showModal, store, headBookmark, personDetails]);
 
     return <Provider value={{ store }}>{children}</Provider>;
 };

@@ -81,3 +81,30 @@
 .viewMore {
     cursor: pointer;
 }
+
+.shareContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    column-gap: 10px;
+
+    .inputContainer {
+        background-color: #f1f3f4;
+        height: 30px;
+        width: 100%;
+        padding: 5px;
+        border-radius: 0.5em;
+
+        .input {
+            background-color: transparent;
+            border-width: 0;
+            text-overflow: ellipsis;
+            width: inherit;
+            line-height: 2em;
+        }
+    }
+    .buttonContainer {
+        padding-left: 2px;
+    }
+}
