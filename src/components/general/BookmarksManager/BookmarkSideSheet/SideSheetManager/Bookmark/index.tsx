@@ -1,6 +1,6 @@
 import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
 import { SortIcon, ShareIcon, useTooltipRef, PersonPhoto } from '@equinor/fusion-components';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import useBookmarkContext from '../../../hooks/useBookmarkContext';
 import { BookmarkView } from '../../../types';
 import Options from './Options';
@@ -10,7 +10,7 @@ type BookmarkProps = {
     bookmark: BookmarkListResponse;
     accordionOpen: boolean;
     onViewChange: (view: BookmarkView) => void;
-    setEditBookmark: Dispatch<SetStateAction<BookmarkListResponse>>;
+    setEditBookmark: (bookmark: BookmarkListResponse) => void;
     onClose: () => void;
 };
 function Bookmark({
@@ -25,6 +25,13 @@ function Bookmark({
     const { store } = useBookmarkContext();
     const bookmarkRef = useTooltipRef('Shared', 'below');
     const createNotification = useNotificationCenter();
+
+    const bookmarkShareUrl = () => {
+        const base = `${window.location.origin}/${bookmark.appKey}`;
+
+        if (bookmark.context) return `${base}/${bookmark.context.id}/${bookmark.id}`;
+        else return `${base}/${bookmark.id}`;
+    };
 
     const handleDelete = async () => {
         const response = await createNotification({
@@ -55,12 +62,17 @@ function Bookmark({
         } catch (e) {}
 
         if (share) {
+            navigator.clipboard.writeText(bookmarkShareUrl());
             await createNotification({
                 level: 'high',
                 title: 'Copied to clipboard',
                 confirmLabel: 'Close',
-                cancelLabel: null,
-                body: `This URL has been copied: ${window.location.href}/${bookmark.id}`,
+                body: (
+                    <>
+                        <div>This URL has been copied:</div>
+                        <div>{bookmarkShareUrl()}</div>
+                    </>
+                ),
             });
         }
     };
@@ -86,7 +98,7 @@ function Bookmark({
                         <div className={styles.personDetailsContainer}>
                             <PersonPhoto personId={bookmark.createdBy.azureUniqueId} />
                             <div className={styles.personDetails}>
-                                <div className={styles.creator}>{bookmark.createdBy.name}</div>
+                                <div>{bookmark.createdBy.name}</div>
 
                                 <div className={styles.creatorEmail}>
                                     {bookmark.createdBy.mail && (
