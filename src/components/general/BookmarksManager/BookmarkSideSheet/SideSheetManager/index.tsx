@@ -17,18 +17,20 @@ import BookmarkForm from './BookmarkForm';
 import useBookmarkContext from '../../hooks/useBookmarkContext';
 import styles from './styles.less';
 import { BookmarkView } from '../../types';
+
 type OpenAccordion = {
     [id: string]: boolean;
 };
+
 type Context = {
     name: string;
     id: string;
 };
 
 type AllBookmarksProps<TPayload> = {
-    allBookmarks: BookmarkListResponse[];
+    allBookmarks: BookmarkListResponse[] | undefined;
     onClose: () => void;
-    currentApp: AppManifest;
+    currentApp: AppManifest | null;
     capturePayload: () => Promise<TPayload>;
     onViewChanged?: (view: BookmarkView) => void;
 };
@@ -57,12 +59,20 @@ function SideSheetManager<T>({
     function handleOpenAccordionChange(id: string) {
         setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
     }
-    const onViewChange = (view: BookmarkView) => {
-        setBookmarkState(view);
-        onViewChanged && onViewChanged(view);
-    };
+
+    const handleBookmarkToBeEdited = (bookmark: BookmarkListResponse) =>
+        setBookmarkToBeEdited(bookmark);
+
+    const onViewChange = useCallback(
+        (view: BookmarkView) => {
+            setBookmarkState(view);
+            onViewChanged && onViewChanged(view);
+        },
+        [setBookmarkState, onViewChanged]
+    );
+
     const onSave = useCallback(
-        async (name: string, description: string, isShared: boolean = false) => {
+        async (name: string, description: string, isShared = false) => {
             try {
                 const payload = await capturePayload();
                 if (payload) {
@@ -70,8 +80,8 @@ function SideSheetManager<T>({
                         name: name,
                         description: description,
                         payload: payload,
-                        appKey: currentApp.key,
-                        contextId: currentContext.id,
+                        appKey: currentApp?.key,
+                        contextId: currentContext?.id,
                         isShared: isShared,
                     });
                     onViewChange('AllBookmarks');
@@ -80,8 +90,9 @@ function SideSheetManager<T>({
                 console.error(e);
             }
         },
-        [currentApp, currentContext]
+        [currentApp, currentContext, capturePayload, onViewChange, store]
     );
+
     const onEditSave = useCallback(
         async (bookmarkId: string, bookmark: BookmarkPatchRequest) => {
             try {
@@ -91,7 +102,7 @@ function SideSheetManager<T>({
                 console.error(e);
             }
         },
-        [currentApp, currentContext]
+        [onViewChange, store]
     );
 
     const groupedContext: Record<string, BookmarkListResponse[]> = {};
@@ -109,6 +120,7 @@ function SideSheetManager<T>({
               return groupedContext;
           }, {})
         : {};
+
     const groupByContextId: Record<string, Context> = allBookmarks
         ? allBookmarks.reduce((__prev, curr) => {
               const key = curr.context ? curr.context.id : 'unknown';
@@ -121,16 +133,16 @@ function SideSheetManager<T>({
 
     useEffect(() => {
         setOpenAccordions({
-            [currentContext.id]: true,
+            [currentContext!.id]: true,
         });
-    }, [currentContext.id]);
+    }, [currentContext]);
 
     if (bookmarkState === 'Creating') {
         return (
             <BookmarkForm
                 onCancel={() => onViewChange('AllBookmarks')}
                 onSave={onSave}
-                contextName={currentContext.title}
+                contextName={currentContext?.title}
             />
         );
     }
@@ -140,7 +152,7 @@ function SideSheetManager<T>({
             <BookmarkForm
                 onCancel={() => onViewChange('AllBookmarks')}
                 onEditSave={onEditSave}
-                contextName={currentContext.title}
+                contextName={currentContext?.title}
                 bookmark={bookmarkToBeEdited}
             />
         );
@@ -178,7 +190,7 @@ function SideSheetManager<T>({
                                                 bookmark={bookmark}
                                                 accordionOpen={openAccordions[context.id]}
                                                 onViewChange={onViewChange}
-                                                setEditBookmark={setBookmarkToBeEdited}
+                                                setEditBookmark={handleBookmarkToBeEdited}
                                                 onClose={onClose}
                                                 key={bookmark.id}
                                             />

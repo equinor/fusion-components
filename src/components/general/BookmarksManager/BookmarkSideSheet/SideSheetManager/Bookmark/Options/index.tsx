@@ -38,23 +38,12 @@ function Options({
                 setIsOpen(false);
             }
         },
-        [isOpen]
+        [isOpen, setIsOpen]
     );
-
-    useEffect(() => {
-        if (!accordionOpen) {
-            setIsOpen(false);
-        }
-    }, [accordionOpen]);
 
     const onEditClick = useCallback(() => select(onEdit), [onEdit, select]);
     const onDeleteClick = useCallback(() => select(onDelete), [onDelete, select]);
-    // const onShareClick = useCallback((share: boolean) => select(onShare(share)), [
-    //     onDelete,
-    //     select,
-    // ]);
-    const onRemoveClick = useCallback(() => select(onRemove), [onDelete, select]);
-
+    const onRemoveClick = useCallback(() => select(onRemove), [select, onRemove]);
     const handleSharingClick = useCallback(
         (share: boolean) => {
             onShare(share);
@@ -62,13 +51,19 @@ function Options({
                 setIsOpen(false);
             }
         },
-        [isOpen, onDelete, onShare]
+        [isOpen, onShare, setIsOpen]
     );
+
+    useEffect(() => {
+        if (!accordionOpen) {
+            setIsOpen(false);
+        }
+    }, [accordionOpen, setIsOpen]);
 
     return (
         <div>
             <Dropdown controller={dropdownController}>
-                {bookmarkInfo.createdBy.azureUniqueId === personDetails.azureUniqueId ? (
+                {bookmarkInfo.createdBy.azureUniqueId === personDetails?.azureUniqueId ? (
                     <OwnerOptions
                         handleSharingClick={handleSharingClick}
                         isShared={bookmarkInfo.isShared}
