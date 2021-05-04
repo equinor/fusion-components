@@ -5,7 +5,6 @@ import {
     HttpClientRequestFailedError,
     BookmarkResponse,
     BookmarkPayloadResponse,
-    BookmarkFavouriteRequest,
 } from '@equinor/fusion';
 import { ActionError } from '@equinor/fusion/lib/epic';
 
