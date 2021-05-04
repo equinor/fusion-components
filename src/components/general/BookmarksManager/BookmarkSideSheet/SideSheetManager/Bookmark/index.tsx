@@ -55,10 +55,21 @@ function Bookmark({
             store.deleteBookmark(bookmark.appKey, bookmark.id);
         } catch (e) {}
     };
+
     const handleRemove = () => {
         try {
             store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
         } catch (e) {}
+    };
+
+    const handleEdit = () => {
+        setEditBookmark(bookmark);
+        onViewChange('Editing');
+    };
+
+    const handleApply = () => {
+        onClose();
+        store.applyBookmark(bookmark.id);
     };
 
     function ShareBody() {
@@ -80,13 +91,14 @@ function Bookmark({
                             outlined
                             onClick={() => navigator.clipboard.writeText(bookmarkShareUrl())}
                         >
-                            Kopiér
+                            Copy
                         </Button>
                     </div>
                 </div>
             </>
         );
     }
+
     const handleSharing = async (share: boolean) => {
         try {
             store.updateBookmark(bookmark.id, {
@@ -105,16 +117,8 @@ function Bookmark({
             });
         }
     };
-    const handleEdit = () => {
-        setEditBookmark(bookmark);
-        onViewChange('Editing');
-    };
-    const handleApply = () => {
-        onClose();
-        store.applyBookmark(bookmark.id);
-    };
 
-    const MoreDetails = () => {
+    function MoreDetails() {
         if (isDescriptionOpen) {
             return (
                 <div className={styles.detailsContainer}>
@@ -143,7 +147,7 @@ function Bookmark({
             );
         }
         return null;
-    };
+    }
     return (
         <div className={styles.container}>
             <div className={styles.accordionContainer}>

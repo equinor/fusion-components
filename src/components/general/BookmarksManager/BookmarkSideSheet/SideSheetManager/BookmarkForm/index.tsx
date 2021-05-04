@@ -1,4 +1,4 @@
-import { BookmarkListResponse, BookmarkRequest, useNotificationCenter } from '@equinor/fusion';
+import { BookmarkListResponse, BookmarkPatchRequest, useNotificationCenter } from '@equinor/fusion';
 import { Button, TextInput } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
 import styles from './styles.less';
@@ -6,10 +6,7 @@ type BookmarkFormProps = {
     contextName?: string;
     onCancel: () => void;
     onSave?: (name: string, description: string) => Promise<void>;
-    onEditSave?: (
-        bookmarkId: string,
-        bookmarkRequest: Partial<Omit<BookmarkRequest, 'appKey' | 'contextId'>>
-    ) => Promise<void>;
+    onEditSave?: (bookmarkId: string, bookmarkRequest: BookmarkPatchRequest) => Promise<void>;
     bookmark?: BookmarkListResponse;
 };
 function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: BookmarkFormProps) {

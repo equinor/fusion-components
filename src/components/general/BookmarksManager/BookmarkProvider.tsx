@@ -25,15 +25,15 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
     children,
     onBookmarkApplied,
 }: Props) => {
-    const clients = useApiClients();
-    const store = useMemo(() => createStore(clients), [clients]);
-    const payload = useSelector(store, 'bookmarkPayload');
-    const headBookmark = useSelector(store, 'bookmark');
     const [showModal, setShowModal] = useState<ModalState>('Close');
+    const clients = useApiClients();
     const currentContext = useCurrentContext();
     const contextManager = useContextManager();
     const createNotification = useNotificationCenter();
     const { personDetails } = useCurrentPersonDetails();
+    const store = useMemo(() => createStore(clients), [clients]);
+    const payload = useSelector(store, 'bookmarkPayload');
+    const headBookmark = useSelector(store, 'bookmark');
 
     useEffect(() => {
         () => store.unsubscribe();

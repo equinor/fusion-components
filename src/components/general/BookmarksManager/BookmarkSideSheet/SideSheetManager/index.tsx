@@ -56,9 +56,8 @@ function SideSheetManager<T>({
         1000
     );
 
-    function handleOpenAccordionChange(id: string) {
+    const handleOpenAccordionChange = (id: string) =>
         setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
-    }
 
     const handleBookmarkToBeEdited = (bookmark: BookmarkListResponse) =>
         setBookmarkToBeEdited(bookmark);

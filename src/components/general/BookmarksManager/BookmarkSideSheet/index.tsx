@@ -25,7 +25,6 @@ function BookmarkSideSheet<T>({
 
     const { store } = useBookmarkContext();
     const bookmarks = useSelector(store, 'bookmarks');
-
     const currentApp = useCurrentApp();
 
     const onViewChanged = (view: BookmarkView) => {
