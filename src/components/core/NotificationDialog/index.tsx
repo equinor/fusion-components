@@ -74,14 +74,10 @@ const NotificationDialog: FC = () => {
                 <DialogContent>
                     <div>{currentNotification.body}</div>
                 </DialogContent>
-
                 <DialogActions>
-                    {!currentNotification.hideCancelAction && (
-                        <Button frameless onClick={onCancel}>
-                            {currentNotification.cancelLabel || 'Cancel'}
-                        </Button>
-                    )}
-
+                    <Button frameless onClick={onCancel}>
+                        {currentNotification.cancelLabel || 'Cancel'}
+                    </Button>
                     <Button frameless onClick={onConfirm}>
                         {currentNotification.confirmLabel || 'Ok'}
                     </Button>
