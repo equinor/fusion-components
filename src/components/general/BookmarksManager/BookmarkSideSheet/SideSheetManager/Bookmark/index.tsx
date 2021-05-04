@@ -112,7 +112,7 @@ function Bookmark({
                 level: 'high',
                 title: 'Copied to clipboard',
                 confirmLabel: 'Close',
-                hideCancel: true,
+                hideCancelAction: true,
                 body: <ShareBody />,
             });
         }

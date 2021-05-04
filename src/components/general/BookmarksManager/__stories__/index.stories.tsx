@@ -17,6 +17,8 @@ const createBookmarksManagerStory = () => () => {
                 id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 name: 'Sverdrup',
             },
+            created: new Date(),
+            updated: new Date(),
             createdBy: {
                 azureUniqueId: '92ac0422-5a16-4bec-939c-507ae880b6a4',
                 mail: 'testemail@equinor.com',
@@ -37,6 +39,8 @@ const createBookmarksManagerStory = () => () => {
                 id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 name: 'Sverdrup',
             },
+            created: new Date(),
+            updated: new Date(),
             createdBy: {
                 azureUniqueId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 mail: 'string',
@@ -47,6 +51,7 @@ const createBookmarksManagerStory = () => () => {
                 accountClassification: 'External',
             },
         },
+
         {
             id: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
             name: 'My other bookmark with a very, very long title!',
@@ -57,6 +62,8 @@ const createBookmarksManagerStory = () => () => {
                 id: '3fa85f64-5717-4562-b3fc-2c963f66afa1',
                 name: 'Sverdrup 2',
             },
+            created: new Date(),
+            updated: new Date(),
             createdBy: {
                 azureUniqueId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
                 mail: 'string',
