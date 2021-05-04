@@ -1,5 +1,11 @@
 import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
-import { SortIcon, ShareIcon, useTooltipRef, PersonPhoto } from '@equinor/fusion-components';
+import {
+    SortIcon,
+    ShareIcon,
+    useTooltipRef,
+    PersonPhoto,
+    Button,
+} from '@equinor/fusion-components';
 import { useState } from 'react';
 import useBookmarkContext from '../../../hooks/useBookmarkContext';
 import { BookmarkView } from '../../../types';
@@ -54,6 +60,33 @@ function Bookmark({
             store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
         } catch (e) {}
     };
+
+    function ShareBody() {
+        return (
+            <>
+                <div>This URL has been copied:</div>
+                <div className={styles.shareContainer}>
+                    <div className={styles.inputContainer}>
+                        <input
+                            type="text"
+                            readOnly
+                            value={bookmarkShareUrl()}
+                            onFocus={(e) => e.target.select()}
+                            className={styles.input}
+                        />
+                    </div>
+                    <div className={styles.buttonContainer}>
+                        <Button
+                            outlined
+                            onClick={() => navigator.clipboard.writeText(bookmarkShareUrl())}
+                        >
+                            Kopiér
+                        </Button>
+                    </div>
+                </div>
+            </>
+        );
+    }
     const handleSharing = async (share: boolean) => {
         try {
             store.updateBookmark(bookmark.id, {
@@ -67,12 +100,8 @@ function Bookmark({
                 level: 'high',
                 title: 'Copied to clipboard',
                 confirmLabel: 'Close',
-                body: (
-                    <>
-                        <div>This URL has been copied:</div>
-                        <div>{bookmarkShareUrl()}</div>
-                    </>
-                ),
+                hideCancel: true,
+                body: <ShareBody />,
             });
         }
     };
