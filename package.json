@@ -152,6 +152,7 @@
         "loader-utils": "^2.0.0",
         "lodash.throttle": "^4.1.1",
         "npm-force-resolutions": "0.0.3",
+        "odata-query": "^6.7.0",
         "pixi.js-legacy": "^5.3.7",
         "prosemirror-commands": "^1.1.5",
         "prosemirror-history": "^1.1.3",
