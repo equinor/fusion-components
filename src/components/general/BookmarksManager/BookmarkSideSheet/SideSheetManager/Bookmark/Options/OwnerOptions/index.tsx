@@ -6,7 +6,7 @@ type OwnerOptionsProps = {
     handleSharingClick: (share: boolean) => void;
     isShared: boolean;
 };
-const OwnerOptions = ({
+export const OwnerOptions = ({
     handleSharingClick,
     isShared,
     onDeleteClick,

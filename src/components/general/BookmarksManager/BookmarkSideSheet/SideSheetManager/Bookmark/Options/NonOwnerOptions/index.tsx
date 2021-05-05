@@ -3,7 +3,7 @@ import { DeleteIcon } from '@equinor/fusion-components';
 type NonOwnerOptionsProps = {
     onRemoveClick: () => void;
 };
-const NonOwnerOptions = ({ onRemoveClick }: NonOwnerOptionsProps): JSX.Element => {
+export const NonOwnerOptions = ({ onRemoveClick }: NonOwnerOptionsProps): JSX.Element => {
     return (
         <div className={styles.menuContainer}>
             <div className={styles.menuItem} key="remove" onClick={onRemoveClick}>

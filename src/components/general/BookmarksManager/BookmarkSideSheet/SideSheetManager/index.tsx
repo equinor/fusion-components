@@ -35,7 +35,7 @@ type AllBookmarksProps<TPayload> = {
     onViewChanged?: (view: BookmarkView) => void;
 };
 
-const SideSheetManager = <T extends unknown>({
+export const SideSheetManager = <T extends unknown>({
     allBookmarks,
     currentApp,
     onClose,

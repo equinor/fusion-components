@@ -14,7 +14,7 @@ type BookmarkSideSheetProps<T> = Pick<
     onClose: () => void;
 };
 
-const BookmarkSideSheet = <T extends unknown>({
+export const BookmarkSideSheet = <T extends unknown>({
     isOpen,
     onClose,
     anchorId,

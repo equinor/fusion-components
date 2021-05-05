@@ -11,7 +11,7 @@ type OptionsProps = {
     accordionOpen?: boolean;
     bookmarkInfo: Pick<BookmarkResponse, 'isShared' | 'createdBy'>;
 };
-const Options = ({
+export const Options = ({
     onEdit,
     onDelete,
     onShare,

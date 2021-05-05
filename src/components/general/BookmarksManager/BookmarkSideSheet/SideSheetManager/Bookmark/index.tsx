@@ -19,7 +19,7 @@ type BookmarkProps = {
     setEditBookmark: (bookmark: BookmarkListResponse) => void;
     onClose: () => void;
 };
-const Bookmark = ({
+export const Bookmark = ({
     bookmark,
     accordionOpen,
     onViewChange,
