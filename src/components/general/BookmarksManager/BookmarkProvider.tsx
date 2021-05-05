@@ -10,6 +10,7 @@ import {
 } from '@equinor/fusion';
 import { bookmarkContext } from './BookmarkContext';
 import createStore from './store';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 import { actions } from './store/actions/bookmarks';
@@ -40,18 +41,19 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
     }, [store]);
 
     useEffect(() => {
-        const subscription = store.action$
-            .pipe(filter(isActionOf(actions.fetchBookmark.success)))
-            .subscribe(() => setShowModal('Show'));
+        const subscription = new Subscription();
 
-        () => subscription.unsubscribe();
-    }, [store]);
+        subscription.add(
+            store.action$
+                .pipe(filter(isActionOf(actions.fetchBookmark.success)))
+                .subscribe(() => setShowModal('Show'))
+        );
 
-    useEffect(() => {
-        const subscription = store.action$
-            .pipe(filter(isActionOf(actions.favourite.success)))
-            .subscribe(() => setShowModal('Close'));
-
+        subscription.add(
+            store.action$
+                .pipe(filter(isActionOf(actions.favourite.success)))
+                .subscribe(() => setShowModal('Close'))
+        );
         () => subscription.unsubscribe();
     }, [store]);
 
