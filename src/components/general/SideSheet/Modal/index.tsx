@@ -18,7 +18,7 @@ import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
 import BannerPresenter from './BannerPresenter';
 import SnackbarPresenter from './SnackbarPresenter';
 
-type SideSheetSize = 'fullscreen' | 'xlarge' | 'large' | 'medium' | 'small';
+type SideSheetSize = 'fullscreen' | 'xxlarge' | 'xlarge' | 'large' | 'medium' | 'small';
 
 type ModalSideSheetProps = ResizablePaneOptions & {
     children: ReactNode;
@@ -105,6 +105,7 @@ export default ({
         {
             [styles.show]: isShowing,
             [styles.fullscreen]: size === 'fullscreen',
+            [styles.xxlarge]: size === 'xxlarge',
             [styles.xlarge]: size === 'xlarge',
             [styles.large]: size === 'large',
             [styles.medium]: size === 'medium',

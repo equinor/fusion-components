@@ -19,6 +19,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         isOpen,
         aside,
         isDisabled,
+        href,
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
@@ -52,13 +53,17 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
     const navigationContent = useMemo(
         () => (
             <div className={styles.groupingContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
-                <div className={styles.linkContainer} onClick={change}>
+                <a
+                    className={styles.linkContainer}
+                    onClick={change}
+                    href={!isDisabled && !isCollapsed ? href : undefined}
+                >
                     <div className={iconClasses}>{icon}</div>
                     <span className={styles.linkText} ref={textRef}>
                         {title}
                     </span>
                     {aside && <div className={styles.asideContainer}>{aside}</div>}
-                </div>
+                </a>
                 <div
                     className={styles.toggleOpenContainer}
                     onClick={() => onChange && onChange(id, true, false)}
