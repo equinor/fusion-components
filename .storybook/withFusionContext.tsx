@@ -1,4 +1,3 @@
- 
 import {
     createFusionContext,
     ServiceResolver,
@@ -123,6 +122,7 @@ const serviceResolver: ServiceResolver = {
     getNotificationBaseUrl: () => 'https://pro-s-notification-ci.azurewebsites.net',
     getInfoUrl: () => 'https://pro-s-info-app-CI.azurewebsites.net',
     getFusionTasksBaseUrl: () => 'https://pro-s-tasks-CI.azurewebsites.net',
+    getBookmarksBaseUrl: () => 'https://pro-s-bookmarks-ci.azurewebsites.net',
 };
 
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
@@ -132,10 +132,10 @@ authContainer.registerAppAsync(
 );
 
 const FusionWrapper: FC = ({ children }) => {
-    const overlay =  useRef<HTMLElement | null>(null);
-    const root =  useRef<HTMLElement | null>(null);
-    const headerContent =  useRef<HTMLElement | null>(null);
-    const headerAppAside =  useRef<HTMLElement | null>(null);
+    const overlay = useRef<HTMLElement | null>(null);
+    const root = useRef<HTMLElement | null>(null);
+    const headerContent = useRef<HTMLElement | null>(null);
+    const headerAppAside = useRef<HTMLElement | null>(null);
 
     const fusionContext = createFusionContext(authContainer, serviceResolver, {
         overlay,
