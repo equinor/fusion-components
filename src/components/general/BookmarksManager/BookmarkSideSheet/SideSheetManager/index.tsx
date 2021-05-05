@@ -35,13 +35,13 @@ type AllBookmarksProps<TPayload> = {
     onViewChanged?: (view: BookmarkView) => void;
 };
 
-function SideSheetManager<T>({
+const SideSheetManager = <T extends unknown>({
     allBookmarks,
     currentApp,
     onClose,
     capturePayload,
     onViewChanged,
-}: AllBookmarksProps<T>) {
+}: AllBookmarksProps<T>): JSX.Element => {
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
     const [bookmarkToBeEdited, setBookmarkToBeEdited] = useState<BookmarkListResponse | undefined>(
         undefined
@@ -203,6 +203,6 @@ function SideSheetManager<T>({
             )}
         </>
     );
-}
+};
 
 export default SideSheetManager;

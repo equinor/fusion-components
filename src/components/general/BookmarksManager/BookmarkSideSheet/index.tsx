@@ -14,13 +14,13 @@ type BookmarkSideSheetProps<T> = Pick<
     onClose: () => void;
 };
 
-function BookmarkSideSheet<T>({
+const BookmarkSideSheet = <T extends unknown>({
     isOpen,
     onClose,
     anchorId,
     capturePayload,
     bookmarkIdFromUrl,
-}: BookmarkSideSheetProps<T>) {
+}: BookmarkSideSheetProps<T>): JSX.Element => {
     const [title, setTitle] = useState<string>('Bookmarks Manager');
 
     const { store } = useBookmarkContext();
@@ -52,6 +52,6 @@ function BookmarkSideSheet<T>({
             />
         </ModalSideSheet>
     );
-}
+};
 
 export default BookmarkSideSheet;

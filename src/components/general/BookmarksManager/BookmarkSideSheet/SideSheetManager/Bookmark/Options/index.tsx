@@ -11,14 +11,14 @@ type OptionsProps = {
     accordionOpen?: boolean;
     bookmarkInfo: Pick<BookmarkResponse, 'isShared' | 'createdBy'>;
 };
-function Options({
+const Options = ({
     onEdit,
     onDelete,
     onShare,
     onRemove,
     accordionOpen,
     bookmarkInfo,
-}: OptionsProps) {
+}: OptionsProps): JSX.Element => {
     const { personDetails } = useCurrentPersonDetails();
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => (
         <IconButton
@@ -76,6 +76,6 @@ function Options({
             </Dropdown>
         </div>
     );
-}
+};
 
 export default Options;

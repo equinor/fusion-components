@@ -26,13 +26,13 @@ export type BookmarksManagerProps<TPayload> = {
     bookmarkIdFromUrl?: string | null;
 };
 
-function BookmarksManager<T>({
+export const BookmarksManager = <T extends unknown>({
     capturePayload,
     applyBookmark,
     name,
     anchorId,
     bookmarkIdFromUrl,
-}: BookmarksManagerProps<T>) {
+}: BookmarksManagerProps<T>): JSX.Element => {
     const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
 
     const tooltipRef = useTooltipRef(name);
@@ -74,6 +74,6 @@ function BookmarksManager<T>({
             </BookmarkProvider>
         </>
     );
-}
+};
 
 export default BookmarksManager;

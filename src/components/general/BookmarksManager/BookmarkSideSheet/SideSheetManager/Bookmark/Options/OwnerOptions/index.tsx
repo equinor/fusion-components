@@ -6,12 +6,12 @@ type OwnerOptionsProps = {
     handleSharingClick: (share: boolean) => void;
     isShared: boolean;
 };
-function OwnerOptions({
+const OwnerOptions = ({
     handleSharingClick,
     isShared,
     onDeleteClick,
     onEditClick,
-}: OwnerOptionsProps) {
+}: OwnerOptionsProps): JSX.Element => {
     return (
         <div className={styles.menuContainer}>
             <div className={styles.menuItem} onClick={onEditClick} key="edit">
@@ -46,6 +46,6 @@ function OwnerOptions({
             )}
         </div>
     );
-}
+};
 
 export default OwnerOptions;

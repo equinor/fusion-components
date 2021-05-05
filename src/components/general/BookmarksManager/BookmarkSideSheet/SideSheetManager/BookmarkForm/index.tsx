@@ -9,7 +9,13 @@ type BookmarkFormProps = {
     onEditSave?: (bookmarkId: string, bookmarkRequest: BookmarkPatchRequest) => Promise<void>;
     bookmark?: BookmarkListResponse;
 };
-function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: BookmarkFormProps) {
+const BookmarkForm = ({
+    contextName,
+    onCancel,
+    onSave,
+    bookmark,
+    onEditSave,
+}: BookmarkFormProps): JSX.Element => {
     const [name, setName] = useState<string>(bookmark?.name ? bookmark.name : '');
     const [description, setDescription] = useState<string>(
         bookmark?.description ? bookmark.description : ''
@@ -105,6 +111,6 @@ function BookmarkForm({ contextName, onCancel, onSave, bookmark, onEditSave }: B
             </div>
         </div>
     );
-}
+};
 
 export default BookmarkForm;

@@ -19,13 +19,13 @@ type BookmarkProps = {
     setEditBookmark: (bookmark: BookmarkListResponse) => void;
     onClose: () => void;
 };
-function Bookmark({
+const Bookmark = ({
     bookmark,
     accordionOpen,
     onViewChange,
     setEditBookmark,
     onClose,
-}: BookmarkProps) {
+}: BookmarkProps): JSX.Element => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
 
     const { store } = useBookmarkContext();
@@ -184,6 +184,6 @@ function Bookmark({
             <MoreDetails />
         </div>
     );
-}
+};
 
 export default Bookmark;
