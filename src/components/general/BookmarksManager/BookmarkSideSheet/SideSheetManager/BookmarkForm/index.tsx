@@ -9,7 +9,7 @@ type BookmarkFormProps = {
     onEditSave?: (bookmarkId: string, bookmarkRequest: BookmarkPatchRequest) => Promise<void>;
     bookmark?: BookmarkListResponse;
 };
-const BookmarkForm = ({
+export const BookmarkForm = ({
     contextName,
     onCancel,
     onSave,
