@@ -1,4 +1,4 @@
-import { useRef, FC } from 'react';
+import { useRef, FC, ReactNode } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 
@@ -20,6 +20,7 @@ type PositionPhotoIconProps = {
     isLinked?: boolean;
     onClick?: (position: Position, instance: PositionInstance) => void;
     rotationInstances: PositionInstance[];
+    personPhotoComponent?: ReactNode;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -27,6 +28,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     currentInstance,
     isLinked,
     rotationInstances,
+    personPhotoComponent,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const taskOwnerRef = useTooltipRef('Task Owner', 'below');
@@ -48,12 +50,14 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     return (
         <div className={styles.photoIconContainer} ref={containerRef}>
             <div className={styles.personIconContainer}>
-                <PersonPhoto
-                    person={(currentInstance && currentInstance.assignedPerson) || undefined}
-                    additionalPersons={additionalPersons}
-                    size="large"
-                    key={currentInstance ? currentInstance.id : (+new Date()).toString()}
-                />
+                {personPhotoComponent || (
+                    <PersonPhoto
+                        person={(currentInstance && currentInstance.assignedPerson) || undefined}
+                        additionalPersons={additionalPersons}
+                        size="large"
+                        key={currentInstance ? currentInstance.id : (+new Date()).toString()}
+                    />
+                )}
             </div>
             {(isTaskOwner || isLinked || isRotating) && (
                 <div className={styles.stateIcons}>
