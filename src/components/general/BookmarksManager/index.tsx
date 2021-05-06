@@ -6,7 +6,7 @@ import {
     styling,
     useAnchor,
 } from '@equinor/fusion-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import BookmarkProvider from './BookmarkProvider';
 import BookmarkSideSheet from './BookmarkSideSheet';
 import { BookmarkPayloadResponse } from '@equinor/fusion';

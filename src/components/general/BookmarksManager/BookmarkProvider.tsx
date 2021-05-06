@@ -86,7 +86,6 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
                     title: `Launched bookmark: "${headBookmark.name}"`,
                     confirmLabel: 'Save to my bookmarks',
                     cancelLabel: 'Cancel',
-
                     body: (
                         <>
                             <div>{headBookmark.description && headBookmark.description}</div>

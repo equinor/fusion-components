@@ -35,6 +35,33 @@ type AllBookmarksProps<TPayload> = {
     onViewChanged?: (view: BookmarkView) => void;
 };
 
+const createGroupByContextId = (allBookmarks: BookmarkListResponse[]) => {
+    const groupedContexts: Record<string, Context | undefined> = {};
+    allBookmarks.reduce((__prev, curr) => {
+        const key = curr.context ? curr.context.id : 'unknown';
+        if (!groupedContexts[key]) {
+            groupedContexts[key] = curr.context;
+        }
+        return groupedContexts;
+    }, {});
+    return groupedContexts;
+};
+
+const createGroupByContext = (allBookmarks: BookmarkListResponse[]) => {
+    const groupedContext: Record<string, BookmarkListResponse[]> = {};
+    allBookmarks.reduce((__prev, curr) => {
+        const key = curr.context ? curr.context.id : 'unknown';
+        if (groupedContext[key]) {
+            const bookmarks = groupedContext[key];
+            bookmarks.push(curr);
+        } else {
+            groupedContext[key] = [curr];
+        }
+        return groupedContext;
+    }, {});
+    return groupedContext;
+};
+
 export const SideSheetManager = <T extends unknown>({
     allBookmarks,
     currentApp,
@@ -42,6 +69,8 @@ export const SideSheetManager = <T extends unknown>({
     capturePayload,
     onViewChanged,
 }: AllBookmarksProps<T>): JSX.Element => {
+    console.log(allBookmarks);
+
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
     const [bookmarkToBeEdited, setBookmarkToBeEdited] = useState<BookmarkListResponse | undefined>(
         undefined
@@ -104,32 +133,6 @@ export const SideSheetManager = <T extends unknown>({
         [onViewChange, store]
     );
 
-    const groupedContext: Record<string, BookmarkListResponse[]> = {};
-    const groupedContexts: Record<string, Context | undefined> = {};
-
-    const bookmarksGroupByContextId: Record<string, BookmarkListResponse[]> = allBookmarks
-        ? allBookmarks.reduce((__prev, curr) => {
-              const key = curr.context ? curr.context.id : 'unknown';
-              if (groupedContext[key]) {
-                  const bookmarks = groupedContext[key];
-                  bookmarks.push(curr);
-              } else {
-                  groupedContext[key] = [curr];
-              }
-              return groupedContext;
-          }, {})
-        : {};
-
-    const groupByContextId: Record<string, Context> = allBookmarks
-        ? allBookmarks.reduce((__prev, curr) => {
-              const key = curr.context ? curr.context.id : 'unknown';
-              if (!groupedContexts[key]) {
-                  groupedContexts[key] = curr.context;
-              }
-              return groupedContexts;
-          }, {})
-        : {};
-
     useEffect(() => {
         setOpenAccordions({
             [currentContext!.id]: true,
@@ -174,7 +177,7 @@ export const SideSheetManager = <T extends unknown>({
                 />
             ) : (
                 <Accordion>
-                    {Object.values(groupByContextId).map((context) => {
+                    {Object.values(createGroupByContextId(allBookmarks)).map((context) => {
                         return (
                             <AccordionItem
                                 label={context.name}
@@ -182,7 +185,7 @@ export const SideSheetManager = <T extends unknown>({
                                 isOpen={openAccordions[context.id]}
                                 onChange={() => handleOpenAccordionChange(context.id)}
                             >
-                                {Object.values(bookmarksGroupByContextId[context.id]).map(
+                                {Object.values(createGroupByContext(allBookmarks)[context.id]).map(
                                     (bookmark: BookmarkListResponse) => {
                                         return (
                                             <Bookmark

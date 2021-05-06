@@ -13,7 +13,7 @@ export const fetchBookmarksReducer = (initial: State) =>
             })
         )
         .handleAction(
-            actions.fetch.success,
+            actions.fetchAll.success,
             (state: State, action: ActionType<typeof actions.fetchAll.success>) => ({
                 ...state,
                 status: removeStatus(state, Status.Idle),
@@ -21,7 +21,7 @@ export const fetchBookmarksReducer = (initial: State) =>
             })
         )
         .handleAction(
-            actions.fetch.failure,
+            actions.fetchAll.failure,
             (state: State, action: ActionType<typeof actions.fetchAll.failure>) => ({
                 ...state,
                 status: removeStatus(state, Status.Failure),

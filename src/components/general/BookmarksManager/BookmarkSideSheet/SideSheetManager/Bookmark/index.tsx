@@ -1,4 +1,4 @@
-import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
+import { BookmarkListResponse, useHistory, useNotificationCenter } from '@equinor/fusion';
 import { SortIcon, useTooltipRef, PersonPhoto, Button } from '@equinor/fusion-components';
 import { useState } from 'react';
 import useBookmarkContext from '../../../hooks/useBookmarkContext';
@@ -28,10 +28,10 @@ export const Bookmark = ({
     const createNotification = useNotificationCenter();
 
     const bookmarkShareUrl = () => {
-        const base = `${window.location.origin}/${bookmark.appKey}`;
+        const base = `${window.location.origin}/apps/${bookmark.appKey}`;
 
-        if (bookmark.context) return `${base}/${bookmark.context.id}/${bookmark.id}`;
-        else return `${base}/${bookmark.id}`;
+        if (bookmark.context) return `${base}/${bookmark.context.id}?bookmarkId=${bookmark.id}`;
+        else return `${base}?bookmarkId=${bookmark.id}`;
     };
 
     const handleDelete = async () => {

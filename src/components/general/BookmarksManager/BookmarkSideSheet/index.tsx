@@ -1,4 +1,4 @@
-import { useCurrentApp, useSelector } from '@equinor/fusion';
+import { useCurrentApp, useHistory, useSelector } from '@equinor/fusion';
 import { ModalSideSheet } from '@equinor/fusion-components';
 import { useEffect, useState } from 'react';
 import { BookmarksManagerProps } from '..';
@@ -22,10 +22,10 @@ export const BookmarkSideSheet = <T extends unknown>({
     bookmarkIdFromUrl,
 }: BookmarkSideSheetProps<T>): JSX.Element => {
     const [title, setTitle] = useState<string>('Bookmarks Manager');
-
     const { store } = useBookmarkContext();
     const bookmarks = useSelector(store, 'bookmarks');
     const currentApp = useCurrentApp();
+    const history = useHistory();
 
     const onViewChanged = (view: BookmarkView) => {
         setTitle(view === 'AllBookmarks' ? 'Bookmarks Manager' : 'Save bookmark');
@@ -36,10 +36,12 @@ export const BookmarkSideSheet = <T extends unknown>({
     }, [store, currentApp]);
 
     useEffect(() => {
-        if (bookmarkIdFromUrl) {
-            store.headBookmark(bookmarkIdFromUrl);
+        const urlParams = new URLSearchParams(history.location.search);
+        const bookmarkId = urlParams.get('bookmarkId');
+        if (bookmarkId) {
+            store.headBookmark(bookmarkId);
         }
-    }, [bookmarkIdFromUrl, store]);
+    }, [history.location, store]);
 
     return (
         <ModalSideSheet header={title} onClose={onClose} show={isOpen} size="medium" id={anchorId}>
