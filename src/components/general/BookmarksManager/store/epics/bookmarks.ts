@@ -13,7 +13,7 @@ const fetchBookmarks = (
     _: StatefulObserver<State>,
     { clients }: Dependencies
 ) => {
-    const { request, success, failure, cancel } = actions.fetch;
+    const { request, success, failure, cancel } = actions.fetchAll;
     return action$.pipe(
         filter(isActionOf(request)),
         switchMap((action) =>
@@ -31,7 +31,7 @@ const fetchBookmark = (
     _: StatefulObserver<State>,
     { clients }: Dependencies
 ) => {
-    const { request, success, failure, cancel } = actions.fetchBookmark;
+    const { request, success, failure, cancel } = actions.fetch;
     return action$.pipe(
         filter(isActionOf(request)),
         switchMap((action) =>
@@ -49,7 +49,7 @@ const deleteBookmark = (
     _: StatefulObserver<State>,
     { clients }: Dependencies
 ) => {
-    const { request, success, failure, cancel } = actions.delete;
+    const { request, success, failure, cancel } = actions.remove;
     return action$.pipe(
         filter(isActionOf(request)),
         switchMap((action) =>
@@ -188,36 +188,36 @@ const headBookmark = (
 const onBookmarkNotExist = (action$: Observable<Actions>) =>
     action$.pipe(
         filter(isActionOf(actions.head.failure)),
-        map((action) => actions.fetchBookmark.request(action.payload.bookmarkId))
+        map((action) => actions.fetch.request(action.payload.bookmarkId))
     );
 
 const onBookmarkAdded = (action$: Observable<Actions>) =>
     action$.pipe(
         filter(isActionOf(actions.add.success)),
-        map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
+        map((action) => actions.fetchAll.request({ appKey: action.payload.appKey }))
     );
 
 const onBookmarkDeleted = (action$: Observable<Actions>) =>
     action$.pipe(
-        filter(isActionOf(actions.delete.success)),
-        map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
+        filter(isActionOf(actions.remove.success)),
+        map((action) => actions.fetchAll.request({ appKey: action.payload.appKey }))
     );
 const onBookmarkUpdated = (action$: Observable<Actions>) =>
     action$.pipe(
         filter(isActionOf(actions.update.success)),
-        map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
+        map((action) => actions.fetchAll.request({ appKey: action.payload.appKey }))
     );
 
 const onBookmarkFavourited = (action$: Observable<Actions>) =>
     action$.pipe(
         filter(isActionOf(actions.favourite.success)),
-        map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
+        map((action) => actions.fetchAll.request({ appKey: action.payload.appKey }))
     );
 
 const onBookmarkUnFavourited = (action$: Observable<Actions>) =>
     action$.pipe(
         filter(isActionOf(actions.unFavourite.success)),
-        map((action) => actions.fetch.request({ appKey: action.payload.appKey }))
+        map((action) => actions.fetchAll.request({ appKey: action.payload.appKey }))
     );
 
 const epics = combineEpics<Actions, Actions, State>(

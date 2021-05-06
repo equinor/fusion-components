@@ -45,7 +45,7 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
 
         subscription.add(
             store.action$
-                .pipe(filter(isActionOf(actions.fetchBookmark.success)))
+                .pipe(filter(isActionOf(actions.fetch.success)))
                 .subscribe(() => setShowModal('Show'))
         );
 

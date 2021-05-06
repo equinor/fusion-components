@@ -12,7 +12,7 @@ const createAllBookmarksStory = () => () => {
     );
 };
 
-storiesOf('NewBookmark', module)
+storiesOf('General/New Bookmark Form', module)
     // .addParameters({ jest: ['Button.stories.jsx'] })
     .addDecorator(withFusionStory('NewBookmark'))
-    .add('Default', createAllBookmarksStory());
+    .add('NewBookmark', createAllBookmarksStory());

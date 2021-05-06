@@ -1,16 +1,11 @@
 import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
-import {
-    SortIcon,
-    ShareIcon,
-    useTooltipRef,
-    PersonPhoto,
-    Button,
-} from '@equinor/fusion-components';
+import { SortIcon, useTooltipRef, PersonPhoto, Button } from '@equinor/fusion-components';
 import { useState } from 'react';
 import useBookmarkContext from '../../../hooks/useBookmarkContext';
 import { BookmarkView } from '../../../types';
 import Options from './Options';
 import styles from './styles.less';
+import '@equinor/fusion-wc-icon';
 
 type BookmarkProps = {
     bookmark: BookmarkListResponse;
@@ -170,7 +165,7 @@ export const Bookmark = ({
                 <div className={styles.sharedBookmark}>
                     {bookmark.isShared && (
                         <div className={styles.icon} ref={bookmarkRef}>
-                            <ShareIcon />
+                            <fwc-icon icon="share" />
                         </div>
                     )}
                 </div>

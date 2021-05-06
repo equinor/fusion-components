@@ -17,14 +17,14 @@ export type ApiErrorHead = ActionError<HttpClientRequestFailedError<any>> & {
 type FetchRequestPayload = {
     appKey: string;
 };
-export const fetchBookmarks = createAsyncAction(
+export const fetchAll = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_FAILURE',
     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARKS_CANCEL'
 )<FetchRequestPayload, BookmarkListResponse[], ApiError, FailedErrorType>();
 
-export const fetchBookmark = createAsyncAction(
+export const fetch = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/FETCH_BOOKMARK_FAILURE',
@@ -35,14 +35,14 @@ type DeletePayload = {
     bookmarkId: string;
     appKey: string;
 };
-export const deleteBookmark = createAsyncAction(
+export const remove = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_FAILURE',
     '@FUSION_COMPONENTS/BOOKMARKS/DELETE_BOOKMARK_CANCEL'
 )<DeletePayload, DeletePayload, ApiError, FailedErrorType>();
 
-export const addBookmark = createAsyncAction(
+export const add = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/ADD_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/ADD_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/ADD_BOOKMARK_FAILURE',
@@ -52,14 +52,14 @@ type UpdatePayload = {
     bookmark: Partial<Omit<BookmarkRequest, 'appKey' | 'contextId'>>;
     bookmarkId: string;
 };
-export const updateBookmark = createAsyncAction(
+export const update = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/UPDATE_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/UPDATE_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/UPDATE_BOOKMARK_FAILURE',
     '@FUSION_COMPONENTS/BOOKMARKS/UPDATE_BOOKMARK_CANCEL'
 )<UpdatePayload, BookmarkResponse, ApiError, string | void>();
 
-export const applyBookmark = createAsyncAction(
+export const apply = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/APPLY_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/APPLY_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/APPLY_BOOKMARK_FAILURE',
@@ -71,20 +71,20 @@ type FavouriteBookmarkPayload = {
     appKey: string;
 };
 
-export const favouriteBookmark = createAsyncAction(
+export const favourite = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/FAVOURITE_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/FAVOURITE_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/FAVOURITE_BOOKMARK_FAILURE',
     '@FUSION_COMPONENTS/BOOKMARKS/FAVOURITE_BOOKMARK_CANCEL'
 )<FavouriteBookmarkPayload, FavouriteBookmarkPayload, ApiError, string | void>();
-export const unFavouriteBookmark = createAsyncAction(
+export const unFavourite = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/UNFAVOURITE_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/UNFAVOURITE_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/UNFAVOURITE_BOOKMARK_FAILURE',
     '@FUSION_COMPONENTS/BOOKMARKS/UNFAVOURITE_BOOKMARK_CANCEL'
 )<FavouriteBookmarkPayload, FavouriteBookmarkPayload, ApiError, string | void>();
 
-export const headBookmark = createAsyncAction(
+export const head = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/HEAD_BOOKMARK_REQUEST',
     '@FUSION_COMPONENTS/BOOKMARKS/HEAD_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/HEAD_BOOKMARK_FAILURE',
@@ -92,15 +92,15 @@ export const headBookmark = createAsyncAction(
 )<string, void, ApiErrorHead, string | void>();
 
 export const actions = {
-    fetch: fetchBookmarks,
-    delete: deleteBookmark,
-    add: addBookmark,
-    update: updateBookmark,
-    apply: applyBookmark,
-    favourite: favouriteBookmark,
-    unFavourite: unFavouriteBookmark,
-    head: headBookmark,
-    fetchBookmark: fetchBookmark,
+    fetchAll,
+    remove,
+    add,
+    update,
+    apply,
+    favourite,
+    unFavourite,
+    head,
+    fetch,
 };
 export type BookmarksActions = ActionType<typeof actions>;
 export default actions;

@@ -5,8 +5,8 @@ import { actions } from '../actions/bookmarks';
 export const fetchBookmarksReducer = (initial: State) =>
     createReducer(initial)
         .handleAction(
-            actions.fetch.request,
-            (state: State, action: ActionType<typeof actions.fetchBookmark.request>) => ({
+            actions.fetchAll.request,
+            (state: State, action: ActionType<typeof actions.fetchAll.request>) => ({
                 ...state,
                 status: [...state.status, Status.Fetching],
                 errors: removeError(state, action),
@@ -14,7 +14,7 @@ export const fetchBookmarksReducer = (initial: State) =>
         )
         .handleAction(
             actions.fetch.success,
-            (state: State, action: ActionType<typeof actions.fetchBookmark.success>) => ({
+            (state: State, action: ActionType<typeof actions.fetchAll.success>) => ({
                 ...state,
                 status: removeStatus(state, Status.Idle),
                 bookmarks: action.payload,
@@ -22,7 +22,7 @@ export const fetchBookmarksReducer = (initial: State) =>
         )
         .handleAction(
             actions.fetch.failure,
-            (state: State, action: ActionType<typeof actions.fetchBookmark.failure>) => ({
+            (state: State, action: ActionType<typeof actions.fetchAll.failure>) => ({
                 ...state,
                 status: removeStatus(state, Status.Failure),
                 errors: [...state.errors, action.payload],

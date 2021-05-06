@@ -1,10 +1,19 @@
-import { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
-import { BookmarkResponse, useCurrentApp } from '@equinor/fusion';
-import ModalSideSheet from '../../SideSheet/Modal';
+import { BookmarkListResponse, BookmarkResponse } from '@equinor/fusion';
+import Bookmark from './../../BookmarksManager/BookmarkSideSheet/SideSheetManager/Bookmark';
+import Accordion from '../../../general/Accordion';
+import AccordionItem from '../../../general/Accordion/AccordionItem';
+import BookmarkProvider from './../BookmarkProvider';
+type Context = {
+    name: string;
+    id: string;
+};
+type OpenAccordion = {
+    [id: string]: boolean;
+};
 
-import SideSheetManager from '../BookmarkSideSheet/SideSheetManager';
 const createBookmarksManagerStory = () => () => {
     const allBookmarks: Omit<BookmarkResponse, 'payload'>[] = [
         {
@@ -76,30 +85,74 @@ const createBookmarksManagerStory = () => () => {
         },
     ];
 
-    const currentApp = useCurrentApp();
+    const createGroupByContextId = (allBookmarks: BookmarkListResponse[]) => {
+        const groupedContexts: Record<string, Context | undefined> = {};
+        allBookmarks.reduce((__prev, curr) => {
+            const key = curr.context ? curr.context.id : 'unknown';
+            if (!groupedContexts[key]) {
+                groupedContexts[key] = curr.context;
+            }
+            return groupedContexts;
+        }, {});
+        return groupedContexts;
+    };
 
+    const createGroupByContext = (allBookmarks: BookmarkListResponse[]) => {
+        const groupedContext: Record<string, BookmarkListResponse[]> = {};
+        allBookmarks.reduce((__prev, curr) => {
+            const key = curr.context ? curr.context.id : 'unknown';
+            if (groupedContext[key]) {
+                const bookmarks = groupedContext[key];
+                bookmarks.push(curr);
+            } else {
+                groupedContext[key] = [curr];
+            }
+            return groupedContext;
+        }, {});
+        return groupedContext;
+    };
+
+    const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
+    const handleOpenAccordionChange = (id: string) =>
+        setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
     return (
-        <Fragment>
-            <ModalSideSheet
-                header={'Bookmarks Manager'}
-                onClose={() => {}}
-                show={true}
-                size="medium"
-                id={'1'}
-            >
-                <SideSheetManager
-                    allBookmarks={allBookmarks}
-                    currentApp={currentApp}
-                    capturePayload={async () => {}}
-                    onViewChanged={(view) => {}}
-                    onClose={() => {}}
-                />
-            </ModalSideSheet>
-        </Fragment>
+        <BookmarkProvider>
+            <Fragment>
+                <>
+                    <Accordion>
+                        {Object.values(createGroupByContextId(allBookmarks)).map((context) => {
+                            return (
+                                <AccordionItem
+                                    label={context.name}
+                                    key={context.id}
+                                    isOpen={openAccordions[context.id]}
+                                    onChange={() => handleOpenAccordionChange(context.id)}
+                                >
+                                    {Object.values(
+                                        createGroupByContext(allBookmarks)[context.id]
+                                    ).map((bookmark: BookmarkListResponse) => {
+                                        return (
+                                            <Bookmark
+                                                bookmark={bookmark}
+                                                accordionOpen={openAccordions[context.id]}
+                                                onViewChange={() => {}}
+                                                setEditBookmark={() => {}}
+                                                onClose={() => {}}
+                                                key={bookmark.id}
+                                            />
+                                        );
+                                    })}
+                                </AccordionItem>
+                            );
+                        })}
+                    </Accordion>
+                </>
+            </Fragment>
+        </BookmarkProvider>
     );
 };
 
-storiesOf('BookmarksManager', module)
+storiesOf('General/BookmarksManager', module)
     // .addParameters({ jest: ['Button.stories.jsx'] })
     .addDecorator(withFusionStory('BookmarksManager'))
     .add('Default', createBookmarksManagerStory());
