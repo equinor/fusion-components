@@ -40,7 +40,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
             ? rotationInstances.length > 0
                 ? `${rotationInstances.length + 1} assignees`
                 : instance.assignedPerson.name
-            : 'TBN';
+            : 'TBN - To Be Nominated';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
