@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
 import styles from './styles.less';
@@ -23,6 +23,7 @@ type PositionCardProps = {
     showRotation?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
+    personPhotoComponent?: ReactNode
 };
 
 const PositionCard: React.FC<PositionCardProps> = ({
@@ -42,6 +43,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     childCount,
     selectedDate,
     showRotation,
+    personPhotoComponent
 }) => {
     const isExternalHire =
         instance &&
@@ -98,6 +100,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     isLinked={isLinked}
                     onClick={onClick}
                     rotationInstances={rotatingInstances}
+                    personPhotoComponent={personPhotoComponent}
                 />
                 <PositionInstanceComponent
                     position={position}
