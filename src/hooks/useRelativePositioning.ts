@@ -34,11 +34,11 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
     useEffect(setRectFromRef, [ref.current]);
 
     const animationFrame = useRef(0);
-    const timer = useRef(0);
+    const timer = useRef<NodeJS.Timeout>(null);
     const isStopped = useRef(false);
     const update = () => {
         clearTimeout(timer.current);
-        window.cancelAnimationFrame(timer.current);
+        window.cancelAnimationFrame(Number(timer.current));
 
         if (isStopped.current) {
             return;

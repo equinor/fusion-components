@@ -26,7 +26,7 @@ export default <T extends HTMLElement>(
     const [isInView, setIsInView] = useState(getIsInView());
 
     const animationFrame = useRef(0);
-    const timer = useRef(0);
+    const timer = useRef<NodeJS.Timeout>(null);
     const checkIsInView = () => {
         clearTimeout(timer.current);
         window.cancelAnimationFrame(animationFrame.current);
