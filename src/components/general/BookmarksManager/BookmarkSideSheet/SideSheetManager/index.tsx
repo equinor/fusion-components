@@ -69,8 +69,6 @@ export const SideSheetManager = <T extends unknown>({
     capturePayload,
     onViewChanged,
 }: AllBookmarksProps<T>): JSX.Element => {
-    console.log(allBookmarks);
-
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
     const [bookmarkToBeEdited, setBookmarkToBeEdited] = useState<BookmarkListResponse | undefined>(
         undefined

@@ -1,4 +1,4 @@
-import { BookmarkListResponse, useHistory, useNotificationCenter } from '@equinor/fusion';
+import { BookmarkListResponse, useNotificationCenter } from '@equinor/fusion';
 import { SortIcon, useTooltipRef, PersonPhoto, Button } from '@equinor/fusion-components';
 import { useState } from 'react';
 import useBookmarkContext from '../../../hooks/useBookmarkContext';
