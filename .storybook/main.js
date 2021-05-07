@@ -7,6 +7,9 @@ const resolve = require('../build/resolve');
 const typescript = require('../build/typescript');
 
 module.exports = {
+    core: {
+        builder: "webpack5"
+    },
     stories: ['../src/**/*.stories.@(jsx|tsx|mdx)'],
     addons: [
         '@storybook/addon-essentials'
