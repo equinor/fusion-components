@@ -253,6 +253,9 @@ const ReportEmbed: FC<PowerBIProps> = ({
             <div className={styles.powerbiContent} ref={embedRef}></div>
             <AppSettingsManager
                 captureAppSetting={captureBookmark}
+                // TODO
+
+                // @ts-ignore
                 applyAppSetting={applyBookmark}
                 hasContext={hasContext}
                 anchorId="pbi-bookmarks-btn"

@@ -80,7 +80,9 @@ const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
         const current = cardContainerRef.current;
         result.className = classNames(styles.adaptiveCard, className);
         current && current.appendChild(result);
-        return () => current && current.firstChild && current.removeChild(current.firstChild);
+        return () => {
+            current && current.firstChild && current.removeChild(current.firstChild);
+        };
     }, [result, className]);
 
     return <div ref={cardContainerRef} />;

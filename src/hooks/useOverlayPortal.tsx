@@ -8,7 +8,7 @@ export default (isVisible: boolean, content: ReactNode): void => {
     const fusionContext = useFusionContext();
     const ref = useRef(document.createElement('div'));
     const overlayContainer = useOverlayContainer();
-    const timer = useRef(0);
+    const timer = useRef<NodeJS.Timeout>(null);
 
     useEffect(() => {
         if (!isVisible || !overlayContainer) {

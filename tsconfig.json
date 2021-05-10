@@ -13,6 +13,7 @@
         "moduleResolution": "node",
         "jsx": "react-jsx",
         "noImplicitAny": false,
+        "skipLibCheck": true,
         "paths": {
             "@equinor/fusion-components": ["./src/index.ts"]
         },

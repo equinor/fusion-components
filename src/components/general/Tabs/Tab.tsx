@@ -1,5 +1,5 @@
 import styles from './styles.less';
-import * as classNames from 'classnames';
+import classNames from 'clsx';
 import { useKeyboardNavigation } from '@equinor/fusion-components';
 import { useState, useRef, FC, ReactNode, AnchorHTMLAttributes } from 'react';
 
