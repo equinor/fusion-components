@@ -95,12 +95,6 @@ export const Bookmark = ({
     }
 
     const handleSharing = async (share: boolean) => {
-        try {
-            store.updateBookmark(bookmark.id, {
-                isShared: share,
-            });
-        } catch (e) {}
-
         if (share) {
             navigator.clipboard.writeText(bookmarkShareUrl());
             await createNotification({
@@ -110,6 +104,27 @@ export const Bookmark = ({
                 hideCancelAction: true,
                 body: <ShareBody />,
             });
+            try {
+                store.updateBookmark(bookmark.id, {
+                    isShared: share,
+                });
+            } catch (e) {}
+        } else {
+            const response = await createNotification({
+                level: 'high',
+                title: `Unshare bookmark: '${bookmark.name}`,
+                confirmLabel: 'Unshare',
+                cancelLabel: 'Cancel',
+                body:
+                    'By unsharing this bookmark, it will also be removed from the people you have shared it with.',
+            });
+            if (!response.confirmed) return;
+
+            try {
+                store.updateBookmark(bookmark.id, {
+                    isShared: share,
+                });
+            } catch (e) {}
         }
     };
 
