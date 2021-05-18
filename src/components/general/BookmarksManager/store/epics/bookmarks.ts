@@ -177,7 +177,7 @@ const headBookmark = (
         filter(isActionOf(request)),
         switchMap((action) =>
             from(clients.bookmarks.headBookmark(action.payload)).pipe(
-                map((res) => success(res.data)),
+                map((res) => success(action.payload)),
                 catchError((error) => of(failure({ action, error, bookmarkId: action.payload }))),
                 takeUntil(action$.pipe(filter(isActionOf(cancel))))
             )

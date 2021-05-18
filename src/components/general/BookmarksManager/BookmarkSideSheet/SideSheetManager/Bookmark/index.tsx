@@ -46,15 +46,11 @@ export const Bookmark = ({
         });
         if (!response.confirmed) return;
 
-        try {
-            store.deleteBookmark(bookmark.appKey, bookmark.id);
-        } catch (e) {}
+        store.deleteBookmark(bookmark.appKey, bookmark.id);
     };
 
     const handleRemove = () => {
-        try {
-            store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
-        } catch (e) {}
+        store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
     };
 
     const handleEdit = () => {
@@ -95,12 +91,6 @@ export const Bookmark = ({
     }
 
     const handleSharing = async (share: boolean) => {
-        try {
-            store.updateBookmark(bookmark.id, {
-                isShared: share,
-            });
-        } catch (e) {}
-
         if (share) {
             navigator.clipboard.writeText(bookmarkShareUrl());
             await createNotification({
@@ -109,6 +99,24 @@ export const Bookmark = ({
                 confirmLabel: 'Close',
                 hideCancelAction: true,
                 body: <ShareBody />,
+            });
+
+            store.updateBookmark(bookmark.id, {
+                isShared: share,
+            });
+        } else {
+            const response = await createNotification({
+                level: 'high',
+                title: `Unshare bookmark: '${bookmark.name}`,
+                confirmLabel: 'Unshare',
+                cancelLabel: 'Cancel',
+                body:
+                    'By unsharing this bookmark, it will also be removed from the people you have shared it with.',
+            });
+            if (!response.confirmed) return;
+
+            store.updateBookmark(bookmark.id, {
+                isShared: share,
             });
         }
     };

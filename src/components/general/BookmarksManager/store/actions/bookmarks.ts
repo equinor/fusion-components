@@ -1,4 +1,4 @@
-import { createAsyncAction, ActionType, createAction } from 'typesafe-actions';
+import { createAsyncAction, ActionType } from 'typesafe-actions';
 import {
     BookmarkListResponse,
     BookmarkRequest,
@@ -89,7 +89,7 @@ export const head = createAsyncAction(
     '@FUSION_COMPONENTS/BOOKMARKS/HEAD_BOOKMARK_SUCCESS',
     '@FUSION_COMPONENTS/BOOKMARKS/HEAD_BOOKMARK_FAILURE',
     '@FUSION_COMPONENTS/BOOKMARKS/HEAD_BOOKMARK_CANCEL'
-)<string, void, ApiErrorHead, string | void>();
+)<string, string, ApiErrorHead, string | void>();
 
 export const actions = {
     fetchAll,
