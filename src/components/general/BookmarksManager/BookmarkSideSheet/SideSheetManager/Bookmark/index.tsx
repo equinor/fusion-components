@@ -46,15 +46,11 @@ export const Bookmark = ({
         });
         if (!response.confirmed) return;
 
-        try {
-            store.deleteBookmark(bookmark.appKey, bookmark.id);
-        } catch (e) {}
+        store.deleteBookmark(bookmark.appKey, bookmark.id);
     };
 
     const handleRemove = () => {
-        try {
-            store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
-        } catch (e) {}
+        store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
     };
 
     const handleEdit = () => {
@@ -104,11 +100,10 @@ export const Bookmark = ({
                 hideCancelAction: true,
                 body: <ShareBody />,
             });
-            try {
-                store.updateBookmark(bookmark.id, {
-                    isShared: share,
-                });
-            } catch (e) {}
+
+            store.updateBookmark(bookmark.id, {
+                isShared: share,
+            });
         } else {
             const response = await createNotification({
                 level: 'high',
@@ -120,11 +115,9 @@ export const Bookmark = ({
             });
             if (!response.confirmed) return;
 
-            try {
-                store.updateBookmark(bookmark.id, {
-                    isShared: share,
-                });
-            } catch (e) {}
+            store.updateBookmark(bookmark.id, {
+                isShared: share,
+            });
         }
     };
 
