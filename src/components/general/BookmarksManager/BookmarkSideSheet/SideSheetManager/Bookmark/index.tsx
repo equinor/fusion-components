@@ -46,11 +46,15 @@ export const Bookmark = ({
         });
         if (!response.confirmed) return;
 
-        store.deleteBookmark(bookmark.appKey, bookmark.id);
+        try {
+            store.deleteBookmark(bookmark.appKey, bookmark.id);
+        } catch (e) {}
     };
 
     const handleRemove = () => {
-        store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
+        try {
+            store.unFavouriteBookmark(bookmark.appKey, bookmark.id);
+        } catch (e) {}
     };
 
     const handleEdit = () => {
@@ -91,9 +95,11 @@ export const Bookmark = ({
     }
 
     const handleSharing = async (share: boolean) => {
-        store.updateBookmark(bookmark.id, {
-            isShared: share,
-        });
+        try {
+            store.updateBookmark(bookmark.id, {
+                isShared: share,
+            });
+        } catch (e) {}
 
         if (share) {
             navigator.clipboard.writeText(bookmarkShareUrl());

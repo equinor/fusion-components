@@ -121,8 +121,12 @@ export const SideSheetManager = <T extends unknown>({
 
     const onEditSave = useCallback(
         async (bookmarkId: string, bookmark: BookmarkPatchRequest) => {
-            store.updateBookmark(bookmarkId, bookmark);
-            onViewChange('AllBookmarks');
+            try {
+                store.updateBookmark(bookmarkId, bookmark);
+                onViewChange('AllBookmarks');
+            } catch (e) {
+                console.error(e);
+            }
         },
         [onViewChange, store]
     );
