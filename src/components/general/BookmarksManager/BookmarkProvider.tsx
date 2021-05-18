@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 import { actions } from './store/actions/bookmarks';
+import { PersonPhoto } from '@equinor/fusion-components';
 
 type ModalState = 'Show' | 'Close' | 'Open';
 type Props = PropsWithChildren<{
@@ -44,15 +45,22 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
         const subscription = new Subscription();
 
         subscription.add(
-            store.action$
-                .pipe(filter(isActionOf(actions.fetch.success)))
-                .subscribe(() => setShowModal('Show'))
+            store.action$.pipe(filter(isActionOf(actions.fetch.success))).subscribe((b) => {
+                setShowModal('Show');
+                store.applyBookmark(b.payload.id);
+            })
         );
 
         subscription.add(
             store.action$
                 .pipe(filter(isActionOf(actions.favourite.success)))
                 .subscribe(() => setShowModal('Close'))
+        );
+
+        subscription.add(
+            store.action$
+                .pipe(filter(isActionOf(actions.head.success)))
+                .subscribe((b) => store.applyBookmark(b.payload))
         );
         () => subscription.unsubscribe();
     }, [store]);
@@ -77,7 +85,7 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
         if (
             showModal === 'Show' &&
             headBookmark &&
-            personDetails.azureUniqueId !== headBookmark.createdBy.azureUniqueId
+            personDetails?.azureUniqueId !== headBookmark.createdBy.azureUniqueId
         ) {
             setShowModal('Open');
             const addBookmark = async () => {
@@ -85,7 +93,7 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
                     level: 'high',
                     title: `Launched bookmark: "${headBookmark.name}"`,
                     confirmLabel: 'Save to my bookmarks',
-                    cancelLabel: 'Cancel',
+                    cancelLabel: `Don't save`,
                     body: (
                         <>
                             <div>{headBookmark.description && headBookmark.description}</div>
