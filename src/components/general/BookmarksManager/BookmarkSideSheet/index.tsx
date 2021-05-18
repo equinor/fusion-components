@@ -1,15 +1,13 @@
 import { useCurrentApp, useHistory, useSelector } from '@equinor/fusion';
 import { ModalSideSheet } from '@equinor/fusion-components';
 import { useEffect, useState } from 'react';
-import { BookmarksManagerProps } from '..';
 import SideSheetManager from './SideSheetManager';
 import useBookmarkContext from '../hooks/useBookmarkContext';
 import { BookmarkView } from '../types';
 
-type BookmarkSideSheetProps<T> = Pick<
-    BookmarksManagerProps<T>,
-    'anchorId' | 'capturePayload' | 'bookmarkIdFromUrl'
-> & {
+type BookmarkSideSheetProps<TPayload> = {
+    anchorId: string;
+    capturePayload: () => Promise<TPayload>;
     isOpen: boolean;
     onClose: () => void;
 };
@@ -19,7 +17,6 @@ export const BookmarkSideSheet = <T extends unknown>({
     onClose,
     anchorId,
     capturePayload,
-    bookmarkIdFromUrl,
 }: BookmarkSideSheetProps<T>): JSX.Element => {
     const [title, setTitle] = useState<string>('Bookmarks Manager');
     const { store } = useBookmarkContext();
