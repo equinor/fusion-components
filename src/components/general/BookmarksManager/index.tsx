@@ -15,24 +15,22 @@ type BookmarkPayload<TPayload> = Omit<BookmarkPayloadResponse, 'payload'> & {
     payload: TPayload;
 };
 
-export type BookmarksManagerProps<TPayload> = {
+export type BookmarksManagerProps<TPayload, TPromise> = {
     capturePayload: () => Promise<TPayload>;
     applyBookmark: (
         bookmarkPayload: BookmarkPayload<TPayload>,
         awaitForContextSwitch: boolean
-    ) => Promise<void>;
+    ) => Promise<TPromise>;
     name: string;
     anchorId: string;
-    bookmarkIdFromUrl?: string | null;
 };
 
-export const BookmarksManager = <T extends unknown>({
+export const BookmarksManager = <T extends unknown, TPromise extends unknown>({
     capturePayload,
     applyBookmark,
     name,
     anchorId,
-    bookmarkIdFromUrl,
-}: BookmarksManagerProps<T>): JSX.Element => {
+}: BookmarksManagerProps<T, TPromise>): JSX.Element => {
     const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
 
     const tooltipRef = useTooltipRef(name);
@@ -68,7 +66,6 @@ export const BookmarksManager = <T extends unknown>({
                     isOpen={isSideSheetOpen}
                     onClose={closeSideSheet}
                     capturePayload={capturePayload}
-                    bookmarkIdFromUrl={bookmarkIdFromUrl}
                     anchorId={anchorId}
                 />
             </BookmarkProvider>

@@ -8,12 +8,12 @@ import {
     EmbedInfo,
     EmbedConfig,
 } from '@equinor/fusion/lib/http/apiClients/models/report/';
-import { AppSettingsManager } from '@equinor/fusion-components';
 
 import styles from '../../styles.less';
 import { ButtonClickEvent } from '../../models/EventHandlerTypes';
 import { FC, useState, useRef, useCallback, useLayoutEffect, useEffect } from 'react';
 import { PowerBIReportErrorDetail } from '../..';
+import { BookmarksManager } from '@equinor/fusion-components';
 
 type PowerBIProps = {
     reportId: string;
@@ -251,15 +251,13 @@ const ReportEmbed: FC<PowerBIProps> = ({
     return (
         <>
             <div className={styles.powerbiContent} ref={embedRef}></div>
-            <AppSettingsManager
-                captureAppSetting={captureBookmark}
-                // TODO
-
-                // @ts-ignore
-                applyAppSetting={applyBookmark}
-                hasContext={hasContext}
+            <BookmarksManager
+                applyBookmark={(bookmark, awaitForContextSwitch) =>
+                    applyBookmark(bookmark.payload, awaitForContextSwitch)
+                }
                 anchorId="pbi-bookmarks-btn"
                 name="Power BI bookmarks"
+                capturePayload={captureBookmark}
             />
         </>
     );
