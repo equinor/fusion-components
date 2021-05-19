@@ -8,13 +8,22 @@ import {
 
 import { PersonDetails } from '@equinor/fusion';
 import usePersonQuery from '../usePersonQuery';
-import peopleToSections, { singlePersonToDropdownSection } from './peopleToDropdownSections';
+import peopleToSections, {
+    singlePersonToDropdownSection,
+} from './peopleToDropdownSections';
 
 export type PersonPickerOption = {
     title: string;
     key: string;
     isSelected?: boolean;
     isDisabled?: boolean;
+};
+
+export type SectionFnProps = {
+    people: PersonDetails[];
+    selectedId: string;
+    searchQuery: string;
+    isQuerying: boolean;
 };
 
 type PersonPickerProps = {
@@ -25,12 +34,12 @@ type PersonPickerProps = {
     hasError?: boolean;
     errorMessage?: string;
     onSelect?: (person: PersonDetails) => void;
-    customSectionGenerator?: (
-        people: PersonDetails[],
-        selectedId: string,
-        searchQuery: string,
-        isQuerying: boolean
-    ) => SearchableDropdownSection[];
+    sectionFn?: ({
+        people,
+        selectedId,
+        searchQuery,
+        isQuerying,
+    }: SectionFnProps) => SearchableDropdownSection[];
 };
 
 const ItemComponent = ({ item }) => {
@@ -75,7 +84,7 @@ export default ({
     errorMessage,
     label,
     placeholder,
-    customSectionGenerator,
+    sectionFn = peopleToSections,
 }: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
@@ -102,19 +111,12 @@ export default ({
     useEffect(() => {
         if (isInitialized) {
             setSections(
-                customSectionGenerator
-                    ? customSectionGenerator(
-                          peopleMatch,
-                          selectedPerson != null ? selectedPerson.azureUniqueId : '',
-                          searchQuery,
-                          isQuerying
-                      )
-                    : peopleToSections(
-                          peopleMatch,
-                          selectedPerson != null ? selectedPerson.azureUniqueId : '',
-                          searchQuery,
-                          isQuerying
-                      )
+                sectionFn({
+                    people: peopleMatch,
+                    selectedId: selectedPerson != null ? selectedPerson.azureUniqueId : '',
+                    searchQuery,
+                    isQuerying,
+                })
             );
         } else {
             setInitialized(searchQuery !== '');
