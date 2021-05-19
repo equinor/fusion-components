@@ -8,9 +8,7 @@ import {
 
 import { PersonDetails } from '@equinor/fusion';
 import usePersonQuery from '../usePersonQuery';
-import peopleToSections, {
-    singlePersonToDropdownSection,
-} from './peopleToDropdownSections';
+import peopleToSections, { singlePersonToDropdownSection } from './peopleToDropdownSections';
 
 export type PersonPickerOption = {
     title: string;
