@@ -68,7 +68,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
     const embedRef = useRef<HTMLDivElement>(null);
     const embeddedRef = useRef<pbi.Embed | null>(null);
     const [awaitableBookmark, setAwaitableBookmark] = useState<string | null>(null);
-
+    const [isRendering, setIsRendering] = useState<boolean>(true);
     const applyBookmark = async (bookmark: string, awaitForContextSwitch: boolean) => {
         const currentReport =
             embedRef && embedRef.current ? (powerbi.get(embedRef.current) as pbi.Report) : null;
@@ -162,6 +162,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
                     setIsLoading(false);
                 });
                 embeddedRef.current.on('rendered', () => {
+                    setIsRendering(false);
                     telemetryLogger.trackMetric({
                         name: `pbi.report.render`,
                         properties: {
@@ -251,14 +252,16 @@ const ReportEmbed: FC<PowerBIProps> = ({
     return (
         <>
             <div className={styles.powerbiContent} ref={embedRef}></div>
-            <BookmarksManager
-                applyBookmark={(bookmark, awaitForContextSwitch) =>
-                    applyBookmark(bookmark.payload, awaitForContextSwitch)
-                }
-                anchorId="pbi-bookmarks-btn"
-                name="Power BI bookmarks"
-                capturePayload={captureBookmark}
-            />
+            {!isRendering && (
+                <BookmarksManager
+                    applyBookmark={(bookmark, awaitForContextSwitch) =>
+                        applyBookmark(bookmark.payload, awaitForContextSwitch)
+                    }
+                    anchorId="pbi-bookmarks-btn"
+                    name="Power BI bookmarks"
+                    capturePayload={captureBookmark}
+                />
+            )}
         </>
     );
 };
