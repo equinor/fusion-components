@@ -25,6 +25,12 @@ type PersonPickerProps = {
     hasError?: boolean;
     errorMessage?: string;
     onSelect?: (person: PersonDetails) => void;
+    customSectionGenerator?: (
+        people: PersonDetails[],
+        selectedId: string,
+        searchQuery: string,
+        isQuerying: boolean
+    ) => SearchableDropdownSection[];
 };
 
 const ItemComponent = ({ item }) => {
@@ -69,6 +75,7 @@ export default ({
     errorMessage,
     label,
     placeholder,
+    customSectionGenerator,
 }: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
@@ -95,12 +102,19 @@ export default ({
     useEffect(() => {
         if (isInitialized) {
             setSections(
-                peopleToSections(
-                    peopleMatch,
-                    selectedPerson != null ? selectedPerson.azureUniqueId : '',
-                    searchQuery,
-                    isQuerying
-                )
+                customSectionGenerator
+                    ? customSectionGenerator(
+                          peopleMatch,
+                          selectedPerson != null ? selectedPerson.azureUniqueId : '',
+                          searchQuery,
+                          isQuerying
+                      )
+                    : peopleToSections(
+                          peopleMatch,
+                          selectedPerson != null ? selectedPerson.azureUniqueId : '',
+                          searchQuery,
+                          isQuerying
+                      )
             );
         } else {
             setInitialized(searchQuery !== '');
