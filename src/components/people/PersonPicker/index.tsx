@@ -32,12 +32,7 @@ type PersonPickerProps = {
     hasError?: boolean;
     errorMessage?: string;
     onSelect?: (person: PersonDetails) => void;
-    sectionFn?: ({
-        people,
-        selectedId,
-        searchQuery,
-        isQuerying,
-    }: SectionFnProps) => SearchableDropdownSection[];
+    sectionFn?: (SectionFnProps) => SearchableDropdownSection[];
 };
 
 const ItemComponent = ({ item }) => {
