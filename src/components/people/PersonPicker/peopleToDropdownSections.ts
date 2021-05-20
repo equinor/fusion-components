@@ -1,5 +1,6 @@
 import { PersonDetails, PersonAccountType } from '@equinor/fusion';
 import { SearchableDropdownSection } from '@equinor/fusion-components';
+import { SectionFnProps } from '.';
 
 const isPersonAccountTypeIn = (person: PersonDetails, accountTypes: PersonAccountType[]) =>
     accountTypes.indexOf(person.accountType) !== -1;
@@ -55,12 +56,12 @@ export function singlePersonToDropdownSection(person: PersonDetails): Searchable
     }
 }
 
-export default function (
-    people: PersonDetails[],
-    selectedId: string,
-    searchQuery: string,
-    isQuerying: boolean
-): SearchableDropdownSection[] {
+export default function ({
+    people,
+    selectedId,
+    searchQuery,
+    isQuerying,
+}: SectionFnProps): SearchableDropdownSection[] {
     const primary = filterPeopleByAccountType(people, ['Consultant', 'Employee']);
     const secondary = filterPeopleByAccountType(people, ['External']);
 
