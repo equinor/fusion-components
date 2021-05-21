@@ -42,7 +42,7 @@
         "@babel/preset-env": "^7.12.13",
         "@babel/preset-react": "^7.12.13",
         "@babel/preset-typescript": "^7.12.13",
-        "@equinor/fusion": "3.2.1",
+        "@equinor/fusion": "3.2.3",
         "@storybook/addon-actions": "^6.1.17",
         "@storybook/addon-docs": "^6.1.21",
         "@storybook/addon-essentials": "^6.1.21",
