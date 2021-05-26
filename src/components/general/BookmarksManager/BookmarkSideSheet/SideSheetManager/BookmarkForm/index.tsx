@@ -69,10 +69,12 @@ export const BookmarkForm = ({
 
     return (
         <div className={styles.container}>
-            <div className={styles.newItem}>
-                <span className={styles.itemLabel}>Context</span>
-                <div className={styles.itemContent}>{contextName && contextName}</div>
-            </div>
+            {contextName && (
+                <div className={styles.newItem}>
+                    <span className={styles.itemLabel}>Context</span>
+                    <div className={styles.itemContent}>{contextName}</div>
+                </div>
+            )}
             <div className={styles.newItem}>
                 <span className={styles.itemLabel}>Name</span>
                 <div className={styles.itemContent}>

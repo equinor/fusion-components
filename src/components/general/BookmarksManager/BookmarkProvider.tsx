@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 import { actions } from './store/actions/bookmarks';
-import { PersonPhoto } from '@equinor/fusion-components';
 
 type ModalState = 'Show' | 'Close' | 'Open';
 type Props = PropsWithChildren<{
@@ -71,8 +70,8 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
                 return;
             }
 
-            if (currentContext?.id !== payload?.context?.id) {
-                await contextManager.setCurrentContextIdAsync(payload!.context!.id);
+            if (payload.context && currentContext?.id !== payload?.context?.id) {
+                await contextManager.setCurrentContextIdAsync(payload.context.id);
                 onBookmarkApplied(payload, true);
             } else {
                 onBookmarkApplied(payload, false);

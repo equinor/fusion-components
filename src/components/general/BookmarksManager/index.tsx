@@ -23,6 +23,7 @@ export type BookmarksManagerProps<TPayload, TPromise> = {
     ) => Promise<TPromise>;
     name: string;
     anchorId: string;
+    hasContext: boolean;
 };
 
 export const BookmarksManager = <T extends unknown, TPromise extends unknown>({
@@ -30,6 +31,7 @@ export const BookmarksManager = <T extends unknown, TPromise extends unknown>({
     applyBookmark,
     name,
     anchorId,
+    hasContext,
 }: BookmarksManagerProps<T, TPromise>): JSX.Element => {
     const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
 
@@ -67,6 +69,7 @@ export const BookmarksManager = <T extends unknown, TPromise extends unknown>({
                     onClose={closeSideSheet}
                     capturePayload={capturePayload}
                     anchorId={anchorId}
+                    hasContext={hasContext}
                 />
             </BookmarkProvider>
         </>

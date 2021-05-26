@@ -260,6 +260,7 @@ const ReportEmbed: FC<PowerBIProps> = ({
                     anchorId="pbi-bookmarks-btn"
                     name="Power BI bookmarks"
                     capturePayload={captureBookmark}
+                    hasContext={hasContext}
                 />
             )}
         </>

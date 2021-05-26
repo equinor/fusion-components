@@ -25,6 +25,7 @@ type OpenAccordion = {
 type Context = {
     name: string;
     id: string;
+    type: string;
 };
 
 type AllBookmarksProps<TPayload> = {
@@ -33,14 +34,15 @@ type AllBookmarksProps<TPayload> = {
     currentApp: AppManifest | null;
     capturePayload: () => Promise<TPayload>;
     onViewChanged?: (view: BookmarkView) => void;
+    hasContext: boolean;
 };
 
 const createGroupByContextId = (allBookmarks: BookmarkListResponse[]) => {
-    const groupedContexts: Record<string, Context | undefined> = {};
+    const groupedContexts: Record<string, Context> = {};
     allBookmarks.reduce((__prev, curr) => {
-        const key = curr.context ? curr.context.id : 'unknown';
+        const key = curr.context ? curr.context.id : 'Global';
         if (!groupedContexts[key]) {
-            groupedContexts[key] = curr.context;
+            groupedContexts[key] = curr.context ? curr.context : { id: key, name: key, type: key };
         }
         return groupedContexts;
     }, {});
@@ -50,7 +52,7 @@ const createGroupByContextId = (allBookmarks: BookmarkListResponse[]) => {
 const createGroupByContext = (allBookmarks: BookmarkListResponse[]) => {
     const groupedContext: Record<string, BookmarkListResponse[]> = {};
     allBookmarks.reduce((__prev, curr) => {
-        const key = curr.context ? curr.context.id : 'unknown';
+        const key = curr.context ? curr.context.id : 'Global';
         if (groupedContext[key]) {
             const bookmarks = groupedContext[key];
             bookmarks.push(curr);
@@ -68,6 +70,7 @@ export const SideSheetManager = <T extends unknown>({
     onClose,
     capturePayload,
     onViewChanged,
+    hasContext,
 }: AllBookmarksProps<T>): JSX.Element => {
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
     const [bookmarkToBeEdited, setBookmarkToBeEdited] = useState<BookmarkListResponse | undefined>(
@@ -107,7 +110,7 @@ export const SideSheetManager = <T extends unknown>({
                         description: description,
                         payload: payload,
                         appKey: currentApp?.key,
-                        contextId: currentContext?.id,
+                        contextId: hasContext ? currentContext?.id : null,
                         isShared: isShared,
                     });
                     onViewChange('AllBookmarks');
@@ -116,7 +119,7 @@ export const SideSheetManager = <T extends unknown>({
                 console.error(e);
             }
         },
-        [currentApp, currentContext, capturePayload, onViewChange, store]
+        [currentApp, currentContext, capturePayload, onViewChange, store, hasContext]
     );
 
     const onEditSave = useCallback(
@@ -128,17 +131,19 @@ export const SideSheetManager = <T extends unknown>({
     );
 
     useEffect(() => {
-        setOpenAccordions({
-            [currentContext!.id]: true,
-        });
-    }, [currentContext]);
+        currentContext && hasContext
+            ? setOpenAccordions({
+                  [currentContext!.id]: true,
+              })
+            : setOpenAccordions({ ['Global']: true });
+    }, [currentContext, hasContext]);
 
     if (bookmarkState === 'Creating') {
         return (
             <BookmarkForm
                 onCancel={() => onViewChange('AllBookmarks')}
                 onSave={onSave}
-                contextName={currentContext?.title}
+                contextName={hasContext ? currentContext?.title : null}
             />
         );
     }
@@ -148,7 +153,7 @@ export const SideSheetManager = <T extends unknown>({
             <BookmarkForm
                 onCancel={() => onViewChange('AllBookmarks')}
                 onEditSave={onEditSave}
-                contextName={currentContext?.title}
+                contextName={hasContext ? currentContext?.title : null}
                 bookmark={bookmarkToBeEdited}
             />
         );
@@ -172,27 +177,28 @@ export const SideSheetManager = <T extends unknown>({
             ) : (
                 <Accordion>
                     {Object.values(createGroupByContextId(allBookmarks)).map((context) => {
+                        const bookmarks = Object.values(
+                            createGroupByContext(allBookmarks)[context!.id]
+                        );
                         return (
                             <AccordionItem
-                                label={context.name}
+                                label={hasContext ? `${context.name} (${context.type})` : 'Global'}
                                 key={context.id}
                                 isOpen={openAccordions[context.id]}
                                 onChange={() => handleOpenAccordionChange(context.id)}
                             >
-                                {Object.values(createGroupByContext(allBookmarks)[context.id]).map(
-                                    (bookmark: BookmarkListResponse) => {
-                                        return (
-                                            <Bookmark
-                                                bookmark={bookmark}
-                                                accordionOpen={openAccordions[context.id]}
-                                                onViewChange={onViewChange}
-                                                setEditBookmark={handleBookmarkToBeEdited}
-                                                onClose={onClose}
-                                                key={bookmark.id}
-                                            />
-                                        );
-                                    }
-                                )}
+                                {bookmarks?.map((bookmark: BookmarkListResponse) => {
+                                    return (
+                                        <Bookmark
+                                            bookmark={bookmark}
+                                            accordionOpen={openAccordions[context!.id]}
+                                            onViewChange={onViewChange}
+                                            setEditBookmark={handleBookmarkToBeEdited}
+                                            onClose={onClose}
+                                            key={bookmark.id}
+                                        />
+                                    );
+                                })}
                             </AccordionItem>
                         );
                     })}
