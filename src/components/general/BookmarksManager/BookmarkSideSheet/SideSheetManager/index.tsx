@@ -42,7 +42,7 @@ const createGroupByContextId = (allBookmarks: BookmarkListResponse[]) => {
     allBookmarks.reduce((__prev, curr) => {
         const key = curr.context ? curr.context.id : 'Global';
         if (!groupedContexts[key]) {
-            groupedContexts[key] = curr.context ? curr.context : { id: key, name: key, type: key };
+            groupedContexts[key] = curr.context ? curr.context : { id: key, name: key, type: '' };
         }
         return groupedContexts;
     }, {});
