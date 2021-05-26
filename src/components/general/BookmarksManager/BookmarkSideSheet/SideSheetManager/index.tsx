@@ -37,10 +37,12 @@ type AllBookmarksProps<TPayload> = {
     hasContext: boolean;
 };
 
+const contextlessBookmark = 'Global';
+
 const createGroupByContextId = (allBookmarks: BookmarkListResponse[]) => {
     const groupedContexts: Record<string, Context> = {};
     allBookmarks.reduce((__prev, curr) => {
-        const key = curr.context ? curr.context.id : 'Global';
+        const key = curr.context ? curr.context.id : contextlessBookmark;
         if (!groupedContexts[key]) {
             groupedContexts[key] = curr.context ? curr.context : { id: key, name: key, type: '' };
         }
@@ -52,7 +54,7 @@ const createGroupByContextId = (allBookmarks: BookmarkListResponse[]) => {
 const createGroupByContext = (allBookmarks: BookmarkListResponse[]) => {
     const groupedContext: Record<string, BookmarkListResponse[]> = {};
     allBookmarks.reduce((__prev, curr) => {
-        const key = curr.context ? curr.context.id : 'Global';
+        const key = curr.context ? curr.context.id : contextlessBookmark;
         if (groupedContext[key]) {
             const bookmarks = groupedContext[key];
             bookmarks.push(curr);
@@ -135,7 +137,7 @@ export const SideSheetManager = <T extends unknown>({
             ? setOpenAccordions({
                   [currentContext!.id]: true,
               })
-            : setOpenAccordions({ ['Global']: true });
+            : setOpenAccordions({ [contextlessBookmark]: true });
     }, [currentContext, hasContext]);
 
     if (bookmarkState === 'Creating') {
@@ -182,7 +184,11 @@ export const SideSheetManager = <T extends unknown>({
                         );
                         return (
                             <AccordionItem
-                                label={hasContext ? `${context.name} (${context.type})` : 'Global'}
+                                label={
+                                    hasContext
+                                        ? `${context.name} (${context.type})`
+                                        : contextlessBookmark
+                                }
                                 key={context.id}
                                 isOpen={openAccordions[context.id]}
                                 onChange={() => handleOpenAccordionChange(context.id)}
