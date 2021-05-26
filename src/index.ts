@@ -99,7 +99,7 @@ export {
     PersonPresenceIcon,
 } from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
-export { default as PersonPicker } from './components/people/PersonPicker';
+export { default as PersonPicker, SectionFnProps } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
 export { default as PersonDetail } from './components/people/PersonDetail';
 export { default as PersonPositionList } from './components/people/PersonPositionList';

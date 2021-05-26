@@ -17,6 +17,13 @@ export type PersonPickerOption = {
     isDisabled?: boolean;
 };
 
+export type SectionFnProps = {
+    people: PersonDetails[];
+    selectedId: string;
+    searchQuery: string;
+    isQuerying: boolean;
+};
+
 type PersonPickerProps = {
     label?: string;
     placeholder?: string;
@@ -25,6 +32,12 @@ type PersonPickerProps = {
     hasError?: boolean;
     errorMessage?: string;
     onSelect?: (person: PersonDetails) => void;
+    sectionFn?: ({
+        people,
+        selectedId,
+        searchQuery,
+        isQuerying,
+    }: SectionFnProps) => SearchableDropdownSection[];
 };
 
 const ItemComponent = ({ item }) => {
@@ -69,6 +82,7 @@ export default ({
     errorMessage,
     label,
     placeholder,
+    sectionFn = peopleToSections,
 }: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
@@ -95,12 +109,12 @@ export default ({
     useEffect(() => {
         if (isInitialized) {
             setSections(
-                peopleToSections(
-                    peopleMatch,
-                    selectedPerson != null ? selectedPerson.azureUniqueId : '',
+                sectionFn({
+                    people: peopleMatch,
+                    selectedId: selectedPerson != null ? selectedPerson.azureUniqueId : '',
                     searchQuery,
-                    isQuerying
-                )
+                    isQuerying,
+                })
             );
         } else {
             setInitialized(searchQuery !== '');
