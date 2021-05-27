@@ -93,7 +93,7 @@ export const Bookmark = ({
     const handleSharing = async (share: boolean) => {
         if (share) {
             navigator.clipboard.writeText(bookmarkShareUrl());
-            await createNotification({
+            createNotification({
                 level: 'high',
                 title: 'Copied to clipboard',
                 confirmLabel: 'Close',
