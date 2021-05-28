@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useCurrentPersonDetails } from '@equinor/fusion';
 import { IconButton, PersonPhoto, useAnchor } from '@equinor/fusion-components';
 import { useState, useCallback, FC } from 'react';
@@ -24,7 +25,7 @@ const CurrentUserButton: FC<CurrentUserButtonProp> = ({ quickFactScope }) => {
     return (
         <>
             <IconButton active={showAccountManager} onClick={openSideSheet} ref={ref}>
-                <PersonPhoto person={personDetails} hidePopover hideTooltip />
+                <PersonPhoto person={personDetails} hideTooltip />
             </IconButton>
             <AccountManagerSideSheet
                 onClose={closeSideSheet}

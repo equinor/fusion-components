@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useCallback, useEffect, useState, Fragment } from 'react';
 
 import styles from './styles.less';
@@ -131,7 +132,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                     </div>
                     {!noPhoto && (
                         <div className={styles.imageContainer}>
-                            <PersonPhoto person={currentPerson} hidePopover size="xlarge" />
+                            <PersonPhoto person={currentPerson} size="xlarge" />
                         </div>
                     )}
                 </div>

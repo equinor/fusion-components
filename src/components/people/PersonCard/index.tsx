@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useMemo, useState, useEffect } from 'react';
 import {
     PersonPhoto,
@@ -107,7 +108,7 @@ export default ({
         <div ref={hidePopover ? undefined : popoverRef}>
             {currentPerson && (
                 <div className={containerClassNames}>
-                    <PersonPhoto person={currentPerson} size={photoSize} hidePopover />
+                    <PersonPhoto person={currentPerson} size={photoSize} />
                     <div className={styles.details}>
                         <div className={nameClassNames}>{currentPerson.name}</div>
                         {showJobTitle && (

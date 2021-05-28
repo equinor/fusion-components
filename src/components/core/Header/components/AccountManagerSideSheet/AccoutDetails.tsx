@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import styles from './styles.less';
 import { PersonDetails, UserMenuSectionItem, UserMenuSection } from '@equinor/fusion';
 import { MenuItemType, PersonPhoto, PersonDetail, Menu } from '@equinor/fusion-components';
@@ -34,7 +35,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({ onMenuClick, personDetails, s
     return (
         <div className={styles.detailsContainer}>
             <div className={styles.personPhoto}>
-                <PersonPhoto person={personDetails} size="xlarge" hidePopover hideTooltip />
+                <PersonPhoto person={personDetails} size="xlarge" hideTooltip />
             </div>
             <div className={styles.personDetails}>
                 <PersonDetail person={personDetails} noPhoto />
