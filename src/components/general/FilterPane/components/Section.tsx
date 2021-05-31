@@ -8,6 +8,7 @@ import { FilterTerm, FilterSection, Filter as FilterType } from '../applyFilters
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
 import { ApplicationGuidanceAnchor } from '../../ApplicationGuidance';
+import { FilterTypes } from '..';
 
 type SectionProps<T> = {
     terms: FilterTerm[];
@@ -43,7 +44,7 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
             const term = terms.find((term) => term.key === filter.key);
             return (
                 <Filter
-                    key={filter.key === 'search' ? filter.key : `${filter.key}_${term?.value}`}
+                    key={filter.type === FilterTypes.Search ? filter.key : `${filter.key}_${term?.value}`}
                     filter={filter}
                     term={term}
                     filterCount={filterCount}
