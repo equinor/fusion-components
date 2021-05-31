@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import styles from './styles.less';
 import {
     PersonDetails,
-    usePersonDetails,
     useComponentDisplayClassNames,
     useComponentDisplayType,
     ComponentDisplayType,
@@ -18,6 +17,7 @@ import {
 import { getDefaultPerson } from '../utils';
 import PersonDetail from '../PersonDetail';
 import { SkeletonBar } from '../../feedback/Skeleton';
+import usePeopleDetails from '../usePeopleDetails';
 
 export { PhotoSize };
 
@@ -42,7 +42,7 @@ export default ({
 }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
     const { isFetching, error, personDetails } = personId
-        ? usePersonDetails(personId)
+        ? usePeopleDetails(personId)
         : { isFetching: isFetchingPerson, error: null, personDetails: person };
 
     useEffect(() => {

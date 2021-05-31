@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState, Fragment } from 'react';
 
 import styles from './styles.less';
-import { PersonDetails, usePersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
+import { PersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
 import {
     PersonPhoto,
     PersonPresenceIcon,
     AccountTypeIcon,
     SkeletonBar,
 } from '@equinor/fusion-components';
+import usePeopleDetails from '../usePeopleDetails';
 
 export type PersonDetailProps = {
     personId?: string;
@@ -23,7 +24,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
     const apiClients = useApiClients();
 
     const { error, personDetails, isFetching } = personId
-        ? usePersonDetails(personId)
+        ? usePeopleDetails(personId)
         : { error: null, personDetails: person, isFetching: false };
 
     useEffect(() => {
