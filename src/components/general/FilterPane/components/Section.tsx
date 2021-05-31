@@ -38,19 +38,18 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         [isCollapsed, section.title]
     );
 
-    const renderedFilterComponents = section.filters.map((filter) => {
-        const term = terms.find((term) => term.key === filter.key);
-        return (
+    const renderedFilterComponents = useMemo(() => {
+        return section.filters.map((filter) => (
             <Filter
-                key={`${filter.key}_${term?.value}`}
+                key={filter.key}
                 filter={filter}
-                term={term}
+                term={terms.find((term) => term.key === filter.key)}
                 filterCount={filterCount}
                 onChange={handleOnFilterChange}
                 quickFactScope={quickFactScope}
             />
-        );
-    });
+        ));
+    }, [section, terms]);
 
     const hasFiltersVisibleWhenCollapsed =
         section.filters.filter((filter) => filter.isVisibleWhenPaneIsCollapsed).length > 0;
