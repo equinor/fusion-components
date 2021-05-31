@@ -39,9 +39,9 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
     );
 
     const renderedFilterComponents = useMemo(() => {
-        return section.filters.map((filter) => (
+        return section.filters.map((filter, index) => (
             <Filter
-                key={filter.key}
+                key={`${filter.key}_${index}`}
                 filter={filter}
                 term={terms.find((term) => term.key === filter.key)}
                 filterCount={filterCount}
