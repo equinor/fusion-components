@@ -39,16 +39,19 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
     );
 
     const renderedFilterComponents = useMemo(() => {
-        return section.filters.map((filter, index) => (
-            <Filter
-                key={`${filter.key}_${index}`}
-                filter={filter}
-                term={terms.find((term) => term.key === filter.key)}
-                filterCount={filterCount}
-                onChange={handleOnFilterChange}
-                quickFactScope={quickFactScope}
-            />
-        ));
+        return section.filters.map((filter, index) => {
+            const term = terms.find((term) => term.key === filter.key);
+            return (
+                <Filter
+                    key={filter.key === 'search' ? filter.key : `${filter.key}_${term?.value}`}
+                    filter={filter}
+                    term={term}
+                    filterCount={filterCount}
+                    onChange={handleOnFilterChange}
+                    quickFactScope={quickFactScope}
+                />
+            );
+        });
     }, [section, terms]);
 
     const hasFiltersVisibleWhenCollapsed =
