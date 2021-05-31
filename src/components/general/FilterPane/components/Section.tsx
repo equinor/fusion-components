@@ -44,7 +44,11 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
             const term = terms.find((term) => term.key === filter.key);
             return (
                 <Filter
-                    key={filter.type === FilterTypes.Search ? filter.key : `${filter.key}_${term?.value}`}
+                    key={
+                        filter.type === FilterTypes.Search
+                            ? filter.key
+                            : `${filter.key}_${term?.value}`
+                    }
                     filter={filter}
                     term={term}
                     filterCount={filterCount}
