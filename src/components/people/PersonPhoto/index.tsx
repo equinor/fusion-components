@@ -153,11 +153,7 @@ export default ({
                         <FallbackImage size={size} rotation={additionalPersons.length > 0} />
                     )}
                     {personDetails && additionalPersons.length === 0 && (
-                        <AccountTypeBadge
-                            currentPerson={personDetails}
-                            size={size}
-                            hideTooltip={hideTooltip}
-                        />
+                        <AccountTypeBadge currentPerson={personDetails} size={size} />
                     )}
                     {additionalPersons.length > 0 && (
                         <RotationBadge
