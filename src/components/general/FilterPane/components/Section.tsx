@@ -40,7 +40,7 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
     );
 
     const renderedFilterComponents = useMemo(() => {
-        return section.filters.map((filter, index) => {
+        return section.filters.map((filter) => {
             const term = terms.find((term) => term.key === filter.key);
             return (
                 <Filter
@@ -57,7 +57,7 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
                 />
             );
         });
-    }, [section, terms]);
+    }, [section, terms, filterCount, handleOnFilterChange, quickFactScope]);
 
     const hasFiltersVisibleWhenCollapsed =
         section.filters.filter((filter) => filter.isVisibleWhenPaneIsCollapsed).length > 0;
