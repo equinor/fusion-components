@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
@@ -32,19 +32,6 @@ export type PersonPhotoProps = {
     presenceStatus?: PersonPresenceAvailability;
 };
 
-const getDefaultPerson = (): PersonDetails => ({
-    azureUniqueId: 'string',
-    name: 'No person assigned',
-    mail: 'noname@equinor.com',
-    jobTitle: 'www',
-    department: 'string',
-    mobilePhone: 'string',
-    officeLocation: 'string',
-    upn: 'string',
-    accountType: 'Employee',
-    company: { id: 'id', name: 'name' },
-});
-
 export default ({
     personId,
     person,
@@ -54,23 +41,23 @@ export default ({
     additionalPersons = [],
     presenceStatus,
 }: PersonPhotoProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(getDefaultPerson());
+    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(null);
 
     const id = person && additionalPersons.length === 0 ? person.azureUniqueId : personId || '';
 
-    const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
+    const { imageUrl, error: imageError } = usePersonImageUrl(id);
 
-    const { error, personDetails } = personId
+    const { error, personDetails, isFetching: fetching } = personId
         ? usePeopleDetails(personId)
-        : { error: null, personDetails: person };
+        : { error: null, personDetails: person, isFetching: false };
 
     useEffect(() => {
-        if (!error && personDetails) {
+        if (!error && personDetails && !fetching) {
             setCurrentPerson(personDetails);
         } else if (error) {
-            setCurrentPerson(getDefaultPerson());
+            setCurrentPerson(null);
         }
-    }, [error, personDetails]);
+    }, [error, personDetails, fetching]);
 
     const photoClassNames = classNames(
         styles.photoContainer,
@@ -84,47 +71,27 @@ export default ({
     );
 
     const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
-    const toolTipContent = hideTooltip ? (
-        ''
-    ) : additionalPersons.length > 0 ? (
+    const tooltipContent = (
         <div>
-            {[...additionalPersons, currentPerson].map((person) => (
-                <>
-                    <span>{person ? person.name : 'TBN: To Be Nominated'}</span>
-                    <br />
-                </>
-            ))}
+            {[...additionalPersons, currentPerson].map((person: PersonDetails, index: number) => {
+                return (
+                    <Fragment key={index}>
+                        <span>{person ? person.name : 'TBN: To Be Nominated'}</span>
+                        <br />
+                    </Fragment>
+                );
+            })}
         </div>
-    ) : currentPerson ? (
-        currentPerson.name
-    ) : (
-        'TBN: To Be Nominated'
     );
-    const nameTooltipRef = useTooltipRef(toolTipContent);
+
+    const nameTooltipRef = useTooltipRef(tooltipContent);
 
     const popoverClassNames = classNames(styles.popoverDetails, {
         [styles.hidePopover]: hideTooltip,
     });
 
-    const PopoverContent = () => (
-        <>
-            {additionalPersons.length > 0 ? (
-                <div>
-                    {[...additionalPersons, currentPerson].map((person) => (
-                        <>
-                            <span>{person.name}</span>
-                            <br />
-                        </>
-                    ))}
-                </div>
-            ) : (
-                <PersonDetail person={currentPerson} />
-            )}
-        </>
-    );
-
-    const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
-        <PopoverContent />,
+    const [popoverRef, _isOpen] = usePopoverRef<HTMLDivElement>(
+        <PersonDetail person={currentPerson} />,
         {
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
@@ -133,21 +100,21 @@ export default ({
         500
     );
 
-    if (isFetching) {
-        return (
-            <div className={photoClassNames}>
-                <SkeletonDisc size={size} />
-            </div>
-        );
-    }
+    const refCheck = () => {
+        if (additionalPersons.length > 0 || !currentPerson) {
+            return nameTooltipRef;
+        } else {
+            return popoverRef;
+        }
+    };
 
     return (
         <div
-            ref={hidePopover ? undefined : popoverRef}
+            ref={hidePopover ? undefined : refCheck()}
             className={photoClassNames}
             style={imageStyle}
         >
-            <div ref={hideTooltip ? undefined : nameTooltipRef}>
+            <div>
                 <div className={popoverClassNames}>
                     {(imageError !== null || additionalPersons.length > 0 || !id) && (
                         <FallbackImage size={size} rotation={additionalPersons.length > 0} />
