@@ -3,7 +3,6 @@ import styles from './styles.less';
 import classNames from 'classnames';
 import {
     useComponentDisplayClassNames,
-    usePersonDetails,
     PersonDetails,
     usePersonImageUrl,
     PersonPresenceAvailability,
@@ -17,6 +16,7 @@ import PersonDetail from '../PersonDetail';
 import { SkeletonDisc } from '../../feedback/Skeleton';
 import PersonPresenceIcon from './PersonPresenceIcon';
 import AccountTypeIcon from './AccountTypeIcon';
+import usePeopleDetails from '../usePeopleDetails';
 
 export { PersonPresenceIcon, AccountTypeIcon };
 
@@ -61,7 +61,7 @@ export default ({
     const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
 
     const { error, personDetails } = personId
-        ? usePersonDetails(personId)
+        ? usePeopleDetails(personId)
         : { error: null, personDetails: person };
 
     useEffect(() => {
