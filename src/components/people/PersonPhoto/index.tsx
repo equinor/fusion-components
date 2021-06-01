@@ -45,7 +45,7 @@ export default ({
 
     const id = person && additionalPersons.length === 0 ? person.azureUniqueId : personId || '';
 
-    const { imageUrl, error: imageError } = usePersonImageUrl(id);
+    const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
 
     const { error, personDetails, isFetching: fetching } = personId
         ? usePeopleDetails(personId)
@@ -107,7 +107,13 @@ export default ({
             return popoverRef;
         }
     };
-
+    if (isFetching) {
+        return (
+            <div className={photoClassNames}>
+                <SkeletonDisc size={size} />
+            </div>
+        );
+    }
     return (
         <div
             ref={hidePopover ? undefined : refCheck()}
