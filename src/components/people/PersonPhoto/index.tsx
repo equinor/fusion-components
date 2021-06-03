@@ -6,6 +6,7 @@ import {
     PersonDetails,
     usePersonImageUrl,
     PersonPresenceAvailability,
+    PersonPresence,
 } from '@equinor/fusion';
 
 import { useTooltipRef, usePopoverRef } from '@equinor/fusion-components';
@@ -17,6 +18,7 @@ import { SkeletonDisc } from '../../feedback/Skeleton';
 import PersonPresenceIcon from './PersonPresenceIcon';
 import AccountTypeIcon from './AccountTypeIcon';
 import usePeopleDetails from '../usePeopleDetails';
+import usePresence from '../usePresence';
 
 export { PersonPresenceIcon, AccountTypeIcon };
 
@@ -42,22 +44,14 @@ export default ({
     presenceStatus,
 }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(null);
-
+    const [currentPresence, setCurrentPresence] = useState<PersonPresence>(null);
+    const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
     const id = person && additionalPersons.length === 0 ? person.azureUniqueId : personId || '';
 
     const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
-
-    const { error, personDetails, isFetching: fetching } = personId
-        ? usePeopleDetails(personId)
-        : { error: null, personDetails: person, isFetching: false };
-
-    useEffect(() => {
-        if (!error && personDetails && !fetching) {
-            setCurrentPerson(personDetails);
-        } else if (error) {
-            setCurrentPerson(null);
-        }
-    }, [error, personDetails, fetching]);
+    const { error, personDetails, isFetching: fetching } = usePeopleDetails(personId, person);
+    const { presence, isFetchingPresence, presenceError } = usePresence(id, isPopoverOpen);
+    const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
 
     const photoClassNames = classNames(
         styles.photoContainer,
@@ -69,8 +63,10 @@ export default ({
             [styles.small]: size === 'small',
         }
     );
+    const popoverClassNames = classNames(styles.popoverDetails, {
+        [styles.hidePopover]: hideTooltip,
+    });
 
-    const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
     const tooltipContent = (
         <div>
             {[...additionalPersons, currentPerson].map((person: PersonDetails, index: number) => {
@@ -86,12 +82,8 @@ export default ({
 
     const nameTooltipRef = useTooltipRef(tooltipContent);
 
-    const popoverClassNames = classNames(styles.popoverDetails, {
-        [styles.hidePopover]: hideTooltip,
-    });
-
-    const [popoverRef, _isOpen] = usePopoverRef<HTMLDivElement>(
-        <PersonDetail person={currentPerson} />,
+    const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
+        <PersonDetail person={currentPerson} presence={presence} />,
         {
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
@@ -99,7 +91,6 @@ export default ({
         true,
         500
     );
-
     const refCheck = () => {
         if (additionalPersons.length > 0 || !currentPerson) {
             return nameTooltipRef;
@@ -107,6 +98,29 @@ export default ({
             return popoverRef;
         }
     };
+
+    useEffect(() => {
+        if (!error && personDetails && !fetching) {
+            setCurrentPerson(personDetails);
+        } else if (error) {
+            setCurrentPerson(null);
+        }
+    }, [error, personDetails, fetching]);
+
+    useEffect(() => {
+        if (!presenceError && !isFetchingPresence && presence) {
+            setCurrentPresence(presence);
+        }
+    }, [presenceError, isFetchingPresence, presence]);
+
+    useEffect(() => {
+        if (isOpen) {
+            setIsPopoverOpen(true);
+        } else {
+            setIsPopoverOpen(false);
+        }
+    }, [isOpen]);
+
     if (isFetching) {
         return (
             <div className={photoClassNames}>
@@ -114,6 +128,7 @@ export default ({
             </div>
         );
     }
+
     return (
         <div
             ref={hidePopover ? undefined : refCheck()}

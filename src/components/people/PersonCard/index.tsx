@@ -18,6 +18,7 @@ import { getDefaultPerson } from '../utils';
 import PersonDetail from '../PersonDetail';
 import { SkeletonBar } from '../../feedback/Skeleton';
 import usePeopleDetails from '../usePeopleDetails';
+import usePresence from '../usePresence';
 
 export { PhotoSize };
 
@@ -41,10 +42,10 @@ export default ({
     isFetchingPerson,
 }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
-    const { isFetching, error, personDetails } = personId
-        ? usePeopleDetails(personId)
-        : { isFetching: isFetchingPerson, error: null, personDetails: person };
-
+    const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
+    const id = personId ? personId : person ? person.azureUniqueId : '';
+    const { isFetching, error, personDetails } = usePeopleDetails(personId);
+    const { presence } = usePresence(id, isPopoverOpen);
     useEffect(() => {
         if (!error && personDetails) {
             setCurrentPerson(personDetails);
@@ -65,7 +66,7 @@ export default ({
     });
 
     const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
-        <PersonDetail person={currentPerson} />,
+        <PersonDetail person={currentPerson} presence={presence} />,
         {
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
@@ -73,7 +74,13 @@ export default ({
         true,
         500
     );
-
+    useEffect(() => {
+        if (isOpen) {
+            setIsPopoverOpen(true);
+        } else {
+            setIsPopoverOpen(false);
+        }
+    }, [isOpen]);
     if (isFetching) {
         return (
             <div className={containerClassNames}>

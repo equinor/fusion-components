@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 
 import styles from './styles.less';
-import { PersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
+import { PersonDetails, PersonPresence } from '@equinor/fusion';
 import {
     PersonPhoto,
     PersonPresenceIcon,
@@ -14,47 +14,18 @@ export type PersonDetailProps = {
     personId?: string;
     person?: PersonDetails;
     noPhoto?: boolean;
+    presence?: PersonPresence;
 };
 
-export default ({ personId, person, noPhoto }: PersonDetailProps) => {
+export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails | null>(null);
-    const [presence, setPresence] = useState<PersonPresence | null>(null);
-    const [isFetchingPresence, setIsFetchingPresence] = useState<boolean>(false);
-    const [presenceError, setPresenceError] = useState<Error | null>(null);
-    const apiClients = useApiClients();
-
-    const { error, personDetails, isFetching } = personId
-        ? usePeopleDetails(personId)
-        : { error: null, personDetails: person, isFetching: false };
+    const { error, personDetails, isFetching } = usePeopleDetails(personId, person);
 
     useEffect(() => {
         if (!error && personDetails) {
             setCurrentPerson(personDetails);
         }
     }, [error, personDetails]);
-
-    const fetchPresenceStatus = useCallback(
-        async (id: string) => {
-            setIsFetchingPresence(true);
-            setPresenceError(null);
-
-            try {
-                const response = await apiClients.people.getPresenceAsync(id);
-                setPresence(response.data);
-            } catch (e) {
-                setPresenceError(e);
-            } finally {
-                setIsFetchingPresence(false);
-            }
-        },
-        [apiClients]
-    );
-
-    useEffect(() => {
-        if (currentPerson && currentPerson.azureUniqueId) {
-            fetchPresenceStatus(currentPerson.azureUniqueId);
-        }
-    }, [currentPerson]);
 
     return (
         <Fragment>
