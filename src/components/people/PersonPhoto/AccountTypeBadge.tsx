@@ -16,7 +16,6 @@ import EmployeeIcon from './icons/EmployeeIcon';
 type AccountTypeBageProps = {
     size: PhotoSize;
     currentPerson: PersonDetails;
-    hideTooltip?: boolean;
 };
 
 const getIconSizes = (isCompact: boolean) => ({
@@ -26,25 +25,7 @@ const getIconSizes = (isCompact: boolean) => ({
     small: isCompact ? 8 : 12,
 });
 
-const resolveTooltip = (accountType: string, isExternalHire: boolean) => {
-    switch (accountType) {
-        case 'Local':
-            return 'No affiliate access account. User cannot log in to Fusion';
-        case 'Employee':
-            if (isExternalHire) {
-                return 'External hire';
-            }
-            return 'Equinor employee';
-        case 'External':
-            return 'Affiliate access';
-        case 'Consultant':
-            return 'X-External / External with Equinor account';
-        default:
-            return accountType;
-    }
-};
-
-const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageProps) => {
+const AccountTypeBadge = ({ size, currentPerson }: AccountTypeBageProps) => {
     const isExternalHire = !!(
         currentPerson.jobTitle && currentPerson.jobTitle.toLowerCase().startsWith('ext')
     );
@@ -67,12 +48,9 @@ const AccountTypeBadge = ({ size, currentPerson, hideTooltip }: AccountTypeBageP
 
     const displayType = useComponentDisplayType();
     const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
-    const accountTypeTooltipRef = useTooltipRef(
-        hideTooltip ? '' : resolveTooltip(currentPerson.accountType, isExternalHire)
-    );
 
     return (
-        <div className={iconClassNames} ref={accountTypeTooltipRef}>
+        <div className={iconClassNames}>
             {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
             {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
             {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}
