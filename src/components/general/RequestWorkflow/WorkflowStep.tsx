@@ -8,19 +8,21 @@ import {
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import WorkflowPopover from './WorkflowPopover';
-import { WorkflowProvisioningStatus, WorkflowStep } from './models';
+import { WorfklowPendingPerson, WorkflowProvisioningStatus, WorkflowStep } from './models';
 import CompletedBy from './CompletedBy';
 
 type RequestWorkflowStepProps = {
     step: WorkflowStep;
     provisioningStatus: WorkflowProvisioningStatus;
     inline: boolean;
+    pendingPerson?: WorfklowPendingPerson;
 };
 
 const RequestWorkflowStep: FC<RequestWorkflowStepProps> = ({
     step,
     inline,
     provisioningStatus,
+    pendingPerson,
 }) => {
     const [popoverRef] = usePopoverRef<HTMLDivElement>(
         <WorkflowPopover step={step} provisioningStatus={provisioningStatus} />,
@@ -71,7 +73,7 @@ const RequestWorkflowStep: FC<RequestWorkflowStepProps> = ({
                     </div>
                 )}
             </div>
-            {!inline && <CompletedBy step={step} />}
+            {!inline && <CompletedBy step={step} pendingPerson={pendingPerson} />}
         </div>
     );
 };

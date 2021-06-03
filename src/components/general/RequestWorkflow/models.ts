@@ -1,6 +1,8 @@
-import { PersonAccountType } from "@equinor/fusion";
+import { PersonAccountType } from '@equinor/fusion';
 
 export type WorkflowProvisioningState = 'NotProvisioned' | 'Provisioned' | 'Error' | 'Unknown';
+
+export type WorkflowStepState = 'Pending' | 'Active' | 'Approved' | 'Skipped';
 
 export type WorkflowProvisioningStatus = {
     state: WorkflowProvisioningState;
@@ -17,17 +19,22 @@ export type WorkflowPerson = {
     mail: string;
     name?: string;
     phoneNumber?: string;
-}
+};
+
+export type WorfklowPendingPerson = {
+    person: WorkflowPerson;
+    stepId: string;
+};
 
 export type WorkflowStep = {
     id: string;
-    state: 'Pending' | 'Active' | 'Approved' | 'Skipped';
+    state: WorkflowStepState;
     name: string;
     description: string;
-    started: Date | null; 
-    completed: Date | null; 
+    started: Date | null;
+    completed: Date | null;
     completedBy: WorkflowPerson | null;
-    previousStep: string | null ;
+    previousStep: string | null;
     nextStep: string | null;
     dueDate: Date | null;
     isCompleted: boolean;

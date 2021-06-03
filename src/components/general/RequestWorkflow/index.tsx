@@ -1,5 +1,10 @@
 import { useCallback, useMemo, FC } from 'react';
-import { WorkflowProvisioningStatus, Workflow, WorkflowStep } from './models';
+import {
+    WorkflowProvisioningStatus,
+    Workflow,
+    WorkflowStep,
+    WorfklowPendingPerson,
+} from './models';
 import styles from './styles.less';
 import RequestWorkflowStep from './WorkflowStep';
 
@@ -7,9 +12,15 @@ type RequestWorkflowProps = {
     workflow: Workflow | null;
     provisioningStatus: WorkflowProvisioningStatus;
     inline?: boolean;
+    pendingPerson?: WorfklowPendingPerson;
 };
 
-const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provisioningStatus }) => {
+const RequestWorkflow: FC<RequestWorkflowProps> = ({
+    workflow,
+    inline,
+    provisioningStatus,
+    pendingPerson,
+}) => {
     const findWorkflowIndex = useCallback(
         (step: WorkflowStep, index: number, depth?: number): number => {
             if (depth > 50) {
@@ -27,7 +38,7 @@ const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provision
         [workflow]
     );
 
-    const sortedWorkflowSteps = useMemo(() => {
+    const sortedWorkflowSteps: WorkflowStep[] = useMemo(() => {
         try {
             if (workflow) {
                 return workflow.steps.reduce(
@@ -53,6 +64,9 @@ const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provision
                         step={step}
                         inline={!!inline}
                         provisioningStatus={provisioningStatus}
+                        pendingPerson={
+                            pendingPerson?.stepId === step.id ? pendingPerson : undefined
+                        }
                     />
                 ))
             ) : !inline ? (
