@@ -23,9 +23,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
     const [presenceError, setPresenceError] = useState<Error | null>(null);
     const apiClients = useApiClients();
 
-    const { error, personDetails, isFetching } = personId
-        ? usePeopleDetails(personId)
-        : { error: null, personDetails: person, isFetching: false };
+    const { error, personDetails, isFetching } = usePeopleDetails(personId, person);
 
     useEffect(() => {
         if (!error && personDetails) {
