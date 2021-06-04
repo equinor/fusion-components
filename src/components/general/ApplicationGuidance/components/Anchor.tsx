@@ -73,7 +73,8 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
 
     useEffect(() => {
         requestAnimationFrame(() => {
-            if (!ref.current) {
+            if (!ref.current || !scope) {
+                ref.current && !scope && console.warn('no scope defined');
                 return;
             }
             const event = new OverlayAnchorConnectEvent({
