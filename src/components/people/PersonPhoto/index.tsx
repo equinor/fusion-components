@@ -47,9 +47,7 @@ export default ({
 
     const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
 
-    const { error, personDetails, isFetching: fetching } = personId
-        ? usePeopleDetails(personId)
-        : { error: null, personDetails: person, isFetching: false };
+    const { error, personDetails, isFetching: fetching } = usePeopleDetails(personId, person);
 
     useEffect(() => {
         if (!error && personDetails && !fetching) {
