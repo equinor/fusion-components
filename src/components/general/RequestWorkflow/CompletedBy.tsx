@@ -18,6 +18,10 @@ const CompletedBy: FC<Props> = ({step}) => {
         } else if (step.state === 'Approved' && personDetails) {
             return personDetails.azureUniqueId;
         }
+
+        if (step?.pendingPerson) {
+            return step.pendingPerson?.azureUniquePersonId;
+        }
         return null;
     }, [step, personDetails]);
 
