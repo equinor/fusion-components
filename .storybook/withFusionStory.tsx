@@ -6,13 +6,15 @@ import { Fragment, ReactNode } from 'react';
 export default (title: string, padding: number = 16) => (stories: () => ReactNode) => {
     return (
         <Fragment>
-            <Header aside={null} start={null} content={null} settings={null}/>
+            <Overlay>
+                <Header aside={null} start={null} content={null} settings={null} quickFactScope="storybook"/>
+            </Overlay>
             <Content>
                 <Overlay>
                     <div
                         style={{
                             padding,
-                            height: '100%',
+                            minHeight: '100%',
                             width: '100%',
                             maxWidth: '100%',
                             boxSizing: 'border-box',
