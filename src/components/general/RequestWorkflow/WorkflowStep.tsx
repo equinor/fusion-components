@@ -8,7 +8,7 @@ import {
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import WorkflowPopover from './WorkflowPopover';
-import { WorkflowProvisioningStatus, WorkflowStep } from './models';
+import {  WorkflowProvisioningStatus, WorkflowStep } from './models';
 import CompletedBy from './CompletedBy';
 
 type RequestWorkflowStepProps = {
