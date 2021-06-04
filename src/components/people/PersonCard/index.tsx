@@ -41,19 +41,12 @@ export default ({
     showJobTitle,
     isFetchingPerson,
 }: PersonCardProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
     const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
     const id = personId ? personId : person ? person.azureUniqueId : '';
-    const { isFetching, error, personDetails } = usePeopleDetails(personId);
+    const { isFetching, error, personDetails } = usePeopleDetails(
+        person ? { person } : { id: personId }
+    );
     const { presence } = usePresence(id, isPopoverOpen);
-    useEffect(() => {
-        if (!error && personDetails) {
-            setCurrentPerson(personDetails);
-        } else if (error) {
-            setCurrentPerson(getDefaultPerson());
-        }
-    }, [error, personDetails]);
-
     const displayType = useComponentDisplayType();
     const shouldDisplayEmail = useMemo(
         () => !inline || (inline && displayType === ComponentDisplayType.Comfortable),
@@ -66,7 +59,7 @@ export default ({
     });
 
     const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
-        <PersonDetail person={currentPerson} presence={presence} />,
+        <PersonDetail person={personDetails} presence={presence} />,
         {
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
@@ -74,6 +67,7 @@ export default ({
         true,
         500
     );
+
     useEffect(() => {
         if (isOpen) {
             setIsPopoverOpen(true);
@@ -81,6 +75,7 @@ export default ({
             setIsPopoverOpen(false);
         }
     }, [isOpen]);
+
     if (isFetching) {
         return (
             <div className={containerClassNames}>
@@ -112,17 +107,17 @@ export default ({
 
     return (
         <div ref={hidePopover ? undefined : popoverRef}>
-            {currentPerson && (
+            {personDetails && (
                 <div className={containerClassNames}>
-                    <PersonPhoto person={currentPerson} size={photoSize} hidePopover />
+                    <PersonPhoto person={personDetails} size={photoSize} hidePopover />
                     <div className={styles.details}>
-                        <div className={nameClassNames}>{currentPerson.name}</div>
+                        <div className={nameClassNames}>{personDetails.name}</div>
                         {showJobTitle && (
-                            <div className={styles.jobTitle}> {currentPerson.jobTitle}</div>
+                            <div className={styles.jobTitle}> {personDetails.jobTitle}</div>
                         )}
                         {shouldDisplayEmail && (
                             <div className={styles.email}>
-                                <a href={`mailto:${currentPerson.mail}`}>{currentPerson.mail}</a>
+                                <a href={`mailto:${personDetails.mail}`}>{personDetails.mail}</a>
                             </div>
                         )}
                     </div>

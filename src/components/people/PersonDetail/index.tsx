@@ -18,22 +18,15 @@ export type PersonDetailProps = {
 };
 
 export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails | null>(null);
-    const { error, personDetails, isFetching } = usePeopleDetails(personId, person);
-
-    useEffect(() => {
-        if (!error && personDetails) {
-            setCurrentPerson(personDetails);
-        }
-    }, [error, personDetails]);
+    const { personDetails, isFetching } = usePeopleDetails(person ? { person } : { id: personId });
 
     return (
         <Fragment>
-            {currentPerson && (
+            {personDetails && (
                 <div className={styles.personDetails}>
                     <div className={styles.detailsContainer}>
                         <div className={styles.personName}>
-                            {isFetching ? <SkeletonBar /> : currentPerson.name}
+                            {isFetching ? <SkeletonBar /> : personDetails.name}
                         </div>
                         <div className={styles.presenceSection}>
                             <div className={styles.iconContainer}>
@@ -50,27 +43,27 @@ export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.jobTitle}</div>
+                                <div>{personDetails.jobTitle}</div>
                             )}
                             {isFetching ? (
                                 <div>
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.department}</div>
+                                <div>{personDetails.department}</div>
                             )}
                         </div>
                         <div className={styles.accountTypeSection}>
                             {!isFetching && (
                                 <div className={styles.iconContainer}>
                                     <AccountTypeIcon
-                                        currentPerson={currentPerson}
+                                        currentPerson={personDetails}
                                         hideTooltip
                                         size="large"
                                     />
                                 </div>
                             )}
-                            {isFetching ? <SkeletonBar /> : currentPerson.accountType}
+                            {isFetching ? <SkeletonBar /> : personDetails.accountType}
                         </div>
 
                         <div className={styles.detailSection}>
@@ -80,8 +73,8 @@ export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
                                 </div>
                             ) : (
                                 <div>
-                                    <a href={`mailto:${currentPerson.mail}`}>
-                                        {currentPerson.mail}
+                                    <a href={`mailto:${personDetails.mail}`}>
+                                        {personDetails.mail}
                                     </a>
                                 </div>
                             )}
@@ -90,20 +83,20 @@ export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.mobilePhone}</div>
+                                <div>{personDetails.mobilePhone}</div>
                             )}
                             {isFetching ? (
                                 <div>
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.officeLocation}</div>
+                                <div>{personDetails.officeLocation}</div>
                             )}
                         </div>
                     </div>
                     {!noPhoto && (
                         <div className={styles.imageContainer}>
-                            <PersonPhoto person={currentPerson} hidePopover size="xlarge" />
+                            <PersonPhoto person={personDetails} hidePopover size="xlarge" />
                         </div>
                     )}
                 </div>

@@ -49,7 +49,9 @@ export default ({
     const id = person && additionalPersons.length === 0 ? person.azureUniqueId : personId || '';
 
     const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
-    const { error, personDetails, isFetching: fetching } = usePeopleDetails(personId, person);
+    const { error, personDetails, isFetching: fetching } = usePeopleDetails(
+        person ? { person } : { id: personId }
+    );
     const { presence, isFetchingPresence, presenceError } = usePresence(id, isPopoverOpen);
     const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
 
