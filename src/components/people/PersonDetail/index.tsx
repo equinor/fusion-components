@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState, Fragment } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 
 import styles from './styles.less';
-import { PersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
+import { PersonDetails, PersonPresence } from '@equinor/fusion';
 import {
     PersonPhoto,
     PersonPresenceIcon,
@@ -14,55 +14,19 @@ export type PersonDetailProps = {
     personId?: string;
     person?: PersonDetails;
     noPhoto?: boolean;
+    presence?: PersonPresence;
 };
 
-export default ({ personId, person, noPhoto }: PersonDetailProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails | null>(null);
-    const [presence, setPresence] = useState<PersonPresence | null>(null);
-    const [isFetchingPresence, setIsFetchingPresence] = useState<boolean>(false);
-    const [presenceError, setPresenceError] = useState<Error | null>(null);
-    const apiClients = useApiClients();
-
-    const { error, personDetails, isFetching } = personId
-        ? usePeopleDetails(personId)
-        : { error: null, personDetails: person, isFetching: false };
-
-    useEffect(() => {
-        if (!error && personDetails) {
-            setCurrentPerson(personDetails);
-        }
-    }, [error, personDetails]);
-
-    const fetchPresenceStatus = useCallback(
-        async (id: string) => {
-            setIsFetchingPresence(true);
-            setPresenceError(null);
-
-            try {
-                const response = await apiClients.people.getPresenceAsync(id);
-                setPresence(response.data);
-            } catch (e) {
-                setPresenceError(e);
-            } finally {
-                setIsFetchingPresence(false);
-            }
-        },
-        [apiClients]
-    );
-
-    useEffect(() => {
-        if (currentPerson && currentPerson.azureUniqueId) {
-            fetchPresenceStatus(currentPerson.azureUniqueId);
-        }
-    }, [currentPerson]);
+export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
+    const { personDetails, isFetching } = usePeopleDetails(person ? { person } : { id: personId });
 
     return (
         <Fragment>
-            {currentPerson && (
+            {personDetails && (
                 <div className={styles.personDetails}>
                     <div className={styles.detailsContainer}>
                         <div className={styles.personName}>
-                            {isFetching ? <SkeletonBar /> : currentPerson.name}
+                            {isFetching ? <SkeletonBar /> : personDetails.name}
                         </div>
                         <div className={styles.presenceSection}>
                             <div className={styles.iconContainer}>
@@ -79,27 +43,27 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.jobTitle}</div>
+                                <div>{personDetails.jobTitle}</div>
                             )}
                             {isFetching ? (
                                 <div>
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.department}</div>
+                                <div>{personDetails.department}</div>
                             )}
                         </div>
                         <div className={styles.accountTypeSection}>
                             {!isFetching && (
                                 <div className={styles.iconContainer}>
                                     <AccountTypeIcon
-                                        currentPerson={currentPerson}
+                                        currentPerson={personDetails}
                                         hideTooltip
                                         size="large"
                                     />
                                 </div>
                             )}
-                            {isFetching ? <SkeletonBar /> : currentPerson.accountType}
+                            {isFetching ? <SkeletonBar /> : personDetails.accountType}
                         </div>
 
                         <div className={styles.detailSection}>
@@ -109,8 +73,8 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                                 </div>
                             ) : (
                                 <div>
-                                    <a href={`mailto:${currentPerson.mail}`}>
-                                        {currentPerson.mail}
+                                    <a href={`mailto:${personDetails.mail}`}>
+                                        {personDetails.mail}
                                     </a>
                                 </div>
                             )}
@@ -119,20 +83,20 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.mobilePhone}</div>
+                                <div>{personDetails.mobilePhone}</div>
                             )}
                             {isFetching ? (
                                 <div>
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.officeLocation}</div>
+                                <div>{personDetails.officeLocation}</div>
                             )}
                         </div>
                     </div>
                     {!noPhoto && (
                         <div className={styles.imageContainer}>
-                            <PersonPhoto person={currentPerson} hidePopover size="xlarge" />
+                            <PersonPhoto person={personDetails} hidePopover size="xlarge" />
                         </div>
                     )}
                 </div>

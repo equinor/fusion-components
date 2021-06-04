@@ -1,33 +1,48 @@
 import { useState, useCallback, useEffect } from 'react';
-import { PersonDetails, useFusionContext } from '@equinor/fusion';
-
-export const usePeopleDetails = (personId?: string) => {
+import { PersonDetails, useApiClients } from '@equinor/fusion';
+interface PersonId {
+    id: string;
+}
+interface Person {
+    person: PersonDetails;
+}
+type UsePeopleDetailsProps = PersonId | Person;
+export const usePeopleDetails = (props: UsePeopleDetailsProps) => {
     const [isFetching, setIsFetching] = useState(false);
     const [personDetails, setPersonDetails] = useState<PersonDetails | null>(null);
     const [error, setError] = useState<Error | null>(null);
-    const fusionContext = useFusionContext();
+    const apiClients = useApiClients();
 
-    const fetchPersonData = useCallback(async (personId: string) => {
-        setIsFetching(true);
-        setPersonDetails(null);
-        try {
-            const response = await fusionContext.http.apiClients.people.getPersonDetailsAsync(
-                personId
-            );
-            setPersonDetails(response.data);
-            setIsFetching(false);
-        } catch (e) {
+    const fetchPersonData = useCallback(
+        async (personId: string) => {
+            setIsFetching(true);
             setPersonDetails(null);
-            setIsFetching(false);
-            setError(e);
-        }
-    }, []);
+            try {
+                const response = await apiClients.people.getPersonDetailsAsync(personId);
+                setPersonDetails(response.data);
+                setIsFetching(false);
+            } catch (e) {
+                setPersonDetails(null);
+                setIsFetching(false);
+                setError(e);
+            }
+        },
+        [apiClients]
+    );
+
+    const isPersonId = (data: UsePeopleDetailsProps): data is PersonId => {
+        return (data as PersonId).id !== undefined;
+    };
 
     useEffect(() => {
-        if (personId) {
-            fetchPersonData(personId);
+        if (isPersonId(props)) {
+            fetchPersonData(props.id);
+        } else {
+            setPersonDetails(props.person);
+            setIsFetching(false);
+            setError(null);
         }
-    }, [fetchPersonData, personId]);
+    }, [fetchPersonData, isPersonId, props]);
 
     return { personDetails, isFetching, error };
 };
