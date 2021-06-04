@@ -21,11 +21,6 @@ export type WorkflowPerson = {
     phoneNumber?: string;
 };
 
-export type WorfklowPendingPerson = {
-    person: WorkflowPerson;
-    stepId: string;
-};
-
 export type WorkflowStep = {
     id: string;
     state: WorkflowStepState;
@@ -39,6 +34,7 @@ export type WorkflowStep = {
     dueDate: Date | null;
     isCompleted: boolean;
     reason: string | null;
+    pendingPerson?: WorkflowPerson;
 };
 
 export type Workflow = {

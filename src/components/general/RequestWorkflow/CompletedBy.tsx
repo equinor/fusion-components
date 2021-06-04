@@ -1,15 +1,14 @@
 import { formatDate, useCurrentPersonDetails } from "@equinor/fusion";
 import { PersonPhoto } from "@equinor/fusion-components";
 import { FC, useMemo } from "react";
-import { WorfklowPendingPerson, WorkflowStep } from "./models";
+import { WorkflowStep } from "./models";
 import styles from './styles.less';
 
 type Props = {
     step: WorkflowStep;
-    pendingPerson?: WorfklowPendingPerson;
 }
 
-const CompletedBy: FC<Props> = ({step, pendingPerson}) => {
+const CompletedBy: FC<Props> = ({step}) => {
     const { personDetails } = useCurrentPersonDetails();
 
     const personPhotoId = useMemo(() => {
@@ -20,8 +19,8 @@ const CompletedBy: FC<Props> = ({step, pendingPerson}) => {
             return personDetails.azureUniqueId;
         }
 
-        if (step.id === pendingPerson?.stepId) {
-            return pendingPerson?.person?.azureUniquePersonId;
+        if (step?.pendingPerson) {
+            return step.pendingPerson?.azureUniquePersonId;
         }
         return null;
     }, [step, personDetails]);
