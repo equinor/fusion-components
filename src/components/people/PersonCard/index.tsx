@@ -41,9 +41,7 @@ export default ({
     isFetchingPerson,
 }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
-    const { isFetching, error, personDetails } = personId
-        ? usePeopleDetails(personId)
-        : { isFetching: isFetchingPerson, error: null, personDetails: person };
+    const { isFetching, error, personDetails } = usePeopleDetails(personId, person);
 
     useEffect(() => {
         if (!error && personDetails) {
