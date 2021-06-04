@@ -34,7 +34,6 @@ export const overlay = (
             height="100%"
             mask="url(#Mask)"
             fill="rgba(0, 0, 0, .5)"
-            filter="blur(5px)"
         ></rect>
     </svg>
 `;
