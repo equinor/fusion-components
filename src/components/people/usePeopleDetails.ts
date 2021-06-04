@@ -1,7 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { PersonDetails, useApiClients } from '@equinor/fusion';
-
-export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
+interface PersonId {
+    id: string;
+}
+interface Person {
+    person: PersonDetails;
+}
+type UsePeopleDetailsProps = PersonId | Person;
+export const usePeopleDetails = (props: UsePeopleDetailsProps) => {
     const [isFetching, setIsFetching] = useState(false);
     const [personDetails, setPersonDetails] = useState<PersonDetails | null>(null);
     const [error, setError] = useState<Error | null>(null);
@@ -24,15 +30,19 @@ export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
         [apiClients]
     );
 
+    const isPersonId = (data: UsePeopleDetailsProps): data is PersonId => {
+        return (data as PersonId).id !== undefined;
+    };
+
     useEffect(() => {
-        if (personId) {
-            fetchPersonData(personId);
+        if (isPersonId(props)) {
+            fetchPersonData(props.id);
         } else {
-            setPersonDetails(person);
+            setPersonDetails(props.person);
             setIsFetching(false);
             setError(null);
         }
-    }, [fetchPersonData, personId, person]);
+    }, [fetchPersonData, isPersonId, props]);
 
     return { personDetails, isFetching, error };
 };
