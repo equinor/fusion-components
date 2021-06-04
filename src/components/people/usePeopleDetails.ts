@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { PersonDetails, useFusionContext } from '@equinor/fusion';
 
-export const usePeopleDetails = (personId?: string) => {
+export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
     const [isFetching, setIsFetching] = useState(false);
     const [personDetails, setPersonDetails] = useState<PersonDetails | null>(null);
     const [error, setError] = useState<Error | null>(null);
@@ -29,7 +29,9 @@ export const usePeopleDetails = (personId?: string) => {
         }
     }, [fetchPersonData, personId]);
 
-    return { personDetails, isFetching, error };
+    return personId
+        ? { personDetails, isFetching, error }
+        : { error: null, personDetails: person, isFetching: false };
 };
 
 export default usePeopleDetails;
