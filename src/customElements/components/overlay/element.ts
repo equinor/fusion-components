@@ -90,7 +90,6 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
             id: el.anchor,
             rect: relativeRect(el.bounds()),
         }));
-        console.log(rects);
         const placeholders = directives.repeat(
             rects,
             (r) => r.id,
