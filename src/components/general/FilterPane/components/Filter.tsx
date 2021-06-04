@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, FC } from 'react';
+import { useState, useCallback, useMemo, FC, useEffect } from 'react';
 
 import classNames from 'classnames';
 import {
@@ -99,6 +99,10 @@ function Filter<T>({
 }: FilterProps<T>) {
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
+
+    useEffect(() => {
+        defaultTerm && setTerm(defaultTerm);
+    }, [defaultTerm]);
 
     const handleOnChange = useCallback(
         (newValue) => {
