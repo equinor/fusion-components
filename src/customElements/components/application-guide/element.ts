@@ -1,21 +1,24 @@
-import { LitElement, html, property, eventOptions, PropertyValues, query } from "../base";
+import { LitElement, html, property, eventOptions, PropertyValues, query } from '../base';
 
 import { OverlayEvent, OverlayEventType, OverLayScope, OverlayElement } from '../overlay';
 import { QuickFactEvent, QuickFactEventType } from '../quick-fact';
-import { ApplicationGuideEvent, ApplicationGuideEventType, ApplicationGuideEventDetail } from './events';
+import {
+    ApplicationGuideEvent,
+    ApplicationGuideEventType,
+    ApplicationGuideEventDetail,
+} from './events';
 
 import { iconOpen } from './open.svg';
 import { iconClose } from './close.svg';
 
 import styles from './element.css';
 
-
 export interface ApplicationGuideElementProps {
     active?: boolean;
 }
 
 /**
- * Element that contains overlays and displays quick fact box 
+ * Element that contains overlays and displays quick fact box
  */
 export class ApplicationGuideElement extends LitElement implements ApplicationGuideElementProps {
     static styles = styles;
@@ -24,13 +27,13 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
      * if active the overlays are activated
      */
     @property({ type: Boolean, reflect: true })
-    active: boolean = false;
+    active = false;
 
     /**
      * selected anchor from overlay
      */
     @property({ type: Object })
-    selected?: { scope: string, anchor: string };
+    selected?: { scope: string; anchor: string };
 
     /**
      * Placeholder for popover (info box)
@@ -45,10 +48,10 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
     /**
      * Drag start position
-     * dY and dX = position of drag start (pointer position) 
+     * dY and dX = position of drag start (pointer position)
      * eY and eX = position of element on drag start
      */
-    protected _dragStart: { dY: number, dX: number, eY: number, eX: number };
+    protected _dragStart: { dY: number; dX: number; eY: number; eX: number };
 
     constructor() {
         super();
@@ -67,7 +70,9 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         window.addEventListener(OverlayEventType.disconnected, this.handleOverlayEvent);
 
         // listen for selection change of overlays
-        this._overlays.forEach(overlay => overlay.addEventListener(OverlayEventType.selection, this.handleOverlayEvent));
+        this._overlays.forEach((overlay) =>
+            overlay.addEventListener(OverlayEventType.selection, this.handleOverlayEvent)
+        );
     }
 
     /**
@@ -81,7 +86,9 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         window.removeEventListener(OverlayEventType.disconnected, this.handleOverlayEvent);
 
         // stop observing change of selection on overlays
-        this._overlays.forEach(overlay => overlay.removeEventListener(OverlayEventType.selection, this.handleOverlayEvent));
+        this._overlays.forEach((overlay) =>
+            overlay.removeEventListener(OverlayEventType.selection, this.handleOverlayEvent)
+        );
     }
 
     /**
@@ -114,15 +121,15 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         overlay.removeEventListener(OverlayEventType.selection, this.handleOverlayEvent);
 
         // update collection of overlays
-        this._overlays = this._overlays.filter(el => el !== overlay);
+        this._overlays = this._overlays.filter((el) => el !== overlay);
     }
 
     /**
      * Change selected item for component
      * Clear selection for all other connected overlays
      */
-    setSelected(overlay: OverlayElement, item: { scope: string, anchor: string }) {
-        this._overlays.filter(el => el !== overlay).forEach(el => el.selected = undefined);
+    setSelected(overlay: OverlayElement, item: { scope: string; anchor: string }) {
+        this._overlays.filter((el) => el !== overlay).forEach((el) => (el.selected = undefined));
         this.selected = item;
     }
 
@@ -141,17 +148,28 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         }
     }
 
-
     render() {
         const { active } = this;
         const fabIcon = active ? iconClose : iconOpen;
         return html`
-            <slot @dragover=${e => e.preventDefault()}></slot>
-            <div id="popover" slot="content" draggable="true" @dragend=${this._handleDragEnd}  @dragstart=${this._handleDragStart}>
+            <slot @dragover=${(e) => e.preventDefault()}></slot>
+            <div
+                id="popover"
+                slot="content"
+                draggable="true"
+                @dragend=${this._handleDragEnd}
+                @dragstart=${this._handleDragStart}
+            >
                 ${this.renderQuickFact()}
             </div>
-            <slot name="fab" @click=${(this.toggle)} >
-                <fusion-button id="fab" round raised size="large" title="${active ? 'close' : 'open'} quick facts">
+            <slot name="fab" @click=${this.toggle}>
+                <fusion-button
+                    id="fab"
+                    round
+                    raised
+                    size="large"
+                    title="${active ? 'close' : 'open'} quick facts"
+                >
                     ${fabIcon}
                 </fusion-button>
             </slot>
@@ -171,7 +189,9 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
                 .anchor="${anchor}"
                 @quick-fact-show=${this._handleQuickFactShow}
             >
-                <span slot="empty">Click on a highlighted area to view a Quickfact or to add a new</span>
+                <span slot="empty"
+                    >Click on a highlighted area to view a Quickfact or to add a new</span
+                >
             </fusion-quick-fact>
         `;
     }
@@ -179,17 +199,19 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     protected updated(props: PropertyValues) {
         super.update(props);
         if (props.has('active')) {
-            this._overlays.forEach(el => el.active = this.active);
+            this._overlays.forEach((el) => (el.active = this.active));
             this.active
                 ? ApplicationGuideEventType.activated
-                : ApplicationGuideEventType.deactivated
+                : ApplicationGuideEventType.deactivated;
         }
         props.has('scope') && this._dispatchEvent(ApplicationGuideEventType.scope);
         props.has('selected') && this._dispatchEvent(ApplicationGuideEventType.selection);
     }
 
-
-    protected _dispatchEvent(type: ApplicationGuideEventType, init?: CustomEventInit<ApplicationGuideEventDetail>) {
+    protected _dispatchEvent(
+        type: ApplicationGuideEventType,
+        init?: CustomEventInit<ApplicationGuideEventDetail>
+    ) {
         const { active, selected } = this;
         const detail: ApplicationGuideEventDetail = {
             active,
@@ -206,7 +228,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         const { anchor, scope, info } = e.detail;
         const detail: ApplicationGuideEventDetail = {
             selected: { anchor, scope },
-            info
+            info,
         };
         this._dispatchEvent(ApplicationGuideEventType.show, { detail });
     }
@@ -219,7 +241,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         this._dragStart = { dY: e.y, dX: e.x, eY: el.offsetTop, eX: el.offsetLeft };
 
         // hides original element in next frame, else clone will not show
-        requestAnimationFrame(() => (el.style.opacity = "0"));
+        requestAnimationFrame(() => (el.style.opacity = '0'));
     }
 
     @eventOptions({ capture: false })
@@ -237,8 +259,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
 
         // show element
         el.style.opacity = null;
-
     }
 }
 
-export default ApplicationGuideElement
+export default ApplicationGuideElement;

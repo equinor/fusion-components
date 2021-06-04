@@ -51,7 +51,7 @@
                     flex-grow: 2;
                 }
             }
-            
+
             &:not([disabled]) {
                 &.isSelected {
                     background-color: var(--color-black-alt5);
@@ -60,15 +60,16 @@
                 &:hover {
                     background-color: var(--color-black-alt4);
                 }
-    
-                &:focus > span, &.isFocused > span {
+
+                &:focus > span,
+                &.isFocused > span {
                     border: 1px dashed var(--color-black-alt3);
                     border-radius: 4px;
                 }
-    
+
                 &:active {
                     background: none;
-    
+
                     > span {
                         background-color: var(--color-primary-alt4);
                         border: 1px dashed transparent;

@@ -1,6 +1,5 @@
 import { LitElement, property, html } from '../base';
 
-
 import { infoApi } from '../base/api';
 
 import styles from './element.css';
@@ -55,7 +54,6 @@ export class QuickFactElement extends LitElement {
         return infoApi.getClient('info');
     }
 
-
     public async fetchQuickFact() {
         const event = this._dispatchEvent(QuickFactEventType.fetch, { cancelable: true });
         if (!event.defaultPrevented) {
@@ -79,7 +77,8 @@ export class QuickFactElement extends LitElement {
             return quickFact.data;
         } catch (err) {
             switch (err.response?.status) {
-                case 404: return undefined;
+                case 404:
+                    return undefined;
                 /** @todo handle not allowed */
                 case 401:
                     this.error = Error('Unauthorized to see quick facts');
@@ -118,7 +117,9 @@ export class QuickFactElement extends LitElement {
     }
 
     private handleSave = async (e: CustomEvent<QuickFact>) => {
-        this._dispatchEvent(this.quickFact ? QuickFactEventType.updated : QuickFactEventType.created);
+        this._dispatchEvent(
+            this.quickFact ? QuickFactEventType.updated : QuickFactEventType.created
+        );
         this.quickFact = e.detail;
     };
 
@@ -139,17 +140,15 @@ export class QuickFactElement extends LitElement {
     }
 
     private renderContent() {
-
         const { quickFact, anchor, fetching, scope, error } = this;
 
         if (!anchor) {
             return html`<slot name="empty"></slot>`;
         }
 
-        if (!!error) {
-            return html`<slot name="error">${error.message}</slot>`
+        if (error) {
+            return html`<slot name="error">${error.message}</slot>`;
         }
-
 
         if (this.view === 'edit') {
             return html`
@@ -172,11 +171,13 @@ export class QuickFactElement extends LitElement {
         }
 
         return html`
-            <fusion-quick-fact-view
-                .quickFact="${quickFact}"
-                .showSkeleton="${this.fetching}"
-            >
-                <fusion-button class="btn-edit" slot="toolbar" @click="${this.handleEditClick}" outlined>
+            <fusion-quick-fact-view .quickFact="${quickFact}" .showSkeleton="${this.fetching}">
+                <fusion-button
+                    class="btn-edit"
+                    slot="toolbar"
+                    @click="${this.handleEditClick}"
+                    outlined
+                >
                     ${iconEdit}
                 </fusion-button>
             </fusion-quick-fact-view>
@@ -202,17 +203,17 @@ export class QuickFactElement extends LitElement {
     render() {
         return html`
             <div>
-                <div id="content">
-                    ${this.renderContent()} 
-                </div>
+                <div id="content">${this.renderContent()}</div>
             </div>
         `;
     }
 
-
-    protected _dispatchEvent(type: QuickFactEventType, init?: CustomEventInit<QuickFactEventDetail>) {
+    protected _dispatchEvent(
+        type: QuickFactEventType,
+        init?: CustomEventInit<QuickFactEventDetail>
+    ) {
         const { scope, anchor, view, quickFact } = this;
-        const detail = { ...init?.detail, scope, anchor, quickFact, view }
+        const detail = { ...init?.detail, scope, anchor, quickFact, view };
         const event = new QuickFactEvent(type, { ...init, detail });
         this.dispatchEvent(event);
         return event;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNotificationContext } from '@equinor/fusion';
 import NotificationBanner from '../../../core/NotificationBanner';
 

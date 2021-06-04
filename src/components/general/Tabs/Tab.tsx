@@ -1,20 +1,20 @@
-import * as React from 'react';
-import * as styles from './styles.less';
-import * as classNames from 'classnames';
+import styles from './styles.less';
+import classNames from 'clsx';
 import { useKeyboardNavigation } from '@equinor/fusion-components';
+import { useState, useRef, FC, ReactNode, AnchorHTMLAttributes } from 'react';
 
-type TabProps = {
+type TabProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'title'> & {
     isCurrent?: boolean;
-    title: string | React.ReactNode;
+    title: string | ReactNode;
     tabKey: string;
     disabled?: boolean;
     onChange?: (ref: HTMLElement) => void;
     url?: string;
 };
 
-const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) => {
-    const [isPressed, setIsPressed] = React.useState(false);
-    const tabRef = React.useRef<HTMLAnchorElement>(null);
+const Tab: FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, tabKey, ...props }) => {
+    const [isPressed, setIsPressed] = useState(false);
+    const tabRef = useRef<HTMLAnchorElement>(null);
 
     useKeyboardNavigation(
         {
@@ -27,7 +27,7 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
         tabRef.current
     );
 
-    const tabClasses = classNames(styles.tab, {
+    const tabClasses = classNames(props.className, styles.tab, {
         [styles.current]: isCurrent,
         [styles.disabled]: disabled,
         [styles.pressed]: isPressed && !disabled,
@@ -46,6 +46,7 @@ const Tab: React.FC<TabProps> = ({ isCurrent, title, disabled, onChange, url }) 
 
     return (
         <a
+            {...props}
             className={tabClasses}
             onClick={() => !disabled && onChange && tabRef.current && onChange(tabRef.current)}
             onMouseDown={() => setIsPressed(true)}
@@ -65,7 +66,6 @@ Tab.displayName = 'Tab';
 Tab.defaultProps = {
     isCurrent: false,
     disabled: false,
-    onChange: () => {},
 };
 
 export default Tab;

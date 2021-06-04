@@ -1,12 +1,12 @@
-import * as React from 'react';
 import {
     NotificationCard,
     useComponentDisplayClassNames,
     enqueueAsyncOperation,
 } from '@equinor/fusion';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import classNames from 'classnames';
 import NotificationCardWrapper from './NotificationCardWrapper';
+import { useRef, useState, useEffect, FC } from 'react';
 
 type NotificationCardsProps = {
     notifications: NotificationCard[];
@@ -15,14 +15,14 @@ type NotificationCardsProps = {
 };
 type GradientType = 'top' | 'bottom' | 'topAndBottom' | null;
 
-const NotificationCards: React.FC<NotificationCardsProps> = ({
+const NotificationCards: FC<NotificationCardsProps> = ({
     notifications,
     onDiscardNotification,
     onShowInList,
 }) => {
-    const notificationCardsRef = React.useRef<HTMLDivElement | null>(null);
+    const notificationCardsRef = useRef<HTMLDivElement | null>(null);
 
-    const [gradient, setGradient] = React.useState<GradientType | null>(null);
+    const [gradient, setGradient] = useState<GradientType | null>(null);
 
     const checkForGradient = async (abortSignal: AbortSignal) => {
         enqueueAsyncOperation(() => {
@@ -55,13 +55,13 @@ const NotificationCards: React.FC<NotificationCardsProps> = ({
         }
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         const abortController = new AbortController();
         checkForGradient(abortController.signal);
         return () => abortController.abort();
     }, [notifications, notificationCardsRef.current]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!(notificationCardsRef && notificationCardsRef.current)) {
             return;
         }

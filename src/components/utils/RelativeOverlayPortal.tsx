@@ -1,5 +1,5 @@
-import React, { FC, ReactNode, MutableRefObject } from 'react';
 import { useOverlayContainer, useRelativePositioning } from '@equinor/fusion-components';
+import { FC, ReactNode, MutableRefObject } from 'react';
 import { createPortal } from 'react-dom';
 
 type OverlayProps = {
@@ -25,7 +25,9 @@ const RelativeOverlayPortal: FC<OverlayProps> = ({ children, relativeRef, show }
                 top: rect.top,
                 left: rect.left,
             }}
-        >{children}</div>,
+        >
+            {children}
+        </div>,
         overlayContainer
     );
 };

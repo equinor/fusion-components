@@ -2,9 +2,7 @@ import { useRef, useState, MutableRefObject, useCallback, useEffect } from 'reac
 import { useEventListener } from '@equinor/fusion-components';
 
 let showTimeout: NodeJS.Timeout;
-export default <T extends HTMLElement>(
-    delay: number = 300
-): [boolean, MutableRefObject<T | null>] => {
+export default <T extends HTMLElement>(delay = 300): [boolean, MutableRefObject<T | null>] => {
     const [isHovering, setIsHovering] = useState<boolean>(false);
     const ref = useRef<T | null>(null);
 

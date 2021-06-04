@@ -1,4 +1,5 @@
-import React from 'react';
+import { useState, FC } from 'react';
+
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 
@@ -8,11 +9,11 @@ import { SideSheet } from '../../SideSheet';
 import '../../../../customElements/components/application-guide';
 import { ApplicationGuidanceAnchor, useAnchor } from '../components/Anchor';
 
-import { Overlay } from '../components/Overlay';
+import '../components/Overlay';
 
-const Story: React.FC = () => {
+const Story: FC = () => {
     const scope = 'storybook';
-    const [showSideSheet, setShowSideSheet] = React.useState(true);
+    const [showSideSheet, setShowSideSheet] = useState(true);
     return (
         <div style={{ display: 'flex', height: '2000px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-evenly', flexGrow: 1 }}>

@@ -3,13 +3,13 @@
 .stepper {
     display: grid;
     grid-template-columns: max-content max-content auto;
-    grid-template-areas: "prev next stepPane";
+    grid-template-areas: 'prev next stepPane';
     border-bottom: 1px solid var(--color-black-alt3);
     padding: calc(var(--grid-unit) * 2px) 0;
 
     @media (max-width: @mobile-max-width) {
         grid-template-columns: max-content auto max-content;
-        grid-template-areas: "prev stepPane next";
+        grid-template-areas: 'prev stepPane next';
         padding: 0;
         border: none;
     }
@@ -40,7 +40,7 @@
     .stepPane {
         display: flex;
         flex-grow: 1;
-        
+
         .step {
             padding: calc(var(--grid-unit) * 1px);
             padding-left: calc(var(--grid-unit) * 2px);
@@ -49,26 +49,28 @@
             display: grid;
             flex-grow: 1;
             grid-template-columns: calc(var(--grid-unit) * 6px) minmax(max-content, auto);
-            grid-template-areas: "badge title"
-                                 " . description";
+            grid-template-areas:
+                'badge title'
+                ' . description';
 
-            grid-template-rows: minmax(calc(var(--grid-unit) * 3px), auto) 
-                                minmax(calc(var(--grid-unit) * 3px), auto);
+            grid-template-rows:
+                minmax(calc(var(--grid-unit) * 3px), auto)
+                minmax(calc(var(--grid-unit) * 3px), auto);
             grid-row-gap: calc(var(--grid-unit) * 1px);
-            
+
             --line-color: var(--color-primary);
 
             @media (max-width: @mobile-max-width) {
-
-                grid-template-areas: "badge title"
-                                     "progress description";
+                grid-template-areas:
+                    'badge title'
+                    'progress description';
                 grid-template-columns: calc(var(--grid-unit) * 6px) auto;
                 padding-left: 0;
-                padding-right:0;
+                padding-right: 0;
             }
 
             &.compact {
-                padding: calc(var(--grid-unit) * .5px);
+                padding: calc(var(--grid-unit) * 0.5px);
             }
 
             &.isClickable {
@@ -80,7 +82,7 @@
                 color: var(--color-black-alt3) !important;
                 --line-color: var(--color-black-alt3);
             }
-    
+
             &.current {
                 font-weight: 500;
             }
@@ -101,80 +103,80 @@
                 }
             }
 
-                &.isLastStep {
-                    width: inherit;
-                    
-                    > span {
-                        &::after {
-                            border: 0;
-                        }
+            &.isLastStep {
+                width: inherit;
+
+                > span {
+                    &::after {
+                        border: 0;
                     }
                 }
             }
+        }
 
-            .badge {
-                grid-area: badge;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                top: 0;
-                height: calc(var(--grid-unit) * 3px);
-                width: calc(var(--grid-unit) * 3px);
-                font-weight: 500;
-                border: 1px solid var(--color-black-alt3);
-                border-radius: 50%;
-                flex-shrink: 0;
-                
-                &.compact {
-                    height: calc(var(--grid-unit) * 2px);
-                    width: calc(var(--grid-unit) * 2px);
-                }
+        .badge {
+            grid-area: badge;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            height: calc(var(--grid-unit) * 3px);
+            width: calc(var(--grid-unit) * 3px);
+            font-weight: 500;
+            border: 1px solid var(--color-black-alt3);
+            border-radius: 50%;
+            flex-shrink: 0;
 
-                &.active {
-                    border: 1px solid var(--color-primary);
-                    background: var(--color-primary);
-                    color: var(--color-white);
-                }
+            &.compact {
+                height: calc(var(--grid-unit) * 2px);
+                width: calc(var(--grid-unit) * 2px);
+            }
 
-                &.done {
-                    border: 1px solid var(--color-primary);
-                    color: var(--color-primary);
-                }
+            &.active {
+                border: 1px solid var(--color-primary);
+                background: var(--color-primary);
+                color: var(--color-white);
+            }
+
+            &.done {
+                border: 1px solid var(--color-primary);
+                color: var(--color-primary);
             }
         }
     }
-    
-    .description {
-        grid-area: description;
-        color: var(--color-black-alt2);
-        padding-left: calc(var(--grid-unit) * 1px);
+}
+
+.description {
+    grid-area: description;
+    color: var(--color-black-alt2);
+    padding-left: calc(var(--grid-unit) * 1px);
+}
+
+.content {
+    display: flex;
+}
+
+.progress {
+    color: var(--color-black-alt2);
+    font-weight: 300;
+
+    @media (max-width: @mobile-max-width) {
+        grid-area: progress;
+        font-size: 12px;
+        width: calc(var(--grid-unit) * 4px);
+        white-space: nowrap;
     }
+}
 
-    .content {
-        display: flex;
+.stepperLine {
+    min-width: calc(var(--grid-unit) * 3px);
+    content: ' ';
+    flex-grow: 1;
+    height: calc(var(--grid-unit) * 1px);
+    border-bottom: 1px solid var(--line-color);
+    margin-left: calc(var(--grid-unit) * 2px);
+
+    @media (max-width: @mobile-max-width) {
+        display: none;
     }
-
-    .progress {
-        color: var(--color-black-alt2);
-        font-weight: 300;
-
-        @media (max-width: @mobile-max-width) {
-            grid-area: progress;
-            font-size: 12px;
-            width: calc(var(--grid-unit) * 4px);
-            white-space: nowrap;
-        }
-    }
-
-    .stepperLine {
-        min-width: calc(var(--grid-unit) * 3px);
-        content: " ";
-        flex-grow: 1;
-        height: calc(var(--grid-unit) * 1px);
-        border-bottom: 1px solid var(--line-color);
-        margin-left: calc(var(--grid-unit) * 2px);
-
-        @media (max-width: @mobile-max-width) {
-            display: none;
-        }
-    }
+}

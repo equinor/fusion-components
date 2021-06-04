@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useCallback } from 'react';
+import { Fragment, useContext, useMemo, useCallback } from 'react';
 
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgStructure, OrgNode } from '../orgChartTypes';
@@ -11,11 +11,11 @@ const Links = <T extends OrgStructure>() => {
         state: { allNodes, cardWidth, cardHeight, centerX, cardMargin, numberOfCardsPerRow, width },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
-    const allChildren = useMemo(() => allNodes.filter(node => !node.aside && node.parentId), [
+    const allChildren = useMemo(() => allNodes.filter((node) => !node.aside && node.parentId), [
         allNodes,
     ]);
 
-    const allAside = useMemo(() => allNodes.filter(node => node.aside && node.parentId), [
+    const allAside = useMemo(() => allNodes.filter((node) => node.aside && node.parentId), [
         allNodes,
     ]);
 
@@ -106,7 +106,7 @@ const Links = <T extends OrgStructure>() => {
             }
 
             const parentId = node.parentId;
-            const parent = allNodes.find(d => d.id === parentId);
+            const parent = allNodes.find((d) => d.id === parentId);
 
             if (!parent) {
                 return null;
@@ -131,10 +131,10 @@ const Links = <T extends OrgStructure>() => {
     return (
         <g className="links">
             {allChildren.map((node, index) => (
-                <React.Fragment key={node.id}>{renderLink(node, index)}</React.Fragment>
+                <Fragment key={node.id}>{renderLink(node, index)}</Fragment>
             ))}
             {allAside.map((node, index) => (
-                <React.Fragment key={node.id}>{renderLink(node, index)}</React.Fragment>
+                <Fragment key={node.id}>{renderLink(node, index)}</Fragment>
             ))}
         </g>
     );

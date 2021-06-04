@@ -24,9 +24,7 @@ export class OverlayPlaceholderElement extends LitElement {
             width: `${rect.width}px`,
             height: `${rect.height}px`,
         });
-        return html`
-            <div id="container" class="${classes}" style="${style}"></div>
-        `;
+        return html` <div id="container" class="${classes}" style="${style}"></div> `;
     }
 }
 

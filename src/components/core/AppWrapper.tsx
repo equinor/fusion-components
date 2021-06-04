@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, FC } from 'react';
+
 import { Router } from 'react-router-dom';
 import { History, createBrowserHistory } from 'history';
 import { useFusionContext, combineUrls, HistoryContext } from '@equinor/fusion';
 import { Spinner, ErrorMessage, ErrorBoundary } from '@equinor/fusion-components';
-
 
 const createAppHistory = (appKey?: string): History => {
     const basename = combineUrls('/apps', appKey || '');
@@ -14,7 +14,7 @@ type AppWrapperProps = {
     appKey?: string;
 };
 
-const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
+const AppWrapper: FC<AppWrapperProps> = ({ appKey }) => {
     const {
         app: { container: appContainer },
         history,
@@ -50,7 +50,7 @@ const AppWrapper: React.FC<AppWrapperProps> = ({ appKey }) => {
 
     const appHistory = useMemo(() => createAppHistory(appKey), [appKey]);
 
-    if ((currentApp === null) && isFetching) {
+    if (currentApp === null && isFetching) {
         return <Spinner centered floating />;
     }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, boolean, select, number } from '@storybook/addon-knobs';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
@@ -48,7 +48,7 @@ const UnselectedStory = () => {
             placeholder="Find person"
             hasError={boolean('Show error', false)}
             selectedPerson={selectedPerson}
-            onSelect={person => setSelectedPerson(person)}
+            onSelect={(person) => setSelectedPerson(person)}
             errorMessage="Required"
         />
     );

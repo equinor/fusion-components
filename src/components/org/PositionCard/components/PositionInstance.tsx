@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import { useCallback, useMemo, FC, MouseEvent } from 'react';
+
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
@@ -20,7 +21,7 @@ type PositionInstanceProps = {
     selectedDate?: Date;
 };
 
-const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
+const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     position,
     instance,
     showLocation,
@@ -39,7 +40,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             ? rotationInstances.length > 0
                 ? `${rotationInstances.length + 1} assignees`
                 : instance.assignedPerson.name
-            : 'TBN';
+            : 'TBN - To Be Nominated';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
@@ -56,7 +57,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     });
 
     const onClickHandler = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
+        (e: MouseEvent<HTMLDivElement>) => {
             if (onClick) {
                 e.stopPropagation();
                 onClick(position, instance);
@@ -66,7 +67,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const onExpandHandler = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: MouseEvent<HTMLButtonElement>) => {
             if (onExpand) {
                 e.stopPropagation();
                 onExpand(position, instance);
@@ -76,18 +77,18 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const instances = position ? position.instances : [];
-    const instancesByFrom = React.useMemo(
+    const instancesByFrom = useMemo(
         () => [...instances].sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime()),
         [instances]
     );
-    const instancesByTo = React.useMemo(
+    const instancesByTo = useMemo(
         () => [...instances].sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime()),
         [instances]
     );
 
-    const firstInstance = React.useMemo(() => instancesByFrom[0], [instancesByFrom]);
-    const lastInstance = React.useMemo(
-        () => instancesByTo.find(i => i.appliesTo.getTime !== undefined),
+    const firstInstance = useMemo(() => instancesByFrom[0], [instancesByFrom]);
+    const lastInstance = useMemo(
+        () => instancesByTo.find((i) => i.appliesTo.getTime !== undefined),
         [instancesByTo]
     );
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ExpandedContentProps } from '../dataTableTypes';
 import styles from '../styles.less';
 import { getCellContent } from '../utils';

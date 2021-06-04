@@ -1,6 +1,7 @@
-import * as React from 'react';
+import { Fragment, FunctionComponent, useCallback, useMemo, useState } from 'react';
+
 import { NotificationCard } from '@equinor/fusion';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import NotificationCardWrapper from './NotificaitonCardWrapper';
 import { Accordion, AccordionItem } from '@equinor/fusion-components';
 
@@ -94,10 +95,12 @@ const divisions: DateDivision[] = [
     },
 ];
 
-const DateDivisionsContainer: React.FC<DateDivisionsContainerProps> = ({ collapsed, children }) =>
-    collapsed ? <Accordion>{children}</Accordion> : <>{children} </>;
+const DateDivisionsContainer: FunctionComponent<DateDivisionsContainerProps> = ({
+    collapsed,
+    children,
+}) => (collapsed ? <Accordion>{children}</Accordion> : <Fragment>{children} </Fragment>);
 
-const NotificationCardContainer: React.FC<NotificationCardContainerProps> = ({
+const NotificationCardContainer: FunctionComponent<NotificationCardContainerProps> = ({
     notification,
     collapsed,
     openAccordions,
@@ -120,31 +123,31 @@ const NotificationCardContainer: React.FC<NotificationCardContainerProps> = ({
         );
     }
     return (
-        <React.Fragment key={notification.id}>
+        <Fragment key={notification.id}>
             {divisionKey === 'today' && (
                 <span className={styles.dateMarker}>
                     Today {get24HTime(new Date(notification.created))}
                 </span>
             )}
             {card}
-        </React.Fragment>
+        </Fragment>
     );
 };
 
-const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({
+const NotificationDateDivisions: FunctionComponent<NotificationDateDivisionProps> = ({
     notifications,
     collapsed,
 }) => {
-    const [openAccordions, setOpenAccordions] = React.useState<AccordionOpenDictionary>({});
+    const [openAccordions, setOpenAccordions] = useState<AccordionOpenDictionary>({});
 
-    const handleOpenAccordionChange = React.useCallback(
+    const handleOpenAccordionChange = useCallback(
         (id: string) => {
             setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
         },
         [openAccordions]
     );
 
-    const notificationDivisions = React.useMemo(() => {
+    const notificationDivisions = useMemo(() => {
         return divisions.map((d) => ({
             ...d,
             notifications: notifications.filter((n) => d.accessor(n)),
@@ -160,8 +163,9 @@ const NotificationDateDivisions: React.FC<NotificationDateDivisionProps> = ({
                             {(division.key !== 'today' || collapsed) && (
                                 <span className={styles.dateMarker}>{division.label}</span>
                             )}
-                            {division.notifications.map((notification) => (
+                            {division.notifications.map((notification, index) => (
                                 <NotificationCardContainer
+                                    key={notification.id}
                                     notification={notification}
                                     divisionKey={division.key}
                                     handleOpenAccordionChange={handleOpenAccordionChange}

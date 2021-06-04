@@ -12,12 +12,19 @@ const mask = (rect: AnchorRect) => svg`
     ></rect>
 `;
 
-export const overlay = (anchors: { id: string, rect: AnchorRect }[], options: { height: string, width: string }) => svg`
+export const overlay = (
+    anchors: { id: string; rect: AnchorRect }[],
+    options: { height: string; width: string }
+) => svg`
     <svg width="${options.width || '100%'}" height="${options.height || '100%'}">
         <defs>
             <mask id="Mask" width="100%" height="100%" x="0" y="0">
                 <rect x="0px" y="0px" width="100%" height="100%" fill="white"></rect>
-                ${directives.repeat(anchors, ({ id }) => id, ({ rect }) => mask(rect))}
+                ${directives.repeat(
+                    anchors,
+                    ({ id }) => id,
+                    ({ rect }) => mask(rect)
+                )}
             </mask>
         </defs>
         <rect

@@ -1,13 +1,13 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
-import withFusionStory from "../../../.storybook/withFusionStory";
+import withFusionStory from '../../../.storybook/withFusionStory';
 import useKeyboardNavigation from '../useKeyboardNavigation';
+import {useState, Fragment} from "react";
 
 const KeyboardNavigationStory = () => {
     const listItems = ['Item 1', 'Item 2', 'Item 3'];
 
-    const [currentItem, setCurrentItem] = React.useState<number | null>(0);
-    const [ref, setRef] = React.useState<HTMLElement | null>(null);
+    const [currentItem, setCurrentItem] = useState<number | null>(0);
+    const [ref, setRef] = useState<HTMLElement | null>(null);
     useKeyboardNavigation(
         {
             onDown: () =>
@@ -24,7 +24,7 @@ const KeyboardNavigationStory = () => {
         ref
     );
     return (
-        <React.Fragment>
+        <Fragment>
             <input
                 ref={setRef}
                 placeholder={
@@ -44,12 +44,12 @@ const KeyboardNavigationStory = () => {
                     </li>
                 ))}
             </ul>
-        </React.Fragment>
+        </Fragment>
     );
 };
 
 storiesOf('Hooks/KeyboardNavigation', module)
-    .addDecorator(withFusionStory("KeyboardNavigation"))
+    .addDecorator(withFusionStory('KeyboardNavigation'))
     .add('Default', () => {
         return <KeyboardNavigationStory />;
     });

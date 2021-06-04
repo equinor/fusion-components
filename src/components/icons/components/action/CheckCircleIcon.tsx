@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 
 const CheckCircle = (props: IconProps) => {

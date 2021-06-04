@@ -61,7 +61,10 @@ export default (
 
             const mouseEvent = e as MouseEvent;
 
-            const width = screenPlacement === "left" ? mouseEvent.pageX : window.innerWidth - mouseEvent.pageX;
+            const width =
+                screenPlacement === 'left'
+                    ? mouseEvent.pageX
+                    : window.innerWidth - mouseEvent.pageX;
             const size = getConstrainedSize({ width });
 
             window.requestAnimationFrame(() => setResizedSize(size));

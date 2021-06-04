@@ -1,4 +1,4 @@
-import {OrgStructure, OrgNode } from '@equinor/fusion-components';
+import { OrgStructure, OrgNode } from '@equinor/fusion-components';
 
 import { useEffect, useContext } from 'react';
 import { ReportingPathContextReducer, ReportingPathContext } from './store';
@@ -22,7 +22,7 @@ const useReportingPathActions = <T extends OrgStructure>({
     const { dispatch } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
 
     const generateNodes = (structure: T[]): OrgNode<T>[] => {
-        return structure.map(item => {
+        return structure.map((item) => {
             return {
                 id: item.id,
                 parentId: item.parentId,
@@ -43,10 +43,10 @@ const useReportingPathActions = <T extends OrgStructure>({
     }, [structure]);
 
     useEffect(() => {
-        if (component ) {
+        if (component) {
             dispatch({
                 type: 'UPDATE_COMPONENT',
-                component: component
+                component: component,
             });
         }
     }, [component]);
@@ -76,7 +76,6 @@ const useReportingPathActions = <T extends OrgStructure>({
             height: parentHeight,
             width: parentWidth,
         });
-       
     }, [parentHeight, parentWidth]);
 };
 

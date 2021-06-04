@@ -4,10 +4,10 @@ import Element from './element';
 export const OverlayAnchorElementTag = 'fusion-overlay-anchor';
 
 @fusionElement(OverlayAnchorElementTag)
-export default class _element extends Element { }
+export default class _element extends Element {}
 declare global {
     interface HTMLElementTagNameMap {
-        [OverlayAnchorElementTag]: _element
+        [OverlayAnchorElementTag]: _element;
     }
 }
 

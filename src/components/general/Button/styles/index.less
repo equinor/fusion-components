@@ -1,6 +1,6 @@
-@import "./variables.less";
-@import "./variants.less";
-@import "./sizes.less";
+@import './variables.less';
+@import './variants.less';
+@import './sizes.less';
 
 .container {
     display: inline-block;
@@ -19,7 +19,6 @@
     & + & {
         margin-left: calc(var(--grid-unit) * 1px) !important;
     }
-
 
     .button {
         display: flex;
@@ -40,14 +39,13 @@
 
     &:focus {
         .button {
-           outline: 2px dashed var(--color-primary);
+            outline: 2px dashed var(--color-primary);
             outline-offset: 1px;
         }
-        
     }
-    
+
     &:active {
-        .button{
+        .button {
             outline: none;
         }
     }
@@ -74,19 +72,19 @@
     &.contained {
         .variant-contained(primary, var(--color-primary), var(--color-white), var(--color-primary-hover), var(--color-primary-alt4));
 
-        &.danger{
-            .variant-contained(danger, var(--color-danger),var(--color-white), var(--color-danger-hover), var(--color-danger-highlight) )
+        &.danger {
+            .variant-contained(danger, var(--color-danger),var(--color-white), var(--color-danger-hover), var(--color-danger-highlight) );
         }
 
         &[disabled] {
             .button-disabled(var(--color-black-alt4), var(--color-black-alt4), var(--color-black-alt2));
         }
-    }   
+    }
 
     &.outlined {
         .variant-outlined(primary, var(--color-primary-white), var(--color-primary), var(--color-primary-hover), var(--color-primary-alt3));
 
-        &.danger{
+        &.danger {
             .variant-outlined(danger, var(--color-white), var(--color-danger), var(--color-danger-hover), var(--color-danger-highlight));
         }
 
@@ -98,8 +96,8 @@
     &.frameless {
         .variant-frameless(primary, var(--color-primary), var(--color-primary-hover), var(--color-primary-alt4));
 
-        &.danger{
-            .variant-frameless(danger, var(--color-danger), var(--color-danger-hover), var(--color-danger-highlight))
+        &.danger {
+            .variant-frameless(danger, var(--color-danger), var(--color-danger-hover), var(--color-danger-highlight));
         }
 
         &[disabled] {

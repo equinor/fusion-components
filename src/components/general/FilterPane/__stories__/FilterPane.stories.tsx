@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
+
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import FilterPane, { FilterTypes, FilterSection, FilterTerm } from '../index';
@@ -10,7 +11,7 @@ import { styling, DataTable, DataTableColumn, Button } from '@equinor/fusion-com
 type TableProps = {
     data: DataItem[];
 };
-const Table: React.FC<TableProps> = ({ data }) => {
+const Table: FC<TableProps> = ({ data }) => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -153,7 +154,7 @@ const sections: FilterSection<DataItem>[] = [
     },
 ];
 
-const FilterPaneStory: React.FC = () => {
+const FilterPaneStory: FC = () => {
     const [terms, setTerms] = useState<FilterTerm[]>([
         {
             key: 'custom-colors',
@@ -196,6 +197,7 @@ const FilterPaneStory: React.FC = () => {
                 screenPlacement={filterScreenPlacement}
                 headerComponent={filterHeaderComponent}
                 quickFactScope="storybook"
+                showResetAllButton={true}
             />
             {filterScreenPlacement === 'left' && (
                 <div style={{ marginRight: styling.grid(4), width: 1, flexGrow: 1 }}>

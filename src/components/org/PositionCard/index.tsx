@@ -1,11 +1,9 @@
-import React, { useCallback, useMemo } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
-
 import styles from './styles.less';
 import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
-import { useCurrentInstance } from './hooks';
 import RotationInstances from './components/RotationInstances';
 
 type PositionCardProps = {
@@ -25,6 +23,7 @@ type PositionCardProps = {
     showRotation?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
+    personPhotoComponent?: ReactNode
 };
 
 const PositionCard: React.FC<PositionCardProps> = ({
@@ -44,6 +43,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     childCount,
     selectedDate,
     showRotation,
+    personPhotoComponent
 }) => {
     const isExternalHire =
         instance &&
@@ -55,20 +55,16 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const isConsultant =
         instance && instance.assignedPerson && instance.assignedPerson.accountType === 'Consultant';
 
-    const containerClassNames = classNames(
-        styles.context,
-        useComponentDisplayClassNames(styles),
-        {
-            [styles.isSelected]: isSelected,
-            [styles.isClickable]: !!onClick,
-            [styles.isExternal]: isExternal,
-            [styles.isConsultant]: isConsultant,
-            [styles.isExternalHire]: isExternalHire,
-            [styles.isLinked]: isLinked,
-            [styles.futurePosition]: isFuture,
-            [styles.pastPosition]: isPast,
-        }
-    );
+    const containerClassNames = classNames(styles.context, useComponentDisplayClassNames(styles), {
+        [styles.isSelected]: isSelected,
+        [styles.isClickable]: !!onClick,
+        [styles.isExternal]: isExternal,
+        [styles.isConsultant]: isConsultant,
+        [styles.isExternalHire]: isExternalHire,
+        [styles.isLinked]: isLinked,
+        [styles.futurePosition]: isFuture,
+        [styles.pastPosition]: isPast,
+    });
 
     const onClickHandler = useCallback(() => {
         if (onClick) {
@@ -76,27 +72,39 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
     }, [position, instance, onClick]);
 
-    const currentInstance = useCurrentInstance(position.instances || [], instance, selectedDate);
+    const filterToDate = useMemo(() => selectedDate || new Date(), [selectedDate]);
 
-    const current: PositionInstance | undefined = currentInstance || undefined;
-    const rotatingInstances: PositionInstance[] =
-        currentInstance && currentInstance.rotatingInstances
-            ? currentInstance.rotatingInstances
-            : [];
+    const allInstances = useMemo(
+        () =>
+            position.instances.filter(
+                (i) =>
+                    i.appliesFrom.getTime() <= filterToDate.getTime() &&
+                    i.appliesTo.getTime() >= filterToDate.getTime()
+            ),
+        [filterToDate, position]
+    );
+    const rotatingInstances: PositionInstance[] = useMemo(
+        () =>
+            instance
+                ? allInstances.filter((i) => i.id !== instance.id && i.type === 'Rotation')
+                : [],
+        [instance, allInstances]
+    );
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
-            <div className={styles.container} >
+            <div className={styles.container}>
                 <PositionIconPhoto
                     position={position}
-                    currentInstance={current}
+                    currentInstance={instance}
                     isLinked={isLinked}
                     onClick={onClick}
                     rotationInstances={rotatingInstances}
+                    personPhotoComponent={personPhotoComponent}
                 />
                 <PositionInstanceComponent
                     position={position}
-                    instance={current}
+                    instance={instance}
                     showLocation={showLocation}
                     showDate={showDate}
                     showExternalId={showExternalId}
@@ -109,7 +117,9 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     selectedDate={selectedDate}
                 />
             </div>
-            {showRotation && rotatingInstances.length > 0 && <RotationInstances allInstances={[...rotatingInstances, current]} position={position}/>}
+            {showRotation && allInstances.length > 1 && rotatingInstances.length > 0 && (
+                <RotationInstances allInstances={allInstances} position={position} />
+            )}
         </div>
     );
 };

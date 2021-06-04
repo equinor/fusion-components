@@ -8,7 +8,7 @@ import {
 import createProvider from './createProvider';
 import createConsumer from './createConsumer';
 
-window.addEventListener('message', e => {
+window.addEventListener('message', (e) => {
     if (!e.data || e.origin !== window.location.origin) {
         return;
     }

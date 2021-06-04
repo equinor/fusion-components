@@ -4,6 +4,7 @@ import './polyfills';
 // Core components
 export { default as FusionHeader, HeaderContentProps } from './components/core/Header';
 export { default as HeaderContentPortal } from './components/core/Header/HeaderContentPortal';
+export { default as HeaderAppAsidePortal } from './components/core/Header/HeaderAppAsidePortal';
 export { default as FusionRoot } from './components/core/Root';
 export { default as FusionContent } from './components/core/Content';
 export { default as FusionContainer } from './components/core/Container';
@@ -24,6 +25,17 @@ export {
     IRelativeDateFuilter,
     ITupleFilter,
 } from './components/data/PowerBIReport';
+export {
+    default as HangingGarden,
+    HangingGardenProps,
+    HangingGardenColumn,
+    ItemRenderContext,
+    RenderItem,
+    useHangingGardenData,
+    useHangingGardenErrorMessage,
+    useHangingGardenGetData,
+    PIXI,
+} from './components/data/HangingGarden';
 
 // General components
 export { default as Button, ButtonProps } from './components/general/Button';
@@ -55,6 +67,7 @@ export {
     useDropdownController,
     DropdownController,
 } from './components/general/Dropdown';
+export { default as Select, SelectOption, SelectSection } from './components/general/Select';
 export {
     default as SearchableDropdown,
     SearchableDropdownOption,
@@ -66,6 +79,14 @@ export { default as Calendar } from './components/general/Calendar';
 export { default as Chip } from './components/general/Chip';
 export { default as DatePicker } from './components/general/DatePicker';
 export { Slider, RangedSlider, SliderMarker } from './components/general/Slider';
+export { default as RequestWorkflow } from './components/general/RequestWorkflow';
+export {
+    Workflow,
+    WorkflowStep,
+    WorkflowProvisioningStatus,
+    WorkflowProvisioningState,
+    WorkflowPerson,
+} from './components/general/RequestWorkflow/models';
 export {
     default as NavigationDrawer,
     NavigationStructure,
@@ -78,7 +99,7 @@ export {
     PersonPresenceIcon,
 } from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
-export { default as PersonPicker } from './components/people/PersonPicker';
+export { default as PersonPicker, SectionFnProps } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
 export { default as PersonDetail } from './components/people/PersonDetail';
 export { default as PersonPositionList } from './components/people/PersonPositionList';
@@ -95,6 +116,8 @@ export {
 export { default as NotificationsSideSheet } from './components/general/NotificationsSideSheet';
 export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 export { default as MarkdownEditor } from './components/general/MarkdownEditor';
+export { default as AppSettingsManager } from './components/general/AppSettingsManager';
+export { default as BookmarksManager } from './components/general/BookmarksManager';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -122,6 +145,7 @@ export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpo
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
 export { default as useRootContainer } from './hooks/useRootContainer';
+export { default as useFullscreen } from './hooks/useFullscreen';
 export {
     default as useStringMask,
     applyStringMask,
@@ -169,6 +193,14 @@ export {
     CheckCircleIcon,
     CloseCircleIcon,
     ScheduleIcon,
+    BookmarksIcon,
+    RemoveCircleIcon,
+    CircleIcon,
+    CalendarAcceptIcon,
+    CalendarEventIcon,
+    FullscreenIcon,
+    FullscreenExitIcon,
+    ShareIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
@@ -184,7 +216,7 @@ export {
     ExitToAppIcon,
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
-export { PlayIcon } from './components/icons/components/av';
+export { PlayIcon, PauseCircleIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
 export {
     FormatBoldIcon,

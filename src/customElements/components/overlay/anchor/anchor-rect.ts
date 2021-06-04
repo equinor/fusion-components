@@ -10,13 +10,7 @@ export interface AnchorRect {
 }
 
 export class AnchorDOMRect implements ClientRect {
-
-    constructor(
-        public x: number,
-        public y: number,
-        public width: number,
-        public height: number
-    ) { }
+    constructor(public x: number, public y: number, public width: number, public height: number) {}
 
     get left() {
         return this.x;
@@ -52,8 +46,8 @@ export class AnchorDOMRect implements ClientRect {
         return new AnchorDOMRect(
             this.left - padding,
             this.top - padding,
-            this.width + (padding * 2),
-            this.height + (padding * 2)
+            this.width + padding * 2,
+            this.height + padding * 2
         );
     }
 }

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { createElement, SVGAttributes } from 'react';
 import { useComponentDisplayType, ComponentDisplayType } from '@equinor/fusion';
 
 type IconFactoryProps = {
@@ -10,7 +10,7 @@ type IconFactoryProps = {
 
 export type IconProps = {} & IconFactoryProps;
 
-const useIcon = (content: React.SVGAttributes<SVGElement>) => {
+const useIcon = (content: SVGAttributes<SVGElement>) => {
     const displayType = useComponentDisplayType();
 
     const iconFactory = ({
@@ -27,7 +27,7 @@ const useIcon = (content: React.SVGAttributes<SVGElement>) => {
             ...rest,
         };
 
-        return React.createElement('svg', props, content);
+        return createElement('svg', props, content);
     };
 
     return iconFactory;

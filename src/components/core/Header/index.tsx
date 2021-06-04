@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     useComponentDisplayClassNames,
     useCurrentApp,
@@ -14,7 +13,8 @@ import ComponentDisplayToggleButton from './components/ComponentDisplayToggleBut
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
 import AppManifest from '@equinor/fusion/lib/app/AppManifest';
-import NotificationsButton from './components/NotificationsButton';
+import { createElement, FC, ReactElement, MutableRefObject } from 'react';
+import FullscreenToggleButton from './components/FullscreenToggleButton';
 
 enum Breakpoints {
     medium = 'medium',
@@ -37,15 +37,24 @@ export type HeaderContentProps = {
 };
 
 type FusionHeaderProps = {
-    start: React.ReactElement | null;
-    content: React.FC<HeaderContentProps> | null;
-    aside: React.ReactElement | null;
+    start: ReactElement | null;
+    content: FC<HeaderContentProps> | null;
+    aside: ReactElement | null;
+    settings: ReactElement | null;
     quickFactScope?: string;
+    showSettings?: boolean;
 };
 
-const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quickFactScope }) => {
+const FusionHeader: FC<FusionHeaderProps> = ({
+    start,
+    content,
+    aside,
+    settings,
+    quickFactScope,
+    showSettings,
+}) => {
     const {
-        refs: { headerContent },
+        refs: { headerContent, headerAppAside },
     } = useFusionContext();
     const currentApp = useCurrentApp();
 
@@ -84,15 +93,19 @@ const FusionHeader: React.FC<FusionHeaderProps> = ({ start, content, aside, quic
             </div>
             <div
                 className={styles.contentContainer}
-                ref={headerContent as React.MutableRefObject<HTMLDivElement | null>}
+                ref={headerContent as MutableRefObject<HTMLDivElement | null>}
             >
-                {content && React.createElement(content, { app: currentApp })}
+                {content && createElement(content, { app: currentApp })}
             </div>
 
             <aside className={styles.asideContainer}>
+                <div
+                    ref={headerAppAside as MutableRefObject<HTMLDivElement | null>}
+                    className={styles.asideAppContainer}
+                ></div>
+                <FullscreenToggleButton quickFactScope={quickFactScope} />
                 <ComponentDisplayToggleButton quickFactScope={quickFactScope} />
                 {aside}
-                <NotificationsButton quickFactScope={quickFactScope} />
                 <CurrentUserButton quickFactScope={quickFactScope} />
             </aside>
         </header>

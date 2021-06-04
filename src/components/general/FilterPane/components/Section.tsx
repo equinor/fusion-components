@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DropdownArrow } from '@equinor/fusion-components';
@@ -8,6 +8,7 @@ import { FilterTerm, FilterSection, Filter as FilterType } from '../applyFilters
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
 import { ApplicationGuidanceAnchor } from '../../ApplicationGuidance';
+import { FilterTypes } from '..';
 
 type SectionProps<T> = {
     terms: FilterTerm[];
@@ -38,16 +39,25 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
         [isCollapsed, section.title]
     );
 
-    const renderedFilterComponents = section.filters.map((filter) => (
-        <Filter
-            key={filter.key}
-            filter={filter}
-            term={terms.find((term) => term.key === filter.key)}
-            filterCount={filterCount}
-            onChange={handleOnFilterChange}
-            quickFactScope={quickFactScope}
-        />
-    ));
+    const renderedFilterComponents = useMemo(() => {
+        return section.filters.map((filter) => {
+            const term = terms.find((term) => term.key === filter.key);
+            return (
+                <Filter
+                    key={
+                        filter.type === FilterTypes.Search
+                            ? filter.key
+                            : `${filter.key}_${term?.value}`
+                    }
+                    filter={filter}
+                    term={term}
+                    filterCount={filterCount}
+                    onChange={handleOnFilterChange}
+                    quickFactScope={quickFactScope}
+                />
+            );
+        });
+    }, [section, terms, filterCount, handleOnFilterChange, quickFactScope]);
 
     const hasFiltersVisibleWhenCollapsed =
         section.filters.filter((filter) => filter.isVisibleWhenPaneIsCollapsed).length > 0;

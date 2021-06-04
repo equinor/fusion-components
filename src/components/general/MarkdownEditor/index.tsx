@@ -1,44 +1,54 @@
-import React from 'react';
+import {
+    useRef,
+    useCallback,
+    useEffect,
+    FC,
+    DetailedHTMLFactory,
+    DetailedHTMLProps,
+    Props,
+    PropsWithChildren,
+} from 'react';
 import {
     MarkdownEditorElement,
     MarkdownEditorElementProps,
 } from '../../../customElements/components/markdown-editor';
 
-export type MarkdownEditorProps = React.PropsWithChildren<
+export type MarkdownEditorProps = PropsWithChildren<
     MarkdownEditorElementProps & {
         onChange: (markdown: string) => void;
     }
 >;
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface ReactHTML {
-            'fusion-markdown-editor': React.DetailedHTMLFactory<
-                React.Props<MarkdownEditorElementProps>,
+            'fusion-markdown-editor': DetailedHTMLFactory<
+                Props<MarkdownEditorElementProps>,
                 MarkdownEditorElement
             >;
         }
         interface IntrinsicElements {
-            'fusion-markdown-editor': React.DetailedHTMLProps<
-                React.Props<MarkdownEditorElementProps>,
+            'fusion-markdown-editor': DetailedHTMLProps<
+                Props<MarkdownEditorElementProps>,
                 MarkdownEditorElement
             >;
         }
     }
 }
 
-export const MarkdownEditor: React.FC<MarkdownEditorProps> = (props: MarkdownEditorProps) => {
-    const editorRef = React.useRef<MarkdownEditorElement>(null);
+export const MarkdownEditor: FC<MarkdownEditorProps> = (props: MarkdownEditorProps) => {
+    const editorRef = useRef<MarkdownEditorElement>(null);
     const { onChange, children, ...attr } = props;
 
-    const onMarkdownChange = React.useCallback(
+    const onMarkdownChange = useCallback(
         (e: CustomEvent) => {
             onChange(e.detail);
         },
         [onChange]
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!editorRef.current) return;
         editorRef.current.addEventListener('change', onMarkdownChange);
         Object.assign(editorRef.current, attr);

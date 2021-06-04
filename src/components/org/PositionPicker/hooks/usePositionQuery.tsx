@@ -18,8 +18,8 @@ const usePositionQuery = (
 
     const performFetchAsync = useCallback(async (projectId: string, contractId: string) => {
         return contractId
-        ? fusionContext.http.apiClients.org.getContractPositionsAsync(projectId, contractId)
-        : fusionContext.http.apiClients.org.getPositionsAsync(projectId);
+            ? fusionContext.http.apiClients.org.getContractPositionsAsync(projectId, contractId)
+            : fusionContext.http.apiClients.org.getPositionsAsync(projectId);
     }, []);
 
     const fetchPositions = useCallback(async (projectId: string, contractId?: string) => {
@@ -42,7 +42,7 @@ const usePositionQuery = (
 
     useEffect(() => {
         // Refetch positions when setting selected position
-        if(selectedPosition && !positions.find(p => p.id === selectedPosition.id)) {
+        if (selectedPosition && !positions.find((p) => p.id === selectedPosition.id)) {
             fetchPositions(projectId, contractId);
         }
     }, [selectedPosition]);
@@ -55,13 +55,13 @@ const usePositionQuery = (
             const now = Date.now();
             setFilteredPositions(
                 positions
-                    .filter(position =>
+                    .filter((position) =>
                         queryParts.every(
-                            query =>
+                            (query) =>
                                 (position.name || '').toLowerCase().includes(query) ||
                                 (position.externalId || '').toLowerCase().includes(query) ||
                                 position.instances.some(
-                                    i =>
+                                    (i) =>
                                         now >= i.appliesFrom.getTime() &&
                                         now <= i.appliesTo.getTime() &&
                                         i.assignedPerson &&

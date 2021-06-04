@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import { useCallback, useEffect, useState, Fragment } from 'react';
+
 import styles from './styles.less';
-import { PersonDetails, usePersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
-import { useState } from 'react';
+import { PersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
 import {
     PersonPhoto,
     PersonPresenceIcon,
     AccountTypeIcon,
     SkeletonBar,
 } from '@equinor/fusion-components';
+import usePeopleDetails from '../usePeopleDetails';
 
 export type PersonDetailProps = {
     personId?: string;
@@ -23,7 +24,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
     const apiClients = useApiClients();
 
     const { error, personDetails, isFetching } = personId
-        ? usePersonDetails(personId)
+        ? usePeopleDetails(personId)
         : { error: null, personDetails: person, isFetching: false };
 
     useEffect(() => {
@@ -32,13 +33,13 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
         }
     }, [error, personDetails]);
 
-    const fetchPresenceStatus = React.useCallback(
-        async (mail: string) => {
+    const fetchPresenceStatus = useCallback(
+        async (id: string) => {
             setIsFetchingPresence(true);
             setPresenceError(null);
 
             try {
-                const response = await apiClients.people.getPresenceAsync(mail, '1.0-preview');
+                const response = await apiClients.people.getPresenceAsync(id);
                 setPresence(response.data);
             } catch (e) {
                 setPresenceError(e);
@@ -49,14 +50,14 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
         [apiClients]
     );
 
-    React.useEffect(() => {
-        if (currentPerson && currentPerson.mail) {
-            fetchPresenceStatus(currentPerson.mail);
+    useEffect(() => {
+        if (currentPerson && currentPerson.azureUniqueId) {
+            fetchPresenceStatus(currentPerson.azureUniqueId);
         }
     }, [currentPerson]);
 
     return (
-        <>
+        <Fragment>
             {currentPerson && (
                 <div className={styles.personDetails}>
                     <div className={styles.detailsContainer}>
@@ -66,7 +67,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                         <div className={styles.presenceSection}>
                             <div className={styles.iconContainer}>
                                 <PersonPresenceIcon
-                                    presence={presence?.availability || 'None'}
+                                    presenceAvailability={presence?.availability}
                                     size="xlarge"
                                 />
                             </div>
@@ -136,6 +137,6 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                     )}
                 </div>
             )}
-        </>
+        </Fragment>
     );
 };

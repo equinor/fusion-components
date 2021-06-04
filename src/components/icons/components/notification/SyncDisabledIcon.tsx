@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { IconProps, useIcon } from '@equinor/fusion-components';
 
 const SyncDisabledIcon = (props: IconProps) => {

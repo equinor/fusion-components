@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useEffect } from 'react';
+import { useContext, useMemo, useEffect } from 'react';
 
 import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
@@ -52,7 +52,7 @@ function Root<T>() {
         }
     }, [width]);
 
-    const root = allNodes.find(n => !n.parentId);
+    const root = allNodes.find((n) => !n.parentId);
     const additionalRowHeight = root ? getAdditionalRowHeight([root], cardMargin, rowMargin) : 0;
     useEffect(() => {
         if (additionalRowHeight !== additionalRootRowHeight) {

@@ -1,7 +1,7 @@
-import * as React from 'react';
 import { hookTestScope } from './hookTestScope';
 import useClickOutsideOverlayPortal from '../useClickOutsideOverlayPortal';
 import useOverlayPortal from '../useOverlayPortal';
+import { useRef } from 'react';
 
 describe('useClickOutsideOverlayPortal', () => {
     it('Should trigger on click outside overlay portal', () => {
@@ -35,8 +35,8 @@ describe('useClickOutsideOverlayPortal', () => {
         let clickMeRef;
 
         const scope = hookTestScope(() => {
-            clickMeRef = React.useRef(null);
-            const closeMeRef = React.useRef(null);
+            clickMeRef = useRef(null);
+            const closeMeRef = useRef(null);
             useOverlayPortal(true, <div ref={clickMeRef} id="click-me" />);
             useOverlayPortal(true, <div ref={closeMeRef} id="close-me" />);
 

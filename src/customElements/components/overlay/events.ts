@@ -1,4 +1,4 @@
-import { OverlayAnchor } from "../overlay/anchor";
+import { OverlayAnchor } from '../overlay/anchor';
 import { OverLayScope } from './element';
 
 export const enum OverlayEventType {
@@ -15,7 +15,7 @@ export type OverlayEventDetail = {
     selected?: OverlayAnchor;
     scope?: OverLayScope;
     active?: boolean;
-}
+};
 
 export class OverlayEvent<T extends OverlayEventType> extends CustomEvent<OverlayEventDetail> {
     constructor(type: T, init: CustomEventInit<OverlayEventDetail>) {

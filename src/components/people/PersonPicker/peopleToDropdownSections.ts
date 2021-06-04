@@ -1,5 +1,6 @@
 import { PersonDetails, PersonAccountType } from '@equinor/fusion';
 import { SearchableDropdownSection } from '@equinor/fusion-components';
+import { SectionFnProps } from '.';
 
 const isPersonAccountTypeIn = (person: PersonDetails, accountTypes: PersonAccountType[]) =>
     accountTypes.indexOf(person.accountType) !== -1;
@@ -17,13 +18,13 @@ const filterPeopleByAccountType = (
     }, []);
 };
 
-const getPrimarySection = items => ({
+const getPrimarySection = (items) => ({
     key: 'primary',
     title: 'Employees and consultants',
     items,
 });
 
-const getSecondarySection = items => ({
+const getSecondarySection = (items) => ({
     key: 'secondary',
     title: 'External',
     items,
@@ -41,7 +42,7 @@ const getEmptySection = (isQuerying: boolean) => ({
 });
 
 export function singlePersonToDropdownSection(person: PersonDetails): SearchableDropdownSection[] {
-    const items = [person].map(p => ({
+    const items = [person].map((p) => ({
         key: p.azureUniqueId,
         title: p.name,
         person: p,
@@ -55,12 +56,12 @@ export function singlePersonToDropdownSection(person: PersonDetails): Searchable
     }
 }
 
-export default function(
-    people: PersonDetails[],
-    selectedId: string,
-    searchQuery: string,
-    isQuerying: boolean
-): SearchableDropdownSection[] {
+export default function ({
+    people,
+    selectedId,
+    searchQuery,
+    isQuerying,
+}: SectionFnProps): SearchableDropdownSection[] {
     const primary = filterPeopleByAccountType(people, ['Consultant', 'Employee']);
     const secondary = filterPeopleByAccountType(people, ['External']);
 

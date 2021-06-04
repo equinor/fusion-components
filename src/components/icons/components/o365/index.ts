@@ -1,1 +1,1 @@
-export{default as DelveIcon } from "./DelveIcon";
+export { default as DelveIcon } from './DelveIcon';

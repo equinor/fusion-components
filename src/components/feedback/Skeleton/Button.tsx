@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { ButtonProps } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import styles from './styles.less';
@@ -8,7 +8,7 @@ type SkeletonButtonProps = ButtonProps & {
     width: number | string;
 };
 
-const SkeletonButton: React.FC<SkeletonButtonProps> = ({ width, ...buttonProps }) => {
+const SkeletonButton: FC<SkeletonButtonProps> = ({ width, ...buttonProps }) => {
     const displayClassNames = useComponentDisplayClassNames(styles);
     const barClassNames = classNames(styles.skeleton, displayClassNames, styles.button);
 

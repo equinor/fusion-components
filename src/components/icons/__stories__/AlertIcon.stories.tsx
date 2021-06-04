@@ -1,8 +1,7 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
 import { withKnobs, number, color, boolean } from '@storybook/addon-knobs';
-import withFusionStory from "../../../../.storybook/withFusionStory";
+import withFusionStory from '../../../../.storybook/withFusionStory';
 
 import { AddAlertIcon, WarningIcon, ErrorIcon, NotificationIcon } from '../components/alert';
 
@@ -10,7 +9,7 @@ const eventsFromNames = actions('onClick');
 
 const stories = storiesOf('Icons/Alert', module);
 stories.addDecorator(withKnobs);
-stories.addDecorator(withFusionStory("Alert"));
+stories.addDecorator(withFusionStory('Alert'));
 
 stories.add('Add', () => (
     <AddAlertIcon

@@ -9,10 +9,10 @@ import '../quick-fact';
 export const ApplicationGuideElementTag = 'fusion-application-guide';
 
 @fusionElement(ApplicationGuideElementTag)
-export default class _element extends Element { }
+export default class _element extends Element {}
 declare global {
     interface HTMLElementTagNameMap {
-        [ApplicationGuideElementTag]: _element
+        [ApplicationGuideElementTag]: _element;
     }
 }
 

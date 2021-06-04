@@ -89,6 +89,4 @@ export const style = css`
     }
 `;
 
-export default [
-    style
-];
+export default [style];

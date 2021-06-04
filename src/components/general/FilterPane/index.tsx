@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
+
 import classNames from 'classnames';
-import { ErrorBoundary } from '@equinor/fusion-components';
+import { Button, ErrorBoundary } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import CollapseExpandButton from './components/CollapseExpandButton';
 import Section from './components/Section';
@@ -37,8 +38,10 @@ export type FilterPaneProps<T> = {
     onChange: OnFilterChangeHandler<T>;
     screenPlacement?: 'right' | 'left';
     onToggleCollapse?: (isCollapsed: boolean) => void;
-    headerComponent?: React.ReactNode;
+    headerComponent?: ReactNode;
     quickFactScope?: string;
+    onResetAll: OnFilterChangeHandler<T>;
+    showResetAllButton: boolean;
 };
 
 function FilterPane<T>({
@@ -51,6 +54,8 @@ function FilterPane<T>({
     onToggleCollapse,
     headerComponent,
     quickFactScope,
+    onResetAll,
+    showResetAllButton,
 }: FilterPaneProps<T>) {
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [filterCount, setFilterCount] = useState<Count[]>([]);
@@ -93,6 +98,10 @@ function FilterPane<T>({
         }
     );
 
+    const onClick = useCallback(() => {
+        onResetAll;
+    }, [onResetAll]);
+
     const filterPaneContext = useMemo<IFilterPaneContext>(
         () => ({
             terms,
@@ -113,6 +122,13 @@ function FilterPane<T>({
                     {!isCollapsed && headerComponent}
                 </div>
                 <div className={styles.content}>
+                    {showResetAllButton && !isCollapsed && (
+                        <div className={styles.resetButton}>
+                            <Button frameless onClick={onClick}>
+                                Reset filters
+                            </Button>
+                        </div>
+                    )}
                     {sectionDefinitions.map((section) => (
                         <Section
                             key={section.key}

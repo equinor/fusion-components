@@ -1,4 +1,3 @@
-import React from 'react';
 import { PhotoSize, useTooltipRef } from '@equinor/fusion-components';
 import {
     PersonDetails,
@@ -27,24 +26,6 @@ const getIconSizes = (isCompact: boolean) => ({
     small: isCompact ? 8 : 12,
 });
 
-const resolveTooltip = (accountType: string, isExternalHire: boolean) => {
-    switch (accountType) {
-        case 'Local':
-            return 'No affiliate access account. User cannot log in to Fusion';
-        case 'Employee':
-            if (isExternalHire) {
-                return 'External hire';
-            }
-            return 'Equinor employee';
-        case 'External':
-            return 'Affiliate access';
-        case 'Consultant':
-            return 'X-External / External with Equinor account';
-        default:
-            return accountType;
-    }
-};
-
 const AccountTypeIkon = ({ size, currentPerson, hideTooltip }: AccountTypeIkonProps) => {
     const isExternalHire = !!(
         currentPerson.jobTitle && currentPerson.jobTitle.toLowerCase().startsWith('ext')
@@ -68,12 +49,9 @@ const AccountTypeIkon = ({ size, currentPerson, hideTooltip }: AccountTypeIkonPr
 
     const displayType = useComponentDisplayType();
     const iconSize = getIconSizes(displayType === ComponentDisplayType.Compact)[size];
-    const accountTypeTooltipRef = useTooltipRef(
-        hideTooltip ? '' : resolveTooltip(currentPerson.accountType, isExternalHire)
-    );
 
     return (
-        <div className={iconClassNames} ref={accountTypeTooltipRef}>
+        <div className={iconClassNames}>
             {isConsultant && <ConsultantIcon width={iconSize} height={iconSize} />}
             {isExternalHire && <ExternalHireIcon width={iconSize} height={iconSize} />}
             {isExternal && <AffiliateIcon width={iconSize} height={iconSize} />}

@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, ReactNode, useMemo, useEffect } from 'react';
+import { FC, useState, useCallback, ReactNode, useMemo, useEffect } from 'react';
 import classNames from 'classnames';
 import {
     useComponentDisplayClassNames,
@@ -51,6 +51,7 @@ export type NavigationStructure = {
     navigationChildren?: NavigationStructure[];
     aside?: ReactNode;
     isDisabled?: boolean;
+    href?: string;
 };
 
 type NavigationDrawerProps = {

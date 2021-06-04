@@ -9,7 +9,16 @@ import {
     useOverlayContainer,
     useStringMask,
 } from '@equinor/fusion-components';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+    FC,
+    KeyboardEvent,
+    FocusEvent,
+    MutableRefObject,
+} from 'react';
 
 type DatePickerProps = {
     disabled?: boolean;
@@ -20,7 +29,14 @@ type DatePickerProps = {
     onChange: (date: null | Date) => void;
 };
 
-const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, label, onChange, selectedDate  }) => {
+const DatePicker: FC<DatePickerProps> = ({
+    disabled,
+    error,
+    errorMessage,
+    label,
+    onChange,
+    selectedDate,
+}) => {
     const [inputValue, setInputValue] = useState<string>('');
     const [maskedValue, isValidMask] = useStringMask(dateMask, inputValue);
 
@@ -33,25 +49,54 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
             return formatDate(selectedDate);
         }, [selectedDate, isOpen, maskedValue]);
 
-        const handleKeyUp = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-            if(e.keyCode === 13 && isValidMask) {
-                try {
-                    const parsedDate = parseDate(maskedValue);
-                    onChange(parsedDate);
-                    setIsOpen(false);
-                } catch (e) {}
-            } else if(e.keyCode === 27) {
-                setIsOpen(false);
-            }
-        }, [isValidMask, onChange]);
-        
-        const overlayContainer = useOverlayContainer();
-        const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-            if(isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
-                setIsOpen(false);
-            }
-        }, [isOpen]);
+        const tryParseDate = useCallback(() => {
+            try {
+                const parsedDate = parseDate(maskedValue);
+                onChange(parsedDate);
+            } catch (e) {}
+        }, [maskedValue, parseDate]);
 
+        const handleKeyUp = useCallback(
+            (e: KeyboardEvent<HTMLInputElement>) => {
+                if ((e.key === 'Enter' || e.key === 'Tab') && isValidMask) {
+                    tryParseDate();
+                    setIsOpen(false);
+                } else if (e.key === 'Escape' || e.key === 'Esc') {
+                    setIsOpen(false);
+                }
+            },
+            [isValidMask, onChange, tryParseDate]
+        );
+
+        const overlayContainer = useOverlayContainer();
+        const handleBlur = useCallback(
+            (e: FocusEvent<HTMLInputElement>) => {
+                if (isValidMask) {
+                    tryParseDate();
+                }
+                if (isOpen && !overlayContainer.contains(e.relatedTarget as HTMLElement)) {
+                    setIsOpen(false);
+                }
+            },
+            [isOpen, tryParseDate, overlayContainer, isValidMask]
+        );
+
+        const handleClick = useCallback(() => !isOpen && !disabled && setIsOpen(true), [
+            isOpen,
+            disabled,
+        ]);
+
+        const handleInputChange = useCallback(
+            (value: string) => setInputValue(unmaskString(dateMask, value)),
+            [unmaskString]
+        );
+
+        const handleIconAction = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
+
+        const textInputPlaceholder = useMemo(
+            () => (selectedDate ? formatDate(selectedDate) : 'dd/mm/yyyy'),
+            [formatDate]
+        );
 
         return (
             <TextInput
@@ -61,18 +106,18 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
                 icon={<CalendarIcon />}
                 label={label}
                 onBlur={handleBlur}
-                onChange={value => setInputValue(unmaskString(dateMask, value))}
-                onClick={() => (!isOpen && !disabled) && setIsOpen(true)}
-                onIconAction={() => isOpen && setIsOpen(false)}
+                onChange={handleInputChange}
+                onClick={handleClick}
+                onIconAction={handleIconAction}
                 onKeyUp={handleKeyUp}
-                placeholder={selectedDate ? formatDate(selectedDate) : 'dd/mm/yyyy'}
+                placeholder={textInputPlaceholder}
                 value={value}
             />
         );
     });
 
     useEffect(() => {
-        if(!dropdownController.isOpen) {
+        if (!dropdownController.isOpen) {
             setInputValue('');
         }
     }, [dropdownController.isOpen]);
@@ -88,9 +133,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ disabled, error, errorMessage, 
     const today = new Date();
 
     return (
-        <div
-            ref={dropdownController.controllerRef as React.MutableRefObject<HTMLDivElement | null>}
-        >
+        <div ref={dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>}>
             <Dropdown controller={dropdownController}>
                 <Calendar
                     initialMonth={today.getMonth() as Month}

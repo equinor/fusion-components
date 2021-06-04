@@ -27,7 +27,7 @@ const useOrgChartActions = <T extends OrgStructure>({
     const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
     const generateNodes = (structure: T[]): OrgNode<T>[] => {
-        return structure.map(item => {
+        return structure.map((item) => {
             return {
                 id: item.id,
                 parentId: item.parentId,
@@ -36,7 +36,7 @@ const useOrgChartActions = <T extends OrgStructure>({
                 data: item,
                 aside: item.aside,
                 linked: item.linked,
-                numberOfAssignees: item.numberOfAssignees
+                numberOfAssignees: item.numberOfAssignees,
             };
         });
     };

@@ -1,10 +1,10 @@
-@import "~styles/mixins.less";
+@import '~styles/mixins.less';
 @import '~styles/variables.less';
 
 .container {
     grid-area: header;
     display: grid;
-    grid-template-areas: "start logo content aside";
+    grid-template-areas: 'start logo content aside';
     grid-template-columns: max-content max-content auto max-content;
     grid-template-rows: 100%;
     align-items: center;
@@ -17,70 +17,73 @@
     z-index: 2;
 
     @media (max-width: @mobile-max-width) {
-        grid-template-areas: "start logo aside"
-                             "content content aside";
+        grid-template-areas:
+            'start logo aside'
+            'content content aside';
         grid-template-columns: max-content auto max-content;
         grid-template-rows: 50% 50%;
     }
 
     &.comfortable {
-        padding: 0 .grid-unit(2px)[];
-        height: .grid-unit(10px)[];
+        padding: 0 .grid-unit(2px) [];
+        height: .grid-unit(10px) [];
         width: calc(100% - (var(--grid-unit) * 4px));
 
-        .startContainer, 
+        .startContainer,
         .asideContainer {
             // @TODO this should be solved better, ex grid or padding with offset container
             > * {
-                margin-right: .grid-unit(1px)[];
+                margin-right: .grid-unit(1px) [];
             }
 
-            :last-child, 
+            :last-child,
             :only-child {
                 margin: 0;
             }
         }
 
         .startContainer {
-            margin-right: .grid-unit(1px)[];
+            margin-right: .grid-unit(1px) [];
         }
 
         .fusionTitleContainer {
-            margin-right: .grid-unit(6px)[];
+            margin-right: .grid-unit(6px) [];
         }
 
         .appNameDivider {
-            height: .grid-unit(3px)[];
-            margin: 0 .grid-unit(1px)[];
+            height: .grid-unit(3px) [];
+            margin: 0 .grid-unit(1px) [];
         }
     }
 
     &.compact {
-        padding: 0 .grid-unit(2px)[];
-        height: .grid-unit(6px)[];
+        padding: 0 .grid-unit(2px) [];
+        height: .grid-unit(6px) [];
         width: calc(100% - (var(--grid-unit) * 4px));
 
-        .startContainer, .asideContainer {
+        .startContainer,
+        .asideContainer {
             > button {
-                margin-right: .grid-unit(1px)[];
+                margin-right: .grid-unit(1px) [];
             }
 
-            :last-child, :only-child {
+            :last-child,
+            :only-child {
                 margin: 0;
             }
         }
 
         .startContainer {
-            margin-right: .grid-unit(1px)[];
+            margin-right: .grid-unit(1px) [];
         }
 
         .fusionTitleContainer {
-            margin-right: .grid-unit(4px)[];
+            margin-right: .grid-unit(4px) [];
         }
 
         .appNameDivider {
-            height: .grid-unit(2px)[];
-            margin: 0 .grid-unit(1px)[];
+            height: .grid-unit(2px) [];
+            margin: 0 .grid-unit(1px) [];
         }
     }
 
@@ -114,13 +117,12 @@
     color: var(--color-primary-accent) !important;
 }
 
-
 .startContainer {
     grid-area: start;
 }
 
 .fusionLogo {
-    margin-right: .grid-unit(1px)[];
+    margin-right: .grid-unit(1px) [];
 }
 
 .fusionTitleContainer {
@@ -131,6 +133,7 @@
 
 .contentContainer {
     grid-area: content;
+    display: flex;
 }
 
 .asideContainer {
@@ -139,12 +142,23 @@
     height: 100%;
     box-sizing: border-box;
     align-items: center;
-    margin-left: .grid-unit(1px)[];
-    margin-right: .grid-unit(1px)[];
+    margin-left: .grid-unit(1px) [];
+    margin-right: .grid-unit(1px) [];
+
+    .asideAppContainer {
+        display: flex;
+        flex-direction: row-reverse;
+
+        &:first-child {
+            border-right: 1px solid var(--color-black-alt3);
+            margin-right: calc(var(--grid-unit) * 2.5px);
+            padding-right: calc(var(--grid-unit) * 1px);
+        }
+    }
 }
 
 /* Override the icon button colors */
-.startContainer, 
+.startContainer,
 .asideContainer {
     button > span {
         color: var(--color-black-alt2) !important;

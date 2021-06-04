@@ -1,4 +1,5 @@
-import * as React from 'react';
+import { useEffect, FC } from 'react';
+
 import Button from '../../Button';
 import styles from './styles.less';
 
@@ -9,7 +10,7 @@ type ItemProps = {
     content?: string;
 };
 
-export const Item: React.FC<ItemProps> = ({ changeItem, prevItem, nextItem, content }) => {
+export const Item: FC<ItemProps> = ({ changeItem, prevItem, nextItem, content }) => {
     const prevButton = prevItem ? (
         <Button onClick={() => prevItem && changeItem(prevItem)}>Previous Item</Button>
     ) : null;
@@ -20,7 +21,7 @@ export const Item: React.FC<ItemProps> = ({ changeItem, prevItem, nextItem, cont
     const timeoutPromise = (interval) => {
         return new Promise((resolve, reject) => {
             setTimeout(function () {
-                console.log("RESOLVED")
+                console.log('RESOLVED');
                 resolve('done');
             }, interval);
         });
@@ -28,7 +29,7 @@ export const Item: React.FC<ItemProps> = ({ changeItem, prevItem, nextItem, cont
 
     const timeOut = async () => await timeoutPromise(5000);
 
-    React.useEffect(() => {
+    useEffect(() => {
         timeOut();
     }, []);
     return (

@@ -2,7 +2,7 @@
     box-sizing: border-box;
     height: 100%;
     border-left: 2px solid var(--color-black-alt4);
-    transition: width .1s;
+    transition: width 0.1s;
     overflow: auto;
     color: var(--color-primary-accent);
     width: var(--filter-pane-width);
@@ -17,14 +17,14 @@
         }
     }
 
-    .header{
+    .header {
         display: flex;
         align-items: center;
         overflow: hidden;
         flex-shrink: 0;
         padding: 0;
         position: sticky;
-        top:0;
+        top: 0;
         background-color: var(--color-white);
         border-bottom: 1px solid var(--color-black-alt4);
         z-index: 10;
@@ -113,7 +113,6 @@
     }
 
     &.compact {
-
         width: calc(var(--grid-unit) * 37px);
 
         &.isCollapsed {
@@ -129,6 +128,10 @@
 
         .content {
             padding: calc(var(--grid-unit) * 1px);
+
+            .resetButton {
+                text-align: right;
+            }
 
             section {
                 padding-bottom: calc(var(--grid-unit) * 1px);
@@ -188,7 +191,6 @@
     }
 
     &.comfortable {
-
         width: calc(var(--grid-unit) * 39px);
 
         &.isCollapsed {
@@ -199,6 +201,10 @@
 
         .content {
             padding: calc(var(--grid-unit) * 2px);
+
+            .resetButton {
+                text-align: right;
+            }
 
             section {
                 padding-bottom: calc(var(--grid-unit) * 2px);
@@ -258,10 +264,10 @@
     }
 
     &.isCollapsed {
-
         width: auto;
 
-        &.compact, &.comfortable {
+        &.compact,
+        &.comfortable {
             .content {
                 section {
                     .filter {

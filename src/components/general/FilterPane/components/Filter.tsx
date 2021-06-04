@@ -1,6 +1,12 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, FC } from 'react';
+
 import classNames from 'classnames';
-import { Button, useTooltipRef, DropdownArrow, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
+import {
+    Button,
+    useTooltipRef,
+    DropdownArrow,
+    ApplicationGuidanceAnchor,
+} from '@equinor/fusion-components';
 import SearchFilterComponent from './SearchFilterComponent';
 import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
@@ -10,7 +16,7 @@ import { FilterTerm, Filter as FilterConfig } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
 
-const resolveFilterComponent = (type: FilterTypes): React.FC<any> | null => {
+const resolveFilterComponent = (type: FilterTypes): FC<any> | null => {
     switch (type) {
         case FilterTypes.Search:
             return SearchFilterComponent;
@@ -42,9 +48,10 @@ function getTermPreview<T>(filter: FilterConfig<T>, term: FilterTerm | null) {
                 .map((option) => option.label)
                 .join(', ');
 
-        case FilterTypes.Radio:
+        case FilterTypes.Radio: {
             const option = filter.options.find((o) => o.key === term.value);
             return option ? option.label : null;
+        }
     }
 
     return null;
@@ -145,7 +152,7 @@ function Filter<T>({
         onChange: handleOnChange,
         filterCount: filterCount.find((fc) => fc.key === filter.key),
         filter,
-        quickFactScope
+        quickFactScope,
     });
 
     if (!renderedFilterComponent) {

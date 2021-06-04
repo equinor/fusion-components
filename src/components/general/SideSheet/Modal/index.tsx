@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useMemo, useState, useEffect, useRef } from 'react';
+import { ReactNode, useCallback, useMemo, useState, useEffect } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
@@ -19,7 +19,7 @@ import BannerPresenter from './BannerPresenter';
 import SnackbarPresenter from './SnackbarPresenter';
 import Overlay from '../../ApplicationGuidance/components/Overlay';
 
-type SideSheetSize = 'fullscreen' | 'xlarge' | 'large' | 'medium' | 'small';
+type SideSheetSize = 'fullscreen' | 'xxlarge' | 'xlarge' | 'large' | 'medium' | 'small';
 
 type ModalSideSheetProps = ResizablePaneOptions & {
     children: ReactNode;
@@ -118,6 +118,7 @@ export default ({
         {
             [styles.show]: isShowing,
             [styles.fullscreen]: size === 'fullscreen',
+            [styles.xxlarge]: size === 'xxlarge',
             [styles.xlarge]: size === 'xlarge',
             [styles.large]: size === 'large',
             [styles.medium]: size === 'medium',

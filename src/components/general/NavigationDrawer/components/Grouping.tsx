@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useCallback, useEffect, useState } from 'react';
+import { useRef, FC, useMemo, useCallback, useEffect, useState } from 'react';
 import styles from './styles.less';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
@@ -19,10 +19,11 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         isOpen,
         aside,
         isDisabled,
+        href,
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
-    const textRef = React.useRef<HTMLElement | null>(null);
+    const textRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         if (textRef.current) {
@@ -52,13 +53,17 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
     const navigationContent = useMemo(
         () => (
             <div className={styles.groupingContainer} ref={shouldHaveTooltip ? tooltipRef : null}>
-                <div className={styles.linkContainer} onClick={change}>
+                <a
+                    className={styles.linkContainer}
+                    onClick={change}
+                    href={!isDisabled && !isCollapsed ? href : undefined}
+                >
                     <div className={iconClasses}>{icon}</div>
                     <span className={styles.linkText} ref={textRef}>
                         {title}
                     </span>
                     {aside && <div className={styles.asideContainer}>{aside}</div>}
-                </div>
+                </a>
                 <div
                     className={styles.toggleOpenContainer}
                     onClick={() => onChange && onChange(id, true, false)}

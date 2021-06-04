@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, FC } from 'react';
 
 import { NotificationRequest, NotificationResponse, useFusionContext } from '@equinor/fusion';
 import {
@@ -11,7 +11,7 @@ import {
 
 import styles from './styles.less';
 
-const NotificationDialog: React.FC = () => {
+const NotificationDialog: FC = () => {
     const { notificationCenter } = useFusionContext();
     const [currentNotification, setCurrentNotification] = useState<NotificationRequest | null>(
         null
@@ -75,9 +75,12 @@ const NotificationDialog: React.FC = () => {
                     <div>{currentNotification.body}</div>
                 </DialogContent>
                 <DialogActions>
-                    <Button frameless onClick={onCancel}>
-                        {currentNotification.cancelLabel || 'Cancel'}
-                    </Button>
+                    {!currentNotification.hideCancelAction && (
+                        <Button frameless onClick={onCancel}>
+                            {currentNotification.cancelLabel || 'Cancel'}
+                        </Button>
+                    )}
+
                     <Button frameless onClick={onConfirm}>
                         {currentNotification.confirmLabel || 'Ok'}
                     </Button>

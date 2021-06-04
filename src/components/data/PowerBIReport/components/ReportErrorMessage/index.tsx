@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as styles from './styles.less';
+import { useState, useEffect, useCallback, useMemo, FC } from 'react';
+import styles from './styles.less';
 import { Report } from '@equinor/fusion/lib/http/apiClients/models/report/';
 import {
     MarkdownViewer,
@@ -12,28 +12,64 @@ import {
 import { useCurrentUser, useApiClients } from '@equinor/fusion';
 import classNames from 'classnames';
 
+export type ContextErrorType = 'NotAuthorizedReport' | 'NotAuthorized' | 'MissingContextRelation';
+
 type ReportErrorMessageProps = {
     report: Report;
+    contextErrorType: ContextErrorType;
+    message?: string;
 };
 
-const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report }) => {
-    const [isFetching, setIsFetching] = React.useState<boolean>(true);
-    const [requirements, setRequirements] = React.useState<string | null>(null);
-    const [description, setDescription] = React.useState<string | null>(null);
-    const [noAccessMessage, setNoAccessMessage] = React.useState<string | null>(null);
-    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = React.useState(
-        false
-    );
+const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextErrorType, message }) => {
+    const [isFetching, setIsFetching] = useState<boolean>(true);
+    const [requirements, setRequirements] = useState<string | null>(null);
+    const [description, setDescription] = useState<string | null>(null);
+    const [noAccessMessage, setNoAccessMessage] = useState<string | null>(null);
+    const [isAccessControlDescriptionsOpen, setAccessControlDescriptionOpen] = useState(false);
 
     const reportApiClient = useApiClients().report;
     const user = useCurrentUser();
-    const timeStamp = React.useMemo(() => new Date().toString(), []);
+    const timeStamp = useMemo(() => new Date().toString(), []);
+    const accessControlError = useMemo(() => contextErrorType !== 'MissingContextRelation', [
+        contextErrorType,
+    ]);
 
-    React.useEffect(() => {
-        getReportInformation();
-    }, [report]);
+    const errorHeaderTitle = useMemo(() => {
+        switch (contextErrorType) {
+            case 'NotAuthorized':
+                return 'It looks like you do not have access to the selected context';
+            case 'NotAuthorizedReport':
+                return 'It looks like you do not have access to this report';
+            case 'MissingContextRelation':
+                return 'No data available for selected context';
+        }
+    }, [contextErrorType]);
 
-    const getReportInformation = React.useCallback(async () => {
+    const errorHeader = useMemo(
+        () => (accessControlError ? 'Restricted Access' : 'No Context Data'),
+        [contextErrorType]
+    );
+
+    useEffect(() => {
+        accessControlError ? getReportInformation() : getBaseInformation();
+    }, [report, accessControlError]);
+
+    const getBaseInformation = useCallback(async () => {
+        setIsFetching(true);
+
+        try {
+            const fetchedDescriptions = await reportApiClient.getDescription(report.id);
+            setDescription(fetchedDescriptions?.data || null);
+        } catch {
+            setDescription(null);
+        }
+
+        setRequirements(null);
+        setNoAccessMessage(message || null);
+        setIsFetching(false);
+    }, [report.id, message]);
+
+    const getReportInformation = useCallback(async () => {
         setIsFetching(true);
 
         try {
@@ -66,14 +102,14 @@ const ReportErrorMessage: React.FC<ReportErrorMessageProps> = ({ report }) => {
     return (
         <div className={styles.reportErroMessage}>
             <div className={styles.container}>
-                <h2 className={styles.header}>Restricted Access</h2>
+                <h2 className={styles.header}>{errorHeader}</h2>
                 <div
                     className={classNames(
                         useElevationClassName(3),
                         styles.restrictedAccessContainer
                     )}
                 >
-                    <h2>It looks like you do not have access to this report</h2>
+                    <h2>{errorHeaderTitle}</h2>
                     {noAccessMessage && <MarkdownViewer markdown={noAccessMessage} />}
                     <div className={styles.reportInfoContainer}>
                         {description && (

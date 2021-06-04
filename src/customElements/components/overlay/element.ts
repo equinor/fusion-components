@@ -1,4 +1,4 @@
-import { LitElement, html, property, PropertyValues, directives } from "../base";
+import { LitElement, html, property, PropertyValues, directives } from '../base';
 
 /** required elements */
 import './placeholder';
@@ -10,7 +10,7 @@ import { AnchorDOMRect, AnchorRect, OverlayAnchor, OverlayAnchorConnectEvent } f
 import { OverlayEventType, OverlayEventDetail, OverlayEvent } from './events';
 import overlay from './overlay.svg';
 
-export type OverLayScope = Record<string, string[]>
+export type OverLayScope = Record<string, string[]>;
 
 export interface OverlayElementProps {
     scope?: OverLayScope;
@@ -34,7 +34,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
     @property({ reflect: true })
     selected?: string;
 
-    // === internal props === // 
+    // === internal props === //
     @property({ type: Array, attribute: false })
     anchors: Record<string, OverlayAnchor> = {};
 
@@ -42,12 +42,14 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         const { scope } = this;
         const anchors = Object.values(this.anchors);
         const hasScope = !!scope && !!Object.keys(scope).length;
-        return hasScope ? anchors.filter(
-            (anchor) => {
-                const scopeAnchors = scope[anchor.scope];
-                return scopeAnchors && (!scopeAnchors.length || scopeAnchors.includes(anchor.anchor))
-            }
-        ) : anchors;
+        return hasScope
+            ? anchors.filter((anchor) => {
+                  const scopeAnchors = scope[anchor.scope];
+                  return (
+                      scopeAnchors && (!scopeAnchors.length || scopeAnchors.includes(anchor.anchor))
+                  );
+              })
+            : anchors;
     }
 
     get selectedAnchor(): OverlayAnchor {
@@ -62,45 +64,54 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         super.connectedCallback();
         this._dispatchEvent(OverlayEventType.connected);
         this.addEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
-        window.addEventListener("resize", this._handleResize, false);
+        window.addEventListener('resize', this._updateAnchorBounds, false);
+        window.addEventListener('scroll', this._updateAnchorBounds, false);
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
         this._dispatchEvent(OverlayEventType.disconnected);
         this.removeEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
-        window.removeEventListener("resize", this._handleResize);
+        window.removeEventListener('resize', this._updateAnchorBounds);
+        window.removeEventListener('scroll', this._updateAnchorBounds);
     }
 
     render() {
         const { active, fixed } = this;
         const clientBounds = this.getBoundingClientRect();
-        const relativeRect = (r: AnchorRect) => new AnchorDOMRect(
-            fixed ? r.x : r.x - clientBounds.x,
-            fixed ? r.y : r.y - clientBounds.y,
-            r.width,
-            r.height
-        );
-        const rects = this.scopedAnchors.map(el => ({ id: el.anchor, rect: relativeRect(el.bounds()) }));
+        const relativeRect = (r: AnchorRect) =>
+            new AnchorDOMRect(
+                fixed ? r.x : r.x - clientBounds.x,
+                fixed ? r.y : r.y - clientBounds.y,
+                r.width,
+                r.height
+            );
+        const rects = this.scopedAnchors.map((el) => ({
+            id: el.anchor,
+            rect: relativeRect(el.bounds()),
+        }));
         console.log(rects);
-        const placeholders = directives.repeat(rects, r => r.id, r => this.renderPlaceholder(r));
+        const placeholders = directives.repeat(
+            rects,
+            (r) => r.id,
+            (r) => this.renderPlaceholder(r)
+        );
         const overlaySize = {
             height: `${clientBounds.height}px`,
             width: `${clientBounds.width}px`,
-        }
+        };
         const classes = directives.classMap({ active, fixed });
         const styles = directives.styleMap(overlaySize);
 
         return html`
             <slot></slot>
             <div id="overlay" class="${classes}" style="${styles}">
-                ${overlay(rects, overlaySize)}
-                ${placeholders}
+                ${overlay(rects, overlaySize)} ${placeholders}
             </div>
         `;
     }
 
-    renderPlaceholder(anchor: { id: string, rect: AnchorRect }) {
+    renderPlaceholder(anchor: { id: string; rect: AnchorRect }) {
         return html`
             <fusion-overlay-placeholder
                 id="${anchor.id}"
@@ -116,9 +127,8 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         super.update(props);
 
         if (props.has('active')) {
-            this._dispatchEvent(this.active
-                ? OverlayEventType.activated
-                : OverlayEventType.deactivated
+            this._dispatchEvent(
+                this.active ? OverlayEventType.activated : OverlayEventType.deactivated
             );
             // request update of bounds after display, anchors may jump
             setTimeout(() => this.requestUpdate('scopedAnchors'), 1000);
@@ -136,22 +146,23 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
 
     protected _dispatchEvent(type: OverlayEventType, init?: CustomEventInit<OverlayEventDetail>) {
         const { scope, active, selectedAnchor: selected } = this;
-        const detail = { ...init?.detail, scope, active, selected }
+        const detail = { ...init?.detail, scope, active, selected };
         const event = new OverlayEvent(type, { ...init, detail, composed: true, bubbles: true });
         this.dispatchEvent(event);
         return event;
     }
 
-    protected _handleResize = () => {
+    protected _updateAnchorBounds = () => {
         this.active && this.requestUpdate('scopedAnchors');
-    }
+    };
 
     protected _handleAnchorConnect({ detail }: OverlayAnchorConnectEvent) {
         const { disconnectedCallback, ...anchor } = detail;
-        !this.anchors[anchor.anchor] && disconnectedCallback(() => {
-            delete this.anchors[anchor.anchor];
-            this.requestUpdate('anchors');
-        });
+        !this.anchors[anchor.anchor] &&
+            disconnectedCallback(() => {
+                delete this.anchors[anchor.anchor];
+                this.requestUpdate('anchors');
+            });
         this.anchors = { ...this.anchors, [anchor.anchor]: anchor };
     }
 

@@ -1,10 +1,11 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { IBasicFilter } from '../models/ReportLevelFilters';
 import PowerBIReport from '../index';
 import Button from '../../../general/Button';
+import withFusionStory from '../../../../../.storybook/withFusionStory';
+import { useState, useMemo, FC } from 'react';
 
-const ReportStandard: React.FC = () => {
+const ReportStandard: FC = () => {
     return (
         <div style={{ width: '100%', height: '100vh' }}>
             <PowerBIReport reportId={'2e90a309-625e-4396-9a5d-45e99f5b3493'} />
@@ -12,8 +13,8 @@ const ReportStandard: React.FC = () => {
     );
 };
 
-const ReportWithFilter: React.FC = () => {
-    const [filterStrings, setFilterStrings] = React.useState<string[]>(null);
+const ReportWithFilter: FC = () => {
+    const [filterStrings, setFilterStrings] = useState<string[]>(null);
 
     const createFilter = (filters: string[]): IBasicFilter => {
         return {
@@ -28,7 +29,7 @@ const ReportWithFilter: React.FC = () => {
         };
     };
 
-    const filter = React.useMemo(() => {
+    const filter = useMemo(() => {
         return filterStrings ? createFilter(filterStrings) : null;
     }, [filterStrings]);
 
@@ -84,5 +85,6 @@ const ReportWithFilter: React.FC = () => {
 };
 
 storiesOf('Data/PowerBI Report', module)
+    .addDecorator(withFusionStory('PowerBI Report'))
     .add('Report Standard', () => <ReportStandard />)
     .add('Report with filter', () => <ReportWithFilter />);

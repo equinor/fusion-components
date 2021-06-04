@@ -4,10 +4,10 @@ import Element from './element';
 export const OverlayElementTag = 'fusion-overlay';
 
 @fusionElement(OverlayElementTag)
-export default class _element extends Element { }
+export default class _element extends Element {}
 declare global {
     interface HTMLElementTagNameMap {
-        [OverlayElementTag]: _element
+        [OverlayElementTag]: _element;
     }
 }
 
