@@ -101,7 +101,7 @@ function Filter<T>({
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
     useEffect(() => {
-        defaultTerm && setTerm(defaultTerm);
+        setTerm(defaultTerm || null);
     }, [defaultTerm]);
 
     const handleOnChange = useCallback(
