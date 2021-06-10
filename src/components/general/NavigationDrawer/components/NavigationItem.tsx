@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useAnchor, UseAnchorProps } from '../../ApplicationGuidance';
 import styles from './styles.less';
 
 type NavigationItemProps = {
@@ -8,6 +9,7 @@ type NavigationItemProps = {
     type: 'child' | 'section' | 'grouping';
     onClick?: () => void;
     isDisabled?: boolean;
+    info?: UseAnchorProps;
 };
 
 const NavigationItem = ({
@@ -17,6 +19,7 @@ const NavigationItem = ({
     type,
     onClick,
     isDisabled,
+    info,
 }: NavigationItemProps) => {
     const containerClassNames = classNames(styles.container, {
         [styles.isActive]: isActive,
@@ -27,11 +30,14 @@ const NavigationItem = ({
         [styles.isDisabled]: isDisabled,
     });
 
+    const anchorRef = useAnchor<HTMLDivElement>(info);
+
     return (
-        <div className={containerClassNames} onClick={onClick}>
+        <div className={containerClassNames} onClick={onClick} ref={anchorRef}>
             {children}
             <div className={styles.visualOnClickContainer} />
         </div>
     );
 };
+
 export default NavigationItem;
