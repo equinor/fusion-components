@@ -86,10 +86,16 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
                 r.width,
                 r.height
             );
-        const rects = this.scopedAnchors.map((el) => ({
-            id: el.anchor,
-            rect: relativeRect(el.bounds()),
-        }));
+        const rects = this.scopedAnchors
+            .map((el) => {
+                const bounds = el.bounds();
+                if (!bounds) return null;
+                return {
+                    id: el.anchor,
+                    rect: relativeRect(bounds),
+                };
+            })
+            .filter((x) => !!x);
         const placeholders = directives.repeat(
             rects,
             (r) => r.id,

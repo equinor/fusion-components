@@ -18,6 +18,7 @@ import {
     toggleActiveById,
     toggleOpenByChildId,
 } from './utils';
+import { UseAnchorProps } from '../ApplicationGuidance';
 export { NavigationChild, NavigationSection, NavigationGrouping };
 
 const NAVIGATION_DRAWER_COLLAPSED_KEY = 'NAVIGATION_DRAWER_COLLAPSED_KEY';
@@ -52,6 +53,7 @@ export type NavigationStructure = {
     aside?: ReactNode;
     isDisabled?: boolean;
     href?: string;
+    info?: UseAnchorProps;
 };
 
 type NavigationDrawerProps = {

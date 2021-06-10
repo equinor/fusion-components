@@ -20,6 +20,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         aside,
         isDisabled,
         href,
+        info,
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
@@ -103,6 +104,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                 type="grouping"
                 isCollapsed={isCollapsed}
                 isDisabled={isDisabled}
+                info={info}
             >
                 {navigationContent}
             </NavigationItem>
