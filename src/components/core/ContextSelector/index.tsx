@@ -104,11 +104,11 @@ const ContextSelector: FC = () => {
 
             const onChangeQueryText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
                 setQueryText(e.target.value);
+                setIsOpen(true);
             }, []);
 
             const onClickDropDown = useCallback(() => {
                 if (!isOpen) {
-                    setQueryText('');
                     !isOpen && setIsOpen(true);
                 }
             }, [isOpen]);
@@ -124,11 +124,12 @@ const ContextSelector: FC = () => {
                     <SearchIcon color="#DADADA" />
                     <input
                         type="text"
-                        value={selectedValue}
+                        value={queryText}
+                        onFocus={() => setIsOpen(true)}
                         onChange={onChangeQueryText}
                         onClick={onClickDropDown}
                         onKeyUp={onKeyUpCloseDropDown}
-                        placeholder={selectedValue !== '' ? selectedValue : placeholder}
+                        placeholder={isOpen ? placeholder : selectedValue || placeholder}
                         className={styles.searchInput}
                         ref={inputRef}
                     />
