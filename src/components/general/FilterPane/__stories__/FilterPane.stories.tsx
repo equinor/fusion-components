@@ -48,10 +48,13 @@ const Table: FC<TableProps> = ({ data }) => {
                 column: sortedByColumn,
                 direction,
             }}
-            quickFactScope="storybook"
         />
     );
 };
+
+const sectionQuickFact = { id: 'filterSection', scope: 'storybook|filter_pane' }; 
+const textSearchQuickFact = { id: 'textSearch', scope: 'storybook|filter_pane' }; 
+const filterQuickFact = { id: 'filter', scope: 'storybook|filter_pane' }; 
 
 const sections: FilterSection<DataItem>[] = [
     {
@@ -59,6 +62,7 @@ const sections: FilterSection<DataItem>[] = [
         title: '',
         filters: [
             {
+                info: textSearchQuickFact, 
                 key: 'search',
                 title: '',
                 type: FilterTypes.Search,
@@ -70,12 +74,14 @@ const sections: FilterSection<DataItem>[] = [
         key: 'custom-colors',
         title: 'Custom colors',
         isCollapsible: true,
+        info: sectionQuickFact, 
         filters: [
             {
                 key: 'custom-colors',
                 title: '',
                 type: FilterTypes.Radio,
                 isVisibleWhenPaneIsCollapsed: true,
+                info: filterQuickFact, 
                 getValue: (item) => '',
                 options: [
                     {

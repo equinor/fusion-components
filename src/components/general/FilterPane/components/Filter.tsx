@@ -87,16 +87,9 @@ type FilterProps<T> = {
     term?: FilterTerm;
     filterCount: Count[];
     onChange: (filter: FilterConfig<T>, term: FilterTerm | null) => void;
-    quickFactScope?: string;
 };
 
-function Filter<T>({
-    filter,
-    term: defaultTerm,
-    filterCount,
-    onChange,
-    quickFactScope,
-}: FilterProps<T>) {
+function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterProps<T>) {
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
@@ -152,7 +145,6 @@ function Filter<T>({
         onChange: handleOnChange,
         filterCount: filterCount.find((fc) => fc.key === filter.key),
         filter,
-        quickFactScope,
     });
 
     if (!renderedFilterComponent) {
@@ -163,19 +155,23 @@ function Filter<T>({
         <div className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse}>
-                    <ApplicationGuidanceAnchor anchor={filter.key} scope={quickFactScope} snug>
+                    <ApplicationGuidanceAnchor
+                        anchor={filter?.info?.id}
+                        scope={filter?.info?.scope}
+                        snug
+                    >
                         <h4>
                             <FilterTitle filter={filter} term={term} />
                         </h4>
+                        <Button
+                            frameless
+                            disabled={!term || !term.value || !term.value.length}
+                            onClick={handleOnReset}
+                        >
+                            Reset
+                        </Button>
+                        {filter.isCollapsible && <DropdownArrow isOpen={!isCollapsed} />}
                     </ApplicationGuidanceAnchor>
-                    <Button
-                        frameless
-                        disabled={!term || !term.value || !term.value.length}
-                        onClick={handleOnReset}
-                    >
-                        Reset
-                    </Button>
-                    {filter.isCollapsible && <DropdownArrow isOpen={!isCollapsed} />}
                 </header>
             )}
             {(!isCollapsed || filterPaneContext.paneIsCollapsed) && (

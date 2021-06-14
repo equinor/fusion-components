@@ -1,5 +1,4 @@
 import { useState, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { DropdownArrow } from '@equinor/fusion-components';
 import Filter from './Filter';
@@ -7,7 +6,7 @@ import styles from '../styles.less';
 import { FilterTerm, FilterSection, Filter as FilterType } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
-import { ApplicationGuidanceAnchor } from '../../ApplicationGuidance';
+import { ApplicationGuidanceAnchor, useAnchor } from '../../ApplicationGuidance';
 import { FilterTypes } from '..';
 
 type SectionProps<T> = {
@@ -15,10 +14,10 @@ type SectionProps<T> = {
     filterCount: Count[];
     section: FilterSection<T>;
     onChange: (section: FilterSection<T>, filter: FilterType<T>, value: string | string[]) => void;
-    quickFactScope?: string;
 };
 
-function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: SectionProps<T>) {
+function Section<T>({ terms, filterCount, section, onChange }: SectionProps<T>) {
+    const anchorRef = useAnchor<HTMLHeadingElement>(section?.info);
     const [isCollapsed, setIsCollapsed] = useState(section.isCollapsed);
 
     const handleOnFilterChange = useCallback(
@@ -53,11 +52,10 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
                     term={term}
                     filterCount={filterCount}
                     onChange={handleOnFilterChange}
-                    quickFactScope={quickFactScope}
                 />
             );
         });
-    }, [section, terms, filterCount, handleOnFilterChange, quickFactScope]);
+    }, [section, terms, filterCount, handleOnFilterChange]);
 
     const hasFiltersVisibleWhenCollapsed =
         section.filters.filter((filter) => filter.isVisibleWhenPaneIsCollapsed).length > 0;
@@ -75,15 +73,19 @@ function Section<T>({ terms, filterCount, section, onChange, quickFactScope }: S
     return (
         <section className={sectionClassNames}>
             {!filterPaneContext.paneIsCollapsed && (
-                <header onClick={toggleCollapse}>
-                    <ApplicationGuidanceAnchor anchor={section.key} scope={quickFactScope} snug>
-                        <h3>{section.title}</h3>
+                <header onClick={toggleCollapse} ref={anchorRef}>
+                    <ApplicationGuidanceAnchor
+                        scope={section.info?.scope}
+                        anchor={section.info?.id}
+                        snug
+                    >
+                        <h3> {section.title} </h3>
+                        {section.isCollapsible && (
+                            <>
+                                <DropdownArrow isOpen={!isCollapsed} />
+                            </>
+                        )}
                     </ApplicationGuidanceAnchor>
-                    {section.isCollapsible && (
-                        <>
-                            <DropdownArrow isOpen={!isCollapsed} />
-                        </>
-                    )}
                 </header>
             )}
             {(!isCollapsed || filterPaneContext.paneIsCollapsed) && (

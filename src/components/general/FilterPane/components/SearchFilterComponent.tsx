@@ -4,18 +4,12 @@ import { FilterTerm, Filter } from '../applyFilters';
 type SearchFilterProps<T> = {
     term: FilterTerm;
     onChange: (value: string) => void;
-    quickFactScope?: string;
     filter: Filter<T>;
 };
 
-function SearchFilterComponent<T>({
-    filter,
-    term,
-    onChange,
-    quickFactScope,
-}: SearchFilterProps<T>) {
+function SearchFilterComponent<T>({ filter, term, onChange }: SearchFilterProps<T>) {
     return (
-        <ApplicationGuidanceAnchor anchor={filter.key} scope={quickFactScope}>
+        <ApplicationGuidanceAnchor anchor={filter?.info?.id} scope={filter?.info?.scope}>
             <TextInput
                 icon={<SearchIcon />}
                 value={term ? (term.value as string) : ''}
