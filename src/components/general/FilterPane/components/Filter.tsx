@@ -1,12 +1,7 @@
 import { useState, useCallback, useMemo, FC } from 'react';
 
 import classNames from 'classnames';
-import {
-    Button,
-    useTooltipRef,
-    DropdownArrow,
-    ApplicationGuidanceAnchor,
-} from '@equinor/fusion-components';
+import { Button, useTooltipRef, DropdownArrow } from '@equinor/fusion-components';
 import SearchFilterComponent from './SearchFilterComponent';
 import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
@@ -15,6 +10,7 @@ import styles from '../styles.less';
 import { FilterTerm, Filter as FilterConfig } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
+import { useAnchor } from '../../ApplicationGuidance';
 
 const resolveFilterComponent = (type: FilterTypes): FC<any> | null => {
     switch (type) {
@@ -93,6 +89,8 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterP
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
+    const anchorRef = useAnchor<HTMLHeadingElement>(filter.info);
+
     const handleOnChange = useCallback(
         (newValue) => {
             if (!newValue) {
@@ -154,24 +152,18 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterP
     return (
         <div className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
-                <header onClick={toggleCollapse}>
-                    <ApplicationGuidanceAnchor
-                        anchor={filter?.info?.id}
-                        scope={filter?.info?.scope}
-                        snug
+                <header onClick={toggleCollapse} ref={anchorRef}>
+                    <h4>
+                        <FilterTitle filter={filter} term={term} />
+                    </h4>
+                    <Button
+                        frameless
+                        disabled={!term || !term.value || !term.value.length}
+                        onClick={handleOnReset}
                     >
-                        <h4>
-                            <FilterTitle filter={filter} term={term} />
-                        </h4>
-                        <Button
-                            frameless
-                            disabled={!term || !term.value || !term.value.length}
-                            onClick={handleOnReset}
-                        >
-                            Reset
-                        </Button>
-                        {filter.isCollapsible && <DropdownArrow isOpen={!isCollapsed} />}
-                    </ApplicationGuidanceAnchor>
+                        Reset
+                    </Button>
+                    {filter.isCollapsible && <DropdownArrow isOpen={!isCollapsed} />}
                 </header>
             )}
             {(!isCollapsed || filterPaneContext.paneIsCollapsed) && (

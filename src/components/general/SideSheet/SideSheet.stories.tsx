@@ -179,16 +179,33 @@ const ModalSideSheetStory = () => {
         onSelected: () => setIsOpen(true),
     });
 
+    const testButton = useAnchor<HTMLButtonElement>({
+        id: 'test',
+        scope: 'storybook|side_sheet',
+        padding: 0,
+        onSelected: () => setIsOpen(true),
+    });
+
     return (
         <div>
-            <Button
-                ref={actionBtn}
-                onClick={() => {
-                    setIsOpen(true);
-                }}
-            >
-                Open Side Sheet
-            </Button>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Button
+                    ref={actionBtn}
+                    onClick={() => {
+                        setIsOpen(true);
+                    }}
+                    >
+                    Open Side Sheet
+                </Button>
+                <Button
+                    ref={testButton}
+                    onClick={() => {
+                        setIsOpen(true);
+                    }}
+                    >
+                    testButton
+                </Button>
+            </div>
             <ModalSideSheet
                 header="This is the modal side sheet header "
                 show={isOpen}

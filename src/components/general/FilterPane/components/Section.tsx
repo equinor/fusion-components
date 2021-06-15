@@ -6,7 +6,7 @@ import styles from '../styles.less';
 import { FilterTerm, FilterSection, Filter as FilterType } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
-import { ApplicationGuidanceAnchor, useAnchor } from '../../ApplicationGuidance';
+import { useAnchor } from '../../ApplicationGuidance';
 import { FilterTypes } from '..';
 
 type SectionProps<T> = {
@@ -17,7 +17,7 @@ type SectionProps<T> = {
 };
 
 function Section<T>({ terms, filterCount, section, onChange }: SectionProps<T>) {
-    const anchorRef = useAnchor<HTMLHeadingElement>(section?.info);
+    const anchorRef = useAnchor<HTMLElement>(section?.info);
     const [isCollapsed, setIsCollapsed] = useState(section.isCollapsed);
 
     const handleOnFilterChange = useCallback(
@@ -74,18 +74,12 @@ function Section<T>({ terms, filterCount, section, onChange }: SectionProps<T>) 
         <section className={sectionClassNames}>
             {!filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse} ref={anchorRef}>
-                    <ApplicationGuidanceAnchor
-                        scope={section.info?.scope}
-                        anchor={section.info?.id}
-                        snug
-                    >
-                        <h3> {section.title} </h3>
-                        {section.isCollapsible && (
-                            <>
-                                <DropdownArrow isOpen={!isCollapsed} />
-                            </>
-                        )}
-                    </ApplicationGuidanceAnchor>
+                    <h3> {section.title} </h3>
+                    {section.isCollapsible && (
+                        <>
+                            <DropdownArrow isOpen={!isCollapsed} />
+                        </>
+                    )}
                 </header>
             )}
             {(!isCollapsed || filterPaneContext.paneIsCollapsed) && (

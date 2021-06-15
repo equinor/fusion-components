@@ -52,8 +52,8 @@ const Table: FC<TableProps> = ({ data }) => {
     );
 };
 
-const sectionQuickFact = { id: 'filterSection', scope: 'storybook|filter_pane' }; 
-const textSearchQuickFact = { id: 'textSearch', scope: 'storybook|filter_pane' }; 
+const sectionQuickFact = { id: 'filter-section', scope: 'storybook|filter_pane' }; 
+const textSearchQuickFact = { id: 'text-search', scope: 'storybook|filter_pane', padding: 10 }; 
 const filterQuickFact = { id: 'filter', scope: 'storybook|filter_pane' }; 
 
 const sections: FilterSection<DataItem>[] = [
@@ -81,7 +81,6 @@ const sections: FilterSection<DataItem>[] = [
                 title: '',
                 type: FilterTypes.Radio,
                 isVisibleWhenPaneIsCollapsed: true,
-                info: filterQuickFact, 
                 getValue: (item) => '',
                 options: [
                     {
@@ -114,6 +113,7 @@ const sections: FilterSection<DataItem>[] = [
                 getValue: (item) => item.gender,
                 isVisibleWhenPaneIsCollapsed: true,
                 isCollapsible: true,
+                info: filterQuickFact,
                 options: [
                     {
                         key: 'Male',

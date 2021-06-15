@@ -1,4 +1,5 @@
-import { TextInput, SearchIcon, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
+import { TextInput, SearchIcon } from '@equinor/fusion-components';
+import { useAnchor } from '../../ApplicationGuidance';
 import { FilterTerm, Filter } from '../applyFilters';
 
 type SearchFilterProps<T> = {
@@ -8,14 +9,15 @@ type SearchFilterProps<T> = {
 };
 
 function SearchFilterComponent<T>({ filter, term, onChange }: SearchFilterProps<T>) {
+    const anchorRef = useAnchor<HTMLDivElement>(filter.info);
     return (
-        <ApplicationGuidanceAnchor anchor={filter?.info?.id} scope={filter?.info?.scope}>
+        <div ref={anchorRef}>
             <TextInput
                 icon={<SearchIcon />}
                 value={term ? (term.value as string) : ''}
                 onChange={onChange}
             />
-        </ApplicationGuidanceAnchor>
+        </div>
     );
 }
 

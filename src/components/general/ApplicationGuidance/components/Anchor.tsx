@@ -68,7 +68,7 @@ export const useAnchor = <R extends HTMLElement>(anchor: UseAnchorProps<R>) => {
  * @param anchor [AppGuideAnchorRef]
  * @returns [ useRef<R>]
  */
-export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
+export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>): void => {
     const { id, ref, scope, onSelected } = anchor;
     const callBackRef = useRef<VoidFunction>();
     const padding = useRef<number>(anchor.padding);
@@ -76,7 +76,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
     useEffect(() => {
         requestAnimationFrame(() => {
             if (!ref.current || !scope || !id) {
-                ref.current && !scope && console.warn('no scope defined');
+                ref.current && !scope && console.debug('no scope defined');
                 return;
             }
 

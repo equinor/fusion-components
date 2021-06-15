@@ -1,4 +1,4 @@
-import { LitElement, html, property, PropertyValues, directives } from '../base';
+import { LitElement, html, property, PropertyValues, directives, TemplateResult } from '../base';
 
 /** required elements */
 import './placeholder';
@@ -60,7 +60,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
      * Listen for anchor connect requests
      * Listen for resize for adjusting anchor bounds
      */
-    connectedCallback() {
+    connectedCallback(): void {
         super.connectedCallback();
         this._dispatchEvent(OverlayEventType.connected);
         this.addEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
@@ -68,7 +68,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         window.addEventListener('scroll', this._updateAnchorBounds, false);
     }
 
-    disconnectedCallback() {
+    disconnectedCallback(): void {
         super.disconnectedCallback();
         this._dispatchEvent(OverlayEventType.disconnected);
         this.removeEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
@@ -86,6 +86,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
                 r.width,
                 r.height
             );
+
         const rects = this.scopedAnchors
             .map((el) => {
                 const bounds = el.bounds();
@@ -116,7 +117,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         `;
     }
 
-    renderPlaceholder(anchor: { id: string; rect: AnchorRect }) {
+    renderPlaceholder(anchor: { id: string; rect: AnchorRect }): TemplateResult {
         return html`
             <fusion-overlay-placeholder
                 id="${anchor.id}"
@@ -128,7 +129,7 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         `;
     }
 
-    updated(props: PropertyValues) {
+    updated(props: PropertyValues): void {
         super.update(props);
 
         if (props.has('active')) {
@@ -149,7 +150,10 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         props.has('anchors') && this._dispatchEvent(OverlayEventType.anchor);
     }
 
-    protected _dispatchEvent(type: OverlayEventType, init?: CustomEventInit<OverlayEventDetail>) {
+    protected _dispatchEvent<T extends OverlayEventType>(
+        type: T,
+        init?: CustomEventInit<OverlayEventDetail>
+    ): OverlayEvent<T> {
         const { scope, active, selectedAnchor: selected } = this;
         const detail = { ...init?.detail, scope, active, selected };
         const event = new OverlayEvent(type, { ...init, detail, composed: true, bubbles: true });
@@ -157,21 +161,20 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         return event;
     }
 
-    protected _updateAnchorBounds = () => {
+    protected _updateAnchorBounds = (): void => {
         this.active && this.requestUpdate('scopedAnchors');
     };
 
-    protected _handleAnchorConnect({ detail }: OverlayAnchorConnectEvent) {
+    protected _handleAnchorConnect({ detail }: OverlayAnchorConnectEvent): void {
         const { disconnectedCallback, ...anchor } = detail;
-        !this.anchors[anchor.anchor] &&
-            disconnectedCallback(() => {
-                delete this.anchors[anchor.anchor];
-                this.requestUpdate('anchors');
-            });
+        disconnectedCallback(() => {
+            delete this.anchors[anchor.anchor];
+            this.requestUpdate('anchors');
+        });
         this.anchors = { ...this.anchors, [anchor.anchor]: anchor };
     }
 
-    protected _handlePlaceholderClick(e: Event) {
+    protected _handlePlaceholderClick(e: Event): void {
         const { currentTarget } = e;
         this.selected = (currentTarget as Element).id;
     }
