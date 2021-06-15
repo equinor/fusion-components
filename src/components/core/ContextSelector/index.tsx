@@ -107,32 +107,49 @@ const ContextSelector: FC = () => {
                 setIsOpen(true);
             }, []);
 
-            const onClickDropDown = useCallback(() => {
-                if (!isOpen) {
-                    !isOpen && setIsOpen(true);
-                }
-            }, [isOpen]);
-
             const placeholder = useMemo(() => {
                 return contextManifest?.placeholder
                     ? contextManifest.placeholder
                     : 'Search context';
             }, [contextManifest?.placeholder]);
 
+            const hasFocus = inputRef.current === document.activeElement;
+
             return (
-                <>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                     <SearchIcon color="#DADADA" />
-                    <input
-                        type="text"
-                        value={queryText}
-                        onFocus={() => setIsOpen(true)}
-                        onChange={onChangeQueryText}
-                        onClick={onClickDropDown}
-                        onKeyUp={onKeyUpCloseDropDown}
-                        placeholder={isOpen ? placeholder : selectedValue || placeholder}
-                        className={styles.searchInput}
-                        ref={inputRef}
-                    />
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type="text"
+                            value={queryText}
+                            onFocus={() => setIsOpen(true)}
+                            onChange={onChangeQueryText}
+                            onKeyUp={onKeyUpCloseDropDown}
+                            placeholder={placeholder}
+                            style={{ opacity: hasFocus ? 1 : 0 }}
+                            className={styles.searchContainer}
+                            ref={inputRef}
+                        />
+                        <span
+                            className={classNames(styles.searchInput, styles.overlay)}
+                            style={{
+                                opacity: hasFocus ? 0 : 1,
+                                position: 'absolute',
+                                left: inputRef.current?.offsetLeft,
+                                top: inputRef.current?.offsetTop,
+                                width: inputRef.current?.clientWidth,
+                                lineHeight: inputRef.current?.clientHeight + 'px',
+                                display: 'inline-block',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                            }}
+                            onClick={() => inputRef.current?.focus()}
+                        >
+                            {selectedValue || placeholder}
+                        </span>
+                    </div>
                     {isQuerying && <Spinner inline />}
                     {contextManifest?.nullable && (
                         <IconButton
@@ -142,7 +159,7 @@ const ContextSelector: FC = () => {
                             <CloseIcon />
                         </IconButton>
                     )}
-                </>
+                </div>
             );
         },
         [queryText, currentContext, dropdownSections, contextManifest]
