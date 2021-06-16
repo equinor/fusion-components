@@ -127,7 +127,7 @@ const ContextSelector: FC = () => {
                             onKeyUp={onKeyUpCloseDropDown}
                             placeholder={placeholder}
                             style={{ opacity: hasFocus ? 1 : 0 }}
-                            className={styles.searchContainer}
+                            className={styles.searchInput}
                             ref={inputRef}
                         />
                         <span
