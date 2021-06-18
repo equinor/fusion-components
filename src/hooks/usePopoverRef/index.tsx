@@ -36,6 +36,10 @@ export default <T extends HTMLElement>(
         ? useHoverToggleController<T>()
         : useClickToggleController<T>();
 
+    useEffect(() => {
+        setIsPopoverOpen(isOpen);
+    }, [isOpen]);
+
     const [isContentOpen, popoverContentRef] = useHoverToggleController<HTMLDivElement>();
 
     const rect = useRelativePositioning(ref);
