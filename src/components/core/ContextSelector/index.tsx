@@ -107,7 +107,10 @@ const ContextSelector: FC = () => {
             }, []);
 
             const onClickDropDown = useCallback(() => {
-                !isOpen && setIsOpen(true);
+                if (!isOpen) {
+                    setQueryText('');
+                    !isOpen && setIsOpen(true);
+                }
             }, [isOpen]);
 
             const placeholder = useMemo(() => {

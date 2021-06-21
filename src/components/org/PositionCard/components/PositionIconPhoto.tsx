@@ -21,6 +21,7 @@ type PositionPhotoIconProps = {
     onClick?: (position: Position, instance: PositionInstance) => void;
     rotationInstances: PositionInstance[];
     personPhotoComponent?: ReactNode;
+    showTaskOwner?: boolean;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -29,6 +30,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     isLinked,
     rotationInstances,
     personPhotoComponent,
+    showTaskOwner,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const taskOwnerRef = useTooltipRef('Task Owner', 'below');
@@ -61,7 +63,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
             </div>
             {(isTaskOwner || isLinked || isRotating) && (
                 <div className={styles.stateIcons}>
-                    {isTaskOwner && (
+                    {showTaskOwner && isTaskOwner && (
                         <span ref={taskOwnerRef} className={styles.edsIcon}>
                             <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
                         </span>

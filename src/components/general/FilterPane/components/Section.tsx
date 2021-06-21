@@ -43,11 +43,7 @@ function Section<T>({ terms, filterCount, section, onChange }: SectionProps<T>) 
             const term = terms.find((term) => term.key === filter.key);
             return (
                 <Filter
-                    key={
-                        filter.type === FilterTypes.Search
-                            ? filter.key
-                            : `${filter.key}_${term?.value}`
-                    }
+                    key={filter.key}
                     filter={filter}
                     term={term}
                     filterCount={filterCount}

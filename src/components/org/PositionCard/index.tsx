@@ -23,7 +23,8 @@ type PositionCardProps = {
     showRotation?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
-    personPhotoComponent?: ReactNode
+    personPhotoComponent?: ReactNode;
+    showTaskOwner?: boolean;
 };
 
 const PositionCard: React.FC<PositionCardProps> = ({
@@ -43,7 +44,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
     childCount,
     selectedDate,
     showRotation,
-    personPhotoComponent
+    personPhotoComponent,
+    showTaskOwner,
 }) => {
     const isExternalHire =
         instance &&
@@ -101,6 +103,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     onClick={onClick}
                     rotationInstances={rotatingInstances}
                     personPhotoComponent={personPhotoComponent}
+                    showTaskOwner={showTaskOwner}
                 />
                 <PositionInstanceComponent
                     position={position}

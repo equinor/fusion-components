@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, FC } from 'react';
+import { useState, useCallback, useMemo, FC, useEffect } from 'react';
 
 import classNames from 'classnames';
 import { Button, useTooltipRef, DropdownArrow } from '@equinor/fusion-components';
@@ -90,6 +90,9 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterP
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
     const anchorRef = useAnchor<HTMLHeadingElement>(filter.info);
+    useEffect(() => {
+        setTerm(defaultTerm || null);
+    }, [defaultTerm]);
 
     const handleOnChange = useCallback(
         (newValue) => {
