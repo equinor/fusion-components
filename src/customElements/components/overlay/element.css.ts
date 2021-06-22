@@ -13,11 +13,13 @@ export const style = css`
         transition: opacity 0.2s;
         will-change: opacity;
         z-index: 99;
+        display: none;
     }
 
     #overlay.active {
         opacity: 1;
         pointer-events: all;
+        display: block;
     }
 
     #overlay.fixed {
