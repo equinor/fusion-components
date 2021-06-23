@@ -107,8 +107,15 @@ export default ({
     useEffect(() => {
         const el = contentRef.current;
         if (!el) return;
-        const rects = el.getBoundingClientRect();
-        el.style.maxHeight = `calc(100% - ${rects.top}px)`;
+
+        const setMaxHeight = () => {
+            const rects = el.getBoundingClientRect();
+            el.style.maxHeight = `calc(100% - ${rects.top}px)`;
+        };
+        setMaxHeight();
+
+        window.addEventListener('resize', setMaxHeight, false);
+        return () => window.removeEventListener('resize', setMaxHeight);
     }, [contentRef.current]);
 
     const modalSideSheetClassNames = classNames(
