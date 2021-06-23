@@ -1,4 +1,13 @@
-import React from 'react';
+import {
+    DetailedHTMLFactory,
+    DetailedHTMLProps,
+    FC,
+    HTMLAttributes,
+    PropsWithChildren,
+    useEffect,
+    useRef,
+} from 'react';
+
 import {
     OverlayElement,
     OverlayElementProps,
@@ -7,9 +16,9 @@ import {
     OverlayEventType,
 } from '../../../../customElements/components/overlay';
 
-export type OverlayProps = React.PropsWithChildren<
+export type OverlayProps = PropsWithChildren<
     OverlayElementProps &
-        React.DetailedHTMLProps<React.HTMLAttributes<OverlayElement>, OverlayElement> & {
+        DetailedHTMLProps<HTMLAttributes<OverlayElement>, OverlayElement> & {
             onSelection?: (e: OverlayEvent<OverlayEventType.selection>) => void;
             onScope?: (e: OverlayEvent<OverlayEventType.scope>) => void;
         }
@@ -18,18 +27,18 @@ export type OverlayProps = React.PropsWithChildren<
 declare global {
     namespace JSX {
         interface ReactHTML {
-            [OverlayElementTag]: React.DetailedHTMLFactory<OverlayProps, OverlayElement>;
+            [OverlayElementTag]: DetailedHTMLFactory<OverlayProps, OverlayElement>;
         }
         interface IntrinsicElements {
-            [OverlayElementTag]: React.DetailedHTMLProps<OverlayProps, OverlayElement>;
+            [OverlayElementTag]: DetailedHTMLProps<OverlayProps, OverlayElement>;
         }
     }
 }
 
-export const Overlay: React.FC<OverlayProps> = (args: OverlayProps) => {
+export const Overlay: FC<OverlayProps> = (args: OverlayProps) => {
     const { scope, onSelection, onScope, ...props } = args;
-    const ref = React.useRef<OverlayElement>();
-    React.useEffect(() => {
+    const ref = useRef<OverlayElement>();
+    useEffect(() => {
         if (!ref.current) return;
         const el = ref.current;
         el.scope = scope;
@@ -41,7 +50,7 @@ export const Overlay: React.FC<OverlayProps> = (args: OverlayProps) => {
         };
     }, [ref]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!ref.current) return;
         ref.current.scope = scope;
     }, [ref, scope]);
