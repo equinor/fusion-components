@@ -147,7 +147,7 @@ const FusionWrapper: FC = ({ children }) => {
     return (
         <FusionContext.Provider value={fusionContext}>
             <HashRouter>
-                <ApplicationGuidanceWrapper scope={{ storybook: [] }}>
+                <ApplicationGuidanceWrapper>
                     <FusionRoot rootRef={root} overlayRef={overlay}>
                         {children}
                     </FusionRoot>

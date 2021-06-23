@@ -45,12 +45,11 @@ declare global {
 export const ApplicationGuidanceWrapper: FC<ApplicationGuidanceWrapperProps> = (
     args: ApplicationGuidanceWrapperProps
 ) => {
-    const { scope, onOpen, onClose, onShow, ...props } = args;
+    const { onOpen, onClose, onShow, ...props } = args;
     const ref = useRef<ApplicationGuideElement>();
     useEffect(() => {
         if (!ref.current) return;
         const el = ref.current;
-        el.scope = scope;
         onOpen && el.addEventListener(ApplicationGuideEventType.activated, onOpen);
         onClose && el.addEventListener(ApplicationGuideEventType.deactivated, onClose);
         onShow && el.addEventListener(ApplicationGuideEventType.show, onShow);
@@ -60,11 +59,6 @@ export const ApplicationGuidanceWrapper: FC<ApplicationGuidanceWrapperProps> = (
             onShow && el.removeEventListener(ApplicationGuideEventType.show, onShow);
         };
     }, [ref]);
-
-    useEffect(() => {
-        if (!ref.current) return;
-        ref.current.scope = scope;
-    }, [ref, scope]);
 
     return <fusion-application-guide ref={ref} {...props}></fusion-application-guide>;
 };

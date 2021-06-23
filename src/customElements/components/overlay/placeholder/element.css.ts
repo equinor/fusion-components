@@ -2,7 +2,7 @@ import { css } from '../../base';
 
 export const style = css`
     #container {
-        position: fixed;
+        position: absolute;
         border-radius: 4px;
         cursor: pointer;
         transition: box-shadow 0.2s;

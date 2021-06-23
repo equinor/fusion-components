@@ -18,6 +18,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
         aside,
         isDisabled,
         href,
+        info,
     } = navigationItem;
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(shouldHaveTooltip ? title : '', 'right');
@@ -45,7 +46,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
 
     return (
         <>
-            <NavigationItem type="section" isActive={isActive} isDisabled={isDisabled}>
+            <NavigationItem type="section" isActive={isActive} isDisabled={isDisabled} info={info}>
                 <div className={styles.sectionContainer} ref={tooltipRef}>
                     <a
                         className={styles.linkContainer}

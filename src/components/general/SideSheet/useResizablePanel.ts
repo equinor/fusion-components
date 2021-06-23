@@ -76,6 +76,7 @@ export default (
         if (isResizing) {
             setMouseIsDown(false);
             setTimeout(() => setIsResizing(false));
+            window.dispatchEvent(new CustomEvent('resize'));
 
             if (resizeSettingsKey && resizedSize) {
                 setAppSettings(resizeSettingsKey, resizedSize);

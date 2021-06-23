@@ -39,7 +39,6 @@ export type FilterPaneProps<T> = {
     screenPlacement?: 'right' | 'left';
     onToggleCollapse?: (isCollapsed: boolean) => void;
     headerComponent?: ReactNode;
-    quickFactScope?: string;
     onResetAll: OnFilterChangeHandler<T>;
     showResetAllButton: boolean;
 };
@@ -53,7 +52,6 @@ function FilterPane<T>({
     screenPlacement = 'right',
     onToggleCollapse,
     headerComponent,
-    quickFactScope,
     onResetAll,
     showResetAllButton,
 }: FilterPaneProps<T>) {
@@ -136,7 +134,6 @@ function FilterPane<T>({
                             terms={terms}
                             filterCount={filterCount}
                             onChange={handleOnSectionChange}
-                            quickFactScope={quickFactScope}
                         />
                     ))}
                 </div>

@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo, useState, useEffect } from 'react';
+import { ReactNode, useCallback, useMemo, useState, useEffect, useRef } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
@@ -17,6 +17,7 @@ import {
 import useResizablePanel, { ResizablePaneOptions } from '../useResizablePanel';
 import BannerPresenter from './BannerPresenter';
 import SnackbarPresenter from './SnackbarPresenter';
+import Overlay from '../../ApplicationGuidance/components/Overlay';
 
 type SideSheetSize = 'fullscreen' | 'xxlarge' | 'xlarge' | 'large' | 'medium' | 'small';
 
@@ -91,12 +92,31 @@ export default ({
         setIsShowing(false);
     }, [safeClose, isResizing]);
 
+    const contentRef = useRef<HTMLDivElement>(null);
     const content = useMemo(() => {
         if (!show) {
             return null;
         }
-        return <div className={styles.content}>{children}</div>;
-    }, [children, show]);
+        return (
+            <div ref={contentRef} className={styles.content}>
+                <Overlay>{children}</Overlay>
+            </div>
+        );
+    }, [children, show, contentRef]);
+
+    useEffect(() => {
+        const el = contentRef.current;
+        if (!el) return;
+
+        const setMaxHeight = () => {
+            const rects = el.getBoundingClientRect();
+            el.style.maxHeight = `calc(100% - ${rects.top}px)`;
+        };
+        setMaxHeight();
+
+        window.addEventListener('resize', setMaxHeight, false);
+        return () => window.removeEventListener('resize', setMaxHeight);
+    }, [contentRef.current]);
 
     const modalSideSheetClassNames = classNames(
         styles.modalSideSheet,
@@ -138,19 +158,21 @@ export default ({
                             </div>
                         )}
                         <BannerPresenter />
-                        <header className={styles.header}>
-                            <div className={styles.closeButton}>
-                                <IconButton onClick={close}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </div>
-                            <div className={styles.headerContent}>
-                                <div className={styles.headerTitle}>{header}</div>
-                                <div className={styles.headerIcons}>{headerIcons}</div>
-                            </div>
-                        </header>
-                        {content}
+                        <Overlay fixed>
+                            <header className={styles.header}>
+                                <div className={styles.closeButton}>
+                                    <IconButton onClick={close}>
+                                        <CloseIcon />
+                                    </IconButton>
+                                </div>
+                                <div className={styles.headerContent}>
+                                    <div className={styles.headerTitle}>{header}</div>
+                                    <div className={styles.headerIcons}>{headerIcons}</div>
+                                </div>
+                            </header>
+                        </Overlay>
                         <SnackbarPresenter />
+                        {content}
                     </div>
                 </NotificationContextProvider>
             </Scrim>
