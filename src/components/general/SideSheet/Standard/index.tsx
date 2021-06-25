@@ -22,6 +22,7 @@ export type StandardSideSheetProps = ResizablePaneOptions & {
     screenPlacement?: 'right' | 'left';
     size?: SideSheetSize;
     children: ReactNode;
+    headerContent?: ReactNode;
 };
 
 const SideSheet: FC<StandardSideSheetProps> = ({
@@ -35,6 +36,7 @@ const SideSheet: FC<StandardSideSheetProps> = ({
     isResizable,
     minWidth,
     maxWidth,
+    headerContent,
 }) => {
     const toggleOpen = useCallback(() => {
         onClose(!isOpen);
@@ -88,6 +90,9 @@ const SideSheet: FC<StandardSideSheetProps> = ({
                     />
                 </div>
                 {isOpen && title && <div className={styles.title}>{title}</div>}
+                {isOpen && headerContent && (
+                    <div className={styles.headerContent}>{headerContent}</div>
+                )}
             </div>
             {isOpen && <div className={styles.content}>{children}</div>}
         </div>
@@ -105,6 +110,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     minWidth,
     maxWidth,
     children,
+    headerContent,
 }) => {
     const [windowWidth, setWindowWidth] = useState<number>(0);
     const fusionContext = useFusionContext();
@@ -139,6 +145,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
             isResizable={isResizable}
             minWidth={minWidth}
             maxWidth={maxWidth}
+            headerContent={headerContent}
         >
             {children}
         </SideSheet>
