@@ -1,7 +1,14 @@
-import { PersonPresence, useApiClients } from '@equinor/fusion';
+import { PersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
 import { useCallback, useEffect, useState } from 'react';
 
-const usePresence = (id: string, isPopoverOpen: boolean = true) => {
+type PersonId = {
+    id: string;
+};
+type Person = {
+    person: PersonDetails;
+};
+type PersonArgs = PersonId | Person;
+const usePresence = (personArg: PersonArgs, fetch: boolean) => {
     const [lastFetched, setLastFetched] = useState<Date | null>(null);
     const [presence, setPresence] = useState<PersonPresence | null>(null);
     const [isFetchingPresence, setIsFetchingPresence] = useState<boolean>(false);
@@ -27,12 +34,19 @@ const usePresence = (id: string, isPopoverOpen: boolean = true) => {
     );
 
     useEffect(() => {
+        const isPersonId = (data: PersonArgs): data is PersonId => {
+            return (data as PersonId).id !== undefined;
+        };
         const now = new Date();
         const diff = now.getTime() - (lastFetched ? lastFetched.getTime() : 0);
-        if (diff / 1000 > 10 && isPopoverOpen) {
-            fetchPresenceStatus(id);
+        if (diff / 1000 > 10 && fetch) {
+            if (isPersonId(personArg)) {
+                fetchPresenceStatus(personArg.id);
+            } else {
+                fetchPresenceStatus(personArg.person.azureUniqueId);
+            }
         }
-    }, [id, fetchPresenceStatus, isPopoverOpen, lastFetched]);
+    }, [fetchPresenceStatus, fetch, lastFetched, personArg]);
 
     return { presence, isFetchingPresence, presenceError };
 };

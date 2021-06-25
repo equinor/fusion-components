@@ -2,6 +2,7 @@ import styles from './styles.less';
 import { PersonDetails, UserMenuSectionItem, UserMenuSection } from '@equinor/fusion';
 import { MenuItemType, PersonPhoto, PersonDetail, Menu } from '@equinor/fusion-components';
 import { useCallback, FC } from 'react';
+import usePresence from './usePresence';
 
 type AccountDetailsProps = {
     personDetails: PersonDetails;
@@ -22,6 +23,7 @@ const AsideComponent: FC<MenuItemComponentProps> = ({ item }) => {
 };
 
 const AccountDetails: FC<AccountDetailsProps> = ({ onMenuClick, personDetails, sections }) => {
+    const { presence } = usePresence(personDetails.azureUniqueId);
     const onMenuItemClick = useCallback(
         (item: MenuItemType) => {
             const clickedItem = item as UserMenuSectionItem;
@@ -37,7 +39,7 @@ const AccountDetails: FC<AccountDetailsProps> = ({ onMenuClick, personDetails, s
                 <PersonPhoto person={personDetails} size="xlarge" hidePopover hideTooltip />
             </div>
             <div className={styles.personDetails}>
-                <PersonDetail person={personDetails} noPhoto />
+                <PersonDetail person={personDetails} presence={presence} noPhoto />
             </div>
 
             <div className={styles.menuContainer}>

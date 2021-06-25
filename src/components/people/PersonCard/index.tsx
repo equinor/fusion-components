@@ -13,6 +13,7 @@ import {
     useComponentDisplayClassNames,
     useComponentDisplayType,
     ComponentDisplayType,
+    PersonPresence,
 } from '@equinor/fusion';
 import { getDefaultPerson } from '../utils';
 import PersonDetail from '../PersonDetail';
@@ -42,11 +43,15 @@ export default ({
     isFetchingPerson,
 }: PersonCardProps) => {
     const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
+    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(null);
+    const [currentPresence, setCurrentPresence] = useState<PersonPresence>(null);
+
     const id = personId ? personId : person ? person.azureUniqueId : '';
+    const personInfo = person ? { person: person } : { id: personId };
     const { isFetching, error, personDetails } = usePeopleDetails(
         person ? { person } : { id: personId }
     );
-    const { presence } = usePresence(id, isPopoverOpen);
+    const { presence, isFetchingPresence, presenceError } = usePresence(personInfo, isPopoverOpen);
     const displayType = useComponentDisplayType();
     const shouldDisplayEmail = useMemo(
         () => !inline || (inline && displayType === ComponentDisplayType.Comfortable),
@@ -59,7 +64,7 @@ export default ({
     });
 
     const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
-        <PersonDetail person={personDetails} presence={presence} />,
+        <PersonDetail person={currentPerson} presence={currentPresence} />,
         {
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
@@ -67,6 +72,18 @@ export default ({
         true,
         500
     );
+
+    useEffect(() => {
+        if (!isFetchingPerson && personDetails && !error) {
+            setCurrentPerson(personDetails);
+        }
+    }, [isFetchingPerson, personDetails, error]);
+
+    useEffect(() => {
+        if (!isFetchingPresence && presence && !presenceError) {
+            setCurrentPresence(presence);
+        }
+    }, [isFetchingPresence, presence, presenceError]);
 
     useEffect(() => {
         if (isOpen) {
@@ -107,17 +124,17 @@ export default ({
 
     return (
         <div ref={hidePopover ? undefined : popoverRef}>
-            {personDetails && (
+            {currentPerson && (
                 <div className={containerClassNames}>
-                    <PersonPhoto person={personDetails} size={photoSize} hidePopover />
+                    <PersonPhoto person={currentPerson} size={photoSize} hidePopover />
                     <div className={styles.details}>
-                        <div className={nameClassNames}>{personDetails.name}</div>
+                        <div className={nameClassNames}>{currentPerson.name}</div>
                         {showJobTitle && (
-                            <div className={styles.jobTitle}> {personDetails.jobTitle}</div>
+                            <div className={styles.jobTitle}> {currentPerson.jobTitle}</div>
                         )}
                         {shouldDisplayEmail && (
                             <div className={styles.email}>
-                                <a href={`mailto:${personDetails.mail}`}>{personDetails.mail}</a>
+                                <a href={`mailto:${currentPerson.mail}`}>{currentPerson.mail}</a>
                             </div>
                         )}
                     </div>

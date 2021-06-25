@@ -27,14 +27,14 @@ export const usePeopleDetails = (props: UsePeopleDetailsProps) => {
                 setError(e);
             }
         },
-        [apiClients]
+        [apiClients.people]
     );
 
-    const isPersonId = (data: UsePeopleDetailsProps): data is PersonId => {
-        return (data as PersonId).id !== undefined;
-    };
-
     useEffect(() => {
+        const isPersonId = (data: UsePeopleDetailsProps): data is PersonId => {
+            return (data as PersonId).id !== undefined;
+        };
+
         if (isPersonId(props)) {
             fetchPersonData(props.id);
         } else {
@@ -42,7 +42,7 @@ export const usePeopleDetails = (props: UsePeopleDetailsProps) => {
             setIsFetching(false);
             setError(null);
         }
-    }, [fetchPersonData, isPersonId, props]);
+    }, [props, fetchPersonData]);
 
     return { personDetails, isFetching, error };
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from 'react';
+import { Fragment } from 'react';
 
 import styles from './styles.less';
 import { PersonDetails, PersonPresence } from '@equinor/fusion';
@@ -8,34 +8,28 @@ import {
     AccountTypeIcon,
     SkeletonBar,
 } from '@equinor/fusion-components';
-import usePeopleDetails from '../usePeopleDetails';
 
-export type PersonDetailProps = {
-    personId?: string;
-    person?: PersonDetails;
+export type PersonDetailsProps = {
+    person: PersonDetails;
     noPhoto?: boolean;
     presence: PersonPresence;
+    isFetching: boolean;
+    isFetchingPresence: boolean;
 };
-
-export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(null);
-    const { personDetails, isFetching, error } = usePeopleDetails(
-        person ? { person } : { id: personId }
-    );
-
-    useEffect(() => {
-        if (!isFetching && !error && personDetails) {
-            setCurrentPerson(personDetails);
-        }
-    }, [isFetching, personDetails, error]);
-
+const PersonDetails = ({
+    person,
+    noPhoto,
+    presence,
+    isFetching,
+    isFetchingPresence,
+}: PersonDetailsProps): JSX.Element => {
     return (
         <Fragment>
-            {currentPerson && (
+            {person && (
                 <div className={styles.personDetails}>
                     <div className={styles.detailsContainer}>
                         <div className={styles.personName}>
-                            {isFetching ? <SkeletonBar /> : currentPerson.name}
+                            {isFetching ? <SkeletonBar /> : person.name}
                         </div>
                         <div className={styles.presenceSection}>
                             <div className={styles.iconContainer}>
@@ -52,27 +46,27 @@ export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.jobTitle}</div>
+                                <div>{person.jobTitle}</div>
                             )}
                             {isFetching ? (
                                 <div>
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.department}</div>
+                                <div>{person.department}</div>
                             )}
                         </div>
                         <div className={styles.accountTypeSection}>
                             {!isFetching && (
                                 <div className={styles.iconContainer}>
                                     <AccountTypeIcon
-                                        currentPerson={currentPerson}
+                                        currentPerson={person}
                                         hideTooltip
                                         size="large"
                                     />
                                 </div>
                             )}
-                            {isFetching ? <SkeletonBar /> : currentPerson.accountType}
+                            {isFetching ? <SkeletonBar /> : person.accountType}
                         </div>
 
                         <div className={styles.detailSection}>
@@ -82,9 +76,7 @@ export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
                                 </div>
                             ) : (
                                 <div>
-                                    <a href={`mailto:${currentPerson.mail}`}>
-                                        {currentPerson.mail}
-                                    </a>
+                                    <a href={`mailto:${person.mail}`}>{person.mail}</a>
                                 </div>
                             )}
                             {isFetching ? (
@@ -92,20 +84,20 @@ export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.mobilePhone}</div>
+                                <div>{person.mobilePhone}</div>
                             )}
                             {isFetching ? (
                                 <div>
                                     <SkeletonBar />
                                 </div>
                             ) : (
-                                <div>{currentPerson.officeLocation}</div>
+                                <div>{person.officeLocation}</div>
                             )}
                         </div>
                     </div>
                     {!noPhoto && (
                         <div className={styles.imageContainer}>
-                            <PersonPhoto person={currentPerson} hidePopover size="xlarge" />
+                            <PersonPhoto person={person} hidePopover size="xlarge" />
                         </div>
                     )}
                 </div>
@@ -113,3 +105,5 @@ export default ({ personId, person, noPhoto, presence }: PersonDetailProps) => {
         </Fragment>
     );
 };
+
+export default PersonDetails;

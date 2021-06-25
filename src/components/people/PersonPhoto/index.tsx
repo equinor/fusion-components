@@ -1,9 +1,9 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useMemo } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
     useComponentDisplayClassNames,
-    PersonDetails,
+    PersonDetails as PersonDetailsType,
     usePersonImageUrl,
     PersonPresenceAvailability,
     PersonPresence,
@@ -13,7 +13,7 @@ import { useTooltipRef, usePopoverRef } from '@equinor/fusion-components';
 import FallbackImage from './FallbackImage';
 import AccountTypeBadge from './AccountTypeBadge';
 import RotationBadge from './RotationBadge';
-import PersonDetail from '../PersonDetail';
+import PersonDetails from '../PersonDetails';
 import { SkeletonDisc } from '../../feedback/Skeleton';
 import PersonPresenceIcon from './PersonPresenceIcon';
 import AccountTypeIcon from './AccountTypeIcon';
@@ -26,10 +26,10 @@ export type PhotoSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 export type PersonPhotoProps = {
     personId?: string;
-    person?: PersonDetails;
+    person?: PersonDetailsType;
     size?: PhotoSize;
     hideTooltip?: boolean;
-    additionalPersons?: PersonDetails[];
+    additionalPersons?: PersonDetailsType[];
     hidePopover?: boolean;
     presenceStatus?: PersonPresenceAvailability;
 };
@@ -43,16 +43,13 @@ export default ({
     additionalPersons = [],
     presenceStatus,
 }: PersonPhotoProps) => {
-    const [currentPerson, setCurrentPerson] = useState<PersonDetails>(null);
-    const [currentPresence, setCurrentPresence] = useState<PersonPresence>(null);
     const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
     const id = person && additionalPersons.length === 0 ? person.azureUniqueId : personId || '';
+    const personInfo = person ? { person: person } : { id: personId };
 
     const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
-    const { error, personDetails, isFetching: fetching } = usePeopleDetails(
-        person ? { person } : { id: personId }
-    );
-    const { presence, isFetchingPresence, presenceError } = usePresence(id, isPopoverOpen);
+    const { error, personDetails, isFetching: isFetchingPeople } = usePeopleDetails(personInfo);
+    const { isFetchingPresence, presence, presenceError } = usePresence(personInfo, isPopoverOpen);
     const imageStyle = imageError === null ? { backgroundImage: `url(${imageUrl})` } : {};
 
     const photoClassNames = classNames(
@@ -71,21 +68,29 @@ export default ({
 
     const tooltipContent = (
         <div>
-            {[...additionalPersons, currentPerson].map((person: PersonDetails, index: number) => {
-                return (
-                    <Fragment key={index}>
-                        <span>{person ? person.name : 'TBN: To Be Nominated'}</span>
-                        <br />
-                    </Fragment>
-                );
-            })}
+            {[...additionalPersons, personDetails].map(
+                (person: PersonDetailsType, index: number) => {
+                    return (
+                        <Fragment key={index}>
+                            <span>{person ? person.name : 'TBN: To Be Nominated'}</span>
+                            <br />
+                        </Fragment>
+                    );
+                }
+            )}
         </div>
     );
-
     const nameTooltipRef = useTooltipRef(tooltipContent);
-
+    const popoverContent = !isFetchingPeople && (
+        <PersonDetails
+            person={personDetails}
+            presence={presence}
+            isFetching={isFetchingPeople}
+            isFetchingPresence={isFetchingPresence}
+        />
+    );
     const [popoverRef, isOpen] = usePopoverRef<HTMLDivElement>(
-        <PersonDetail person={currentPerson} presence={presence} />,
+        popoverContent,
         {
             justify: 'start', // start = "left" | middle = "center" | end = "right"
             placement: 'below', // start = "top" | middle = "center" | end = "bottom"
@@ -94,26 +99,12 @@ export default ({
         500
     );
     const refCheck = () => {
-        if (additionalPersons.length > 0 || !currentPerson) {
+        if (additionalPersons.length > 0 || !personDetails) {
             return nameTooltipRef;
         } else {
             return popoverRef;
         }
     };
-
-    useEffect(() => {
-        if (!error && personDetails && !fetching) {
-            setCurrentPerson(personDetails);
-        } else if (error) {
-            setCurrentPerson(null);
-        }
-    }, [error, personDetails, fetching]);
-
-    useEffect(() => {
-        if (!presenceError && !isFetchingPresence && presence) {
-            setCurrentPresence(presence);
-        }
-    }, [presenceError, isFetchingPresence, presence]);
 
     useEffect(() => {
         if (isOpen) {
@@ -123,7 +114,7 @@ export default ({
         }
     }, [isOpen]);
 
-    if (isFetching) {
+    if (isFetching || isFetchingPeople) {
         return (
             <div className={photoClassNames}>
                 <SkeletonDisc size={size} />
