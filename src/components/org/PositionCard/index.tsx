@@ -25,6 +25,8 @@ type PositionCardProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
+    backgroundStyle?: any;
+    borderStyle?: any;
 };
 
 const PositionCard: React.FC<PositionCardProps> = ({
@@ -46,6 +48,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showRotation,
     personPhotoComponent,
     showTaskOwner,
+    backgroundStyle,
+    borderStyle,
 }) => {
     const isExternalHire =
         instance &&
@@ -66,6 +70,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
         [styles.isLinked]: isLinked,
         [styles.futurePosition]: isFuture,
         [styles.pastPosition]: isPast,
+        [backgroundStyle]: !!backgroundStyle,
+        [borderStyle]: !!borderStyle,
     });
 
     const onClickHandler = useCallback(() => {
