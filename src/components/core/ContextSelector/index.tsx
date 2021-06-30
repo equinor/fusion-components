@@ -116,7 +116,7 @@ const ContextSelector: FC = () => {
             const hasFocus = inputRef.current === document.activeElement;
 
             return (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className={styles.flexContainer}>
                     <SearchIcon color="#DADADA" />
                     <div style={{ position: 'relative' }}>
                         <input
@@ -227,7 +227,11 @@ const ContextSelector: FC = () => {
         [isOpen, contexts, queryText, contextHistory]
     );
 
-    const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
+    const containerClassNames = classNames(
+        styles.component,
+        styles.flexContainer,
+        useComponentDisplayClassNames(styles)
+    );
     const containerRef = controllerRef as MutableRefObject<HTMLDivElement | null>;
     const helperText = useMemo(
         () =>
