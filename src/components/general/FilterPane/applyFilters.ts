@@ -1,5 +1,6 @@
 import FilterTypes from './filterTypes';
 import Filter from './components/Filter';
+import { UseAnchorProps } from '../ApplicationGuidance';
 
 export type FilterTerm = {
     key: string;
@@ -18,9 +19,11 @@ export type Filter<T> = Collapsible & {
     type: FilterTypes;
     getValue: (item: T) => string | string[];
     options?: any;
+    info?: UseAnchorProps;
 };
 
 export type FilterSection<T> = Collapsible & {
+    info?: UseAnchorProps;
     key: string;
     title: string;
     filters: Filter<T>[];

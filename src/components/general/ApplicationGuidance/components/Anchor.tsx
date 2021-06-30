@@ -16,16 +16,16 @@ import {
     OverlayAnchorConnectEvent,
 } from '../../../../customElements/components/overlay/anchor';
 
-export interface AppGuideAnchorRef<R extends HTMLElement> {
+export interface AppGuideAnchorRef<R extends HTMLElement = HTMLElement> {
     /**
      * unique key for the app (within its scope)
      */
-    id: string;
+    id?: string;
 
     /**
      * scope of the anchor, sub-scopes are divided by `|`
      */
-    scope: string;
+    scope?: string;
 
     /**
      * amount of padding added to the calculation of element bounds
@@ -36,7 +36,11 @@ export interface AppGuideAnchorRef<R extends HTMLElement> {
      * reference to the element [HTMLElement] which displays the anchor
      */
     ref: RefObject<R>;
+
+    onSelected?: () => void;
 }
+
+export type UseAnchorProps<R extends HTMLElement = HTMLElement> = Omit<AppGuideAnchorRef<R>, 'ref'>;
 
 /**
  * @see useAnchorRef
@@ -46,7 +50,7 @@ export interface AppGuideAnchorRef<R extends HTMLElement> {
  * @param anchor anchor props
  * @returns [ useRef<R>]
  */
-export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<R>, 'ref'>) => {
+export const useAnchor = <R extends HTMLElement>(anchor: UseAnchorProps<R>) => {
     const ref = useRef<R>(null);
     useAnchorRef({ ...anchor, ref });
     return ref;
@@ -64,21 +68,24 @@ export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<
  * @param anchor [AppGuideAnchorRef]
  * @returns [ useRef<R>]
  */
-export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
-    const { id, ref, scope } = anchor;
+export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>): void => {
+    const { id, ref, scope, onSelected } = anchor;
     const callBackRef = useRef<VoidFunction>();
     const padding = useRef<number>(anchor.padding);
 
     useEffect(() => {
         requestAnimationFrame(() => {
-            if (!ref.current) {
+            if (!ref.current || !scope || !id) {
+                ref.current && !scope && console.debug('no scope defined');
                 return;
             }
+
             const event = new OverlayAnchorConnectEvent({
                 detail: {
                     anchor: id,
                     scope,
                     bounds: () => {
+                        if (!ref.current) return null;
                         return AnchorDOMRect.create(
                             ref.current.getBoundingClientRect(),
                             padding.current
@@ -87,6 +94,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                     disconnectedCallback: (cb: VoidFunction) => {
                         callBackRef.current = cb;
                     },
+                    selected: onSelected,
                 },
                 cancelable: false,
                 // allow propagation threw shadow doms
@@ -96,7 +104,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
             ref.current.dispatchEvent(event);
         });
         return () => callBackRef.current && callBackRef.current();
-    }, [ref]);
+    }, [ref.current]);
 };
 
 export type ApplicationGuidanceAnchorProps = PropsWithChildren<
