@@ -44,6 +44,7 @@ type SearchableDropdownProps = {
     onSelect?: (item: SearchableDropdownOption) => void;
     onSearchAsync?: (query: string) => void;
     dropdownMaxHeight?: number;
+    onOpen?: (isOpen: boolean) => void;
 };
 
 const createSingleSectionFromOptions = (
@@ -92,6 +93,7 @@ const SearchableDropdown = ({
     asideComponent,
     selectedComponent,
     dropdownMaxHeight,
+    onOpen,
 }: SearchableDropdownProps) => {
     if ((!options && !sections) || (options && sections)) {
         throw new Error("You must supply only one of 'options', 'sections' props");
@@ -226,6 +228,12 @@ const SearchableDropdown = ({
         },
         [isOpen, onSelect]
     );
+
+    useEffect(() => {
+        if (onOpen) {
+            onOpen(isOpen);
+        }
+    }, [isOpen]);
 
     const containerRef = dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
