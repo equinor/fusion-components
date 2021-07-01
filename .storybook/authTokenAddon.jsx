@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
 
+/**
+ * Allow setting auth token
+ * @todo
+ * - This needs to be rewritten when msal is implemented
+ * - There should be a button and callback endpoint for sso 
+ */
 const AuthTokenInput = ({ active }) => {
     const [authToken, setAuthToken] = useState(
-        localStorage.getItem('FUSION_STORYBOOK_AUTH_TOKEN') || ''
+        localStorage.getItem('FUSION_STORYBOOK_AUTH_TOKEN')
     );
 
     const onAuthTokenInputChange = e => {
@@ -25,8 +31,6 @@ const AuthTokenInput = ({ active }) => {
                 margin: 24,
             }}
         >
-            <button onClick={login}>Sign in</button>
-            <p>Or paste auth token (without bearer)</p>
             <textarea
                 onChange={onAuthTokenInputChange}
                 placeholder="JWT Token"
@@ -38,7 +42,7 @@ const AuthTokenInput = ({ active }) => {
                     padding: 8,
                     boxSizing: 'border-box',
                 }}
-                value={authToken}
+                value={authToken || ''}
             >
             </textarea>
         </div>

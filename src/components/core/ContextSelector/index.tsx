@@ -104,14 +104,8 @@ const ContextSelector: FC = () => {
 
             const onChangeQueryText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
                 setQueryText(e.target.value);
+                setIsOpen(true);
             }, []);
-
-            const onClickDropDown = useCallback(() => {
-                if (!isOpen) {
-                    setQueryText('');
-                    !isOpen && setIsOpen(true);
-                }
-            }, [isOpen]);
 
             const placeholder = useMemo(() => {
                 return contextManifest?.placeholder
@@ -119,19 +113,43 @@ const ContextSelector: FC = () => {
                     : 'Search context';
             }, [contextManifest?.placeholder]);
 
+            const hasFocus = inputRef.current === document.activeElement;
+
             return (
-                <>
+                <div className={styles.flexContainer}>
                     <SearchIcon color="#DADADA" />
-                    <input
-                        type="text"
-                        value={selectedValue}
-                        onChange={onChangeQueryText}
-                        onClick={onClickDropDown}
-                        onKeyUp={onKeyUpCloseDropDown}
-                        placeholder={selectedValue !== '' ? selectedValue : placeholder}
-                        className={styles.searchInput}
-                        ref={inputRef}
-                    />
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type="text"
+                            value={queryText}
+                            onFocus={() => setIsOpen(true)}
+                            onChange={onChangeQueryText}
+                            onKeyUp={onKeyUpCloseDropDown}
+                            placeholder={placeholder}
+                            style={{ opacity: hasFocus ? 1 : 0 }}
+                            className={styles.searchInput}
+                            ref={inputRef}
+                        />
+                        <span
+                            className={classNames(styles.searchInput, styles.overlay)}
+                            style={{
+                                opacity: hasFocus ? 0 : 1,
+                                position: 'absolute',
+                                left: inputRef.current?.offsetLeft,
+                                top: inputRef.current?.offsetTop,
+                                width: inputRef.current?.clientWidth,
+                                lineHeight: inputRef.current?.clientHeight + 'px',
+                                display: 'inline-block',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                            }}
+                            onClick={() => inputRef.current?.focus()}
+                        >
+                            {selectedValue || placeholder}
+                        </span>
+                    </div>
                     {isQuerying && <Spinner inline />}
                     {contextManifest?.nullable && (
                         <IconButton
@@ -141,7 +159,7 @@ const ContextSelector: FC = () => {
                             <CloseIcon />
                         </IconButton>
                     )}
-                </>
+                </div>
             );
         },
         [queryText, currentContext, dropdownSections, contextManifest]
@@ -209,7 +227,11 @@ const ContextSelector: FC = () => {
         [isOpen, contexts, queryText, contextHistory]
     );
 
-    const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
+    const containerClassNames = classNames(
+        styles.component,
+        styles.flexContainer,
+        useComponentDisplayClassNames(styles)
+    );
     const containerRef = controllerRef as MutableRefObject<HTMLDivElement | null>;
     const helperText = useMemo(
         () =>
