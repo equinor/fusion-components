@@ -38,6 +38,8 @@ type PersonPickerProps = {
         searchQuery,
         isQuerying,
     }: SectionFnProps) => SearchableDropdownSection[];
+    onOpen?: (isOpen: boolean) => void;
+    onSearchAsync?: (query: string) => void;
 };
 
 const ItemComponent = ({ item }) => {
@@ -83,6 +85,8 @@ export default ({
     label,
     placeholder,
     sectionFn = peopleToSections,
+    onOpen,
+    onSearchAsync,
 }: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
@@ -130,11 +134,30 @@ export default ({
         [onSelect]
     );
 
+    const handleOpen = useCallback(
+        (isOpen: boolean) => {
+            if (onOpen) {
+                onOpen(isOpen);
+            }
+        },
+        [onOpen]
+    );
+
+    const handleSearchAsync = useCallback(
+        (query: string) => {
+            if (onSearchAsync) {
+                onSearchAsync(query);
+            }
+            setSearchQuery(query);
+        },
+        [onSearchAsync, setSearchQuery]
+    );
+
     return (
         <SearchableDropdown
             sections={sections}
             onSelect={handleSelect}
-            onSearchAsync={(query) => setSearchQuery(query)}
+            onSearchAsync={handleSearchAsync}
             error={hasError}
             errorMessage={errorMessage}
             itemComponent={ItemComponent}
@@ -142,6 +165,7 @@ export default ({
             selectedComponent={SelectedItemComponent}
             label={label}
             placeholder={placeholder}
+            onOpen={handleOpen}
         />
     );
 };
