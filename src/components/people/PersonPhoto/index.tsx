@@ -65,6 +65,7 @@ export default ({
             [styles.large]: size === 'large',
             [styles.medium]: size === 'medium',
             [styles.small]: size === 'small',
+            [styles.inactive]: !!currentPerson?.inactive,
         }
     );
 
