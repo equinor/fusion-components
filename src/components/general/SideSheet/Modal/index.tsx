@@ -143,7 +143,6 @@ export default ({
                     <div
                         style={{ ...resizedSize }}
                         className={modalSideSheetClassNames}
-                        onClick={(e) => e.stopPropagation()}
                         onTransitionEnd={() => {
                             !isShowing && onClose && onClose();
                         }}

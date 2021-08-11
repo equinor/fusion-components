@@ -2,7 +2,6 @@ import { useState, useRef, useCallback, FC, useEffect, MutableRefObject, ReactNo
 
 import classNames from 'classnames';
 import {
-    useClickOutsideOverlayPortal,
     RelativeOverlayPortal,
     useElevationClassName,
     useRelativePositioning,
@@ -68,7 +67,6 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
     const { isOpen, setIsOpen, node, controllerRef } = controller;
 
     const close = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
-    useClickOutsideOverlayPortal(close, controllerRef.current);
 
     const dropdownContainerClassNames = classNames(
         styles.dropdownContainer,
@@ -105,6 +103,24 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
         setMaxHeight(`calc(100vh - ${dropdownRect.top}px - (var(--grid-unit) * 3px))`);
     }, [rect, isOpen]);
 
+    const handleClick = (e) => {
+        if (dropdownRef.current.contains(e.target)) {
+            return;
+        }
+        close();
+    };
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('click', handleClick);
+        } else {
+            document.removeEventListener('click', handleClick);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClick);
+        };
+    }, [isOpen]);
     return (
         <>
             {node}
