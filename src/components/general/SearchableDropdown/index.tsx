@@ -38,6 +38,7 @@ type SearchableDropdownProps = {
     sections?: SearchableDropdownSection[];
     error?: boolean;
     errorMessage?: string;
+    headerComponent?: any;
     itemComponent?: any;
     asideComponent?: any;
     selectedComponent?: any;
@@ -89,6 +90,7 @@ const SearchableDropdown = ({
     error,
     errorMessage,
     onSearchAsync,
+    headerComponent,
     itemComponent,
     asideComponent,
     selectedComponent,
@@ -249,6 +251,11 @@ const SearchableDropdown = ({
     return (
         <div ref={containerRef}>
             <Dropdown controller={dropdownController}>
+                {!!headerComponent && (
+                    <div className={styles.header} onClick={() => setIsOpen(true)}>
+                        {headerComponent}
+                    </div>
+                )}
                 <div
                     className={styles.menuContainer}
                     style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
