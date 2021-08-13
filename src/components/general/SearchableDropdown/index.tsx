@@ -275,7 +275,12 @@ const SearchableDropdown = ({
                         <div className={styles.noResultsContainer}>
                             {inputValue ? (
                                 !!noResultComponent ? (
-                                    <div className={styles.customSlot} onClick={() => setIsOpen(true)}>{noResultComponent}</div>
+                                    <div
+                                        className={styles.customSlot}
+                                        onClick={() => setIsOpen(true)}
+                                    >
+                                        {noResultComponent}
+                                    </div>
                                 ) : (
                                     <span>
                                         No matches for <strong> {inputValue}</strong>
