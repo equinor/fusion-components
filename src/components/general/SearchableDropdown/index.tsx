@@ -182,7 +182,7 @@ const SearchableDropdown = ({
         const overlayContainer = useOverlayContainer();
         const handleBlur = useCallback(
             (e: FocusEvent<HTMLInputElement>) => {
-                if (overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
+                if (!overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
                 setIsOpen(false, 250);
             },
             [isOpen, overlayContainer]
@@ -235,7 +235,8 @@ const SearchableDropdown = ({
         }
     }, [isOpen]);
 
-    const containerRef = dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
+    const containerRef =
+        dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     const hasResults = useMemo(() => {
         return (

@@ -1,4 +1,13 @@
-import { useState, useRef, useCallback, FC, useEffect, MutableRefObject, ReactNode } from 'react';
+import {
+    useState,
+    useRef,
+    useCallback,
+    FC,
+    useEffect,
+    MutableRefObject,
+    ReactNode,
+    Fragment,
+} from 'react';
 
 import classNames from 'classnames';
 import {
@@ -65,7 +74,7 @@ const useLoop = (handler: AsyncOperation<void>, dependencies: any[] = []) => {
 
 const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) => {
     const { isOpen, setIsOpen, node, controllerRef } = controller;
-
+    const outerRef = useRef<HTMLDivElement | null>(null);
     const close = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
 
     const dropdownContainerClassNames = classNames(
@@ -104,7 +113,7 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
     }, [rect, isOpen]);
 
     const handleClick = (e) => {
-        if (dropdownRef.current.contains(e.target)) {
+        if (outerRef.current.contains(e.target) || dropdownRef.current.contains(e.target)) {
             return;
         }
         close();
@@ -122,7 +131,7 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
         };
     }, [isOpen]);
     return (
-        <>
+        <div ref={outerRef}>
             {node}
             <RelativeOverlayPortal relativeRef={controllerRef} show={isOpen}>
                 <div
@@ -133,7 +142,7 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
                     {children}
                 </div>
             </RelativeOverlayPortal>
-        </>
+        </div>
     );
 };
 
