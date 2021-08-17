@@ -38,9 +38,11 @@ type SearchableDropdownProps = {
     sections?: SearchableDropdownSection[];
     error?: boolean;
     errorMessage?: string;
+    headerComponent?: any;
     itemComponent?: any;
     asideComponent?: any;
     selectedComponent?: any;
+    noResultComponent?: any;
     onSelect?: (item: SearchableDropdownOption) => void;
     onSearchAsync?: (query: string) => void;
     dropdownMaxHeight?: number;
@@ -89,9 +91,11 @@ const SearchableDropdown = ({
     error,
     errorMessage,
     onSearchAsync,
+    headerComponent,
     itemComponent,
     asideComponent,
     selectedComponent,
+    noResultComponent,
     dropdownMaxHeight,
     onOpen,
 }: SearchableDropdownProps) => {
@@ -249,6 +253,11 @@ const SearchableDropdown = ({
     return (
         <div ref={containerRef}>
             <Dropdown controller={dropdownController}>
+                {!!headerComponent && (
+                    <div className={styles.customSlot} onClick={() => setIsOpen(true)}>
+                        {headerComponent}
+                    </div>
+                )}
                 <div
                     className={styles.menuContainer}
                     style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
@@ -265,9 +274,18 @@ const SearchableDropdown = ({
                     ) : (
                         <div className={styles.noResultsContainer}>
                             {inputValue ? (
-                                <span>
-                                    No matches for <strong> {inputValue}</strong>
-                                </span>
+                                !!noResultComponent ? (
+                                    <div
+                                        className={styles.customSlot}
+                                        onClick={() => setIsOpen(true)}
+                                    >
+                                        {noResultComponent}
+                                    </div>
+                                ) : (
+                                    <span>
+                                        No matches for <strong> {inputValue}</strong>
+                                    </span>
+                                )
                             ) : (
                                 'Start typing to search'
                             )}
