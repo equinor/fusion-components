@@ -5,6 +5,7 @@ import styles from './styles.less';
 import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
 import RotationInstances from './components/RotationInstances';
+import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
 type PositionCardProps = {
     position: Position;
@@ -25,9 +26,26 @@ type PositionCardProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
-    backgroundStyle?: any;
-    borderStyle?: any;
+    backgroundStyle?: string;
+    borderStyle?: string;
 };
+
+const useCardStyles = makeStyles((theme) =>
+    createStyles({
+        futureBakground: {
+            backgroundColor: theme.colors.interactive.success__highlight.getVariable('color'),
+        },
+        futureBorder: {
+            borderColor: theme.colors.interactive.success__resting.getVariable('color'),
+        },
+        pastBakground: {
+            backgroundColor: theme.colors.interactive.disabled__fill.getVariable('color'),
+        },
+        pastBorder: {
+            borderColor: theme.colors.interactive.disabled__text.getVariable('color'),
+        },
+    })
+);
 
 const PositionCard: React.FC<PositionCardProps> = ({
     position,
@@ -61,6 +79,20 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const isConsultant =
         instance && instance.assignedPerson && instance.assignedPerson.accountType === 'Consultant';
 
+    const cardStyles = useCardStyles();
+
+    const background = () => {
+        if (!!backgroundStyle) return backgroundStyle;
+        if (isFuture) return cardStyles.futureBakground;
+        if (isPast) return cardStyles.pastBakground;
+    };
+
+    const border = () => {
+        if (!!borderStyle) return borderStyle;
+        if (isFuture) return cardStyles.futureBorder;
+        if (isPast) return cardStyles.pastBorder;
+    };
+
     const containerClassNames = classNames(styles.context, useComponentDisplayClassNames(styles), {
         [styles.isSelected]: isSelected,
         [styles.isClickable]: !!onClick,
@@ -68,10 +100,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
         [styles.isConsultant]: isConsultant,
         [styles.isExternalHire]: isExternalHire,
         [styles.isLinked]: isLinked,
-        [styles.futurePosition]: isFuture,
-        [styles.pastPosition]: isPast,
-        [backgroundStyle]: !!backgroundStyle,
-        [borderStyle]: !!borderStyle,
+        [background()]: !!background(),
+        [border()]: !!border(),
     });
 
     const onClickHandler = useCallback(() => {
