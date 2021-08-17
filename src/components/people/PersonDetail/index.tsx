@@ -15,8 +15,26 @@ export type PersonDetailProps = {
     person?: PersonDetails;
     noPhoto?: boolean;
 };
+const isExternalHire = (person: PersonDetails) =>
+    !!(person.jobTitle && person.jobTitle.toLowerCase().startsWith('ext'));
 
-export default ({ personId, person, noPhoto }: PersonDetailProps) => {
+const getAccountTypeName = (person: PersonDetails): string => {
+    switch (person.accountType) {
+        case 'Consultant':
+            return 'Contractor/Enterprise';
+        case 'External':
+            return 'External/Affiliate';
+        case 'Employee':
+            if (isExternalHire(person)) {
+                return 'External hire/Consultant';
+            }
+            return 'Employee';
+        default:
+            return person.accountType;
+    }
+};
+
+const PersonDetail = ({ personId, person, noPhoto }: PersonDetailProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails | null>(null);
     const [presence, setPresence] = useState<PersonPresence | null>(null);
     const [isFetchingPresence, setIsFetchingPresence] = useState<boolean>(false);
@@ -97,7 +115,7 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
                                     />
                                 </div>
                             )}
-                            {isFetching ? <SkeletonBar /> : currentPerson.accountType}
+                            {isFetching ? <SkeletonBar /> : getAccountTypeName(currentPerson)}
                         </div>
 
                         <div className={styles.detailSection}>
@@ -138,3 +156,5 @@ export default ({ personId, person, noPhoto }: PersonDetailProps) => {
         </Fragment>
     );
 };
+
+export default PersonDetail;
