@@ -208,7 +208,11 @@ const SearchableDropdown = ({
                         placeholder={placeholder || 'Type to search...'}
                         label={label}
                         icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
-                        onIconAction={() => isOpen && setIsOpen(false)}
+                        onIconAction={(e) => {
+                            e.stopPropagation();
+                            setIsOpen(!isOpen);
+                            ref.current && ref.current.click && ref.current.click();
+                        }}
                         onClick={() => !isOpen && setIsOpen(true)}
                         value={selectedValue}
                         ref={inputRef}
