@@ -32,6 +32,16 @@ module.exports = merge(
     },
     {
         externals: {
+            '@equinor/fusion': {
+                commonjs: '@equinor/fusion',
+                commonjs2: '@equinor/fusion',
+                amd: '@equinor/fusion',
+            },
+            '@equinor/fusion-react-styles': {
+                commonjs: '@equinor/fusion-react-styles',
+                commonjs2: '@equinor/fusion-react-styles',
+                amd: '@equinor/fusion-react-styles',
+            },
             react: {
                 commonjs: 'react',
                 commonjs2: 'react',
@@ -41,11 +51,6 @@ module.exports = merge(
                 commonjs: 'react-dom',
                 commonjs2: 'react-dom',
                 amd: 'react-dom',
-            },
-            '@equinor/fusion': {
-                commonjs: '@equinor/fusion',
-                commonjs2: '@equinor/fusion',
-                amd: '@equinor/fusion',
             },
             'react-router-dom': {
                 commonjs: 'react-router-dom',

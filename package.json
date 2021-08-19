@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "2.2.28",
+    "version": "2.2.29-exclude-jss.0",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -121,6 +121,7 @@
         "webpack-merge": "^5.7.3"
     },
     "peerDependencies": {
+        "@equinor/fusion-react-styles": "^3.2.4",
         "@equinor/fusion": "^3.2.4",
         "history": "^4.9.0",
         "pixi.js-legacy": "^5.3.7",
