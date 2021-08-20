@@ -6,6 +6,7 @@ import {
     useMemo,
     FocusEvent,
     MutableRefObject,
+    MouseEvent,
 } from 'react';
 
 import {
@@ -192,6 +193,15 @@ const SearchableDropdown = ({
             [isOpen, overlayContainer]
         );
 
+        const handleOnIconAction = useCallback(
+            (e: MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+                ref.current && ref.current.click && ref.current.click();
+            },
+            [isOpen]
+        );
+
         return (
             <>
                 {!isOpen && selectedComponent && selectedItem ? (
@@ -208,11 +218,7 @@ const SearchableDropdown = ({
                         placeholder={placeholder || 'Type to search...'}
                         label={label}
                         icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
-                        onIconAction={(e) => {
-                            e.stopPropagation();
-                            setIsOpen(!isOpen);
-                            ref.current && ref.current.click && ref.current.click();
-                        }}
+                        onIconAction={(e) => handleOnIconAction(e)}
                         onClick={() => !isOpen && setIsOpen(true)}
                         value={selectedValue}
                         ref={inputRef}

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import styles from './styles.less';
-import { FC, ReactNode, MouseEvent, useState, useRef } from 'react';
+import { FC, ReactNode, MouseEvent, useState, useRef, useCallback } from 'react';
 
 type ScrimProps = {
     children: ReactNode;
@@ -17,14 +17,17 @@ const Scrim: FC<ScrimProps> = ({ children, show, onClick }) => {
         [styles.show]: show,
     });
 
-    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-        if (
-            (mouseUpTarget as Node).isEqualNode(mouseDownTarget as Node) &&
-            (ref.current as Node).isEqualNode(e.target as Node)
-        ) {
-            onClick(e);
-        }
-    };
+    const handleClick = useCallback(
+        (e: MouseEvent<HTMLDivElement>) => {
+            if (
+                (mouseUpTarget as Node).isEqualNode(mouseDownTarget as Node) &&
+                (ref.current as Node).isEqualNode(e.target as Node)
+            ) {
+                onClick(e);
+            }
+        },
+        [onClick, mouseUpTarget, mouseDownTarget]
+    );
     return (
         <div
             ref={ref}

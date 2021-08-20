@@ -112,12 +112,15 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
         setMaxHeight(`calc(100vh - ${dropdownRect.top}px - (var(--grid-unit) * 3px))`);
     }, [rect, isOpen]);
 
-    const handleClick = (e) => {
-        if (outerRef.current.contains(e.target) || dropdownRef.current.contains(e.target)) {
-            return;
-        }
-        close();
-    };
+    const handleClick = useCallback(
+        (e) => {
+            if (outerRef.current.contains(e.target) || dropdownRef.current.contains(e.target)) {
+                return;
+            }
+            close();
+        },
+        [close]
+    );
 
     useEffect(() => {
         if (isOpen) {
@@ -129,7 +132,7 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
         return () => {
             document.removeEventListener('click', handleClick);
         };
-    }, [isOpen]);
+    }, [isOpen, handleClick]);
     return (
         <div ref={outerRef}>
             {node}
