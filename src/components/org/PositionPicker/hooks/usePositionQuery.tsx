@@ -1,10 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useFusionContext, Position } from '@equinor/fusion';
+import { isAfter, isBefore } from 'date-fns';
 
 const usePositionQuery = (
     selectedPosition: Position | null,
     projectId: string,
-    contractId?: string
+    contractId?: string,
+    allowFuture?: boolean,
+    allowPast?: boolean
 ): [Error | null, boolean, Position[], (query: string) => void] => {
     const [error, setError] = useState(null);
     const [isFetching, setIsFetching] = useState(false);
@@ -56,18 +59,43 @@ const usePositionQuery = (
             setFilteredPositions(
                 positions
                     .filter((position) =>
-                        queryParts.every(
-                            (query) =>
+                        queryParts.every((query) => {
+                            const hasActiveInstance = position.instances.some(
+                                (i) =>
+                                    now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
+                            );
+                            const activeInstanceMatches = position.instances.some(
+                                (i) =>
+                                    now >= i.appliesFrom.getTime() &&
+                                    now <= i.appliesTo.getTime() &&
+                                    i.assignedPerson &&
+                                    i.assignedPerson.name.toLowerCase().includes(query)
+                            );
+
+                            const immediateFutureInstance = position.instances
+                                .sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime())
+                                .filter((x) => isAfter(x.appliesFrom, now))[0];
+                            const hasImmediateFutureInstance =
+                                immediateFutureInstance?.assignedPerson?.name
+                                    .toLowerCase()
+                                    .includes(query);
+
+                            const immediatePastInstance = position.instances
+                                .sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime())
+                                .filter((x) => isBefore(x.appliesTo, now))[0];
+                            const hasImmediatePastInstance =
+                                immediatePastInstance?.assignedPerson?.name
+                                    .toLowerCase()
+                                    .includes(query);
+
+                            return (
                                 (position.name || '').toLowerCase().includes(query) ||
                                 (position.externalId || '').toLowerCase().includes(query) ||
-                                position.instances.some(
-                                    (i) =>
-                                        now >= i.appliesFrom.getTime() &&
-                                        now <= i.appliesTo.getTime() &&
-                                        i.assignedPerson &&
-                                        i.assignedPerson.name.toLowerCase().includes(query)
-                                )
-                        )
+                                activeInstanceMatches ||
+                                (!hasActiveInstance && allowFuture && hasImmediateFutureInstance) ||
+                                (!hasActiveInstance && allowPast && hasImmediatePastInstance)
+                            );
+                        })
                     )
                     .slice(0, 10)
             );
