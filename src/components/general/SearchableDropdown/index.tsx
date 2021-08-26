@@ -6,6 +6,7 @@ import {
     useMemo,
     FocusEvent,
     MutableRefObject,
+    MouseEvent,
 } from 'react';
 
 import {
@@ -186,10 +187,19 @@ const SearchableDropdown = ({
         const overlayContainer = useOverlayContainer();
         const handleBlur = useCallback(
             (e: FocusEvent<HTMLInputElement>) => {
-                if (overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
+                if (!overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
                 setIsOpen(false, 250);
             },
             [isOpen, overlayContainer]
+        );
+
+        const handleOnIconAction = useCallback(
+            (e: MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+                ref.current && ref.current.click && ref.current.click();
+            },
+            [isOpen]
         );
 
         return (
@@ -208,7 +218,7 @@ const SearchableDropdown = ({
                         placeholder={placeholder || 'Type to search...'}
                         label={label}
                         icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
-                        onIconAction={() => isOpen && setIsOpen(false)}
+                        onIconAction={(e) => handleOnIconAction(e)}
                         onClick={() => !isOpen && setIsOpen(true)}
                         value={selectedValue}
                         ref={inputRef}
@@ -239,7 +249,8 @@ const SearchableDropdown = ({
         }
     }, [isOpen]);
 
-    const containerRef = dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
+    const containerRef =
+        dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     const hasResults = useMemo(() => {
         return (
