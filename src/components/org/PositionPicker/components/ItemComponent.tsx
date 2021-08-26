@@ -1,16 +1,16 @@
 import ItemComponentProps from './itemComponentProps';
 import styles from '../styles.less';
 import { useMemo, FC } from 'react';
+import { usePositionPickerContext } from '../positionPickerContext';
+import usePositionInstance from '../hooks/usePositionInstance';
 
 const ItemComponent: FC<ItemComponentProps> = ({ item }) => {
+    const { allowFuture, allowPast } = usePositionPickerContext();
+    const { instance } = usePositionInstance(item.position?.instances, allowFuture, allowPast);
+
     if (item.key === 'empty') {
         return <div>{item.title}</div>;
     }
-
-    const now = Date.now();
-    const activeInstance = item.position.instances.find(
-        (i) => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
-    );
 
     const positionName = useMemo(() => {
         if (!item.position.externalId) {
@@ -24,9 +24,7 @@ const ItemComponent: FC<ItemComponentProps> = ({ item }) => {
         <div className={styles.cardContainer}>
             <div className={styles.positionName}>{positionName}</div>
             <div className={styles.assignedPersonName}>
-                {activeInstance && activeInstance.assignedPerson
-                    ? activeInstance.assignedPerson.name
-                    : 'TNB'}
+                {instance?.assignedPerson ? instance.assignedPerson.name : 'TNB'}
             </div>
         </div>
     );

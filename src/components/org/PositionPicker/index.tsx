@@ -8,6 +8,7 @@ import {
     singlePositionToDropdownOption,
     positionsToDropdownOption,
 } from './positionToDropdownSection';
+import { PositionPickerContex } from './positionPickerContext';
 
 type PositionPickerProps = {
     initialPosition?: Position;
@@ -17,6 +18,8 @@ type PositionPickerProps = {
     selectedPosition: Position | null;
     label?: string;
     placeholder?: string;
+    allowFuture?: boolean;
+    allowPast?: boolean;
 };
 
 const PositionPicker = ({
@@ -27,12 +30,16 @@ const PositionPicker = ({
     contractId,
     label,
     placeholder,
+    allowFuture,
+    allowPast,
 }: PositionPickerProps) => {
     const [options, setOptions] = useState<SearchableDropdownOption[]>([]);
     const [error, isFetching, filteredPositions, search] = usePositionQuery(
         selectedPosition,
         projectId,
-        contractId
+        contractId,
+        allowFuture,
+        allowPast
     );
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -62,15 +69,17 @@ const PositionPicker = ({
     );
 
     return (
-        <SearchableDropdown
-            options={options}
-            onSelect={handleSelect}
-            itemComponent={ItemComponent}
-            asideComponent={AsideComponent}
-            onSearchAsync={setSearchQuery}
-            label={label}
-            placeholder={placeholder || 'Select position'}
-        />
+        <PositionPickerContex.Provider value={{ allowFuture: allowFuture, allowPast: allowPast }}>
+            <SearchableDropdown
+                options={options}
+                onSelect={handleSelect}
+                itemComponent={ItemComponent}
+                asideComponent={AsideComponent}
+                onSearchAsync={setSearchQuery}
+                label={label}
+                placeholder={placeholder || 'Select position'}
+            />
+        </PositionPickerContex.Provider>
     );
 };
 
