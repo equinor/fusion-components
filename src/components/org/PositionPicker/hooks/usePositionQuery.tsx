@@ -1,6 +1,51 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useFusionContext, Position } from '@equinor/fusion';
 import { isAfter, isBefore } from 'date-fns';
+import {
+    hasNameMatchInQuery,
+    isInstanceCurrent,
+    sortInstancesByFrom,
+    sortInstancesByTo,
+} from '../utils';
+import useFetchPositions from './useFetchPositions';
+
+const hasPositionQueryMatch = (
+    position: Position,
+    query: string,
+    allowFuture: boolean,
+    allowPast: boolean
+) => {
+    const now = Date.now();
+    const hasActiveInstance = position.instances.some(isInstanceCurrent);
+
+    const immediateFutureInstance = sortInstancesByFrom(position.instances).filter((x) =>
+        isAfter(x.appliesFrom, now)
+    )[0];
+
+    // Checks for match in assigned person name for closest future instance
+    const hasImmediateFutureInstance = hasNameMatchInQuery(immediateFutureInstance, query);
+    const immediatePastInstance = sortInstancesByTo(position.instances).filter((x) =>
+        isBefore(x.appliesTo, now)
+    )[0];
+
+    // Checks for match in assigned person name for closest past instance
+    const hasImmediatePastInstance = hasNameMatchInQuery(immediatePastInstance, query);
+    const hasActiveInstanceMatch = position.instances.some(
+        (i) => isInstanceCurrent(i) && hasNameMatchInQuery(i, query)
+    );
+    const hasPositionNameMatch = (position.name || '').toLowerCase().includes(query);
+    const hasExternalIdMatch = (position.externalId || '').toLowerCase().includes(query);
+    const hasImmediateFutureMatch = !hasActiveInstance && allowFuture && hasImmediateFutureInstance;
+    const hasImmediatePastMatch = !hasActiveInstance && allowPast && hasImmediatePastInstance;
+
+    return (
+        hasActiveInstanceMatch ||
+        hasPositionNameMatch ||
+        hasExternalIdMatch ||
+        hasImmediateFutureMatch ||
+        hasImmediatePastMatch
+    );
+};
 
 const usePositionQuery = (
     selectedPosition: Position | null,
@@ -9,35 +54,12 @@ const usePositionQuery = (
     allowFuture?: boolean,
     allowPast?: boolean
 ): [Error | null, boolean, Position[], (query: string) => void] => {
-    const [error, setError] = useState(null);
-    const [isFetching, setIsFetching] = useState(false);
     const [query, setQuery] = useState('');
-    const [positions, setPositions] = useState<Position[]>([]);
     const [filteredPositions, setFilteredPositions] = useState<Position[]>([]);
-
-    const fusionContext = useFusionContext();
 
     const canQuery = (query: string) => !!query && query.length > 2;
 
-    const performFetchAsync = useCallback(async (projectId: string, contractId: string) => {
-        return contractId
-            ? fusionContext.http.apiClients.org.getContractPositionsAsync(projectId, contractId)
-            : fusionContext.http.apiClients.org.getPositionsAsync(projectId);
-    }, []);
-
-    const fetchPositions = useCallback(async (projectId: string, contractId?: string) => {
-        setPositions([]);
-        setIsFetching(true);
-        try {
-            const response = await performFetchAsync(projectId, contractId);
-            setPositions(response.data);
-            setIsFetching(false);
-        } catch (e) {
-            setError(e);
-            setIsFetching(false);
-            setPositions([]);
-        }
-    }, []);
+    const { error, fetchPositions, isFetching, positions } = useFetchPositions();
 
     useEffect(() => {
         fetchPositions(projectId, contractId);
@@ -53,53 +75,17 @@ const usePositionQuery = (
     const search = (query: string) => {
         const queryParts = query.toLowerCase().split(' ');
         setQuery(query);
+        if (!canQuery(query)) return;
 
-        if (canQuery(query)) {
-            const now = Date.now();
-            setFilteredPositions(
-                positions
-                    .filter((position) =>
-                        queryParts.every((query) => {
-                            const hasActiveInstance = position.instances.some(
-                                (i) =>
-                                    now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
-                            );
-                            const activeInstanceMatches = position.instances.some(
-                                (i) =>
-                                    now >= i.appliesFrom.getTime() &&
-                                    now <= i.appliesTo.getTime() &&
-                                    i.assignedPerson &&
-                                    i.assignedPerson.name.toLowerCase().includes(query)
-                            );
-
-                            const immediateFutureInstance = position.instances
-                                .sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime())
-                                .filter((x) => isAfter(x.appliesFrom, now))[0];
-                            const hasImmediateFutureInstance =
-                                immediateFutureInstance?.assignedPerson?.name
-                                    .toLowerCase()
-                                    .includes(query);
-
-                            const immediatePastInstance = position.instances
-                                .sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime())
-                                .filter((x) => isBefore(x.appliesTo, now))[0];
-                            const hasImmediatePastInstance =
-                                immediatePastInstance?.assignedPerson?.name
-                                    .toLowerCase()
-                                    .includes(query);
-
-                            return (
-                                (position.name || '').toLowerCase().includes(query) ||
-                                (position.externalId || '').toLowerCase().includes(query) ||
-                                activeInstanceMatches ||
-                                (!hasActiveInstance && allowFuture && hasImmediateFutureInstance) ||
-                                (!hasActiveInstance && allowPast && hasImmediatePastInstance)
-                            );
-                        })
-                    )
-                    .slice(0, 10)
-            );
-        }
+        const now = Date.now();
+        const filteredPositions = positions
+            .filter((position) =>
+                queryParts.every((query) =>
+                    hasPositionQueryMatch(position, query, allowFuture, allowPast)
+                )
+            )
+            .slice(0, 10);
+        setFilteredPositions(filteredPositions);
     };
 
     return [error, isFetching, filteredPositions, search];

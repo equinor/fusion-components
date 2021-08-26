@@ -1,16 +1,15 @@
 import { PositionInstance } from '@equinor/fusion';
 import { isAfter, isBefore } from 'date-fns';
 import { useMemo } from 'react';
+import { isInstanceCurrent, sortInstancesByFrom, sortInstancesByTo } from '../utils';
 
-export default (
+const usePositionInstance = (
     instances: PositionInstance[] = [],
     allowFuture: boolean,
     allowPast: boolean
 ): { instance: PositionInstance } => {
     const now = Date.now();
-    const activeInstance = instances.find(
-        (i) => now >= i.appliesFrom.getTime() && now <= i.appliesTo.getTime()
-    );
+    const activeInstance = useMemo(() => instances.find(isInstanceCurrent), [instances]);
 
     /**
      * Returns current active position instance if it exists. If not,
@@ -21,19 +20,17 @@ export default (
     const instance = useMemo(() => {
         if (activeInstance) return activeInstance;
 
-        const instancesSortedByFrom = [...instances].sort(
-            (a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime()
-        );
+        const instancesSortedByFrom = sortInstancesByFrom(instances);
         const futureInstance = instancesSortedByFrom.filter((x) => isAfter(x.appliesFrom, now))[0];
 
-        const instancesSortedByTo = [...instances].sort(
-            (a, b) => b.appliesTo.getTime() - a.appliesTo.getTime()
-        );
+        const instancesSortedByTo = sortInstancesByTo(instances);
         const pastInstance = instancesSortedByTo.filter((x) => isBefore(x.appliesTo, now))[0];
 
         if (allowFuture && futureInstance) return futureInstance;
         if (allowPast && pastInstance) return pastInstance;
-    }, [instances, activeInstance]);
+    }, [instances, activeInstance, allowFuture, allowPast]);
 
     return { instance };
 };
+
+export default usePositionInstance;
