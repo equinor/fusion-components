@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import { useFusionContext, Position } from '@equinor/fusion';
+import { useState, useEffect } from 'react';
+import { Position } from '@equinor/fusion';
 import { isAfter, isBefore } from 'date-fns';
 import {
     hasNameMatchInQuery,

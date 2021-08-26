@@ -1,17 +1,20 @@
-import { Position, useFusionContext } from '@equinor/fusion';
+import { Position, useApiClients } from '@equinor/fusion';
 import { useCallback, useState } from 'react';
 
 const useFetchPositions = () => {
     const [error, setError] = useState(null);
     const [isFetching, setIsFetching] = useState(false);
     const [positions, setPositions] = useState<Position[]>([]);
-    const fusionContext = useFusionContext();
+    const apiClients = useApiClients();
 
-    const performFetchAsync = useCallback(async (projectId: string, contractId: string) => {
-        return contractId
-            ? fusionContext.http.apiClients.org.getContractPositionsAsync(projectId, contractId)
-            : fusionContext.http.apiClients.org.getPositionsAsync(projectId);
-    }, []);
+    const performFetchAsync = useCallback(
+        async (projectId: string, contractId: string) => {
+            return contractId
+                ? apiClients.org.getContractPositionsAsync(projectId, contractId)
+                : apiClients.org.getPositionsAsync(projectId);
+        },
+        [apiClients]
+    );
 
     const fetchPositions = useCallback(
         async (projectId: string, contractId?: string) => {
