@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo } from 'react';
+import { ReactNode, useCallback, useMemo, CSSProperties } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
 import styles from './styles.less';
@@ -6,6 +6,11 @@ import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
 import RotationInstances from './components/RotationInstances';
 import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
+
+type CustomCardStyles = {
+    backgroundStyle?: CSSProperties;
+    borderStyle?: CSSProperties;
+};
 
 type PositionCardProps = {
     position: Position;
@@ -26,26 +31,38 @@ type PositionCardProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
-    backgroundStyle?: string;
-    borderStyle?: string;
-};
+} & CustomCardStyles;
 
-const useCardStyles = makeStyles((theme) =>
-    createStyles({
-        futureBakground: {
-            backgroundColor: theme.colors.interactive.success__highlight.getVariable('color'),
-        },
-        futureBorder: {
-            borderColor: theme.colors.interactive.success__resting.getVariable('color'),
-        },
-        pastBakground: {
-            backgroundColor: theme.colors.interactive.disabled__fill.getVariable('color'),
-        },
-        pastBorder: {
-            borderColor: theme.colors.interactive.disabled__text.getVariable('color'),
-        },
-    })
-);
+const useCardStyles = ({ backgroundStyle, borderStyle }: CustomCardStyles) =>
+    makeStyles((theme) =>
+        createStyles({
+            container: {
+                backgroundColor: 'var(--color-white)',
+                border: '2px solid var(--color-black-alt4)',
+                '&$futureBackground': {
+                    backgroundColor:
+                        theme.colors.interactive.success__highlight.getVariable('color'),
+                },
+                '&$futureBorder': {
+                    borderColor: theme.colors.interactive.success__resting.getVariable('color'),
+                },
+                '&$pastBackground': {
+                    backgroundColor: theme.colors.interactive.disabled__fill.getVariable('color'),
+                },
+                '&$pastBorder': {
+                    borderColor: theme.colors.interactive.disabled__text.getVariable('color'),
+                },
+                '&$customBackgroundStyle': backgroundStyle,
+                '&$customBorderStyle': borderStyle,
+            },
+            futureBackground: {},
+            futureBorder: {},
+            pastBackground: {},
+            pastBorder: {},
+            customBackgroundStyle: {},
+            customBorderStyle: {},
+        })
+    )();
 
 const PositionCard: React.FC<PositionCardProps> = ({
     position,
@@ -79,30 +96,36 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const isConsultant =
         instance && instance.assignedPerson && instance.assignedPerson.accountType === 'Consultant';
 
-    const cardStyles = useCardStyles();
+    const cardStyles = useCardStyles({ backgroundStyle, borderStyle });
 
     const background = () => {
-        if (!!backgroundStyle) return backgroundStyle;
-        if (isFuture) return cardStyles.futureBakground;
-        if (isPast) return cardStyles.pastBakground;
+        if (!!backgroundStyle) return cardStyles.customBackgroundStyle;
+        if (isFuture) return cardStyles.futureBackground;
+        if (isPast) return cardStyles.pastBackground;
     };
 
     const border = () => {
-        if (!!borderStyle) return borderStyle;
+        if (!!borderStyle) return cardStyles.customBorderStyle;
         if (isFuture) return cardStyles.futureBorder;
         if (isPast) return cardStyles.pastBorder;
     };
 
-    const containerClassNames = classNames(styles.context, useComponentDisplayClassNames(styles), {
-        [styles.isSelected]: isSelected,
-        [styles.isClickable]: !!onClick,
-        [styles.isExternal]: isExternal,
-        [styles.isConsultant]: isConsultant,
-        [styles.isExternalHire]: isExternalHire,
-        [styles.isLinked]: isLinked,
-        [background()]: !!background(),
-        [border()]: !!border(),
-    });
+    const containerClassNames = classNames(
+        styles.context,
+        cardStyles.container,
+        useComponentDisplayClassNames(styles),
+        {
+            [styles.isSelected]: isSelected,
+            [styles.isClickable]: !!onClick,
+            [styles.isExternal]: isExternal,
+            [styles.isConsultant]: isConsultant,
+            [styles.isExternalHire]: isExternalHire,
+            [styles.isLinked]: isLinked,
+            [styles.clear]: true,
+            [background()]: !!background(),
+            [border()]: !!border(),
+        }
+    );
 
     const onClickHandler = useCallback(() => {
         if (onClick) {
