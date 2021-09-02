@@ -7,6 +7,14 @@ import PositionInstanceComponent from './components/PositionInstance';
 import RotationInstances from './components/RotationInstances';
 import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
+export type ChildCountTypeKey = 'positions' | 'fte' | 'uniquePersons';
+
+export const childCountTypeNameMapping: Record<ChildCountTypeKey, string> = {
+    positions: 'Positions',
+    fte: 'Full time equivalents (FTE)',
+    uniquePersons: 'Unique persons',
+};
+
 type CustomCardStyles = {
     backgroundStyle?: CSSProperties;
     borderStyle?: CSSProperties;
@@ -25,6 +33,7 @@ type PositionCardProps = {
     isPast?: boolean;
     isLinked?: boolean;
     childCount?: number;
+    childCountType?: ChildCountTypeKey;
     selectedDate?: Date;
     showRotation?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
@@ -79,6 +88,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     isPast,
     isLinked,
     childCount,
+    childCountType,
     selectedDate,
     showRotation,
     personPhotoComponent,
@@ -175,6 +185,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     onClick={onClick}
                     onExpand={onExpand}
                     childCount={childCount}
+                    childCountType={childCountType}
                     rotationInstances={rotatingInstances}
                     selectedDate={selectedDate}
                 />

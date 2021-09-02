@@ -14,7 +14,7 @@ const position: Position = {
         id: '3',
         name: 'Engineer',
         roleDescription: '',
-        projectType:'',
+        projectType: '',
         subDiscipline: '',
     },
     externalId: '800',
@@ -235,7 +235,7 @@ const tbnPosition: Position = {
         id: '3',
         name: 'Engineer',
         roleDescription: '',
-        projectType:'',
+        projectType: '',
         subDiscipline: '',
     },
     externalId: '800',
@@ -248,7 +248,7 @@ const tbnPosition: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
-    isTaskOwner: false
+    isTaskOwner: false,
 };
 
 const positions = {
@@ -299,6 +299,7 @@ const InteractiveStory = () => {
             isSelected={isSelected}
             onExpand={action('onExpand')}
             childCount={number('Child count', 2)}
+            childCountType={'positions'}
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
             selectedDate={new Date('2022-09-25T00:00:00')}

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import styles from '../styles.less';
 import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
 import PositionTimeline from './PositionTimeline';
+import { ChildCountTypeKey, childCountTypeNameMapping } from '..';
 
 type PositionInstanceProps = {
     position: Position;
@@ -17,6 +18,7 @@ type PositionInstanceProps = {
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     childCount?: number;
+    childCountType?: ChildCountTypeKey;
     rotationInstances: PositionInstance[];
     selectedDate?: Date;
 };
@@ -32,6 +34,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     onClick,
     onExpand,
     childCount,
+    childCountType,
     rotationInstances,
     selectedDate,
 }) => {
@@ -45,11 +48,13 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
 
+    const childrenTooltipName = childCountTypeNameMapping[childCountType] || 'positions';
+
     const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const childrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
+    const childrenTooltipRef = useTooltipRef(`${childCount} ${childrenTooltipName}`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
