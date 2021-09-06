@@ -16,7 +16,7 @@ type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 export type StandardSideSheetProps = ResizablePaneOptions & {
     id: string;
-    title?: string;
+    title?: ReactNode;
     isOpen: boolean;
     onClose: (isOpen: boolean) => void;
     screenPlacement?: 'right' | 'left';
