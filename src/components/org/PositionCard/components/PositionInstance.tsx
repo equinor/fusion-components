@@ -48,6 +48,8 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
 
+    const allowZeroCount = childCountType === 'uniquePersons';
+
     const childrenTooltipName = childCountTypeNameMapping[childCountType] || 'positions';
 
     const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
@@ -127,7 +129,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
                     {position.externalId}
                 </div>
             )}
-            {onExpand && childCount !== undefined && childCount > 0 && (
+            {onExpand && childCount !== undefined && (childCount > 0 || allowZeroCount) && (
                 <div className={styles.expandButton}>
                     <IconButton ref={childrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>
