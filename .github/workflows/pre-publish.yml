@@ -41,14 +41,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Commit changes
-        run: |
-            git add package*.json 
-            git commit -m'chore(prerelease): bumped version with tag ${{ github.event.inputs.tag }}'
-            git push
-        env:
-          GH_TOKEN: ${{ github.token }}
-
       - name: Release packages
         run: npm publish --tag ${{ github.event.inputs.tag }} --access public
         env:
