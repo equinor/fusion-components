@@ -1,4 +1,4 @@
-import React, { useContext, PropsWithChildren, useMemo } from 'react';
+import { useContext, PropsWithChildren } from 'react';
 
 import { ErrorMessage } from '@equinor/fusion-components';
 
@@ -16,21 +16,22 @@ type PowerBIReportErrorBoundryProps = PropsWithChildren<{}>;
 const compareArray = (a: ApiError[], b: ApiError[]): boolean =>
     a.length === b.length && a.every((value, index) => value.action === b[index].action);
 
-export const PowerBIReportErrorBoundry: React.FC<PowerBIReportErrorBoundryProps> = (
+export const PowerBIReportErrorBoundary: React.FC<PowerBIReportErrorBoundryProps> = (
     props: PowerBIReportErrorBoundryProps
 ) => {
     const { store } = useContext(context);
+
     const id = useSelector(store, 'id');
     const errors = useSelector(store, 'errors', compareArray);
-    if (errors.find(({ error }) => error.statusCode === 403)) {
-        return <PowerBIReportInfo id={id} />;
+    if (errors?.find(({ error }) => error.statusCode === 403)) {
+        return <PowerBIReportInfo id={id || ''} />;
     }
-    if (errors.length) {
+    if (errors?.length) {
         const { title, message, type } = processActionError(errors[0]);
         return <ErrorMessage hasError={true} title={title} message={message} errorType={type} />;
     }
-    console.log(errors);
+
     return <>{props.children}</>;
 };
 
-export default PowerBIReportErrorBoundry;
+export default PowerBIReportErrorBoundary;

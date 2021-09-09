@@ -1,11 +1,11 @@
-import { ErrorTypes } from '@equinor/fusion-components';
+import { ErrorTypes } from '@equinor/fusion-components/dist/components/general/ErrorMessage';
 
 export type ErrrorProperties = {
-  title?: string;
-  message?: string;
-  type?: ErrorTypes;
+    title?: string;
+    message?: string;
+    type?: ErrorTypes;
 };
 
-export { PowerBIReportErrorBoundry } from './PowerBIReportErrorBoundry';
+export { PowerBIReportErrorBoundary } from './PowerBIReportErrorBoundary';
 
-export { default } from './PowerBIReportErrorBoundry';
+export { default } from './PowerBIReportErrorBoundary';

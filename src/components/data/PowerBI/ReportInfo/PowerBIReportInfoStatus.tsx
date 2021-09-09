@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import { useSelector } from '@equinor/fusion/lib/epic';
 
@@ -22,8 +22,8 @@ const statusText = (status: Status) => {
 
 export const PowerBIInfoStatus: FunctionComponent<{ store: Store }> = ({ store }) => {
     const status = useSelector(store, 'status');
-    const title = status.map(statusText).shift();
-    return status.length ? <Spinner title={title} floating centered /> : null;
+    const title = status?.map(statusText).shift();
+    return status?.length ? <Spinner title={title} floating centered /> : null;
 };
 
 export default PowerBIInfoStatus;

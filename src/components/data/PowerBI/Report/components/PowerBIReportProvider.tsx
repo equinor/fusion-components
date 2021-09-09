@@ -1,8 +1,20 @@
-import React, { useEffect, PropsWithChildren, FunctionComponent, useRef, useMemo } from 'react';
+import {
+    MutableRefObject,
+    useEffect,
+    PropsWithChildren,
+    FunctionComponent,
+    useRef,
+    useMemo,
+} from 'react';
 
 import { useCurrentContext, useTelemetryLogger, useApiClients } from '@equinor/fusion';
 
-import { context, PowerBIEmbedComponent, PowerBIEmbedEventEntry } from '../context';
+import {
+    context,
+    PowerBIEmbedComponent,
+    PowerBIEmbedEventEntry,
+    PowerBIReportContext,
+} from '../context';
 import { Subject, Subscription } from 'rxjs';
 import PowerBITelemetryObserver from '../telemetry/observer';
 import { createStore, actions } from '../store';
@@ -13,18 +25,26 @@ type Props = PropsWithChildren<{ id: string; hasContext: boolean }>;
 
 const { Provider } = context;
 
-export const PowerBIReportProvider: FunctionComponent<Props> = ({ children, id, hasContext }: Props) => {
+export const PowerBIReportProvider: FunctionComponent<Props> = ({
+    children,
+    id,
+    hasContext,
+}: Props) => {
     const clients = useApiClients();
     const store = useMemo(() => createStore(id, clients), [id, clients]);
 
-    const component = useRef<PowerBIEmbedComponent>(null);
+    const component = useRef<PowerBIEmbedComponent | undefined>(undefined);
 
     const logger = useTelemetryLogger();
+
     const metrics = useMemo(() => new PowerBITelemetryObserver(store, logger), [store, logger]);
 
     const event$ = useMemo(() => new Subject<PowerBIEmbedEventEntry>(), [store]);
 
-    const value = useMemo(() => ({ store, event$, metrics, component }), [store, event$, metrics, component]);
+    const value = useMemo<PowerBIReportContext>(
+        () => ({ store, event$, metrics, component }),
+        [store, event$, metrics, component]
+    );
 
     const currentContext = useCurrentContext();
     const rls = useMemo(() => {
@@ -44,8 +64,7 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({ children, id, 
             store.state$
                 .pipe(
                     distinctUntilKeyChanged('hasContextAccess'),
-                    filter((x) => x.hasContextAccess),
-                    tap((x) => console.log(12, x))
+                    filter((x) => Boolean(x.hasContextAccess))
                 )
                 .subscribe(() => store.requestEmbedInfo())
         );

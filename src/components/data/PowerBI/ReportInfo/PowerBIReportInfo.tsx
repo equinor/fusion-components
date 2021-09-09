@@ -27,14 +27,13 @@ export const PowerBIReportInfo: FunctionComponent<Props> = ({
 }: Props) => {
     const clients = useApiClients();
     const store = useMemo<Store>(() => {
-        console.log('creating new store');
         return createStore(id, { clients });
     }, [id, clients]);
     const initialized = useSelector(store, 'initialized');
 
     useEffect(() => {
-        store.action$.subscribe(a => console.log(a));
-        store.state$.subscribe(a => console.log(a));
+        store.action$.subscribe((a) => console.log(a));
+        store.state$.subscribe((a) => console.log(a));
         return store.initialize();
     }, [store]);
 
@@ -49,7 +48,12 @@ export const PowerBIReportInfo: FunctionComponent<Props> = ({
         <div className={styles.reportErroMessage}>
             <div className={styles.container}>
                 <h2 className={styles.header}>{header}</h2>
-                <div className={classNames(useElevationClassName(3), styles.restrictedAccessContainer)}>
+                <div
+                    className={classNames(
+                        useElevationClassName(3),
+                        styles.restrictedAccessContainer
+                    )}
+                >
                     <h2>{subHeader}</h2>
                     {accessDescription && <MarkdownViewer markdown={accessDescription} />}
                     <div className={styles.reportInfoContainer}>
@@ -73,6 +77,5 @@ export const PowerBIReportInfo: FunctionComponent<Props> = ({
         </div>
     );
 };
-
 
 export default PowerBIReportInfo;
