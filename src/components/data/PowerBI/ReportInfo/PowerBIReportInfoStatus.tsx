@@ -4,8 +4,8 @@ import { useSelector } from '@equinor/fusion/lib/epic';
 
 import { Spinner } from '@equinor/fusion-components';
 
-import { Status } from './state';
-import Store from './store';
+import { Status } from './store/state';
+import Store from './store/store';
 
 const statusText = (status: Status) => {
     switch (status) {

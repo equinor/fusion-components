@@ -5,7 +5,7 @@ import { useSelector } from '@equinor/fusion/lib/epic';
 
 import { MarkdownViewer, PersonCard, useElevationClassName } from '@equinor/fusion-components';
 
-import Store, { createStore } from './store';
+import Store, { createStore } from './store/store';
 
 import { PowerBIInfoStatus } from './PowerBIReportInfoStatus';
 import { PowerBIInfoUserIdentity } from './PowerBIUserIdentity';
@@ -32,8 +32,6 @@ export const PowerBIReportInfo: FunctionComponent<Props> = ({
     const initialized = useSelector(store, 'initialized');
 
     useEffect(() => {
-        store.action$.subscribe((a) => console.log(a));
-        store.state$.subscribe((a) => console.log(a));
         return store.initialize();
     }, [store]);
 
