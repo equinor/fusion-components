@@ -1,14 +1,11 @@
-import React from 'react';
-
+import { FC, MutableRefObject, useEffect } from 'react';
 import { Subscription } from 'rxjs';
 import { pluck, distinctUntilChanged, filter } from 'rxjs/operators';
 
 import { PowerBIReportContext } from '../Report';
 
-export const Debugger: React.FC<{ context: React.MutableRefObject<PowerBIReportContext | undefined> }> = ({
-    context,
-}) => {
-    React.useEffect(() => {
+export const Debugger: FC<{ context: MutableRefObject<PowerBIReportContext | undefined> }> = ({ context }) => {
+    useEffect(() => {
         if (!context.current) return;
         const { store, metrics, event$ } = context.current;
         const sub = new Subscription();

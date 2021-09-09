@@ -1,25 +1,24 @@
-import * as React from 'react';
-
 import { IBasicFilter } from 'powerbi-models';
+import { useState, useMemo, useRef } from 'react';
 
 import { Button } from '../../../..';
 import { PowerBIReportContext, PowerBI } from '../Report';
 import { Debugger } from './debugger';
 
 const filterz: IBasicFilter = {
-  $schema: 'http://powerbi.com/product/schema#basic',
-  target: {
-      table: 'Dim_NCR_Open_Closed',
-      column: 'NCRState',
-  },
-  filterType: 1,
-  operator: 'In',
-  values: ['Closed'],
+    $schema: 'http://powerbi.com/product/schema#basic',
+    target: {
+        table: 'Dim_NCR_Open_Closed',
+        column: 'NCRState',
+    },
+    filterType: 1,
+    operator: 'In',
+    values: ['Closed'],
 };
 
 const ReportWithFilter = () => {
-    const [filterStrings, setFilterStrings] = React.useState<string[]>(null);
-    const filter: IBasicFilter = React.useMemo(
+    const [filterStrings, setFilterStrings] = useState<string[]>(null);
+    const filter: IBasicFilter = useMemo(
         () =>
             filterStrings
                 ? {
@@ -35,7 +34,7 @@ const ReportWithFilter = () => {
                 : null,
         [filterStrings]
     );
-    const contextRef = React.useRef<PowerBIReportContext>();
+    const contextRef = useRef<PowerBIReportContext>();
     return (
         <div style={{ display: 'flex', flexFlow: 'column', height: '100vh' }}>
             <div>

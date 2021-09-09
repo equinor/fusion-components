@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, FunctionComponent, useCallback, useMemo } from 'react';
+import { useContext, useEffect, FC, useCallback, useMemo } from 'react';
 
 import { PowerBIEmbed, EventHandler } from 'powerbi-client-react';
 
@@ -15,23 +15,16 @@ export type PowerBIComponentProps = {
     config?: PowerBIComponentConfig;
 };
 
-const service = new PowerBIServices.Service(
-    factories.hpmFactory,
-    factories.wpmpFactory,
-    factories.routerFactory
-);
+const service = new PowerBIServices.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
 
-export const PowerBIReportView: FunctionComponent<PowerBIComponentProps> = ({
-    config,
-}: PowerBIComponentProps) => {
+export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBIComponentProps) => {
     const { metrics, component, event$ } = useContext(context);
 
     const embedConfig = useConfig(config);
     const eventHandlers = useMemo(
         () =>
             Object.values(PowerBIEmbedEvents).reduce(
-                (cur, type) =>
-                    cur.set(type, (event, entity) => event$.next({ type, event, entity })),
+                (cur, type) => cur.set(type, (event, entity) => event$.next({ type, event, entity })),
                 new Map<any, EventHandler>()
             ),
         [event$]

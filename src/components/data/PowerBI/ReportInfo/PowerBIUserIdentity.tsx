@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FC } from 'react';
 
 import { useCurrentUser } from '@equinor/fusion';
 
@@ -6,7 +6,7 @@ import * as styles from './styles.less';
 
 type Props = { header?: string };
 
-export const PowerBIInfoUserIdentity: FunctionComponent<Props> = (props) => {
+export const PowerBIInfoUserIdentity: FC<Props> = (props) => {
     const user = useCurrentUser();
     const header = props.header || 'Your identity does not meet this reports access requirements, your identity is:';
     return (

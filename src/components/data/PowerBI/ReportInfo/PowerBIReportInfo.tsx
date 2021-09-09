@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 
 import { useApiClients } from '@equinor/fusion';
 import { useSelector } from '@equinor/fusion/lib/epic';
@@ -20,7 +20,7 @@ type Props = {
     subHeader?: string;
 };
 
-export const PowerBIReportInfo: FunctionComponent<Props> = ({
+export const PowerBIReportInfo: FC<Props> = ({
     id,
     header = 'Restricted Access',
     subHeader = 'It looks like you do not have access to this report',
@@ -46,12 +46,7 @@ export const PowerBIReportInfo: FunctionComponent<Props> = ({
         <div className={styles.reportErroMessage}>
             <div className={styles.container}>
                 <h2 className={styles.header}>{header}</h2>
-                <div
-                    className={classNames(
-                        useElevationClassName(3),
-                        styles.restrictedAccessContainer
-                    )}
-                >
+                <div className={classNames(useElevationClassName(3), styles.restrictedAccessContainer)}>
                     <h2>{subHeader}</h2>
                     {accessDescription && <MarkdownViewer markdown={accessDescription} />}
                     <div className={styles.reportInfoContainer}>

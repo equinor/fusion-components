@@ -1,16 +1,14 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import { PowerBIReportInfo } from '../';
 import ContextSelector from '../../../core/ContextSelector';
-
-import { ReportStandard } from './ReportStandard';
 import { ContextTypes, useFusionContext } from '@equinor/fusion';
 import { FusionHeader, FusionContent, Button } from '../../../..';
 import { PowerBIReportContext, PowerBI } from '../Report';
 import { Debugger } from './debugger';
+import { FC, useRef } from 'react';
 
-const CurrentContext: React.FC = ({ children }) => {
+const CurrentContext: FC = ({ children }) => {
     const { app } = useFusionContext();
 
     (app.container as any)._currentApp.state = {
@@ -24,7 +22,7 @@ const CurrentContext: React.FC = ({ children }) => {
 };
 
 const Report = ({ hasContext, reportId }) => {
-    const contextRef = React.useRef<PowerBIReportContext>();
+    const contextRef = useRef<PowerBIReportContext>();
     return (
         <CurrentContext>
             <FusionHeader start={null} content={ContextSelector} aside={null} settings={null} />
@@ -34,11 +32,7 @@ const Report = ({ hasContext, reportId }) => {
                         <Debugger context={contextRef} />
                     </div>
                     <div style={{ width: '100%', height: '500px' }}>
-                        <PowerBI
-                            reportId={reportId}
-                            contextRef={contextRef}
-                            hasContext={hasContext}
-                        ></PowerBI>
+                        <PowerBI reportId={reportId} contextRef={contextRef} hasContext={hasContext}></PowerBI>
                     </div>
                 </div>
             </FusionContent>

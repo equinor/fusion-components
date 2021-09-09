@@ -1,20 +1,8 @@
-import {
-    MutableRefObject,
-    useEffect,
-    PropsWithChildren,
-    FunctionComponent,
-    useRef,
-    useMemo,
-} from 'react';
+import { useEffect, PropsWithChildren, FunctionComponent, useRef, useMemo } from 'react';
 
 import { useCurrentContext, useTelemetryLogger, useApiClients } from '@equinor/fusion';
 
-import {
-    context,
-    PowerBIEmbedComponent,
-    PowerBIEmbedEventEntry,
-    PowerBIReportContext,
-} from '../context';
+import { context, PowerBIEmbedComponent, PowerBIEmbedEventEntry, PowerBIReportContext } from '../context';
 import { Subject, Subscription } from 'rxjs';
 import PowerBITelemetryObserver from '../telemetry/observer';
 import { createStore, actions } from '../store';
@@ -25,11 +13,7 @@ type Props = PropsWithChildren<{ id: string; hasContext: boolean }>;
 
 const { Provider } = context;
 
-export const PowerBIReportProvider: FunctionComponent<Props> = ({
-    children,
-    id,
-    hasContext,
-}: Props) => {
+export const PowerBIReportProvider: FunctionComponent<Props> = ({ children, id, hasContext }: Props) => {
     const clients = useApiClients();
     const store = useMemo(() => createStore(id, clients), [id, clients]);
 
