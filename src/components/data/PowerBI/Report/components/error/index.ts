@@ -1,4 +1,4 @@
-import { ErrorTypes } from '@equinor/fusion-components/dist/components/general/ErrorMessage';
+import { ErrorTypes } from '../../../../../general/ErrorMessage';
 
 export type ErrrorProperties = {
     title?: string;
