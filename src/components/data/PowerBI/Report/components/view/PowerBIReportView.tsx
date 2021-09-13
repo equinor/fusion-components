@@ -5,9 +5,8 @@ import { PowerBIEmbed, EventHandler } from 'powerbi-client-react';
 import { context, PowerBIEmbedEvents } from '../../context';
 import { IEmbedConfiguration, service as PowerBIServices, factories } from 'powerbi-client';
 import useConfig from './useConfig';
-
-import * as styles from './styles.less';
 import usePowerBIFilters from './useFilters';
+import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
 export type PowerBIComponentConfig = Omit<IEmbedConfiguration, 'accessToken'>;
 
@@ -15,7 +14,24 @@ export type PowerBIComponentProps = {
     config?: PowerBIComponentConfig;
 };
 
-const service = new PowerBIServices.Service(factories.hpmFactory, factories.wpmpFactory, factories.routerFactory);
+const service = new PowerBIServices.Service(
+    factories.hpmFactory,
+    factories.wpmpFactory,
+    factories.routerFactory
+);
+
+const useStyles = makeStyles(
+    () =>
+        createStyles({
+            iframeContainer: {
+                display: 'flex',
+                height: '100%',
+                width: '100%',
+                '&>iframe': { border: 'none' },
+            },
+        }),
+    { name: 'fusion-powerBi-iframe' }
+);
 
 export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBIComponentProps) => {
     const { metrics, component, event$ } = useContext(context);
@@ -24,7 +40,8 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
     const eventHandlers = useMemo(
         () =>
             Object.values(PowerBIEmbedEvents).reduce(
-                (cur, type) => cur.set(type, (event, entity) => event$.next({ type, event, entity })),
+                (cur, type) =>
+                    cur.set(type, (event, entity) => event$.next({ type, event, entity })),
                 new Map<any, EventHandler>()
             ),
         [event$]
@@ -49,7 +66,7 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
 
     // only render component when access token
     if (embedConfig) {
-        const cssClassName = styles.iframeContainer;
+        const cssClassName = useStyles().iframeContainer;
         return (
             <PowerBIEmbed
                 {...{ embedConfig, eventHandlers, getEmbeddedComponent, cssClassName, service }}
