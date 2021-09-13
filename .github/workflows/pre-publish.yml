@@ -11,6 +11,10 @@ jobs:
   publish:
     name: Publish to PR
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+        
     steps:
 
       - name: Checkout project
