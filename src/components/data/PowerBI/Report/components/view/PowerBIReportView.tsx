@@ -64,9 +64,9 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
         } catch {}
     }, [metrics, component, embedConfig?.accessToken]);
 
+    const cssClassName = useStyles().iframeContainer;
     // only render component when access token
     if (embedConfig) {
-        const cssClassName = useStyles().iframeContainer;
         return (
             <PowerBIEmbed
                 {...{ embedConfig, eventHandlers, getEmbeddedComponent, cssClassName, service }}
