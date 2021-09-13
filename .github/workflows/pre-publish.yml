@@ -45,6 +45,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
+      - name: Push version
+        run: git push
+        continue-on-error: true
+
       - name: Release packages
         run: npm publish --tag ${{ github.event.inputs.tag }} --access public
         env:
