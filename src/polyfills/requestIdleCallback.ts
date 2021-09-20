@@ -17,6 +17,7 @@ interface Window {
     cancelIdleCallback(id: RequestIdleCallbackId): void;
 }
 
+// @ts-ignore
 window.requestIdleCallback =
     window.requestIdleCallback ||
     ((callback) => {

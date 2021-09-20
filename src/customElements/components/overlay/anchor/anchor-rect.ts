@@ -9,7 +9,7 @@ export interface AnchorRect {
     readonly y: number;
 }
 
-export class AnchorDOMRect implements ClientRect {
+export class AnchorDOMRect implements AnchorRect {
     constructor(public x: number, public y: number, public width: number, public height: number) {}
 
     get left() {

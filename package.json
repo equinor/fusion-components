@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "2.4.5",
+    "version": "2.4.6-power-bi.4",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "module": "dist/index.js",
@@ -121,8 +121,8 @@
         "webpack-merge": "^5.7.3"
     },
     "peerDependencies": {
-        "@equinor/fusion-react-styles": "^3.2.4",
         "@equinor/fusion": "^3.2.4",
+        "@equinor/fusion-react-styles": "^0.3.0",
         "history": "^4.9.0",
         "pixi.js-legacy": "^5.3.7",
         "powerbi-client": "^2.18.5",
@@ -137,7 +137,7 @@
     ],
     "dependencies": {
         "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.13",
-        "@equinor/fusion-react-styles": "^0.2.1",
+        "@equinor/fusion-react-styles": "^0.3.0",
         "@equinor/fusion-wc-icon": "^1.0.2",
         "@reach/router": "^1.3.4",
         "@storybook/addon-jest": "^6.2.9",
@@ -154,6 +154,7 @@
         "lodash.throttle": "^4.1.1",
         "npm-force-resolutions": "0.0.3",
         "pixi.js-legacy": "^5.3.7",
+        "powerbi-client-react": "^1.3.3",
         "prosemirror-commands": "^1.1.5",
         "prosemirror-history": "^1.1.3",
         "prosemirror-inputrules": "^1.1.3",

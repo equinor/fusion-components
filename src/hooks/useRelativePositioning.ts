@@ -1,6 +1,7 @@
 import { useState, useEffect, MutableRefObject, useRef } from 'react';
 
-const defaultRect: ClientRect = {
+// previously ClientRect
+const defaultRect = {
     left: 0,
     right: 0,
     top: 0,

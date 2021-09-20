@@ -11,6 +11,10 @@ jobs:
   publish:
     name: Publish to PR
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+        
     steps:
 
       - name: Checkout project
@@ -40,6 +44,10 @@ jobs:
         run: npm version prerelease --preid=${{ github.event.inputs.tag }}
         env:
           GH_TOKEN: ${{ github.token }}
+
+      - name: Push version
+        run: git push
+        continue-on-error: true
 
       - name: Release packages
         run: npm publish --tag ${{ github.event.inputs.tag }} --access public
