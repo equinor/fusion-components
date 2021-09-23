@@ -1,24 +1,20 @@
 import { clsx } from '@equinor/fusion-react-styles';
 import { FC, useContext } from 'react';
-import { ActionSlotProps, InfoSlotProps, PersonSlotProps, TimelineSplit } from '../model';
 import Split from '../Split';
-import { timelineContext } from '../TimelineProvider';
+import { timelineContext } from '../../TimelineProvider';
 import { useStyles } from './styles';
 
 type SplitSequenceProps = {
     rotationKey: string;
-    PersonSlot: FC<PersonSlotProps<TimelineSplit>>;
-    InfoSlot?: FC<InfoSlotProps<TimelineSplit>>;
-    ActionSlot?: FC<ActionSlotProps<boolean>>;
 };
 
-export const SplitSequence: FC<SplitSequenceProps> = ({ rotationKey, PersonSlot, InfoSlot, ActionSlot }) => {
+export const SplitSequence: FC<SplitSequenceProps> = ({ rotationKey }) => {
     const {
-        state: { computePosition, rotationGroups },
+        state: { computePosition, rotationGroups, PersonSlot, InfoSlot, ActionSlot },
     } = useContext(timelineContext);
 
     const hasRotationGroups = Object.keys(rotationGroups).length > 1;
-    const styles = useStyles({hasRotationGroups});
+    const styles = useStyles({ hasRotationGroups });
 
     if (!computePosition) return null;
 
@@ -37,7 +33,7 @@ export const SplitSequence: FC<SplitSequenceProps> = ({ rotationKey, PersonSlot,
                         key={split.id + index}
                         startPosition={computePosition(split.appliesFrom.getTime(), 'start')}
                         endPosition={computePosition(split.appliesTo.getTime(), 'end')}
-                        personSlot={<PersonSlot item={split} />}
+                        personSlot={PersonSlot && <PersonSlot item={split} />}
                         infoSlot={InfoSlot && <InfoSlot item={split} />}
                         ActionSlot={ActionSlot}
                     />

@@ -163,7 +163,7 @@ export {
     OrgChartItemProps,
     OrgNode,
 } from './components/org/OrgChart';
-export { default as SelectableTimeline } from './components/org/PositionTimeline/SelectableTimeline';
+export { default as PositionTimeline } from './components/org/PositionTimeline';
 export { default as ReportingPath } from './components/org/ReportingPath';
 export { default as PositionPicker } from './components/org/PositionPicker';
 

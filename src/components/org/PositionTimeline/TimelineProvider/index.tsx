@@ -31,15 +31,19 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
         initialDate,
         previewDates,
         onDateChange,
-        onSplitSelect,
+        onSingleSelect,
+        onMultiSelect,
         highlighted,
         disabled,
+        PersonSlot,
+        InfoSlot,
+        ActionSlot,
         children,
     } = props;
 
     const [state, dispatch] = useReducer(
-        reducer(initialContext({ mode, previewDates })),
-        initialContext({ mode, previewDates })
+        reducer(initialContext({ mode, previewDates, PersonSlot, InfoSlot, ActionSlot })),
+        initialContext({ mode, previewDates, PersonSlot, InfoSlot, ActionSlot })
     );
 
     useEffect(() => {
@@ -48,9 +52,9 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
     }, [selectedPosition, initialDate]);
 
     useEffect(() => {
-        if (!initialSplit) return;
+        if (!initialSplit || state.selected.length) return;
         dispatch(actions.selectSplit(initialSplit.id));
-    }, [initialSplit]);
+    }, [initialSplit, state.selected]);
 
     useEffect(() => {
         if (!onDateChange) return;
@@ -58,8 +62,13 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
     }, [state.selectedDate]);
 
     useEffect(() => {
-        if (!onSplitSelect) return;
-        state.selected.map((id) => onSplitSelect(id));
+        if (!onSingleSelect) return;
+        state.selected.map((id) => onSingleSelect(id));
+    }, [state.selected]);
+
+    useEffect(() => {
+        if (!onMultiSelect) return;
+        onMultiSelect(state.selected);
     }, [state.selected]);
 
     useEffect(() => {

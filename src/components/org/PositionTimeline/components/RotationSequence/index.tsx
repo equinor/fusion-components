@@ -1,23 +1,12 @@
 import { clsx, theme } from '@equinor/fusion-react-styles';
 import { FC, useContext, useMemo } from 'react';
-import { ActionSlotProps, InfoSlotProps, PersonSlotProps, TimelineSplit } from '../model';
 import SplitSequence from '../SplitSequence';
-import { timelineContext } from '../TimelineProvider';
-import TimelineSlider from '../TimelineSlider';
+import { timelineContext } from '../../TimelineProvider';
 import { useStyles } from './styles';
 import { getSortedRotationKeys } from './utils';
+import TimelineSlider from '../../TimelineSlider';
 
-type RotationSequenceProps = {
-    PersonSlot: FC<PersonSlotProps<TimelineSplit>>;
-    InfoSlot?: FC<InfoSlotProps<TimelineSplit>>;
-    ActionSlot?: FC<ActionSlotProps<boolean>>;
-};
-
-export const RotationSequence: FC<RotationSequenceProps> = ({
-    PersonSlot,
-    InfoSlot,
-    ActionSlot,
-}) => {
+export const RotationSequence: FC = () => {
     const styles = useStyles(theme);
     const {
         state: { rotationGroups, computePosition, selectedDate, mode, previewDates },
@@ -48,13 +37,7 @@ export const RotationSequence: FC<RotationSequenceProps> = ({
                         style={{ left: indicatorPosition }}
                     />
                     {rotationKeys.map((key, index) => (
-                        <SplitSequence
-                            key={key + index + 'split-sequence'}
-                            rotationKey={key}
-                            PersonSlot={PersonSlot}
-                            InfoSlot={InfoSlot}
-                            ActionSlot={ActionSlot}
-                        />
+                        <SplitSequence key={key + index + 'split-sequence'} rotationKey={key} />
                     ))}
                 </div>
             </TimelineSlider>

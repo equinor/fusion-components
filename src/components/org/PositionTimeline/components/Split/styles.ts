@@ -35,9 +35,14 @@ export const useStyles = makeStyles((theme) =>
             background: theme.colors.interactive.success__highlight.getVariable('color'),
         }),
         disabled: {
-            background: theme.colors.interactive.table__cell__fill_hover.getVariable('color'),
-            opacity: 0.7,
+            background: `${theme.colors.interactive.disabled__fill.getVariable(
+                'color'
+            )} !important`,
+            borderColor: `${theme.colors.interactive.disabled__border.getVariable(
+                'color'
+            )} !important`,
             cursor: 'auto',
+            opacity: 0.7,
             pointerEvents: 'none',
         },
         clickable: {
