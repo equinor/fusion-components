@@ -3,13 +3,13 @@ import { actions } from './actions';
 import { Actions, TimelineState } from './types';
 import {
     createPositionEstimator,
-    generateSliderMarkers,
     getEndDate,
     getRotationGroups,
     getSelectedSplits,
     getStartDate,
     initialSelectedDate,
-} from './utils';
+} from '../utils';
+import { generateSliderMarkers } from './utils';
 
 export const reducer = (initial: TimelineState) =>
     createReducer<TimelineState, Actions>(initial)

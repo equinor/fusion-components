@@ -44,9 +44,13 @@ export type SplitDetails = any & { appliesFrom: Date; appliesTo: Date };
 
 export type RotationGroups = Record<string, TimelineSplit[]>;
 
+export type RotationColumns = Record<string, any>;
+
 export type TimelineSlotProps = {
     split: TimelineSplit;
     isSelected: boolean;
 }
 
 export type SelectMode = 'single' | 'multi' | 'slider';
+
+export type PositionMark = 'start' | 'end';

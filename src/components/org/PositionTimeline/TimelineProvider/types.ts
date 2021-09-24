@@ -7,10 +7,9 @@ import {
     TimelineSplit,
     TimelinePosition,
     TimelineSlotProps,
+    PositionMark,
 } from '../model';
 import { actions } from './actions';
-
-export type PositionMark = 'start' | 'end';
 
 export type Actions = ActionType<typeof actions>;
 export type TimelineState = {
