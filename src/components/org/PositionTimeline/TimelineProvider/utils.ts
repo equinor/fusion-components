@@ -71,8 +71,8 @@ export const getRotationGroups = (splits: TimelineSplit[]): RotationGroups => {
 
 /**
  * Removes the time from the date object, to make it data-comparable
- * @param date 
- * @returns 
+ * @param date
+ * @returns
  */
 const removeTimeFromDate = (date: Date) => {
     const newDate = new Date(date);
@@ -82,14 +82,11 @@ const removeTimeFromDate = (date: Date) => {
 
 /**
  * Finds the splits that are active given the selected date
- * @param splits 
- * @param selectedDate 
- * @returns 
+ * @param splits
+ * @param selectedDate
+ * @returns
  */
-export const getSelectedSplits = (
-    splits: TimelineSplit[],
-    selectedDate: Date
-): string[] => {
+export const getSelectedSplits = (splits: TimelineSplit[], selectedDate: Date): string[] => {
     return splits
         .filter((split) => {
             const from = removeTimeFromDate(split.appliesFrom);
@@ -165,18 +162,28 @@ export const createSplitMarkers = (splits: TimelineSplit[]) => {
             createSliderMarker(split.appliesTo.getTime(), formatDate(split.appliesTo)),
         ];
     }
-    return splits.map((split, index) => {
+    return splits.reduce((markers: SliderMarker[], currentSplit: TimelineSplit, index) => {
         if (index === splits.length - 1) {
-            return createSliderMarker(split.appliesTo.getTime(), formatDate(split.appliesTo));
+            return [
+                ...markers,
+                createSliderMarker(currentSplit.appliesFrom.getTime(), ''),
+                createSliderMarker(
+                    currentSplit.appliesTo.getTime(),
+                    formatDate(currentSplit.appliesTo)
+                ),
+            ];
         }
         if (index === 0) {
-            return createSliderMarker(
-                split.appliesFrom.getTime(),
-                formatDate(split.appliesFrom)
-            );
+            return [
+                ...markers,
+                createSliderMarker(
+                    currentSplit.appliesFrom.getTime(),
+                    formatDate(currentSplit.appliesFrom)
+                ),
+            ];
         }
-        return createSliderMarker(split.appliesFrom.getTime(), '');
-    });
+        return [...markers, createSliderMarker(currentSplit.appliesFrom.getTime(), '')];
+    }, []);
 };
 
 /**
