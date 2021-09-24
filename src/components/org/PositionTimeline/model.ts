@@ -44,12 +44,12 @@ export type SplitDetails = any & { appliesFrom: Date; appliesTo: Date };
 
 export type RotationGroups = Record<string, TimelineSplit[]>;
 
-export type PersonSlotProps<T> = {
-    item: T;
+export type PersonSlotProps = {
+    item: TimelineSplit;
 };
 
-export type InfoSlotProps<T> = {
-    item: T;
+export type InfoSlotProps = {
+    item: TimelineSplit;
 };
 
 export type ActionSlotProps<T> = {

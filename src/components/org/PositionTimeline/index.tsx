@@ -24,8 +24,8 @@ type PositionTimelineProps = {
     onMultiSelect?: (splits: string[]) => void;
     highlighted?: string[];
     disabled?: string[];
-    CustomPersonSlot?: FC<PersonSlotProps<TimelineSplit>>;
-    CustomInfoSlot?: FC<InfoSlotProps<TimelineSplit>>;
+    CustomPersonSlot?: FC<PersonSlotProps>;
+    CustomInfoSlot?: FC<InfoSlotProps>;
     CustomActionSlot?: FC<ActionSlotProps<boolean>>;
 };
 

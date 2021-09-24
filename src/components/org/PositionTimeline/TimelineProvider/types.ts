@@ -30,8 +30,8 @@ export type TimelineState = {
     selectedDate: Date;
     topSliderMarkers: SliderMarker[];
     bottomSliderMarkers: SliderMarker[];
-    PersonSlot?: FC<PersonSlotProps<TimelineSplit>>;
-    InfoSlot?: FC<InfoSlotProps<TimelineSplit>>;
+    PersonSlot?: FC<PersonSlotProps>;
+    InfoSlot?: FC<InfoSlotProps>;
     ActionSlot?: FC<ActionSlotProps<boolean>>;
 };
 export type TimelineContext = {
@@ -50,8 +50,8 @@ export type TimelineProviderProps = {
     onMultiSelect?: (splits: string[]) => void;
     highlighted?: string[];
     disabled?: string[];
-    PersonSlot?: FC<PersonSlotProps<TimelineSplit>>;
-    InfoSlot?: FC<InfoSlotProps<TimelineSplit>>;
+    PersonSlot?: FC<PersonSlotProps>;
+    InfoSlot?: FC<InfoSlotProps>;
     ActionSlot?: FC<ActionSlotProps<boolean>>;
 };
 
