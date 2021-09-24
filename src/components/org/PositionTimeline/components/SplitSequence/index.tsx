@@ -10,7 +10,7 @@ type SplitSequenceProps = {
 
 export const SplitSequence: FC<SplitSequenceProps> = ({ rotationKey }) => {
     const {
-        state: { computePosition, rotationGroups, PersonSlot, InfoSlot, ActionSlot },
+        state: { computePosition, rotationGroups },
     } = useContext(timelineContext);
 
     const hasRotationGroups = Object.keys(rotationGroups).length > 1;
@@ -33,9 +33,7 @@ export const SplitSequence: FC<SplitSequenceProps> = ({ rotationKey }) => {
                         key={split.id + index}
                         startPosition={computePosition(split.appliesFrom.getTime(), 'start')}
                         endPosition={computePosition(split.appliesTo.getTime(), 'end')}
-                        personSlot={PersonSlot && <PersonSlot item={split} />}
-                        infoSlot={InfoSlot && <InfoSlot item={split} />}
-                        ActionSlot={ActionSlot}
+                        split={split}
                     />
                 ))}
             </div>

@@ -6,9 +6,7 @@ import {
     SelectMode,
     TimelineSplit,
     TimelinePosition,
-    PersonSlotProps,
-    InfoSlotProps,
-    ActionSlotProps,
+    TimelineSlotProps,
 } from '../model';
 import { actions } from './actions';
 
@@ -30,9 +28,9 @@ export type TimelineState = {
     selectedDate: Date;
     topSliderMarkers: SliderMarker[];
     bottomSliderMarkers: SliderMarker[];
-    PersonSlot?: FC<PersonSlotProps>;
-    InfoSlot?: FC<InfoSlotProps>;
-    ActionSlot?: FC<ActionSlotProps<boolean>>;
+    PersonSlot?: FC<TimelineSlotProps>;
+    InfoSlot?: FC<TimelineSlotProps>;
+    ActionSlot?: FC<TimelineSlotProps>;
 };
 export type TimelineContext = {
     state: TimelineState;
@@ -50,9 +48,9 @@ export type TimelineProviderProps = {
     onMultiSelect?: (splits: string[]) => void;
     highlighted?: string[];
     disabled?: string[];
-    PersonSlot?: FC<PersonSlotProps>;
-    InfoSlot?: FC<InfoSlotProps>;
-    ActionSlot?: FC<ActionSlotProps<boolean>>;
+    PersonSlot?: FC<TimelineSlotProps>;
+    InfoSlot?: FC<TimelineSlotProps>;
+    ActionSlot?: FC<TimelineSlotProps>;
 };
 
 export type SetPosition = {

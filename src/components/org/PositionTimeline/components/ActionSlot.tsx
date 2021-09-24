@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { ActionSlotProps } from '../model';
+import { TimelineSlotProps } from '../model';
 import { Checkbox } from '@equinor/fusion-react-checkbox';
 
-export const ActionSlot: FC<ActionSlotProps<boolean>> = ({ value }) => {
-    return <Checkbox checked={value} />;
+export const ActionSlot: FC<TimelineSlotProps> = ({ isSelected }) => {
+    return <Checkbox checked={isSelected} />;
 };

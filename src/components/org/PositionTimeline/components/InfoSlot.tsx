@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { InfoSlotProps, TimelineSplit } from '../model';
+import { TimelineSlotProps } from '../model';
 
-export const InfoSlot: FC<InfoSlotProps<TimelineSplit>> = ({ item }) => {
-    return <span>{`${item?.workload || 0}%`}</span>;
+export const InfoSlot: FC<TimelineSlotProps> = ({ split }) => {
+    return <span>{`${split?.workload || 0}%`}</span>;
 };

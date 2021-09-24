@@ -1,6 +1,6 @@
 import { clsx } from '@equinor/fusion-react-styles';
 import { FC, useContext } from 'react';
-import { ActionSlotProps } from '../../model';
+import { TimelineSplit } from '../../model';
 import { timelineContext } from '../../TimelineProvider';
 import { actions } from '../../TimelineProvider/actions';
 import { useStyles } from './styles';
@@ -10,26 +10,17 @@ type SplitProps = {
     rotationId?: string;
     startPosition: number;
     endPosition: number;
-    personSlot: JSX.Element;
-    infoSlot?: JSX.Element;
-    ActionSlot?: FC<ActionSlotProps<boolean>>;
+    split: TimelineSplit;
 };
 
-export const Split: FC<SplitProps> = ({
-    id,
-    rotationId,
-    startPosition,
-    endPosition,
-    personSlot,
-    infoSlot,
-    ActionSlot,
-}) => {
+export const Split: FC<SplitProps> = ({ id, rotationId, startPosition, endPosition, split }) => {
     const styles = useStyles({ isRotation: !!rotationId });
     const {
-        state: { selected, highlighted, disabled, mode },
+        state: { selected, highlighted, disabled, mode, PersonSlot, InfoSlot, ActionSlot },
         dispatch,
     } = useContext(timelineContext);
     const isDisabled = disabled.includes(id);
+    const isSelected = selected.includes(id);
 
     const handleClick = (e) => {
         e.stopPropagation();
@@ -48,12 +39,16 @@ export const Split: FC<SplitProps> = ({
             onClick={handleClick}
         >
             <div className={styles.content}>
-                <div className={styles.slot}>{personSlot}</div>
+                <div className={styles.slot}>
+                    {PersonSlot && <PersonSlot split={split} isSelected={isSelected} />}
+                </div>
                 <div style={{ justifyContent: 'flex-start' }} className={styles.slot}>
-                    {infoSlot}
+                    {InfoSlot && <InfoSlot split={split} isSelected={isSelected} />}
                 </div>
                 <div className={styles.slot}>
-                    {ActionSlot && !isDisabled && <ActionSlot value={selected.includes(id)} />}
+                    {ActionSlot && !isDisabled && (
+                        <ActionSlot split={split} isSelected={isSelected} />
+                    )}
                 </div>
             </div>
         </div>

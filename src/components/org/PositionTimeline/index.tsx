@@ -3,9 +3,7 @@ import {
     SelectMode,
     TimelineSplit,
     TimelinePosition,
-    PersonSlotProps,
-    InfoSlotProps,
-    ActionSlotProps,
+    TimelineSlotProps,
 } from './model';
 import RotationSequence from './components/RotationSequence';
 import TimelineProvider from './TimelineProvider';
@@ -24,9 +22,9 @@ type PositionTimelineProps = {
     onMultiSelect?: (splits: string[]) => void;
     highlighted?: string[];
     disabled?: string[];
-    CustomPersonSlot?: FC<PersonSlotProps>;
-    CustomInfoSlot?: FC<InfoSlotProps>;
-    CustomActionSlot?: FC<ActionSlotProps<boolean>>;
+    CustomPersonSlot?: FC<TimelineSlotProps>;
+    CustomInfoSlot?: FC<TimelineSlotProps>;
+    CustomActionSlot?: FC<TimelineSlotProps>;
 };
 
 export const PositionTimeline: FC<PositionTimelineProps> = ({
