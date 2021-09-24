@@ -4,7 +4,7 @@ import SplitSequence from '../SplitSequence';
 import { timelineContext } from '../../TimelineProvider';
 import { useStyles } from './styles';
 import { getSortedRotationKeys } from './utils';
-import TimelineSlider from '../../TimelineSlider';
+import TimelineSlider from '../TimelineSlider';
 
 export const RotationSequence: FC = () => {
     const styles = useStyles(theme);
