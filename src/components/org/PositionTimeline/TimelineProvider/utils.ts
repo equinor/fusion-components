@@ -193,7 +193,7 @@ export const createSplitMarkers = (splits: TimelineSplit[]) => {
  * @returns
  */
 export const sortByDate = (a: TimelineSplit, b: TimelineSplit) =>
-    a.appliesFrom.getTime() - b.appliesFrom.getTime();
+    new Date(a.appliesFrom).getTime() - new Date(b.appliesFrom).getTime();
 
 /**
  * Generates a set of slider markers used as a wrapper for the position timeline component
