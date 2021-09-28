@@ -1,11 +1,18 @@
-import { PositionMark, RotationColumns, RotationGroups, TimelineSplit } from "./model";
+import {
+    PositionMark,
+    RotationColumn,
+    RotationColumns,
+    RotationGroups,
+    TemporalSplitGroups,
+    TimelineSplit,
+} from './model';
 
 /**
  * Finds the earliest start date in a set of splits.
  * @param splits
  * @returns
  */
- export const getStartDate = (splits: TimelineSplit[]) => {
+export const getStartDate = (splits: TimelineSplit[]) => {
     return Math.min(...splits.map((split) => split.appliesFrom.getTime()));
 };
 
@@ -66,12 +73,96 @@ export const getRotationGroups = (splits: TimelineSplit[]): RotationGroups => {
     );
 };
 
-export const getRotationColumns = (splits: TimelineSplit[]): RotationColumns => {
-    return splits.reduce((columns: RotationColumns, currentSplit: TimelineSplit) => {
-        if (!currentSplit.rotationId) return columns;
-        
+/**
+ * Groups a set of splits according to their start date. Every split that begins
+ * on the same date will be grouped together. Based on the appliesFrom property.
+ * @param splits 
+ * @returns 
+ */
+export const splitGroupsByDate = (splits: TimelineSplit[]): TemporalSplitGroups => {
+    return splits.reduce((groups: TemporalSplitGroups, currentSplit: TimelineSplit) => {
+        const appliesFrom = removeTimeFromDate(currentSplit.appliesFrom).getTime().toString();
+        if (!Object.keys(groups).includes(appliesFrom)) {
+            return {
+                ...groups,
+                [appliesFrom]: [currentSplit],
+            };
+        }
+        return {
+            ...groups,
+            [appliesFrom]: [...groups[appliesFrom], currentSplit],
+        };
     }, {});
-}
+};
+
+/**
+ * Returns the split with the earliest start date. Based on the appliesFrom property.
+ * @param splits 
+ * @returns 
+ */
+export const getEarliestFinish = (splits: TimelineSplit[]): TimelineSplit => {
+    const ascending = splits.sort((a, b) => a.appliesTo.getTime() - b.appliesTo.getTime());
+    return ascending[0];
+};
+
+/**
+ * Checks whether two splits overlap in time. 
+ * @param splitA 
+ * @param splitB 
+ * @returns 
+ */
+export const doesSplitsOverlap = (splitA: TimelineSplit, splitB: TimelineSplit) =>
+    splitA.appliesFrom.getTime() <= splitB.appliesTo.getTime() &&
+    splitB.appliesFrom.getTime() <= splitA.appliesTo.getTime();
+
+/**
+ * Returns all the splits in a set which overlaps in time with the main split
+ * @param main 
+ * @param splits 
+ * @returns 
+ */
+export const getLinkedSplits = (main: TimelineSplit, splits: TimelineSplit[]): string[] => {
+    return splits.reduce((overlapping: string[], currentSplit: TimelineSplit) => {
+        if (doesSplitsOverlap(main, currentSplit)) {
+            return [...overlapping, currentSplit.id];
+        }
+        return overlapping;
+    }, []);
+};
+
+/**
+ * Groups a set of splits into columns, where each column is represented by a unqiue split start date in the set of splits.
+ * Each column is associated by a main split (the split in the set which has the smallest range compared to other splits with
+ * the same start date), and a set of linked splits, which overlaps with the main split.
+ * @param splits 
+ * @returns 
+ */
+export const getRotationColumns = (splits: TimelineSplit[]): RotationColumns => {
+    const temporalGroups = splitGroupsByDate(splits);
+    return Object.keys(temporalGroups).reduce((columns: RotationColumns, temporalKey: string) => {
+        const relevantSplits = temporalGroups[temporalKey];
+        if (relevantSplits.length === 1) {
+            const split = relevantSplits[0];
+            const linked = getLinkedSplits(split, splits);
+            return {
+                ...columns,
+                [split.id]: {
+                    split,
+                    linked,
+                },
+            };
+        }
+        const earliest = getEarliestFinish(relevantSplits);
+        const linked = getLinkedSplits(earliest, splits);
+        return {
+            ...columns,
+            [earliest.id]: {
+                split: earliest,
+                linked
+            }
+        }
+    }, {});
+};
 
 /**
  * Removes the time from the date object, to make it data-comparable

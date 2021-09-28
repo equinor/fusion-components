@@ -42,9 +42,16 @@ export type TimelinePosition = {
 
 export type SplitDetails = any & { appliesFrom: Date; appliesTo: Date };
 
-export type RotationGroups = Record<string, TimelineSplit[]>;
+export type RotationGroups = Record<number, TimelineSplit[]>;
 
-export type RotationColumns = Record<string, any>;
+export type TemporalSplitGroups = Record<string, TimelineSplit[]>;
+
+export type RotationColumn = {
+    split: TimelineSplit;
+    linked: string[];
+}
+
+export type RotationColumns = Record<string, RotationColumn>;
 
 export type TimelineSlotProps = {
     split: TimelineSplit;

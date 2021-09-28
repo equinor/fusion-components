@@ -3,7 +3,7 @@ import { TimelinePosition } from '../model';
 import {
     createPositionEstimator,
     getEndDate,
-    getRotationGroups,
+    getRotationColumns,
     getStartDate,
     initialSelectedDate,
 } from '../utils';
@@ -13,7 +13,7 @@ export const usePositionTimeline = (position: TimelinePosition, date: Date) => {
     const start = useMemo(() => getStartDate(splits), [splits]);
     const end = useMemo(() => getEndDate(splits), [splits]);
     const selectedDate = useMemo(() => initialSelectedDate(date, start, end), [date, start, end]);
-    const rotationGroups = useMemo(() => getRotationGroups(splits), [splits]);
+    const rotationColumns = useMemo(() => getRotationColumns(splits), [splits]);
     const computePosition = useMemo(() => createPositionEstimator(start, end), [start, end]);
 
     return {
@@ -21,7 +21,7 @@ export const usePositionTimeline = (position: TimelinePosition, date: Date) => {
         start,
         end,
         selectedDate,
-        rotationGroups,
+        rotationColumns,
         computePosition,
     };
 };
