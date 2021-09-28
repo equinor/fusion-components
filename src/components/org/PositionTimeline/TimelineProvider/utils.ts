@@ -102,7 +102,7 @@ export const generateSliderMarkers = (
     startDate?: number,
     endDate?: number
 ): { topSliderMarkers: SliderMarker[]; bottomSliderMarkers: SliderMarker[] } => {
-    const sortedSplits = splits.sort(sortByDate);
+    const sortedSplits = [...splits].sort(sortByDate);
     const topSliderMarkers = [
         createSliderMarker(startDate || 0, ''),
         createSliderMarker(endDate || 0, ''),
