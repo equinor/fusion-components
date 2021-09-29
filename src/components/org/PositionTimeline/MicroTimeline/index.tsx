@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { TimelinePosition } from '../model';
+import MicroMarker from './MicroMarker';
 import MicroSplit from './MicroSplit';
+import { MicroSplits } from './MicroSplit/MicroSplits';
 import { useStyles } from './styles';
 import { usePositionTimeline } from './usePositionTimeline';
 
@@ -21,13 +23,15 @@ export const MicroTimeline: FC<MicroTimelineProps> = ({ selectedPosition, initia
     } = usePositionTimeline(selectedPosition, initialDate ?? new Date());
     return (
         <div className={styles.timeline}>
-            {Object.values(rotationColumns).map((col) => (
-                <MicroSplit
-                    key={col.split.id}
-                    split={col.split}
-                    computePosition={computePosition}
-                />
-            ))}
+            <MicroSplits rotationColumns={rotationColumns} computePosition={computePosition} />
+            <MicroMarker
+                date={Object.values(rotationColumns)[0].split.appliesFrom}
+                computePosition={computePosition}
+            />
+            <MicroMarker
+                date={Object.values(rotationColumns)[0].split.appliesTo}
+                computePosition={computePosition}
+            />
         </div>
     );
 };

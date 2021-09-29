@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { PositionMark, TimelineSplit } from '../../model';
 import { useStyles } from './styles';
+import { addRotationMargin } from './utils';
 
 type MicroSplitProps = {
     split: TimelineSplit;
@@ -8,22 +9,34 @@ type MicroSplitProps = {
 };
 
 export const MicroSplit: FC<MicroSplitProps> = ({ split, computePosition }) => {
-    const styles = useStyles({ isSelected: true, isAssigned: true, isRotation: false });
+    const isRotation = !!split.rotationId;
+    const isAssigned = !!split.assignedPerson;
+    const styles = useStyles({ isSelected: true, isAssigned, isRotation });
     if (!computePosition) return null;
 
+    const startPosition = computePosition(split.appliesFrom.getTime(), 'start');
+    const endPosition = computePosition(split.appliesTo.getTime(), 'end');
+
     return (
-        <div className={styles.root}>
+        <div className={styles.split}>
             <div
-                className={styles.indicator}
-                style={{ left: `${computePosition(split.appliesFrom.getTime(), 'start')}%` }}
-            ></div>
-            <div
-                className={styles.split}
+                className={styles.line}
                 style={{
-                    left: `${computePosition(split.appliesFrom.getTime(), 'start')}%`,
-                    right: `${computePosition(split.appliesTo.getTime(), 'end')}%`,
+                    top: isRotation ? '-3.5px' : '-1px',
+                    left: addRotationMargin(startPosition, isRotation),
+                    right: addRotationMargin(endPosition, false),
                 }}
             ></div>
+            {isRotation && (
+                <div
+                    className={styles.line}
+                    style={{
+                        bottom: '-2.5px',
+                        left: addRotationMargin(startPosition, isRotation),
+                        right: addRotationMargin(endPosition, false),
+                    }}
+                ></div>
+            )}
         </div>
     );
 };
