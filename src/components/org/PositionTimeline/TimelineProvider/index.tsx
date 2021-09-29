@@ -52,9 +52,9 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
     }, [selectedPosition, initialDate]);
 
     useEffect(() => {
-        if (!initialSplit || state.selected.length) return;
+        if (!initialSplit) return;
         dispatch(actions.selectSplit(initialSplit.id));
-    }, [initialSplit, state.selected]);
+    }, [initialSplit]);
 
     useEffect(() => {
         if (!onDateChange) return;
