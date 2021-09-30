@@ -20,14 +20,14 @@ export const SplitLine: FC<SplitLineProps> = ({
     startPosition,
     endPosition,
     verticalPosition,
-    size
+    size,
 }) => {
     const styles = useStyles({ isSelected, isAssigned, size });
     const vertical = useMemo(() => {
         if (verticalPosition === 'top') {
-            return { top: isRotation ? '-3.5px' : '-1px' };
+            return { top: isRotation ? (size === 'small' ? '-3.5px' : '-4.5px') : '-1px' };
         }
-        return { bottom: '-2.5px' };
+        return { bottom: size === 'small' ? '-2.5px' : '-3.5px' };
     }, [verticalPosition, isRotation]);
     return (
         <div
