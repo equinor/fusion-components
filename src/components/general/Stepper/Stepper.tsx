@@ -116,7 +116,7 @@ const Stepper: FC<StepperProps> = ({
     );
 
     const stepperContainerClasses = classNames(
-        styles.stepperContainter,
+        styles.stepperContainer,
         useComponentDisplayClassNames(styles),
         {
             [styles.verticalStepperContainer]: verticalSteps,
