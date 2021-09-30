@@ -2,14 +2,14 @@ import { FC } from 'react';
 import MicroSplit from '..';
 import { PositionMark, RotationColumns, TimelineSize } from '../../../model';
 
-type MicroSplitsProps = {
+type InlineSplitsProps = {
     selectedSplit: string;
     rotationColumns: RotationColumns;
     computePosition?: (time: number, mark: PositionMark) => number;
     size: TimelineSize;
 };
 
-export const MicroSplits: FC<MicroSplitsProps> = ({
+export const InlineSplits: FC<InlineSplitsProps> = ({
     selectedSplit,
     rotationColumns,
     computePosition,

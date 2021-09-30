@@ -1,18 +1,18 @@
 import { FC } from 'react';
 import { TimelinePosition, TimelineSize } from '../model';
-import { MicroMarkers } from './MicroMarker/MicroMarkers';
-import { MicroSplits } from './MicroSplit/components/MicroSplits';
+import { InlineMarkers } from './InlineMarker/MicroMarkers';
+import { InlineSplits } from './InlineSplit/components/MicroSplits';
 import { useStyles } from './styles';
 import { usePositionTimeline } from './usePositionTimeline';
 
-type MicroTimelineProps = {
+type InlinePositionTimelineProps = {
     selectedPosition: TimelinePosition;
     selectedSplit?: string;
     initialDate?: Date;
     size: TimelineSize;
 };
 
-export const MicroTimeline: FC<MicroTimelineProps> = ({
+export const InlinePositionTimeline: FC<InlinePositionTimelineProps> = ({
     selectedPosition,
     selectedSplit,
     initialDate,
@@ -26,13 +26,13 @@ export const MicroTimeline: FC<MicroTimelineProps> = ({
     );
     return (
         <div className={styles.timeline}>
-            <MicroSplits
+            <InlineSplits
                 selectedSplit={selected}
                 rotationColumns={rotationColumns}
                 computePosition={computePosition}
                 size={size}
             />
-            <MicroMarkers
+            <InlineMarkers
                 selectedSplit={selected}
                 rotationColumns={rotationColumns}
                 computePosition={computePosition}
@@ -43,4 +43,4 @@ export const MicroTimeline: FC<MicroTimelineProps> = ({
     );
 };
 
-export default MicroTimeline;
+export default InlinePositionTimeline;

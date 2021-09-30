@@ -5,7 +5,7 @@ import { useStyles } from './styles';
 import { TooltipContent } from './components/TooltipContent';
 import { SplitLine } from './components/SplitLine';
 
-type MicroSplitProps = {
+type InlineSplitProps = {
     selected: string;
     split: TimelineSplit;
     linked: TimelineSplit[];
@@ -13,7 +13,7 @@ type MicroSplitProps = {
     size: TimelineSize;
 };
 
-export const MicroSplit: FC<MicroSplitProps> = ({ split, linked, computePosition, selected, size }) => {
+export const InlineSplit: FC<InlineSplitProps> = ({ split, linked, computePosition, selected, size }) => {
     const isSelected = linked.map((split) => split.id).includes(selected);
     const isRotation = !!split.rotationId;
     const isAssigned = !!split.assignedPerson;
@@ -59,4 +59,4 @@ export const MicroSplit: FC<MicroSplitProps> = ({ split, linked, computePosition
     );
 };
 
-export default MicroSplit;
+export default InlineSplit;

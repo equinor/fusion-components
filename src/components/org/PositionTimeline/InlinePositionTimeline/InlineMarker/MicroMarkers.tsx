@@ -1,11 +1,11 @@
 import { FC, useMemo } from 'react';
-import MicroMarker from '.';
+import InlineMarker from '.';
 import { PositionMark, RotationColumns, TimelineSize } from '../../model';
 import { sortRotationColumns } from '../utils';
-import { MicroMarkerData } from './types';
+import { InlineMarkerData } from './types';
 import { generateMarkerData } from './utils';
 
-type MicroMarkersProps = {
+type InlineMarkersProps = {
     selectedSplit: string;
     rotationColumns: RotationColumns;
     computePosition?: (time: number, mark: PositionMark) => number;
@@ -13,7 +13,7 @@ type MicroMarkersProps = {
     size: TimelineSize;
 };
 
-export const MicroMarkers: FC<MicroMarkersProps> = ({
+export const InlineMarkers: FC<InlineMarkersProps> = ({
     selectedSplit,
     rotationColumns,
     computePosition,
@@ -24,14 +24,14 @@ export const MicroMarkers: FC<MicroMarkersProps> = ({
         return Object.values(rotationColumns).sort(sortRotationColumns);
     }, [rotationColumns]);
 
-    const markerData: MicroMarkerData[] = useMemo(() => {
+    const markerData: InlineMarkerData[] = useMemo(() => {
         return generateMarkerData(sortedColumns);
     }, [sortedColumns]);
 
     return (
         <>
             {markerData.map((data) => (
-                <MicroMarker
+                <InlineMarker
                     key={`micro-marker-${data.date.getTime()}`}
                     selected={selectedSplit}
                     date={data.date}
@@ -41,7 +41,7 @@ export const MicroMarkers: FC<MicroMarkersProps> = ({
                 />
             ))}
             {selectedDate && (
-                <MicroMarker
+                <InlineMarker
                     key={`micro-marker-${selectedDate.getTime()}`}
                     selected={selectedSplit}
                     date={selectedDate}

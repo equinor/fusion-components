@@ -1,5 +1,5 @@
 import { RotationColumn } from '../../model';
-import { MicroMarkerData } from './types';
+import { InlineMarkerData } from './types';
 
 export const dayShiftDate = (date: Date, days: number) => {
     const shifted = new Date(date);
@@ -13,16 +13,16 @@ export const detectGap = (start: Date, end: Date) => {
 };
 
 export const generateMarkerData = (rotationColumns: RotationColumn[]) => {
-    return rotationColumns.reduce((data: MicroMarkerData[], col: RotationColumn, index) => {
+    return rotationColumns.reduce((data: InlineMarkerData[], col: RotationColumn, index) => {
         const prevCol = index > 0 ? rotationColumns[index - 1] : undefined;
         const nextCol = index < rotationColumns.length - 1 ? rotationColumns[index + 1] : undefined;
         const hasGapBefore = prevCol && detectGap(prevCol.split.appliesTo, col.split.appliesFrom);
         const hasGapAfter = nextCol && detectGap(col.split.appliesTo, nextCol.split.appliesFrom);
-        const start: MicroMarkerData = {
+        const start: InlineMarkerData = {
             date: col.split.appliesFrom,
             linked: col.linked.map((split) => split.id),
         };
-        const end: MicroMarkerData = {
+        const end: InlineMarkerData = {
             date: col.split.appliesTo,
             linked: col.linked.map((split) => split.id),
         };

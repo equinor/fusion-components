@@ -7,7 +7,7 @@ import {
     useTooltipRef,
     ExpandMoreIcon,
     IconButton,
-    MicroTimeline,
+    InlinePositionTimeline,
 } from '@equinor/fusion-components';
 import { ChildCountTypeKey, childCountTypeNameMapping } from '..';
 
@@ -129,7 +129,11 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
             )}
             {showTimeline && instances.length > 0 && (
                 <div className={styles.positionTimeline}>
-                    <MicroTimeline selectedPosition={position} initialDate={selectedDate} size="small" />
+                    <InlinePositionTimeline
+                        selectedPosition={position}
+                        initialDate={selectedDate}
+                        size="small"
+                    />
                 </div>
             )}
         </div>

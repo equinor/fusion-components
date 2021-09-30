@@ -1,5 +1,5 @@
 
-export type MicroMarkerData = {
+export type InlineMarkerData = {
     date: Date;
     linked: string[];
 }

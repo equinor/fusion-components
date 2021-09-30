@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { PositionMark, TimelineSize } from '../../model';
 import { useStyles } from './styles';
 
-type MicroMarkerProps = {
+type InlineMarkerProps = {
     selected: string;
     date: Date;
     linked?: string[];
@@ -12,7 +12,7 @@ type MicroMarkerProps = {
     size: TimelineSize;
 };
 
-export const MicroMarker: FC<MicroMarkerProps> = ({
+export const InlineMarker: FC<InlineMarkerProps> = ({
     selected,
     date,
     linked,
@@ -32,4 +32,4 @@ export const MicroMarker: FC<MicroMarkerProps> = ({
     );
 };
 
-export default MicroMarker;
+export default InlineMarker;
