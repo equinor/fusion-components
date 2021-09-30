@@ -1,36 +1,43 @@
 import { FC } from 'react';
-import { TimelinePosition } from '../model';
-import MicroMarker from './MicroMarker';
-import MicroSplit from './MicroSplit';
-import { MicroSplits } from './MicroSplit/MicroSplits';
+import { TimelinePosition, TimelineSize } from '../model';
+import { MicroMarkers } from './MicroMarker/MicroMarkers';
+import { MicroSplits } from './MicroSplit/components/MicroSplits';
 import { useStyles } from './styles';
 import { usePositionTimeline } from './usePositionTimeline';
 
 type MicroTimelineProps = {
     selectedPosition: TimelinePosition;
+    selectedSplit?: string;
     initialDate?: Date;
+    size: TimelineSize;
 };
 
-export const MicroTimeline: FC<MicroTimelineProps> = ({ selectedPosition, initialDate }) => {
+export const MicroTimeline: FC<MicroTimelineProps> = ({
+    selectedPosition,
+    selectedSplit,
+    initialDate,
+    size
+}) => {
     const styles = useStyles();
-    const {
-        splits,
-        start,
-        end,
-        selectedDate,
-        rotationColumns,
-        computePosition,
-    } = usePositionTimeline(selectedPosition, initialDate ?? new Date());
+    const { selectedDate, rotationColumns, computePosition, selected } = usePositionTimeline(
+        selectedPosition,
+        initialDate,
+        selectedSplit
+    );
     return (
         <div className={styles.timeline}>
-            <MicroSplits rotationColumns={rotationColumns} computePosition={computePosition} />
-            <MicroMarker
-                date={Object.values(rotationColumns)[0].split.appliesFrom}
+            <MicroSplits
+                selectedSplit={selected}
+                rotationColumns={rotationColumns}
                 computePosition={computePosition}
+                size={size}
             />
-            <MicroMarker
-                date={Object.values(rotationColumns)[0].split.appliesTo}
+            <MicroMarkers
+                selectedSplit={selected}
+                rotationColumns={rotationColumns}
                 computePosition={computePosition}
+                selectedDate={selectedDate}
+                size={size}
             />
         </div>
     );

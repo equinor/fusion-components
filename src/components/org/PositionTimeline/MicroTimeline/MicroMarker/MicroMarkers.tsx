@@ -1,28 +1,55 @@
-import { FC, useCallback, useMemo } from 'react';
-import { PositionMark, RotationColumn, RotationColumns } from '../../model';
+import { FC, useMemo } from 'react';
+import MicroMarker from '.';
+import { PositionMark, RotationColumns, TimelineSize } from '../../model';
+import { sortRotationColumns } from '../utils';
+import { MicroMarkerData } from './types';
+import { generateMarkerData } from './utils';
 
 type MicroMarkersProps = {
+    selectedSplit: string;
     rotationColumns: RotationColumns;
     computePosition?: (time: number, mark: PositionMark) => number;
+    selectedDate?: Date;
+    size: TimelineSize;
 };
 
-export const MicroMarkers: FC<MicroMarkersProps> = ({ rotationColumns, computePosition }) => {
+export const MicroMarkers: FC<MicroMarkersProps> = ({
+    selectedSplit,
+    rotationColumns,
+    computePosition,
+    selectedDate,
+    size
+}) => {
     const sortedColumns = useMemo(() => {
-        return Object.values(rotationColumns).sort(
-            (a, b) => a.split.appliesFrom.getTime() - b.split.appliesFrom.getTime()
-        );
+        return Object.values(rotationColumns).sort(sortRotationColumns);
     }, [rotationColumns]);
 
-    const microMarkers = useMemo(() => {
-        return sortedColumns.reduce((markers: JSX.Element[], col: RotationColumn, index) => {
-            if (index === sortedColumns.length - 1) {
-
-            }
-            
-
-        }, []);
+    const markerData: MicroMarkerData[] = useMemo(() => {
+        return generateMarkerData(sortedColumns);
     }, [sortedColumns]);
 
-    const MicroMarkers = 
-    return <>{sortedColumns.map((col, index) => )}</>;
+    return (
+        <>
+            {markerData.map((data) => (
+                <MicroMarker
+                    key={`micro-marker-${data.date.getTime()}`}
+                    selected={selectedSplit}
+                    date={data.date}
+                    linked={data.linked}
+                    computePosition={computePosition}
+                    size={size}
+                />
+            ))}
+            {selectedDate && (
+                <MicroMarker
+                    key={`micro-marker-${selectedDate.getTime()}`}
+                    selected={selectedSplit}
+                    date={selectedDate}
+                    computePosition={computePosition}
+                    isSelectedDate
+                    size={size}
+                />
+            )}
+        </>
+    );
 };

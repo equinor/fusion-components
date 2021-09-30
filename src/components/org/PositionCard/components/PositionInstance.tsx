@@ -1,10 +1,14 @@
-import { useCallback, useMemo, FC, MouseEvent } from 'react';
+import { useCallback, FC, MouseEvent } from 'react';
 
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
-import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
-import PositionTimeline from './PositionTimeline';
+import {
+    useTooltipRef,
+    ExpandMoreIcon,
+    IconButton,
+    MicroTimeline,
+} from '@equinor/fusion-components';
 import { ChildCountTypeKey, childCountTypeNameMapping } from '..';
 
 type PositionInstanceProps = {
@@ -82,20 +86,6 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     );
 
     const instances = position ? position.instances : [];
-    const instancesByFrom = useMemo(
-        () => [...instances].sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime()),
-        [instances]
-    );
-    const instancesByTo = useMemo(
-        () => [...instances].sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime()),
-        [instances]
-    );
-
-    const firstInstance = useMemo(() => instancesByFrom[0], [instancesByFrom]);
-    const lastInstance = useMemo(
-        () => instancesByTo.find((i) => i.appliesTo.getTime !== undefined),
-        [instancesByTo]
-    );
 
     return (
         <div className={positionInstanceClasses} onClick={onClickHandler}>
@@ -138,13 +128,9 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
                 </div>
             )}
             {showTimeline && instances.length > 0 && (
-                <PositionTimeline
-                    allInstances={instancesByFrom}
-                    activeInstance={instance || null}
-                    firstInstance={firstInstance}
-                    lastInstance={lastInstance}
-                    selectedDate={selectedDate}
-                />
+                <div className={styles.positionTimeline}>
+                    <MicroTimeline selectedPosition={position} initialDate={selectedDate} size="small" />
+                </div>
             )}
         </div>
     );

@@ -48,7 +48,7 @@ export type TemporalSplitGroups = Record<string, TimelineSplit[]>;
 
 export type RotationColumn = {
     split: TimelineSplit;
-    linked: string[];
+    linked: TimelineSplit[];
 }
 
 export type RotationColumns = Record<string, RotationColumn>;
@@ -61,3 +61,5 @@ export type TimelineSlotProps = {
 export type SelectMode = 'single' | 'multi' | 'slider';
 
 export type PositionMark = 'start' | 'end';
+
+export type TimelineSize = 'small' | 'medium';

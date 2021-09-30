@@ -76,8 +76,8 @@ export const getRotationGroups = (splits: TimelineSplit[]): RotationGroups => {
 /**
  * Groups a set of splits according to their start date. Every split that begins
  * on the same date will be grouped together. Based on the appliesFrom property.
- * @param splits 
- * @returns 
+ * @param splits
+ * @returns
  */
 export const splitGroupsByDate = (splits: TimelineSplit[]): TemporalSplitGroups => {
     return splits.reduce((groups: TemporalSplitGroups, currentSplit: TimelineSplit) => {
@@ -97,8 +97,8 @@ export const splitGroupsByDate = (splits: TimelineSplit[]): TemporalSplitGroups 
 
 /**
  * Returns the split with the earliest start date. Based on the appliesFrom property.
- * @param splits 
- * @returns 
+ * @param splits
+ * @returns
  */
 export const getEarliestFinish = (splits: TimelineSplit[]): TimelineSplit => {
     const ascending = splits.sort((a, b) => a.appliesTo.getTime() - b.appliesTo.getTime());
@@ -106,10 +106,10 @@ export const getEarliestFinish = (splits: TimelineSplit[]): TimelineSplit => {
 };
 
 /**
- * Checks whether two splits overlap in time. 
- * @param splitA 
- * @param splitB 
- * @returns 
+ * Checks whether two splits overlap in time.
+ * @param splitA
+ * @param splitB
+ * @returns
  */
 export const doesSplitsOverlap = (splitA: TimelineSplit, splitB: TimelineSplit) =>
     splitA.appliesFrom.getTime() <= splitB.appliesTo.getTime() &&
@@ -117,14 +117,14 @@ export const doesSplitsOverlap = (splitA: TimelineSplit, splitB: TimelineSplit) 
 
 /**
  * Returns all the splits in a set which overlaps in time with the main split
- * @param main 
- * @param splits 
- * @returns 
+ * @param main
+ * @param splits
+ * @returns
  */
-export const getLinkedSplits = (main: TimelineSplit, splits: TimelineSplit[]): string[] => {
-    return splits.reduce((overlapping: string[], currentSplit: TimelineSplit) => {
+export const getLinkedSplits = (main: TimelineSplit, splits: TimelineSplit[]): TimelineSplit[] => {
+    return splits.reduce((overlapping: TimelineSplit[], currentSplit: TimelineSplit) => {
         if (doesSplitsOverlap(main, currentSplit)) {
-            return [...overlapping, currentSplit.id];
+            return [...overlapping, currentSplit];
         }
         return overlapping;
     }, []);
@@ -134,8 +134,8 @@ export const getLinkedSplits = (main: TimelineSplit, splits: TimelineSplit[]): s
  * Groups a set of splits into columns, where each column is represented by a unqiue split start date in the set of splits.
  * Each column is associated by a main split (the split in the set which has the smallest range compared to other splits with
  * the same start date), and a set of linked splits, which overlaps with the main split.
- * @param splits 
- * @returns 
+ * @param splits
+ * @returns
  */
 export const getRotationColumns = (splits: TimelineSplit[]): RotationColumns => {
     const temporalGroups = splitGroupsByDate(splits);
@@ -158,9 +158,9 @@ export const getRotationColumns = (splits: TimelineSplit[]): RotationColumns => 
             ...columns,
             [earliest.id]: {
                 split: earliest,
-                linked
-            }
-        }
+                linked,
+            },
+        };
     }, {});
 };
 

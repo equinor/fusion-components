@@ -1,41 +1,59 @@
+import { useTooltipRef } from '@equinor/fusion-components';
 import { FC } from 'react';
-import { PositionMark, TimelineSplit } from '../../model';
+import { PositionMark, TimelineSize, TimelineSplit } from '../../model';
 import { useStyles } from './styles';
-import { addRotationMargin } from './utils';
+import { TooltipContent } from './components/TooltipContent';
+import { SplitLine } from './components/SplitLine';
 
 type MicroSplitProps = {
+    selected: string;
     split: TimelineSplit;
+    linked: TimelineSplit[];
     computePosition?: (time: number, mark: PositionMark) => number;
+    size: TimelineSize;
 };
 
-export const MicroSplit: FC<MicroSplitProps> = ({ split, computePosition }) => {
+export const MicroSplit: FC<MicroSplitProps> = ({ split, linked, computePosition, selected, size }) => {
+    const isSelected = linked.map((split) => split.id).includes(selected);
     const isRotation = !!split.rotationId;
     const isAssigned = !!split.assignedPerson;
-    const styles = useStyles({ isSelected: true, isAssigned, isRotation });
+    const styles = useStyles();
     if (!computePosition) return null;
 
     const startPosition = computePosition(split.appliesFrom.getTime(), 'start');
     const endPosition = computePosition(split.appliesTo.getTime(), 'end');
 
+    const splitTooltipRef = useTooltipRef(linked.map((split) => <TooltipContent split={split} />));
+
     return (
         <div className={styles.split}>
+            <SplitLine
+                isRotation={isRotation}
+                isAssigned={isAssigned}
+                isSelected={isSelected}
+                startPosition={startPosition}
+                endPosition={endPosition}
+                verticalPosition="top"
+                size={size}
+            />
             <div
-                className={styles.line}
+                className={styles.tooltipContainer}
                 style={{
-                    top: isRotation ? '-3.5px' : '-1px',
-                    left: addRotationMargin(startPosition, isRotation),
-                    right: addRotationMargin(endPosition, false),
+                    left: `${startPosition}%`,
+                    right: `${endPosition}%`,
                 }}
+                ref={splitTooltipRef}
             ></div>
             {isRotation && (
-                <div
-                    className={styles.line}
-                    style={{
-                        bottom: '-2.5px',
-                        left: addRotationMargin(startPosition, isRotation),
-                        right: addRotationMargin(endPosition, false),
-                    }}
-                ></div>
+                <SplitLine
+                    isRotation={isRotation}
+                    isAssigned={isAssigned}
+                    isSelected={isSelected}
+                    startPosition={startPosition}
+                    endPosition={endPosition}
+                    verticalPosition="bottom"
+                    size={size}
+                />
             )}
         </div>
     );
