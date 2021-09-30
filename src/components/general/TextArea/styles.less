@@ -1,23 +1,23 @@
 @import '~styles/mixins.less';
 
 .textAreaContainer {
-   display: flex;
+    display: flex;
     flex-direction: column;
     height: 100%;
 
     .textAreaContent {
         display: flex;
         justify-content: space-between;
-        min-height: .grid-unit(7px)[];
+        min-height: .grid-unit(7px) [];
         background-color: var(--color-black-alt5);
         border-bottom: 1px solid var(--color-primary-accent);
         caret-color: var(--color-primary);
-        padding: .grid-unit(1px)[] .grid-unit(2px)[];
+        padding: .grid-unit(1px) [] .grid-unit(2px) [];
         border-radius: 4px 4px 0 0;
         height: 100%;
 
         > aside {
-            padding-right: .grid-unit(2px)[];
+            padding-right: .grid-unit(2px) [];
             display: flex;
             align-items: center;
         }
@@ -27,28 +27,28 @@
         }
 
         &.disabled {
-          border-bottom-color: var(--color-black-alt5);
-          cursor: not-allowed;
+            border-bottom-color: var(--color-black-alt5);
+            cursor: not-allowed;
         }
 
         &.focus {
             border-bottom: 1px solid var(--color-primary);
             box-shadow: 0 1px 0 var(--color-primary);
         }
-        
+
         &.error {
             border-bottom-color: var(--color-red);
             caret-color: var(--color-red);
-            
+
             &.focus {
                 box-shadow: 0 1px 0 var(--color-red);
             }
         }
-        
+
         &.labelLess {
             padding-top: 0;
             padding-bottom: 0;
-        } 
+        }
 
         .inputTextContent {
             display: flex;
@@ -63,7 +63,7 @@
                 color: var(--color-primary-accent);
                 opacity: 0.6;
                 font-size: 16px;
-                transition: top ease .2s, font-size .2s;
+                transition: top ease 0.2s, font-size 0.2s;
                 top: calc(var(--grid-unit) * 2px);
                 -ms-transform: translateY(-50%);
                 transform: translateY(-50%);
@@ -71,13 +71,13 @@
 
             textarea {
                 font-size: 16px;
-                line-height: .grid-unit(2px)[];
+                line-height: .grid-unit(2px) [];
                 width: 100%;
                 height: 100%;
                 outline: none;
                 background-color: var(--color-black-alt5);
                 border: none;
-                resize: none; 
+                resize: none;
                 padding-top: calc(var(--grid-unit) * 1px);
 
                 &::placeholder {
@@ -90,13 +90,13 @@
                 label {
                     font-size: 12px;
                     line-height: 14px;
-                    top: .grid-unit(1px)[];
+                    top: .grid-unit(1px) [];
                     opacity: 1;
                     position: relative;
                 }
 
-                &.error{
-                    label{
+                &.error {
+                    label {
                         color: var(--color-red);
                     }
                 }
@@ -116,17 +116,17 @@
         }
     }
 
-    .helperIconText{
+    .helperIconText {
         display: flex;
-        padding-left: .grid-unit(1px)[];
-        padding-top: .grid-unit(0.5px)[];
+        padding-left: .grid-unit(1px) [];
+        padding-top: .grid-unit(0.5px) [];
 
         .helperText {
             display: flex;
             position: relative;
             font-size: 11px;
-            padding-left: .grid-unit(1px)[];
-            line-height: .grid-unit(2px)[];
+            padding-left: .grid-unit(1px) [];
+            line-height: .grid-unit(2px) [];
             color: var(--color-black-alt2);
 
             &.error {
@@ -136,12 +136,12 @@
 
         .icon {
             display: flex;
-            padding-left: .grid-unit(1px)[];
+            padding-left: .grid-unit(1px) [];
             height: 100%;
-        
+
             svg {
-                width: .grid-unit(2px)[];
-                height: .grid-unit(2px)[];
+                width: .grid-unit(2px) [];
+                height: .grid-unit(2px) [];
             }
         }
     }

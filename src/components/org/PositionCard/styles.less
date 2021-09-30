@@ -4,27 +4,17 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-white);
-    border: 1px solid var(--color-black-alt4);
     border-radius: 4px;
     position: relative;
-    transition: box-shadow .15s;
-
-    &.futurePosition{
-        background-color: #EEFCF2;
-        border: 1px solid var(--color-green);
-    }
-
-    &.pastPosition {
-        background-color: #E6E6E6;
-        border: 1px solid var(--color-black-alt3);
-    }
+    transition: box-shadow 0.15s;
 
     &.isClickable {
         cursor: pointer;
 
-        &:hover, &.isSelected {
-            box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+        &:hover,
+        &.isSelected {
+            box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12),
+                0px 2px 4px rgba(0, 0, 0, 0.14);
         }
 
         &.isSelected {
@@ -35,7 +25,7 @@
 
     &.multipleAssignments {
         &::before {
-            content: "";
+            content: '';
             width: 100%;
             height: 100%;
             position: absolute;
@@ -53,9 +43,8 @@
     }
 
     &.isLinked {
-        border: 1px dashed var(--color-black-alt3);
+        border: 2px dashed #bebebe; // EDS Design Token Interactive/Disabled/Text 🎨 Grey 30
     }
-
 
     .rotationInstances {
         border-top: 1px solid var(--color-black-alt4);
@@ -67,7 +56,7 @@
             align-items: center;
             padding-top: calc(var(--grid-unit) * 1px);
 
-            .assigneeInfo{
+            .assigneeInfo {
                 display: flex;
                 flex-direction: column;
                 padding-left: calc(var(--grid-unit) * 2px);
@@ -79,16 +68,13 @@
                     font-size: var(--small-section-font-size);
                 }
             }
-
         }
     }
-    
 
     .container {
         display: flex;
         flex-direction: row;
 
-       
         .photoIconContainer {
             user-select: none;
             flex-shrink: 0;
@@ -113,7 +99,7 @@
                     font-weight: bold;
                     color: var(--color-white);
                     background-color: var(--color-red);
-                    top: calc(var(--grid-unit) * .25px);
+                    top: calc(var(--grid-unit) * 0.25px);
                     right: 0;
                     transform: translateX(50%);
                     border-radius: 50%;
@@ -123,11 +109,18 @@
                 }
             }
 
-            .stateIcon{
+            .stateIcons {
                 position: relative;
+                padding-top: calc(var(--grid-unit) * 1px);
                 display: flex;
-                justify-content: center;
-                padding-top: calc(var(--grid-unit)* .5px);
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .edsIcon > * {
+                height: 16px;
+                width: 16px;
+                color: var(--color-black-alt2);
             }
         }
 
@@ -136,9 +129,11 @@
             flex-grow: 1;
             margin-left: var(--photo-and-details-spacing);
             width: 1px;
-            min-height: calc(var(--grid-unit)* 7px);
+            min-height: calc(var(--grid-unit) * 7px);
 
-            .assignedPersonName span, .basePositionName span, .positionName span {
+            .assignedPersonName span,
+            .basePositionName span,
+            .positionName span {
                 display: inline-block;
                 white-space: nowrap;
                 overflow: hidden;
@@ -146,7 +141,9 @@
                 max-width: 100%;
             }
 
-            .basePositionName, .location, .period {
+            .basePositionName,
+            .location,
+            .period {
                 font-size: var(--small-section-font-size);
                 line-height: var(--small-section-line-height);
             }
@@ -158,7 +155,7 @@
                 color: var(--color-primary);
                 display: flex;
 
-                span {            
+                span {
                     text-decoration: underline;
                 }
             }
@@ -168,43 +165,44 @@
                 line-height: var(--big-section-line-height);
                 margin-right: calc(var(--grid-unit) * 6px);
                 display: flex;
-
             }
-            .basePositionName{
+            .basePositionName {
                 display: flex;
                 margin-right: calc(var(--grid-unit) * 6px);
             }
-        
+
             .externalId {
-                    padding-left: calc(var(--grid-unit) * .5px);
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    display: flex;
-                    align-items: center;
-                    font-size: var(--small-section-font-size);
-                    line-height: var(--small-section-line-height);
+                padding-left: calc(var(--grid-unit) * 0.5px);
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                align-items: center;
+                font-size: var(--small-section-font-size);
+                line-height: var(--small-section-line-height);
             }
 
             .childPositionCount {
-                    display: flex;
-                    flex-direction: column;
-                    width: 100%;
-                    height: 100%;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: var(--small-section-font-size);
-            } 
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                font-size: var(--small-section-font-size);
+                letter-spacing: 1px;
+                font-feature-settings: 'tnum' on, 'lnum' on;
+            }
 
             .expandButton {
-                height: var(--child-position-height); 
+                height: var(--child-position-height);
                 position: absolute;
                 right: 0;
                 bottom: 0;
             }
 
-            &.cropPositionName{
-                .positionName span{
+            &.cropPositionName {
+                .positionName span {
                     margin-right: calc(var(--grid-unit) * 6px);
                 }
             }
@@ -222,20 +220,20 @@
                     top: 50%;
                     transform: translateY(-50%);
                     box-sizing: border-box;
-                    height: calc(var(--grid-unit) * .5px);
-                    width: calc(var(--grid-unit) * .5px);
+                    height: calc(var(--grid-unit) * 0.5px);
+                    width: calc(var(--grid-unit) * 0.5px);
                     position: absolute;
 
-                    &.right{
+                    &.right {
                         right: 0;
                     }
-                    &.selectedDate{
+                    &.selectedDate {
                         background: var(--color-white);
                         border: 1px solid var(--color-primary);
                     }
                 }
 
-                .instance{
+                .instance {
                     height: 100%;
                     position: absolute;
 
@@ -245,20 +243,20 @@
                         top: 50%;
                         transform: translateY(-50%);
                         position: absolute;
-                        height: calc(var(--grid-unit) * .5px - 2px);
+                        height: calc(var(--grid-unit) * 0.5px - 2px);
                         display: flex;
                         align-items: center;
                         background: var(--instance-color);
                         box-sizing: border-box;
                     }
-                    
+
                     &.isCurrent {
                         --instance-color: var(--color-primary);
                         &.hasRotation {
                             --instance-color: var(--color-secondary-alt1);
                         }
                     }
-                    &:not(.isCurrent){
+                    &:not(.isCurrent) {
                         --instance-color: var(--color-primary-alt1);
                         &.hasRotation {
                             --instance-color: var(--color-secondary-alt3);
@@ -266,18 +264,16 @@
                     }
 
                     &.hasUnAssignedPerson {
-                        .instanceLine{
+                        .instanceLine {
                             background: repeating-linear-gradient(
                                 to right,
                                 var(--instance-color),
                                 var(--instance-color) calc(var(--grid-unit) * 1px),
-                                rgba(0,0,0,0) calc(var(--grid-unit) * 1px),
-                                rgba(0,0,0,0) calc(var(--grid-unit) * 1.5px)
+                                rgba(0, 0, 0, 0) calc(var(--grid-unit) * 1px),
+                                rgba(0, 0, 0, 0) calc(var(--grid-unit) * 1.5px)
                             );
                         }
-
                     }
-    
                 }
             }
         }
@@ -290,18 +286,19 @@
         background: white;
         border: 1px solid var(--color-black-alt4);
         border-radius: 4px;
-        overflow: visible;;
-    
+        overflow: visible;
+
         .instanceWrapper {
             display: flex;
             width: var(--container-width);
             border-bottom: 1px solid var(--color-black-alt4);
             padding: var(--container-padding);
             box-sizing: border-box;
-            transition: box-shadow .15s;
+            transition: box-shadow 0.15s;
 
             &:hover {
-                box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+                box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12),
+                    0px 2px 4px rgba(0, 0, 0, 0.14);
             }
 
             &:first-child {
@@ -337,7 +334,7 @@
         --container-height: calc(var(--grid-unit) * 12px);
         --container-padding: calc(var(--grid-unit) * 1px);
         --photo-and-details-spacing: calc(var(--grid-unit) * 1px);
-        --position-name-spacing: calc(var(--grid-unit) * .5px);
+        --position-name-spacing: calc(var(--grid-unit) * 0.5px);
 
         --child-position-padding: calc(var(--grid-unit) * 0.5px);
         --child-position-height: calc(var(--grid-unit) * 4px);

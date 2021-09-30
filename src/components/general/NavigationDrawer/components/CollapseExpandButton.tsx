@@ -1,12 +1,12 @@
-import React from 'react';
 import { useTooltipRef, CollapseIcon, IconButton } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 type CollapseExpandButtonProps = {
     isCollapsed: boolean;
     onClick: () => void;
 };
 
-const CollapseExpandButton: React.FC<CollapseExpandButtonProps> = ({ isCollapsed, onClick }) => {
+const CollapseExpandButton: FC<CollapseExpandButtonProps> = ({ isCollapsed, onClick }) => {
     const tooltipRef = useTooltipRef(isCollapsed ? 'Expand' : 'Collapse', 'right');
 
     return (

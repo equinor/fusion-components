@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     NavigationChild,
     NavigationSection,
@@ -11,7 +10,7 @@ export const getNavigationComponentForItem = (structure?: NavigationStructure[],
     if (!structure) {
         return null;
     }
-    return structure.map(item => {
+    return structure.map((item) => {
         const itemProps = {
             title: item.title,
             id: item.id,
@@ -21,7 +20,9 @@ export const getNavigationComponentForItem = (structure?: NavigationStructure[],
             icon: item.icon,
             navigationChildren: item.navigationChildren,
             aside: item.aside,
-            isDisabled: item.isDisabled
+            isDisabled: item.isDisabled,
+            href: item.href,
+            info: item.info,
         };
         switch (item.type) {
             case 'child':
@@ -56,7 +57,7 @@ export const toggleOpenById = (id: string, structure: NavigationStructure): Navi
     if (structure.navigationChildren) {
         return {
             ...structure,
-            navigationChildren: structure.navigationChildren.map(child =>
+            navigationChildren: structure.navigationChildren.map((child) =>
                 toggleOpenById(id, child)
             ),
         };
@@ -72,7 +73,7 @@ export const toggleActiveById = (
         return {
             ...structure,
             isActive: structure.id === id,
-            navigationChildren: structure.navigationChildren.map(child =>
+            navigationChildren: structure.navigationChildren.map((child) =>
                 toggleActiveById(id, child)
             ),
         };
@@ -94,7 +95,7 @@ export const toggleOpenByChildId = (
         return {
             ...structure,
             isOpen: true,
-            navigationChildren: structure.navigationChildren.map(child =>
+            navigationChildren: structure.navigationChildren.map((child) =>
                 toggleOpenByChildId(id, child)
             ),
         };
@@ -107,8 +108,8 @@ const hasChildById = (id: string, structure: NavigationStructure): boolean => {
         return true;
     }
     if (structure.navigationChildren) {
-        const children = structure.navigationChildren.map(item => hasChildById(id, item));
-        return children.some(child => child);
+        const children = structure.navigationChildren.map((item) => hasChildById(id, item));
+        return children.some((child) => child);
     }
     return false;
 };
@@ -118,8 +119,8 @@ export const hasActive = (structure: NavigationStructure): boolean => {
         return true;
     }
     if (structure.navigationChildren) {
-        const children = structure.navigationChildren.map(item => hasActive(item));
-        return children.some(active => active);
+        const children = structure.navigationChildren.map((item) => hasActive(item));
+        return children.some((active) => active);
     }
     return false;
 };

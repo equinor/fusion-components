@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
+
 import classNames from 'classnames';
 import { Button, ErrorBoundary } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -37,9 +38,8 @@ export type FilterPaneProps<T> = {
     onChange: OnFilterChangeHandler<T>;
     screenPlacement?: 'right' | 'left';
     onToggleCollapse?: (isCollapsed: boolean) => void;
-    headerComponent?: React.ReactNode;
-    quickFactScope?: string;
-    onResetAll: () => void;
+    headerComponent?: ReactNode;
+    onResetAll: OnFilterChangeHandler<T>;
     showResetAllButton: boolean;
 };
 
@@ -52,7 +52,6 @@ function FilterPane<T>({
     screenPlacement = 'right',
     onToggleCollapse,
     headerComponent,
-    quickFactScope,
     onResetAll,
     showResetAllButton,
 }: FilterPaneProps<T>) {
@@ -97,6 +96,10 @@ function FilterPane<T>({
         }
     );
 
+    const onClick = useCallback(() => {
+        onResetAll;
+    }, [onResetAll]);
+
     const filterPaneContext = useMemo<IFilterPaneContext>(
         () => ({
             terms,
@@ -119,7 +122,7 @@ function FilterPane<T>({
                 <div className={styles.content}>
                     {showResetAllButton && !isCollapsed && (
                         <div className={styles.resetButton}>
-                            <Button frameless onClick={onResetAll}>
+                            <Button frameless onClick={onClick}>
                                 Reset filters
                             </Button>
                         </div>
@@ -131,7 +134,6 @@ function FilterPane<T>({
                             terms={terms}
                             filterCount={filterCount}
                             onChange={handleOnSectionChange}
-                            quickFactScope={quickFactScope}
                         />
                     ))}
                 </div>

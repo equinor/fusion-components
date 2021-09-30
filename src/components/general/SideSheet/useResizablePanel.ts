@@ -61,7 +61,10 @@ export default (
 
             const mouseEvent = e as MouseEvent;
 
-            const width = screenPlacement === "left" ? mouseEvent.pageX : window.innerWidth - mouseEvent.pageX;
+            const width =
+                screenPlacement === 'left'
+                    ? mouseEvent.pageX
+                    : window.innerWidth - mouseEvent.pageX;
             const size = getConstrainedSize({ width });
 
             window.requestAnimationFrame(() => setResizedSize(size));
@@ -73,6 +76,7 @@ export default (
         if (isResizing) {
             setMouseIsDown(false);
             setTimeout(() => setIsResizing(false));
+            window.dispatchEvent(new CustomEvent('resize'));
 
             if (resizeSettingsKey && resizedSize) {
                 setAppSettings(resizeSettingsKey, resizedSize);

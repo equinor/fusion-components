@@ -1,6 +1,7 @@
 import { useState, useEffect, MutableRefObject, useRef } from 'react';
 
-const defaultRect: ClientRect = {
+// previously ClientRect
+const defaultRect = {
     left: 0,
     right: 0,
     top: 0,
@@ -34,11 +35,11 @@ export default (ref: MutableRefObject<HTMLElement | null>) => {
     useEffect(setRectFromRef, [ref.current]);
 
     const animationFrame = useRef(0);
-    const timer = useRef(0);
+    const timer = useRef<NodeJS.Timeout>(null);
     const isStopped = useRef(false);
     const update = () => {
         clearTimeout(timer.current);
-        window.cancelAnimationFrame(timer.current);
+        window.cancelAnimationFrame(Number(timer.current));
 
         if (isStopped.current) {
             return;

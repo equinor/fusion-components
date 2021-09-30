@@ -1,24 +1,24 @@
-import React from 'react';
-import { TextInput, SearchIcon, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
+import { TextInput, SearchIcon } from '@equinor/fusion-components';
+import { useAnchor } from '../../ApplicationGuidance';
 import { FilterTerm, Filter } from '../applyFilters';
 
 type SearchFilterProps<T> = {
     term: FilterTerm;
     onChange: (value: string) => void;
-    quickFactScope?: string;
-    filter: Filter<T>,
+    filter: Filter<T>;
 };
 
-function SearchFilterComponent<T>({ filter, term, onChange, quickFactScope }: SearchFilterProps<T>) {
+function SearchFilterComponent<T>({ filter, term, onChange }: SearchFilterProps<T>) {
+    const anchorRef = useAnchor<HTMLDivElement>(filter.info);
     return (
-        <ApplicationGuidanceAnchor anchor={filter.key} scope={quickFactScope}>
+        <div ref={anchorRef}>
             <TextInput
                 icon={<SearchIcon />}
                 value={term ? (term.value as string) : ''}
                 onChange={onChange}
             />
-        </ApplicationGuidanceAnchor>
+        </div>
     );
-};
+}
 
 export default SearchFilterComponent;

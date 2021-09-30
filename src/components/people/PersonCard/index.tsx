@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
     PersonPhoto,
     PhotoSize,
@@ -10,7 +10,6 @@ import classNames from 'classnames';
 import styles from './styles.less';
 import {
     PersonDetails,
-    usePersonDetails,
     useComponentDisplayClassNames,
     useComponentDisplayType,
     ComponentDisplayType,
@@ -18,6 +17,7 @@ import {
 import { getDefaultPerson } from '../utils';
 import PersonDetail from '../PersonDetail';
 import { SkeletonBar } from '../../feedback/Skeleton';
+import usePeopleDetails from '../usePeopleDetails';
 
 export { PhotoSize };
 
@@ -41,9 +41,7 @@ export default ({
     isFetchingPerson,
 }: PersonCardProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
-    const { isFetching, error, personDetails } = personId
-        ? usePersonDetails(personId)
-        : { isFetching: isFetchingPerson, error: null, personDetails: person };
+    const { isFetching, error, personDetails } = usePeopleDetails(personId, person);
 
     useEffect(() => {
         if (!error && personDetails) {
@@ -54,7 +52,7 @@ export default ({
     }, [error, personDetails]);
 
     const displayType = useComponentDisplayType();
-    const shouldDisplayEmail = React.useMemo(
+    const shouldDisplayEmail = useMemo(
         () => !inline || (inline && displayType === ComponentDisplayType.Comfortable),
         [displayType, inline]
     );

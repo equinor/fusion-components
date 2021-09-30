@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import Dropdown, { useDropdownController } from './index';
 import { Button } from '@equinor/fusion-components';

@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, ReactNode, useMemo, useEffect } from 'react';
+import { FC, useState, useCallback, ReactNode, useMemo, useEffect } from 'react';
 import classNames from 'classnames';
 import {
     useComponentDisplayClassNames,
@@ -18,6 +18,7 @@ import {
     toggleActiveById,
     toggleOpenByChildId,
 } from './utils';
+import { UseAnchorProps } from '../ApplicationGuidance';
 export { NavigationChild, NavigationSection, NavigationGrouping };
 
 const NAVIGATION_DRAWER_COLLAPSED_KEY = 'NAVIGATION_DRAWER_COLLAPSED_KEY';
@@ -51,6 +52,8 @@ export type NavigationStructure = {
     navigationChildren?: NavigationStructure[];
     aside?: ReactNode;
     isDisabled?: boolean;
+    href?: string;
+    info?: UseAnchorProps;
 };
 
 type NavigationDrawerProps = {

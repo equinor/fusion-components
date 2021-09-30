@@ -1,9 +1,9 @@
-import React from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { cloneElement, useEffect, useRef, Children, FC } from 'react';
 
 type StepPaneProps = {
     onChange: (stepKey: string) => void;
@@ -14,7 +14,7 @@ type StepPaneProps = {
     verticalSteps?: boolean;
 };
 
-const StepPane: React.FC<StepPaneProps> = ({
+const StepPane: FC<StepPaneProps> = ({
     children,
     onChange,
     activeStepKey,
@@ -22,8 +22,8 @@ const StepPane: React.FC<StepPaneProps> = ({
     forceOrder,
     verticalSteps,
 }) => {
-    const stepPaneRef = React.useRef<HTMLDivElement | null>(null);
-    const activeStepRef = React.useRef<HTMLElement | null>(null);
+    const stepPaneRef = useRef<HTMLDivElement | null>(null);
+    const activeStepRef = useRef<HTMLElement | null>(null);
 
     const windowWidth = useWindowWidth();
 
@@ -41,9 +41,9 @@ const StepPane: React.FC<StepPaneProps> = ({
         pane.scrollTo(stepRef.offsetLeft - stepRef.offsetWidth, 0);
     };
 
-    React.useEffect(() => scrollToStep(activeStepRef.current), [activeStepKey]);
+    useEffect(() => scrollToStep(activeStepRef.current), [activeStepKey]);
 
-    const clonedChildren = React.Children.map(children, (child, index) => {
+    const clonedChildren = Children.map(children, (child, index) => {
         const { title, stepKey, disabled } = child.props;
 
         if (!title || !stepKey) {
@@ -62,7 +62,7 @@ const StepPane: React.FC<StepPaneProps> = ({
 
         const position = index + 1;
 
-        return React.cloneElement(child, {
+        return cloneElement(child, {
             onChange: (ref: HTMLElement) => {
                 activeStepRef.current = ref;
                 onChange(stepKey);

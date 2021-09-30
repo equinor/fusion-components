@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     PersonPhoto,
     SearchableDropdown,
@@ -17,6 +17,13 @@ export type PersonPickerOption = {
     isDisabled?: boolean;
 };
 
+export type SectionFnProps = {
+    people: PersonDetails[];
+    selectedId: string;
+    searchQuery: string;
+    isQuerying: boolean;
+};
+
 type PersonPickerProps = {
     label?: string;
     placeholder?: string;
@@ -25,6 +32,14 @@ type PersonPickerProps = {
     hasError?: boolean;
     errorMessage?: string;
     onSelect?: (person: PersonDetails) => void;
+    sectionFn?: ({
+        people,
+        selectedId,
+        searchQuery,
+        isQuerying,
+    }: SectionFnProps) => SearchableDropdownSection[];
+    onOpen?: (isOpen: boolean) => void;
+    onSearchAsync?: (query: string) => void;
 };
 
 const ItemComponent = ({ item }) => {
@@ -69,6 +84,9 @@ export default ({
     errorMessage,
     label,
     placeholder,
+    sectionFn = peopleToSections,
+    onOpen,
+    onSearchAsync,
 }: PersonPickerProps) => {
     const [sections, setSections] = useState<SearchableDropdownSection[]>([]);
     const [error, isQuerying, people, search] = usePersonQuery();
@@ -79,8 +97,7 @@ export default ({
     useEffect(() => {
         if (initialPerson && !isInitialized) {
             setSections(singlePersonToDropdownSection(initialPerson));
-        }
-        else {
+        } else {
             setSections([]);
         }
     }, [isInitialized, initialPerson]);
@@ -96,29 +113,51 @@ export default ({
     useEffect(() => {
         if (isInitialized) {
             setSections(
-                peopleToSections(
-                    peopleMatch,
-                    selectedPerson != null ? selectedPerson.azureUniqueId : '',
+                sectionFn({
+                    people: peopleMatch,
+                    selectedId: selectedPerson != null ? selectedPerson.azureUniqueId : '',
                     searchQuery,
-                    isQuerying
-                )
+                    isQuerying,
+                })
             );
         } else {
             setInitialized(searchQuery !== '');
         }
     }, [peopleMatch, searchQuery, selectedPerson, isQuerying]);
 
-    const handleSelect = useCallback(item => {
-        if (onSelect) {
-            onSelect(item.person);
-        }
-    }, [onSelect]);
+    const handleSelect = useCallback(
+        (item) => {
+            if (onSelect) {
+                onSelect(item.person);
+            }
+        },
+        [onSelect]
+    );
+
+    const handleOpen = useCallback(
+        (isOpen: boolean) => {
+            if (onOpen) {
+                onOpen(isOpen);
+            }
+        },
+        [onOpen]
+    );
+
+    const handleSearchAsync = useCallback(
+        (query: string) => {
+            if (onSearchAsync) {
+                onSearchAsync(query);
+            }
+            setSearchQuery(query);
+        },
+        [onSearchAsync, setSearchQuery]
+    );
 
     return (
         <SearchableDropdown
             sections={sections}
             onSelect={handleSelect}
-            onSearchAsync={query => setSearchQuery(query)}
+            onSearchAsync={handleSearchAsync}
             error={hasError}
             errorMessage={errorMessage}
             itemComponent={ItemComponent}
@@ -126,6 +165,7 @@ export default ({
             selectedComponent={SelectedItemComponent}
             label={label}
             placeholder={placeholder}
+            onOpen={handleOpen}
         />
     );
 };

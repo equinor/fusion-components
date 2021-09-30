@@ -22,10 +22,11 @@
         color: var(--color-black-alt1);
     }
 
-    &.below, &.above {
+    &.below,
+    &.above {
         left: 50%;
         transform: translateX(-50%);
-    
+
         .arrow {
             left: 50%;
             transform: translateX(-50%);
@@ -35,7 +36,7 @@
     &.below {
         top: 100%;
         margin-top: calc(var(--grid-unit) * 1px);
-    
+
         .arrow {
             bottom: 100%;
         }
@@ -44,14 +45,15 @@
     &.above {
         bottom: 100%;
         margin-bottom: calc(var(--grid-unit) * 1px);
-    
+
         .arrow {
             top: 100%;
             transform: translateX(-50%) rotate(180deg);
         }
     }
 
-    &.left, &.right {
+    &.left,
+    &.right {
         top: 50%;
         transform: translateY(-50%);
 

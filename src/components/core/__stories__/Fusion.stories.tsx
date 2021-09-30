@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import FusionHeader from '../Header';
@@ -84,7 +84,7 @@ const FusionStory = () => {
     };
 
     return (
-        <React.Fragment>
+        <Fragment>
             <FusionHeader
                 start={
                     <IconButton>
@@ -291,7 +291,7 @@ const FusionStory = () => {
                     </p>
                 </div>
             </FusionContent>
-        </React.Fragment>
+        </Fragment>
     );
 };
 

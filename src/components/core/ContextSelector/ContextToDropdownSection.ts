@@ -26,7 +26,7 @@ const ContextTypesStrings = {
 export const formattedContextType = (contextType: string): string =>
     contextType in ContextTypesStrings ? ContextTypesStrings[contextType] : contextType;
 
-export default function(
+export default function (
     contexts: Context[],
     searchQuery: string,
     isQuerying: boolean,
@@ -48,7 +48,7 @@ export default function(
             isSelected: selectedContext && selectedContext.id === c.id,
         };
 
-        const sectionIndex = s.findIndex(s => s.key === c.type.id);
+        const sectionIndex = s.findIndex((s) => s.key === c.type.id);
 
         sectionIndex > -1
             ? sections[sectionIndex].items.push(context)

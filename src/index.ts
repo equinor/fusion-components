@@ -17,20 +17,32 @@ export { default as NotificationDialog } from './components/core/NotificationDia
 // Data components
 export { default as DataTable, DataTableColumn } from './components/data/DataTable';
 export {
-    default as PowerBIReport,
+    PowerBI as PowerBIReport,
     ReportLevelFilters,
     IBasicFilter,
     IBasicFilterWithKeys,
     IAdvancedFilter,
-    IRelativeDateFuilter,
+    IRelativeDateFilter,
     ITupleFilter,
-} from './components/data/PowerBIReport';
+} from './components/data/PowerBI';
+
+export {
+    default as HangingGarden,
+    HangingGardenProps,
+    HangingGardenColumn,
+    ItemRenderContext,
+    RenderItem,
+    useHangingGardenData,
+    useHangingGardenErrorMessage,
+    useHangingGardenGetData,
+    PIXI,
+} from './components/data/HangingGarden';
 
 // General components
 export { default as Button, ButtonProps } from './components/general/Button';
 export { default as IconButton } from './components/general/IconButton';
 export { default as ErrorBoundary } from './components/general/ErrorBoundary';
-export { default as ErrorMessage } from './components/general/ErrorMessage';
+export { default as ErrorMessage, ErrorTypes } from './components/general/ErrorMessage';
 export { default as Menu, MenuItemType, MenuSection } from './components/general/Menu';
 export { Tabs, Tab } from './components/general/Tabs';
 export { Stepper, Step } from './components/general/Stepper';
@@ -68,6 +80,14 @@ export { default as Calendar } from './components/general/Calendar';
 export { default as Chip } from './components/general/Chip';
 export { default as DatePicker } from './components/general/DatePicker';
 export { Slider, RangedSlider, SliderMarker } from './components/general/Slider';
+export { default as RequestWorkflow } from './components/general/RequestWorkflow';
+export {
+    Workflow,
+    WorkflowStep,
+    WorkflowProvisioningStatus,
+    WorkflowProvisioningState,
+    WorkflowPerson,
+} from './components/general/RequestWorkflow/models';
 export {
     default as NavigationDrawer,
     NavigationStructure,
@@ -80,7 +100,7 @@ export {
     PersonPresenceIcon,
 } from './components/people/PersonPhoto';
 export { default as PersonCard } from './components/people/PersonCard';
-export { default as PersonPicker } from './components/people/PersonPicker';
+export { default as PersonPicker, SectionFnProps } from './components/people/PersonPicker';
 export { default as PersonPositionCard } from './components/people/PersonPositionCard';
 export { default as PersonDetail } from './components/people/PersonDetail';
 export { default as PersonPositionList } from './components/people/PersonPositionList';
@@ -98,6 +118,7 @@ export { default as NotificationsSideSheet } from './components/general/Notifica
 export { StandardNotificationCard } from './components/general/NotificationCardComponent';
 export { default as MarkdownEditor } from './components/general/MarkdownEditor';
 export { default as AppSettingsManager } from './components/general/AppSettingsManager';
+export { default as BookmarksManager } from './components/general/BookmarksManager';
 
 // Feedback components
 export { default as Spinner } from './components/feedback/Spinner';
@@ -125,6 +146,7 @@ export { default as useHorizontalBreakpoint } from './hooks/useHorizontalBreakpo
 export { default as useSizeBreakpoint } from './hooks/useSizeBreakpoint';
 export { default as useVerticalBreakpoint } from './hooks/useVerticalBreakpoint';
 export { default as useRootContainer } from './hooks/useRootContainer';
+export { default as useFullscreen } from './hooks/useFullscreen';
 export {
     default as useStringMask,
     applyStringMask,
@@ -141,6 +163,8 @@ export {
     OrgChartItemProps,
     OrgNode,
 } from './components/org/OrgChart';
+export { default as PositionTimeline } from './components/org/PositionTimeline';
+export { TimelineSlotProps } from './components/org/PositionTimeline/model';
 export { default as ReportingPath } from './components/org/ReportingPath';
 export { default as PositionPicker } from './components/org/PositionPicker';
 
@@ -173,6 +197,13 @@ export {
     CloseCircleIcon,
     ScheduleIcon,
     BookmarksIcon,
+    RemoveCircleIcon,
+    CircleIcon,
+    CalendarAcceptIcon,
+    CalendarEventIcon,
+    FullscreenIcon,
+    FullscreenExitIcon,
+    ShareIcon,
 } from './components/icons/components/action';
 export {
     PaginationArrow,
@@ -188,7 +219,7 @@ export {
     ExitToAppIcon,
 } from './components/icons/components/navigation';
 export { PeopleIcon } from './components/icons/components/social';
-export { PlayIcon } from './components/icons/components/av';
+export { PlayIcon, PauseCircleIcon } from './components/icons/components/av';
 export { EditIcon } from './components/icons/components/image';
 export {
     FormatBoldIcon,

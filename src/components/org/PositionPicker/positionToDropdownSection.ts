@@ -22,7 +22,7 @@ export const positionsToDropdownOption = (
     positions: Position[],
     selectedPosition: Position | null
 ): SearchableDropdownOption[] => {
-    if (selectedPosition !== null && !positions.find(p => p.id === selectedPosition.id)) {
+    if (selectedPosition !== null && !positions.find((p) => p.id === selectedPosition.id)) {
         positions = [selectedPosition, ...positions];
     }
 
@@ -36,7 +36,7 @@ export const positionsToDropdownOption = (
         ];
     }
 
-    return positions.map(p => ({
+    return positions.map((p) => ({
         key: p.id,
         title: createPositionTitle(p),
         position: p,

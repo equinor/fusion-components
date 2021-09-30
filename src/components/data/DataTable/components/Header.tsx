@@ -1,10 +1,10 @@
-import React from 'react';
 import { DataTableHeaderProps, DataTableColumn, DataTableSortedBy } from '../dataTableTypes';
 import styles from '../styles.less';
 import classnames from 'classnames';
 import { SortDirection } from '@equinor/fusion';
 import { SortIcon, useTooltipRef, ApplicationGuidanceAnchor } from '@equinor/fusion-components';
 import SelectionCell from './SelectionCell';
+import { FC } from 'react';
 
 function getCellClassNames<T>(base: string, column: DataTableColumn<T>, isInAnchor: boolean) {
     return classnames(base, {
@@ -17,7 +17,7 @@ type SortIndicatorProps = {
     isSortedBy: boolean;
     direction: SortDirection | null;
 };
-const SortIndicator: React.FC<SortIndicatorProps> = ({ isSortedBy, direction }) => {
+const SortIndicator: FC<SortIndicatorProps> = ({ isSortedBy, direction }) => {
     return (
         <span className={styles.sortIndicator}>
             <SortIcon direction={isSortedBy ? direction : null} />

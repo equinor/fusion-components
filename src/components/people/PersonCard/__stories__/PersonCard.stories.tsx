@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import PersonCard, { PhotoSize } from '../index';
@@ -80,9 +80,9 @@ const PersonCardStory = () => {
 
     const size = select('Photo size', sizes, sizes.xlarge) as PhotoSize;
 
-    const [isFetchingPerson, setIsFetchingPerson] = React.useState(true);
+    const [isFetchingPerson, setIsFetchingPerson] = useState(true);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const timer = setTimeout(() => {
             setIsFetchingPerson(false);
         }, 1000);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { SearchableDropdown, SearchableDropdownOption } from '@equinor/fusion-components';
 import { Position } from '@equinor/fusion';
 import usePositionQuery from './hooks/usePositionQuery';
@@ -8,6 +8,7 @@ import {
     singlePositionToDropdownOption,
     positionsToDropdownOption,
 } from './positionToDropdownSection';
+import { PositionPickerContex } from './positionPickerContext';
 
 type PositionPickerProps = {
     initialPosition?: Position;
@@ -17,6 +18,8 @@ type PositionPickerProps = {
     selectedPosition: Position | null;
     label?: string;
     placeholder?: string;
+    allowFuture?: boolean;
+    allowPast?: boolean;
 };
 
 const PositionPicker = ({
@@ -27,9 +30,17 @@ const PositionPicker = ({
     contractId,
     label,
     placeholder,
+    allowFuture,
+    allowPast,
 }: PositionPickerProps) => {
     const [options, setOptions] = useState<SearchableDropdownOption[]>([]);
-    const [error, isFetching, filteredPositions, search] = usePositionQuery(selectedPosition, projectId, contractId);
+    const [error, isFetching, filteredPositions, search] = usePositionQuery(
+        selectedPosition,
+        projectId,
+        contractId,
+        allowFuture,
+        allowPast
+    );
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
@@ -49,7 +60,7 @@ const PositionPicker = ({
     }, [filteredPositions, isFetching, selectedPosition]);
 
     const handleSelect = useCallback(
-        item => {
+        (item) => {
             if (onSelect) {
                 onSelect(item.position);
             }
@@ -58,15 +69,17 @@ const PositionPicker = ({
     );
 
     return (
-        <SearchableDropdown
-            options={options}
-            onSelect={handleSelect}
-            itemComponent={ItemComponent}
-            asideComponent={AsideComponent}
-            onSearchAsync={setSearchQuery}
-            label={label}
-            placeholder={placeholder || 'Select position'}
-        />
+        <PositionPickerContex.Provider value={{ allowFuture: allowFuture, allowPast: allowPast }}>
+            <SearchableDropdown
+                options={options}
+                onSelect={handleSelect}
+                itemComponent={ItemComponent}
+                asideComponent={AsideComponent}
+                onSearchAsync={setSearchQuery}
+                label={label}
+                placeholder={placeholder || 'Select position'}
+            />
+        </PositionPickerContex.Provider>
     );
 };
 

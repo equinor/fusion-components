@@ -1,7 +1,6 @@
 import { css } from '../../base';
 export const style = css`
-    
-    header{
+    header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -14,14 +13,14 @@ export const style = css`
         margin-left: 20px;
         margin-bottom: auto;
     }
-    
+
     footer {
         display: flex;
         align-items: center;
         font-size: 0.9rem;
-        color: #0084c4
+        color: #0084c4;
     }
-    footer .publisher-name{
+    footer .publisher-name {
         font-weight: bold;
     }
 

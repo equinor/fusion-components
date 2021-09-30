@@ -1,5 +1,5 @@
-import React from 'react';
 import { useTooltipRef, CollapseIcon, IconButton } from '@equinor/fusion-components';
+import { FC } from 'react';
 
 type CollapseExpandButtonProps = {
     isOpen: boolean;
@@ -7,7 +7,7 @@ type CollapseExpandButtonProps = {
     screenPlacement: 'left' | 'right';
 };
 
-const CollapseExpandButton: React.FC<CollapseExpandButtonProps> = ({
+const CollapseExpandButton: FC<CollapseExpandButtonProps> = ({
     isOpen,
     onClick,
     screenPlacement,

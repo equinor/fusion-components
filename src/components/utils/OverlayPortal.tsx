@@ -1,11 +1,11 @@
-import { useOverlayContainer } from "@equinor/fusion-components";
+import { useOverlayContainer } from '@equinor/fusion-components';
 import { createPortal } from 'react-dom';
 import { FC, ReactNode } from 'react';
 
 type OverlayPortalProps = {
     children?: ReactNode;
     show?: boolean;
-}
+};
 
 const OverlayPortal: FC<OverlayPortalProps> = ({ children, show }) => {
     const overlayContainer = useOverlayContainer();

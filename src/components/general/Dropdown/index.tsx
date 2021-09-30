@@ -1,7 +1,16 @@
-import React, { useState, useRef, useCallback, FC, useMemo, useEffect, useReducer } from 'react';
+import {
+    useState,
+    useRef,
+    useCallback,
+    FC,
+    useEffect,
+    MutableRefObject,
+    ReactNode,
+    Fragment,
+} from 'react';
+
 import classNames from 'classnames';
 import {
-    useClickOutsideOverlayPortal,
     RelativeOverlayPortal,
     useElevationClassName,
     useRelativePositioning,
@@ -12,8 +21,8 @@ import { enqueueAsyncOperation, AsyncOperation } from '@equinor/fusion';
 export type DropdownController = {
     isOpen: boolean;
     setIsOpen: (isOpen: boolean) => void;
-    node: React.ReactNode;
-    controllerRef: React.MutableRefObject<HTMLElement | null>;
+    node: ReactNode;
+    controllerRef: MutableRefObject<HTMLElement | null>;
 };
 type DropdownJustification = 'left' | 'right';
 
@@ -24,10 +33,10 @@ type DropdownProps = {
 
 export const useDropdownController = (
     controller: (
-        ref: React.MutableRefObject<HTMLElement | null>,
+        ref: MutableRefObject<HTMLElement | null>,
         isOpen: boolean,
         setIsOpen: (isOpen: boolean, delay?: number) => void
-    ) => React.ReactNode
+    ) => ReactNode
 ): DropdownController => {
     const [isOpen, _setIsOpen] = useState(false);
     const controllerRef = useRef<HTMLElement | null>(null);
@@ -65,9 +74,8 @@ const useLoop = (handler: AsyncOperation<void>, dependencies: any[] = []) => {
 
 const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) => {
     const { isOpen, setIsOpen, node, controllerRef } = controller;
-
+    const outerRef = useRef<HTMLDivElement | null>(null);
     const close = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
-    useClickOutsideOverlayPortal(close, controllerRef.current);
 
     const dropdownContainerClassNames = classNames(
         styles.dropdownContainer,
@@ -100,12 +108,33 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
             setTop(undefined);
         }
 
-        const dropdownRect = dropdownRef.current?.getBoundingClientRect();
-        setMaxHeight(`calc(100vh - ${dropdownRect?.top}px - (var(--grid-unit) * 3px))`);
+        const dropdownRect = dropdownRef.current.getBoundingClientRect();
+        setMaxHeight(`calc(100vh - ${dropdownRect.top}px - (var(--grid-unit) * 3px))`);
     }, [rect, isOpen]);
 
+    const handleClick = useCallback(
+        (e) => {
+            if (outerRef.current.contains(e.target) || dropdownRef.current.contains(e.target)) {
+                return;
+            }
+            close();
+        },
+        [close]
+    );
+
+    useEffect(() => {
+        if (isOpen) {
+            document.addEventListener('click', handleClick);
+        } else {
+            document.removeEventListener('click', handleClick);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClick);
+        };
+    }, [isOpen, handleClick]);
     return (
-        <>
+        <div ref={outerRef}>
             {node}
             <RelativeOverlayPortal relativeRef={controllerRef} show={isOpen}>
                 <div
@@ -116,7 +145,7 @@ const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) =>
                     {children}
                 </div>
             </RelativeOverlayPortal>
-        </>
+        </div>
     );
 };
 

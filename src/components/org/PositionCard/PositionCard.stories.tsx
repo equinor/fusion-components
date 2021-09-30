@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, boolean, select, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -14,6 +14,8 @@ const position: Position = {
         id: '3',
         name: 'Engineer',
         roleDescription: '',
+        projectType: '',
+        subDiscipline: '',
     },
     externalId: '800',
     instances: [
@@ -222,6 +224,7 @@ const position: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
+    isTaskOwner: true,
 };
 
 const tbnPosition: Position = {
@@ -232,6 +235,8 @@ const tbnPosition: Position = {
         id: '3',
         name: 'Engineer',
         roleDescription: '',
+        projectType: '',
+        subDiscipline: '',
     },
     externalId: '800',
     instances: [],
@@ -243,6 +248,7 @@ const tbnPosition: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
+    isTaskOwner: false,
 };
 
 const positions = {
@@ -260,7 +266,7 @@ const InteractiveStory = () => {
 
     const toggleSelected = useCallback((position, instance) => {
         action('click')(position, instance);
-        setIsSelected(prev => !prev);
+        setIsSelected((prev) => !prev);
     }, []);
 
     const selectedPositionKey = select('position', positionKeys, positionKeys.Standard);
@@ -278,7 +284,7 @@ const InteractiveStory = () => {
     );
     const selectedPositionInstanceId = select('instance', instanceKeys, '1');
     const selectedPositionsInstance = selectedPosition.instances.find(
-        i => i.id === selectedPositionInstanceId
+        (i) => i.id === selectedPositionInstanceId
     );
     return (
         <PositionCard
@@ -293,10 +299,10 @@ const InteractiveStory = () => {
             isSelected={isSelected}
             onExpand={action('onExpand')}
             childCount={number('Child count', 2)}
+            childCountType={'positions'}
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
             selectedDate={new Date('2022-09-25T00:00:00')}
-
         />
     );
 };
@@ -316,7 +322,7 @@ const DefaultStory = () => {
     );
     const selectedPositionInstanceId = select('instance', instanceKeys, '1');
     const selectedPositionsInstance = selectedPosition.instances.find(
-        i => i.id === selectedPositionInstanceId
+        (i) => i.id === selectedPositionInstanceId
     );
     return (
         <PositionCard
@@ -330,7 +336,7 @@ const DefaultStory = () => {
             isSelected={false}
             isFuture={boolean('Show as future position', false)}
             isPast={boolean('Show as past position', false)}
-            showRotation={boolean("Show rotation", true)}
+            showRotation={boolean('Show rotation', true)}
         />
     );
 };

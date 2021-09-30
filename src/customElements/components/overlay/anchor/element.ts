@@ -1,12 +1,13 @@
-import { LitElement, property } from '../../base';
+import { LitElement, property, PropertyValues } from '../../base';
 import { OverlayAnchorConnectEvent } from './events';
 import { AnchorDOMRect, AnchorRect } from './anchor-rect';
 
 export type OverlayAnchor = {
     anchor: string;
     scope: string;
-    bounds: () => AnchorRect,
-}
+    bounds: () => AnchorRect;
+    selected?: () => void;
+};
 
 export interface OverlayAnchorElementProps extends OverlayAnchor {
     snug?: boolean;
@@ -44,50 +45,69 @@ export class OverlayAnchorElement extends LitElement implements OverlayAnchorEle
      * applies padding if not snug
      */
     bounds(): AnchorRect {
-        return AnchorDOMRect.fromUnbound(this, this.snug && 16);
+        return AnchorDOMRect.fromUnbound(this, !this.snug && 16);
     }
 
     /**
      * @override this element does not need a shadow dom
      */
-    createRenderRoot() {
+    createRenderRoot(): HTMLElement {
         return this;
     }
 
     /**
      * @override add default styling and notify observers
      */
-    connectedCallback() {
+    connectedCallback(): void {
         super.connectedCallback();
 
         const style = (this.renderRoot as OverlayAnchorElement).style;
-        !style.display && (style.display = "contents");
+        !style.display && (style.display = 'contents');
 
+        this._connect2overlay();
+    }
+
+    /**
+     * @override callback all observers when removed from dom
+     */
+    disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this._disconnect();
+    }
+
+    protected _disconnect(): void {
+        this._disconnectedCallbacks.forEach((cb) => cb());
+        delete this._disconnectedCallbacks;
         this._disconnectedCallbacks = [];
+    }
 
+    protected updated(props: PropertyValues): void {
+        super.updated(props);
+        const propKeys = Object.keys(props);
+        if (propKeys.includes('anchor') || propKeys.includes('scope')) {
+            this._disconnect();
+            this._connect2overlay();
+        }
+    }
+
+    protected _connect2overlay(): void {
         requestAnimationFrame(() => {
             const { anchor, scope, bounds, _disconnectedCallbacks } = this;
+            if (!anchor || !scope) return;
             const event = new OverlayAnchorConnectEvent({
                 detail: {
                     anchor,
                     scope,
                     bounds: bounds.bind(this),
-                    disconnectedCallback: _disconnectedCallbacks.push.bind(this)
+                    selected: () => this.dispatchEvent(new CustomEvent('selected')),
+                    disconnectedCallback: _disconnectedCallbacks.push.bind(this),
                 },
                 bubbles: true,
                 composed: true,
                 cancelable: false,
             });
             this.dispatchEvent(event);
-        })
-    }
-
-    /**
-     * @override callback all observers when removed from dom
-     */
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        this._disconnectedCallbacks.forEach(cb => cb());
+        });
     }
 }
 

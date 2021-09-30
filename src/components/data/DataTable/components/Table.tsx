@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { DataTableTableProps } from '../dataTableTypes';
 import DataTableHeader from './Header';
 import DataTableBody from './Body';

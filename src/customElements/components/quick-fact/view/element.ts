@@ -60,13 +60,11 @@ export class QuickFactViewElement extends LitElement {
     @property({ attribute: false })
     showSkeleton: boolean;
 
-
     private handleEditClick = () => {
         this.dispatchEvent(new CustomEvent('edit'));
     };
 
     render() {
-
         if (!this.quickFact) {
             return '';
         }
@@ -89,8 +87,10 @@ export class QuickFactViewElement extends LitElement {
             </header>
             <section>${html(body)}</section>
             <footer title="${formatDateTime(modified)}">
-                <span>Last updated ${formatDistance(modified, new Date())} ago by <span class="publisher-name">${publisher.name}</span> </span>
-                
+                <span
+                    >Last updated ${formatDistance(modified, new Date())} ago by
+                    <span class="publisher-name">${publisher.name}</span>
+                </span>
             </footer>
         `;
     }
@@ -103,5 +103,3 @@ declare global {
 }
 
 export default QuickFactViewElement;
-
-

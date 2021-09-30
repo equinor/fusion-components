@@ -1,4 +1,4 @@
-import { Position } from "@equinor/fusion";
+import { Position } from '@equinor/fusion';
 
 type ItemComponentProps = {
     item: { key: string; title: string; position: Position };

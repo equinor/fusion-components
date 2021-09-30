@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import * as styles from './styles.less';
+import { useEffect, useRef, useState, FC } from 'react';
+
+import styles from './styles.less';
 import classNames from 'classnames';
 import { DoneIcon, styling } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -26,7 +27,7 @@ type BadgeProps = {
     done?: boolean;
 };
 
-const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
+const Badge: FC<BadgeProps> = ({ position, active, done }) => {
     const badgeClasses = classNames(styles.badge, useComponentDisplayClassNames(styles), {
         [styles.active]: active,
         [styles.done]: done,
@@ -40,7 +41,7 @@ const Badge: React.FC<BadgeProps> = ({ position, active, done }) => {
     );
 };
 
-const Step: React.FC<StepProps> = ({
+const Step: FC<StepProps> = ({
     title,
     description,
     isCurrent,
@@ -53,8 +54,8 @@ const Step: React.FC<StepProps> = ({
     stepCount,
     verticalStep,
 }) => {
-    const stepRef = React.useRef<HTMLAnchorElement>(null);
-    const [showStepCount, setShowStepCount] = React.useState(false);
+    const stepRef = useRef<HTMLAnchorElement>(null);
+    const [showStepCount, setShowStepCount] = useState(false);
 
     const stepClasses = classNames(styles.step, useComponentDisplayClassNames(styles), {
         [styles.current]: isCurrent,
@@ -78,7 +79,7 @@ const Step: React.FC<StepProps> = ({
         }
     }, [windowWidth, verticalStep]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isCurrent && onChange && stepRef.current) {
             onChange(stepRef.current);
         }

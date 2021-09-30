@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { Position } from '@equinor/fusion';
@@ -12,6 +12,8 @@ const position: Position = {
         id: '3',
         name: 'Engineer',
         roleDescription: '',
+        projectType:'',
+        subDiscipline: '',
     },
     externalId: '800',
     instances: [
@@ -63,6 +65,7 @@ const position: Position = {
         isSupport: false,
     },
     name: 'Drilling Engineer',
+    isTaskOwner: false,
 };
 
 const DefaultStory = () => {

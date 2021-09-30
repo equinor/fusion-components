@@ -1,7 +1,8 @@
-@import "~styles/variables.css";
-@import "~styles/colors.less";
+@import '~styles/variables.css';
+@import '~styles/colors.less';
 
-.container, .overlay {
+.container,
+.overlay {
     font-family: Equinor, sans-serif;
     width: 100%;
     height: 100%;
@@ -15,7 +16,11 @@
         color: var(--color-primary);
     }
 
-    h1, h2, h3, h4, h5 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
         font-weight: normal;
         margin: 0;
     }
@@ -27,12 +32,12 @@
 
     h2 {
         font-size: var(--h2-font-size);
-        line-height: var(--h2-line-height)
+        line-height: var(--h2-line-height);
     }
 
     h3 {
         font-size: var(--h3-font-size);
-        line-height: var(--h3-line-height)
+        line-height: var(--h3-line-height);
     }
 
     h4 {
@@ -77,14 +82,14 @@
         --h4-line-height: calc(var(--grid-unit) * 4px);
         --h5-line-height: calc(var(--grid-unit) * 3px);
     }
-
 }
 
 .overlay {
     position: fixed;
     overflow: visible;
     pointer-events: none;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     z-index: var(--overlay-z-index);
 }
 
@@ -112,13 +117,13 @@
 
 :global {
     ::-webkit-scrollbar {
-        width: calc(var(--grid-unit) * .5px);
+        width: calc(var(--grid-unit) * 0.5px);
         height: calc(var(--grid-unit) * 1px);
         overflow: visible;
     }
 
     ::-webkit-scrollbar-track {
-        width: calc(var(--grid-unit) * .5px);
+        width: calc(var(--grid-unit) * 0.5px);
         height: calc(var(--grid-unit) * 1px);
         background: var(--color-black-alt4);
     }
@@ -130,7 +135,7 @@
         &:hover {
             background: var(--color-black-alt2);
         }
-        
+
         &:active {
             background: var(--color-primary-accent);
         }

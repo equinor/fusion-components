@@ -1,26 +1,25 @@
-import React from 'react';
 import { useCurrentPersonDetails } from '@equinor/fusion';
 import { IconButton, PersonPhoto, useAnchor } from '@equinor/fusion-components';
+import { useState, useCallback, FC } from 'react';
 
 import AccountManagerSideSheet from './AccountManagerSideSheet';
-import { string } from 'prop-types';
 
 type CurrentUserButtonProp = {
-    quickFactScope?: string,
-}
-const CurrentUserButton: React.FC<CurrentUserButtonProp> = ({quickFactScope}) => {
+    quickFactScope?: string;
+};
+const CurrentUserButton: FC<CurrentUserButtonProp> = ({ quickFactScope }) => {
     const { personDetails } = useCurrentPersonDetails();
-    const [showAccountManager, setShowAccountManager] = React.useState<boolean>(false);
+    const [showAccountManager, setShowAccountManager] = useState<boolean>(false);
 
-    const closeSideSheet = React.useCallback(() => {
+    const closeSideSheet = useCallback(() => {
         setShowAccountManager(false);
     }, []);
 
-    const openSideSheet = React.useCallback(() => {
+    const openSideSheet = useCallback(() => {
         setShowAccountManager(true);
     }, []);
 
-    const ref = useAnchor<HTMLButtonElement>({id: "current-user-btn", scope: quickFactScope})
+    const ref = useAnchor<HTMLButtonElement>({ id: 'current-user-btn', scope: quickFactScope });
 
     return (
         <>

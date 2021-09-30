@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
+import { useCallback, useMemo, FC, MouseEvent } from 'react';
+
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
 import styles from '../styles.less';
 import { useTooltipRef, ExpandMoreIcon, IconButton } from '@equinor/fusion-components';
 import PositionTimeline from './PositionTimeline';
+import { ChildCountTypeKey, childCountTypeNameMapping } from '..';
 
 type PositionInstanceProps = {
     position: Position;
@@ -16,11 +18,12 @@ type PositionInstanceProps = {
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     childCount?: number;
+    childCountType?: ChildCountTypeKey;
     rotationInstances: PositionInstance[];
     selectedDate?: Date;
 };
 
-const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
+const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     position,
     instance,
     showLocation,
@@ -31,6 +34,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     onClick,
     onExpand,
     childCount,
+    childCountType,
     rotationInstances,
     selectedDate,
 }) => {
@@ -39,16 +43,18 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
             ? rotationInstances.length > 0
                 ? `${rotationInstances.length + 1} assignees`
                 : instance.assignedPerson.name
-            : 'TBN';
+            : 'TBN - To Be Nominated';
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
+
+    const childrenTooltipName = childCountTypeNameMapping[childCountType] || 'positions';
 
     const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
     const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const childrenTooltipRef = useTooltipRef(`${childCount} positions`, 'above');
+    const childrenTooltipRef = useTooltipRef(`${childCount} ${childrenTooltipName}`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
@@ -56,7 +62,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     });
 
     const onClickHandler = useCallback(
-        (e: React.MouseEvent<HTMLDivElement>) => {
+        (e: MouseEvent<HTMLDivElement>) => {
             if (onClick) {
                 e.stopPropagation();
                 onClick(position, instance);
@@ -66,7 +72,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const onExpandHandler = useCallback(
-        (e: React.MouseEvent<HTMLButtonElement>) => {
+        (e: MouseEvent<HTMLButtonElement>) => {
             if (onExpand) {
                 e.stopPropagation();
                 onExpand(position, instance);
@@ -76,18 +82,18 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
     );
 
     const instances = position ? position.instances : [];
-    const instancesByFrom = React.useMemo(
+    const instancesByFrom = useMemo(
         () => [...instances].sort((a, b) => a.appliesFrom.getTime() - b.appliesFrom.getTime()),
         [instances]
     );
-    const instancesByTo = React.useMemo(
+    const instancesByTo = useMemo(
         () => [...instances].sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime()),
         [instances]
     );
 
-    const firstInstance = React.useMemo(() => instancesByFrom[0], [instancesByFrom]);
-    const lastInstance = React.useMemo(
-        () => instancesByTo.find(i => i.appliesTo.getTime !== undefined),
+    const firstInstance = useMemo(() => instancesByFrom[0], [instancesByFrom]);
+    const lastInstance = useMemo(
+        () => instancesByTo.find((i) => i.appliesTo.getTime !== undefined),
         [instancesByTo]
     );
 
@@ -121,7 +127,7 @@ const PositionInstanceComponent: React.FC<PositionInstanceProps> = ({
                     {position.externalId}
                 </div>
             )}
-            {onExpand && childCount !== undefined && childCount > 0 && (
+            {onExpand && childCount !== undefined && (
                 <div className={styles.expandButton}>
                     <IconButton ref={childrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>

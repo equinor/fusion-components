@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
     createFusionContext,
     ServiceResolver,
@@ -12,6 +11,7 @@ import FusionRoot from '../src/components/core/Root';
 import { ApplicationGuidanceWrapper } from '../src/components/general/ApplicationGuidance';
 import AuthApp from '@equinor/fusion/lib/auth/AuthApp';
 import AuthNonce from '@equinor/fusion/lib/auth/AuthNonce';
+import { useRef, FC } from 'react';
 
 const mockUser = {
     id: '1337',
@@ -121,6 +121,8 @@ const serviceResolver: ServiceResolver = {
     getPowerBiApiBaseUrl: () => 'https://api.powerbi.com/v1.0/myorg',
     getNotificationBaseUrl: () => 'https://pro-s-notification-ci.azurewebsites.net',
     getInfoUrl: () => 'https://pro-s-info-app-CI.azurewebsites.net',
+    getFusionTasksBaseUrl: () => 'https://pro-s-tasks-CI.azurewebsites.net',
+    getBookmarksBaseUrl: () => 'https://pro-s-bookmarks-ci.azurewebsites.net',
 };
 
 const clientId = '5a842df8-3238-415d-b168-9f16a6a6031b';
@@ -129,11 +131,11 @@ authContainer.registerAppAsync(
     Object.keys(serviceResolver).map((key) => serviceResolver[key]())
 );
 
-const FusionWrapper: React.FC = ({ children }) => {
-    const overlay = React.useRef<HTMLElement | null>(null);
-    const root = React.useRef<HTMLElement | null>(null);
-    const headerContent = React.useRef<HTMLElement | null>(null);
-    const headerAppAside = React.useRef<HTMLElement | null>(null);
+const FusionWrapper: FC = ({ children }) => {
+    const overlay = useRef<HTMLElement | null>(null);
+    const root = useRef<HTMLElement | null>(null);
+    const headerContent = useRef<HTMLElement | null>(null);
+    const headerAppAside = useRef<HTMLElement | null>(null);
 
     const fusionContext = createFusionContext(authContainer, serviceResolver, {
         overlay,
@@ -145,7 +147,7 @@ const FusionWrapper: React.FC = ({ children }) => {
     return (
         <FusionContext.Provider value={fusionContext}>
             <HashRouter>
-                <ApplicationGuidanceWrapper scope={{ storybook: [] }}>
+                <ApplicationGuidanceWrapper>
                     <FusionRoot rootRef={root} overlayRef={overlay}>
                         {children}
                     </FusionRoot>

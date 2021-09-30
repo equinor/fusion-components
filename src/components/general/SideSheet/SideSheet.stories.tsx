@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs, select, boolean, number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
@@ -6,6 +6,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import { ModalSideSheet, SideSheet } from './index';
 import { Button, IconButton, WarningIcon, DoneIcon } from '@equinor/fusion-components';
 import { useNotificationCenter } from '@equinor/fusion';
+import { useAnchor } from '../ApplicationGuidance';
 
 const snackbar = action('snackbar');
 const banner = action('banner');
@@ -73,16 +74,26 @@ const SidesheetContent = () => {
         dialog(response);
     };
 
+    const btn1 = useAnchor<HTMLButtonElement>({ id: 'btn1', scope: 'storybook|side_sheet' });
+    const btn2 = useAnchor<HTMLButtonElement>({ id: 'btn2', scope: 'storybook|side_sheet' });
+    const btn3 = useAnchor<HTMLButtonElement>({ id: 'btn3', scope: 'storybook|side_sheet' });
+
     return (
         <div style={{ paddingTop: 32, paddingLeft: 32, paddingRight: 32 }}>
-            <div>
-                <Button onClick={onSnackbarClick}>Show low priority notification</Button>
+            <div style={{ margin: '.5rem 0' }}>
+                <Button ref={btn1} onClick={onSnackbarClick}>
+                    Show low priority notification
+                </Button>
             </div>
-            <div>
-                <Button onClick={onBannerClick}>Show medium priority notification</Button>
+            <div style={{ margin: '.5rem 0' }}>
+                <Button ref={btn2} onClick={onBannerClick}>
+                    Show medium priority notification
+                </Button>
             </div>
-            <div>
-                <Button onClick={onDialogClick}>Show high priority blocking notification</Button>
+            <div style={{ margin: '.5rem 0' }}>
+                <Button ref={btn3} onClick={onDialogClick}>
+                    Show high priority blocking notification
+                </Button>
             </div>
             <p>
                 I'm gonna be at the dance. Well yeah, you know we have two of them. Excuse me. Oh
@@ -147,7 +158,7 @@ const SidesheetContent = () => {
 };
 
 const ModalSideSheetStory = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const size = select(
         'Size',
@@ -161,15 +172,40 @@ const ModalSideSheetStory = () => {
         'medium'
     );
 
+    const actionBtn = useAnchor<HTMLButtonElement>({
+        id: 'action',
+        scope: 'storybook|side_sheet',
+        padding: 0,
+        onSelected: () => setIsOpen(true),
+    });
+
+    const testButton = useAnchor<HTMLButtonElement>({
+        id: 'test',
+        scope: 'storybook|side_sheet',
+        padding: 0,
+        onSelected: () => setIsOpen(true),
+    });
+
     return (
         <div>
-            <Button
-                onClick={() => {
-                    setIsOpen(true);
-                }}
-            >
-                Open Side Sheet
-            </Button>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <Button
+                    ref={actionBtn}
+                    onClick={() => {
+                        setIsOpen(true);
+                    }}
+                    >
+                    Open Side Sheet
+                </Button>
+                <Button
+                    ref={testButton}
+                    onClick={() => {
+                        setIsOpen(true);
+                    }}
+                    >
+                    testButton
+                </Button>
+            </div>
             <ModalSideSheet
                 header="This is the modal side sheet header "
                 show={isOpen}
@@ -198,7 +234,7 @@ const ModalSideSheetStory = () => {
 };
 
 const StandardSideSheetStory = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const size = select(
         'Size',
@@ -226,7 +262,7 @@ const StandardSideSheetStory = () => {
             <SideSheet
                 isOpen={isOpen}
                 size={size}
-                onClose={isOpen => {
+                onClose={(isOpen) => {
                     setIsOpen(isOpen);
                 }}
                 title="This is a title"

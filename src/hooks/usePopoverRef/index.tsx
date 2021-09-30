@@ -1,5 +1,15 @@
-import * as React from 'react';
-import * as styles from './styles.less';
+import {
+    useCallback,
+    useEffect,
+    useState,
+    ReactNode,
+    MutableRefObject,
+    Dispatch,
+    SetStateAction,
+    RefObject,
+} from 'react';
+
+import styles from './styles.less';
 
 import {
     useClickToggleController,
@@ -15,26 +25,26 @@ import useClickOutside from '../useClickOutside';
 export { PopoverPlacement, PopoverJustification };
 
 export default <T extends HTMLElement>(
-    content: React.ReactNode,
+    content: ReactNode,
     props?: PopoverContainerProps,
     hover?: boolean,
     delay?: number
-): [
-    React.MutableRefObject<T | null>,
-    boolean,
-    React.Dispatch<React.SetStateAction<boolean>> | undefined
-] => {
-    const [isOpen, setIsOpen] = React.useState(false);
+): [MutableRefObject<T | null>, boolean, Dispatch<SetStateAction<boolean>> | undefined] => {
+    const [isOpen, setIsOpen] = useState(false);
 
     const [isPopoverOpen, ref, setIsPopoverOpen] = hover
         ? useHoverToggleController<T>()
         : useClickToggleController<T>();
 
+    useEffect(() => {
+        if (setIsPopoverOpen) setIsPopoverOpen(isOpen);
+    }, [setIsPopoverOpen, isOpen]);
+
     const [isContentOpen, popoverContentRef] = useHoverToggleController<HTMLDivElement>();
 
     const rect = useRelativePositioning(ref);
 
-    const close = React.useCallback(() => {
+    const close = useCallback(() => {
         if (hover) {
             setTimeout(() => {
                 !isContentOpen && setIsOpen(false);
@@ -44,7 +54,7 @@ export default <T extends HTMLElement>(
         }
     }, [isContentOpen, setIsOpen, delay, isPopoverOpen, hover]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const timer = setTimeout(() => {
             setIsOpen(isPopoverOpen || isContentOpen);
         }, delay || 0);
@@ -65,10 +75,7 @@ export default <T extends HTMLElement>(
                     left: rect.left,
                 }}
             >
-                <PopoverContainer
-                    ref={popoverContentRef as React.RefObject<HTMLDivElement>}
-                    {...props}
-                >
+                <PopoverContainer ref={popoverContentRef as RefObject<HTMLDivElement>} {...props}>
                     {content}
                 </PopoverContainer>
             </div>

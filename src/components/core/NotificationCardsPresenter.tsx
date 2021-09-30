@@ -1,29 +1,27 @@
-import * as React from 'react';
 import { NotificationCards } from '@equinor/fusion-components';
 import { useFusionContext, NotificationCard } from '@equinor/fusion';
+import { FC, useState, useEffect, useCallback } from 'react';
 
 type NotificationCardsPresenterProps = {
     onShowInList: () => void;
 };
 
-const NotificationCardsPresenter: React.FC<NotificationCardsPresenterProps> = ({
-    onShowInList,
-}) => {
+const NotificationCardsPresenter: FC<NotificationCardsPresenterProps> = ({ onShowInList }) => {
     const { notificationCenter } = useFusionContext();
-    const [notificationCards, setNotificationCards] = React.useState<NotificationCard[]>([]);
+    const [notificationCards, setNotificationCards] = useState<NotificationCard[]>([]);
     const presentCard = (notificationCard: NotificationCard) => {
         setNotificationCards((cards) => [...cards, notificationCard]);
     };
-    React.useEffect(() => {
+    useEffect(() => {
         return notificationCenter.registerCardPresenter(presentCard);
     }, []);
 
-    const showCardInList = React.useCallback(() => {
+    const showCardInList = useCallback(() => {
         setNotificationCards([]);
         onShowInList();
     }, [onShowInList]);
 
-    const removeNotificationCard = React.useCallback(
+    const removeNotificationCard = useCallback(
         (card: NotificationCard) => {
             const updatedNotifications = [...notificationCards].filter((n) => n.id !== card.id);
             setNotificationCards(updatedNotifications);

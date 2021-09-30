@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import { Fragment, useCallback, useContext } from 'react';
 import { BreadCrumb } from '../orgChartTypes';
 
 import styles from './styles.less';
@@ -6,11 +6,20 @@ import { OrgChartContextReducer, OrgChartContext } from '../store';
 
 const BreadCrumbs = () => {
     const {
-        state: { breadCrumbComponent, breadCrumbs, centerX, cardWidth, numberOfCardsPerRow, breadCrumbWidth, breadCrumbHeight, breadCrumbMargin },
+        state: {
+            breadCrumbComponent,
+            breadCrumbs,
+            centerX,
+            cardWidth,
+            numberOfCardsPerRow,
+            breadCrumbWidth,
+            breadCrumbHeight,
+            breadCrumbMargin,
+        },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
 
     const x = centerX - cardWidth / 2;
-    const y = 0
+    const y = 0;
 
     const renderLink = useCallback(
         (index: number) => {
@@ -30,7 +39,7 @@ const BreadCrumbs = () => {
 
             const BreadCrumbComponent = breadCrumbComponent;
             return (
-                <React.Fragment key={index + 'bread-crumb'}>
+                <Fragment key={index + 'bread-crumb'}>
                     <rect
                         x={componentX}
                         y={componentY}
@@ -52,7 +61,7 @@ const BreadCrumbs = () => {
                             />
                         )}
                     </foreignObject>
-                </React.Fragment>
+                </Fragment>
             );
         },
         [breadCrumbs, x, y, breadCrumbComponent]

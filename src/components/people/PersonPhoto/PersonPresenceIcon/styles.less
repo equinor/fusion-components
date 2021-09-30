@@ -7,31 +7,37 @@
     justify-content: center;
     align-items: center;
     
-    &.online {
+    &.available, &.availableidle {
         background: var(--color-green);
     }
 
-    &.idlenusy, &.berightback, &.away {
+    &.berightback, &.away {
         background: var(--color-yellow);
     } 
-    
-    &.donotdisturb, &.busy {
+    &.donotdisturb {
         background: var(--color-danger);
     }
 
-    &.offline, &.none {
+     &.busy, &.busyidle {
+        background: var(--color-danger);
+/*         color: var(--color-danger); */
+    }
+
+    &.offline {
         background: var(--color-black-alt3);
     }
-    
+
     &.xlarge {
-        &.comfortable, &.compact {
+        &.comfortable,
+        &.compact {
             // 24x24
             --presenceContainerSize: calc(var(--grid-unit) * 2px);
         }
     }
 
     &.large {
-        &.comfortable, &.compact {
+        &.comfortable,
+        &.compact {
             // 16x16
             --presenceContainerSize: calc(var(--grid-unit) * 1.5px);
         }

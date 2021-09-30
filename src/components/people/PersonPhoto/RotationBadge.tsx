@@ -1,5 +1,4 @@
-import React from 'react';
-import { PhotoSize, useTooltipRef } from '@equinor/fusion-components';
+import { PhotoSize } from '@equinor/fusion-components';
 import {
     useComponentDisplayType,
     useComponentDisplayClassNames,
@@ -22,7 +21,7 @@ const getIconSizes = (isCompact: boolean) => ({
     small: isCompact ? 8 : 12,
 });
 
-const RotationBadge = ({ size, numberOfPersons, hideTooltip }: RotationBadgeProps) => {
+const RotationBadge = ({ size, numberOfPersons }: RotationBadgeProps) => {
     const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
         [styles.xlarge]: size === 'xlarge',
         [styles.large]: size === 'large',

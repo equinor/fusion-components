@@ -1,11 +1,7 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, FC, useEffect } from 'react';
+
 import classNames from 'classnames';
-import {
-    Button,
-    useTooltipRef,
-    DropdownArrow,
-    ApplicationGuidanceAnchor,
-} from '@equinor/fusion-components';
+import { Button, useTooltipRef, DropdownArrow } from '@equinor/fusion-components';
 import SearchFilterComponent from './SearchFilterComponent';
 import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
@@ -14,8 +10,9 @@ import styles from '../styles.less';
 import { FilterTerm, Filter as FilterConfig } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
+import { useAnchor } from '../../ApplicationGuidance';
 
-const resolveFilterComponent = (type: FilterTypes): React.FC<any> | null => {
+const resolveFilterComponent = (type: FilterTypes): FC<any> | null => {
     switch (type) {
         case FilterTypes.Search:
             return SearchFilterComponent;
@@ -47,9 +44,10 @@ function getTermPreview<T>(filter: FilterConfig<T>, term: FilterTerm | null) {
                 .map((option) => option.label)
                 .join(', ');
 
-        case FilterTypes.Radio:
+        case FilterTypes.Radio: {
             const option = filter.options.find((o) => o.key === term.value);
             return option ? option.label : null;
+        }
     }
 
     return null;
@@ -85,23 +83,15 @@ type FilterProps<T> = {
     term?: FilterTerm;
     filterCount: Count[];
     onChange: (filter: FilterConfig<T>, term: FilterTerm | null) => void;
-    quickFactScope?: string;
 };
 
-function Filter<T>({
-    filter,
-    term: defaultTerm,
-    filterCount,
-    onChange,
-    quickFactScope,
-}: FilterProps<T>) {
+function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterProps<T>) {
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
-    React.useEffect(() => {
-        if (defaultTerm !== term) {
-            setTerm(defaultTerm);
-        }
+    const anchorRef = useAnchor<HTMLHeadingElement>(filter.info);
+    useEffect(() => {
+        setTerm(defaultTerm || null);
     }, [defaultTerm]);
 
     const handleOnChange = useCallback(
@@ -156,7 +146,6 @@ function Filter<T>({
         onChange: handleOnChange,
         filterCount: filterCount.find((fc) => fc.key === filter.key),
         filter,
-        quickFactScope,
     });
 
     if (!renderedFilterComponent) {
@@ -166,12 +155,10 @@ function Filter<T>({
     return (
         <div className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
-                <header onClick={toggleCollapse}>
-                    <ApplicationGuidanceAnchor anchor={filter.key} scope={quickFactScope} snug>
-                        <h4>
-                            <FilterTitle filter={filter} term={term} />
-                        </h4>
-                    </ApplicationGuidanceAnchor>
+                <header onClick={toggleCollapse} ref={anchorRef}>
+                    <h4>
+                        <FilterTitle filter={filter} term={term} />
+                    </h4>
                     <Button
                         frameless
                         disabled={!term || !term.value || !term.value.length}

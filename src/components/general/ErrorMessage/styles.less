@@ -1,5 +1,4 @@
-@import "~styles/variables.less";
-
+@import '~styles/variables.less';
 
 .container {
     position: relative;
@@ -8,21 +7,23 @@
 
     .messageContainer {
         position: relative;
-        left: 0; bottom: 0; right: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         display: flex;
         align-content: center;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         z-index: 999;
-        
+
         .message {
             text-align: center;
         }
 
         &.comfortable {
-            top: 0; 
-            margin-top:calc(var(--grid-unit) * 15px);
+            top: 0;
+            margin-top: calc(var(--grid-unit) * 15px);
 
             .title {
                 padding-top: calc(var(--grid-unit) * 6px);
@@ -34,8 +35,9 @@
             .message {
                 font-size: 20px;
                 height: calc(var(--grid-unit) * 3px);
-                padding-bottom: calc(var(--grid-unit) * 10px);
-                padding-top: calc(var(--grid-unit)* 3px);
+                padding-bottom: calc(var(--grid-unit) * 5px);
+                padding-top: calc(var(--grid-unit) * 3px);
+                height: auto;
             }
         }
 
@@ -43,44 +45,45 @@
             margin-top: 0;
             top: 50%;
             transform: translateY(-50%);
-                    
+
             .title {
-                padding-top: calc(var(--grid-unit)* 5px);
+                padding-top: calc(var(--grid-unit) * 5px);
                 font-size: 16px;
-                height: calc(var(--grid-unit)* 3px);
+                height: calc(var(--grid-unit) * 3px);
                 font-weight: 600;
             }
 
             .message {
                 font-size: 16px;
-                height: calc(var(--grid-unit)* 2px);
+                height: calc(var(--grid-unit) * 2px);
                 padding-bottom: calc(var(--grid-unit) * 4px);
-                padding-top: calc(var(--grid-unit)* 1px);
-
+                padding-top: calc(var(--grid-unit) * 1px);
+                height: auto;
             }
         }
     }
 }
 
-:global(.react-grid-layout){ //PDP tile styling
-    .messageContainer.comfortable, .messageContainer.compact{
+:global(.react-grid-layout) {
+    //PDP tile styling
+    .messageContainer.comfortable,
+    .messageContainer.compact {
         margin-top: 0;
         top: 50%;
         transform: translateY(-50%);
-                
+
         .title {
-            padding-top: calc(var(--grid-unit)* 5px);
+            padding-top: calc(var(--grid-unit) * 5px);
             font-size: 16px;
-            height: calc(var(--grid-unit)* 3px);
+            height: calc(var(--grid-unit) * 3px);
             font-weight: 600;
         }
 
         .message {
             font-size: 16px;
-            height: calc(var(--grid-unit)* 2px);
+            height: calc(var(--grid-unit) * 2px);
             padding-bottom: calc(var(--grid-unit) * 4px);
-            padding-top: calc(var(--grid-unit)* 1px);
-
+            padding-top: calc(var(--grid-unit) * 1px);
         }
     }
 }

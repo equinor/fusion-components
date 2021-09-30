@@ -1,4 +1,14 @@
-import React, { useState, useRef, useCallback, useEffect, useMemo } from 'react';
+import {
+    useState,
+    useRef,
+    useCallback,
+    useEffect,
+    useMemo,
+    FocusEvent,
+    MutableRefObject,
+    MouseEvent,
+} from 'react';
+
 import {
     TextInput,
     DropdownArrow,
@@ -29,12 +39,15 @@ type SearchableDropdownProps = {
     sections?: SearchableDropdownSection[];
     error?: boolean;
     errorMessage?: string;
+    headerComponent?: any;
     itemComponent?: any;
     asideComponent?: any;
     selectedComponent?: any;
+    noResultComponent?: any;
     onSelect?: (item: SearchableDropdownOption) => void;
     onSearchAsync?: (query: string) => void;
     dropdownMaxHeight?: number;
+    onOpen?: (isOpen: boolean) => void;
 };
 
 const createSingleSectionFromOptions = (
@@ -79,10 +92,13 @@ const SearchableDropdown = ({
     error,
     errorMessage,
     onSearchAsync,
+    headerComponent,
     itemComponent,
     asideComponent,
     selectedComponent,
+    noResultComponent,
     dropdownMaxHeight,
+    onOpen,
 }: SearchableDropdownProps) => {
     if ((!options && !sections) || (options && sections)) {
         throw new Error("You must supply only one of 'options', 'sections' props");
@@ -170,11 +186,20 @@ const SearchableDropdown = ({
 
         const overlayContainer = useOverlayContainer();
         const handleBlur = useCallback(
-            (e: React.FocusEvent<HTMLInputElement>) => {
-                if (overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
+            (e: FocusEvent<HTMLInputElement>) => {
+                if (!overlayContainer.contains(e.relatedTarget as HTMLElement)) return;
                 setIsOpen(false, 250);
             },
             [isOpen, overlayContainer]
+        );
+
+        const handleOnIconAction = useCallback(
+            (e: MouseEvent<HTMLDivElement>) => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+                ref.current && ref.current.click && ref.current.click();
+            },
+            [isOpen]
         );
 
         return (
@@ -193,7 +218,7 @@ const SearchableDropdown = ({
                         placeholder={placeholder || 'Type to search...'}
                         label={label}
                         icon={<DropdownArrow cursor="pointer" isOpen={isOpen} />}
-                        onIconAction={() => isOpen && setIsOpen(false)}
+                        onIconAction={(e) => handleOnIconAction(e)}
                         onClick={() => !isOpen && setIsOpen(true)}
                         value={selectedValue}
                         ref={inputRef}
@@ -218,7 +243,14 @@ const SearchableDropdown = ({
         [isOpen, onSelect]
     );
 
-    const containerRef = dropdownController.controllerRef as React.MutableRefObject<HTMLDivElement | null>;
+    useEffect(() => {
+        if (onOpen) {
+            onOpen(isOpen);
+        }
+    }, [isOpen]);
+
+    const containerRef =
+        dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     const hasResults = useMemo(() => {
         return (
@@ -232,6 +264,11 @@ const SearchableDropdown = ({
     return (
         <div ref={containerRef}>
             <Dropdown controller={dropdownController}>
+                {!!headerComponent && (
+                    <div className={styles.customSlot} onClick={() => setIsOpen(true)}>
+                        {headerComponent}
+                    </div>
+                )}
                 <div
                     className={styles.menuContainer}
                     style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
@@ -248,9 +285,18 @@ const SearchableDropdown = ({
                     ) : (
                         <div className={styles.noResultsContainer}>
                             {inputValue ? (
-                                <span>
-                                    No matches for <strong> {inputValue}</strong>
-                                </span>
+                                !!noResultComponent ? (
+                                    <div
+                                        className={styles.customSlot}
+                                        onClick={() => setIsOpen(true)}
+                                    >
+                                        {noResultComponent}
+                                    </div>
+                                ) : (
+                                    <span>
+                                        No matches for <strong> {inputValue}</strong>
+                                    </span>
+                                )
                             ) : (
                                 'Start typing to search'
                             )}

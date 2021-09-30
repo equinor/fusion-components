@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
     useContextManager,
     useCurrentContext,
@@ -20,10 +19,21 @@ import {
     IconButton,
     CloseIcon,
 } from '@equinor/fusion-components';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import classNames from 'classnames';
 
 import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
+import {
+    useRef,
+    useState,
+    useEffect,
+    useCallback,
+    useMemo,
+    FC,
+    KeyboardEvent,
+    ChangeEvent,
+    MutableRefObject,
+} from 'react';
 
 const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     sections.reduce(
@@ -36,7 +46,7 @@ type SearchableContextDropdownOption = SearchableDropdownOption & {
     contextType: ContextType;
 };
 
-const ContextSelector: React.FC = () => {
+const ContextSelector: FC = () => {
     const contextManager = useContextManager();
     const currentContext = useCurrentContext();
     const contextHistory = useContextHistory();
@@ -45,12 +55,12 @@ const ContextSelector: React.FC = () => {
     const contextManifest = currentApp?.context;
     const { isQuerying, contexts, search } = useContextQuery();
 
-    const inputRef = React.useRef<HTMLInputElement | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const [queryText, setQueryText] = React.useState('');
-    const [dropdownSections, setDropdownSections] = React.useState<SearchableDropdownSection[]>([]);
+    const [queryText, setQueryText] = useState('');
+    const [dropdownSections, setDropdownSections] = useState<SearchableDropdownSection[]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const selection = queryText && contexts.length ? contexts : contextHistory;
 
         setDropdownSections(
@@ -58,26 +68,26 @@ const ContextSelector: React.FC = () => {
         );
     }, [contexts, currentContext, queryText, isQuerying, contextHistory]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         search(queryText);
     }, [queryText]);
 
-    const onKeyUpCloseDropDown = React.useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
+    const onKeyUpCloseDropDown = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         if (e.keyCode !== 27) return; //ESC
 
         setIsOpen(false);
         setQueryText('');
     }, []);
 
-    const dropdownControllerProps = React.useCallback(
+    const dropdownControllerProps = useCallback(
         (ref, isOpen, setIsOpen) => {
-            const selectedItem = React.useMemo(() => {
+            const selectedItem = useMemo(() => {
                 const mergedItems = mergeDropdownSectionItems(dropdownSections);
                 const selectedItem = mergedItems.find((option) => option.isSelected === true);
                 return selectedItem as SearchableContextDropdownOption;
             }, [dropdownSections]);
 
-            const selectedValue = React.useMemo(() => {
+            const selectedValue = useMemo(() => {
                 if (isOpen) {
                     return queryText;
                 } else if (selectedItem) {
@@ -92,36 +102,54 @@ const ContextSelector: React.FC = () => {
                 return '';
             }, [isOpen, queryText, selectedItem, currentContext]);
 
-            const onChangeQueryText = React.useCallback(
-                (e: React.ChangeEvent<HTMLInputElement>) => {
-                    setQueryText(e.target.value);
-                },
-                []
-            );
+            const onChangeQueryText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+                setQueryText(e.target.value);
+                setIsOpen(true);
+            }, []);
 
-            const onClickDropDown = React.useCallback(() => {
-                !isOpen && setIsOpen(true);
-            }, [isOpen]);
-
-            const placeholder = React.useMemo(() => {
+            const placeholder = useMemo(() => {
                 return contextManifest?.placeholder
                     ? contextManifest.placeholder
                     : 'Search context';
             }, [contextManifest?.placeholder]);
 
+            const hasFocus = inputRef.current === document.activeElement;
+
             return (
-                <>
+                <div className={styles.flexContainer}>
                     <SearchIcon color="#DADADA" />
-                    <input
-                        type="text"
-                        value={selectedValue}
-                        onChange={onChangeQueryText}
-                        onClick={onClickDropDown}
-                        onKeyUp={onKeyUpCloseDropDown}
-                        placeholder={selectedValue !== '' ? selectedValue : placeholder}
-                        className={styles.searchInput}
-                        ref={inputRef}
-                    />
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type="text"
+                            value={queryText}
+                            onFocus={() => setIsOpen(true)}
+                            onChange={onChangeQueryText}
+                            onKeyUp={onKeyUpCloseDropDown}
+                            placeholder={placeholder}
+                            style={{ opacity: hasFocus ? 1 : 0 }}
+                            className={styles.searchInput}
+                            ref={inputRef}
+                        />
+                        <span
+                            className={classNames(styles.searchInput, styles.overlay)}
+                            style={{
+                                opacity: hasFocus ? 0 : 1,
+                                position: 'absolute',
+                                left: inputRef.current?.offsetLeft,
+                                top: inputRef.current?.offsetTop,
+                                width: inputRef.current?.clientWidth,
+                                lineHeight: inputRef.current?.clientHeight + 'px',
+                                display: 'inline-block',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                            }}
+                            onClick={() => inputRef.current?.focus()}
+                        >
+                            {selectedValue || placeholder}
+                        </span>
+                    </div>
                     {isQuerying && <Spinner inline />}
                     {contextManifest?.nullable && (
                         <IconButton
@@ -131,7 +159,7 @@ const ContextSelector: React.FC = () => {
                             <CloseIcon />
                         </IconButton>
                     )}
-                </>
+                </div>
             );
         },
         [queryText, currentContext, dropdownSections, contextManifest]
@@ -140,7 +168,7 @@ const ContextSelector: React.FC = () => {
     const dropdownController = useDropdownController(dropdownControllerProps);
     const { isOpen, setIsOpen, controllerRef } = dropdownController;
 
-    const exchangeContext = React.useCallback(async () => {
+    const exchangeContext = useCallback(async () => {
         const alternatives = await contextManager.exchangeCurrentContextAsync(
             ...currentContextTypes
         );
@@ -158,7 +186,7 @@ const ContextSelector: React.FC = () => {
         setIsOpen(true);
     }, [contextManager, currentContext, currentContextTypes]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!contextManifest || !currentContext) {
             return;
         }
@@ -179,7 +207,7 @@ const ContextSelector: React.FC = () => {
         }
     }, [currentApp, contextManifest, exchangeContext]);
 
-    const onSelect = React.useCallback(
+    const onSelect = useCallback(
         (item) => {
             if (item.key && item.key === 'empty') {
                 return;
@@ -199,9 +227,13 @@ const ContextSelector: React.FC = () => {
         [isOpen, contexts, queryText, contextHistory]
     );
 
-    const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
-    const containerRef = controllerRef as React.MutableRefObject<HTMLDivElement | null>;
-    const helperText = React.useMemo(
+    const containerClassNames = classNames(
+        styles.component,
+        styles.flexContainer,
+        useComponentDisplayClassNames(styles)
+    );
+    const containerRef = controllerRef as MutableRefObject<HTMLDivElement | null>;
+    const helperText = useMemo(
         () =>
             !dropdownSections[0]?.items?.length && !isQuerying && !queryText
                 ? 'Start typing to search'

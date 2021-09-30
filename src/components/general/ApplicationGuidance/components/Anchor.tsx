@@ -1,23 +1,31 @@
-import React from 'react';
+import {
+    useRef,
+    useEffect,
+    FC,
+    RefObject,
+    DetailedHTMLFactory,
+    DetailedHTMLProps,
+    HTMLAttributes,
+    PropsWithChildren,
+} from 'react';
 import {
     AnchorDOMRect,
     OverlayAnchorElement,
     OverlayAnchorElementTag,
     OverlayAnchorElementProps,
-    OverlayAnchorConnectEvent
+    OverlayAnchorConnectEvent,
 } from '../../../../customElements/components/overlay/anchor';
 
-export interface AppGuideAnchorRef<R extends HTMLElement> {
-
-    /** 
+export interface AppGuideAnchorRef<R extends HTMLElement = HTMLElement> {
+    /**
      * unique key for the app (within its scope)
-    */ 
-    id: string;
+     */
+    id?: string;
 
     /**
-     * scope of the anchor, sub-scopes are divided by `|` 
+     * scope of the anchor, sub-scopes are divided by `|`
      */
-    scope: string;
+    scope?: string;
 
     /**
      * amount of padding added to the calculation of element bounds
@@ -27,50 +35,57 @@ export interface AppGuideAnchorRef<R extends HTMLElement> {
     /**
      * reference to the element [HTMLElement] which displays the anchor
      */
-    ref: React.RefObject<R>;
+    ref: RefObject<R>;
+
+    onSelected?: () => void;
 }
+
+export type UseAnchorProps<R extends HTMLElement = HTMLElement> = Omit<AppGuideAnchorRef<R>, 'ref'>;
 
 /**
  * @see useAnchorRef
- * 
+ *
  * Creates and ref for [useAnchorRef]
- * 
+ *
  * @param anchor anchor props
- * @returns [React.useRef<R>]
+ * @returns [ useRef<R>]
  */
-export const useAnchor = <R extends HTMLElement>(anchor: Omit<AppGuideAnchorRef<R>, 'ref'>) => {
-    const ref = React.useRef<R>(null);
+export const useAnchor = <R extends HTMLElement>(anchor: UseAnchorProps<R>) => {
+    const ref = useRef<R>(null);
     useAnchorRef({ ...anchor, ref });
     return ref;
 };
 
 /**
- * 
+ *
  * Hook for binding an element to a anchor.
  * When the element attaches to the dom an event is fired for registering the element to the overlay.
  * The event contains a callback for disconnecting from the over, which is called on un-mount
  * The event also contain a callback for calculating the bounds of the element and applies provided padding.
- * 
+ *
  * The element must be within a [ApplicationGuidanceWrapper]
- * 
+ *
  * @param anchor [AppGuideAnchorRef]
- * @returns [React.useRef<R>]
+ * @returns [ useRef<R>]
  */
-export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>) => {
-    const { id, ref, scope } = anchor;
-    const callBackRef = React.useRef<VoidFunction>();
-    const padding = React.useRef<number>(anchor.padding);
+export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>): void => {
+    const { id, ref, scope, onSelected } = anchor;
+    const callBackRef = useRef<VoidFunction>();
+    const padding = useRef<number>(anchor.padding);
 
-    React.useEffect(() => {
+    useEffect(() => {
         requestAnimationFrame(() => {
-            if (!ref.current) {
+            if (!ref.current || !scope || !id) {
+                ref.current && !scope && console.debug('no scope defined');
                 return;
             }
+
             const event = new OverlayAnchorConnectEvent({
                 detail: {
                     anchor: id,
                     scope,
                     bounds: () => {
+                        if (!ref.current) return null;
                         return AnchorDOMRect.create(
                             ref.current.getBoundingClientRect(),
                             padding.current
@@ -79,6 +94,7 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                     disconnectedCallback: (cb: VoidFunction) => {
                         callBackRef.current = cb;
                     },
+                    selected: onSelected,
                 },
                 cancelable: false,
                 // allow propagation threw shadow doms
@@ -86,32 +102,33 @@ export const useAnchorRef = <R extends HTMLElement>(anchor: AppGuideAnchorRef<R>
                 composed: true,
             });
             ref.current.dispatchEvent(event);
-        })
+        });
         return () => callBackRef.current && callBackRef.current();
-    }, [ref]);
+    }, [ref.current]);
 };
 
-export type ApplicationGuidanceAnchorProps = React.PropsWithChildren<
+export type ApplicationGuidanceAnchorProps = PropsWithChildren<
     Omit<OverlayAnchorElementProps, 'bounds'> &
-    React.DetailedHTMLProps<React.HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
+        DetailedHTMLProps<HTMLAttributes<OverlayAnchorElement>, OverlayAnchorElement>
 >;
 
-export const ApplicationGuidanceAnchor: React.FC<ApplicationGuidanceAnchorProps> = (
+export const ApplicationGuidanceAnchor: FC<ApplicationGuidanceAnchorProps> = (
     props: ApplicationGuidanceAnchorProps
 ) => {
     return <fusion-overlay-anchor {...props}></fusion-overlay-anchor>;
 };
 
 declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace JSX {
         interface ReactHTML {
-            [OverlayAnchorElementTag]: React.DetailedHTMLFactory<
+            [OverlayAnchorElementTag]: DetailedHTMLFactory<
                 ApplicationGuidanceAnchorProps,
                 OverlayAnchorElement
             >;
         }
         interface IntrinsicElements {
-            [OverlayAnchorElementTag]: React.DetailedHTMLProps<
+            [OverlayAnchorElementTag]: DetailedHTMLProps<
                 ApplicationGuidanceAnchorProps,
                 OverlayAnchorElement
             >;

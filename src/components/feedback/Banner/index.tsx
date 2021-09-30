@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import { Button } from '@equinor/fusion-components';
+import { useState, useEffect, FC } from 'react';
 
 type BannerProps = {
     message: string;
@@ -12,14 +12,7 @@ type BannerProps = {
     onAction?: () => void;
 };
 
-const Banner: React.FC<BannerProps> = ({
-    message,
-    icon,
-    onDismiss,
-    action,
-    actionLabel,
-    onAction,
-}) => {
+const Banner: FC<BannerProps> = ({ message, icon, onDismiss, action, actionLabel, onAction }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {

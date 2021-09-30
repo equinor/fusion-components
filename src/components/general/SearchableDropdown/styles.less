@@ -1,6 +1,6 @@
 @import '~styles/mixins.less';
 
-.menuContainer{
+.menuContainer {
     pointer-events: all;
     min-height: calc(var(--grid-unit) * 8px);
 }
@@ -16,23 +16,29 @@
 .buttonContainer {
     display: flex;
     flex-direction: column;
-    
+
     .buttonContent {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        min-height: .grid-unit(5px)[];
-        max-height: .grid-unit(7px)[];
+        min-height: .grid-unit(5px) [];
+        max-height: .grid-unit(7px) [];
         background-color: var(--color-black-alt5);
         border-bottom: 1px solid var(--color-primary-accent);
         caret-color: var(--color-primary);
-        padding: .grid-unit(1px)[] .grid-unit(2px)[];
+        padding: .grid-unit(1px) [] .grid-unit(2px) [];
         border-radius: 4px 4px 0 0;
 
         .dropDownArrow {
             min-width: calc(var(--grid-unit) * 3px);
         }
     }
+}
+
+.customSlot {
+    display: flex;
+    flex-direction: column;
+    width: '100%';
 }
 
 .noResultsContainer {

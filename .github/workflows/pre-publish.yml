@@ -1,0 +1,57 @@
+name: Pre-release
+
+on: 
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Realse tag (PR)'     
+        required: true
+
+jobs:
+  publish:
+    name: Publish to PR
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+        
+    steps:
+
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          registry-url: https://registry.npmjs.org
+          
+      - name: npm install 
+        run: |
+          npm ci
+
+      - name: Build
+        run: | 
+          npm run build
+
+      - name: Config git user
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Bump versions (pre-release)
+        run: npm version prerelease --preid=${{ github.event.inputs.tag }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Push version
+        run: git push
+        continue-on-error: true
+
+      - name: Release packages
+        run: npm publish --tag ${{ github.event.inputs.tag }} --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+      

@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useMemo } from 'react';
+import { useContext, useCallback, useMemo } from 'react';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
@@ -34,7 +34,7 @@ const Labels = () => {
     }, []);
 
     const childLabelNode = useMemo(() => {
-        const childNodes = allNodes.filter(node => !node.aside && node.parentId);
+        const childNodes = allNodes.filter((node) => !node.aside && node.parentId);
         const firstChildNode = childNodes.length && childNodes[0];
         const marginY = childNodes.length === 1 ? 8 : 28;
         if (firstChildNode && childrenLabel && numberOfCardsPerRow === 1) {
@@ -49,7 +49,7 @@ const Labels = () => {
     }, [allNodes, centerX, childrenLabel]);
 
     const asideLabelNode = useMemo(() => {
-        const asideNodes = allNodes.filter(node => node.aside && node.parentId);
+        const asideNodes = allNodes.filter((node) => node.aside && node.parentId);
         const firstAsideNode = asideNodes.length && asideNodes[0];
 
         if (firstAsideNode && asideLabel && numberOfCardsPerRow === 1) {

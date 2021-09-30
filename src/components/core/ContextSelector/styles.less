@@ -1,6 +1,8 @@
-.container {
+.flexContainer {
     display: flex;
     align-items: center;
+}
+.component {
     width: calc(var(--grid-unit) * 65px);
 
     .searchInput {
@@ -17,20 +19,15 @@
         height: calc(var(--grid-unit) * var(--height-multiplier));
         margin-left: calc(var(--grid-unit) * 1px);
         font-size: var(--font-size);
-
-        &::placeholder {
-            color: var(--color-primary-accent);
-        }
-
-        &:focus {
-            border-bottom-color: var(--color-primary);
-
-            &::placeholder {
-                color: var(--color-black-alt3);
-            }
+        &.overlay{
+            user-select: none;
+            cursor: pointer;
         }
     }
 
+    input.searchInput:focus{
+        border-bottom-color: var(--color-primary);
+    }
 
     &.comfortable {
         --height-multiplier: 6px;
@@ -41,17 +38,15 @@
         --height-multiplier: 5px;
         --font-size: 15px;
     }
-
-
 }
 
 .dropdownContainer {
-    max-height: calc(var(--grid-unit)* 60px);
+    max-height: calc(var(--grid-unit) * 60px);
     overflow-y: auto;
 
     .helperText {
         display: flex;
-        padding: 0 calc(var(--grid-unit)* 2px);
+        padding: 0 calc(var(--grid-unit) * 2px);
         min-height: calc(var(--grid-unit) * 8px);
         align-items: center;
     }

@@ -57,7 +57,7 @@ export const buttonStyle = css`
     }
 
     .button.border:hover {
-        background: rgba(0, 132, 196, 0.20);
+        background: rgba(0, 132, 196, 0.2);
         border: 1px solid var(--color-contrast);
         color: var(--color-contrast);
     }

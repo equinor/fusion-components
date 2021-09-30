@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback, FC } from 'react';
+
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import FilterPane, { FilterTypes, FilterSection, FilterTerm } from '../index';
@@ -10,7 +11,7 @@ import { styling, DataTable, DataTableColumn, Button } from '@equinor/fusion-com
 type TableProps = {
     data: DataItem[];
 };
-const Table: React.FC<TableProps> = ({ data }) => {
+const Table: FC<TableProps> = ({ data }) => {
     const [appSettings, setAppSetting] = useAppSettings();
     const perPage = parseInt(appSettings['perPage'], 10) || 20;
 
@@ -47,10 +48,13 @@ const Table: React.FC<TableProps> = ({ data }) => {
                 column: sortedByColumn,
                 direction,
             }}
-            quickFactScope="storybook"
         />
     );
 };
+
+const sectionQuickFact = { id: 'filter-section', scope: 'storybook|filter_pane' }; 
+const textSearchQuickFact = { id: 'text-search', scope: 'storybook|filter_pane', padding: 10 }; 
+const filterQuickFact = { id: 'filter', scope: 'storybook|filter_pane' }; 
 
 const sections: FilterSection<DataItem>[] = [
     {
@@ -58,6 +62,7 @@ const sections: FilterSection<DataItem>[] = [
         title: '',
         filters: [
             {
+                info: textSearchQuickFact, 
                 key: 'search',
                 title: '',
                 type: FilterTypes.Search,
@@ -69,6 +74,7 @@ const sections: FilterSection<DataItem>[] = [
         key: 'custom-colors',
         title: 'Custom colors',
         isCollapsible: true,
+        info: sectionQuickFact, 
         filters: [
             {
                 key: 'custom-colors',
@@ -107,6 +113,7 @@ const sections: FilterSection<DataItem>[] = [
                 getValue: (item) => item.gender,
                 isVisibleWhenPaneIsCollapsed: true,
                 isCollapsible: true,
+                info: filterQuickFact,
                 options: [
                     {
                         key: 'Male',
@@ -153,7 +160,7 @@ const sections: FilterSection<DataItem>[] = [
     },
 ];
 
-const FilterPaneStory: React.FC = () => {
+const FilterPaneStory: FC = () => {
     const [terms, setTerms] = useState<FilterTerm[]>([
         {
             key: 'custom-colors',

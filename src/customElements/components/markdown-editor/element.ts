@@ -1,4 +1,15 @@
-import { fusionElement, LitElement, property, html, internalProperty, query, eventOptions, throttle, queryAsync, PropertyValues } from '../base';
+import {
+    fusionElement,
+    LitElement,
+    property,
+    html,
+    internalProperty,
+    query,
+    eventOptions,
+    throttle,
+    queryAsync,
+    PropertyValues,
+} from '../base';
 
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
@@ -20,18 +31,18 @@ const defaultMenuItem: Array<MdMenuItemType> = ['strong', 'em', 'bullet_list', '
 
 /**
  * Element for editing markdown.
- * 
+ *
  * @example
- * 
+ *
  * ```html
  * <fusion-markdown-editor>**some** markdown *text*</fusion-markdown-editor>
  * ```
- * 
+ *
  * ```ts
  * const md = '#my heading';
  * html`<fusion-markdown-editor .value="md" @change=${console.log}></fusion-markdown-editor>`
  * ```
- * 
+ *
  */
 @fusionElement('fusion-markdown-editor')
 export class MarkdownEditorElement extends LitElement implements MarkdownEditorElementProps {
@@ -59,7 +70,11 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
      * @todo move to function for setState and create a clearState
      */
     public set markdown(value: string) {
-        const { state, view, state: { tr: transaction } } = this;
+        const {
+            state,
+            view,
+            state: { tr: transaction },
+        } = this;
         const selection = TextSelection.create(transaction.doc, 0, transaction.doc.content.size);
         transaction.setSelection(selection);
         transaction.replaceSelectionWith(defaultMarkdownParser.parse(value));
@@ -75,9 +90,8 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
     }
 
     public get state() {
-        return this.view.state
+        return this.view.state;
     }
-
 
     firstUpdated(props: PropertyValues) {
         super.firstUpdated(props);
@@ -157,7 +171,7 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
      * this should actually only be handle on blur
      * throttle incase some one two-way binds this component
      * cache the current markdown, to compare with incoming values
-     * 
+     *
      * @todo this value might need to be increased
      */
     @throttle(250, { leading: false })

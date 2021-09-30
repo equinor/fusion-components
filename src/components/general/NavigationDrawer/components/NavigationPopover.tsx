@@ -1,4 +1,4 @@
-import React, { useRef, ReactNode, useState, useCallback } from 'react';
+import { useRef, ReactNode, useState, useCallback } from 'react';
 import {
     RelativeOverlayPortal,
     useClickOutsideOverlayPortal,
@@ -35,7 +35,7 @@ const NavigationPopover = ({
     useClickOutsideOverlayPortal(close, iconRef.current);
     const hasActiveChild =
         isActive ||
-        (navigationChildren && navigationChildren.some(navChild => hasActive(navChild)));
+        (navigationChildren && navigationChildren.some((navChild) => hasActive(navChild)));
 
     return (
         <>

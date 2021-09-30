@@ -1,12 +1,24 @@
-import React, { useCallback, useMemo } from 'react';
+import { ReactNode, useCallback, useMemo, CSSProperties } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
-
 import styles from './styles.less';
 import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
-import { useCurrentInstance } from './hooks';
 import RotationInstances from './components/RotationInstances';
+import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
+
+export type ChildCountTypeKey = 'positions' | 'fte' | 'uniquePersons';
+
+export const childCountTypeNameMapping: Record<ChildCountTypeKey, string> = {
+    positions: 'Positions',
+    fte: 'Full time equivalents (FTE)',
+    uniquePersons: 'Unique persons',
+};
+
+type CustomCardStyles = {
+    backgroundStyle?: CSSProperties;
+    borderStyle?: CSSProperties;
+};
 
 type PositionCardProps = {
     position: Position;
@@ -21,11 +33,45 @@ type PositionCardProps = {
     isPast?: boolean;
     isLinked?: boolean;
     childCount?: number;
+    childCountType?: ChildCountTypeKey;
     selectedDate?: Date;
     showRotation?: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
     onExpand?: (position: Position, instance?: PositionInstance) => void;
-};
+    personPhotoComponent?: ReactNode;
+    showTaskOwner?: boolean;
+} & CustomCardStyles;
+
+const useCardStyles = ({ backgroundStyle, borderStyle }: CustomCardStyles) =>
+    makeStyles((theme) =>
+        createStyles({
+            container: {
+                backgroundColor: 'var(--color-white)',
+                border: '2px solid var(--color-black-alt4)',
+                '&$futureBackground': {
+                    backgroundColor:
+                        theme.colors.interactive.success__highlight.getVariable('color'),
+                },
+                '&$futureBorder': {
+                    borderColor: theme.colors.interactive.success__resting.getVariable('color'),
+                },
+                '&$pastBackground': {
+                    backgroundColor: theme.colors.interactive.disabled__fill.getVariable('color'),
+                },
+                '&$pastBorder': {
+                    borderColor: theme.colors.interactive.disabled__text.getVariable('color'),
+                },
+                '&$customBackgroundStyle': backgroundStyle,
+                '&$customBorderStyle': borderStyle,
+            },
+            futureBackground: {},
+            futureBorder: {},
+            pastBackground: {},
+            pastBorder: {},
+            customBackgroundStyle: {},
+            customBorderStyle: {},
+        })
+    )();
 
 const PositionCard: React.FC<PositionCardProps> = ({
     position,
@@ -42,8 +88,13 @@ const PositionCard: React.FC<PositionCardProps> = ({
     isPast,
     isLinked,
     childCount,
+    childCountType,
     selectedDate,
     showRotation,
+    personPhotoComponent,
+    showTaskOwner,
+    backgroundStyle,
+    borderStyle,
 }) => {
     const isExternalHire =
         instance &&
@@ -55,8 +106,23 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const isConsultant =
         instance && instance.assignedPerson && instance.assignedPerson.accountType === 'Consultant';
 
+    const cardStyles = useCardStyles({ backgroundStyle, borderStyle });
+
+    const background = () => {
+        if (!!backgroundStyle) return cardStyles.customBackgroundStyle;
+        if (isFuture) return cardStyles.futureBackground;
+        if (isPast) return cardStyles.pastBackground;
+    };
+
+    const border = () => {
+        if (!!borderStyle) return cardStyles.customBorderStyle;
+        if (isFuture) return cardStyles.futureBorder;
+        if (isPast) return cardStyles.pastBorder;
+    };
+
     const containerClassNames = classNames(
         styles.context,
+        cardStyles.container,
         useComponentDisplayClassNames(styles),
         {
             [styles.isSelected]: isSelected,
@@ -65,8 +131,9 @@ const PositionCard: React.FC<PositionCardProps> = ({
             [styles.isConsultant]: isConsultant,
             [styles.isExternalHire]: isExternalHire,
             [styles.isLinked]: isLinked,
-            [styles.futurePosition]: isFuture,
-            [styles.pastPosition]: isPast,
+            [styles.clear]: true,
+            [background()]: !!background(),
+            [border()]: !!border(),
         }
     );
 
@@ -76,27 +143,40 @@ const PositionCard: React.FC<PositionCardProps> = ({
         }
     }, [position, instance, onClick]);
 
-    const currentInstance = useCurrentInstance(position.instances || [], instance, selectedDate);
+    const filterToDate = useMemo(() => selectedDate || new Date(), [selectedDate]);
 
-    const current: PositionInstance | undefined = currentInstance || undefined;
-    const rotatingInstances: PositionInstance[] =
-        currentInstance && currentInstance.rotatingInstances
-            ? currentInstance.rotatingInstances
-            : [];
+    const allInstances = useMemo(
+        () =>
+            position.instances.filter(
+                (i) =>
+                    i.appliesFrom.getTime() <= filterToDate.getTime() &&
+                    i.appliesTo.getTime() >= filterToDate.getTime()
+            ),
+        [filterToDate, position]
+    );
+    const rotatingInstances: PositionInstance[] = useMemo(
+        () =>
+            instance
+                ? allInstances.filter((i) => i.id !== instance.id && i.type === 'Rotation')
+                : [],
+        [instance, allInstances]
+    );
 
     return (
         <div className={containerClassNames} onClick={onClickHandler}>
-            <div className={styles.container} >
+            <div className={styles.container}>
                 <PositionIconPhoto
                     position={position}
-                    currentInstance={current}
+                    currentInstance={instance}
                     isLinked={isLinked}
                     onClick={onClick}
                     rotationInstances={rotatingInstances}
+                    personPhotoComponent={personPhotoComponent}
+                    showTaskOwner={showTaskOwner}
                 />
                 <PositionInstanceComponent
                     position={position}
-                    instance={current}
+                    instance={instance}
                     showLocation={showLocation}
                     showDate={showDate}
                     showExternalId={showExternalId}
@@ -105,11 +185,14 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     onClick={onClick}
                     onExpand={onExpand}
                     childCount={childCount}
+                    childCountType={childCountType}
                     rotationInstances={rotatingInstances}
                     selectedDate={selectedDate}
                 />
             </div>
-            {showRotation && rotatingInstances.length > 0 && <RotationInstances allInstances={[...rotatingInstances, current]} position={position}/>}
+            {showRotation && allInstances.length > 1 && rotatingInstances.length > 0 && (
+                <RotationInstances allInstances={allInstances} position={position} />
+            )}
         </div>
     );
 };

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { actions } from '@storybook/addon-actions';
 import withFusionStory from '../../../../../.storybook/withFusionStory';

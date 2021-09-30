@@ -1,0 +1,167 @@
+.workflowContainer {
+    display: flex;
+    overflow: auto;
+
+    .workflowStep{
+        display: flex;
+        flex-direction: column;
+        width: calc(var(--grid-unit) * 28px);
+        padding-right: calc(var(--grid-unit) * 2px);
+
+        &.inline {
+            width: initial;
+            padding: 0;
+
+            .stepHeader {
+                padding: 0;
+
+                .stepConnector {
+                    width: calc(var(--grid-unit) * 1px);
+                }
+            }
+        }
+
+        .stepHeader {
+            display: flex;
+            padding-bottom: calc(var(--grid-unit) * 1px);
+
+            .stepTitle {
+                flex: 1;
+                padding-left: calc(var(--grid-unit) * 1px);
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+                font-weight: 600;
+
+                &.disabled {
+                    color: var(--color-black-alt3);
+                }
+            }
+
+            .stepConnector {
+                flex: 1;
+                position: relative;
+                width: calc(var(--grid-unit) * 14px);
+
+                .stepConnectorLine {
+                    position: absolute;
+                    top: 50%;
+                    left: 0;
+                    border-top: 1px solid var(--color-black-alt4);
+                    width: 100%;
+                    transform: translateY(-50%);
+
+                    &.approved{
+                        border-color: var(--color-green);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.stepPerson {
+    display: flex;
+    padding-bottom: calc(var(--grid-unit) * 2px);
+
+    .stepPersonDetails {
+        display: flex;
+        flex-direction: column;
+        max-width: calc(var(--grid-unit) * 24px);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-left: calc(var(--grid-unit) * 1px);
+        
+        .completed {
+            color: var(--color-black-alt3);
+            font-size: 14px;
+            line-height: 16px;
+        }
+        .completedDate{
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
+}
+
+.popoverContainer{
+    display: grid;
+    grid-template-areas: 
+        "header header"
+        "started completed"
+        "completedBy completedBy"
+        "description description";
+    width: calc(var(--grid-unit) * 36px);
+    min-height: calc(var(--grid-unit) * 30px);
+
+    .textField {
+        display: flex;
+        flex-direction: column;
+
+        .title {
+            font-size: 14px;
+            color: var(--color-black-alt2);
+        }
+
+        .content {
+            font-size: 16px;
+            line-height: calc(var(--grid-unit) * 2px);
+            padding-top: calc(var(--grid-unit) * 0.5px);
+            display: flex;
+            align-items: center;
+            max-width: calc(var(--grid-unit) * 34px);
+
+        }
+    }
+
+    .header{
+        grid-area: header;
+        font-size: 18px;
+        font-weight: 500;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .started {
+        grid-area: started;
+    }
+
+    .completed{
+        grid-area: completed;
+    }
+
+    .completedBy {
+        grid-area: completedBy;
+    }
+
+    .description {
+        grid-area: description;
+    }
+
+    .stepPerson {
+        display: flex;
+        padding-bottom: calc(vaR(--grid-unit) * 2px);
+    
+        .stepPersonDetails {
+            display: flex;
+            flex-direction: column;
+            max-width: calc(var(--grid-unit) * 24px);
+            justify-content: center;
+            padding-left: calc(var(--grid-unit) * 1px);
+        }
+    }
+}
+
+.fusionIconContainer{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    width: calc(var(--grid-unit) * 4px);
+    height: calc(var(--grid-unit) * 4px);
+    background-color: var(--color-white);
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
+    border-radius: 50%;
+}

@@ -1,12 +1,11 @@
-
 .photoContainer {
     display: flex;
     position: relative;
     width: var(--photo-size);
     height: var(--photo-size);
-    border-radius: 50%;	
-    background-size: cover;	
-    background-position: center;	
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
 
     &.xlarge {
@@ -68,32 +67,34 @@
         &.affiliate {
             background: #ff93ee;
         }
-    
+
         &.consultant {
             background: var(--color-secondary);
-        } 
-        
-        &.employee{
+        }
+
+        &.employee {
             background: var(--color-purple);
         }
 
-        &.externalHire{
+        &.externalHire {
             background: var(--color-primary-accent);
         }
 
         &.local {
             background: var(--color-black-alt3);
         }
-    
+
         &.xlarge {
-            &.comfortable, &.compact {
+            &.comfortable,
+            &.compact {
                 // 24x24
                 --iconContainerSize: calc(var(--grid-unit) * 3px);
             }
         }
-    
+
         &.large {
-            &.comfortable, &.compact {
+            &.comfortable,
+            &.compact {
                 // 16x16
                 --iconContainerSize: calc(var(--grid-unit) * 2px);
             }
@@ -110,13 +111,13 @@
                 --iconContainerSize: calc(var(--grid-unit) * 1.5px);
             }
         }
-    
+
         &.small {
             &.comfortable {
                 // 12x12
                 --iconContainerSize: calc(var(--grid-unit) * 1.5px);
             }
-    
+
             &.compact {
                 // 8x8
                 --iconContainerSize: calc(var(--grid-unit) * 1px);

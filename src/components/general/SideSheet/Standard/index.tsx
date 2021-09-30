@@ -1,4 +1,5 @@
-import React, { FC, useState, useCallback, useRef, useEffect, ReactNode, useMemo } from 'react';
+import { FC, useState, useCallback, useEffect, ReactNode, useMemo } from 'react';
+
 import classNames from 'classnames';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
 import styles from './styles.less';
@@ -15,15 +16,16 @@ type SideSheetSize = 'xlarge' | 'large' | 'medium' | 'small';
 
 export type StandardSideSheetProps = ResizablePaneOptions & {
     id: string;
-    title?: string;
+    title?: ReactNode;
     isOpen: boolean;
     onClose: (isOpen: boolean) => void;
     screenPlacement?: 'right' | 'left';
     size?: SideSheetSize;
     children: ReactNode;
+    headerContent?: ReactNode;
 };
 
-const SideSheet: React.FC<StandardSideSheetProps> = ({
+const SideSheet: FC<StandardSideSheetProps> = ({
     id,
     title,
     isOpen,
@@ -34,6 +36,7 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
     isResizable,
     minWidth,
     maxWidth,
+    headerContent,
 }) => {
     const toggleOpen = useCallback(() => {
         onClose(!isOpen);
@@ -87,6 +90,9 @@ const SideSheet: React.FC<StandardSideSheetProps> = ({
                     />
                 </div>
                 {isOpen && title && <div className={styles.title}>{title}</div>}
+                {isOpen && headerContent && (
+                    <div className={styles.headerContent}>{headerContent}</div>
+                )}
             </div>
             {isOpen && <div className={styles.content}>{children}</div>}
         </div>
@@ -104,8 +110,9 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
     minWidth,
     maxWidth,
     children,
+    headerContent,
 }) => {
-    const [windowWidth, setWindowWidth] = useState<Number>(0);
+    const [windowWidth, setWindowWidth] = useState<number>(0);
     const fusionContext = useFusionContext();
     const rootElement = fusionContext.refs.root;
 
@@ -138,6 +145,7 @@ const StandardSideSheet: FC<StandardSideSheetProps> = ({
             isResizable={isResizable}
             minWidth={minWidth}
             maxWidth={maxWidth}
+            headerContent={headerContent}
         >
             {children}
         </SideSheet>

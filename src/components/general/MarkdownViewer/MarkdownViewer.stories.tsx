@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import MarkdownViewer from '.';
@@ -6,9 +6,9 @@ import MarkdownViewer from '.';
 const initialMarkdown = `# This is markdown \n ## This is also markdown \n ### This is also markdown \n\n * Some \n * List \n * Items`;
 
 const MarkdownViewerStory = () => {
-    const [markdown, setMarkdown] = React.useState(initialMarkdown);
+    const [markdown, setMarkdown] = useState(initialMarkdown);
 
-    const handleTextareaChanged = React.useCallback(event => {
+    const handleTextareaChanged = useCallback((event) => {
         setMarkdown(event.target.value);
     }, []);
 

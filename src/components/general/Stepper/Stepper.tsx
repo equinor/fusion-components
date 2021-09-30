@@ -1,10 +1,10 @@
-import React from 'react';
-import * as styles from './styles.less';
+import styles from './styles.less';
 import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
+import { useState, useEffect, useCallback, FC, Children, ReactElement } from 'react';
 
 type StepperProps = {
     onChange?: (stepKey: string) => void;
@@ -23,7 +23,7 @@ type StepKey = {
 
 type StepDirection = 'next' | 'prev';
 
-const Stepper: React.FC<StepperProps> = ({
+const Stepper: FC<StepperProps> = ({
     children,
     activeStepKey,
     forceOrder,
@@ -31,34 +31,34 @@ const Stepper: React.FC<StepperProps> = ({
     hideNavButtons,
     verticalSteps,
 }) => {
-    const [stepKeys, setStepKeys] = React.useState<StepKey[]>([]);
-    const [currentStepKey, setCurrentStepKey] = React.useState<string | null>(null);
-    const [activeStepPosition, setActiveStepPosition] = React.useState<number | null>(null);
+    const [stepKeys, setStepKeys] = useState<StepKey[]>([]);
+    const [currentStepKey, setCurrentStepKey] = useState<string | null>(null);
+    const [activeStepPosition, setActiveStepPosition] = useState<number | null>(null);
 
-    const [canNext, setCanNext] = React.useState(true);
-    const [canPrev, setCanPrev] = React.useState(false);
+    const [canNext, setCanNext] = useState(true);
+    const [canPrev, setCanPrev] = useState(false);
 
-    React.useEffect(() => {
-        const steps: StepKey[] = React.Children.toArray(children).map((c, i) => ({
-            key: (c as React.ReactElement).props.stepKey,
+    useEffect(() => {
+        const steps: StepKey[] = Children.toArray(children).map((c, i) => ({
+            key: (c as ReactElement).props.stepKey,
             position: i + 1,
-            disabled: (c as React.ReactElement).props.disabled,
+            disabled: (c as ReactElement).props.disabled,
         }));
 
         setStepKeys(steps);
     }, [children]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         setCurrentStepKey(activeStepKey);
     }, [activeStepKey]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (onChange && currentStepKey) {
             onChange(currentStepKey);
         }
     }, [onChange, currentStepKey]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const current = stepKeys.find((sk) => sk.key === currentStepKey);
 
         if (current) {
@@ -72,7 +72,7 @@ const Stepper: React.FC<StepperProps> = ({
         }
     }, [stepKeys, currentStepKey]);
 
-    const findStepKey = React.useCallback(
+    const findStepKey = useCallback(
         (direction: StepDirection) => {
             const current = stepKeys.find((sk) => sk.key === currentStepKey);
 
@@ -87,7 +87,7 @@ const Stepper: React.FC<StepperProps> = ({
         [currentStepKey, stepKeys]
     );
 
-    const handleClickPrev = React.useCallback(() => {
+    const handleClickPrev = useCallback(() => {
         const prevKey = findStepKey('prev');
         if (!prevKey) {
             return;
@@ -96,7 +96,7 @@ const Stepper: React.FC<StepperProps> = ({
         setCurrentStepKey(prevKey.key);
     }, [currentStepKey, stepKeys]);
 
-    const handleClickNext = React.useCallback(() => {
+    const handleClickNext = useCallback(() => {
         const nextKey = findStepKey('next');
 
         if (!nextKey) {
@@ -106,7 +106,7 @@ const Stepper: React.FC<StepperProps> = ({
         setCurrentStepKey(nextKey.key);
     }, [currentStepKey, stepKeys]);
 
-    const handleChange = React.useCallback(
+    const handleChange = useCallback(
         (stepKey: string) => {
             if (!forceOrder) {
                 setCurrentStepKey(stepKey);
@@ -150,7 +150,7 @@ const Stepper: React.FC<StepperProps> = ({
                     activeStepPosition={activeStepPosition}
                     onChange={handleChange}
                     verticalSteps={verticalSteps}
-                />
+                ></StepPane>
             </div>
             <StepContent children={children} activeStepKey={currentStepKey} />
         </div>

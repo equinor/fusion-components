@@ -1,13 +1,21 @@
-import React from 'react';
+import {
+    forwardRef,
+    RefObject,
+    useEffect,
+    useState,
+    ReactNode,
+    PropsWithChildren,
+    MutableRefObject,
+} from 'react';
 import classNames from 'classnames';
-import * as styles from '../styles.less';
+import styles from '../styles.less';
 import Arrow from './Arrow';
 import useInViewChecker from '../../useInViewChecker';
 import { TooltipPlacement } from '..';
 
 export type TooltipContainerProps = {
     placement?: TooltipPlacement;
-    content: String | React.ReactNode;
+    content: string | ReactNode;
 };
 
 const getNextAlternativePlacement = (
@@ -46,24 +54,21 @@ const getAlternativePlacement = (
     return getNextAlternativePlacement(alternatives, testedPlacements) || preferredPlacement;
 };
 
-const TooltipContainer = React.forwardRef<
+const TooltipContainer = forwardRef<
     HTMLDivElement | null,
-    React.PropsWithChildren<TooltipContainerProps>
+    PropsWithChildren<TooltipContainerProps>
 >(({ placement: preferredPlacement, content }, ref) => {
-    const [isInView, setIsInView] = useInViewChecker(
-        ref as React.MutableRefObject<HTMLDivElement>,
-        4
-    );
-    const [placement, setPlacement] = React.useState<TooltipPlacement>(preferredPlacement);
-    const [testedPlacements, setTestedPlacements] = React.useState<TooltipPlacement[]>([]);
+    const [isInView, setIsInView] = useInViewChecker(ref as MutableRefObject<HTMLDivElement>, 4);
+    const [placement, setPlacement] = useState<TooltipPlacement>(preferredPlacement);
+    const [testedPlacements, setTestedPlacements] = useState<TooltipPlacement[]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (preferredPlacement) {
             setPlacement(preferredPlacement);
         }
     }, [preferredPlacement]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (isInView || testedPlacements.length >= 4) {
             return;
         }
@@ -77,7 +82,7 @@ const TooltipContainer = React.forwardRef<
     const tooltipClassName = classNames(styles.tooltip, styles[placement.toLocaleLowerCase()]);
 
     return (
-        <div className={tooltipClassName} ref={ref as React.RefObject<HTMLDivElement>}>
+        <div className={tooltipClassName} ref={ref as RefObject<HTMLDivElement>}>
             <Arrow />
             <span className={styles.content}>{content}</span>
         </div>
