@@ -207,74 +207,10 @@
                 }
             }
 
-            .instanceTimelineContainer {
-                position: relative;
-                height: calc(var(--grid-unit) * 1px);
-                border-radius: 4px;
-                overflow: hidden;
-                width: calc(var(--grid-unit) * 23px);
-
-                .dot {
-                    background: var(--instance-color);
-                    border-radius: 50%;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    box-sizing: border-box;
-                    height: calc(var(--grid-unit) * 0.5px);
-                    width: calc(var(--grid-unit) * 0.5px);
-                    position: absolute;
-
-                    &.right {
-                        right: 0;
-                    }
-                    &.selectedDate {
-                        background: var(--color-white);
-                        border: 1px solid var(--color-primary);
-                    }
-                }
-
-                .instance {
-                    height: 100%;
-                    position: absolute;
-
-                    .instanceLine {
-                        left: 0;
-                        right: 0;
-                        top: 50%;
-                        transform: translateY(-50%);
-                        position: absolute;
-                        height: calc(var(--grid-unit) * 0.5px - 2px);
-                        display: flex;
-                        align-items: center;
-                        background: var(--instance-color);
-                        box-sizing: border-box;
-                    }
-
-                    &.isCurrent {
-                        --instance-color: var(--color-primary);
-                        &.hasRotation {
-                            --instance-color: var(--color-secondary-alt1);
-                        }
-                    }
-                    &:not(.isCurrent) {
-                        --instance-color: var(--color-primary-alt1);
-                        &.hasRotation {
-                            --instance-color: var(--color-secondary-alt3);
-                        }
-                    }
-
-                    &.hasUnAssignedPerson {
-                        .instanceLine {
-                            background: repeating-linear-gradient(
-                                to right,
-                                var(--instance-color),
-                                var(--instance-color) calc(var(--grid-unit) * 1px),
-                                rgba(0, 0, 0, 0) calc(var(--grid-unit) * 1px),
-                                rgba(0, 0, 0, 0) calc(var(--grid-unit) * 1.5px)
-                            );
-                        }
-                    }
-                }
+            .positionTimeline {
+                display: flex;
+                width: 75%;
+                height: .5rem;
             }
         }
     }

@@ -1,6 +1,6 @@
 import { clsx } from '@equinor/fusion-react-styles';
 import { FC, useContext } from 'react';
-import { TimelineSplit } from '../../model';
+import { PositionMark, TimelineSplit } from '../../model';
 import { timelineContext } from '../../TimelineProvider';
 import { actions } from '../../TimelineProvider/actions';
 import { useStyles } from './styles';
@@ -8,15 +8,22 @@ import { useStyles } from './styles';
 type SplitProps = {
     id: string;
     rotationId?: string;
-    startPosition: number;
-    endPosition: number;
     split: TimelineSplit;
 };
 
-export const Split: FC<SplitProps> = ({ id, rotationId, startPosition, endPosition, split }) => {
+export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
     const styles = useStyles({ isRotation: !!rotationId });
     const {
-        state: { selected, highlighted, disabled, mode, PersonSlot, InfoSlot, ActionSlot },
+        state: {
+            selected,
+            highlighted,
+            disabled,
+            mode,
+            PersonSlot,
+            InfoSlot,
+            ActionSlot,
+            computePosition,
+        },
         dispatch,
     } = useContext(timelineContext);
     const isDisabled = disabled.includes(id);
@@ -28,6 +35,8 @@ export const Split: FC<SplitProps> = ({ id, rotationId, startPosition, endPositi
         dispatch(actions.selectSplit(id));
     };
 
+    if (!computePosition) return null;
+
     return (
         <div
             className={clsx(styles.container, {
@@ -35,7 +44,10 @@ export const Split: FC<SplitProps> = ({ id, rotationId, startPosition, endPositi
                 [styles.disabled]: isDisabled,
                 [styles.clickable]: mode !== 'slider',
             })}
-            style={{ left: `${startPosition}%`, right: `${endPosition}%` }}
+            style={{
+                left: `${computePosition(split.appliesFrom.getTime(), 'start')}%`,
+                right: `${computePosition(split.appliesTo.getTime(), 'end')}%`,
+            }}
             onClick={handleClick}
         >
             <div className={styles.content}>

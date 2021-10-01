@@ -13,6 +13,9 @@ export type TimelineSplit = {
     type: 'Normal' | 'Rotation';
     location: {
         id: string;
+        name: string;
+        country: string;
+        code: string;
     } |  null;
     assignedPerson: {
         azureUniqueId?: string;
@@ -42,7 +45,16 @@ export type TimelinePosition = {
 
 export type SplitDetails = any & { appliesFrom: Date; appliesTo: Date };
 
-export type RotationGroups = Record<string, TimelineSplit[]>;
+export type RotationGroups = Record<number, TimelineSplit[]>;
+
+export type TemporalSplitGroups = Record<string, TimelineSplit[]>;
+
+export type RotationColumn = {
+    split: TimelineSplit;
+    linked: TimelineSplit[];
+}
+
+export type RotationColumns = Record<string, RotationColumn>;
 
 export type TimelineSlotProps = {
     split: TimelineSplit;
@@ -50,3 +62,7 @@ export type TimelineSlotProps = {
 }
 
 export type SelectMode = 'single' | 'multi' | 'slider';
+
+export type PositionMark = 'start' | 'end';
+
+export type TimelineSize = 'small' | 'medium';

@@ -2,9 +2,9 @@ import { formatDate } from '@equinor/fusion';
 import { Slider, SliderMarker } from '@equinor/fusion-components';
 import { clsx, theme } from '@equinor/fusion-react-styles';
 import { FC, PropsWithChildren, useCallback, useContext, useMemo } from 'react';
-import { timelineContext } from '../TimelineProvider';
-import { actions } from '../TimelineProvider/actions';
-import { createSliderMarker } from '../TimelineProvider/utils';
+import { timelineContext } from '../../TimelineProvider';
+import { actions } from '../../TimelineProvider/actions';
+import { createSliderMarker } from '../../TimelineProvider/utils';
 import { useStyles } from './styles';
 
 let animationFrame = 0;
