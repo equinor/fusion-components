@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import MicroSplit from '..';
-import { PositionMark, RotationColumns, TimelineSize } from '../../../model';
+import MicroSplit from '../InlineSplit';
+import { PositionMark, RotationColumns, TimelineSize } from '../../model';
 
 type InlineSplitsProps = {
     selectedSplit: string;

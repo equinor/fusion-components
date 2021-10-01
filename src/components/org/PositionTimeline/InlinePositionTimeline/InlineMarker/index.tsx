@@ -1,4 +1,3 @@
-import { clsx } from '@equinor/fusion-react-styles';
 import { FC } from 'react';
 import { PositionMark, TimelineSize } from '../../model';
 import { useStyles } from './styles';
@@ -18,15 +17,15 @@ export const InlineMarker: FC<InlineMarkerProps> = ({
     linked,
     computePosition,
     isSelectedDate,
-    size
+    size,
 }) => {
     const isSelected = !!linked && linked.includes(selected);
-    const styles = useStyles({ isSelected, size });
+    const styles = useStyles({ isSelected, size, isSelectedDate });
     if (!computePosition) return null;
 
     return (
         <div
-            className={clsx(styles.marker, { [styles.selectedDate]: isSelectedDate })}
+            className={styles.marker}
             style={{ left: `${computePosition(date.getTime(), 'start')}%` }}
         ></div>
     );

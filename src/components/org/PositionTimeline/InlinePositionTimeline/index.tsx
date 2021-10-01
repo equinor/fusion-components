@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { TimelinePosition, TimelineSize } from '../model';
-import { InlineMarkers } from './InlineMarker/MicroMarkers';
-import { InlineSplits } from './InlineSplit/components/MicroSplits';
+import InlineMarkers from './InlineMarkers';
+import { InlineSplits } from './InlineSplits';
 import { useStyles } from './styles';
 import { usePositionTimeline } from './usePositionTimeline';
 

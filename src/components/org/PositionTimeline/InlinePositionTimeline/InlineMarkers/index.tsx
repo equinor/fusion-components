@@ -1,9 +1,9 @@
 import { FC, useMemo } from 'react';
-import InlineMarker from '.';
+import InlineMarker from '../InlineMarker';
 import { PositionMark, RotationColumns, TimelineSize } from '../../model';
 import { sortRotationColumns } from '../utils';
-import { InlineMarkerData } from './types';
-import { generateMarkerData } from './utils';
+import { InlineMarkerData } from '../InlineMarker/types';
+import { generateMarkerData } from '../InlineMarker/utils';
 
 type InlineMarkersProps = {
     selectedSplit: string;
@@ -32,7 +32,7 @@ export const InlineMarkers: FC<InlineMarkersProps> = ({
         <>
             {markerData.map((data) => (
                 <InlineMarker
-                    key={`micro-marker-${data.date.getTime()}`}
+                    key={`inline-marker-${data.date.getTime()}`}
                     selected={selectedSplit}
                     date={data.date}
                     linked={data.linked}
@@ -42,7 +42,7 @@ export const InlineMarkers: FC<InlineMarkersProps> = ({
             ))}
             {selectedDate && (
                 <InlineMarker
-                    key={`micro-marker-${selectedDate.getTime()}`}
+                    key={`inline-marker-${selectedDate.getTime()}`}
                     selected={selectedSplit}
                     date={selectedDate}
                     computePosition={computePosition}
@@ -53,3 +53,5 @@ export const InlineMarkers: FC<InlineMarkersProps> = ({
         </>
     );
 };
+
+export default InlineMarkers;
