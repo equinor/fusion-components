@@ -1,8 +1,10 @@
+import { usePopoverRef } from '@equinor/fusion-components';
 import { clsx } from '@equinor/fusion-react-styles';
-import { FC, useContext } from 'react';
-import { PositionMark, TimelineSplit } from '../../model';
+import { FC, RefObject, useContext } from 'react';
+import { TimelineSplit } from '../../model';
 import { timelineContext } from '../../TimelineProvider';
 import { actions } from '../../TimelineProvider/actions';
+import SplitPopover from '../SplitPopover';
 import { useStyles } from './styles';
 
 type SplitProps = {
@@ -15,6 +17,7 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
     const styles = useStyles({ isRotation: !!rotationId });
     const {
         state: {
+            position,
             selected,
             highlighted,
             disabled,
@@ -35,6 +38,12 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
         dispatch(actions.selectSplit(id));
     };
 
+    const [splitPopoverRef] = usePopoverRef(
+        <SplitPopover split={split} position={position} />,
+        { placement: 'below', justify: 'center' },
+        true
+    );
+
     if (!computePosition) return null;
 
     return (
@@ -49,6 +58,7 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
                 right: `${computePosition(split.appliesTo.getTime(), 'end')}%`,
             }}
             onClick={handleClick}
+            ref={splitPopoverRef as RefObject<HTMLDivElement>}
         >
             <div className={styles.content}>
                 <div className={styles.slot}>
