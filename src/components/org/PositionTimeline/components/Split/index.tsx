@@ -1,10 +1,8 @@
-import { usePopoverRef } from '@equinor/fusion-components';
 import { clsx } from '@equinor/fusion-react-styles';
-import { FC, RefObject, useContext } from 'react';
+import { FC, useContext } from 'react';
 import { TimelineSplit } from '../../model';
 import { timelineContext } from '../../TimelineProvider';
 import { actions } from '../../TimelineProvider/actions';
-import SplitPopover from '../SplitPopover';
 import { useStyles } from './styles';
 
 type SplitProps = {
@@ -38,12 +36,6 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
         dispatch(actions.selectSplit(id));
     };
 
-    const [splitPopoverRef] = usePopoverRef(
-        <SplitPopover split={split} position={position} />,
-        { placement: 'below', justify: 'center' },
-        true
-    );
-
     if (!computePosition) return null;
 
     return (
@@ -58,18 +50,21 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
                 right: `${computePosition(split.appliesTo.getTime(), 'end')}%`,
             }}
             onClick={handleClick}
-            ref={splitPopoverRef as RefObject<HTMLDivElement>}
         >
             <div className={styles.content}>
                 <div className={styles.slot}>
-                    {PersonSlot && <PersonSlot split={split} isSelected={isSelected} />}
+                    {PersonSlot && (
+                        <PersonSlot split={split} position={position} isSelected={isSelected} />
+                    )}
                 </div>
                 <div style={{ justifyContent: 'flex-start' }} className={styles.slot}>
-                    {InfoSlot && <InfoSlot split={split} isSelected={isSelected} />}
+                    {InfoSlot && (
+                        <InfoSlot split={split} position={position} isSelected={isSelected} />
+                    )}
                 </div>
                 <div className={styles.slot}>
                     {ActionSlot && !isDisabled && (
-                        <ActionSlot split={split} isSelected={isSelected} />
+                        <ActionSlot split={split} position={position} isSelected={isSelected} />
                     )}
                 </div>
             </div>

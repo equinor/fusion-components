@@ -36,7 +36,7 @@ export const SplitPopover: FC<SplitPopoverProps> = ({ position, split, customSlo
                     <span className={styles.text}>{split?.location?.name || 'No location'}</span>
                 </div>
             </div>
-            <div style={{ border: '1px solid #000' }}>{customSlot}</div>
+            <div>{customSlot}</div>
         </div>
     );
 };

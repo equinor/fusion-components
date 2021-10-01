@@ -58,6 +58,7 @@ export type RotationColumns = Record<string, RotationColumn>;
 
 export type TimelineSlotProps = {
     split: TimelineSplit;
+    position: TimelinePosition;
     isSelected: boolean;
 }
 
