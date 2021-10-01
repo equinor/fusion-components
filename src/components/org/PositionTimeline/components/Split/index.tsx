@@ -1,6 +1,6 @@
 import { clsx } from '@equinor/fusion-react-styles';
 import { FC, useContext } from 'react';
-import { PositionMark, TimelineSplit } from '../../model';
+import { TimelineSplit } from '../../model';
 import { timelineContext } from '../../TimelineProvider';
 import { actions } from '../../TimelineProvider/actions';
 import { useStyles } from './styles';
@@ -15,6 +15,7 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
     const styles = useStyles({ isRotation: !!rotationId });
     const {
         state: {
+            position,
             selected,
             highlighted,
             disabled,
@@ -52,14 +53,18 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
         >
             <div className={styles.content}>
                 <div className={styles.slot}>
-                    {PersonSlot && <PersonSlot split={split} isSelected={isSelected} />}
+                    {PersonSlot && (
+                        <PersonSlot split={split} position={position} isSelected={isSelected} />
+                    )}
                 </div>
                 <div style={{ justifyContent: 'flex-start' }} className={styles.slot}>
-                    {InfoSlot && <InfoSlot split={split} isSelected={isSelected} />}
+                    {InfoSlot && (
+                        <InfoSlot split={split} position={position} isSelected={isSelected} />
+                    )}
                 </div>
                 <div className={styles.slot}>
                     {ActionSlot && !isDisabled && (
-                        <ActionSlot split={split} isSelected={isSelected} />
+                        <ActionSlot split={split} position={position} isSelected={isSelected} />
                     )}
                 </div>
             </div>
