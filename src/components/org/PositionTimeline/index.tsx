@@ -1,10 +1,5 @@
 import { FC } from 'react';
-import {
-    SelectMode,
-    TimelineSplit,
-    TimelinePosition,
-    TimelineSlotProps,
-} from './model';
+import { SelectMode, TimelineSplit, TimelinePosition, TimelineSlotProps } from './model';
 import RotationSequence from './components/RotationSequence';
 import TimelineProvider from './TimelineProvider';
 import { PersonSlot } from './components/PersonSlot';

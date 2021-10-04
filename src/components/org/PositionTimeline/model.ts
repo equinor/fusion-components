@@ -16,7 +16,7 @@ export type TimelineSplit = {
         name: string;
         country: string;
         code: string;
-    } |  null;
+    } | null;
     assignedPerson: {
         azureUniqueId?: string;
         mail?: string | null;
@@ -52,7 +52,7 @@ export type TemporalSplitGroups = Record<string, TimelineSplit[]>;
 export type RotationColumn = {
     split: TimelineSplit;
     linked: TimelineSplit[];
-}
+};
 
 export type RotationColumns = Record<string, RotationColumn>;
 
@@ -60,7 +60,7 @@ export type TimelineSlotProps = {
     split: TimelineSplit;
     position: TimelinePosition;
     isSelected: boolean;
-}
+};
 
 export type SelectMode = 'single' | 'multi' | 'slider';
 
