@@ -43,7 +43,6 @@ export const useStyles = makeStyles((theme) =>
             )} !important`,
             cursor: 'default',
             opacity: 0.7,
-            pointerEvents: 'none',
         },
         clickable: {
             '&:hover': {
