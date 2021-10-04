@@ -41,7 +41,7 @@ export const useStyles = makeStyles((theme) =>
             borderColor: `${theme.colors.interactive.disabled__border.getVariable(
                 'color'
             )} !important`,
-            cursor: 'auto',
+            cursor: 'default',
             opacity: 0.7,
             pointerEvents: 'none',
         },

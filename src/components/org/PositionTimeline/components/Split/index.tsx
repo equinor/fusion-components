@@ -31,6 +31,9 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
     const isSelected = selected.includes(id);
 
     const handleClick = (e) => {
+        if (isDisabled) {
+            return;
+        }
         e.stopPropagation();
         if (mode === 'slider') return;
         dispatch(actions.selectSplit(id));
