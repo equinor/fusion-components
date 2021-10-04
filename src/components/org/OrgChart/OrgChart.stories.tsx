@@ -1,10 +1,11 @@
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
-import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
+import { OrgStructure, OrgChartItemProps, BreadCrumb, Auxiliary } from './orgChartTypes';
 import { useComponentDisplayType, Position } from '@equinor/fusion';
 import { PositionCard } from '@equinor/fusion-components';
 import { FC, CSSProperties } from 'react';
+import { theme } from '@equinor/fusion-react-styles';
 
 type PositionStructure = OrgStructure & {
     name?: string;
@@ -198,8 +199,35 @@ const breadCrumbStyle = {
     height: '32px',
 } as CSSProperties;
 
+const auxiliaryStyle = {
+    width: 'calc(100% - calc(var(--grid-unit) * 2.5px))',
+    height: 'calc(100% - calc(var(--grid-unit) * 2.5px))',
+    background: theme.colors.ui.background__default.getVariable('color'),
+    border: `2px solid ${theme.colors.interactive.disabled__border.getVariable('color')}`,
+    borderRadius: '4px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    fontSize: '12px',
+    margin: '10px',
+} as CSSProperties;
+
 const BreadCrumbComponent: FC<BreadCrumb> = ({ label }) => {
     return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
+};
+
+const AuxiliaryComponent: FC<Auxiliary> = ({ component }) => {
+    const InnerComponent = component;
+    return (
+        <div style={{ ...auxiliaryStyle, cursor: 'pointer' }}>
+            <InnerComponent />
+        </div>
+    );
+};
+
+const AddPositionAuxiliaryComponent: FC = () => {
+    return <div>Add Position</div>;
 };
 
 const PositionCardComponent: FC<OrgChartItemProps<PositionStructure>> = ({ item }) => {
@@ -234,6 +262,20 @@ const breadCrumbs: BreadCrumb[] = [
     },
 ];
 
+const auxiliaries: Auxiliary[] = [
+    {
+        childId: '1',
+        id: '101',
+        component: AddPositionAuxiliaryComponent,
+    },
+    {
+        childId: '101',
+        id: '102',
+        component: AddPositionAuxiliaryComponent,
+        connected: false,
+    },
+];
+
 const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
@@ -248,11 +290,14 @@ const OrgChartStory = () => {
                 component={PositionCardComponent}
                 breadCrumbComponent={BreadCrumbComponent}
                 breadCrumbs={breadCrumbs}
+                breadCrumbMargin={10}
+                auxiliaryComponent={AuxiliaryComponent}
+                auxiliaries={auxiliaries}
+                auxiliaryMargin={10}
                 cardWidth={cardWidth}
                 cardHeight={cardHeight}
                 rowMargin={rowMargin}
                 cardMargin={cardMargin}
-                breadCrumbMargin={10}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
             />

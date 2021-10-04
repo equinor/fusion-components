@@ -23,6 +23,11 @@ const useOrgChartActions = <T extends OrgStructure>({
     breadCrumbWidth = 194,
     breadCrumbHeight = 52,
     breadCrumbMargin = 16,
+    auxiliaryComponent,
+    auxiliaries,
+    auxiliaryWidth = 180,
+    auxiliaryHeight = 80,
+    auxiliaryMargin = 10,
 }: OrgChartActionProps<T>) => {
     const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
@@ -57,14 +62,15 @@ const useOrgChartActions = <T extends OrgStructure>({
     }, [structure]);
 
     useEffect(() => {
-        if (component || breadCrumbComponent) {
+        if (component || breadCrumbComponent || auxiliaryComponent) {
             dispatch({
                 type: 'UPDATE_COMPONENTS',
                 component: component || undefined,
                 breadCrumbComponent: breadCrumbComponent || undefined,
+                auxiliaryComponent: auxiliaryComponent || undefined,
             });
         }
-    }, [component, breadCrumbComponent]);
+    }, [component, breadCrumbComponent, auxiliaryComponent]);
 
     useEffect(() => {
         dispatch({
@@ -113,6 +119,22 @@ const useOrgChartActions = <T extends OrgStructure>({
             margin: breadCrumbMargin,
         });
     }, [breadCrumbHeight, breadCrumbMargin, breadCrumbWidth]);
+
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_AUXILIARIES',
+            auxiliaries: auxiliaries || null,
+        });
+    }, [breadCrumbs]);
+
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_AUXILIARY_SIZE',
+            width: auxiliaryWidth,
+            height: auxiliaryHeight,
+            margin: auxiliaryMargin,
+        });
+    }, [auxiliaryWidth, auxiliaryHeight, auxiliaryMargin]);
 };
 
 export default useOrgChartActions;

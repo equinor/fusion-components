@@ -9,6 +9,7 @@ import Children from './components/Children';
 import Labels from './components/Labels';
 import useOrgChartActions from './actions';
 import BreadCrumbs from './components/BreadCrumbs';
+import Auxiliary from './components/Auxiliary';
 
 export { OrgStructure, OrgChartItemProps, OrgNode };
 
@@ -59,6 +60,7 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
             <Links />
             <Aside />
             <BreadCrumbs />
+            <Auxiliary />
             <Root />
             <Children />
             <Labels />

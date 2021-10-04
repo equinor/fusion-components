@@ -18,6 +18,11 @@ export type OrgChartProps<T> = {
     breadCrumbWidth?: number;
     breadCrumbHeight?: number;
     breadCrumbMargin?: number;
+    auxiliaryComponent?: FC<Auxiliary>;
+    auxiliaries?: Auxiliary[];
+    auxiliaryWidth?: number;
+    auxiliaryHeight?: number;
+    auxiliaryMargin?: number;
 };
 
 export type OrgStructure = {
@@ -38,4 +43,11 @@ export type BreadCrumb = {
     childId: string;
     label?: string;
     id?: string;
+};
+
+export type Auxiliary = {
+    childId: string;
+    id?: string;
+    component?: FC<any>;
+    connected?: boolean;
 };

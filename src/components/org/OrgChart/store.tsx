@@ -1,4 +1,4 @@
-import { OrgNode, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
+import { OrgNode, OrgChartItemProps, BreadCrumb, Auxiliary } from './orgChartTypes';
 import { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
 
 type Action<T> =
@@ -17,6 +17,7 @@ type Action<T> =
           type: 'UPDATE_COMPONENTS';
           component?: FC<OrgChartItemProps<T>>;
           breadCrumbComponent?: FC<BreadCrumb>;
+          auxiliaryComponent?: FC<Auxiliary>;
       }
     | { type: 'UPDATE_ASIDE_ROWS'; rows: number }
     | { type: 'UPDATE_CHILDREN_ROWS'; rows: number }
@@ -30,7 +31,9 @@ type Action<T> =
           additionalChildRowHeight?: number;
           additionalAsideRowHeight?: number;
           additionalRootRowHeight?: number;
-      };
+      }
+    | { type: 'UPDATE_AUXILIARIES'; auxiliaries: Auxiliary[] | null }
+    | { type: 'UPDATE_AUXILIARY_SIZE'; height?: number; width?: number; margin?: number };
 
 export type OrgChartContextType<T> = {
     width: number;
@@ -57,6 +60,12 @@ export type OrgChartContextType<T> = {
     additionalChildRowHeight: number;
     additionalAsideRowHeight: number;
     additionalRootRowHeight: number;
+
+    auxiliaryComponent?: FC<Auxiliary> | null;
+    auxiliaries?: Auxiliary[];
+    auxiliaryWidth?: number;
+    auxiliaryHeight?: number;
+    auxiliaryMargin?: number;
 };
 
 export type OrgChartContextReducer<T> = {
@@ -105,6 +114,7 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                 ...state,
                 component: action.component || state.component,
                 breadCrumbComponent: action.breadCrumbComponent || state.breadCrumbComponent,
+                auxiliaryComponent: action.auxiliaryComponent || state.auxiliaryComponent,
             };
         case 'UPDATE_ASIDE_ROWS':
             return {
@@ -170,6 +180,18 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                         ? action.additionalRootRowHeight
                         : state.additionalRootRowHeight,
             };
+        case 'UPDATE_AUXILIARIES':
+            return {
+                ...state,
+                auxiliaries: action.auxiliaries,
+            };
+        case 'UPDATE_AUXILIARY_SIZE':
+            return {
+                ...state,
+                auxiliaryWidth: action.width || state.auxiliaryWidth,
+                auxiliaryHeight: action.height || state.auxiliaryHeight,
+                auxiliaryMargin: action.margin || state.auxiliaryMargin,
+            };
     }
 }
 
@@ -199,6 +221,11 @@ export function OrgChartContextProvider<T>({ children }: any) {
         additionalChildRowHeight: 0,
         additionalAsideRowHeight: 0,
         additionalRootRowHeight: 0,
+        auxiliaryComponent: null,
+        auxiliaries: null,
+        auxiliaryWidth: 0,
+        auxiliaryHeight: 0,
+        auxiliaryMargin: 0,
     };
 
     const [state, dispatch] = useReducer<Reducer<OrgChartContextType<T>, Action<T>>>(
