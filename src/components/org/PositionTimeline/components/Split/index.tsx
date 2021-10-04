@@ -46,7 +46,7 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
             className={clsx(styles.container, {
                 [styles.highlighted]: [...selected, ...highlighted].includes(id),
                 [styles.disabled]: isDisabled,
-                [styles.clickable]: mode !== 'slider',
+                [styles.clickable]: mode !== 'slider' && !isDisabled,
             })}
             style={{
                 left: `${computePosition(split.appliesFrom.getTime(), 'start')}%`,
