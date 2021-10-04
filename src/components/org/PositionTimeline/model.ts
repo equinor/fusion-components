@@ -13,9 +13,9 @@ export type TimelineSplit = {
     type: 'Normal' | 'Rotation';
     location: {
         id: string;
-        name?: string;
-        country?: string;
-        code?: string;
+        name: string;
+        country: string;
+        code: string;
     } | null;
     assignedPerson: {
         azureUniqueId?: string;
