@@ -6,8 +6,18 @@ import { actions } from '../../TimelineProvider/actions';
 import { useStyles } from './styles';
 
 type SplitProps = {
+    /**
+     * The unique id of a position split.
+     */
     id: string;
+    /**
+     * The unique id representing a rotation group. Splits in the same rotation group has 
+     * the same rotation id. This property is provided by backend.
+     */
     rotationId?: string;
+    /**
+     * An object containing all relevant metadata about the split.
+     */
     split: TimelineSplit;
 };
 

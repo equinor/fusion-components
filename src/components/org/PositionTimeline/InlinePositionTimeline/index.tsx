@@ -6,9 +6,25 @@ import { useStyles } from './styles';
 import { usePositionTimeline } from './usePositionTimeline';
 
 type InlinePositionTimelineProps = {
+    /**
+     * An object containing all relevant metadata about the position, including 
+     * the set of position splits.
+     */
     selectedPosition: TimelinePosition;
+    /**
+     * Information about the selected split that should be highlighted in the timeline. 
+     * Typically either selectedSplit or initialDate is provided to highlight a split.
+     */
     selectedSplit?: string;
+    /**
+     * A filter date for which will cause any splits that overlaps to be highlighted in 
+     * the timeline.
+     */
     initialDate?: Date;
+    /**
+     * Either has the value ‘small’ or ‘medium’. Will change the pixel size of the markers 
+     * and splits.
+     */
     size: TimelineSize;
 };
 

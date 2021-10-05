@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import MicroSplit from '../InlineSplit';
+import InlineSplit from '../InlineSplit';
 import { PositionMark, RotationColumns, TimelineSize } from '../../model';
 
 type InlineSplitsProps = {
@@ -18,7 +18,7 @@ export const InlineSplits: FC<InlineSplitsProps> = ({
     return (
         <>
             {Object.values(rotationColumns).map((col) => (
-                <MicroSplit
+                <InlineSplit
                     key={col.split.id}
                     selected={selectedSplit}
                     split={col.split}

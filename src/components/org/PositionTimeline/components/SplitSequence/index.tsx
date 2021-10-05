@@ -5,6 +5,10 @@ import { timelineContext } from '../../TimelineProvider';
 import { useStyles } from './styles';
 
 type SplitSequenceProps = {
+    /**
+     * The unqiue id representing a rotation group. The rotation key is computed internally 
+     * by the frontend, and could in theory be identical to the rotation id assigned by backend.
+     */
     rotationKey: string;
 };
 
