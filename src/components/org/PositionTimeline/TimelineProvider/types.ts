@@ -56,3 +56,9 @@ export type SetPosition = {
     position: TimelinePosition;
     initialDate?: Date;
 };
+
+export type SetCustomSlots = {
+    PersonSlot: FC<TimelineSlotProps>;
+    InfoSlot: FC<TimelineSlotProps>;
+    ActionSlot: FC<TimelineSlotProps>;
+}

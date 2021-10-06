@@ -1,5 +1,5 @@
 import { createAction } from 'typesafe-actions';
-import { SetPosition } from './types';
+import { SetCustomSlots, SetPosition } from './types';
 export const actions = {
     reset: createAction('@TIMELINE/RESET')<void>(),
     setPosition: createAction('@TIMELINE/SET_POSITION')<SetPosition>(),
@@ -7,4 +7,5 @@ export const actions = {
     setSelectedDate: createAction('@TIMELINE/SET_SELECTED_DATE')<Date>(),
     setHighlighted: createAction('@TIMELINE/SET_HIGHLIGHTED')<string[]>(),
     setDisabled: createAction('@TIMELINE/SET_DISABLED')<string[]>(),
+    setCustomSlots: createAction('@TIMELINE/SET_CUSTOM_SLOTS')<SetCustomSlots>(),
 };

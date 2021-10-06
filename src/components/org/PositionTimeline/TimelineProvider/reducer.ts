@@ -82,4 +82,13 @@ export const reducer = (initial: TimelineState) =>
         .handleAction(actions.setDisabled, (state, action) => ({
             ...state,
             disabled: action.payload,
-        }));
+        }))
+        .handleAction(actions.setCustomSlots, (state, action) => {
+            const { PersonSlot, InfoSlot, ActionSlot } = action.payload;
+            return {
+                ...state,
+                PersonSlot: PersonSlot ?? state.PersonSlot,
+                InfoSlot: InfoSlot ?? state.InfoSlot,
+                ActionSlot: ActionSlot ?? state.ActionSlot,
+            };
+        });
