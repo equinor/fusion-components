@@ -42,8 +42,8 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
     } = props;
 
     const [state, dispatch] = useReducer(
-        reducer(initialContext({ mode, previewDates, PersonSlot, InfoSlot, ActionSlot })),
-        initialContext({ mode, previewDates, PersonSlot, InfoSlot, ActionSlot })
+        reducer(initialContext({ mode, previewDates })),
+        initialContext({ mode, previewDates })
     );
 
     useEffect(() => {
@@ -80,6 +80,10 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
         if (!disabled) return;
         dispatch(actions.setDisabled(disabled));
     }, [disabled]);
+
+    useEffect(() => {
+        dispatch(actions.setCustomSlots({ PersonSlot, InfoSlot, ActionSlot }));
+    }, [PersonSlot, ActionSlot, InfoSlot]);
 
     return (
         <timelineContext.Provider value={{ state, dispatch }}>{children}</timelineContext.Provider>
