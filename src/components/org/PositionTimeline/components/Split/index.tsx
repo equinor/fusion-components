@@ -11,7 +11,7 @@ type SplitProps = {
      */
     id: string;
     /**
-     * The unique id representing a rotation group. Splits in the same rotation group has 
+     * The unique id representing a rotation group. Splits in the same rotation group has
      * the same rotation id. This property is provided by backend.
      */
     rotationId?: string;
@@ -48,7 +48,6 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
         if (mode === 'slider') return;
         dispatch(actions.selectSplit(id));
     };
-
     if (!computePosition) return null;
 
     return (
@@ -65,7 +64,7 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
             onClick={handleClick}
         >
             <div className={styles.content}>
-                <div className={styles.slot}>
+                <div className={clsx(styles.slot, styles.maxWidth)}>
                     {PersonSlot && (
                         <PersonSlot split={split} position={position} isSelected={isSelected} />
                     )}
@@ -75,7 +74,7 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
                         <InfoSlot split={split} position={position} isSelected={isSelected} />
                     )}
                 </div>
-                <div className={styles.slot}>
+                <div className={clsx(styles.slot, styles.maxWidth)}>
                     {ActionSlot && !isDisabled && (
                         <ActionSlot split={split} position={position} isSelected={isSelected} />
                     )}
