@@ -3,6 +3,7 @@ import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-com
 import StepPane from './StepPane';
 import StepContent from './StepContent';
 import classNames from 'classnames';
+import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { useState, useEffect, useCallback, FC, Children, ReactElement } from 'react';
 
 type StepperProps = {
@@ -11,6 +12,7 @@ type StepperProps = {
     forceOrder?: boolean;
     activeStepKey: string;
     hideNavButtons?: boolean;
+    verticalSteps?: boolean;
 };
 
 type StepKey = {
@@ -27,6 +29,7 @@ const Stepper: FC<StepperProps> = ({
     forceOrder,
     onChange,
     hideNavButtons,
+    verticalSteps,
 }) => {
     const [stepKeys, setStepKeys] = useState<StepKey[]>([]);
     const [currentStepKey, setCurrentStepKey] = useState<string | null>(null);
@@ -112,9 +115,20 @@ const Stepper: FC<StepperProps> = ({
         [forceOrder, stepKeys]
     );
 
+    const stepperContainerClasses = classNames(
+        styles.stepperContainer,
+        useComponentDisplayClassNames(styles),
+        {
+            [styles.verticalStepperContainer]: verticalSteps,
+        }
+    );
+    const stepperClasses = classNames(styles.stepper, useComponentDisplayClassNames(styles), {
+        [styles.verticalStepper]: verticalSteps,
+    });
+
     return (
-        <>
-            <div className={styles.stepper}>
+        <div className={stepperContainerClasses}>
+            <div className={stepperClasses}>
                 {!hideNavButtons && (
                     <>
                         <div className={classNames(styles.navigation, styles.prev)}>
@@ -135,10 +149,11 @@ const Stepper: FC<StepperProps> = ({
                     activeStepKey={currentStepKey}
                     activeStepPosition={activeStepPosition}
                     onChange={handleChange}
+                    verticalSteps={verticalSteps}
                 ></StepPane>
             </div>
             <StepContent children={children} activeStepKey={currentStepKey} />
-        </>
+        </div>
     );
 };
 

@@ -19,6 +19,7 @@ const DefaultStory = () => {
             forceOrder={boolean('Force order', false)}
             activeStepKey={select('Active step', stepKeys, 'step1')}
             hideNavButtons={boolean('Hide nav buttons', false)}
+            verticalSteps={boolean('Vertical Steps', false)}
         >
             <Step
                 title="Select workspace and do some other work"
@@ -51,6 +52,7 @@ const InteractiveStory = () => {
             forceOrder={boolean('Force order', true)}
             activeStepKey="step1"
             hideNavButtons={boolean('Hide nav buttons', false)}
+            verticalSteps={boolean('Vertical Steps', false)}
         >
             <Step title="Select workspace" stepKey="step1">
                 <Item>
@@ -94,8 +96,40 @@ const InteractiveStory = () => {
     );
 };
 
+const VerticalStory = () => {
+    return (
+        <Stepper
+            forceOrder={boolean('Force order', false)}
+            activeStepKey={select('Active step', stepKeys, 'step1')}
+            hideNavButtons={boolean('Hide nav buttons', false)}
+            verticalSteps
+        >
+            <Step
+                title="Select workspace and do some other work"
+                description="This is a description text"
+                stepKey="step1"
+            >
+                <Item>Select workspace</Item>
+            </Step>
+            <Step title="Select report/dashboard" description="Description" stepKey="step2">
+                <Item>Select a report or dashboard</Item>
+            </Step>
+            <Step title="Fill in details" stepKey="step3">
+                <Item>Specify details about refresh rate, data source etc.</Item>
+            </Step>
+            <Step title="Summary" stepKey="step4">
+                <Item>Summary</Item>
+            </Step>
+            <Step title="Publish" stepKey="step5" disabled>
+                <Item>Publish button</Item>
+            </Step>
+        </Stepper>
+    );
+};
+
 const stories = storiesOf('General/Stepper', module);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withFusionStory('Stepper'));
 stories.add('Default', () => <DefaultStory />);
 stories.add('Interactive', () => <InteractiveStory />);
+stories.add('Vertical', () => <VerticalStory />);

@@ -1,182 +1,227 @@
 @import '~styles/variables.less';
 
-.stepper {
+.stepperContainer {
     display: grid;
-    grid-template-columns: max-content max-content auto;
-    grid-template-areas: 'prev next stepPane';
-    border-bottom: 1px solid var(--color-black-alt3);
-    padding: calc(var(--grid-unit) * 2px) 0;
 
-    @media (max-width: @mobile-max-width) {
-        grid-template-columns: max-content auto max-content;
-        grid-template-areas: 'prev stepPane next';
-        padding: 0;
-        border: none;
-    }
+    &.verticalStepperContainer {
+        grid-template-columns: max-content auto;
+        height: 100%;
 
-    .prev {
-        grid-area: prev;
-    }
-
-    .next {
-        grid-area: next;
-    }
-
-    .navigation {
-        display: flex;
-        flex-shrink: 0;
-
-        @media (max-width: @mobile-max-width) {
-            align-self: flex-start;
-        }
-    }
-
-    .stepPaneWrapper {
-        grid-area: stepPane;
-        scroll-behavior: smooth;
-        overflow: hidden;
-    }
-
-    .stepPane {
-        display: flex;
-        flex-grow: 1;
-
-        .step {
-            padding: calc(var(--grid-unit) * 1px);
-            padding-left: calc(var(--grid-unit) * 2px);
-            padding-right: calc(var(--grid-unit) * 2px);
-            color: var(--color-black);
+        .stepper {
             display: grid;
-            flex-grow: 1;
-            grid-template-columns: calc(var(--grid-unit) * 6px) minmax(max-content, auto);
-            grid-template-areas:
-                'badge title'
-                ' . description';
+            grid-template-columns: max-content max-content auto;
+            grid-template-areas: 'prev next stepPane';
+            border-bottom: 1px solid var(--color-black-alt3);
+            padding: calc(var(--grid-unit) * 2px) 0;
 
-            grid-template-rows:
-                minmax(calc(var(--grid-unit) * 3px), auto)
-                minmax(calc(var(--grid-unit) * 3px), auto);
-            grid-row-gap: calc(var(--grid-unit) * 1px);
-
-            --line-color: var(--color-primary);
+            &.verticalStepper {
+                grid-template-columns: max-content max-content 1fr;
+                grid-template-rows: max-content auto;
+                grid-template-areas:
+                    'prev next .'
+                    'stepPane stepPane stepPane';
+                border-bottom: none;
+                border-right: 1px solid var(--color-black-alt3);
+            }
 
             @media (max-width: @mobile-max-width) {
-                grid-template-areas:
-                    'badge title'
-                    'progress description';
-                grid-template-columns: calc(var(--grid-unit) * 6px) auto;
-                padding-left: 0;
-                padding-right: 0;
+                grid-template-columns: max-content auto max-content;
+                grid-template-areas: 'prev stepPane next';
+                padding: 0;
+                border: none;
             }
 
-            &.compact {
-                padding: calc(var(--grid-unit) * 0.5px);
+            .prev {
+                grid-area: prev;
             }
 
-            &.isClickable {
-                cursor: pointer;
+            .next {
+                grid-area: next;
             }
 
-            &.disabled {
-                cursor: not-allowed;
-                color: var(--color-black-alt3) !important;
-                --line-color: var(--color-black-alt3);
-            }
-
-            &.current {
-                font-weight: 500;
-            }
-
-            .title {
-                grid-area: title;
-                overflow: hidden;
-                padding-left: calc(var(--grid-unit) * 1px);
-                align-self: center;
+            .navigation {
                 display: flex;
+                flex-shrink: 0;
 
-                &.compact {
-                    width: calc(var(--grid-unit) * 24px);
-                }
-
-                > .text {
-                    display: block;
+                @media (max-width: @mobile-max-width) {
+                    align-self: flex-start;
                 }
             }
 
-            &.isLastStep {
-                width: inherit;
+            .stepPaneWrapper {
+                grid-area: stepPane;
+                scroll-behavior: smooth;
+                overflow: hidden;
+            }
 
-                > span {
-                    &::after {
-                        border: 0;
+            .stepPane {
+                display: flex;
+                flex-grow: 1;
+
+                &.verticalSteps {
+                    flex-direction: column;
+                }
+
+                .step {
+                    padding: calc(var(--grid-unit) * 1px);
+                    padding-left: calc(var(--grid-unit) * 2px);
+                    padding-right: calc(var(--grid-unit) * 2px);
+                    color: var(--color-black);
+                    display: grid;
+                    flex-grow: 1;
+                    grid-template-columns: calc(var(--grid-unit) * 6px) minmax(max-content, auto);
+                    grid-template-areas:
+                        'badge title'
+                        ' . description';
+
+                    grid-template-rows:
+                        minmax(calc(var(--grid-unit) * 3px), auto)
+                        minmax(calc(var(--grid-unit) * 3px), auto);
+                    grid-row-gap: calc(var(--grid-unit) * 1px);
+
+                    --line-color: var(--color-primary);
+
+                    @media (max-width: @mobile-max-width) {
+                        grid-template-areas:
+                            'badge title'
+                            'progress description';
+                        grid-template-columns: calc(var(--grid-unit) * 6px) auto;
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+
+                    &.compact {
+                        padding: calc(var(--grid-unit) * 0.5px);
+                    }
+
+                    &.isClickable {
+                        cursor: pointer;
+                    }
+
+                    &.disabled {
+                        cursor: not-allowed;
+                        color: var(--color-black-alt3) !important;
+                        --line-color: var(--color-black-alt3);
+                    }
+
+                    &.current {
+                        font-weight: 500;
+                    }
+
+                    .title {
+                        grid-area: title;
+                        overflow: hidden;
+                        padding-left: calc(var(--grid-unit) * 1px);
+                        align-self: center;
+                        display: flex;
+
+                        &.compact {
+                            width: calc(var(--grid-unit) * 24px);
+                        }
+
+                        > .text {
+                            display: block;
+                        }
+
+                        > .text::after {
+                            display: block;
+                            content: attr(title);
+                            font-weight: 500;
+                            height: 0;
+                            overflow: hidden;
+                            visibility: hidden;
+                        }
+                    }
+
+                    &.isLastStep {
+                        width: inherit;
+
+                        > span {
+                            &::after {
+                                border: 0;
+                            }
+                        }
+                    }
+                }
+
+                .badge {
+                    grid-area: badge;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    top: 0;
+                    height: calc(var(--grid-unit) * 3px);
+                    width: calc(var(--grid-unit) * 3px);
+                    font-weight: 500;
+                    border: 1px solid var(--color-black-alt3);
+                    border-radius: 50%;
+                    flex-shrink: 0;
+
+                    &.compact {
+                        height: calc(var(--grid-unit) * 2px);
+                        width: calc(var(--grid-unit) * 2px);
+                    }
+
+                    &.active {
+                        border: 1px solid var(--color-primary);
+                        background: var(--color-primary);
+                        color: var(--color-white);
+                    }
+
+                    &.done {
+                        border: 1px solid var(--color-primary);
+                        color: var(--color-primary);
                     }
                 }
             }
         }
 
-        .badge {
-            grid-area: badge;
+        .description {
+            grid-area: description;
+            color: var(--color-black-alt2);
+            padding-left: calc(var(--grid-unit) * 1px);
+        }
+
+        .content {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            top: 0;
-            height: calc(var(--grid-unit) * 3px);
-            width: calc(var(--grid-unit) * 3px);
-            font-weight: 500;
-            border: 1px solid var(--color-black-alt3);
-            border-radius: 50%;
-            flex-shrink: 0;
+        }
 
-            &.compact {
-                height: calc(var(--grid-unit) * 2px);
-                width: calc(var(--grid-unit) * 2px);
-            }
+        .progress {
+            color: var(--color-black-alt2);
+            font-weight: 300;
 
-            &.active {
-                border: 1px solid var(--color-primary);
-                background: var(--color-primary);
-                color: var(--color-white);
-            }
-
-            &.done {
-                border: 1px solid var(--color-primary);
-                color: var(--color-primary);
+            @media (max-width: @mobile-max-width) {
+                grid-area: progress;
+                font-size: 12px;
+                width: calc(var(--grid-unit) * 4px);
+                white-space: nowrap;
             }
         }
-    }
-}
 
-.description {
-    grid-area: description;
-    color: var(--color-black-alt2);
-    padding-left: calc(var(--grid-unit) * 1px);
-}
+        .stepperLine {
+            min-width: calc(var(--grid-unit) * 3px);
+            content: ' ';
+            flex-grow: 1;
+            height: calc(var(--grid-unit) * 1px);
+            border-bottom: 1px solid var(--line-color);
+            margin-left: calc(var(--grid-unit) * 2px);
 
-.content {
-    display: flex;
-}
+            @media (max-width: @mobile-max-width) {
+                display: none;
+            }
+        }
 
-.progress {
-    color: var(--color-black-alt2);
-    font-weight: 300;
+        .verticalStepperLine {
+            min-width: calc(var(--grid-unit) * 3px);
+            content: ' ';
+            flex-grow: 1;
+            height: calc(var(--grid-unit) * 3px);
+            border-left: 1px solid var(--line-color);
+            margin-left: calc(var(--grid-unit) * 1.5px);
 
-    @media (max-width: @mobile-max-width) {
-        grid-area: progress;
-        font-size: 12px;
-        width: calc(var(--grid-unit) * 4px);
-        white-space: nowrap;
-    }
-}
-
-.stepperLine {
-    min-width: calc(var(--grid-unit) * 3px);
-    content: ' ';
-    flex-grow: 1;
-    height: calc(var(--grid-unit) * 1px);
-    border-bottom: 1px solid var(--line-color);
-    margin-left: calc(var(--grid-unit) * 2px);
-
-    @media (max-width: @mobile-max-width) {
-        display: none;
+            @media (max-width: @mobile-max-width) {
+                display: none;
+            }
+        }
     }
 }
