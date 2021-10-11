@@ -73,6 +73,6 @@ AnchorComponent.defaultProps = {
     onMouseUp: () => {},
 };
 
-AnchorComponent.displayName = '@fusion/components/general/Button/AnchorComponent';
+AnchorComponent.displayName = 'Anchor';
 
 export default AnchorComponent;

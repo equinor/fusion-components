@@ -38,6 +38,6 @@ ButtonComponent.defaultProps = {
     onMouseUp: () => {},
 };
 
-ButtonComponent.displayName = '@fusion/components/general/Button/ButtonComponent';
+ButtonComponent.displayName = 'Button';
 
 export default ButtonComponent;
