@@ -9,7 +9,7 @@
         "test": "jest",
         "test:generate-output": "jest --json --outputFile=.jest-test-results.json || true",
         "storybook": "start-storybook -p 9001 -c .storybook",
-        "clear:storybook": "rm -rf node_modules/.cache/storybook",
+        "clear:storybook": "rimraf node_modules/.cache/storybook",
         "start": "npm run clear:storybook && start-storybook -p 9001",
         "build:storybook": "build-storybook -c .storybook -o ./docs --no-dll",
         "prebuild": "rm -rf dist",

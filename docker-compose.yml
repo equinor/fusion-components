@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  storybook:
+    build: 
+      context: .
+      dockerfile: ./dev.Dockerfile
+    volumes:
+      - ./src:/app/src:r
+      - ./build:/app/build:r
+      - ./.storybook:/app/.storybook
+    entrypoint: 'npm run storybook'
+    ports:
+      - 9001:9001
