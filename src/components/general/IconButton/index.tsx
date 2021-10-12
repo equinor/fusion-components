@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import styles from './styles.less';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
-type IconButtonProps = {
+type IconButtonProps = JSX.IntrinsicElements['button']&{
     active?: boolean;
     toggler?: boolean;
     disabled?: boolean;
-    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+//    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconButtonProps>>(

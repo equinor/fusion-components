@@ -11,7 +11,7 @@ storiesOf('General/Icon Button', module)
     .addDecorator(withFusionStory('Icon Button'))
     .add('Default', () => (
         <div style={{ padding: 8 }}>
-            <IconButton {...eventsFromNames}>
+            <IconButton id="icon-btn" {...eventsFromNames}>
                 <SearchIcon />
             </IconButton>
         </div>
