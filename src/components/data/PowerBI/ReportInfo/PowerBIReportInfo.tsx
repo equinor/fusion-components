@@ -31,6 +31,11 @@ export const PowerBIReportInfo: FC<Props> = ({
     }, [id, clients]);
     const initialized = useSelector(store, 'initialized');
 
+    const restrictedAccessContainer = useMemo(
+        () => classNames(useElevationClassName(3), styles.restrictedAccessContainer),
+        []
+    );
+
     useEffect(() => {
         return store.initialize();
     }, [store]);
@@ -43,10 +48,10 @@ export const PowerBIReportInfo: FC<Props> = ({
     const personId = report?.ownedBy?.azureUniqueId;
 
     return (
-        <div className={styles.reportErroMessage}>
+        <div className={styles.pbiErrorMessage}>
             <div className={styles.container}>
                 <h2 className={styles.header}>{header}</h2>
-                <div className={classNames(useElevationClassName(3), styles.restrictedAccessContainer)}>
+                <div className={restrictedAccessContainer}>
                     <h2>{subHeader}</h2>
                     {accessDescription && <MarkdownViewer markdown={accessDescription} />}
                     <div className={styles.reportInfoContainer}>
