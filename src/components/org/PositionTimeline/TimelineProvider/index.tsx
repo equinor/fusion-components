@@ -42,8 +42,14 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
     } = props;
 
     const [state, dispatch] = useReducer(
-        reducer(initialContext({ mode, previewDates, selected: [initialSplit.id] })),
-        initialContext({ mode, previewDates, selected: [initialSplit.id] })
+        reducer(
+            initialContext({
+                mode,
+                previewDates,
+                selected: initialSplit?.id ? [initialSplit.id] : [],
+            })
+        ),
+        initialContext({ mode, previewDates, selected: initialSplit?.id ? [initialSplit.id] : [] })
     );
 
     useEffect(() => {

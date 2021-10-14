@@ -60,6 +60,7 @@ export type TimelineSlotProps = {
     split: TimelineSplit;
     position: TimelinePosition;
     isSelected: boolean;
+    isDisabled: boolean;
 };
 
 export type SelectMode = 'single' | 'multi' | 'slider';
