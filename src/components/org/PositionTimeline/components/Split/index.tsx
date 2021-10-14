@@ -66,17 +66,32 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
             <div className={styles.content}>
                 <div className={clsx(styles.slot, styles.maxWidth)}>
                     {PersonSlot && (
-                        <PersonSlot split={split} position={position} isSelected={isSelected} />
+                        <PersonSlot
+                            split={split}
+                            position={position}
+                            isSelected={isSelected}
+                            isDisabled={isDisabled}
+                        />
                     )}
                 </div>
                 <div style={{ justifyContent: 'flex-start' }} className={styles.slot}>
                     {InfoSlot && (
-                        <InfoSlot split={split} position={position} isSelected={isSelected} />
+                        <InfoSlot
+                            split={split}
+                            position={position}
+                            isSelected={isSelected}
+                            isDisabled={isDisabled}
+                        />
                     )}
                 </div>
                 <div className={clsx(styles.slot, styles.maxWidth)}>
-                    {ActionSlot && !isDisabled && (
-                        <ActionSlot split={split} position={position} isSelected={isSelected} />
+                    {ActionSlot && (
+                        <ActionSlot
+                            split={split}
+                            position={position}
+                            isSelected={isSelected}
+                            isDisabled={isDisabled}
+                        />
                     )}
                 </div>
             </div>
