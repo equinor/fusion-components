@@ -6,7 +6,7 @@ import { Accordion, AccordionItem, MarkdownViewer } from '@equinor/fusion-compon
 
 import { Store } from './store/store';
 
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 export const PowerBIInfoRequirements: FC<{ store: Store }> = ({ store }) => {
     const requirements = useSelector(store, 'requirements');
@@ -14,7 +14,11 @@ export const PowerBIInfoRequirements: FC<{ store: Store }> = ({ store }) => {
     return requirements ? (
         <div className={styles.accessControlContainer}>
             <Accordion>
-                <AccordionItem label={'Access control description'} isOpen={open} onChange={() => setOpen(!open)}>
+                <AccordionItem
+                    label={'Access control description'}
+                    isOpen={open}
+                    onChange={() => setOpen(!open)}
+                >
                     <MarkdownViewer markdown={requirements} />
                 </AccordionItem>
             </Accordion>
