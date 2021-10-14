@@ -8,7 +8,7 @@ const getBorderColor = (theme, isSelected: boolean, isSelectedDate: boolean) => 
     if (isSelected) {
         return theme.colors.interactive.primary__resting.getVariable('color');
     }
-    return theme.colors.text.static_icons__tertiary.getVariable('color');
+    return theme.colors.interactive.disabled__text.getVariable('color');
 };
 
 const getBackgroundColor = (theme, isSelected: boolean, isSelectedDate: boolean) => {
@@ -18,7 +18,7 @@ const getBackgroundColor = (theme, isSelected: boolean, isSelectedDate: boolean)
     if (isSelected) {
         return theme.colors.interactive.primary__resting.getVariable('color');
     }
-    return theme.colors.text.static_icons__tertiary.getVariable('color');
+    return theme.colors.interactive.disabled__text.getVariable('color');
 };
 
 export const useStyles = makeStyles((theme) =>
