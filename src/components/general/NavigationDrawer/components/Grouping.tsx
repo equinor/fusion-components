@@ -100,6 +100,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
     return (
         <>
             <NavigationItem
+                id={id}
                 isActive={isActive}
                 type="grouping"
                 isCollapsed={isCollapsed}
