@@ -12,7 +12,7 @@ import { PowerBIInfoUserIdentity } from './PowerBIUserIdentity';
 import { PowerBIInfoRequirements } from './PowerBIRequirements';
 
 import classNames from 'classnames';
-import * as styles from './styles.less';
+import styles from './styles.less';
 
 type Props = {
     id: string;
