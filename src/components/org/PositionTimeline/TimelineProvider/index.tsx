@@ -42,19 +42,20 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
     } = props;
 
     const [state, dispatch] = useReducer(
-        reducer(initialContext({ mode, previewDates })),
-        initialContext({ mode, previewDates })
+        reducer(
+            initialContext({
+                mode,
+                previewDates,
+                selected: initialSplit?.id ? [initialSplit.id] : [],
+            })
+        ),
+        initialContext({ mode, previewDates, selected: initialSplit?.id ? [initialSplit.id] : [] })
     );
 
     useEffect(() => {
         dispatch(actions.setPosition({ position: selectedPosition, initialDate }));
         return () => dispatch(actions.reset());
     }, [selectedPosition, initialDate]);
-
-    useEffect(() => {
-        if (!initialSplit) return;
-        dispatch(actions.selectSplit(initialSplit.id));
-    }, [initialSplit]);
 
     useEffect(() => {
         if (!onDateChange) return;

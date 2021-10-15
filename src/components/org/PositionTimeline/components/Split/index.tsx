@@ -11,7 +11,7 @@ type SplitProps = {
      */
     id: string;
     /**
-     * The unique id representing a rotation group. Splits in the same rotation group has 
+     * The unique id representing a rotation group. Splits in the same rotation group has
      * the same rotation id. This property is provided by backend.
      */
     rotationId?: string;
@@ -48,7 +48,6 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
         if (mode === 'slider') return;
         dispatch(actions.selectSplit(id));
     };
-
     if (!computePosition) return null;
 
     return (
@@ -65,19 +64,34 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
             onClick={handleClick}
         >
             <div className={styles.content}>
-                <div className={styles.slot}>
+                <div className={clsx(styles.slot, styles.maxWidth)}>
                     {PersonSlot && (
-                        <PersonSlot split={split} position={position} isSelected={isSelected} />
+                        <PersonSlot
+                            split={split}
+                            position={position}
+                            isSelected={isSelected}
+                            isDisabled={isDisabled}
+                        />
                     )}
                 </div>
                 <div style={{ justifyContent: 'flex-start' }} className={styles.slot}>
                     {InfoSlot && (
-                        <InfoSlot split={split} position={position} isSelected={isSelected} />
+                        <InfoSlot
+                            split={split}
+                            position={position}
+                            isSelected={isSelected}
+                            isDisabled={isDisabled}
+                        />
                     )}
                 </div>
-                <div className={styles.slot}>
-                    {ActionSlot && !isDisabled && (
-                        <ActionSlot split={split} position={position} isSelected={isSelected} />
+                <div className={clsx(styles.slot, styles.maxWidth)}>
+                    {ActionSlot && (
+                        <ActionSlot
+                            split={split}
+                            position={position}
+                            isSelected={isSelected}
+                            isDisabled={isDisabled}
+                        />
                     )}
                 </div>
             </div>

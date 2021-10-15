@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) =>
         line: (props: StyleProps) => ({
             borderBottomColor: props.isSelected
                 ? theme.colors.interactive.primary__resting.getVariable('color')
-                : theme.colors.interactive.disabled__text.getVariable('color'),
+                : theme.colors.interactive.disabled__border.getVariable('color'),
             borderBottomWidth: props.size === 'small' ? '2px' : '3px',
             borderBottomStyle: props.isAssigned ? 'solid' : 'dashed',
             position: 'absolute',

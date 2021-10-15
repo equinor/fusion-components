@@ -22,14 +22,18 @@ export const useStyles = makeStyles((theme) =>
             boxSizing: 'border-box',
             width: '100%',
             display: 'grid',
-            gridTemplateColumns: '2rem auto 2rem',
+            gridTemplateColumns: 'min-content auto min-content',
             overflow: 'hidden',
             fontSize: '12px',
+        },
+        maxWidth: {
+            maxWidth: '2rem',
         },
         slot: {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            overflow: 'hidden',
         },
         highlighted: (props: { isRotation: boolean }) => ({
             background: theme.colors.interactive.success__highlight.getVariable('color'),
