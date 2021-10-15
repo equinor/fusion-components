@@ -47,6 +47,7 @@ const TextInputStory = () => {
     return (
         <div style={{ display: 'flex', padding: '8px', flexDirection: 'column' }}>
             <TextInput
+                id='label-text'
                 onChange={(value) => setValue(value)}
                 value={value}
                 label="Label text"
@@ -70,6 +71,7 @@ const TextInputStory = () => {
             />
             <br />
             <TextInput
+                id='search-text'
                 onChange={(value) => setValue(value)}
                 value={value}
                 icon={
@@ -86,6 +88,7 @@ const TextInputStory = () => {
             />
             <br />
             <TextInput
+                id='masked-text'
                 onChange={(value) => setValue(unmaskString(dateTimeMask, value))}
                 value={maskedValue}
                 placeholder={'dd/mm/yyyy, hh:mm'}
