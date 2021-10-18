@@ -93,6 +93,7 @@ const DropdownStory = () => {
     return (
         <div style={{ margin: '8px' }}>
             <SearchableDropdown
+                id="dropdown"
                 error
                 errorMessage="required"
                 options={options}
@@ -106,6 +107,7 @@ const DropdownStory = () => {
             />
             <br />
             <SearchableDropdown
+                id="select-food"
                 label="Select food"
                 onSelect={(item) => updateSections(item)}
                 sections={sections}
@@ -113,6 +115,7 @@ const DropdownStory = () => {
             <br />
             <div style={{ width: '300px' }}>
                 <SearchableDropdown
+                    id="narrow-food"
                     label="Narrow food"
                     onSelect={(item) => updateSections(item)}
                     sections={sections}
