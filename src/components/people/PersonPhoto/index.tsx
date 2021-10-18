@@ -118,22 +118,20 @@ export default ({
             className={photoClassNames}
             style={imageStyle}
         >
-            <div>
-                <div className={popoverClassNames}>
-                    {(imageError !== null || additionalPersons.length > 0 || !id) && (
-                        <FallbackImage size={size} rotation={additionalPersons.length > 0} />
-                    )}
-                    {personDetails && additionalPersons.length === 0 && (
-                        <AccountTypeBadge currentPerson={personDetails} size={size} />
-                    )}
-                    {additionalPersons.length > 0 && (
-                        <RotationBadge
-                            numberOfPersons={additionalPersons.length + 1}
-                            size={size}
-                            hideTooltip={hideTooltip}
-                        />
-                    )}
-                </div>
+            <div className={popoverClassNames}>
+                {(imageError !== null || additionalPersons.length > 0 || !id) && (
+                    <FallbackImage size={size} rotation={additionalPersons.length > 0} />
+                )}
+                {personDetails && additionalPersons.length === 0 && (
+                    <AccountTypeBadge currentPerson={personDetails} size={size} />
+                )}
+                {additionalPersons.length > 0 && (
+                    <RotationBadge
+                        numberOfPersons={additionalPersons.length + 1}
+                        size={size}
+                        hideTooltip={hideTooltip}
+                    />
+                )}
             </div>
         </div>
     );
