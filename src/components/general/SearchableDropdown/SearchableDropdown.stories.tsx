@@ -102,6 +102,7 @@ const DropdownStory = () => {
             />
             <br />
             <SearchableDropdown
+                id="dropdown"
                 options={optionsNoLAbel}
                 onSelect={(item) => setOptionsNoLabel(updateOptions(item))}
             />

@@ -24,6 +24,7 @@ const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
 
     return (
         <NavigationItem
+            id={id}
             type="child"
             isActive={isActive}
             onClick={change}
