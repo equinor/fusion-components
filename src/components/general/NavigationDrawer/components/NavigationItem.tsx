@@ -3,6 +3,7 @@ import { useAnchor, UseAnchorProps } from '../../ApplicationGuidance';
 import styles from './styles.less';
 
 type NavigationItemProps = {
+    id?: string;
     children: any;
     isActive?: boolean;
     isCollapsed?: boolean;
@@ -13,6 +14,7 @@ type NavigationItemProps = {
 };
 
 const NavigationItem = ({
+    id,
     children,
     isActive,
     isCollapsed,
@@ -33,7 +35,7 @@ const NavigationItem = ({
     const anchorRef = useAnchor<HTMLDivElement>(info);
 
     return (
-        <div className={containerClassNames} onClick={onClick} ref={anchorRef}>
+        <div id={id} className={containerClassNames} onClick={onClick} ref={anchorRef}>
             {children}
             <div className={styles.visualOnClickContainer} />
         </div>

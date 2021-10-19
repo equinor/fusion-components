@@ -46,7 +46,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
 
     return (
         <>
-            <NavigationItem type="section" isActive={isActive} isDisabled={isDisabled} info={info}>
+            <NavigationItem id={id} type="section" isActive={isActive} isDisabled={isDisabled} info={info}>
                 <div className={styles.sectionContainer} ref={tooltipRef}>
                     <a
                         className={styles.linkContainer}
