@@ -71,7 +71,7 @@ const SideSheet: FC<StandardSideSheetProps> = ({
     const resizeIndicatorClassNames = classNames(styles.indicator, useElevationClassName(1));
 
     return (
-        <div className={containerClassNames} key={id} style={{ ...resizedSize }}>
+        <div data-cy="standard-container" className={containerClassNames} key={id} style={{ ...resizedSize }}>
             {isResizable && isOpen && (
                 <div className={styles.resizeHandle} onMouseDown={onResizeStart}>
                     <div className={styles.bar} />
@@ -84,6 +84,7 @@ const SideSheet: FC<StandardSideSheetProps> = ({
             <div className={styles.header}>
                 <div className={styles.collapseButtonContainer}>
                     <CollapseExpandButton
+                        id="collapse-expand-button" 
                         isOpen={isOpen}
                         onClick={toggleOpen}
                         screenPlacement={screenPlacement}
@@ -94,7 +95,7 @@ const SideSheet: FC<StandardSideSheetProps> = ({
                     <div className={styles.headerContent}>{headerContent}</div>
                 )}
             </div>
-            {isOpen && <div className={styles.content}>{children}</div>}
+            {isOpen && <div data-cy="standard-content" className={styles.content}>{children}</div>}
         </div>
     );
 };
