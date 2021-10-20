@@ -11,14 +11,14 @@ storiesOf('General/Icon Button', module)
     .addDecorator(withFusionStory('Icon Button'))
     .add('Default', () => (
         <div style={{ padding: 8 }}>
-            <IconButton id="icon-btn" {...eventsFromNames}>
+            <IconButton id="default-icon-btn" {...eventsFromNames}>
                 <SearchIcon />
             </IconButton>
         </div>
     ))
     .add('Toggler', () => (
         <div style={{ padding: 8 }}>
-            <IconButton toggler {...eventsFromNames}>
+            <IconButton id="toggler-icon-btn" toggler {...eventsFromNames}>
                 <SearchIcon />
             </IconButton>
             <IconButton toggler active {...eventsFromNames}>
@@ -28,7 +28,7 @@ storiesOf('General/Icon Button', module)
     ))
     .add('OpenInNew', () => (
         <div style={{ padding: 8 }}>
-            <IconButton {...eventsFromNames}>
+            <IconButton id="open-in-new-icon-btn" {...eventsFromNames}>
                 <OpenInNewIcon />
             </IconButton>
         </div>
