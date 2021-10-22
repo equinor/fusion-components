@@ -57,7 +57,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                 <a
                     className={styles.linkContainer}
                     onClick={change}
-                    href={!isDisabled && !isCollapsed ? href : undefined}
+                    href={!isDisabled && href?.length ? href : undefined}
                 >
                     <div className={iconClasses}>{icon}</div>
                     <span className={styles.linkText} ref={textRef}>

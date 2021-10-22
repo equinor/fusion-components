@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../../.storybook/withFusionStory';
 import NavigationDrawer, { NavigationStructure } from '../index';
-import { ErrorIcon, WarningIcon, useAnchor } from '@equinor/fusion-components';
+import { ErrorIcon, WarningIcon } from '@equinor/fusion-components';
+import { OpenInNewIcon } from '../../../icons/components/action';
 import Chip from '../../Chip';
 
 const getNavStructure = (): NavigationStructure[] => {
@@ -117,6 +118,14 @@ const getNavStructure = (): NavigationStructure[] => {
             title: 'Grouping4',
             icon: <ErrorIcon outline />,
             aside: <ErrorIcon outline />,
+        },
+        {
+            id: 'grouping5',
+            type: 'grouping',
+            title: 'Open in new',
+            icon: <OpenInNewIcon />,
+            aside: <OpenInNewIcon />,
+            href: 'https://fusion.equinor.com/'
         },
     ]
 }
