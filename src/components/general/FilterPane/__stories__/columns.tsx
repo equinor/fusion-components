@@ -13,7 +13,7 @@ export type DataItemProps = {
 };
 
 const DeleteColumn: FC<DataItemProps> = ({ item }) => (
-    <Button {...eventsFromNames}>Delete #{item.id}</Button>
+    <Button id="row-delete-btn" {...eventsFromNames}>Delete #{item.id}</Button>
 );
 const DeleteColumnSkeleton = () => <Button disabled>Delete #</Button>;
 
@@ -26,6 +26,7 @@ const columns: DataTableColumn<DataItem>[] = [
         width: styling.grid(5),
         priority: 6,
         sortable: true,
+        id: 'expand-btn',
     },
     {
         key: 'firstName',
@@ -34,6 +35,7 @@ const columns: DataTableColumn<DataItem>[] = [
         priority: 2,
         sortable: true,
         width: styling.grid(20),
+        id: 'first-name',
     },
     {
         key: 'lastName',
@@ -42,6 +44,7 @@ const columns: DataTableColumn<DataItem>[] = [
         priority: 5,
         sortable: true,
         width: styling.grid(30),
+        id: 'last-name',
     },
     {
         key: 'email',
@@ -49,6 +52,7 @@ const columns: DataTableColumn<DataItem>[] = [
         label: 'Email',
         priority: 4,
         sortable: true,
+        id: 'email',
     },
     {
         key: 'delete',
@@ -61,6 +65,7 @@ const columns: DataTableColumn<DataItem>[] = [
             justifyContent: 'flex-end',
         },
         priority: 3,
+        id: 'delete-btn',
     },
 ];
 

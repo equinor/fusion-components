@@ -14,9 +14,10 @@ type SectionProps<T> = {
     filterCount: Count[];
     section: FilterSection<T>;
     onChange: (section: FilterSection<T>, filter: FilterType<T>, value: string | string[]) => void;
+    id?: string;
 };
 
-function Section<T>({ terms, filterCount, section, onChange }: SectionProps<T>) {
+function Section<T>({ terms, filterCount, section, onChange, id }: SectionProps<T>) {
     const anchorRef = useAnchor<HTMLElement>(section?.info);
     const [isCollapsed, setIsCollapsed] = useState(section.isCollapsed);
 
@@ -67,7 +68,7 @@ function Section<T>({ terms, filterCount, section, onChange }: SectionProps<T>) 
     }
 
     return (
-        <section className={sectionClassNames}>
+        <section id={id} className={sectionClassNames}>
             {!filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse} ref={anchorRef}>
                     <h3> {section.title} </h3>

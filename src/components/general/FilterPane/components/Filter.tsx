@@ -85,7 +85,7 @@ type FilterProps<T> = {
     onChange: (filter: FilterConfig<T>, term: FilterTerm | null) => void;
 };
 
-function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterProps<T>) {
+function Filter<T>({ filter, term: defaultTerm, filterCount, onChange, }: FilterProps<T>) {
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
@@ -159,7 +159,8 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterP
                     <h4>
                         <FilterTitle filter={filter} term={term} />
                     </h4>
-                    <Button
+                    <Button 
+                        id="reset-btn"
                         frameless
                         disabled={!term || !term.value || !term.value.length}
                         onClick={handleOnReset}
@@ -170,7 +171,7 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange }: FilterP
                 </header>
             )}
             {(!isCollapsed || filterPaneContext.paneIsCollapsed) && (
-                <div>{renderedFilterComponent}</div>
+                <div data-cy="filter-component">{renderedFilterComponent}</div>
             )}
         </div>
     );

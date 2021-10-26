@@ -13,6 +13,7 @@ function SearchFilterComponent<T>({ filter, term, onChange }: SearchFilterProps<
     return (
         <div ref={anchorRef}>
             <TextInput
+                id="search-filter"
                 icon={<SearchIcon />}
                 value={term ? (term.value as string) : ''}
                 onChange={onChange}
