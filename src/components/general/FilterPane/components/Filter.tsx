@@ -83,9 +83,10 @@ type FilterProps<T> = {
     term?: FilterTerm;
     filterCount: Count[];
     onChange: (filter: FilterConfig<T>, term: FilterTerm | null) => void;
+    id?: string;
 };
 
-function Filter<T>({ filter, term: defaultTerm, filterCount, onChange, }: FilterProps<T>) {
+function Filter<T>({ filter, term: defaultTerm, filterCount, onChange, id }: FilterProps<T>) {
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
@@ -153,7 +154,7 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange, }: Filter
     }
 
     return (
-        <div className={containerClassNames}>
+        <div data-cy="filter" id={id} className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse} ref={anchorRef}>
                     <h4>

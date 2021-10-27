@@ -44,6 +44,7 @@ function Section<T>({ terms, filterCount, section, onChange, id }: SectionProps<
             const term = terms.find((term) => term.key === filter.key);
             return (
                 <Filter
+                    id='filter'
                     key={filter.key}
                     filter={filter}
                     term={term}
