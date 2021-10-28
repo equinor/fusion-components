@@ -46,6 +46,7 @@ const WithSkeleton: FC = () => {
 
     return (
         <DataTable
+            id='with-skeleton-table'
             columns={columns}
             data={pagedData}
             pagination={pagination}
@@ -102,6 +103,7 @@ const WithoutSkeleton: FC = () => {
 
     return (
         <DataTable
+            id='default-table'
             columns={columns}
             data={pagedData}
             pagination={pagination}
@@ -146,6 +148,7 @@ const NoColumnsCollapse: FC = () => {
 
     return (
         <DataTable
+            id='no-columns-collapse-table'
             noColumnsCollapse
             columns={wordWrapColumns}
             data={pagedData}
@@ -190,6 +193,7 @@ const Selectable: FC = () => {
 
     return (
         <DataTable
+            id='multi-selectable-table'
             columns={columns}
             data={pagedData}
             pagination={pagination}
@@ -249,6 +253,7 @@ const SingleSelectable: FC = () => {
 
     return (
         <DataTable
+            id='single-selectable-table'
             columns={simpleColumns}
             data={pagedData}
             pagination={pagination}
@@ -307,6 +312,7 @@ const ExpandableRows: FC = () => {
 
     return (
         <DataTable
+            id='expandable-rows-table'
             columns={simpleColumns}
             data={pagedData}
             pagination={pagination}
