@@ -2,7 +2,6 @@ import Content from './Content';
 import getButtonClasses from '../buttonClasses';
 import { ComponentDisplayType } from '@equinor/fusion';
 import { EventHandler, forwardRef, PropsWithChildren, SyntheticEvent } from 'react';
-import { id } from 'date-fns/locale';
 
 type ButtonProps = {
     disabled?: boolean;
