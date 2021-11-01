@@ -53,6 +53,7 @@ export const useStyles = makeStyles(
         compact: {},
         comfortable: {},
     })
+    { name: 'fusion-components-contextSelector'}
 );
 
 export default useStyles;
