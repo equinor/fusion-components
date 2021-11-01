@@ -19,7 +19,8 @@ import {
     IconButton,
     CloseIcon,
 } from '@equinor/fusion-components';
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './ContextSelector.style';
 import classNames from 'classnames';
 
 import contextToDropdownSection, { formattedContextType } from './ContextToDropdownSection';
@@ -46,7 +47,8 @@ type SearchableContextDropdownOption = SearchableDropdownOption & {
     contextType: ContextType;
 };
 
-const ContextSelector: FC = () => {
+export const ContextSelector: FC = () => {
+    const styles = useStyles();
     const contextManager = useContextManager();
     const currentContext = useCurrentContext();
     const contextHistory = useContextHistory();
