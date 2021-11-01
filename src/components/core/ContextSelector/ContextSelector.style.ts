@@ -52,8 +52,8 @@ export const useStyles = makeStyles(
         overlay: {},
         compact: {},
         comfortable: {},
-    })
-    { name: 'fusion-components-contextSelector'}
+    }),
+    { name: 'fusion-components-contextSelector' }
 );
 
 export default useStyles;
