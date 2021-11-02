@@ -35,7 +35,7 @@ type AllBookmarksProps<TPayload> = {
     capturePayload: () => Promise<TPayload>;
     onViewChanged?: (view: BookmarkView) => void;
     hasContext: boolean;
-    openOnCreate: boolean
+    openOnCreate: boolean;
     disableCreateButton: boolean;
 };
 
@@ -137,7 +137,7 @@ export const SideSheetManager = <T extends unknown>({
     );
 
     useEffect(() => {
-        openOnCreate && onViewChange('Creating');
+        onViewChange(openOnCreate ? 'Creating' : 'AllBookmarks');
     }, [openOnCreate]);
 
     useEffect(() => {
@@ -172,7 +172,11 @@ export const SideSheetManager = <T extends unknown>({
     return (
         <>
             <div className={styles.buttonContainer}>
-                <Button onClick={() => onViewChange('Creating')} ref={tooltipRef} disabled={disableCreateButton}>
+                <Button
+                    onClick={() => onViewChange('Creating')}
+                    ref={tooltipRef}
+                    disabled={disableCreateButton}
+                >
                     New bookmark
                 </Button>
             </div>
