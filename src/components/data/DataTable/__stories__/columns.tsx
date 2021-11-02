@@ -27,6 +27,7 @@ const columns: DataTableColumn<DataItem>[] = [
         width: styling.grid(5),
         priority: 6,
         sortable: true,
+        id: 'id',
     },
     {
         key: 'firstName',
@@ -35,6 +36,7 @@ const columns: DataTableColumn<DataItem>[] = [
         priority: 2,
         sortable: true,
         width: styling.grid(20),
+        id: 'firstName',
     },
     {
         key: 'lastName',
@@ -43,6 +45,7 @@ const columns: DataTableColumn<DataItem>[] = [
         priority: 5,
         sortable: true,
         width: styling.grid(30),
+        id: 'lastName',
     },
     {
         key: 'email',
@@ -50,6 +53,7 @@ const columns: DataTableColumn<DataItem>[] = [
         label: 'Email',
         priority: 4,
         sortable: true,
+        id: 'email',
     },
     {
         key: 'delete',
@@ -62,6 +66,7 @@ const columns: DataTableColumn<DataItem>[] = [
             justifyContent: 'flex-end',
         },
         priority: 3,
+        id: 'delete',
     },
 ];
 
