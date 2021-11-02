@@ -22,7 +22,7 @@ const RadioButtonWrapper: FC<RadioButtonProps> = ({ option, onClick, isChecked }
     const tooltipRef = useTooltipRef(option.label, filterPaneContext.tooltipPlacement);
 
     return (
-        <li ref={tooltipRef} onClick={onClick}>
+        <li data-cy="radio-btn-filter" ref={tooltipRef} onClick={onClick}>
             <RadioButton selected={isChecked} color={option.color} />
             {!filterPaneContext.paneIsCollapsed && <label>{option.label}</label>}
         </li>

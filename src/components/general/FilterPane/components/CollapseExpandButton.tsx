@@ -14,7 +14,7 @@ const CollapseExpandButton: FC<CollapseExpandButtonProps> = ({ onClick }) => {
     );
 
     return (
-        <IconButton ref={tooltipRef} onClick={onClick}>
+        <IconButton id="collapse-expand-btn" ref={tooltipRef} onClick={onClick}>
             <CollapseIcon
                 isCollapsed={filterPaneContext.paneIsCollapsed}
                 screenPlacement={filterPaneContext.screenPlacement}
