@@ -129,6 +129,7 @@ function FilterPane<T>({
                     )}
                     {sectionDefinitions.map((section) => (
                         <Section
+                            id="filter-section"
                             key={section.key}
                             section={section}
                             terms={terms}
