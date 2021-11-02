@@ -13,7 +13,7 @@ export type DataItemProps = {
 };
 
 const DeleteColumn: FC<DataItemProps> = ({ item }) => (
-    <Button {...eventsFromNames}>Delete #{item.id}</Button>
+    <Button id="row-delete-btn" {...eventsFromNames}>Delete #{item.id}</Button>
 );
 const DeleteColumnSkeleton = () => <Button disabled>Delete #</Button>;
 
