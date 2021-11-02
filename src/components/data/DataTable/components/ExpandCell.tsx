@@ -13,8 +13,10 @@ const ExpandCell: FC<ExpandCellProps> = ({
     onMouseOver,
     className,
     isSelected,
+    id,
 }) => (
     <div
+        id={id}
         onMouseLeave={onMouseOut}
         onMouseEnter={onMouseOver}
         onClick={() => isExpandable && onClick()}

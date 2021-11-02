@@ -14,6 +14,7 @@ function DataTableCell<T>({
     onMouseOver,
     isSelected,
     onClick,
+    id,
 }: DataTableCellProps<T>) {
     const handleClick = useCallback(() => {
         if (onClick) {
@@ -33,6 +34,7 @@ function DataTableCell<T>({
             onMouseEnter={onMouseOver}
             style={column.style}
             onClick={handleClick}
+            id={id}
         >
             {getCellContent(item, column, rowIndex)}
         </div>

@@ -33,6 +33,7 @@ function DataTableRow<T>({
     return (
         <>
             <ExpandCell
+                id="expand-cell"
                 isExpandable={isExpandable}
                 isExpanded={isExpanded}
                 isHovering={isHovering}
@@ -43,6 +44,7 @@ function DataTableRow<T>({
                 className={classNames(styles.cell)}
             />
             <SelectionCell
+                id="selection-cell"
                 isSelectable={!!isSelectable}
                 isSelected={isSelected}
                 onChange={onSelect}
@@ -63,9 +65,11 @@ function DataTableRow<T>({
                     onMouseOver={setIsHoveringTrue}
                     onMouseOut={setIsHoveringFalse}
                     onClick={onClick}
+                    id={column.id}
                 />
             ))}
             <ExpandedContent
+                id="expanded-content"
                 item={item}
                 rowIndex={index}
                 isExpanded={isExpanded}
