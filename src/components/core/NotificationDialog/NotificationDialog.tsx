@@ -69,7 +69,7 @@ export const NotificationDialog: FC = () => {
     }
 
     return (
-        <div id="HELP" className={styles.container}>
+        <div className={styles.container}>
             <Dialog>
                 <DialogTitle>{currentNotification.title}</DialogTitle>
                 <DialogContent>
