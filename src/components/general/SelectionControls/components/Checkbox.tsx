@@ -13,6 +13,10 @@ type CheckboxProps = {
     color?: string;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/input-checkbox--page}
+ */
 const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
     ({ selected, onChange, disabled, indeterminate, color }, ref) => {
         const inputRef =

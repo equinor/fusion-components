@@ -1,5 +1,8 @@
 import { IconProps, useIcon } from '@equinor/fusion-components';
-
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-icon--page}
+ */
 const ArrowUpwardIcon = (props: IconProps) => {
     const iconFactory = useIcon(
         <path

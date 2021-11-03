@@ -5,6 +5,11 @@ type PaginationArrowIconProps = {
     prev?: boolean;
 } & IconProps;
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-icon--page}
+ */
+
 const PaginationArrow = ({ next, prev, ...props }: PaginationArrowIconProps) => {
     const iconFactory = useIcon(
         next ? (

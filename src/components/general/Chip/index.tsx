@@ -11,6 +11,10 @@ type ChipProps = {
     primary?: boolean;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-chip--page}
+ */
 const Chip: FC<ChipProps> = ({ isDisabled, onRemove, title, secondary, primary }) => {
     const chipContainerClassNames = classNames(styles.chipContainer, {
         [styles.disabled]: isDisabled,

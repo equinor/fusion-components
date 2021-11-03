@@ -34,6 +34,11 @@ type TextAreaProps = {
     onBlur?: (event: FocusEvent<HTMLTextAreaElement>) => void;
     onKeyUp?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
 };
+
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/input-textarea--page}
+ */
 const TextArea = forwardRef<HTMLTextAreaElement | null, PropsWithChildren<TextAreaProps>>(
     (
         {

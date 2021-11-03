@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, useEffect, FC } from 'react';
+import { useMemo, useState, useCallback, useEffect, FC, PropsWithChildren } from 'react';
 
 import classNames from 'classnames';
 import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/fusion';
@@ -14,6 +14,10 @@ type CalendarProps = {
     interactive?: boolean;
     onChange?: (date: Date) => void;
 };
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-datepicker--date-picker}
+ */
 
 const Calendar: FC<CalendarProps> = ({
     initialYear,
@@ -22,11 +26,16 @@ const Calendar: FC<CalendarProps> = ({
     interactive,
     onChange,
 }) => {
+    console.log('year', initialYear);
+    console.log('month', initialMonth);
+
     const [year, setYear] = useState(initialYear);
     const [month, setMonth] = useState(initialMonth);
     const calendar = useMemo(() => createCalendar(year, month), [year, month]);
+    console.log('calendar', calendar);
     const isCurrentMonth = useMemo(() => calendar.dates.some((d) => d.isToday), [calendar]);
     const weekDays = useMemo(() => calendar.dates.slice(0, 7).map((d) => d.weekDay), [calendar]);
+    console.log(weekDays);
 
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
@@ -69,6 +78,7 @@ const Calendar: FC<CalendarProps> = ({
 
         setYear(selectedDate.getFullYear());
         setMonth(selectedDate.getMonth() as Month);
+        console.log('useeffect');
     }, [selectedDate]);
 
     return (
@@ -89,7 +99,7 @@ const Calendar: FC<CalendarProps> = ({
             </header>
             <div className={styles.grid}>
                 {weekDays.map((weekDay) => (
-                    <header key={weekDay}>{weekDay}</header>
+                    <header key={weekDay}>{weekDay} hbh</header>
                 ))}
                 {calendar.dates.map((d) => (
                     <Day

@@ -10,6 +10,10 @@ type RadioProps = {
     color?: string;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/input-radio--page}
+ */
 const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
     ({ selected, onChange, disabled, color }, ref) => {
         const inputRef = ref as MutableRefObject<HTMLInputElement | null>;

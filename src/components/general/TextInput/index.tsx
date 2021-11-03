@@ -37,6 +37,10 @@ type TextInputProps = {
     onKeyUp?: (event: KeyboardEvent<HTMLInputElement>) => void;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/input-textinput--page}
+ */
 const TextInput = forwardRef<HTMLInputElement | null, PropsWithChildren<TextInputProps>>(
     (
         {

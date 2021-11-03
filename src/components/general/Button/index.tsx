@@ -43,6 +43,11 @@ export type ButtonProps = {
     id?: string;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/input-button--page}
+ */
+
 export const Button = forwardRef<HTMLElement | null, PropsWithChildren<ButtonProps>>(
     (props, ref) => {
         // Used to apply "radar" animation on mouse up
@@ -110,9 +115,9 @@ Button.defaultProps = {
     url: null,
     relativeUrl: null,
     targetBlank: false,
-    onMouseDown: () => {},
-    onClickCapture: () => {},
-    onClick: () => {},
+    onMouseDown: () => { },
+    onClickCapture: () => { },
+    onClick: () => { },
 };
 
 export default Button;
