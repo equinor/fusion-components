@@ -54,9 +54,7 @@ export const TimelineProvider = (props: PropsWithChildren<TimelineProviderProps>
 
     useEffect(() => {
         dispatch(actions.setPosition({ position: selectedPosition, initialDate }));
-        return () => {
-            return dispatch(actions.reset());
-        };
+        return () => dispatch(actions.reset());
     }, [selectedPosition, initialDate]);
 
     useEffect(() => {
