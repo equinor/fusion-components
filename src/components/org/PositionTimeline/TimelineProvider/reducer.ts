@@ -21,7 +21,6 @@ export const reducer = (initial: TimelineState) =>
             startDate: undefined,
             endDate: undefined,
             computePosition: undefined,
-            selectedDate: new Date(),
             topSliderMarkers: [],
             bottomSliderMarkers: [],
         }))
