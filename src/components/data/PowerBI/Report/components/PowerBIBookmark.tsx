@@ -4,7 +4,7 @@ import { Report } from 'powerbi-client';
 import { filter, first } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { useSelector } from '@equinor/fusion';
-import { AppSettingsManager } from '@equinor/fusion-components';
+import { BookmarksManager } from '@equinor/fusion-components';
 
 type Props = {
     hasContext: boolean;
@@ -53,9 +53,11 @@ export const PowerBIBookmark: FunctionComponent<Props> = ({ hasContext }: Props)
     };
 
     return (
-        <AppSettingsManager
-            captureAppSetting={captureBookmark}
-            applyAppSetting={applyBookmark}
+        <BookmarksManager
+            capturePayload={captureBookmark}
+            applyBookmark={(bookmark, awaitForContextSwitch) =>
+                applyBookmark(bookmark.payload, awaitForContextSwitch)
+            }
             hasContext={hasContext}
             anchorId="pbi-bookmarks-btn"
             name="Power BI bookmarks"
