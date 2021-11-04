@@ -12,6 +12,10 @@ type BannerProps = {
     onAction?: () => void;
 };
 
+/**
+ * @deprecated
+ * Component is exported as Global but is not beeing used
+ */
 const Banner: FC<BannerProps> = ({ message, icon, onDismiss, action, actionLabel, onAction }) => {
     const [isVisible, setIsVisible] = useState(false);
 
