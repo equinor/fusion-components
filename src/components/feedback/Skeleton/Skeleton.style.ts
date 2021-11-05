@@ -22,41 +22,43 @@ export const useStyles = makeStyles(
             position: 'relative',
             width: 'var(--disc-size)',
             height: 'var(--disc-size)',
+            '&$xlarge': {
+                '&$comfortable': {
+                    '--disc-size': 'calc(var(--grid-unit) * 7px)',
+                },
+                '&$compact': {
+                    '--disc-size': 'calc(var(--grid-unit) * 6px)',
+                },
+            },
+            '&$large': {
+                '&$comfortable': {
+                    '--disc-size': 'calc(var(--grid-unit) * 5px=',
+                },
+                '&$compact': {
+                    '--disc-size': 'calc(var(--grid-unit) * 4px)',
+                },
+            },
+            '&$medium': {
+                '&$comfortable': {
+                    '--disc-size': 'calc(var(--grid-unit) * 4px)',
+                },
+                '&$compact': {
+                    '--disc-size': 'calc(var(--grid-unit) * 3px)',
+                },
+            },
+            '&$small': {
+                '&$comfortable': {
+                    '--disc-size': 'calc(var(--grid-unit) * 3px)',
+                },
+                '&$compact': {
+                    '--disc-size': 'calc(var(--grid-unit) * 2px)',
+                },
+            },
         },
-        xlarge: {
-            '&$comfortable': {
-                '--disc-size': 'calc(var(--grid-unit) * 7px',
-            },
-            '&$compact': {
-                '--disc-size': 'calc(var(--grid-unit) * 6px)',
-            },
-        },
-        large: {
-            '&$comfortable': {
-                '--disc-size': 'calc(var(--grid-unit) * 5px',
-            },
-            '&$compact': {
-                '--disc-size': 'calc(var(--grid-unit) * 4px)',
-            },
-        },
-        medium: {
-            '&$comfortable': {
-                '--disc-size': 'calc(var(--grid-unit) * 4px',
-            },
-            '&$compact': {
-                '--disc-size': 'calc(var(--grid-unit) * 3px)',
-            },
-        },
-        small: {
-            '&$comfortable': {
-                '--disc-size': 'calc(var(--grid-unit) * 3px',
-            },
-            '&$compact': {
-                '--disc-size': 'calc(var(--grid-unit) * 2px)',
-            },
-        },
-        compact: {},
-        comfortable: {},
+        xlarge: {},
+        large: {},
+        medium: {},
+        small: {},
         '@keyframe skeleton-slide': {
             '0%': {
                 backgroundPosition: '0% 0%',
