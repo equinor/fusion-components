@@ -2,18 +2,27 @@ import { useEffect, PropsWithChildren, FunctionComponent, useRef, useMemo } from
 
 import { useCurrentContext, useTelemetryLogger, useApiClients } from '@equinor/fusion';
 
-import { context, PowerBIEmbedComponent, PowerBIEmbedEventEntry, PowerBIReportContext } from '../context';
+import {
+    context,
+    PowerBIEmbedComponent,
+    PowerBIEmbedEventEntry,
+    PowerBIReportContext,
+} from '../context';
 import { Subject, Subscription } from 'rxjs';
 import PowerBITelemetryObserver from '../telemetry/observer';
 import { createStore, actions } from '../store';
-import { distinctUntilKeyChanged, filter, tap } from 'rxjs/operators';
+import { distinctUntilKeyChanged, filter } from 'rxjs/operators';
 import { isActionOf } from 'typesafe-actions';
 
 type Props = PropsWithChildren<{ id: string; hasContext: boolean }>;
 
 const { Provider } = context;
 
-export const PowerBIReportProvider: FunctionComponent<Props> = ({ children, id, hasContext }: Props) => {
+export const PowerBIReportProvider: FunctionComponent<Props> = ({
+    children,
+    id,
+    hasContext,
+}: Props) => {
     const clients = useApiClients();
     const store = useMemo(() => createStore(id, clients), [id, clients]);
 

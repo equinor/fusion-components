@@ -29,7 +29,7 @@ export const PowerBIBookmark: FunctionComponent<Props> = ({ hasContext }: Props)
      */
     useSelector(store, 'status');
 
-    const report = useMemo(() => component?.current as Report, [component]);
+    const report = component?.current as Report;
 
     const captureBookmark = async () => {
         if (!report) return '';
