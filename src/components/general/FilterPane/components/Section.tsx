@@ -44,7 +44,7 @@ function Section<T>({ terms, filterCount, section, onChange, id }: SectionProps<
             const term = terms.find((term) => term.key === filter.key);
             return (
                 <Filter
-                    id='filter'
+                    id={filter.id}
                     key={filter.key}
                     filter={filter}
                     term={term}
@@ -69,7 +69,7 @@ function Section<T>({ terms, filterCount, section, onChange, id }: SectionProps<
     }
 
     return (
-        <section id={id} className={sectionClassNames}>
+        <section id={section.id} className={sectionClassNames}>
             {!filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse} ref={anchorRef}>
                     <h3> {section.title} </h3>

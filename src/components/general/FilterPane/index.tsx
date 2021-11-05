@@ -112,7 +112,7 @@ function FilterPane<T>({
 
     return (
         <FilterPaneContext.Provider value={filterPaneContext}>
-            <div className={containerClassNames}>
+            <div id={id} data-cy="filter-pane" className={containerClassNames}>
                 <div className={styles.header}>
                     <div className={styles.collapseExpandButtonContainer}>
                         <CollapseExpandButton onClick={toggleCollapsed} />
@@ -122,14 +122,14 @@ function FilterPane<T>({
                 <div className={styles.content}>
                     {showResetAllButton && !isCollapsed && (
                         <div className={styles.resetButton}>
-                            <Button frameless onClick={onClick}>
+                            <Button id="reset-filter-btn" frameless onClick={onClick}>
                                 Reset filters
                             </Button>
                         </div>
                     )}
                     {sectionDefinitions.map((section) => (
                         <Section
-                            id="filter-section"
+                            id={section.id}
                             key={section.key}
                             section={section}
                             terms={terms}
