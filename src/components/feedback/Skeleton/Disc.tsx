@@ -8,6 +8,10 @@ type SkeletonDiscProps = {
     size: DiscSize;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-skeleton--page}
+ */
 const SkeletonDisc: FC<SkeletonDiscProps> = ({ size }) => {
     const displayClassNames = useComponentDisplayClassNames(styles);
 
