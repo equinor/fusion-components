@@ -1,6 +1,7 @@
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './Skeleton.style';
 import { FC } from 'react';
 
 export type DiscSize = 'xlarge' | 'large' | 'medium' | 'small';
@@ -9,6 +10,7 @@ type SkeletonDiscProps = {
 };
 
 const SkeletonDisc: FC<SkeletonDiscProps> = ({ size }) => {
+    const styles = useStyles();
     const displayClassNames = useComponentDisplayClassNames(styles);
 
     const discClassNames = classNames(styles.skeleton, styles.disc, displayClassNames, {
