@@ -57,7 +57,7 @@ export const useStyles = makeStyles(
         },
         comfortable: {},
         compact: {},
-        '@keyframe skeleton-slide': {
+        '@keyframes skeleton-slide': {
             '0%': {
                 backgroundPosition: '0% 0%',
             },
