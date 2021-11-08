@@ -206,14 +206,7 @@ export const getSelectedSplits = (splits: TimelineSplit[], selectedDate: Date): 
  * @returns
  */
 export const initialSelectedDate = (currentDate: Date, start: number, end: number): Date => {
-    const current = !!currentDate ? currentDate : new Date();
-    console.log('current date', currentDate);
-    console.log('current', current);
-    console.log('start', new Date(start));
-    console.log('end', new Date(end));
-
-
-    if (current.getTime() < start) return new Date(start);
-    if (current.getTime() > end) return new Date(end);
+    if (currentDate.getTime() < start) return new Date(start);
+    if (currentDate.getTime() > end) return new Date(end);
     return currentDate;
 };
