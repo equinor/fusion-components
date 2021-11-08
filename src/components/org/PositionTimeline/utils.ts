@@ -23,11 +23,7 @@ export const getStartDate = (splits: TimelineSplit[]) => {
  * @returns
  */
 export const getEndDate = (splits: TimelineSplit[]) => {
-    if (!splits.length) {
-        const date = new Date();
-        date.setDate(date.getDate() + 10);
-        return date.getTime();
-    }
+    if (!splits.length) return new Date().getTime();
     return Math.max(...splits.map((split) => split.appliesTo.getTime()));
 };
 
