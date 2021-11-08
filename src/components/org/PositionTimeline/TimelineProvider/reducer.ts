@@ -29,7 +29,7 @@ export const reducer = (initial: TimelineState) =>
             const start = getStartDate(splits);
             const end = getEndDate(splits);
             const selectedDate = initialSelectedDate(
-                action.payload.initialDate ?? state.selectedDate,
+                action.payload.initialDate ?? state.selectedDate ,
                 start,
                 end
             );
