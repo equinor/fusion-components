@@ -154,7 +154,7 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange, id }: Fil
     }
 
     return (
-        <div data-cy="filter" id={id} className={containerClassNames}>
+        <div id={id} className={containerClassNames}>
             {filter.title && !filterPaneContext.paneIsCollapsed && (
                 <header onClick={toggleCollapse} ref={anchorRef}>
                     <h4>

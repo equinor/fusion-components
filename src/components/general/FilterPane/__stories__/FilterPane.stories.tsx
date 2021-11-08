@@ -58,6 +58,7 @@ const filterQuickFact = { id: 'filter', scope: 'storybook|filter_pane' };
 
 const sections: FilterSection<DataItem>[] = [
     {
+        id: 'search-section',
         key: 'search',
         title: '',
         filters: [
@@ -71,12 +72,14 @@ const sections: FilterSection<DataItem>[] = [
         ],
     },
     {
+        id: 'custom-colors-section',
         key: 'custom-colors',
         title: 'Custom colors',
         isCollapsible: true,
         info: sectionQuickFact, 
         filters: [
             {
+                id: 'custom-colors-filter',
                 key: 'custom-colors',
                 title: '',
                 type: FilterTypes.Radio,
@@ -102,11 +105,13 @@ const sections: FilterSection<DataItem>[] = [
         ],
     },
     {
+        id: 'filter-section',
         key: 'filters',
         title: 'Filters',
         isCollapsible: true,
         filters: [
             {
+                id: 'gender-filter',
                 key: 'gender',
                 title: 'Gender',
                 type: FilterTypes.Checkbox,
@@ -127,6 +132,7 @@ const sections: FilterSection<DataItem>[] = [
                 ],
             },
             {
+                id: 'id-filter',
                 key: 'id',
                 title: 'Id - with custom colors and very very long title',
                 type: FilterTypes.Checkbox,
@@ -181,7 +187,7 @@ const FilterPaneStory: FC = () => {
 
     const filterHeaderComponent = (
         <div style={{ marginRight: '8px' }}>
-            <Button frameless onClick={changeSide}>
+            <Button id="flip-pane-btn" frameless onClick={changeSide}>
                 Flip pane {filterScreenPlacement === 'right' ? 'left' : 'right'}
             </Button>
         </div>
