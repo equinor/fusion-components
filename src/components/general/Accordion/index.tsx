@@ -1,5 +1,4 @@
 import { FC } from 'react';
-//import styles from './styles.less';
 import { useStyles } from './Accordion.style';
 import AccordionItem from './AccordionItem';
 export { AccordionItem };
