@@ -1,4 +1,4 @@
-import styles from '../styles.less';
+import { useStyles } from '../Options.style';
 import { EditIcon, DeleteIcon } from '@equinor/fusion-components';
 import '@equinor/fusion-wc-icon';
 type OwnerOptionsProps = {
@@ -13,6 +13,7 @@ export const OwnerOptions = ({
     onDeleteClick,
     onEditClick,
 }: OwnerOptionsProps): JSX.Element => {
+    const styles = useStyles();
     return (
         <div className={styles.menuContainer}>
             <div className={styles.menuItem} onClick={onEditClick} key="edit">

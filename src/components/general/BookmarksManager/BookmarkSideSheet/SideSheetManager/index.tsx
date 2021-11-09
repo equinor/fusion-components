@@ -15,7 +15,7 @@ import { useEffect, useState, useCallback } from 'react';
 import Bookmark from './Bookmark';
 import BookmarkForm from './BookmarkForm';
 import useBookmarkContext from '../../hooks/useBookmarkContext';
-import styles from './styles.less';
+import { useStyles } from './index.style';
 import { BookmarkView } from '../../types';
 
 type OpenAccordion = {
@@ -74,6 +74,7 @@ export const SideSheetManager = <T extends unknown>({
     onViewChanged,
     hasContext,
 }: AllBookmarksProps<T>): JSX.Element => {
+    const styles = useStyles();
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
     const [bookmarkToBeEdited, setBookmarkToBeEdited] = useState<BookmarkListResponse | undefined>(
         undefined
@@ -135,8 +136,8 @@ export const SideSheetManager = <T extends unknown>({
     useEffect(() => {
         currentContext && hasContext
             ? setOpenAccordions({
-                  [currentContext!.id]: true,
-              })
+                [currentContext!.id]: true,
+            })
             : setOpenAccordions({ [contextlessBookmark]: true });
     }, [currentContext, hasContext]);
 
