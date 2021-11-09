@@ -3,9 +3,11 @@ import { useRef, useMemo, useCallback, useEffect, FC } from 'react';
 import * as AdaptiveCards from 'adaptivecards';
 
 import marked from 'marked';
-import classNames from 'classnames';
+import clsx from 'clsx';
+import { useStyles } from './AdaptiveCardViewer.style';
 import styles from './styles.less';
 import getDefaultHostConfig from './defaultHostConfig';
+
 
 type AdaptiveCardViewerProps = {
     /** The hostConfig object that is passed along to the native AdaptiveCards. [More Info](https://docs.microsoft.com/en-us/adaptive-cards/display/hostconfig) */
@@ -37,6 +39,7 @@ const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
     onActionSubmit,
     className,
 }) => {
+    const stylesNew = useStyles();
     const cardContainerRef = useRef<HTMLDivElement | null>(null);
     const adaptiveCard = useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
 
@@ -78,7 +81,7 @@ const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
 
     useEffect(() => {
         const current = cardContainerRef.current;
-        result.className = classNames(styles.adaptiveCard, className);
+        result.className = clsx(stylesNew.adaptiveCard, className);
         current && current.appendChild(result);
         return () => {
             current && current.firstChild && current.removeChild(current.firstChild);
