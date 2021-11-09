@@ -15,7 +15,7 @@ type CalendarProps = {
     onChange?: (date: Date) => void;
 };
 
-const Calendar: FC<CalendarProps> = ({
+export const Calendar: FC<CalendarProps> = ({
     initialYear,
     initialMonth,
     selectedDate,
