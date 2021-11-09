@@ -20,6 +20,7 @@ export type Filter<T> = Collapsible & {
     getValue: (item: T) => string | string[];
     options?: any;
     info?: UseAnchorProps;
+    id?: string;
 };
 
 export type FilterSection<T> = Collapsible & {
@@ -27,6 +28,7 @@ export type FilterSection<T> = Collapsible & {
     key: string;
     title: string;
     filters: Filter<T>[];
+    id?: string;
 };
 
 export type FilterOptions<T> = {

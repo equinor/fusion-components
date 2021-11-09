@@ -69,19 +69,19 @@ const NotificationDialog: FC = () => {
 
     return (
         <div className={styles.container}>
-            <Dialog>
+            <Dialog id="notification-dialog">
                 <DialogTitle>{currentNotification.title}</DialogTitle>
                 <DialogContent>
                     <div>{currentNotification.body}</div>
                 </DialogContent>
                 <DialogActions>
                     {!currentNotification.hideCancelAction && (
-                        <Button frameless onClick={onCancel}>
+                        <Button id="cancel-btn" frameless onClick={onCancel}>
                             {currentNotification.cancelLabel || 'Cancel'}
                         </Button>
                     )}
 
-                    <Button frameless onClick={onConfirm}>
+                    <Button id="confirm-btn" frameless onClick={onConfirm}>
                         {currentNotification.confirmLabel || 'Ok'}
                     </Button>
                 </DialogActions>

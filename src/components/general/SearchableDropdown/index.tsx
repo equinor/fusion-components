@@ -33,6 +33,7 @@ export type SearchableDropdownSection = {
 };
 
 type SearchableDropdownProps = {
+    id?: string,
     label?: string;
     placeholder?: string;
     options?: SearchableDropdownOption[];
@@ -84,6 +85,7 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
     );
 
 const SearchableDropdown = ({
+    id,
     options,
     sections,
     label,
@@ -270,6 +272,7 @@ const SearchableDropdown = ({
                     </div>
                 )}
                 <div
+                    id={id}
                     className={styles.menuContainer}
                     style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
                 >

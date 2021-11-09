@@ -30,8 +30,9 @@ export const PowerBI: FunctionComponent<PowerBIProps> = ({
         <PowerBIBookmark hasContext={hasContext} />
         <context.Consumer>
             {(value) => {
-                if (contextRef?.current && contextRef?.current !== value)
+                if (contextRef && contextRef?.current !== value) {
                     contextRef.current = value || undefined;
+                }
                 return null;
             }}
         </context.Consumer>

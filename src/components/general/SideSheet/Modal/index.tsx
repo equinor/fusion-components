@@ -98,7 +98,7 @@ export default ({
             return null;
         }
         return (
-            <div ref={contentRef} className={styles.content}>
+            <div data-cy="modal-content" ref={contentRef} className={styles.content}>
                 <Overlay>{children}</Overlay>
             </div>
         );
@@ -141,6 +141,7 @@ export default ({
             <Scrim onClick={close} show={isShowing}>
                 <NotificationContextProvider>
                     <div
+                        id={id}
                         style={{ ...resizedSize }}
                         className={modalSideSheetClassNames}
                         onTransitionEnd={() => {
@@ -160,7 +161,7 @@ export default ({
                         <Overlay fixed>
                             <header className={styles.header}>
                                 <div className={styles.closeButton}>
-                                    <IconButton onClick={close}>
+                                    <IconButton id="close-btn" onClick={close}>
                                         <CloseIcon />
                                     </IconButton>
                                 </div>

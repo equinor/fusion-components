@@ -18,6 +18,7 @@ import {
 } from 'react';
 
 type TextInputProps = {
+    id?: string;
     disabled?: boolean;
     error?: boolean;
     errorMessage?: string;
@@ -39,6 +40,7 @@ type TextInputProps = {
 const TextInput = forwardRef<HTMLInputElement | null, PropsWithChildren<TextInputProps>>(
     (
         {
+            id = '',
             disabled = false,
             error,
             errorMessage,
@@ -156,7 +158,7 @@ const TextInput = forwardRef<HTMLInputElement | null, PropsWithChildren<TextInpu
         }, [placeholder, focus, label]);
 
         return (
-            <div className={styles.inputContainer}>
+            <div id={id} className={styles.inputContainer}>
                 <div className={inputContentClasses} onClick={handleDivClick}>
                     {asideComponent}
                     <div className={inputTextContentClasses}>

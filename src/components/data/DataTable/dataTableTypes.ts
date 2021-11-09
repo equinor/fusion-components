@@ -24,7 +24,7 @@ export type DataTableColumn<T> = {
     skeleton?: FC<DataItemSkeletonComponentProps>;
     style?: CSSProperties;
     sortable?: DataItemBooleanAccessor<T>;
-
+    id?: string;
     /** High value or falsy value will be collapsed first when there's no space for all columns */
     priority?: number;
 };
@@ -59,6 +59,7 @@ export type DataTableProps<T> = {
     listSkeleton?: FC;
     noColumnsCollapse?: boolean;
     quickFactScope?: string;
+    id?: string;
 };
 
 export type DataTableTableProps<T> = {
@@ -79,6 +80,7 @@ export type DataTableTableProps<T> = {
     onExpand?: (item: T) => void;
     noColumnsCollapse?: boolean;
     quickFactScope?: string;
+    id?: string;
 };
 
 export type DataTableListProps<T> = {
@@ -95,6 +97,7 @@ export type DataTableListProps<T> = {
     sortedBy?: DataTableSortedBy<T>;
     listComponent: FC<DataItemComponentProps<T>>;
     listSkeleton?: FC;
+    id?: string;
 };
 
 export type DataTableHeaderProps<T> = {
@@ -148,6 +151,7 @@ export type DataTableCellProps<T> = {
     onMouseOver: () => void;
     onMouseOut: () => void;
     onClick?: OnDataTableRowClickHandler<T>;
+    id?: string;
 };
 
 export type DataTablePaginationProps = {
@@ -165,6 +169,7 @@ export type ExpandCellProps = {
     onMouseOver: () => void;
     onMouseOut: () => void;
     className: string;
+    id?: string;
 };
 
 export type ExpandedContentProps<T> = {
@@ -173,6 +178,7 @@ export type ExpandedContentProps<T> = {
     isExpanded: boolean;
     expandedComponent?: FC<DataItemComponentProps<T>>;
     collapsedColumns: DataTableColumn<T>[];
+    id?: string;
 };
 
 export type SelectionCellProps = {
@@ -184,4 +190,5 @@ export type SelectionCellProps = {
     onMouseOut?: () => void;
     className: string;
     indeterminate?: boolean;
+    id?: string;
 };
