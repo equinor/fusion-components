@@ -123,7 +123,7 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
     );
 
     return (
-        <div className={containerClassNames}>
+        <div id={id} className={containerClassNames}>
             <div className={styles.collapseButtonContainer}>
                 <CollapseExpandButton isCollapsed={isCollapsed} onClick={toggleCollapsed} />
             </div>
