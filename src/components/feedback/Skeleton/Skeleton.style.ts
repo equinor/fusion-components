@@ -2,12 +2,25 @@ import { makeStyles, createStyles } from '@equinor/fusion-react-styles';
 
 export const useStyles = makeStyles(
     createStyles({
+        '@keyframes skeletonSlide': {
+            '0%': {
+                backgroundPosition: '0% 0%',
+            },
+
+            '50%': {
+                backgroundPosition: '-100% 0%',
+            },
+
+            '100%': {
+                backgroundPosition: '-200% 0%',
+            },
+        },
         skeleton: {
             display: 'inline-block',
             backgroundImage:
                 'linear-gradient(90deg, var(--color-black-alt4), var(--color-black-alt5), var(--color-black-alt4))',
             backgroundSize: '200% calc(var(--grid-unit) * 2px)',
-            animation: 'skeleton-slide 2s infinite forwards linear',
+            animation: '$skeletonSlide 2s infinite forwards linear',
             borderRadius: '4px',
         },
         bar: {
@@ -57,19 +70,6 @@ export const useStyles = makeStyles(
         },
         comfortable: {},
         compact: {},
-        '@keyframes skeleton-slide': {
-            '0%': {
-                backgroundPosition: '0% 0%',
-            },
-
-            '50%': {
-                backgroundPosition: '-100% 0%',
-            },
-
-            '100%': {
-                backgroundPosition: '-200% 0%',
-            },
-        },
     })
 );
 export default useStyles;
