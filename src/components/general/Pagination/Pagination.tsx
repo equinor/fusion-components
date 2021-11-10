@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import styles from './styles.less';
+import { useStyles } from './Pagination.style';
 import {
     Pagination as PaginationConfig,
     Page,
@@ -37,10 +37,13 @@ const PaginationButton: FC<PaginationButtonProps> = ({ page, isCurrent, onClick 
         {page.value}
     </Button>
 );
+const Padding: FC = () => {
+    const styles = useStyles();
+    return <span className={styles.padding}>...</span>;
+};
 
-const Padding: FC = () => <span className={styles.padding}>...</span>;
-
-const Pagination: FC<PaginationProps> = ({ pagination, onChange }) => {
+export const Pagination: FC<PaginationProps> = ({ pagination, onChange }) => {
+    const styles = useStyles();
     const { currentPage, head, center, tail } = pagination;
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
@@ -108,6 +111,7 @@ const Pagination: FC<PaginationProps> = ({ pagination, onChange }) => {
 };
 
 export const PaginationSkeleton: FC<SkeletonPaginationProps> = ({ pagination }) => {
+    const styles = useStyles();
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     return (
         <div className={containerClassNames}>
