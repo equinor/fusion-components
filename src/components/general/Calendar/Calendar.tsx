@@ -5,7 +5,8 @@ import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/f
 
 import { IconButton, Button, PaginationArrow } from '@equinor/fusion-components';
 import Day from './Day';
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './Calendar.style';
 
 type CalendarProps = {
     initialYear: number;
@@ -22,6 +23,7 @@ export const Calendar: FC<CalendarProps> = ({
     interactive,
     onChange,
 }) => {
+    const styles = useStyles();
     const [year, setYear] = useState(initialYear);
     const [month, setMonth] = useState(initialMonth);
     const calendar = useMemo(() => createCalendar(year, month), [year, month]);
@@ -77,7 +79,7 @@ export const Calendar: FC<CalendarProps> = ({
                 <IconButton onClick={prevMonth}>
                     <PaginationArrow next={false} />
                 </IconButton>
-                <h4>{monthName}</h4>
+                <h4 className={styles.h4}>{monthName}</h4>
                 {!isCurrentMonth && (
                     <div className={styles.todayButton}>
                         <Button onClick={gotoToday}>Today</Button>
@@ -89,7 +91,14 @@ export const Calendar: FC<CalendarProps> = ({
             </header>
             <div className={styles.grid}>
                 {weekDays.map((weekDay) => (
-                    <header key={weekDay}>{weekDay}</header>
+                    <header
+                        style={{
+                            background: 'var(--color-black-alt4)',
+                        }}
+                        key={weekDay}
+                    >
+                        {weekDay}
+                    </header>
                 ))}
                 {calendar.dates.map((d) => (
                     <Day
