@@ -18,8 +18,8 @@ export const useStyles = makeStyles(
             whiteSpace: 'nowrap',
         },
         buttons: {
-            margin: '0 calc(var(--range-padding))',
-            whiteSpace: 'nowrap',
+            display: 'flex',
+            alignItems: 'center',
         },
         comfortable: {
             '--padding-width': 'calc(var(--grid-unit) * 5px)',
