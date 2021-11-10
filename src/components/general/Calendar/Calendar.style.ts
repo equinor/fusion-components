@@ -39,7 +39,7 @@ export const useStyles = makeStyles(
                 background: 'var(--color-black-alt4)',
             },
 
-            '& header, $day': {
+            '& header, &$day': {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -51,13 +51,12 @@ export const useStyles = makeStyles(
         day: {
             '&$isToday': {
                 fontWeight: 'bold',
+                color: 'red',
             },
             '&$notSelectedMonth': {
                 color: 'var(--color-black-alt3)',
             },
         },
-        isToday: {},
-        notSelectedMonth: {},
         comfortable: {},
         compact: {},
     })

@@ -79,7 +79,7 @@ export const Calendar: FC<CalendarProps> = ({
                 <IconButton onClick={prevMonth}>
                     <PaginationArrow next={false} />
                 </IconButton>
-                <h4 className={styles.h4}>{monthName}</h4>
+                <h4>{monthName}</h4>
                 {!isCurrentMonth && (
                     <div className={styles.todayButton}>
                         <Button onClick={gotoToday}>Today</Button>
@@ -91,14 +91,7 @@ export const Calendar: FC<CalendarProps> = ({
             </header>
             <div className={styles.grid}>
                 {weekDays.map((weekDay) => (
-                    <header
-                        style={{
-                            background: 'var(--color-black-alt4)',
-                        }}
-                        key={weekDay}
-                    >
-                        {weekDay}
-                    </header>
+                    <header key={weekDay}>{weekDay}</header>
                 ))}
                 {calendar.dates.map((d) => (
                     <Day
