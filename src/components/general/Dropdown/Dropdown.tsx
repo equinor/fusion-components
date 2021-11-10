@@ -15,7 +15,7 @@ import {
     useElevationClassName,
     useRelativePositioning,
 } from '@equinor/fusion-components';
-import styles from './styles.less';
+import { useStyles } from './Dropdown.style';
 import { enqueueAsyncOperation, AsyncOperation } from '@equinor/fusion';
 
 export type DropdownController = {
@@ -63,7 +63,7 @@ const useLoop = (handler: AsyncOperation<void>, dependencies: any[] = []) => {
         try {
             await enqueueAsyncOperation(handler, abortSignal);
             loopAsync(abortSignal);
-        } catch (e) {}
+        } catch (e) { }
     };
     useEffect(() => {
         const abortController = new AbortController();
@@ -72,7 +72,8 @@ const useLoop = (handler: AsyncOperation<void>, dependencies: any[] = []) => {
     }, dependencies);
 };
 
-const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) => {
+export const Dropdown: FC<DropdownProps> = ({ controller, justification, children }) => {
+    const styles = useStyles();
     const { isOpen, setIsOpen, node, controllerRef } = controller;
     const outerRef = useRef<HTMLDivElement | null>(null);
     const close = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
