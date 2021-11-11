@@ -6,7 +6,7 @@ export const useStyles = makeStyles(
             display: 'inline-block',
 
             '&:hover': {
-                '&$title, &$removeButton': {
+                '& $title, & $removeButton': {
                     color: 'var(--chip-hover-color)',
                 },
             },
@@ -30,7 +30,7 @@ export const useStyles = makeStyles(
         },
         title: {
             margin: 0,
-            '&$removeButton': {
+            '& + $removeButton': {
                 paddingLeft: 'calc(var(--grid-unit) * 1px)',
             },
         },
@@ -49,11 +49,11 @@ export const useStyles = makeStyles(
             '--chip-background-color': 'var(--color-black-alt5)',
             '--chip-hover-color': 'var(--color-black-alt2)',
 
-            '&$chip': {
+            '& $chip': {
                 cursor: 'not-allowed',
             },
         },
     }),
-    { name: 'fusion-component-Chip' }
+    { name: 'fusion-component-chip' }
 );
 export default useStyles;
