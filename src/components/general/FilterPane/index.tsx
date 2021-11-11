@@ -6,6 +6,7 @@ import { useComponentDisplayClassNames } from '@equinor/fusion';
 import CollapseExpandButton from './components/CollapseExpandButton';
 import Section from './components/Section';
 import styles from './styles.less';
+import { useStyles } from './FilterPane.style';
 import applyFilters, {
     filterAndNotify,
     mergeTerms,
@@ -55,6 +56,7 @@ function FilterPane<T>({
     onResetAll,
     showResetAllButton,
 }: FilterPaneProps<T>) {
+    const styles = useStyles();
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [filterCount, setFilterCount] = useState<Count[]>([]);
 

@@ -6,7 +6,8 @@ import SearchFilterComponent from './SearchFilterComponent';
 import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
 import FilterTypes from '../filterTypes';
-import styles from '../styles.less';
+import { useStyles } from '../FilterPane.style';
+//import styles from '../styles.less';
 import { FilterTerm, Filter as FilterConfig } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';
@@ -87,6 +88,7 @@ type FilterProps<T> = {
 };
 
 function Filter<T>({ filter, term: defaultTerm, filterCount, onChange, id }: FilterProps<T>) {
+    const styles = useStyles();
     const [term, setTerm] = useState<FilterTerm | null>(defaultTerm || null);
     const [isCollapsed, setIsCollapsed] = useState(filter.isCollapsed);
 
@@ -160,7 +162,7 @@ function Filter<T>({ filter, term: defaultTerm, filterCount, onChange, id }: Fil
                     <h4>
                         <FilterTitle filter={filter} term={term} />
                     </h4>
-                    <Button 
+                    <Button
                         id="reset-btn"
                         frameless
                         disabled={!term || !term.value || !term.value.length}
