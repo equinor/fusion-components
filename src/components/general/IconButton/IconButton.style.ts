@@ -29,8 +29,16 @@ export const useStyles = makeStyles(
             //'&:focus$isToggler$iconContainer': {
             '&:focus': {
                 '& $iconContainer': {
-                    border: 'none',
-                    backgroundColor: 'var(--color-primary-hover-alt1)',
+                    border: '1px',
+                    borderRadius: '50%',
+                    borderStyle: 'dashed',
+                    borderColor: 'var(--color-primary)',
+                },
+                '& $isToggler': {
+                    '& $iconContainer': {
+                        border: 'none',
+                        backgroundColor: 'var(--color-primary-hover-alt1)',
+                    },
                 },
                 '& $isActive': {
                     '& $iconContainer': {
@@ -75,12 +83,8 @@ export const useStyles = makeStyles(
                 borderRadius: '1px',
                 border: '1px solid var(--color-black-alt4)',
             },
-            '& $isActive': {
-                '& $iconContainer': {
-                    backgroundColor: 'var(--color-primary)',
-                },
-            },
         },
+
         comfortable: {
             width: 'calc((var(--grid-unit) * 6px) - 2px)',
             height: 'calc((var(--grid-unit) * 6px) - 2px)',
@@ -121,6 +125,7 @@ export const useStyles = makeStyles(
                 },
             },
         },
+        isDisabled: {},
     }),
     { name: 'fusion-component-iconButton' }
 );
