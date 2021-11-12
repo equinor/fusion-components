@@ -83,18 +83,15 @@
             border-color: var(--color-primary);
         }
 
-        &.isToggler {
-            .iconContainer {
+        &.isToggler.iconContainer {
                 border: none;
                 background-color: var(--color-primary-hover-alt1);
-            }
-
-            &.isActive {
-                .iconContainer {
-                    background-color: var(--color-primary);
-                }
-            }
+            
         }
+        &.isToggler.isActive {
+            .iconContainer {
+                background-color: var(--color-primary);
+            }
     }
 
     &.isActive {

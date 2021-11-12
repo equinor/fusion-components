@@ -1,18 +1,20 @@
 import { forwardRef, PropsWithChildren, MutableRefObject, useRef, MouseEvent } from 'react';
 import classNames from 'classnames';
 
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './IconButton.style';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
-type IconButtonProps = JSX.IntrinsicElements['button']&{
+type IconButtonProps = JSX.IntrinsicElements['button'] & {
     active?: boolean;
     toggler?: boolean;
     disabled?: boolean;
-//    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+    //    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const IconButton = forwardRef<HTMLButtonElement | null, PropsWithChildren<IconButtonProps>>(
     ({ active, toggler, disabled, children, ...props }, ref) => {
+        const styles = useStyles();
         const buttonClassNames = classNames(
             styles.container,
             useComponentDisplayClassNames(styles),
