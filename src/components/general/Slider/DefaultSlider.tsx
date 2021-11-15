@@ -1,7 +1,8 @@
 import { useCallback, useState, FC, MouseEvent } from 'react';
 
 import Marker, { SliderMarker } from './Marker';
-import styles from './styles.less';
+import { useStyles } from './Slider.style';
+//import styles from './styles.less';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { useEventListener } from '@equinor/fusion-components';
@@ -17,6 +18,7 @@ type SliderProps = {
 };
 
 const Slider: FC<SliderProps> = ({ value, markers, disabled, hideHandle, onChange }) => {
+    const styles = useStyles();
     const { calculatePosition, markerFinder, trackRef, sortedMarkers } = useSliderTrack(markers);
 
     const onTrackClick = useCallback(

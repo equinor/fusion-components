@@ -1,6 +1,7 @@
 import { useCallback, FC, MouseEvent } from 'react';
 
-import styles from './styles.less';
+import { useStyles } from './Slider.style';
+//import styles from './styles.less';
 import classNames from 'classnames';
 
 export type SliderMarker = {
@@ -19,6 +20,7 @@ type SliderMarkerProps = {
 };
 
 const Marker: FC<SliderMarkerProps> = ({ marker, isActive, disabled, position, onClick }) => {
+    const styles = useStyles();
     const onClickHandler = useCallback(
         (e: MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
