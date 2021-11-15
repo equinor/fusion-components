@@ -3,50 +3,53 @@ import { makeStyles, createStyles } from '@equinor/fusion-react-styles';
 export const useStyles = makeStyles(
     createStyles({
         popoverContainer: {
+            '--arrow-width': '12px',
+            '--arrow-height': '8px',
 
-    [['&.start.below',
-    '&.start.above']].join(',') {
-        left: 0,
+            padding: 'calc(var(--grid-unit) * 2px)',
+            background: 'white',
+            border: '1px solid var(--color-black-alt4)',
+            borderRadius: '4px',
+            position: 'absolute',
+            pointerEvents: 'all',
 
-        '& $arrow': {
-            left: 'calc(var(--grid-unit) * 1px)',
-        }
+            [['& $start$below', '& $start$above'].join(',')]: {
+                left: 0,
 
-        '& $isCentered': {
-            left: 'calc(50% - (var(--grid-unit) * 1px) - (var(--arrow-width) / 2))',
-        }
-    }
+                '& $arrow': {
+                    left: 'calc(var(--grid-unit) * 1px)',
+                },
 
-    &.center.below,
-    &.center.above {
-        left: 50%;
-        transform: translateX(-50%);
+                '& $isCentered': {
+                    left: 'calc(50% - (var(--grid-unit) * 1px) - (var(--arrow-width) / 2))',
+                },
+            },
 
-        .arrow {
-            left: 50%;
-            transform: translateX(-50%);
-        }
+            [['& $center$below', '& $center$above'].join(',')]: {
+                left: '50%',
+                transform: 'translateX(-50%)',
 
-        &.above .arrow {
-            transform: translateX(-50%) rotate(180deg);
-        }
-    }
+                '& $arrow': {
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                },
 
-    &.end.below,
-    &.end.above {
-        right: 0;
+                '& $above $arrow': {
+                    transform: 'translateX(-50%) rotate(180deg)',
+                },
+            },
 
-        .arrow {
-            right: calc(var(--grid-unit) * 1px);
-        }
+            [['& $end$below', '& $end$above'].join(',')]: {
+                right: 0,
 
-        &.isCentered {
-            right: calc(50% - (var(--grid-unit) * 1px) - (var(--arrow-width) / 2));
-        }
-    }
+                '& $arrow': {
+                    right: 'calc(var(--grid-unit) * 1px)',
+                },
 
-
-
+                '& $isCentered ': {
+                    right: 'calc(50% - (var(--grid-unit) * 1px) - (var(--arrow-width) / 2))',
+                },
+            },
         },
         fillWithContent: {
             padding: 0,
@@ -61,9 +64,37 @@ export const useStyles = makeStyles(
                 bottom: '100%',
             },
         },
-        above: {},
-        left: {},
-        right: {},
+        above: {
+            bottom: '100%',
+            marginBottom: 'calc(var(--grid-unit) * 1px)',
+
+            '& $arrow': {
+                top: '100%',
+                transform: 'rotate(180deg)',
+            },
+        },
+        left: {
+            right: '100%',
+            marginRight: 'calc(var(--grid-unit) * 1px)',
+
+            '& $arrow': {
+                transform: 'rotate(90deg)',
+
+                left: '100%',
+                marginLeft: '-2px',
+            },
+        },
+        right: {
+            left: '100%',
+            marginLeft: 'calc(var(--grid-unit) * 1px)',
+
+            '& $arrow': {
+                transform: 'rotate(-90deg)',
+
+                right: '100%',
+                marginRight: '-2px',
+            },
+        },
         isCentered: {},
     })
 );
