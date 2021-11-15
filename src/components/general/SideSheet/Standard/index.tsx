@@ -2,7 +2,8 @@ import { FC, useState, useCallback, useEffect, ReactNode, useMemo } from 'react'
 
 import classNames from 'classnames';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './Standard.style';
 import CollapseExpandButton from './CollapseExpandButton';
 import {
     OverlayPortal,
@@ -42,6 +43,7 @@ const SideSheet: FC<StandardSideSheetProps> = ({
         onClose(!isOpen);
     }, [isOpen]);
 
+    const styles = useStyles();
     const windowWidth = (window.innerWidth / 3) * 2;
     const { resizedSize, isResizing, onResizeStart } = useResizablePanel(
         {
@@ -84,7 +86,7 @@ const SideSheet: FC<StandardSideSheetProps> = ({
             <div className={styles.header}>
                 <div className={styles.collapseButtonContainer}>
                     <CollapseExpandButton
-                        id="collapse-expand-button" 
+                        id="collapse-expand-button"
                         isOpen={isOpen}
                         onClick={toggleOpen}
                         screenPlacement={screenPlacement}
