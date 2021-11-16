@@ -7,7 +7,7 @@ export const useStyles = makeStyles(
             width: '100%',
             height: 'calc(var(--grid-unit) * 6px)',
 
-            '--track-z-index': 1,
+            '--track-z-index': '1',
             '--slider-z-index': 'calc(var(--track-z-index) + 1)',
             '--marker-z-index': 'calc(var(--slider-z-index) + 1)',
             '--handle-z-index': 'calc(var(--marker-z-index) + 1)',
@@ -32,9 +32,7 @@ export const useStyles = makeStyles(
                 },
             },
         },
-        isLowered: {
-            height: 'calc(var(--grid-unit) * 8px)',
-        },
+        isLowered: {},
         track: {
             position: 'absolute',
             //zIndex: 'var(--track-z-index)',
@@ -64,9 +62,13 @@ export const useStyles = makeStyles(
             borderRadius: '50%',
             boxSizing: 'border-box',
         },
+        noTransition: {
+            transition: 'none',
+        },
         handle: {
             position: 'absolute',
-            //zIndex: 'var(--handle-z-index)',
+            //@ts-ignore
+            zIndex: 'var(--handle-z-index)',
             top: '50%',
             transform: 'translateY(-50%) translateX(-50%)',
             width: 'calc(var(--grid-unit) * 5px)',
@@ -91,7 +93,8 @@ export const useStyles = makeStyles(
         },
         marker: {
             position: 'absolute',
-            //zIndex: 'var(--marker-z-index)',
+            //@ts-ignore
+            zIndex: 'var(--marker-z-index)',
             top: '50%',
             transform: 'translateY(-50%) translateX(-50%)',
             width: 'calc(var(--grid-unit) * 5px)',
@@ -122,6 +125,8 @@ export const useStyles = makeStyles(
                 },
             },
         },
+        isElevated: {},
+
         mouseIsDown: {
             '& $slider, & $handle': {
                 transition: 'none',
@@ -163,6 +168,8 @@ export const useStyles = makeStyles(
                 pointerEvents: 'none',
             },
         },
+        compact: {},
+        comfortable: {},
     })
 );
 
