@@ -40,6 +40,7 @@ type PositionCardProps = {
     onExpand?: (position: Position, instance?: PositionInstance) => void;
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
+    anonymize?: boolean;
 } & CustomCardStyles;
 
 const useCardStyles = ({ backgroundStyle, borderStyle }: CustomCardStyles) =>
@@ -95,6 +96,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showTaskOwner,
     backgroundStyle,
     borderStyle,
+    anonymize,
 }) => {
     const isExternalHire =
         instance &&
@@ -173,6 +175,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     rotationInstances={rotatingInstances}
                     personPhotoComponent={personPhotoComponent}
                     showTaskOwner={showTaskOwner}
+                    anonymize={anonymize}
                 />
                 <PositionInstanceComponent
                     position={position}
@@ -188,10 +191,15 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     childCountType={childCountType}
                     rotationInstances={rotatingInstances}
                     selectedDate={selectedDate}
+                    anonymize={anonymize}
                 />
             </div>
             {showRotation && allInstances.length > 1 && rotatingInstances.length > 0 && (
-                <RotationInstances allInstances={allInstances} position={position} />
+                <RotationInstances
+                    allInstances={allInstances}
+                    position={position}
+                    anonymize={anonymize}
+                />
             )}
         </div>
     );
