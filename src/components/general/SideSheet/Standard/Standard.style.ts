@@ -81,7 +81,6 @@ export const useStyles = makeStyles(
         collapseButtonContainer: {
             width: 'calc(var(--grid-unit) * 6px)',
             height: 'calc(var(--grid-unit) * 6px)',
-            borderBottom: '1px solid var(--color-black-alt4)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
