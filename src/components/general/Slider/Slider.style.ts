@@ -31,6 +31,20 @@ export const useStyles = makeStyles(
                     },
                 },
             },
+            '& $isLowered': {
+                height: 'calc(var(--grid-unit) * 8px)',
+            },
+
+            '& $isElevated': {
+                '& label': {
+                    top: 0,
+                    bottom: 'auto',
+                },
+            },
+
+            '& $noTransition': {
+                transition: 'none',
+            },
         },
         isLowered: {},
         track: {
@@ -62,9 +76,7 @@ export const useStyles = makeStyles(
             borderRadius: '50%',
             boxSizing: 'border-box',
         },
-        noTransition: {
-            transition: 'none',
-        },
+        noTransition: {},
         handle: {
             position: 'absolute',
             //@ts-ignore
@@ -74,10 +86,6 @@ export const useStyles = makeStyles(
             width: 'calc(var(--grid-unit) * 5px)',
             height: 'calc(var(--grid-unit) * 5px)',
             transition: 'left 0.2s',
-
-            '& $noTransition': {
-                transition: 'none',
-            },
 
             '& $dot': {
                 width: 'calc(var(--grid-unit) * 1.5px)',
@@ -112,17 +120,6 @@ export const useStyles = makeStyles(
                 whiteSpace: 'nowrap',
                 fontSize: '11px',
                 cursor: 'pointer',
-            },
-
-            '& $isLowered': {
-                height: 'calc(var(--grid-unit) * 8px)',
-            },
-
-            '& $isElevated': {
-                '& label': {
-                    top: 0,
-                    bottom: 'auto',
-                },
             },
         },
         isElevated: {},

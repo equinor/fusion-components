@@ -1,7 +1,6 @@
 import { useCallback, FC, MouseEvent } from 'react';
 
 import { useStyles } from './Slider.style';
-//import styles from './styles.less';
 import classNames from 'classnames';
 
 export type SliderMarker = {
