@@ -1,7 +1,5 @@
-import { useContext, useEffect, FC, useCallback, useMemo } from 'react';
-
+import { useContext, useEffect, FC, useMemo } from 'react';
 import { PowerBIEmbed, EventHandler } from 'powerbi-client-react';
-
 import { context, PowerBIEmbedEvents } from '../../context';
 import { IEmbedConfiguration, service as PowerBIServices, factories } from 'powerbi-client';
 import useConfig from './useConfig';
@@ -47,10 +45,9 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
         [event$]
     );
 
-    const getEmbeddedComponent = useCallback(
-        (value) => (component?.current ? (component.current = value) : null),
-        [component]
-    );
+    const getEmbeddedComponent = (value) => {
+        component.current = value;
+    };
 
     usePowerBIFilters(event$, config?.filters);
 

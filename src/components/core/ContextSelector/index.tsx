@@ -116,7 +116,7 @@ const ContextSelector: FC = () => {
             const hasFocus = inputRef.current === document.activeElement;
 
             return (
-                <div className={styles.flexContainer}>
+                <div data-cy="context-selector" className={styles.flexContainer}>
                     <SearchIcon color="#DADADA" />
                     <div style={{ position: 'relative' }}>
                         <input
@@ -244,7 +244,7 @@ const ContextSelector: FC = () => {
     return (
         <div className={containerClassNames} ref={containerRef}>
             <Dropdown controller={dropdownController}>
-                <div className={styles.dropdownContainer}>
+                <div data-cy="context-selector-dropdown" className={styles.dropdownContainer}>
                     {helperText ? (
                         <div className={styles.helperText}>{helperText}</div>
                     ) : (

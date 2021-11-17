@@ -1,21 +1,19 @@
 import { forwardRef, PropsWithChildren } from 'react';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
-import styles from './styles.less';
+import { useStyles } from './Container.style';
 
 type FusionContainerProps = {
     noHeader?: boolean;
 };
 
-const FusionContainer = forwardRef<HTMLDivElement, PropsWithChildren<FusionContainerProps>>(
+export const FusionContainer = forwardRef<HTMLDivElement, PropsWithChildren<FusionContainerProps>>(
     ({ noHeader = false, children }, ref) => {
-        const containerClassNames = classNames(
-            styles.container,
-            useComponentDisplayClassNames(styles),
-            {
-                [styles.noHeader]: noHeader,
-            }
-        );
+        const styles = useStyles();
+
+        const containerClassNames = classNames(styles.root, useComponentDisplayClassNames(styles), {
+            [styles.noHeader]: noHeader,
+        });
 
         return (
             <div className={containerClassNames} ref={ref}>

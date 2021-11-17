@@ -8,6 +8,7 @@ function DataTableExpandedContent<T>({
     item,
     rowIndex,
     collapsedColumns,
+    id,
 }: ExpandedContentProps<T>) {
     if (!isExpanded) {
         return null;
@@ -41,7 +42,7 @@ function DataTableExpandedContent<T>({
         );
     };
 
-    return <div className={styles.expandedContent}>{renderExpandedContent()}</div>;
+    return <div id={id} className={styles.expandedContent}>{renderExpandedContent()}</div>;
 }
 
 export default DataTableExpandedContent;
