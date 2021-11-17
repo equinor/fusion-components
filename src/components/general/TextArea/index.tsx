@@ -1,4 +1,5 @@
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './TextArea.style';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -55,6 +56,7 @@ const TextArea = forwardRef<HTMLTextAreaElement | null, PropsWithChildren<TextAr
         },
         ref
     ) => {
+        const styles = useStyles();
         const [focus, setFocus] = useState(false);
         const inputRef =
             (ref as MutableRefObject<HTMLTextAreaElement | null>) ||
