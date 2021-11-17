@@ -1,4 +1,3 @@
-//import styles from './styles.less';
 import { useStyles } from './TextArea.style';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
