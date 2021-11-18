@@ -7,45 +7,21 @@ export const useStyles = makeStyles(
             flexDirection: 'column',
             overflow: 'auto',
             height: '100%',
-
-            '& $current': {
-                color: 'var(--color-primary)',
-                borderBottom: '2px solid var(--color-primary)',
-                paddingBottom: 'calc(var(--grid-unit) * 0.5px - 2px)',
-
-                '&:hover': {
-                    backgroundColor: 'initial',
-                    color: 'var(--color-primary-hover)',
-                },
-                '& $pressed': {
-                    borderRadius:
-                        'calc(var(--grid-unit) * 1px) calc(var(--grid-unit) * 1px) 0px 0px',
-                },
-                '& $title': {
-                    outline: 'none',
-                },
-            },
-            '& $showGradientLeft': {
-                '& $gradientLeft': {
-                    opacity: 1,
-                    background: 'linear-gradient(90deg, #fff 23.44%, rgba(255, 255, 255, 0) 100%)',
-                },
-            },
-
-            '& $showGradientRight': {
-                '& $gradientRight': {
-                    opacity: 1,
-                    background: 'linear-gradient(270deg, #fff 23.44%, rgba(255, 255, 255, 0) 100%)',
-                },
-            },
-            '& $pressed': {
-                outline: 'none',
-                backgroundColor: 'initial',
-                '& $title': {
-                    outline: 'none',
-                },
+        },
+        showGradientLeft: {
+            '&$gradientLeft': {
+                opacity: 1,
+                background: 'linear-gradient(90deg, #fff 23.44%, rgba(255, 255, 255, 0) 100%)',
             },
         },
+
+        showGradientRight: {
+            '&$gradientRight': {
+                opacity: 1,
+                background: 'linear-gradient(270deg, #fff 23.44%, rgba(255, 255, 255, 0) 100%)',
+            },
+        },
+
         tabsPane: {
             display: 'flex',
             flexDirection: 'row',
@@ -54,25 +30,25 @@ export const useStyles = makeStyles(
             scrollBehavior: 'smooth',
             flexShrink: 0,
 
-            '& $gradientRight': {
-                right: 0,
-            },
-
             '&::-webkit-scrollbar': {
                 display: 'none',
             },
-
-            '& $disabled': {
-                cursor: 'not-allowed',
-                color: 'var(--color-black-alt4) !important',
-                '&:hover': {
-                    backgroundColor: 'initial',
-                },
-            },
         },
-
-        pressed: {},
-        current: {},
+        gradientLeft: {
+            height: 'calc(var(--grid-unit) * 8px)',
+            width: 'calc(var(--grid-unit) * 8px)',
+            position: 'absolute',
+            opacity: 0,
+            pointerEvents: 'none',
+        },
+        gradientRight: {
+            height: 'calc(var(--grid-unit) * 8px)',
+            width: 'calc(var(--grid-unit) * 8px)',
+            position: 'absolute',
+            opacity: 0,
+            pointerEvents: 'none',
+            right: 0,
+        },
 
         title: {
             fontSize: '16px',
@@ -84,6 +60,12 @@ export const useStyles = makeStyles(
             alignItems: 'center',
             justifyContent: 'center',
             outline: 'none',
+
+            '&$pressed': {
+                backgroundColor: 'var(--color-primary-alt4)',
+                borderRadius: 'calc(var(--grid-unit) * 0.5px)',
+                outline: 'none',
+            },
         },
 
         tab: {
@@ -106,21 +88,50 @@ export const useStyles = makeStyles(
             whiteSpace: 'nowrap',
             flexShrink: 0,
 
-            '& $pressed': {
-                backgroundColor: 'var(--color-primary-alt4)',
-                borderRadius: 'calc(var(--grid-unit) * 0.5px)',
-                outline: 'none',
-            },
-
             '&:focus': {
                 outline: 'none',
-                '& $title': {
+                '&$title': {
                     outline: '1px dashed var(--color-black-alt3)',
                 },
             },
 
             '&:hover': {
                 backgroundColor: 'var(--color-primary-hover-alt1)',
+            },
+
+            '&$pressed': {
+                outline: 'none',
+                backgroundColor: 'initial',
+                '&$title': {
+                    outline: 'none',
+                },
+            },
+        },
+
+        pressed: {},
+
+        disabled: {
+            cursor: 'not-allowed',
+            color: 'var(--color-black-alt4) !important',
+            '&:hover': {
+                backgroundColor: 'initial',
+            },
+        },
+
+        current: {
+            color: 'var(--color-primary)',
+            borderBottom: '2px solid var(--color-primary)',
+            paddingBottom: 'calc(var(--grid-unit) * 0.5px - 2px)',
+
+            '&:hover': {
+                backgroundColor: 'initial',
+                color: 'var(--color-primary-hover)',
+            },
+            '&$pressed': {
+                borderRadius: 'calc(var(--grid-unit) * 1px) calc(var(--grid-unit) * 1px) 0px 0px',
+            },
+            '&$title': {
+                outline: 'none',
             },
         },
 
@@ -129,23 +140,6 @@ export const useStyles = makeStyles(
             flexGrow: 1,
             height: '1px', // flexbox bug
         },
-        showGradientRight: {},
-        showGradientLeft: {},
-        gradientLeft: {
-            height: 'calc(var(--grid-unit) * 8px)',
-            width: 'calc(var(--grid-unit) * 8px)',
-            position: 'absolute',
-            opacity: 0,
-            pointerEvents: 'none',
-        },
-        gradientRight: {
-            height: 'calc(var(--grid-unit) * 8px)',
-            width: 'calc(var(--grid-unit) * 8px)',
-            position: 'absolute',
-            opacity: 0,
-            pointerEvents: 'none',
-        },
-        disabled: {},
         comfortable: {},
         compact: {},
     }),
