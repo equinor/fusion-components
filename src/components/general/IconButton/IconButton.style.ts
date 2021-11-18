@@ -14,11 +14,11 @@ export const useStyles = makeStyles(
                 '& $disabled',
                 '& $isDisabled:active',
                 '& $isDisabled:hover',
-                '& $isDisabled:hover:not(& $:active)',
-                '& $isDisabled:hover:not(& $:active):not(& $isActive)',
+                '& $isDisabled:hover:not(:active)',
+                '& $isDisabled:hover:not(:active):not($isActive)',
             ].join(',')]: {
                 cursor: 'not-allowed',
-                '& $iconContainer': {
+                '&$iconContainer': {
                     color: 'var(--color-black-alt3)',
                     background: 'none',
                     borderColor: 'transparent',
@@ -30,9 +30,9 @@ export const useStyles = makeStyles(
                 '& $iconContainer': {
                     backgroundColor: 'var(--color-primary-alt4)',
                     borderColor: 'var(--color-primary-alt4)',
-                    color: 'var(--color-primary)',
+                    color: 'var(--color-primary) !important',
                 },
-                '& $isToggler': {
+                '&$isToggler': {
                     '& $iconContainer': {
                         margin: 'auto',
                         width: 'calc(var(--grid-unit) * 4px)',
@@ -45,16 +45,16 @@ export const useStyles = makeStyles(
             },
 
             '&:hover': {
-                '& $iconContainer': {
+                '&$iconContainer': {
                     backgroundColor: 'var(--color-primary-alt4)',
                     borderColor: 'var(--color-primary-alt4)',
                     color: 'var(--color-primary-hover)',
                 },
-                '&:not(& $:active)': {
+                '&:not(:active)': {
                     '& $iconContainer': {
                         backgroundColor: 'var(--color-primary-hover)',
                     },
-                    '&:not(& $isActive)': {
+                    '&:not($isActive)': {
                         '& $iconContainer': {
                             backgroundColor: 'var(--color-primary-hover-alt1)',
                         },
@@ -63,6 +63,25 @@ export const useStyles = makeStyles(
             },
 
             //'&:focus$isToggler$iconContainer': {
+            // '&:focus': {
+            //     '& $iconContainer': {
+            //         border: '1px',
+            //         borderRadius: '50%',
+            //         borderStyle: 'dashed',
+            //         borderColor: 'var(--color-primary)',
+            //     },
+            //     '&$isToggler$iconContainer': {
+            //         border: 'none',
+            //         backgroundColor: 'var(--color-primary-hover-alt1)',
+            //     },
+
+            //     '&$isToggler$isActive': {
+            //         '& $iconContainer': {
+            //             backgroundColor: 'var(--color-primary)',
+            //         },
+            //     },
+            // },
+
             '&:focus': {
                 '& $iconContainer': {
                     border: '1px',
@@ -70,21 +89,24 @@ export const useStyles = makeStyles(
                     borderStyle: 'dashed',
                     borderColor: 'var(--color-primary)',
                 },
-                '& $isToggler': {
+                '&$isToggler': {
                     '& $iconContainer': {
                         border: 'none',
                         backgroundColor: 'var(--color-primary-hover-alt1)',
                     },
-                },
-                '& $isActive': {
-                    '& $iconContainer': {
-                        backgroundColor: 'var(--color-primary)',
+
+                    '&$isActive': {
+                        '& $iconContainer': {
+                            backgroundColor: 'var(--color-primary)',
+                        },
                     },
                 },
             },
         },
 
         iconContainer: {
+            //border: 'none',
+            //borderRadius: 0,
             borderStyle: 'solid',
             display: 'flex',
             alignItems: 'center',
@@ -118,7 +140,7 @@ export const useStyles = makeStyles(
                 borderColor: 'var(--color-primary)',
                 color: 'var(--color-white)',
             },
-            '&:not(& $isToggler)': {
+            '&:not($isToggler)': {
                 '& $iconContainer': {
                     width: 'calc(100% - (var(--grid-unit) * 1px))',
                     height: 'calc(100% - (var(--grid-unit) * 1px))',
