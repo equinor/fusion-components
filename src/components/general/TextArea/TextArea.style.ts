@@ -31,6 +31,10 @@ export const useStyles = makeStyles(
         disabled: {
             borderBottomColor: 'var(--color-black-alt5)',
             cursor: 'not-allowed',
+
+            '&:hover': {
+                cursor: 'not-allowed',
+            },
         },
 
         focus: {
