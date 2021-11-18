@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { useState, useCallback, useEffect, FC } from 'react';
 import MenuItem, { MenuItemType, MenuItemComponentProps } from './MenuItem';
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './Menu.style';
 import {
     useKeyboardNavigation,
     Elevation,
@@ -34,6 +35,7 @@ function Menu<TItem extends MenuItemType = MenuItemType>({
     asideComponent,
     keyboardNavigationRef,
 }: MenuProps<TItem>) {
+    const styles = useStyles();
     const [focusedSectionKey, setFocusedSectionKey] = useState<string | null>(null);
     const [focusedItemKey, setFocusedItemKey] = useState<string | null>(null);
     const [skipDirection, setSkipDirection] = useState<number>(0);
