@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useAnchor, UseAnchorProps } from '../../ApplicationGuidance';
-import styles from './styles.less';
+import { useStyles } from './Components.style';
 
 type NavigationItemProps = {
     id?: string;
@@ -23,12 +23,13 @@ const NavigationItem = ({
     isDisabled,
     info,
 }: NavigationItemProps) => {
+    const styles = useStyles();
     const containerClassNames = classNames(styles.container, {
         [styles.isActive]: isActive,
         [styles.isCollapsed]: isCollapsed,
         [styles.menuSection]: type === 'section',
         [styles.menuChild]: type === 'child',
-        [styles.menuGrouping]: type === 'grouping',
+        //[styles.menuGrouping]: type === 'grouping',
         [styles.isDisabled]: isDisabled,
     });
 

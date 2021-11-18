@@ -5,7 +5,8 @@ import {
     useComponentDisplayType,
     ComponentDisplayType,
 } from '@equinor/fusion';
-import styles from './styles.less';
+import { useStyles } from './NavigationDrawer.style';
+//mport styles from './styles.less';
 import {
     NavigationChild,
     NavigationSection,
@@ -71,6 +72,7 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
     onChangeSelectedId,
     selectedId,
 }) => {
+    const styles = useStyles();
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
     const [internalStructure, setInternalStructure] = useState<NavigationStructure[]>();
     const displayType = useComponentDisplayType();
