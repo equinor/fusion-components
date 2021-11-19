@@ -6,7 +6,7 @@ import { Actions, actions } from './actions';
 type CheckAccess = Pick<
     ActionPayload<typeof actions.checkContextAccess.request>,
     'externalId' | 'type'
->;
+> & { silent?: boolean };
 
 export class Store extends EpicReducer<State, Actions> {
     set contextAccess(value: boolean) {
@@ -18,8 +18,10 @@ export class Store extends EpicReducer<State, Actions> {
         return () => this.dispatch(actions.fetchEmbedInfo.cancel());
     }
 
-    requestAccessToken(): VoidFunction {
-        this.dispatch(actions.fetchAccessToken.request(this.value.id));
+    requestAccessToken(silent?: boolean): VoidFunction {
+        this.dispatch(
+            actions.fetchAccessToken.request({ reportId: this.value.id, silent: !!silent })
+        );
         return () => this.dispatch(actions.fetchAccessToken.cancel());
     }
 

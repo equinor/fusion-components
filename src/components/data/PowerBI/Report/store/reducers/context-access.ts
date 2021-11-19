@@ -9,7 +9,7 @@ export const checkAccessContextReducer = (initial: State) =>
         .handleAction(checkContextAccess.request, (state, action) => ({
             ...state,
             hasContextAccess: undefined,
-            status: [...state.status, Status.AccessCheck],
+            status: action.payload.silent ? state.status : [...state.status, Status.AccessCheck],
             errors: removeError(state, action),
         }))
         .handleAction(checkContextAccess.success, (state) => ({

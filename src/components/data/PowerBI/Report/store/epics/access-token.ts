@@ -27,7 +27,7 @@ export const accessToken = <S extends { id: string }>(
     const request$ = action$.pipe(
         filter(isActionOf(actions.fetchAccessToken.request)),
         switchMap((action) =>
-            from(clients.report.getAccessToken(action.payload)).pipe(
+            from(clients.report.getAccessToken(action.payload.reportId)).pipe(
                 map((res) => actions.fetchAccessToken.success(res.data)),
                 catchError((error) => of(actions.fetchAccessToken.failure({ action, error }))),
                 takeUntil(action$.pipe(filter(isActionOf(actions.fetchAccessToken.cancel))))
@@ -48,7 +48,9 @@ export const accessToken = <S extends { id: string }>(
     );
 
     const refresh$ = acquired$.pipe(
-        switchMap(() => of(actions.fetchAccessToken.request(state$.value.id)))
+        switchMap(() =>
+            of(actions.fetchAccessToken.request({ reportId: state$.value.id, silent: true }))
+        )
     );
 
     return merge(request$, acquired$, refresh$);
