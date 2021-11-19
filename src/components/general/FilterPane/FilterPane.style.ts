@@ -86,7 +86,7 @@ export const useStyles = makeStyles(
 
             '& $isCollapsed': {
                 width: 'auto',
-                '& $compact, & $comfortable': {
+                '&$compact, &$comfortable': {
                     '& $content': {
                         '& $section': {
                             '& $filter': {
@@ -122,7 +122,7 @@ export const useStyles = makeStyles(
         compact: {
             width: 'calc(var(--grid-unit) * 37px)',
 
-            '& $isCollapsed': {
+            '&$isCollapsed': {
                 '& $content': {
                     padding: 0,
                 },
@@ -146,11 +146,11 @@ export const useStyles = makeStyles(
                         marginTop: 'calc(var(--grid-unit) * 1px)',
                     },
 
-                    '& $isCollapsed': {
+                    '&$isCollapsed': {
                         paddingBottom: 0,
                     },
 
-                    '& $hasTitle': {
+                    '&$hasTitle': {
                         '& $filter': {
                             marginLeft: 'calc(var(--grid-unit) * 1px)',
                         },
@@ -171,7 +171,7 @@ export const useStyles = makeStyles(
                             marginBottom: 0,
                         },
 
-                        '& $isCollapsed': {
+                        '&$isCollapsed': {
                             paddingBottom: 0,
                         },
 
@@ -209,7 +209,7 @@ export const useStyles = makeStyles(
         comfortable: {
             width: 'calc(var(--grid-unit) * 39px)',
 
-            '& $isCollapsed': {
+            '&$isCollapsed': {
                 '& $content': {
                     padding: 0,
                 },
@@ -230,11 +230,11 @@ export const useStyles = makeStyles(
                         marginTop: 'calc(var(--grid-unit) * 1px)',
                     },
 
-                    '& $isCollapsed': {
+                    '&$isCollapsed': {
                         paddingBottom: 0,
                     },
 
-                    '& $hasTitle': {
+                    '&$hasTitle': {
                         '& $filter': {
                             marginLeft: 'calc(var(--grid-unit) * 2px)',
                         },
@@ -255,7 +255,7 @@ export const useStyles = makeStyles(
                             marginBottom: 0,
                         },
 
-                        '& $isCollapsed': {
+                        '&$isCollapsed': {
                             paddingBottom: 0,
                         },
 
