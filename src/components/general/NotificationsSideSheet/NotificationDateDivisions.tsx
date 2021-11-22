@@ -1,7 +1,6 @@
 import { Fragment, FunctionComponent, useCallback, useMemo, useState } from 'react';
 
 import { NotificationCard } from '@equinor/fusion';
-//import styles from './styles.less';
 import { useStyles } from './NotificationSideSheet.style';
 
 import NotificationCardWrapper from './NotificaitonCardWrapper';
