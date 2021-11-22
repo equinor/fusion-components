@@ -15,6 +15,7 @@ const BreadCrumbs = () => {
             breadCrumbWidth,
             breadCrumbHeight,
             breadCrumbMargin,
+            // extendedBreadCrumbLine,
         },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
 
@@ -22,9 +23,12 @@ const BreadCrumbs = () => {
     const y = 0;
 
     const renderLink = useCallback(
-        (index: number) => {
+        (index: number, extendedBreadCrumbLine?: boolean) => {
+            const mx = extendedBreadCrumbLine ? 0 : x - breadCrumbWidth * (index + 1);
+            const my = y + breadCrumbHeight / 2 + 0.5;
+
             const path = `
-            M ${x - breadCrumbWidth * (index + 1)} ${y + breadCrumbHeight / 2 + 0.5}
+            M ${mx} ${my}
             H ${x + cardWidth / 2}
             `;
             return <path d={path} className={styles.link} />;
@@ -74,7 +78,7 @@ const BreadCrumbs = () => {
     return (
         <g className="bread-crumbs">
             {breadCrumbs.map((_, index) => {
-                return renderLink(index);
+                return renderLink(index, true);
             })}
             {breadCrumbs.map((crumb, index) => {
                 return renderComponent(crumb, index);

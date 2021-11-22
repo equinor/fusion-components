@@ -242,7 +242,7 @@ const OrgChartStory = () => {
     const cardWidth = componentDisplayType === 'Compact' ? 300 : 340;
 
     return (
-        <div style={{ width: '100%', height: '100%' }}>
+        <div style={{ width: '100%', height: '100%', paddingTop: '6rem' }}>
             <OrgChart
                 structure={positions}
                 component={PositionCardComponent}
