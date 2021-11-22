@@ -1,4 +1,4 @@
-import styles from './styles.less';
+import { useStyles } from './NotificationSideSheet.style';
 import { Button, Spinner, Tab, Tabs, SettingsIcon } from '@equinor/fusion-components';
 import { NotificationCard, useGlobalNotificationCardsActions } from '@equinor/fusion';
 import NotificationDateDivisions from './NotificationDateDivisions';
@@ -21,6 +21,7 @@ const NotificationsSideSheetContent: FC<NotificationsSideSheetContentProps> = ({
     isFetchingReadNotifications,
     isFetchingUnReadNotifications,
 }) => {
+    const styles = useStyles();
     const [activeTabKey, setActiveTabKey] = useState('unread');
     const changeTabKey = (tabKey) => setActiveTabKey(tabKey);
 

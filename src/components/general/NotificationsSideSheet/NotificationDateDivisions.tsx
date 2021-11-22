@@ -1,7 +1,9 @@
 import { Fragment, FunctionComponent, useCallback, useMemo, useState } from 'react';
 
 import { NotificationCard } from '@equinor/fusion';
-import styles from './styles.less';
+//import styles from './styles.less';
+import { useStyles } from './NotificationSideSheet.style';
+
 import NotificationCardWrapper from './NotificaitonCardWrapper';
 import { Accordion, AccordionItem } from '@equinor/fusion-components';
 
@@ -108,6 +110,7 @@ const NotificationCardContainer: FunctionComponent<NotificationCardContainerProp
     handleOpenAccordionChange,
 }) => {
     const card = <NotificationCardWrapper notification={notification} />;
+    const styles = useStyles();
     if (collapsed) {
         const id = notification.id;
         return (
@@ -138,6 +141,7 @@ const NotificationDateDivisions: FunctionComponent<NotificationDateDivisionProps
     notifications,
     collapsed,
 }) => {
+    const styles = useStyles();
     const [openAccordions, setOpenAccordions] = useState<AccordionOpenDictionary>({});
 
     const handleOpenAccordionChange = useCallback(
