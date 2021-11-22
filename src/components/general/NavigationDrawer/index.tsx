@@ -6,7 +6,6 @@ import {
     ComponentDisplayType,
 } from '@equinor/fusion';
 import { useStyles } from './NavigationDrawer.style';
-//mport styles from './styles.less';
 import {
     NavigationChild,
     NavigationSection,
