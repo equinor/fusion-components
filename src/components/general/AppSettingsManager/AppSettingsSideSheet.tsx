@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { ModalSideSheet, Tabs, Tab } from '@equinor/fusion-components';
 import NewBookmark from './components/NewBookmark';
 import useBookmarks, { Bookmark } from './useBookmarks';
-import styles from './styles.less';
+import { useStyles } from './AppsettingsSideSheet.style';
 import AllBookmarks from './components/AllBookmarks';
 import { useContextManager } from '@equinor/fusion';
 import { AppSettingsManagerProps } from '.';
@@ -27,6 +27,7 @@ function AppSettingsSideSheet<T>({
     const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
         hasContext
     );
+    const styles = useStyles();
     const contextManager = useContextManager();
 
     const captureAndSaveBookmarkAsync = useCallback(
@@ -44,7 +45,7 @@ function AppSettingsSideSheet<T>({
                     },
                     'add'
                 );
-            } catch (e) {}
+            } catch (e) { }
         },
         [updateBookmark, captureAppSetting]
     );
