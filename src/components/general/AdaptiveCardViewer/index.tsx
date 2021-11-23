@@ -5,7 +5,6 @@ import * as AdaptiveCards from 'adaptivecards';
 import marked from 'marked';
 import clsx from 'clsx';
 import { useStyles } from './AdaptiveCardViewer.style';
-import styles from './styles.less';
 import getDefaultHostConfig from './defaultHostConfig';
 
 
@@ -39,7 +38,7 @@ const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
     onActionSubmit,
     className,
 }) => {
-    const stylesNew = useStyles();
+    const styles = useStyles();
     const cardContainerRef = useRef<HTMLDivElement | null>(null);
     const adaptiveCard = useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
 
@@ -81,7 +80,7 @@ const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
 
     useEffect(() => {
         const current = cardContainerRef.current;
-        result.className = clsx(stylesNew.adaptiveCard, className);
+        result.className = clsx(styles.adaptiveCard, className);
         current && current.appendChild(result);
         return () => {
             current && current.firstChild && current.removeChild(current.firstChild);
