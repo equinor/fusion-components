@@ -30,9 +30,10 @@ const ReportErrorMessage: FC<ReportErrorMessageProps> = ({ report, contextErrorT
     const reportApiClient = useApiClients().report;
     const user = useCurrentUser();
     const timeStamp = useMemo(() => new Date().toString(), []);
-    const accessControlError = useMemo(() => contextErrorType !== 'MissingContextRelation', [
-        contextErrorType,
-    ]);
+    const accessControlError = useMemo(
+        () => contextErrorType !== 'MissingContextRelation',
+        [contextErrorType]
+    );
 
     const errorHeaderTitle = useMemo(() => {
         switch (contextErrorType) {
