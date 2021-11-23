@@ -7,7 +7,6 @@ import CheckBoxesFilterComponent from './CheckBoxesFilterComponent';
 import RadioButtonsFilterComponent from './RadioButtonsFilterComponent';
 import FilterTypes from '../filterTypes';
 import { useStyles } from '../FilterPane.style';
-//import styles from '../styles.less';
 import { FilterTerm, Filter as FilterConfig } from '../applyFilters';
 import { Count } from '../countFilters';
 import { useFilterPaneContext } from '../FilterPaneContext';

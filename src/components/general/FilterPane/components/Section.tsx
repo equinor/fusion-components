@@ -2,7 +2,6 @@ import { useState, useCallback, useMemo } from 'react';
 import classNames from 'classnames';
 import { DropdownArrow } from '@equinor/fusion-components';
 import Filter from './Filter';
-//import styles from '../styles.less';
 import { useStyles } from '../FilterPane.style';
 import { FilterTerm, FilterSection, Filter as FilterType } from '../applyFilters';
 import { Count } from '../countFilters';

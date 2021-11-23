@@ -76,21 +76,8 @@ export const useStyles = makeStyles(
                                 background: 'var(-color-primary-alt4)',
                             },
 
-                            '> label': {
+                            '& > label': {
                                 cursor: 'pointer',
-                            },
-                        },
-                    },
-                },
-            },
-
-            '& $isCollapsed': {
-                width: 'auto',
-                '&$compact, &$comfortable': {
-                    '& $content': {
-                        '& $section': {
-                            '& $filter': {
-                                marginLeft: 0,
                             },
                         },
                     },
@@ -178,13 +165,13 @@ export const useStyles = makeStyles(
                         '& header': {
                             '& h4': {
                                 fontSize: '11px',
-                                fontWeight: '400',
+                                fontWeight: 400,
                             },
                         },
 
                         '& ul': {
                             '& li': {
-                                '> label': {
+                                '& > label': {
                                     marginLeft: 'calc(var(--grid-unit) * 1px)',
                                     fontSize: '11px',
                                 },
@@ -262,13 +249,13 @@ export const useStyles = makeStyles(
                         '& header': {
                             '& h4': {
                                 fontSize: '12px',
-                                fontWeight: '400',
+                                fontWeight: 400,
                             },
                         },
 
                         '& ul': {
                             '& li': {
-                                '> label': {
+                                '& > label': {
                                     marginLeft: 'calc(var(--grid-unit) * 1px)',
                                     fontSize: '12px',
                                 },
@@ -279,7 +266,18 @@ export const useStyles = makeStyles(
             },
         },
         hasTitle: {},
-        isCollapsed: {},
+        isCollapsed: {
+            width: 'auto',
+            '&$compact, &$comfortable': {
+                '& $content': {
+                    '& $section': {
+                        '& $filter': {
+                            marginLeft: 0,
+                        },
+                    },
+                },
+            },
+        },
         isExpanded: {},
         filter: {},
         content: {},

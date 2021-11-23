@@ -5,7 +5,6 @@ import { Button, ErrorBoundary } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import CollapseExpandButton from './components/CollapseExpandButton';
 import Section from './components/Section';
-import styles from './styles.less';
 import { useStyles } from './FilterPane.style';
 import applyFilters, {
     filterAndNotify,
