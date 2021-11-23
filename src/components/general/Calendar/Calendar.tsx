@@ -5,7 +5,6 @@ import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/f
 
 import { IconButton, Button, PaginationArrow } from '@equinor/fusion-components';
 import Day from './Day';
-//import styles from './styles.less';
 import { useStyles } from './Calendar.style';
 
 type CalendarProps = {

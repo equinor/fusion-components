@@ -36,15 +36,12 @@ export const useStyles = makeStyles(
             gridTemplateColumns: 'repeat(7, 1fr)',
 
             '& header': {
-                background: 'var(--color-black-alt4)',
-            },
-
-            '& header, &day': {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 height: 'var(--cell-size)',
                 marginBottom: 'var(--week-margin)',
+                background: 'var(--color-black-alt4)',
             },
         },
 
@@ -63,7 +60,8 @@ export const useStyles = makeStyles(
         },
         comfortable: {},
         compact: {},
-    })
+    }),
+    { name: 'fusion-components-Calendar' }
 );
 
 export default useStyles;

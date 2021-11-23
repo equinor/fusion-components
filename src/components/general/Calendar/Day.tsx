@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 import { CalendarDate, isSameDate } from '@equinor/fusion';
-
-//import styles from './styles.less';
 import { useStyles } from './Calendar.style';
 import { IconButton } from '@equinor/fusion-components';
 import { FC } from 'react';
