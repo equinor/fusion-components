@@ -1,7 +1,6 @@
 import { CloseIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { FC } from 'react';
-//import styles from './styles.less';
 import { useStyles } from './Chip.style';
 
 type ChipProps = {

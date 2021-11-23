@@ -6,7 +6,10 @@ export const useStyles = makeStyles(
             display: 'inline-block',
 
             '&:hover': {
-                '& $title, & $removeButton': {
+                '& $title': {
+                    color: 'var(--chip-hover-color)',
+                },
+                '& $removeButton': {
                     color: 'var(--chip-hover-color)',
                 },
             },
