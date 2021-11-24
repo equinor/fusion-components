@@ -22,7 +22,7 @@ export const useStyles = makeStyles(
                 height: '100%',
                 transition: 'transform 0.1s ease-out',
 
-                '&:not(& $isCollapsed)': {
+                '&:not($isCollapsed)': {
                     width: '100% !important',
                     left: 0,
                     top: 0,
