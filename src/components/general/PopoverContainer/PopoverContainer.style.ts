@@ -13,19 +13,19 @@ export const useStyles = makeStyles(
             position: 'absolute',
             pointerEvents: 'all',
 
-            [['& $start$below', '& $start$above'].join(',')]: {
+            [['&$start$below', '&$start$above'].join(',')]: {
                 left: 0,
 
                 '& $arrow': {
                     left: 'calc(var(--grid-unit) * 1px)',
                 },
 
-                '& $isCentered': {
+                '&$isCentered': {
                     left: 'calc(50% - (var(--grid-unit) * 1px) - (var(--arrow-width) / 2))',
                 },
             },
 
-            [['& $center$below', '& $center$above'].join(',')]: {
+            [['&$center$below', '&$center$above'].join(',')]: {
                 left: '50%',
                 transform: 'translateX(-50%)',
 
@@ -39,14 +39,14 @@ export const useStyles = makeStyles(
                 },
             },
 
-            [['& $end$below', '& $end$above'].join(',')]: {
+            [['&$end$below', '&$end$above'].join(',')]: {
                 right: 0,
 
                 '& $arrow': {
                     right: 'calc(var(--grid-unit) * 1px)',
                 },
 
-                '& $isCentered ': {
+                '&$isCentered ': {
                     right: 'calc(50% - (var(--grid-unit) * 1px) - (var(--arrow-width) / 2))',
                 },
             },
