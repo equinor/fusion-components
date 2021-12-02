@@ -1,15 +1,12 @@
 import { LitElement, html, property, eventOptions, PropertyValues, query } from '../base';
 
-import { OverlayEvent, OverlayEventType, OverLayScope, OverlayElement } from '../overlay';
+import { OverlayEvent, OverlayEventType, OverlayElement } from '../overlay';
 import { QuickFactEvent, QuickFactEventType } from '../quick-fact';
 import {
     ApplicationGuideEvent,
     ApplicationGuideEventType,
     ApplicationGuideEventDetail,
 } from './events';
-
-import { iconOpen } from './open.svg';
-import { iconClose } from './close.svg';
 
 import styles from './element.css';
 
@@ -133,6 +130,12 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
         this.selected = item;
     }
 
+    /** Clear QuickFact after deactivating/toggling */
+    clearSelected() {
+        this._overlays.forEach((el) => (el.selected = undefined));
+        this.selected = undefined;
+    }
+
     handleOverlayEvent(evt: OverlayEvent<any>): void {
         switch (evt.type) {
             case OverlayEventType.connected:
@@ -149,8 +152,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     }
 
     render() {
-        const { active } = this;
-        const fabIcon = active ? iconClose : iconOpen;
         return html`
             <slot @dragover=${(e) => e.preventDefault()}></slot>
             <div
@@ -162,6 +163,7 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
             >
                 ${this.renderQuickFact()}
             </div>
+            <slot name="fab"></slot>
         `;
     }
 

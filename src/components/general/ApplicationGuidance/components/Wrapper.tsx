@@ -64,6 +64,9 @@ export const ApplicationGuidanceWrapper: FC<ApplicationGuidanceWrapperProps> = (
         if (!ref.current) return;
         const el = ref.current;
         el.active = active;
+        if (!active) {
+            el.clearSelected();
+        }
     }, [ref, active]);
 
     return <fusion-application-guide ref={ref} {...props}></fusion-application-guide>;
