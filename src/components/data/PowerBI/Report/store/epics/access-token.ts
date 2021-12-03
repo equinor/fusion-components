@@ -11,7 +11,7 @@ import actions from '../actions/access';
 
 export type Dependencies = { clients: ApiClients };
 
-const refreshOffset = 60000;
+const refreshOffset = 58000;
 
 /**
  * Epic for access token
