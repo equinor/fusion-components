@@ -163,7 +163,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
             >
                 ${this.renderQuickFact()}
             </div>
-            <slot name="fab"></slot>
         `;
     }
 
