@@ -133,7 +133,8 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
     /** Clear QuickFact after deactivating/toggling */
     clearSelected() {
         this._overlays.forEach((el) => (el.selected = undefined));
-        this.selected = undefined;
+        //this.selected = undefined;
+        this.selected = { scope: undefined, anchor: undefined };
     }
 
     handleOverlayEvent(evt: OverlayEvent<any>): void {
