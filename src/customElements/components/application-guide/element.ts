@@ -125,16 +125,15 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
      * Change selected item for component
      * Clear selection for all other connected overlays
      */
-    setSelected(overlay: OverlayElement, item: { scope: string; anchor: string }) {
+    setSelected(overlay: OverlayElement, item: { scope: string; anchor: string }): void {
         this._overlays.filter((el) => el !== overlay).forEach((el) => (el.selected = undefined));
         this.selected = item;
     }
 
     /** Clear QuickFact after deactivating/toggling */
-    clearSelected() {
+    clearSelected(): void {
         this._overlays.forEach((el) => (el.selected = undefined));
-        //this.selected = undefined;
-        this.selected = { scope: undefined, anchor: undefined };
+        this.selected = undefined;
     }
 
     handleOverlayEvent(evt: OverlayEvent<any>): void {
@@ -146,8 +145,10 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
                 this.addOverlay(evt.target as OverlayElement);
                 break;
             case OverlayEventType.selection:
-                const { anchor, scope } = evt.detail.selected;
-                this.setSelected(evt.target as OverlayElement, { anchor, scope });
+                if (evt.detail.selected) {
+                    const { anchor, scope } = evt.detail.selected;
+                    this.setSelected(evt.target as OverlayElement, { anchor, scope });
+                }
                 break;
         }
     }
