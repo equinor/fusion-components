@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from './styles.less';
+import { useStyles } from './PersonPresenceIcon.style';
 import { useComponentDisplayClassNames, PersonPresenceAvailability } from '@equinor/fusion';
 import {
     useTooltipRef,
@@ -18,11 +18,12 @@ type PersonPresenceProps = {
 };
 
 const PersonPresenceIcon: FC<PersonPresenceProps> = ({ presenceAvailability, size }) => {
+    const styles = useStyles();
     const presenceClasses = classNames(
         styles.presenceContainer,
         useComponentDisplayClassNames(styles),
         styles[size],
-        styles[presenceAvailability?.toLowerCase()|| 'offline']
+        styles[presenceAvailability?.toLowerCase() || 'offline']
     );
 
     const presenceIcon = useMemo(() => {

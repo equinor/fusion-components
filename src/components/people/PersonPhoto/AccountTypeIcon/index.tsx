@@ -5,7 +5,6 @@ import {
     useComponentDisplayClassNames,
     ComponentDisplayType,
 } from '@equinor/fusion';
-//import styles from './styles.less';
 import { useStyles } from './AccountTypeIcon.style';
 import classNames from 'classnames';
 import ConsultantIcon from '../icons/ConsultantIcon';
