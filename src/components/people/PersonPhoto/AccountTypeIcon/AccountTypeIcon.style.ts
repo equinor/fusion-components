@@ -2,7 +2,11 @@ import { makeStyles, createStyles } from '@equinor/fusion-react-styles';
 
 export const useStyles = makeStyles(
     createStyles({
-        iconContainer: {},
+        iconContainer: {
+            borderRadius: '50%',
+            width: 'var(--iconContainerSize)',
+            height: 'var(--iconContainerSize)',
+        },
         affiliate: {
             background: '#ff93ee',
         },
@@ -24,14 +28,24 @@ export const useStyles = makeStyles(
         },
 
         xlarge: {
-            '&$comfortable, &$compact': {
+            '&$comfortable': {
+                // 24x24
+                '--iconContainerSize': 'calc(var(--grid-unit) * 3px)',
+            },
+
+            '&$compact': {
                 // 24x24
                 '--iconContainerSize': 'calc(var(--grid-unit) * 3px)',
             },
         },
 
         large: {
-            '&$comfortable, &$compact': {
+            '&$comfortable': {
+                // 16x16
+                '--iconContainerSize': 'calc(var(--grid-unit) * 2px)',
+            },
+
+            '&$compact': {
                 // 16x16
                 '--iconContainerSize': 'calc(var(--grid-unit) * 2px)',
             },
