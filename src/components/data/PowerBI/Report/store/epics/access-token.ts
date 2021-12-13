@@ -6,7 +6,6 @@ import {
     catchError,
     takeUntil,
     delay,
-    tap,
     withLatestFrom,
 } from 'rxjs/operators';
 
@@ -58,7 +57,7 @@ export const accessToken = <S extends { id: string; token: AccessToken }>(
     /**
      * when access token is acquired, schedule a refresh
      */
-    const acquired$ = request$.pipe(
+    const acquired$ = action$.pipe(
         filter(isActionOf(actions.fetchAccessToken.success)),
         switchMap((action) => {
             const expires = accessTokenExpireTime(action.payload);
@@ -66,10 +65,6 @@ export const accessToken = <S extends { id: string; token: AccessToken }>(
                 delay(expires)
             );
         })
-    );
-
-    const refresh$ = acquired$.pipe(
-        map(() => actions.fetchAccessToken.request({ reportId: state$.value.id, silent: true }))
     );
 
     /**
@@ -84,15 +79,19 @@ export const accessToken = <S extends { id: string; token: AccessToken }>(
         map(([_, state]) => state.token),
         // only continue of a token exists
         filter((x) => !!x),
-        // TODO - remove me!
-        tap((x) => console.debug(x, accessTokenExpireTime(x), shouldUpdateToken(x))),
         // only continue if token expired
         filter(shouldUpdateToken),
         // dispatch request for update of token
         map(() => actions.refreshAccessToken({ reason: 'tab activated' }))
     );
 
-    return merge(request$, acquired$, refresh$, activated$);
+    const refresh$ = action$.pipe(
+        filter(isActionOf(actions.refreshAccessToken)),
+        withLatestFrom(state$),
+        map(([_, state]) => actions.fetchAccessToken.request({ reportId: state.id, silent: true }))
+    );
+
+    return merge(request$, acquired$, activated$, refresh$);
 };
 
 export default accessToken;
