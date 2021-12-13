@@ -1,4 +1,4 @@
-import { Observable, from, of, merge, fromEvent } from 'rxjs';
+import { Observable, from, of, merge, fromEvent, interval } from 'rxjs';
 import {
     filter,
     switchMap,
@@ -7,6 +7,7 @@ import {
     takeUntil,
     delay,
     withLatestFrom,
+    throttleTime,
 } from 'rxjs/operators';
 
 import { isActionOf, ActionType } from 'typesafe-actions';
@@ -20,7 +21,7 @@ import { AccessToken } from '@equinor/fusion/lib/http/apiClients/models/report';
 
 export type Dependencies = { clients: ApiClients };
 
-const MINUTES_BEFORE_EXPIRATION = 10;
+const MINUTES_BEFORE_EXPIRATION = 1;
 const REFRESH_OFFSET = MINUTES_BEFORE_EXPIRATION * 60 * 1000;
 
 const accessTokenExpireTime = (token: AccessToken, offset: number = REFRESH_OFFSET): number => {
@@ -88,6 +89,7 @@ export const accessToken = <S extends { id: string; token: AccessToken }>(
     const refresh$ = action$.pipe(
         filter(isActionOf(actions.refreshAccessToken)),
         withLatestFrom(state$),
+        throttleTime(60 * 1000),
         map(([_, state]) => actions.fetchAccessToken.request({ reportId: state.id, silent: true }))
     );
 
