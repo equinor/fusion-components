@@ -1,7 +1,7 @@
 import { useMemo, FC } from 'react';
 
 import { PersonRole } from '@equinor/fusion';
-import styles from './styles.less';
+import { useStyles } from './PersonRoleList.style';
 import RoleItem from './RoleItem';
 
 type PersonRoleListProps = {
@@ -14,6 +14,7 @@ const sortByDisplayName = (a: PersonRole, b: PersonRole) => {
 };
 
 const PersonRoleList: FC<PersonRoleListProps> = ({ roleType, personRoles }) => {
+    const styles = useStyles();
     const roles = useMemo(
         () =>
             personRoles.filter((role) =>
@@ -40,7 +41,7 @@ const PersonRoleList: FC<PersonRoleListProps> = ({ roleType, personRoles }) => {
                     />
                 ))
             )}
-            {}
+            { }
         </div>
     );
 };
