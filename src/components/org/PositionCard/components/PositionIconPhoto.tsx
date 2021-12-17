@@ -12,7 +12,7 @@ import {
     SyncIcon,
 } from '@equinor/fusion-components';
 
-import styles from '../styles.less';
+import { useStyles } from '../PositionCard.style';
 
 type PositionPhotoIconProps = {
     position: Position;
@@ -34,6 +34,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     showTaskOwner,
     anonymize,
 }) => {
+    const styles = useStyles();
     const containerRef = useRef<HTMLDivElement>(null);
     const taskOwnerRef = useTooltipRef('Task Owner', 'below');
     const linkedRef = useTooltipRef('Linked', 'below');
