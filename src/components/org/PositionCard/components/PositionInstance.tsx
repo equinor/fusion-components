@@ -66,7 +66,10 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
         'below'
     );
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const childrenTooltipRef = useTooltipRef(`${childCount} ${childrenTooltipName}`, 'above');
+    const childrenTooltipRef = useTooltipRef(
+        childCountType !== 'hidden' ? `${childCount} ${childrenTooltipName}` : '',
+        'above'
+    );
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
@@ -127,10 +130,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
             )}
             {onExpand && childCount !== undefined && (
                 <div className={styles.expandButton}>
-                    <IconButton
-                        ref={childCountType !== 'hidden' ? childrenTooltipRef : undefined}
-                        onClick={onExpandHandler}
-                    >
+                    <IconButton ref={childrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>
                             {childCountType !== 'hidden' ? childCount : undefined}
                             <ExpandMoreIcon height={16} isExpanded={false} />
