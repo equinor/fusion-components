@@ -42,9 +42,8 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     childCountType,
     rotationInstances,
     selectedDate,
-    anonymize
+    anonymize,
 }) => {
-
     const assignedPersonName = useMemo(() => {
         if (anonymize) return '';
         if (!instance?.assignedPerson) return 'TBN - To Be Nominated';
@@ -62,7 +61,10 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
 
     const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
-    const assignedPersonNameTooltipRef = useTooltipRef(`Person: ${anonymize ? 'Anonymous' : assignedPersonName}`, 'below');
+    const assignedPersonNameTooltipRef = useTooltipRef(
+        `Person: ${anonymize ? 'Anonymous' : assignedPersonName}`,
+        'below'
+    );
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
     const childrenTooltipRef = useTooltipRef(`${childCount} ${childrenTooltipName}`, 'above');
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
@@ -125,9 +127,12 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
             )}
             {onExpand && childCount !== undefined && (
                 <div className={styles.expandButton}>
-                    <IconButton ref={childrenTooltipRef} onClick={onExpandHandler}>
+                    <IconButton
+                        ref={childCountType !== 'hidden' ? childrenTooltipRef : undefined}
+                        onClick={onExpandHandler}
+                    >
                         <div className={styles.childPositionCount}>
-                            {childCount}
+                            {childCountType !== 'hidden' ? childCount : undefined}
                             <ExpandMoreIcon height={16} isExpanded={false} />
                         </div>
                     </IconButton>
