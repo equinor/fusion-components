@@ -7,13 +7,13 @@ import PositionInstanceComponent from './components/PositionInstance';
 import RotationInstances from './components/RotationInstances';
 import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
-export type ChildCountTypeKey = 'positions' | 'fte' | 'uniquePersons' | 'hideNumbers';
+export type ChildCountTypeKey = 'positions' | 'fte' | 'uniquePersons' | 'hidden';
 
 export const childCountTypeNameMapping: Record<ChildCountTypeKey, string> = {
     positions: 'Positions',
     fte: 'Full time equivalents (FTE)',
     uniquePersons: 'Unique persons',
-    hideNumbers: 'Positions',
+    hidden: 'Positions',
 };
 
 type CustomCardStyles = {
