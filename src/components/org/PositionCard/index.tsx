@@ -13,7 +13,7 @@ export const childCountTypeNameMapping: Record<ChildCountTypeKey, string> = {
     positions: 'Positions',
     fte: 'Full time equivalents (FTE)',
     uniquePersons: 'Unique persons',
-    hidden: 'Positions',
+    hidden: '',
 };
 
 type CustomCardStyles = {
