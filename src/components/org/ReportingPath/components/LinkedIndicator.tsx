@@ -2,12 +2,13 @@ import { useContext, useCallback, useMemo } from 'react';
 import { ReportingPathContextReducer, ReportingPathContext } from '../store';
 import { OrgNode, LinkIcon, styling } from '@equinor/fusion-components';
 
-import styles from './styles.less';
+import { useStyles } from './style';
 
 function LinkedIndicator<T>() {
     const {
         state: { allNodes, cardMargin },
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
+    const styles = useStyles();
 
     const likedNodes = useMemo(() => allNodes.filter((node) => node.linked), [allNodes]);
 
