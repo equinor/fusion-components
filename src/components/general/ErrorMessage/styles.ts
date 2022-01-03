@@ -61,28 +61,5 @@ export const useStyles = makeStyles(
                 height: 'auto',
             },
         },
-
-        ':global($react-grid-layout)': {
-            //PDP tile styling
-            $messageContainer$comfortable: {
-                marginTop: 0,
-                top: '50%',
-                transform: 'translateY(-50%)',
-
-                '& $title': {
-                    paddingTop: 'calc(var(--grid-unit) * 5px)',
-                    fontSize: '16px',
-                    height: 'calc(var(--grid-unit) * 3px)',
-                    fontWeight: 600,
-                },
-
-                '& $message': {
-                    fontSize: '16px',
-                    height: 'calc(var(--grid-unit) * 2px)',
-                    paddingBottom: 'calc(var(--grid-unit) * 4px)',
-                    paddingTop: 'calc(var(--grid-unit) * 1px)',
-                },
-            },
-        },
     })
 );
