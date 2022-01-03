@@ -7,16 +7,55 @@ export const useStyles = makeStyles(
             flexDirection: 'column',
             overflow: 'auto',
             height: '100%',
+            '& $tab': {
+                cursor: 'pointer',
+                height: 'calc(var(--grid-unit) * 6px)',
+                //display: 'flex',
+                //alignItems: 'center',
+                //justifyContent: 'center',
+                textDecoration: 'none',
+                background: 'none',
+                border: 'none',
+                font: 'inherit',
+                minWidth: 0,
+                overflow: 'hidden',
+                padding: 'calc(var(--grid-unit) * 0.5px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
+                color: 'inherit',
+
+                '&:focus': {
+                    outline: 'none',
+                    '& $title': {
+                        outline: '1px dashed var(--color-black-alt3)',
+                    },
+                },
+
+                '&:hover': {
+                    backgroundColor: 'var(--color-primary-hover-alt1)',
+                },
+
+                '&$pressed': {
+                    outline: 'none',
+                    backgroundColor: 'initial',
+                    '& $title': {
+                        outline: 'none',
+                    },
+                },
+            },
         },
         showGradientLeft: {
-            '&$gradientLeft': {
+            '& $gradientLeft': {
                 opacity: 1,
                 background: 'linear-gradient(90deg, #fff 23.44%, rgba(255, 255, 255, 0) 100%)',
             },
         },
 
         showGradientRight: {
-            '&$gradientRight': {
+            '& $gradientRight': {
                 opacity: 1,
                 background: 'linear-gradient(270deg, #fff 23.44%, rgba(255, 255, 255, 0) 100%)',
             },
@@ -68,45 +107,7 @@ export const useStyles = makeStyles(
             },
         },
 
-        tab: {
-            cursor: 'pointer',
-            height: 'calc(var(--grid-unit) * 6px)',
-            //display: 'flex',
-            alignItems: 'center',
-            //justifyContent: 'center',
-            textDecoration: 'none',
-            background: 'none',
-            color: 'inherit',
-            border: 'none',
-            font: 'inherit',
-            minWidth: 0,
-            overflow: 'hidden',
-            padding: 'calc(var(--grid-unit) * 0.5px)',
-            display: 'flex',
-            alignIitems: 'center',
-            justifyContent: 'center',
-            whiteSpace: 'nowrap',
-            flexShrink: 0,
-
-            '&:focus': {
-                outline: 'none',
-                '&$title': {
-                    outline: '1px dashed var(--color-black-alt3)',
-                },
-            },
-
-            '&:hover': {
-                backgroundColor: 'var(--color-primary-hover-alt1)',
-            },
-
-            '&$pressed': {
-                outline: 'none',
-                backgroundColor: 'initial',
-                '&$title': {
-                    outline: 'none',
-                },
-            },
-        },
+        tab: {},
 
         pressed: {},
 
