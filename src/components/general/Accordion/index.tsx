@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import styles from './styles.less';
+import { useStyles } from './Accordion.style';
 import AccordionItem from './AccordionItem';
 export { AccordionItem };
 
@@ -8,6 +8,7 @@ type AccordionProps = {
 };
 
 const Accordion: FC<AccordionProps> = ({ children }) => {
+    const styles = useStyles();
     return <div className={styles.container}>{children}</div>;
 };
 
