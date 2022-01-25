@@ -107,6 +107,7 @@ export const useStyles = makeStyles(
             paddingLeft: 'calc(var(--grid-unit) * 1px)',
             alignSelf: 'center',
             display: 'flex',
+            //TODO change color of title from green to :   color: 'var(--color-black-alt2)',
 
             '&$compact': {
                 width: 'calc(var(--grid-unit) * 24px)',
