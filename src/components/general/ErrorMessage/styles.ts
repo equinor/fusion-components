@@ -61,5 +61,7 @@ export const useStyles = makeStyles(
                 height: 'auto',
             },
         },
-    })
+        title: {},
+    }),
+    { name: 'fusion-components-errorMessage' }
 );
