@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, FC } from 'react';
 
-import styles from './styles.less';
+import { useStyles } from './style';
 import classNames from 'classnames';
 import { DoneIcon, styling } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -28,6 +28,7 @@ type BadgeProps = {
 };
 
 const Badge: FC<BadgeProps> = ({ position, active, done }) => {
+    const styles = useStyles();
     const badgeClasses = classNames(styles.badge, useComponentDisplayClassNames(styles), {
         [styles.active]: active,
         [styles.done]: done,
@@ -54,6 +55,7 @@ const Step: FC<StepProps> = ({
     stepCount,
     verticalStep,
 }) => {
+    const styles = useStyles();
     const stepRef = useRef<HTMLAnchorElement>(null);
     const [showStepCount, setShowStepCount] = useState(false);
 

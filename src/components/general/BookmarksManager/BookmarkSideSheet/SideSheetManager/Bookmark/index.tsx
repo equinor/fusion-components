@@ -5,6 +5,7 @@ import useBookmarkContext from '../../../hooks/useBookmarkContext';
 import { BookmarkView } from '../../../types';
 import Options from './Options';
 import styles from './styles.less';
+// TODO: replace with FusionIcon
 import '@equinor/fusion-wc-icon';
 
 type BookmarkProps = {
