@@ -102,6 +102,7 @@ export const useStyles = makeStyles(
         buttonContainer: {
             paddingLeft: '2px',
         },
-    })
+    }),
+    { name: 'fusion-components-bookmark' }
 );
 export default useStyles;

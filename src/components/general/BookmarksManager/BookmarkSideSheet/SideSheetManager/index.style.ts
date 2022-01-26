@@ -7,7 +7,10 @@ export const useStyles = makeStyles(
             justifyContent: 'flex-end',
             paddingRight: 'calc(var(--grid-unit) * 1px)',
         },
-    })
+    }),
+    {
+        name: 'fusion-components-bookmark-sidesheet',
+    }
 );
 
 export default useStyles;
