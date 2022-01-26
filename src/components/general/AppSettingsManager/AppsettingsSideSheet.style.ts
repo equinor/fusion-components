@@ -66,7 +66,8 @@ export const useStyles = makeStyles(
             display: 'flex',
             alignItems: 'center',
         },
-    })
+    }),
+    { name: 'fusion-components-appSettingsSideSheet' }
 );
 
 export default useStyles;
