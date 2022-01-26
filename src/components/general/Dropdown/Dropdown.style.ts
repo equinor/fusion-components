@@ -19,6 +19,7 @@ export const useStyles = makeStyles(
         justifyRight: {
             left: 0,
         },
-    })
+    }),
+    { name: 'fusion-components-dropdown' }
 );
 export default useStyles;
