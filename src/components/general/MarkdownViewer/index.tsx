@@ -1,4 +1,4 @@
-import marked from 'marked';
+import { marked } from 'marked';
 import styles from './styles.less';
 import dompurify from 'dompurify';
 import { FC } from 'react';
@@ -11,7 +11,7 @@ const MarkdownViewer: FC<MarkdownViewerProps> = ({ markdown }) => {
     return (
         <div
             className={styles.container}
-            dangerouslySetInnerHTML={{ __html: dompurify.sanitize(marked(markdown)) }}
+            dangerouslySetInnerHTML={{ __html: dompurify.sanitize(marked.parse(markdown)) }}
         />
     );
 };
