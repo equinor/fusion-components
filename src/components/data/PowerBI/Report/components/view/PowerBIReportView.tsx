@@ -57,8 +57,13 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
         metrics?.performance.mark('load');
         try {
             // component might been unmounted
-            component?.current?.reload();
-        } catch {}
+            console.debug('updating access token');
+            component?.current?.setAccessToken(embedConfig.accessToken);
+        } catch (err) {
+            // TODO - make own action
+            console.error(err);
+            metrics.error({ name: 'access_token_error', properties: { error: err } });
+        }
     }, [metrics, component, embedConfig?.accessToken]);
 
     const cssClassName = useStyles().iframeContainer;
