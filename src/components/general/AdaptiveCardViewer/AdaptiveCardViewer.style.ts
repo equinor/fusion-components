@@ -15,7 +15,6 @@ export const useStyles = makeStyles(
                 borderRadius: '4px',
                 position: 'relative',
                 zIndex: 1,
-                //minWidth: 0,
                 verticalAlign: 'middle',
                 overflow: 'hidden',
                 alignItems: 'center',
@@ -35,7 +34,6 @@ export const useStyles = makeStyles(
                 },
                 '&:focus': {
                     outline: 'none',
-                    backgroundColor: 'var(--color-primary)',
                 },
             },
         },

@@ -2,11 +2,10 @@ import { useRef, useMemo, useCallback, useEffect, FC } from 'react';
 
 import * as AdaptiveCards from 'adaptivecards';
 
-import marked from 'marked';
+import { marked } from 'marked';
 import clsx from 'clsx';
 import { useStyles } from './AdaptiveCardViewer.style';
 import getDefaultHostConfig from './defaultHostConfig';
-
 
 type AdaptiveCardViewerProps = {
     /** The hostConfig object that is passed along to the native AdaptiveCards. [More Info](https://docs.microsoft.com/en-us/adaptive-cards/display/hostconfig) */
@@ -43,7 +42,7 @@ const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
     const adaptiveCard = useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
 
     AdaptiveCards.AdaptiveCard.onProcessMarkdown = (text, result) => {
-        result.outputHtml = marked(text);
+        result.outputHtml = marked.parse(text);
         result.didProcess = true;
     };
 
