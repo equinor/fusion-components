@@ -26,24 +26,6 @@ export const useStyles = makeStyles(
                 },
             },
 
-            '&:active': {
-                '& $iconContainer': {
-                    backgroundColor: 'var(--color-primary-alt4)',
-                    borderColor: 'var(--color-primary-alt4)',
-                    color: 'var(--color-primary) !important',
-                },
-                '&$isToggler': {
-                    '& $iconContainer': {
-                        margin: 'auto',
-                        width: 'calc(var(--grid-unit) * 4px)',
-                        height: 'calc(var(--grid-unit) * 4px)',
-                        borderRadius: '4px',
-                        backgroundColor: 'var(--color-primary-alt3)',
-                        borderColor: 'var(--color-primary-alt3) important',
-                    },
-                },
-            },
-
             '&:hover': {
                 '&$iconContainer': {
                     backgroundColor: 'var(--color-primary-alt4)',
@@ -61,26 +43,6 @@ export const useStyles = makeStyles(
                     },
                 },
             },
-
-            //'&:focus$isToggler$iconContainer': {
-            // '&:focus': {
-            //     '& $iconContainer': {
-            //         border: '1px',
-            //         borderRadius: '50%',
-            //         borderStyle: 'dashed',
-            //         borderColor: 'var(--color-primary)',
-            //     },
-            //     '&$isToggler$iconContainer': {
-            //         border: 'none',
-            //         backgroundColor: 'var(--color-primary-hover-alt1)',
-            //     },
-
-            //     '&$isToggler$isActive': {
-            //         '& $iconContainer': {
-            //             backgroundColor: 'var(--color-primary)',
-            //         },
-            //     },
-            // },
 
             '&:focus': {
                 '& $iconContainer': {
@@ -102,11 +64,48 @@ export const useStyles = makeStyles(
                     },
                 },
             },
+
+            '&:active': {
+                '& $iconContainer': {
+                    backgroundColor: 'var(--color-primary-alt4)',
+                    borderColor: 'var(--color-primary-alt4)',
+                    color: 'var(--color-primary) !important',
+                },
+
+                '&$isToggler': {
+                    '& $iconContainer': {
+                        margin: 'auto',
+                        width: 'calc(var(--grid-unit) * 4px)',
+                        height: 'calc(var(--grid-unit) * 4px)',
+                        borderRadius: '4px',
+                        backgroundColor: 'var(--color-primary-alt3)',
+                        borderColor: 'var(--color-primary-alt3) important',
+                    },
+                },
+            },
         },
 
+        //'&:focus$isToggler$iconContainer': {
+        // '&:focus': {
+        //     '& $iconContainer': {
+        //         border: '1px',
+        //         borderRadius: '50%',
+        //         borderStyle: 'dashed',
+        //         borderColor: 'var(--color-primary)',
+        //     },
+        //     '&$isToggler$iconContainer': {
+        //         border: 'none',
+        //         backgroundColor: 'var(--color-primary-hover-alt1)',
+        //     },
+
+        //     '&$isToggler$isActive': {
+        //         '& $iconContainer': {
+        //             backgroundColor: 'var(--color-primary)',
+        //         },
+        //     },
+        // },
+
         iconContainer: {
-            //border: 'none',
-            //borderRadius: 0,
             borderStyle: 'solid',
             display: 'flex',
             alignItems: 'center',
