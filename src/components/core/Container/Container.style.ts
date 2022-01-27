@@ -7,7 +7,7 @@ export const useStyles = makeStyles(
             position: 'relative',
             display: 'grid',
             gridTemplateAreas: '"header" "content"',
-            gridTemplateRows: 'var(--header-height) calc(100 % - var(--header-height))',
+            gridTemplateRows: 'var(--header-height) calc(100% - var(--header-height))',
             '&$noHeader': {
                 '--header-height': '0px',
             },
