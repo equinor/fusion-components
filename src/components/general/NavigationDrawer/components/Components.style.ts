@@ -48,9 +48,13 @@ export const useStyles = makeStyles(
             alignItems: 'center',
             zIndex: 1,
             justifyContent: 'space-between',
-            letterSpacing: '0.7',
+            letterSpacing: 0.7,
             fontWeight: 600,
             textDecoration: 'none',
+
+            'a&': {
+                color: 'inherit',
+            },
         },
         linkText: {
             width: 'calc(var(--grid-unit) * 27px)',
