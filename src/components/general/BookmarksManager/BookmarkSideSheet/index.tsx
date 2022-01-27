@@ -11,6 +11,8 @@ type BookmarkSideSheetProps<TPayload> = {
     isOpen: boolean;
     onClose: () => void;
     hasContext: boolean;
+    openOnCreate?: boolean;
+    disableCreateButton: boolean;
 };
 
 export const BookmarkSideSheet = <T extends unknown>({
@@ -19,6 +21,8 @@ export const BookmarkSideSheet = <T extends unknown>({
     anchorId,
     capturePayload,
     hasContext,
+    disableCreateButton,
+    openOnCreate = false
 }: BookmarkSideSheetProps<T>): JSX.Element => {
     const [title, setTitle] = useState<string>('Bookmarks Manager');
     const { store } = useBookmarkContext();
@@ -51,6 +55,8 @@ export const BookmarkSideSheet = <T extends unknown>({
                 onViewChanged={onViewChanged}
                 onClose={onClose}
                 hasContext={hasContext}
+                openOnCreate={openOnCreate}
+                disableCreateButton={disableCreateButton}
             />
         </ModalSideSheet>
     );
