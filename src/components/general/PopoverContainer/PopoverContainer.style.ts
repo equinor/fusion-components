@@ -96,6 +96,7 @@ export const useStyles = makeStyles(
             },
         },
         isCentered: {},
+        content: {},
     })
 );
 

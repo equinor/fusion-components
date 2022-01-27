@@ -1,6 +1,7 @@
-import styles from './styles.less';
+import { useStyles } from './PopoverContainer.style';
 
 export default () => {
+    const styles = useStyles();
     return (
         <svg
             className={styles.arrow}
