@@ -24,6 +24,7 @@ export type SearchableDropdownOption = {
     key: string;
     isSelected?: boolean;
     isDisabled?: boolean;
+    matchSearchQuery?: string;
 };
 
 export type SearchableDropdownSection = {
@@ -124,9 +125,14 @@ export const SearchableDropdown = ({
                 onSearchAsync(inputValue);
             } else {
                 if (options) {
-                    const newOptions = options.filter((option) =>
-                        option.title.toLowerCase().includes(inputValue.toLowerCase())
-                    );
+                    const newOptions = options.filter((option) => {
+                        if (option.matchSearchQuery) {
+                            return option.matchSearchQuery
+                                .toLowerCase()
+                                .includes(inputValue.toLowerCase());
+                        }
+                        return option.title.toLowerCase().includes(inputValue.toLowerCase());
+                    });
                     setDropdownSections(createSingleSectionFromOptions(newOptions));
                 } else if (sections) {
                     setDropdownSections(filterMultipleSections(sections, inputValue));
