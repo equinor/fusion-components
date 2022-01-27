@@ -58,6 +58,7 @@ const BreadCrumbs = () => {
                                 label={breadCrumb.label}
                                 id={breadCrumb.id}
                                 childId={breadCrumb.childId}
+                                content={breadCrumb.content}
                             />
                         )}
                     </foreignObject>
