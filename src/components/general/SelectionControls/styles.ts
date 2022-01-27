@@ -117,7 +117,7 @@ export const useStyles = makeStyles(
             },
 
             '&:hover': {
-                $checkmark: {
+                '& $checkmark': {
                     backgroundColor: 'var(--color-primary-alt4)',
                 },
             },
