@@ -1,5 +1,5 @@
 import ItemComponentProps from './itemComponentProps';
-import { useStyles } from '../style';
+import { useStyles } from '../itemComponentStyle';
 import { useMemo, FC } from 'react';
 import { usePositionPickerContext } from '../positionPickerContext';
 import usePositionInstance from '../hooks/usePositionInstance';
