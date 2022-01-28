@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { useEffect, useRef, FC, ReactNode, MouseEvent } from 'react';
-//import styles from './styles.less';
 import { useStyles } from './Menu.style';
 
 export type MenuItemComponentProps<TItem extends MenuItemType> = {
