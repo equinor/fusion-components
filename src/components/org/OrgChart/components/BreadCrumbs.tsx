@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useContext } from 'react';
 import { BreadCrumb } from '../orgChartTypes';
 
-import { useStyles } from './style';
+import { useStyles } from './componentsStyle';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
 
 const BreadCrumbs = () => {

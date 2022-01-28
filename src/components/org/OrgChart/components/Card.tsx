@@ -3,7 +3,7 @@ import { useMemo, useEffect, useContext } from 'react';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
-import { useStyles } from './style';
+import { useStyles } from './componentsStyle';
 
 type CardProps<T> = {
     node: OrgNode<T>;

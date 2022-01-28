@@ -2,7 +2,7 @@ import { useContext, useCallback, useMemo } from 'react';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
-import { useStyles } from './style';
+import { useStyles } from './componentsStyle';
 import classNames from 'classnames';
 
 const Labels = () => {

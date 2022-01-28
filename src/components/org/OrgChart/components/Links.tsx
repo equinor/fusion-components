@@ -3,7 +3,7 @@ import { Fragment, useContext, useMemo, useCallback } from 'react';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgStructure, OrgNode } from '../orgChartTypes';
 
-import { useStyles } from './style';
+import { useStyles } from './componentsStyle';
 import classNames from 'classnames';
 
 const Links = <T extends OrgStructure>() => {

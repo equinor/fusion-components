@@ -1,6 +1,6 @@
 import { makeStyles, createStyles } from '@equinor/fusion-react-styles';
 
-export const useStyles = makeStyles(
+export const useStyles = makeStyles((theme) =>
     createStyles({
         labelObject: {
             height: '100%',
@@ -15,7 +15,7 @@ export const useStyles = makeStyles(
         },
 
         link: {
-            stroke: '#dcdcdc', // EDS Design Token Interactive/Disabled/Border 🎨 Grey 20
+            stroke: theme.colors.interactive.disabled__border.getVariable('color'),
             strokeWidth: '2px',
             fill: 'none',
             shapeRendering: 'crispEdges',
@@ -23,7 +23,7 @@ export const useStyles = makeStyles(
 
         isLinked: {
             strokeDasharray: 5,
-            stroke: '#bebebe', // EDS Design Token Interactive/Disabled/Text 🎨 Grey 30
+            stroke: theme.colors.interactive.disabled__text.getVariable('color'),
         },
 
         card: {
