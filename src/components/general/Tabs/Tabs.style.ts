@@ -139,7 +139,7 @@ export const useStyles = makeStyles(
             '& $tabContent': {
                 width: '100%',
                 flexGrow: 1,
-                height: '1px', // flexbox bug
+                //height: '1px', // flexbox bug
             },
         },
         tabsPane: {},

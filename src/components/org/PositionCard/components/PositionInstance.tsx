@@ -1,4 +1,4 @@
-import { useCallback, FC, MouseEvent } from 'react';
+import { useCallback, FC, MouseEvent, useMemo } from 'react';
 
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
@@ -25,6 +25,7 @@ type PositionInstanceProps = {
     childCountType?: ChildCountTypeKey;
     rotationInstances: PositionInstance[];
     selectedDate?: Date;
+    anonymize?: boolean;
 };
 
 const PositionInstanceComponent: FC<PositionInstanceProps> = ({
@@ -41,13 +42,17 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     childCountType,
     rotationInstances,
     selectedDate,
+    anonymize,
 }) => {
-    const assignedPersonName =
-        instance && instance.assignedPerson
-            ? rotationInstances.length > 0
-                ? `${rotationInstances.length + 1} assignees`
-                : instance.assignedPerson.name
-            : 'TBN - To Be Nominated';
+    const assignedPersonName = useMemo(() => {
+        if (anonymize) return '';
+        if (!instance?.assignedPerson) return 'TBN - To Be Nominated';
+        if (rotationInstances.length > 0) {
+            return `${rotationInstances.length + 1} assignees`;
+        }
+        return instance.assignedPerson.name;
+    }, [anonymize, instance, rotationInstances]);
+
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
     const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
@@ -56,9 +61,15 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
 
     const obsTooltipRef = useTooltipRef(`OBS: ${obs}`, 'below');
     const positionNameTooltipRef = useTooltipRef('Position: ' + position.name, 'below');
-    const assignedPersonNameTooltipRef = useTooltipRef('Person: ' + assignedPersonName, 'below');
+    const assignedPersonNameTooltipRef = useTooltipRef(
+        `Person: ${anonymize ? 'Anonymous' : assignedPersonName}`,
+        'below'
+    );
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
-    const childrenTooltipRef = useTooltipRef(`${childCount} ${childrenTooltipName}`, 'above');
+    const childrenTooltipRef = useTooltipRef(
+        childCountType !== 'hidden' ? `${childCount} ${childrenTooltipName}` : '',
+        'above'
+    );
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
 
     const positionInstanceClasses = classNames(styles.positionInstance, {
@@ -121,7 +132,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
                 <div className={styles.expandButton}>
                     <IconButton ref={childrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>
-                            {childCount}
+                            {childCountType !== 'hidden' ? childCount : undefined}
                             <ExpandMoreIcon height={16} isExpanded={false} />
                         </div>
                     </IconButton>

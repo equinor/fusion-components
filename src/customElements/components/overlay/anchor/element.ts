@@ -6,7 +6,9 @@ export type OverlayAnchor = {
     anchor: string;
     scope: string;
     bounds: () => AnchorRect;
-    selected?: () => void;
+
+    /** Returns true to prevent default event dispatch */
+    selected?: () => void | boolean;
 };
 
 export interface OverlayAnchorElementProps extends OverlayAnchor {
