@@ -1,6 +1,6 @@
 import { fusionElement, LitElement, property, html, svg } from '../../base';
-import { formatDateTime, IFusionContext } from '@equinor/fusion';
-import * as marked from 'marked';
+import { formatDateTime } from '@equinor/fusion';
+import { marked } from 'marked';
 import { formatDistance } from 'date-fns';
 
 import styles from './element.css';
@@ -69,7 +69,7 @@ export class QuickFactViewElement extends LitElement {
             return '';
         }
 
-        const body = ([marked(this.quickFact.bodyMarkdown)] as unknown) as TemplateStringsArray;
+        const body = [marked.parse(this.quickFact.bodyMarkdown)] as unknown as TemplateStringsArray;
 
         // @TODO this should not be here
         // const fusionContext = window['74b1613f-f22a-451b-a5c3-1c9391e91e68'] as IFusionContext;
