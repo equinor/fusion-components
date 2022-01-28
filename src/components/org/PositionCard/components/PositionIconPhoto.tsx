@@ -2,6 +2,7 @@ import { useRef, FC, ReactNode } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 
+// TODO: replace with FusionIcon
 import { IconType } from '@equinor/fusion-wc-icon';
 
 import {
