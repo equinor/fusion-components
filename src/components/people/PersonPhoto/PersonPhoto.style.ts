@@ -134,7 +134,7 @@ export const useStyles = makeStyles(
         local: {
             background: 'var(--color-black-alt3)',
         },
-
+        hidePopover: {},
         comfortable: {},
         compact: {},
     }),

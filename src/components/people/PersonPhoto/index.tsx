@@ -97,7 +97,7 @@ export default ({
     const nameTooltipRef = useTooltipRef(tooltipContent);
 
     const popoverClassNames = classNames(styles.popoverDetails, {
-        //[styles.hidePopover]: hideTooltip,
+        [styles.hidePopover]: hideTooltip,
     });
 
     const [popoverRef, _isOpen] = usePopoverRef<HTMLDivElement>(
