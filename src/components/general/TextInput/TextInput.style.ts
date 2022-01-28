@@ -136,7 +136,8 @@ export const useStyles = makeStyles(
                 color: 'var(--color-red)',
             },
         },
-    })
+    }),
+    { name: 'fusion-compontents-textInput' }
 );
 
 export default useStyles;
