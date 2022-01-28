@@ -1,5 +1,6 @@
 import styles from '../styles.less';
 import { EditIcon, DeleteIcon } from '@equinor/fusion-components';
+// TODO: replace with FusionIcon
 import '@equinor/fusion-wc-icon';
 type OwnerOptionsProps = {
     onEditClick: () => void;
