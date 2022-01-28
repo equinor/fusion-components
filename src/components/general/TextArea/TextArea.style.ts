@@ -144,7 +144,8 @@ export const useStyles = makeStyles(
                 height: 'calc(var(--grid-unit) * 2px)',
             },
         },
-    })
+    }),
+    { name: 'fusion-components-textArea' }
 );
 
 export default useStyles;
