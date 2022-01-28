@@ -1,4 +1,4 @@
-import { useContext, FunctionComponent, useMemo } from 'react';
+import { useContext, FunctionComponent, useState, useEffect } from 'react';
 import { context, PowerBIEmbedEvents, PowerBIEmbedEventEntry } from '../context';
 import { Report } from 'powerbi-client';
 import { filter, first } from 'rxjs/operators';
@@ -18,6 +18,7 @@ const nextRender = (event$: Observable<PowerBIEmbedEventEntry>) => {
 };
 
 export const PowerBIBookmark: FunctionComponent<Props> = ({ hasContext }: Props) => {
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const pbiContext = useContext(context);
 
     if (!pbiContext) return null;
@@ -51,17 +52,29 @@ export const PowerBIBookmark: FunctionComponent<Props> = ({ hasContext }: Props)
             ? nextRender(event$).subscribe(() => report.bookmarksManager.applyState(bookmark))
             : report.bookmarksManager.applyState(bookmark);
     };
+    useEffect(() => {
+        const loaded$ = event$.pipe(
+            filter((x) => x.type === PowerBIEmbedEvents.Loaded),
+            first()
+        );
+        const subscription = loaded$.subscribe(() => setIsLoaded(true));
 
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, [event$]);
     return (
-        <BookmarksManager
-            capturePayload={captureBookmark}
-            applyBookmark={(bookmark, awaitForContextSwitch) =>
-                applyBookmark(bookmark.payload, awaitForContextSwitch)
-            }
-            hasContext={hasContext}
-            anchorId="pbi-bookmarks-btn"
-            name="Power BI bookmarks"
-        />
+        isLoaded && (
+            <BookmarksManager
+                capturePayload={captureBookmark}
+                applyBookmark={(bookmark, awaitForContextSwitch) =>
+                    applyBookmark(bookmark.payload, awaitForContextSwitch)
+                }
+                hasContext={hasContext}
+                anchorId="pbi-bookmarks-btn"
+                name="Power BI bookmarks"
+            />
+        )
     );
 };
 
