@@ -16,6 +16,7 @@ export const useScrimStyles = makeStyles(
             opacity: 1,
             pointerEvents: 'all',
         },
-    })
+    }),
+    { name: 'fusion-components-scrim ' }
 );
 export default useScrimStyles;
