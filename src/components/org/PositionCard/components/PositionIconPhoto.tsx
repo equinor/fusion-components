@@ -2,6 +2,7 @@ import { useRef, FC, ReactNode } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 
+// TODO: replace with FusionIcon
 import { IconType } from '@equinor/fusion-wc-icon';
 
 import {
@@ -22,6 +23,7 @@ type PositionPhotoIconProps = {
     rotationInstances: PositionInstance[];
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
+    anonymize?: boolean;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -31,6 +33,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     rotationInstances,
     personPhotoComponent,
     showTaskOwner,
+    anonymize,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const taskOwnerRef = useTooltipRef('Task Owner', 'below');
@@ -54,10 +57,15 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
             <div className={styles.personIconContainer}>
                 {personPhotoComponent || (
                     <PersonPhoto
-                        person={(currentInstance && currentInstance.assignedPerson) || undefined}
+                        person={
+                            !anonymize && currentInstance?.assignedPerson
+                                ? currentInstance.assignedPerson
+                                : undefined
+                        }
                         additionalPersons={additionalPersons}
                         size="large"
                         key={currentInstance ? currentInstance.id : (+new Date()).toString()}
+                        customTooltip={anonymize ? 'Anonymous' : undefined}
                     />
                 )}
             </div>

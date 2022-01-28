@@ -35,6 +35,8 @@ type AllBookmarksProps<TPayload> = {
     capturePayload: () => Promise<TPayload>;
     onViewChanged?: (view: BookmarkView) => void;
     hasContext: boolean;
+    openOnCreate: boolean;
+    disableCreateButton: boolean;
 };
 
 const contextlessBookmark = 'Global';
@@ -73,6 +75,8 @@ export const SideSheetManager = <T extends unknown>({
     capturePayload,
     onViewChanged,
     hasContext,
+    openOnCreate,
+    disableCreateButton,
 }: AllBookmarksProps<T>): JSX.Element => {
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
     const [bookmarkToBeEdited, setBookmarkToBeEdited] = useState<BookmarkListResponse | undefined>(
@@ -133,6 +137,10 @@ export const SideSheetManager = <T extends unknown>({
     );
 
     useEffect(() => {
+        onViewChange(openOnCreate ? 'Creating' : 'AllBookmarks');
+    }, [openOnCreate]);
+
+    useEffect(() => {
         currentContext && hasContext
             ? setOpenAccordions({
                   [currentContext!.id]: true,
@@ -164,7 +172,11 @@ export const SideSheetManager = <T extends unknown>({
     return (
         <>
             <div className={styles.buttonContainer}>
-                <Button onClick={() => onViewChange('Creating')} ref={tooltipRef}>
+                <Button
+                    onClick={() => onViewChange('Creating')}
+                    ref={tooltipRef}
+                    disabled={disableCreateButton}
+                >
                     New bookmark
                 </Button>
             </div>

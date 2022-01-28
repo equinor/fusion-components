@@ -38,4 +38,5 @@ export type BreadCrumb = {
     childId: string;
     label?: string;
     id?: string;
+    content?: JSX.Element;
 };

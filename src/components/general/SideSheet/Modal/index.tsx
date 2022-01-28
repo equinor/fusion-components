@@ -1,5 +1,4 @@
 import { ReactNode, useCallback, useMemo, useState, useEffect, useRef } from 'react';
-//import styles from './styles.less';
 import { useStyles } from './Modal.style';
 import classNames from 'classnames';
 import {

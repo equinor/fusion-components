@@ -2,7 +2,6 @@ import { FC, useState, useCallback, useEffect, ReactNode, useMemo } from 'react'
 
 import classNames from 'classnames';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';
-//import styles from './styles.less';
 import { useStyles } from './Standard.style';
 import CollapseExpandButton from './CollapseExpandButton';
 import {
