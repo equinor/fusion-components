@@ -2,7 +2,7 @@ import { useRef, useMemo, useCallback, useEffect, FC } from 'react';
 
 import * as AdaptiveCards from 'adaptivecards';
 
-import marked from 'marked';
+import { marked } from 'marked';
 import classNames from 'classnames';
 import styles from './styles.less';
 import getDefaultHostConfig from './defaultHostConfig';
@@ -41,7 +41,7 @@ const AdaptiveCardViewer: FC<AdaptiveCardViewerProps> = ({
     const adaptiveCard = useMemo(() => new AdaptiveCards.AdaptiveCard(), []);
 
     AdaptiveCards.AdaptiveCard.onProcessMarkdown = (text, result) => {
-        result.outputHtml = marked(text);
+        result.outputHtml = marked.parse(text);
         result.didProcess = true;
     };
 
