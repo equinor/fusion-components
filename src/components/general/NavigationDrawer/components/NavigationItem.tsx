@@ -29,7 +29,6 @@ const NavigationItem = ({
         [styles.isCollapsed]: isCollapsed,
         [styles.menuSection]: type === 'section',
         [styles.menuChild]: type === 'child',
-        //[styles.menuGrouping]: type === 'grouping',
         [styles.isDisabled]: isDisabled,
     });
 
