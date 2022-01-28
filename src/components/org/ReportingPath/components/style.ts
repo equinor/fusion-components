@@ -4,7 +4,6 @@ export const useStyles = makeStyles(
         createStyles({
             link: {
                 stroke: theme.colors.interactive.disabled__border.getVariable('color'),
-                //'#dcdcdc', // EDS Design Token Interactive/Disabled/Border 🎨 Grey 20
                 strokeWidth: '2px',
                 fill: 'none',
                 shapeRendering: 'crispEdges',
