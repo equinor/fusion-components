@@ -49,7 +49,8 @@ export const useStyles = makeStyles(
             alignItems: 'center',
         },
         contextBookmarks: {},
-    })
+    }),
+    { name: 'fusion-components-allBookmarks' }
 );
 
 export default useStyles;
