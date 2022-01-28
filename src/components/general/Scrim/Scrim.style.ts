@@ -1,6 +1,6 @@
 import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
-export const useStyles = makeStyles(
+export const useScrimStyles = makeStyles(
     createStyles({
         scrim: {
             top: 0,
@@ -18,4 +18,4 @@ export const useStyles = makeStyles(
         },
     })
 );
-export default useStyles;
+export default useScrimStyles;
