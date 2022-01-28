@@ -1,4 +1,4 @@
-import styles from './styles.less';
+import { useStyles } from './MenuComponent.style';
 import { UserMenuSectionItem, PersonDetails } from '@equinor/fusion';
 import { IconButton, ArrowBackIcon } from '@equinor/fusion-components';
 import { FC } from 'react';
@@ -14,6 +14,7 @@ const MenuComponent: FC<MenuComponentProps> = ({
     onBackClick,
     personDetails,
 }) => {
+    const styles = useStyles();
     const Component = selectedMenuItem.component || null;
     return (
         <div className={styles.menuComponentContainer}>
