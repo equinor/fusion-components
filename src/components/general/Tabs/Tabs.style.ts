@@ -1,6 +1,6 @@
 import { makeStyles, createStyles } from '@equinor/fusion-react-styles';
 
-export const useStyles = makeStyles(
+export const useTabsStyles = makeStyles(
     createStyles({
         tabs: {
             display: 'flex',
@@ -92,9 +92,6 @@ export const useStyles = makeStyles(
 
                     '&:focus': {
                         outline: 'none',
-                        '& $title': {
-                            //outline: '1px dashed var(--color-black-alt3)',
-                        },
                     },
 
                     '&:hover': {
@@ -139,7 +136,6 @@ export const useStyles = makeStyles(
             '& $tabContent': {
                 width: '100%',
                 flexGrow: 1,
-                //height: '1px', // flexbox bug
             },
         },
         tabsPane: {},
@@ -159,4 +155,4 @@ export const useStyles = makeStyles(
     { name: 'fusion-components-tabs' }
 );
 
-export default useStyles;
+export default useTabsStyles;

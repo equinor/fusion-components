@@ -1,5 +1,4 @@
-//import styles from './styles.less';
-import { useStyles } from './Tabs.style';
+import { useTabsStyles } from './Tabs.style';
 import classNames from 'clsx';
 import { useKeyboardNavigation } from '@equinor/fusion-components';
 import { useState, useRef, FC, ReactNode, AnchorHTMLAttributes } from 'react';
@@ -14,7 +13,7 @@ type TabProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'title'> & {
 };
 
 const Tab: FC<TabProps> = ({ isCurrent, title, disabled, onChange, url, tabKey, ...props }) => {
-    const styles = useStyles();
+    const styles = useTabsStyles();
     const [isPressed, setIsPressed] = useState(false);
     const tabRef = useRef<HTMLAnchorElement>(null);
 
