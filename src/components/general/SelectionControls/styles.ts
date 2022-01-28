@@ -127,8 +127,6 @@ export const useStyles = makeStyles(
                 backgroundColor: 'var(--color-primary)',
 
                 '& $checkmark': {
-                    // transform: scale(1);
-                    // opacity: 1;
                     background: 'none',
                 },
             },
@@ -138,8 +136,6 @@ export const useStyles = makeStyles(
                 backgroundColor: 'var(--color-primary)',
 
                 '& $checkmark': {
-                    // transform: scale(1);
-                    // opacity: 1;
                     background: 'none',
                 },
             },
@@ -163,7 +159,6 @@ export const useStyles = makeStyles(
             width: 'calc(var(--checkbox-size) - 2px)',
             height: 'calc(var(--checkbox-size) - 2px)',
             color: 'var(--color-white)',
-            // transform: scale(0.8);
             backgroundColor: 'white',
             transition: 'all 0.1s',
             borderRadius: '2px',
@@ -263,7 +258,8 @@ export const useStyles = makeStyles(
                 },
             },
         },
-    })
+    }),
+    { name: 'fusion-components-selectionsControl' }
 );
 
 export default useStyles;
