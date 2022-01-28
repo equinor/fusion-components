@@ -13,6 +13,7 @@ export const useStyles = makeStyles(
             fontSize: '14px',
             lineHeight: '24px',
         },
-    })
+    }),
+    { name: 'fusion-components-positionPicker' }
 );
 export default useStyles;
