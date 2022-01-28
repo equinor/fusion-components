@@ -17,7 +17,9 @@ export const fetchAccessToken = createAsyncAction(
     '@PBI/FETCH_REPORT_TOKEN_CANCEL'
 )<AccessRequest, AccessToken, ActionError<HttpClientRequestFailedError<any>>, string | void>();
 
-export const refreshAccessToken = createAction('@PBI/FETCH_REPORT_TOKEN_REFRESH')<void>();
+export const refreshAccessToken = createAction('@PBI/FETCH_REPORT_TOKEN_REFRESH')<{
+    reason?: string;
+}>();
 
 const actions = { fetchAccessToken, refreshAccessToken };
 

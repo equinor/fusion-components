@@ -1,15 +1,12 @@
 import { LitElement, html, property, eventOptions, PropertyValues, query } from '../base';
 
-import { OverlayEvent, OverlayEventType, OverLayScope, OverlayElement } from '../overlay';
+import { OverlayEvent, OverlayEventType, OverlayElement } from '../overlay';
 import { QuickFactEvent, QuickFactEventType } from '../quick-fact';
 import {
     ApplicationGuideEvent,
     ApplicationGuideEventType,
     ApplicationGuideEventDetail,
 } from './events';
-
-import { iconOpen } from './open.svg';
-import { iconClose } from './close.svg';
 
 import styles from './element.css';
 
@@ -128,9 +125,15 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
      * Change selected item for component
      * Clear selection for all other connected overlays
      */
-    setSelected(overlay: OverlayElement, item: { scope: string; anchor: string }) {
+    setSelected(overlay: OverlayElement, item: { scope: string; anchor: string }): void {
         this._overlays.filter((el) => el !== overlay).forEach((el) => (el.selected = undefined));
         this.selected = item;
+    }
+
+    /** Clear QuickFact after deactivating/toggling */
+    clearSelected(): void {
+        this._overlays.forEach((el) => (el.selected = undefined));
+        this.selected = undefined;
     }
 
     handleOverlayEvent(evt: OverlayEvent<any>): void {
@@ -142,15 +145,15 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
                 this.addOverlay(evt.target as OverlayElement);
                 break;
             case OverlayEventType.selection:
-                const { anchor, scope } = evt.detail.selected;
-                this.setSelected(evt.target as OverlayElement, { anchor, scope });
+                if (evt.detail.selected) {
+                    const { anchor, scope } = evt.detail.selected;
+                    this.setSelected(evt.target as OverlayElement, { anchor, scope });
+                }
                 break;
         }
     }
 
     render() {
-        const { active } = this;
-        const fabIcon = active ? iconClose : iconOpen;
         return html`
             <slot @dragover=${(e) => e.preventDefault()}></slot>
             <div
@@ -162,17 +165,6 @@ export class ApplicationGuideElement extends LitElement implements ApplicationGu
             >
                 ${this.renderQuickFact()}
             </div>
-            <slot name="fab" @click=${this.toggle}>
-                <fusion-button
-                    id="fab"
-                    round
-                    raised
-                    size="large"
-                    title="${active ? 'close' : 'open'} quick facts"
-                >
-                    ${fabIcon}
-                </fusion-button>
-            </slot>
         `;
     }
 
