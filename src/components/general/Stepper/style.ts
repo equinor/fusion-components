@@ -129,9 +129,7 @@ export const useStyles = makeStyles(
                 visibility: 'hidden',
             },
         },
-        text: {
-            display: 'block',
-        },
+        text: {},
         isLastStep: {
             width: 'inherit',
 
