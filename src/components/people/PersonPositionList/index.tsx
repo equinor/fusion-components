@@ -1,6 +1,6 @@
 import { useMemo, useCallback, FC } from 'react';
 
-import styles from './styles.less';
+import { useStyles } from './PersonPositionList.style';
 import { PersonPosition } from '@equinor/fusion';
 import PersonPositionCards from './PersonPositionCards';
 import {
@@ -24,6 +24,7 @@ const PersonPositionList: FC<PersonPositionListProps> = ({
     disableOrgLink,
 }) => {
     const positionsSortedByTo = sortPositionsByTo(allPositions);
+    const styles = useStyles();
 
     const date = useMemo(() => filterByDate || new Date(), [filterByDate]);
 

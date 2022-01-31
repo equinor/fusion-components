@@ -1,7 +1,7 @@
 import { PersonPosition } from '@equinor/fusion';
 import { PersonPositionCard } from '@equinor/fusion-components';
 import { useMemo, FC, PropsWithChildren } from 'react';
-import styles from './styles.less';
+import { useStyles } from './PersonPositionList.style';
 
 type PersonPositionCardsProps = {
     positions: PersonPosition[];
@@ -20,14 +20,14 @@ type CardLinkProps = {
 };
 
 const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({ children, disableOrgLink, position }) => {
+    const styles = useStyles();
     if (disableOrgLink) {
         return <>{children}</>;
     }
     return (
         <a
-            href={`/apps/pro-org/${position.project.id}/chart/${
-                position.parentPositionId ? position.parentPositionId : ' '
-            }`}
+            href={`/apps/pro-org/${position.project.id}/chart/${position.parentPositionId ? position.parentPositionId : ' '
+                }`}
             className={styles.orgChartLink}
         >
             {children}
@@ -36,6 +36,7 @@ const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({ children, disableOrgLi
 };
 
 const PersonPositionCards: FC<PersonPositionCardsProps> = ({ positions, disableOrgLink }) => {
+    const styles = useStyles();
     if (positions.length === 0) {
         return <div className={styles.noPositions}> No positions </div>;
     }
