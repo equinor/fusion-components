@@ -18,6 +18,8 @@ import { actions } from './store/actions/bookmarks';
 type ModalState = 'Show' | 'Close' | 'Open';
 type Props = PropsWithChildren<{
     onBookmarkApplied?: (bookmark: BookmarkPayloadResponse, awaitForContextSwitch: boolean) => void;
+    onBookmarkDeleted?: () => void;
+    onBookmarkEdited?: () => void;
 }>;
 
 const { Provider } = bookmarkContext;
@@ -25,6 +27,8 @@ const { Provider } = bookmarkContext;
 export const BookmarkProvider: FunctionComponent<Props> = ({
     children,
     onBookmarkApplied,
+    onBookmarkDeleted,
+    onBookmarkEdited
 }: Props) => {
     const [showModal, setShowModal] = useState<ModalState>('Close');
     const clients = useApiClients();
@@ -42,6 +46,18 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
 
     useEffect(() => {
         const subscription = new Subscription();
+
+        onBookmarkDeleted && subscription.add(
+            store.action$.pipe(filter(isActionOf(actions.remove.success))).subscribe((_b) => {
+                onBookmarkDeleted();
+            })
+        );
+
+        onBookmarkEdited && subscription.add(
+            store.action$.pipe(filter(isActionOf(actions.update.success))).subscribe((_b) => {
+                onBookmarkEdited();
+            })
+        );
 
         subscription.add(
             store.action$.pipe(filter(isActionOf(actions.fetch.success))).subscribe((b) => {

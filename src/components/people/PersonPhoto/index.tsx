@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useMemo } from 'react';
 import styles from './styles.less';
 import classNames from 'classnames';
 import {
@@ -30,6 +30,7 @@ export type PersonPhotoProps = {
     additionalPersons?: PersonDetails[];
     hidePopover?: boolean;
     presenceStatus?: PersonPresenceAvailability;
+    customTooltip?: string;
 };
 
 export default ({
@@ -40,10 +41,14 @@ export default ({
     size = 'medium',
     additionalPersons = [],
     presenceStatus,
+    customTooltip,
 }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(null);
 
-    const id = person && additionalPersons.length === 0 ? person.azureUniqueId : personId || '';
+    const id = useMemo(() => {
+        if (person && additionalPersons.length === 0) return person.azureUniqueId;
+        return personId || '';
+    }, [person, additionalPersons, personId]);
 
     const { isFetching, imageUrl, error: imageError } = usePersonImageUrl(id);
 
@@ -74,7 +79,13 @@ export default ({
             {[...additionalPersons, currentPerson].map((person: PersonDetails, index: number) => {
                 return (
                     <Fragment key={index}>
-                        <span>{person ? person.name : 'TBN: To Be Nominated'}</span>
+                        <span>
+                            {!!customTooltip
+                                ? customTooltip
+                                : person
+                                ? person.name
+                                : 'TBN: To Be Nominated'}
+                        </span>
                         <br />
                     </Fragment>
                 );
@@ -99,7 +110,7 @@ export default ({
     );
 
     const refCheck = () => {
-        if (additionalPersons.length > 0 || !currentPerson) {
+        if (additionalPersons.length > 0 || !currentPerson || !!customTooltip) {
             return nameTooltipRef;
         } else {
             return popoverRef;

@@ -1,7 +1,5 @@
-import { useContext, useEffect, FC, useCallback, useMemo } from 'react';
-
+import { useContext, useEffect, FC, useMemo } from 'react';
 import { PowerBIEmbed, EventHandler } from 'powerbi-client-react';
-
 import { context, PowerBIEmbedEvents } from '../../context';
 import { IEmbedConfiguration, service as PowerBIServices, factories } from 'powerbi-client';
 import useConfig from './useConfig';
@@ -47,10 +45,9 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
         [event$]
     );
 
-    const getEmbeddedComponent = useCallback(
-        (value) => (component?.current ? (component.current = value) : null),
-        [component]
-    );
+    const getEmbeddedComponent = (value) => {
+        component.current = value;
+    };
 
     usePowerBIFilters(event$, config?.filters);
 
@@ -60,8 +57,13 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
         metrics?.performance.mark('load');
         try {
             // component might been unmounted
-            component?.current?.reload();
-        } catch {}
+            console.debug('updating access token');
+            component?.current?.setAccessToken(embedConfig.accessToken);
+        } catch (err) {
+            // TODO - make own action
+            console.error(err);
+            metrics.error({ name: 'access_token_error', properties: { error: err } });
+        }
     }, [metrics, component, embedConfig?.accessToken]);
 
     const cssClassName = useStyles().iframeContainer;

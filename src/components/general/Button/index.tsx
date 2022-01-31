@@ -40,6 +40,7 @@ export type ButtonProps = {
     onMouseDown?: EventHandler<SyntheticEvent>;
     onClickCapture?: EventHandler<SyntheticEvent>;
     onClick?: EventHandler<SyntheticEvent>;
+    id?: string;
 };
 
 export const Button = forwardRef<HTMLElement | null, PropsWithChildren<ButtonProps>>(
@@ -93,6 +94,7 @@ export const Button = forwardRef<HTMLElement | null, PropsWithChildren<ButtonPro
                 onMouseUp={handleOnMouseUp}
                 onClick={props.onClick}
                 onClickCapture={props.onClickCapture}
+                id={props.id}
             />
         );
     }

@@ -5,10 +5,11 @@ import { FC } from 'react';
 
 type DialogProps = {
     children: any;
+    id?: string;
 };
 
-export const Dialog: FC<DialogProps> = ({ children }) => {
-    return <div className={classNames(styles.container, useElevationClassName(6))}>{children}</div>;
+export const Dialog: FC<DialogProps> = ({ children, id }) => {
+    return <div id={id} className={classNames(styles.container, useElevationClassName(6))}>{children}</div>;
 };
 
 export const DialogTitle: FC<DialogProps> = ({ children }) => (
