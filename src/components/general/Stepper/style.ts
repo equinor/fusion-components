@@ -67,7 +67,11 @@ export const useStyles = makeStyles(
             padding: 'calc(var(--grid-unit) * 1px)',
             paddingLeft: 'calc(var(--grid-unit) * 2px)',
             paddingRight: 'calc(var(--grid-unit) * 2px)',
+<<<<<<< HEAD
             //color: 'var(--color-black)',
+=======
+            color: 'var(--color-black)',
+>>>>>>> master
             display: 'grid',
             flexGrow: 1,
             gridTemplateColumns: 'calc(var(--grid-unit) * 6px) minmax(max-content, auto)',
@@ -88,9 +92,12 @@ export const useStyles = makeStyles(
             '&$compact': {
                 padding: 'calc(var(--grid-unit) * 0.5px)',
             },
+<<<<<<< HEAD
             'a&': {
                 color: 'var(--color-black)',
             },
+=======
+>>>>>>> master
         },
         compact: {},
         isClickable: {
@@ -110,7 +117,10 @@ export const useStyles = makeStyles(
             paddingLeft: 'calc(var(--grid-unit) * 1px)',
             alignSelf: 'center',
             display: 'flex',
+<<<<<<< HEAD
             //TODO change color of title from green to :   color: 'var(--color-black-alt2)',
+=======
+>>>>>>> master
 
             '&$compact': {
                 width: 'calc(var(--grid-unit) * 24px)',
