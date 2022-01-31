@@ -1,5 +1,4 @@
 import { FC } from 'react';
-//import styles from './styles.less';
 import { useStyles } from './Content.style';
 import NotificationBanners from '../NotificationBanner';
 import { useFusionContext } from '@equinor/fusion';
