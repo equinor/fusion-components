@@ -16,11 +16,13 @@ const SelectionCell = forwardRef<HTMLDivElement | null, PropsWithChildren<Select
             isHovering,
             className,
             indeterminate,
+            id,
         },
         ref
     ) => {
         return (
             <div
+                id={id}
                 onMouseLeave={onMouseOut}
                 onMouseEnter={onMouseOver}
                 className={classNames(className, styles.select, {

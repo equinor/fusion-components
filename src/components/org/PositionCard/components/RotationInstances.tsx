@@ -1,14 +1,15 @@
 import styles from '../styles.less';
 import { PositionInstance, Position } from '@equinor/fusion';
 import { PersonPhoto } from '@equinor/fusion-components';
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useMemo } from 'react';
 
 type RotationInstancesProps = {
     allInstances: PositionInstance[];
     position: Position;
+    anonymize?: boolean;
 };
 
-const RotationInstances: FC<RotationInstancesProps> = ({ allInstances, position }) => {
+const RotationInstances: FC<RotationInstancesProps> = ({ allInstances, position, anonymize }) => {
     const instancesSortedByRotationId = useMemo(
         () =>
             allInstances.sort((a, b) => {
@@ -19,17 +20,23 @@ const RotationInstances: FC<RotationInstancesProps> = ({ allInstances, position 
             }),
         [allInstances]
     );
+    const instanceName = useCallback(
+        (instance: PositionInstance) => {
+            if (anonymize) return '';
+            return instance?.assignedPerson?.name ? instance.assignedPerson.name : 'TBN';
+        },
+        [anonymize]
+    );
     return (
         <div className={styles.rotationInstances}>
             {instancesSortedByRotationId.map((instance) => (
                 <div className={styles.assignee}>
-                    <PersonPhoto person={instance.assignedPerson || undefined} />
+                    <PersonPhoto
+                        person={!anonymize ? instance.assignedPerson || undefined : undefined}
+                        customTooltip={anonymize ? 'Anonymous' : undefined}
+                    />
                     <div className={styles.assigneeInfo}>
-                        <span className={styles.name}>
-                            {instance.assignedPerson && instance.assignedPerson.name
-                                ? instance.assignedPerson.name
-                                : 'TBN'}
-                        </span>
+                        <span className={styles.name}>{instanceName(instance)}</span>
                         <span className={styles.externalId}>
                             {position.externalId}-
                             {instance.rotationId ? `R${instance.rotationId.toUpperCase()}` : ''}

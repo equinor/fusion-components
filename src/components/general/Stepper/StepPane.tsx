@@ -1,4 +1,4 @@
-import styles from './styles.less';
+import { useStyles } from './style';
 import { styling } from '@equinor/fusion-components';
 import useWindowWidth from './useWindowWidth';
 import classNames from 'classnames';
@@ -22,6 +22,7 @@ const StepPane: FC<StepPaneProps> = ({
     forceOrder,
     verticalSteps,
 }) => {
+    const styles = useStyles();
     const stepPaneRef = useRef<HTMLDivElement | null>(null);
     const activeStepRef = useRef<HTMLElement | null>(null);
 

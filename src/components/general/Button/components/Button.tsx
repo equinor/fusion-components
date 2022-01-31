@@ -9,12 +9,13 @@ type ButtonProps = {
     onClickCapture?: EventHandler<SyntheticEvent>;
     onMouseDown?: EventHandler<SyntheticEvent>;
     onMouseUp?: EventHandler<SyntheticEvent>;
+    id?: string;
     displayType: ComponentDisplayType;
     mouseHasBeenDown: boolean;
 };
 
 const ButtonComponent = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
-    ({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, ...props }, ref) => (
+    ({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, id, ...props }, ref) => (
         <button
             type="button"
             className={getButtonClasses(props)}
@@ -23,6 +24,7 @@ const ButtonComponent = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonPr
             onMouseUp={onMouseUp}
             onClick={onClick}
             onClickCapture={onClickCapture}
+            id={id}
             ref={ref}
         >
             <Content>{children}</Content>
