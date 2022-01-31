@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect, useMemo, MutableRefObject } from 'react';
 
 import { DropdownArrow, Menu, Dropdown, useDropdownController } from '@equinor/fusion-components';
-//import styles from './styles.less';
 import { useStyles } from './Select.style';
 import classNames from 'classnames';
 

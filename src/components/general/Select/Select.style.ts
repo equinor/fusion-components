@@ -36,7 +36,8 @@ export const useStyles = makeStyles(
             color: 'var(--color-black-alt3)',
             borderColor: 'var(--color-black-alt3)',
         },
-    })
+    }),
+    { name: 'fusion-components-select' }
 );
 
 export default useStyles;
