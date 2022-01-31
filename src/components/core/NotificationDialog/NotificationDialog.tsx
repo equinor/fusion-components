@@ -9,9 +9,10 @@ import {
     DialogTitle,
 } from '@equinor/fusion-components';
 
-import styles from './styles.less';
+import { useStyles } from './NotificationDialog.style';
 
-const NotificationDialog: FC = () => {
+export const NotificationDialog: FC = () => {
+    const styles = useStyles();
     const { notificationCenter } = useFusionContext();
     const [currentNotification, setCurrentNotification] = useState<NotificationRequest | null>(
         null
