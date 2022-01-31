@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useMemo, MutableRefObject } from 'react';
 
 import { DropdownArrow, Menu, Dropdown, useDropdownController } from '@equinor/fusion-components';
-import styles from './styles.less';
+import { useStyles } from './Select.style';
 import classNames from 'classnames';
 
 export type SelectOption = {
@@ -34,7 +34,7 @@ const createSingleSectionFromOptions = (options: SelectOption[]): SelectSection[
 const mergeDropdownSectionItems = (sections: SelectSection[]) =>
     sections.reduce((acc: SelectOption[], curr: SelectSection) => acc.concat(curr.items), []);
 
-const Select = ({
+export const Select = ({
     options,
     sections,
     placeholder,
@@ -46,6 +46,7 @@ const Select = ({
         throw new Error("You must supply only one of 'options', 'sections' props");
     }
 
+    const styles = useStyles();
     const [dropdownSections, setDropdownSections] = useState<SelectSection[]>([]);
 
     useEffect(() => {
@@ -107,7 +108,7 @@ const Select = ({
         <div ref={containerRef}>
             <Dropdown controller={dropdownController}>
                 <div
-                    className={styles.menuContainer}
+                    className={styles.selectContainer}
                     style={dropdownMaxHeight ? { maxHeight: `${dropdownMaxHeight}px` } : {}}
                 >
                     <Menu elevation={0} onClick={select} sections={dropdownSections} />
