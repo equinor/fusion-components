@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useMemo, useState, useEffect, useRef } from 'react';
-import styles from './styles.less';
+import { useStyles } from './Modal.style';
 import classNames from 'classnames';
 import {
     IconButton,
@@ -50,6 +50,7 @@ export default ({
     minWidth,
     maxWidth,
 }: ModalSideSheetProps) => {
+    const styles = useStyles();
     const [isShowing, setIsShowing] = useState(false);
     const sendNotification = useNotificationCenter();
 
