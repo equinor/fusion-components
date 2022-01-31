@@ -67,7 +67,7 @@ export const useStyles = makeStyles(
             padding: 'calc(var(--grid-unit) * 1px)',
             paddingLeft: 'calc(var(--grid-unit) * 2px)',
             paddingRight: 'calc(var(--grid-unit) * 2px)',
-            color: 'var(--color-black)',
+            //color: 'var(--color-black)',
             display: 'grid',
             flexGrow: 1,
             gridTemplateColumns: 'calc(var(--grid-unit) * 6px) minmax(max-content, auto)',
@@ -87,6 +87,9 @@ export const useStyles = makeStyles(
 
             '&$compact': {
                 padding: 'calc(var(--grid-unit) * 0.5px)',
+            },
+            'a&': {
+                color: 'var(--color-black)',
             },
         },
         compact: {},
