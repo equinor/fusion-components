@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from './styles.less';
+import { useStyles } from './PopoverContainer.style';
 import Arrow from './Arrow';
 import { useElevationClassName } from '@equinor/fusion-components';
 import useInViewChecker from '../../../hooks/useInViewChecker';
@@ -57,6 +57,7 @@ const PopoverContainer = forwardRef<
     HTMLDivElement | null,
     PropsWithChildren<PopoverContainerProps>
 >(({ placement: preferredPlacement, justify, title, fillWithContent, centered, children }, ref) => {
+    const styles = useStyles();
     const [placement, setPlacement] = useState<PopoverPlacement>(preferredPlacement || 'below');
     useEffect(() => {
         if (preferredPlacement) {
