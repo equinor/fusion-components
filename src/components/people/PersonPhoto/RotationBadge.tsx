@@ -4,7 +4,7 @@ import {
     useComponentDisplayClassNames,
     ComponentDisplayType,
 } from '@equinor/fusion';
-import styles from './styles.less';
+import { useStyles } from './PersonPhoto.style';
 import classNames from 'classnames';
 import RotationNumberIcon from './icons/RotationNumberIcon';
 
@@ -22,6 +22,7 @@ const getIconSizes = (isCompact: boolean) => ({
 });
 
 const RotationBadge = ({ size, numberOfPersons }: RotationBadgeProps) => {
+    const styles = useStyles();
     const iconClassNames = classNames(styles.iconContainer, useComponentDisplayClassNames(styles), {
         [styles.xlarge]: size === 'xlarge',
         [styles.large]: size === 'large',
