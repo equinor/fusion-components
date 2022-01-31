@@ -1,5 +1,5 @@
 import { useRef, FC, useMemo, useCallback, useEffect, useState } from 'react';
-import styles from './styles.less';
+import { useStyles } from './Components.style';
 import { DropdownArrow } from '@equinor/fusion-components';
 import { getNavigationComponentForItem } from '../utils';
 import { NavigationComponentProps } from '..';
@@ -22,6 +22,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
         href,
         info,
     } = navigationItem;
+    const styles = useStyles();
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
     const tooltipRef = useTooltipRef(title, 'right');
     const textRef = useRef<HTMLElement | null>(null);

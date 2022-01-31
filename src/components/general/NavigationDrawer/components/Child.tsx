@@ -1,10 +1,11 @@
 import { useRef, FC, useCallback, useEffect, useState } from 'react';
-import styles from './styles.less';
+import { useStyles } from './Components.style';
 import { NavigationComponentProps } from '..';
 import NavigationItem from './NavigationItem';
 import { useTooltipRef } from '@equinor/fusion-components';
 
 const Child: FC<NavigationComponentProps> = ({ navigationItem, onChange }) => {
+    const styles = useStyles();
     const { id, isActive, title, onClick, aside, isDisabled, href, info } = navigationItem;
     const textRef = useRef<HTMLElement | null>(null);
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
