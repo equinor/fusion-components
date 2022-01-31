@@ -5,7 +5,7 @@ import { createCalendar, Month, useComponentDisplayClassNames } from '@equinor/f
 
 import { IconButton, Button, PaginationArrow } from '@equinor/fusion-components';
 import Day from './Day';
-import styles from './styles.less';
+import { useStyles } from './Calendar.style';
 
 type CalendarProps = {
     initialYear: number;
@@ -15,13 +15,14 @@ type CalendarProps = {
     onChange?: (date: Date) => void;
 };
 
-const Calendar: FC<CalendarProps> = ({
+export const Calendar: FC<CalendarProps> = ({
     initialYear,
     initialMonth,
     selectedDate,
     interactive,
     onChange,
 }) => {
+    const styles = useStyles();
     const [year, setYear] = useState(initialYear);
     const [month, setMonth] = useState(initialMonth);
     const calendar = useMemo(() => createCalendar(year, month), [year, month]);
