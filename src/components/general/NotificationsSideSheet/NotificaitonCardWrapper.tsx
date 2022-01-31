@@ -9,7 +9,8 @@ import {
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { useCallback, useMemo, FC } from 'react';
-import styles from './styles.less';
+import { useStyles } from './NotificationSideSheet.style';
+
 
 type NotificationCardWrapperProps = {
     notification: NotificationCard;
@@ -23,6 +24,7 @@ const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({ notificatio
         isDeletingNotification,
     } = useNotificationCardActions(notification);
 
+    const styles = useStyles();
     const isSeen = notification.seenByUser;
 
     const markNotificationAsSeen = useCallback(async () => {
@@ -42,10 +44,10 @@ const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({ notificatio
         () =>
             !isSeen
                 ? [
-                      <Button key="btn-notification-seen" outlined onClick={markNotificationAsSeen}>
-                          {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
-                      </Button>,
-                  ]
+                    <Button key="btn-notification-seen" outlined onClick={markNotificationAsSeen}>
+                        {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
+                    </Button>,
+                ]
                 : [],
         [isSeen, markNotificationAsSeen, isMarkingNotification]
     );
