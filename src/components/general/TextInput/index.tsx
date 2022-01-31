@@ -1,4 +1,4 @@
-import styles from './styles.less';
+import { useStyles } from './TextInput.style';
 import classNames from 'classnames';
 import { ErrorIcon, styling } from '@equinor/fusion-components';
 import {
@@ -61,6 +61,7 @@ const TextInput = forwardRef<HTMLInputElement | null, PropsWithChildren<TextInpu
         },
         ref
     ) => {
+        const styles = useStyles();
         const [focus, setFocus] = useState(false);
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) ||
