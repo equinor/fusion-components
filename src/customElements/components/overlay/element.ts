@@ -142,8 +142,11 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
 
         if (props.has('selected')) {
             const anchor = this.anchors[this.selected];
-            anchor?.selected && anchor.selected();
-            this._dispatchEvent(OverlayEventType.selection);
+
+            //** prevent dispatch of event */
+            if (!anchor?.selected || !anchor.selected()) {
+                this._dispatchEvent(OverlayEventType.selection);
+            }
         }
 
         props.has('scope') && this._dispatchEvent(OverlayEventType.scope);
