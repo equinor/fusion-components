@@ -17,7 +17,7 @@ import {
     useDropdownController,
     useOverlayContainer,
 } from '@equinor/fusion-components';
-import styles from './styles.less';
+import { useStyles } from './SearchableDropdown.style';
 
 export type SearchableDropdownOption = {
     title: string;
@@ -85,7 +85,7 @@ const mergeDropdownSectionItems = (sections: SearchableDropdownSection[]) =>
         []
     );
 
-const SearchableDropdown = ({
+export const SearchableDropdown = ({
     id,
     options,
     sections,
@@ -106,7 +106,7 @@ const SearchableDropdown = ({
     if ((!options && !sections) || (options && sections)) {
         throw new Error("You must supply only one of 'options', 'sections' props");
     }
-
+    const styles = useStyles();
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [inputValue, setInputValue] = useState('');
     const [dropdownSections, setDropdownSections] = useState<SearchableDropdownSection[]>([]);
