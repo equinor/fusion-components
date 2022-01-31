@@ -7,7 +7,7 @@ import {
     styling,
 } from '@equinor/fusion-components';
 import classNames from 'classnames';
-import styles from './styles.less';
+import { useStyles } from './PersonCard.style';
 import {
     PersonDetails,
     useComponentDisplayClassNames,
@@ -40,6 +40,7 @@ export default ({
     showJobTitle,
     isFetchingPerson,
 }: PersonCardProps) => {
+    const styles = useStyles();
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>();
     const { isFetching, error, personDetails } = usePeopleDetails(personId, person);
 
