@@ -69,6 +69,7 @@ export const useStyles = makeStyles(
             paddingRight: 'calc(var(--grid-unit) * 2px)',
             display: 'grid',
             flexGrow: 1,
+            //color: 'var(--color-black)',
             gridTemplateColumns: 'calc(var(--grid-unit) * 6px) minmax(max-content, auto)',
             gridTemplateAreas: '"badge title" " . description"',
             gridTemplateRows:
@@ -78,18 +79,18 @@ export const useStyles = makeStyles(
             '--line-color': 'var(--color-primary)',
 
             '@media (max-width: 767px)': {
-                gridTemplateAreas: '"badge title", "progress description"',
+                gridTemplateAreas: '"badge title" "progress description"',
                 gridTemplateColumns: 'calc(var(--grid-unit) * 6px) auto',
                 paddingLeft: 0,
                 paddingRight: 0,
             },
 
-            '&$compact': {
-                padding: 'calc(var(--grid-unit) * 0.5px)',
-            },
-            
             'a&': {
                 color: 'var(--color-black)',
+            },
+
+            '&$compact': {
+                padding: 'calc(var(--grid-unit) * 0.5px)',
             },
         },
         compact: {},
@@ -110,18 +111,14 @@ export const useStyles = makeStyles(
             paddingLeft: 'calc(var(--grid-unit) * 1px)',
             alignSelf: 'center',
             display: 'flex',
-<<<<<<< HEAD
-            //TODO change color of title from green to :   color: 'var(--color-black-alt2)',
-=======
->>>>>>> master
 
             '&$compact': {
                 width: 'calc(var(--grid-unit) * 24px)',
             },
 
-            /*'& > .text ': {
+            '& > $text ': {
                 display: 'block',
-            },*/
+            },
 
             '& > $text::after': {
                 display: 'block',
@@ -216,7 +213,8 @@ export const useStyles = makeStyles(
             },
         },
         comfortable: {},
-    })
+    }),
+    { name: 'fusion-components-stepper' }
 );
 
 export default useStyles;
