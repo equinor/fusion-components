@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import styles from './styles.less';
+import { useScrimStyles } from './Scrim.style';
 import { FC, ReactNode, MouseEvent, useState, useRef, useCallback } from 'react';
 
 type ScrimProps = {
@@ -8,7 +8,8 @@ type ScrimProps = {
     onClick?: (event: MouseEvent<HTMLDivElement>) => void;
 };
 
-const Scrim: FC<ScrimProps> = ({ children, show, onClick }) => {
+export const Scrim: FC<ScrimProps> = ({ children, show, onClick }) => {
+    const styles = useScrimStyles();
     const [mouseDownTarget, setMouseDownTarget] = useState({});
     const [mouseUpTarget, setMouseUpTarget] = useState({});
 
