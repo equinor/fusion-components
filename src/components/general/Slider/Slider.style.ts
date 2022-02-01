@@ -167,7 +167,8 @@ export const useStyles = makeStyles(
         },
         compact: {},
         comfortable: {},
-    })
+    }),
+    { name: 'fusion-components-slider' }
 );
 
 export default useStyles;
