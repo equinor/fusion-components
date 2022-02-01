@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { ButtonProps } from '@equinor/fusion-components';
 import classNames from 'classnames';
-//import styles from './styles.less';
 import { useStyles } from './Skeleton.style';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 

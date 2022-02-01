@@ -37,39 +37,48 @@ export const useStyles = makeStyles(
             height: 'var(--disc-size)',
         },
         xlarge: {
+            // 56x56
             '&$comfortable': {
                 '--disc-size': 'calc(var(--grid-unit) * 7px)',
             },
+            // 48x48
             '&$compact': {
                 '--disc-size': 'calc(var(--grid-unit) * 6px)',
             },
         },
         large: {
+            // 40x40
             '&$comfortable': {
                 '--disc-size': 'calc(var(--grid-unit) * 5px=',
             },
+            // 32x32
             '&$compact': {
                 '--disc-size': 'calc(var(--grid-unit) * 4px)',
             },
         },
         medium: {
+            // 32x32
             '&$comfortable': {
                 '--disc-size': 'calc(var(--grid-unit) * 4px)',
             },
+            // 24x24
             '&$compact': {
                 '--disc-size': 'calc(var(--grid-unit) * 3px)',
             },
         },
         small: {
+            // 24x24
             '&$comfortable': {
                 '--disc-size': 'calc(var(--grid-unit) * 3px)',
             },
+            // 16x16
             '&$compact': {
                 '--disc-size': 'calc(var(--grid-unit) * 2px)',
             },
         },
         comfortable: {},
         compact: {},
-    })
+    }),
+    { name: 'fusion-components-skeleton' }
 );
 export default useStyles;

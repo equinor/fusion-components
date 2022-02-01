@@ -1,6 +1,5 @@
 import { useMemo, FC } from 'react';
 import { useStyles } from './Skeleton.style';
-//import styles from './styles.less';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
 
