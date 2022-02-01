@@ -7,7 +7,7 @@ import {
     useDropdownController,
 } from '@equinor/fusion-components';
 import { useCallback, useEffect, FC, MutableRefObject } from 'react';
-import styles from './styles.less';
+import { useStyles } from './AllBookmarks.style';
 
 type BookmarkOptionsProps = {
     onEdit: () => void;
@@ -16,6 +16,7 @@ type BookmarkOptionsProps = {
 };
 
 const BookmarkOptions: FC<BookmarkOptionsProps> = ({ onDelete, onEdit, accordionOpen }) => {
+    const styles = useStyles();
     const dropdownController = useDropdownController((ref, isOpen, setIsOpen) => (
         <IconButton
             ref={ref as MutableRefObject<HTMLButtonElement>}

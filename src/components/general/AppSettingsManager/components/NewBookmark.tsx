@@ -1,7 +1,7 @@
 import { useNotificationCenter } from '@equinor/fusion';
 import { Button, TextInput } from '@equinor/fusion-components';
 import { useState, useCallback, FC } from 'react';
-import styles from './../styles.less';
+import { useStyles } from '../AppsettingsSideSheet.style';
 
 type NewBookmarkProps = {
     contextName: string;
@@ -9,6 +9,7 @@ type NewBookmarkProps = {
     onSave: (name: string) => Promise<void>;
 };
 const NewBookmark: FC<NewBookmarkProps> = ({ contextName, onCancel, onSave }) => {
+    const styles = useStyles();
     const [name, setName] = useState<string>('');
     const createNotification = useNotificationCenter();
 
