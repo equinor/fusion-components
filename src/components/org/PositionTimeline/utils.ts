@@ -13,6 +13,7 @@ import {
  * @returns
  */
 export const getStartDate = (splits: TimelineSplit[]) => {
+    if (!splits.length) return new Date().getTime();
     return Math.min(...splits.map((split) => split.appliesFrom.getTime()));
 };
 
@@ -22,6 +23,7 @@ export const getStartDate = (splits: TimelineSplit[]) => {
  * @returns
  */
 export const getEndDate = (splits: TimelineSplit[]) => {
+    if (!splits.length) return new Date().getTime();
     return Math.max(...splits.map((split) => split.appliesTo.getTime()));
 };
 

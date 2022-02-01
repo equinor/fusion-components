@@ -5,16 +5,22 @@ import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClien
 import { ActionError } from '@equinor/fusion/lib/epic';
 
 export type AccessActions = ActionType<typeof actions>;
+export type AccessRequest = {
+    reportId: string;
+    silent?: boolean;
+};
 
 export const fetchAccessToken = createAsyncAction(
-  '@PBI/FETCH_REPORT_TOKEN_REQUEST',
-  '@PBI/FETCH_REPORT_TOKEN_SUCCESS',
-  '@PBI/FETCH_REPORT_TOKEN_FAILURE',
-  '@PBI/FETCH_REPORT_TOKEN_CANCEL'
-)<string, AccessToken, ActionError<HttpClientRequestFailedError<any>>, string | void>();
+    '@PBI/FETCH_REPORT_TOKEN_REQUEST',
+    '@PBI/FETCH_REPORT_TOKEN_SUCCESS',
+    '@PBI/FETCH_REPORT_TOKEN_FAILURE',
+    '@PBI/FETCH_REPORT_TOKEN_CANCEL'
+)<AccessRequest, AccessToken, ActionError<HttpClientRequestFailedError<any>>, string | void>();
 
-export const refreshAccessToken = createAction('@PBI/FETCH_REPORT_TOKEN_REFRESH')<void>();
+export const refreshAccessToken = createAction('@PBI/FETCH_REPORT_TOKEN_REFRESH')<{
+    reason?: string;
+}>();
 
-const actions = { fetchAccessToken, refreshAccessToken }
+const actions = { fetchAccessToken, refreshAccessToken };
 
 export default actions;

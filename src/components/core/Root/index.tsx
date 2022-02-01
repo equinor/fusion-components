@@ -1,6 +1,6 @@
 import styles from './styles.less';
 
-import FusionContainer from '../Container';
+import FusionContainer from '../Container/Container';
 import NotificationSnacks from '../NotificationSnacks';
 import NotificationDialog from '../NotificationDialog';
 import { useComponentDisplayClassNames, useFusionContext } from '@equinor/fusion';

@@ -1,4 +1,4 @@
-import styles from './styles.less';
+import { useStyles } from './style';
 import { IconButton, ArrowBackIcon, ArrowForwardIcon } from '@equinor/fusion-components';
 import StepPane from './StepPane';
 import StepContent from './StepContent';
@@ -31,6 +31,7 @@ const Stepper: FC<StepperProps> = ({
     hideNavButtons,
     verticalSteps,
 }) => {
+    const styles = useStyles();
     const [stepKeys, setStepKeys] = useState<StepKey[]>([]);
     const [currentStepKey, setCurrentStepKey] = useState<string | null>(null);
     const [activeStepPosition, setActiveStepPosition] = useState<number | null>(null);

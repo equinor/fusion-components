@@ -15,14 +15,15 @@ type RadioButtonProps = {
     option: RadioOption;
     onClick: () => void;
     isChecked: boolean;
+    id?: string;
 };
 
-const RadioButtonWrapper: FC<RadioButtonProps> = ({ option, onClick, isChecked }) => {
+const RadioButtonWrapper: FC<RadioButtonProps> = ({ option, onClick, isChecked, id }) => {
     const filterPaneContext = useFilterPaneContext();
     const tooltipRef = useTooltipRef(option.label, filterPaneContext.tooltipPlacement);
 
     return (
-        <li data-cy="radio-btn-filter" ref={tooltipRef} onClick={onClick}>
+        <li id={id} ref={tooltipRef} onClick={onClick}>
             <RadioButton selected={isChecked} color={option.color} />
             {!filterPaneContext.paneIsCollapsed && <label>{option.label}</label>}
         </li>
