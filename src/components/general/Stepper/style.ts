@@ -69,7 +69,7 @@ export const useStyles = makeStyles(
             paddingRight: 'calc(var(--grid-unit) * 2px)',
             display: 'grid',
             flexGrow: 1,
-            //color: 'var(--color-black)',
+            'a&': { color: 'var(--color-black)' },
             gridTemplateColumns: 'calc(var(--grid-unit) * 6px) minmax(max-content, auto)',
             gridTemplateAreas: '"badge title" " . description"',
             gridTemplateRows:
@@ -83,10 +83,6 @@ export const useStyles = makeStyles(
                 gridTemplateColumns: 'calc(var(--grid-unit) * 6px) auto',
                 paddingLeft: 0,
                 paddingRight: 0,
-            },
-
-            'a&': {
-                color: 'var(--color-black)',
             },
 
             '&$compact': {
