@@ -30,6 +30,7 @@ export const useStyles = makeStyles(
             display: 'flex',
             alignItems: 'center',
         },
-    })
+    }),
+    { name: 'fusion-components-bookmarksManager-options' }
 );
 export default useStyles;
