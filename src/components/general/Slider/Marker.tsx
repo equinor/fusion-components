@@ -29,7 +29,6 @@ const Marker: FC<SliderMarkerProps> = ({ marker, isActive, disabled, position, o
     );
 
     const markerClassNames = classNames(styles.marker, {
-        // [styles.isActive]: isActive,
         [styles.isLowered]: marker.lowered,
         [styles.isElevated]: marker.elevated,
     });

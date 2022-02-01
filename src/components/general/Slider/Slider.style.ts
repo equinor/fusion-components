@@ -49,7 +49,6 @@ export const useStyles = makeStyles(
         isLowered: {},
         track: {
             position: 'absolute',
-            //zIndex: 'var(--track-z-index)',
             top: '50%',
             transform: 'translateY(-50%)',
             zIndex: 1,
@@ -60,7 +59,6 @@ export const useStyles = makeStyles(
         },
         slider: {
             position: 'absolute',
-            //zIndex: 'var(--slider-z-index)',
             top: '50%',
             transform: 'translateY(-50%)',
             zIndex: 2,

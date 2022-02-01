@@ -104,7 +104,6 @@ const Slider: FC<SliderProps> = ({ values, markers, disabled, hideHandle, onChan
         styles.container,
         useComponentDisplayClassNames(styles),
         {
-            //[styles.activeHandle]: activeHandle !== null,
             [styles.isDisabled]: disabled,
             [styles.isLowered]: markers.some((marker) => !!marker.lowered),
         }
