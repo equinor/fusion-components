@@ -114,7 +114,7 @@ export default ({
         };
         setMaxHeight();
 
-        window.addEventListener('resize', setMaxHeight, false);
+        window.addEventListener('resize', setMaxHeight, { passive: true });
         return () => window.removeEventListener('resize', setMaxHeight);
     }, [contentRef.current]);
 

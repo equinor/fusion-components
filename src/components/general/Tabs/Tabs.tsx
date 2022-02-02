@@ -73,10 +73,13 @@ const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
         pane.scrollTo(tabRef.offsetLeft - pane.offsetWidth / 2 + tabRef.offsetWidth / 2, 0);
     };
 
-    useEventListener(tabsPaneRef.current, 'scroll', () => setGradient(checkForGradient), [
+    useEventListener(
         tabsPaneRef.current,
-        activeTabKey,
-    ]);
+        'scroll',
+        () => setGradient(checkForGradient),
+        [tabsPaneRef.current, activeTabKey],
+        { passive: true }
+    );
 
     useEffect(() => {
         scrollToTab(activeTabRef.current);
@@ -110,13 +113,14 @@ const Tabs: FC<TabsProps> = ({ onChange, activeTabKey, noScrollGradient, childre
     return (
         <div className={styles.tabs}>
             <TabPane
-                children={children}
                 activeTabKey={activeTabKey}
                 noScrollGradient={noScrollGradient}
                 onChange={(tabKey) => onChange(tabKey)}
-            />
+            >
+                {children}
+            </TabPane>
 
-            <TabContent children={children} activeTabKey={activeTabKey} />
+            <TabContent activeTabKey={activeTabKey}>{children}</TabContent>
         </div>
     );
 };

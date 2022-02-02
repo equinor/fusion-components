@@ -94,9 +94,9 @@ const RelativePortalChild = ({
     });
 
     useEffect(() => {
-        document.addEventListener('scroll', updatePositioning, true);
-        window.addEventListener('resize', updatePositioning, true);
-        document.addEventListener('click', handleClickOutside, false);
+        document.addEventListener('scroll', updatePositioning, {passive: true, capture: true});
+        window.addEventListener('resize', updatePositioning, {passive: true, capture: true});
+        document.addEventListener('click', handleClickOutside, {passive: true});
         updatePositioning();
 
         return () => {
