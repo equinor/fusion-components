@@ -64,8 +64,8 @@ export class OverlayElement extends LitElement implements OverlayElementProps {
         super.connectedCallback();
         this._dispatchEvent(OverlayEventType.connected);
         this.addEventListener(OverlayAnchorConnectEvent.eventName, this._handleAnchorConnect);
-        window.addEventListener('resize', this._updateAnchorBounds, false);
-        window.addEventListener('scroll', this._updateAnchorBounds, false);
+        window.addEventListener('resize', this._updateAnchorBounds, { passive: true });
+        window.addEventListener('scroll', this._updateAnchorBounds, { passive: true });
     }
 
     disconnectedCallback(): void {
