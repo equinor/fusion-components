@@ -67,9 +67,9 @@ export const useStyles = makeStyles(
             padding: 'calc(var(--grid-unit) * 1px)',
             paddingLeft: 'calc(var(--grid-unit) * 2px)',
             paddingRight: 'calc(var(--grid-unit) * 2px)',
-            color: 'var(--color-black)',
             display: 'grid',
             flexGrow: 1,
+            'a&': { color: 'var(--color-black)' },
             gridTemplateColumns: 'calc(var(--grid-unit) * 6px) minmax(max-content, auto)',
             gridTemplateAreas: '"badge title" " . description"',
             gridTemplateRows:
@@ -79,7 +79,7 @@ export const useStyles = makeStyles(
             '--line-color': 'var(--color-primary)',
 
             '@media (max-width: 767px)': {
-                gridTemplateAreas: '"badge title", "progress description"',
+                gridTemplateAreas: '"badge title" "progress description"',
                 gridTemplateColumns: 'calc(var(--grid-unit) * 6px) auto',
                 paddingLeft: 0,
                 paddingRight: 0,
@@ -112,9 +112,9 @@ export const useStyles = makeStyles(
                 width: 'calc(var(--grid-unit) * 24px)',
             },
 
-            /*'& > .text ': {
+            '& > $text ': {
                 display: 'block',
-            },*/
+            },
 
             '& > $text::after': {
                 display: 'block',
@@ -125,9 +125,7 @@ export const useStyles = makeStyles(
                 visibility: 'hidden',
             },
         },
-        text: {
-            display: 'block',
-        },
+        text: {},
         isLastStep: {
             width: 'inherit',
 
@@ -209,7 +207,8 @@ export const useStyles = makeStyles(
             },
         },
         comfortable: {},
-    })
+    }),
+    { name: 'fusion-components-stepper' }
 );
 
 export default useStyles;
