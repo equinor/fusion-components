@@ -5,17 +5,17 @@ export default <T extends EventListenerOrEventListenerObject>(
     eventType: string,
     handler: T,
     dependencies: any[],
-    useCapture = false
-) => {
+    options?: boolean | AddEventListenerOptions
+): void => {
     useEffect(() => {
         if (node == null) {
             return;
         }
 
-        node.addEventListener(eventType, handler, useCapture);
+        node.addEventListener(eventType, handler, options);
 
         return () => {
-            node.removeEventListener(eventType, handler, useCapture);
+            node.removeEventListener(eventType, handler, options);
         };
     }, [node, ...dependencies]);
 };
