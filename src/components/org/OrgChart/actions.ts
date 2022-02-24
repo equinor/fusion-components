@@ -20,9 +20,9 @@ const useOrgChartActions = <T extends OrgStructure>({
     parentHeight,
     parentWidth,
     breadCrumbs,
-    breadCrumbWidth = 194,
-    breadCrumbHeight = 52,
-    breadCrumbMargin = 16,
+    breadCrumbWidth = 232, //194
+    breadCrumbHeight = 104, //52
+    breadCrumbMargin = 32, //16
 }: OrgChartActionProps<T>) => {
     const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
 
