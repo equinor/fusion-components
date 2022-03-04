@@ -23,8 +23,12 @@ const useDepartmentCardStyles = makeStyles(
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            flexDirection: 'column',
+            width: '100%',
+            height: '65%',
         },
         textContainer: {
+            marginLeft: '0.25rem',
             display: 'flex',
             justifyContent: 'center',
             flexDirection: 'column',
@@ -36,7 +40,7 @@ const useDepartmentCardStyles = makeStyles(
             width: '90%',
             fontSize: '12px',
             lineHeight: '1rem',
-            fontWeight: 600,
+            fontWeight: 500,
         },
         name: {
             whiteSpace: 'nowrap',
