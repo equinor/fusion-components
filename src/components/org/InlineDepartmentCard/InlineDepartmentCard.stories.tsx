@@ -11,7 +11,7 @@ const payload = {
 
 const InlineDepartmentCardViewerStory = () => {
     return (
-        <div style={{ margin: '8px' }}>
+        <div style={{ margin: '8px', width: '35%' }}>
             <InlineDepartmentCard
                 name={payload.personName}
                 fullDepartmentName={payload.departmentName}
