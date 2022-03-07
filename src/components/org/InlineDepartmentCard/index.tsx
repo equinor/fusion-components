@@ -13,10 +13,10 @@ const useDepartmentCardStyles = makeStyles(
             display: 'grid',
             gridTemplateColumns: '2rem 1fr',
             alignItems: 'center',
-            padding: ' 0.2rem 0 0.2rem 0', //maybe remove this?
+            padding: ' 0.2rem 0 0.2rem 0',
             borderRadius: '4px',
-            width: '100%', //'193px',
-            height: '40px', //100%
+            width: '100%',
+            height: '40px',
             background: '#FFFFFF',
         },
         logo: {
