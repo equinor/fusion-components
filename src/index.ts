@@ -167,9 +167,10 @@ export {
 export { default as PositionTimeline } from './components/org/PositionTimeline';
 export { TimelineSlotProps } from './components/org/PositionTimeline/model';
 export { default as InlinePositionTimeline } from './components/org/PositionTimeline/InlinePositionTimeline';
-export { default as SplitPopover} from './components/org/PositionTimeline/components/SplitPopover';
+export { default as SplitPopover } from './components/org/PositionTimeline/components/SplitPopover';
 export { default as ReportingPath } from './components/org/ReportingPath';
 export { default as PositionPicker } from './components/org/PositionPicker';
+export { default as InlineDepartmentCard } from './components/org/InlineDepartmentCard';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';
