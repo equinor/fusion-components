@@ -5,6 +5,7 @@ import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 import { useComponentDisplayType, Position } from '@equinor/fusion';
 import { PositionCard } from '@equinor/fusion-components';
 import { FC, CSSProperties } from 'react';
+import { clsx, createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
 type PositionStructure = OrgStructure & {
     name?: string;
@@ -180,26 +181,82 @@ const position: Position = {
     properties: {
         isSupport: false,
     },
-    name: 'Drilling Engineer',
+    name: 'Drilling Engineer test 123',
 };
 
-const breadCrumbStyle = {
-    display: 'flex',
-    justifyContent: 'left',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    boxShadow:
-        '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
-    margin: '10px',
-    padding: '16px',
-    boxSizing: 'border-box',
-    flex: '1',
-    fontSize: '16px',
-    height: '32px',
-} as CSSProperties;
+const useStyles = makeStyles(
+    () =>
+        createStyles({
+            container: () => ({
+                display: 'grid',
+                gridTemplateColumns: '2rem 1fr',
+                width: '100%',
+                margin: '0.02rem',
+                alignItems: 'end',
+                cursor: 'pointer',
+                padding: ' 0.4rem 0 0.2rem 0',
+                background: 'white',
+            }),
 
-const BreadCrumbComponent: FC<BreadCrumb> = ({ label }) => {
-    return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
+            avatar: {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            },
+            textContainer: {
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                marginLeft: '.5rem',
+            },
+            textOverflow: {
+                display: 'inline-block',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                overflow: 'hidden',
+                width: '85%',
+            },
+            title: {
+                fontSize: '12px',
+                color: '#007079',
+                textDecorationLine: 'underline',
+                lineHeight: '1rem',
+                fontWeight: 500,
+            },
+            description: {
+                fontSize: '10px',
+                color: '#243746',
+                lineHeight: '12px',
+            },
+        }),
+    { name: 'breadcrumb-card' }
+);
+
+type BreadCrumbItem = {
+    position?: Position;
+};
+
+const BreadCrumbComponent: FC<BreadCrumb<BreadCrumbItem>> = ({ breadCrumbItem }) => {
+    const styles = useStyles();
+    const position = breadCrumbItem?.position;
+    const instance = breadCrumbItem?.position.instances[0];
+    if (!position) {
+        return <div>No item test</div>;
+    }
+
+    return (
+        <PositionCard
+            position={position}
+            instance={instance}
+            showDate={false}
+            showExternalId={false}
+            showLocation={false}
+            showObs={false}
+            isSelected={false}
+            onExpand={() => {}}
+            inline
+        />
+    );
 };
 
 const PositionCardComponent: FC<OrgChartItemProps<PositionStructure>> = ({ item }) => {
@@ -221,16 +278,24 @@ const PositionCardComponent: FC<OrgChartItemProps<PositionStructure>> = ({ item 
     );
 };
 
-const breadCrumbs: BreadCrumb[] = [
+const breadCrumbs: BreadCrumb<BreadCrumbItem>[] = [
     {
         childId: '1',
         label: 'Boss',
         id: '101',
+        breadCrumbItem: { position },
     },
     {
         childId: '101',
         label: 'Director',
         id: '102',
+        breadCrumbItem: { position },
+    },
+    {
+        childId: '102',
+        label: 'Director',
+        id: '103',
+        breadCrumbItem: { position },
     },
 ];
 
@@ -238,7 +303,7 @@ const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
     const rowMargin = componentDisplayType === 'Compact' ? 138 : 164;
-    const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
+    const cardMargin = componentDisplayType === 'Compact' ? 24 : 24;
     const cardWidth = componentDisplayType === 'Compact' ? 300 : 340;
 
     return (
@@ -253,8 +318,11 @@ const OrgChartStory = () => {
                 rowMargin={rowMargin}
                 cardMargin={cardMargin}
                 breadCrumbMargin={10}
+                breadCrumbWidth={240}
+                breadCrumbHeight={52}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
+                bredCrumbView="vertical"
             />
         </div>
     );

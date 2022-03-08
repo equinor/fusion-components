@@ -1,23 +1,26 @@
 import { FC } from 'react';
 
-export type OrgChartItemProps<T> = {
-    item: T;
+export type OrgChartItemProps<TChart> = {
+    item: TChart;
 };
 
-export type OrgChartProps<T> = {
-    structure: T[];
-    component: FC<OrgChartItemProps<T>> | null;
+export type BreadCrumbView = 'collapsed' | 'horizontal' | 'vertical';
+
+export type OrgChartProps<TChart, TBreadCrumb> = {
+    structure: TChart[];
+    component: FC<OrgChartItemProps<TChart>> | null;
     cardWidth?: number;
     cardHeight?: number;
     cardMargin?: number;
     rowMargin?: number;
     asideLabel?: string;
     childrenLabel?: string;
-    breadCrumbComponent?: FC<BreadCrumb>;
-    breadCrumbs?: BreadCrumb[];
+    breadCrumbComponent?: FC<BreadCrumb<TBreadCrumb>>;
+    breadCrumbs?: BreadCrumb<TBreadCrumb>[];
     breadCrumbWidth?: number;
     breadCrumbHeight?: number;
     breadCrumbMargin?: number;
+    bredCrumbView?: BreadCrumbView;
 };
 
 export type OrgStructure = {
@@ -28,15 +31,17 @@ export type OrgStructure = {
     numberOfAssignees?: number;
 };
 
-export type OrgNode<T> = OrgStructure & {
+export type OrgNode<TChart = unknown> = OrgStructure & {
     x: number | null;
     y: number | null;
-    data: T;
+    data: TChart;
 };
 
-export type BreadCrumb = {
+export type BreadCrumb<TBreadCrumb = unknown> = {
     childId: string;
     label?: string;
     id?: string;
+    linked?: boolean;
     content?: JSX.Element;
+    breadCrumbItem?: TBreadCrumb;
 };

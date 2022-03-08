@@ -19,6 +19,7 @@ export const childCountTypeNameMapping: Record<ChildCountTypeKey, string> = {
 type CustomCardStyles = {
     backgroundStyle?: CSSProperties;
     borderStyle?: CSSProperties;
+    inline?: boolean;
 };
 
 type PositionCardProps = {
@@ -42,14 +43,15 @@ type PositionCardProps = {
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
     anonymize?: boolean;
+    inline?: boolean;
 } & CustomCardStyles;
 
-const useCardStyles = ({ backgroundStyle, borderStyle }: CustomCardStyles) =>
+const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyles) =>
     makeStyles((theme) =>
         createStyles({
             container: {
-                backgroundColor: 'var(--color-white)',
-                border: '2px solid var(--color-black-alt4)',
+                backgroundColor: !inline ? 'var(--color-white)' : 'none',
+                border: !inline ? '2px solid var(--color-black-alt4)' : 'none',
                 '&$futureBackground': {
                     backgroundColor:
                         theme.colors.interactive.success__highlight.getVariable('color'),
@@ -98,6 +100,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     backgroundStyle,
     borderStyle,
     anonymize,
+    inline,
 }) => {
     const isExternalHire =
         instance &&
@@ -109,7 +112,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const isConsultant =
         instance && instance.assignedPerson && instance.assignedPerson.accountType === 'Consultant';
 
-    const cardStyles = useCardStyles({ backgroundStyle, borderStyle });
+    const cardStyles = useCardStyles({ backgroundStyle, borderStyle, inline });
 
     const background = () => {
         if (!!backgroundStyle) return cardStyles.customBackgroundStyle;
@@ -137,6 +140,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
             [styles.clear]: true,
             [background()]: !!background(),
             [border()]: !!border(),
+            [styles.inline]: inline,
         }
     );
 
@@ -177,6 +181,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     personPhotoComponent={personPhotoComponent}
                     showTaskOwner={showTaskOwner}
                     anonymize={anonymize}
+                    inline={inline}
                 />
                 <PositionInstanceComponent
                     position={position}

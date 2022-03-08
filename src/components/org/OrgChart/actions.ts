@@ -2,12 +2,12 @@ import { OrgNode, OrgChartProps, OrgStructure } from './orgChartTypes';
 import { useEffect, useContext } from 'react';
 import { OrgChartContextReducer, OrgChartContext } from './store';
 
-type OrgChartActionProps<T> = OrgChartProps<T> & {
+type OrgChartActionProps<TChart, TBreadCrumb> = OrgChartProps<TChart, TBreadCrumb> & {
     parentHeight: number;
     parentWidth: number;
 };
 
-const useOrgChartActions = <T extends OrgStructure>({
+const useOrgChartActions = <TChart extends OrgStructure, TBreadCrumb>({
     structure,
     cardWidth = 340,
     cardHeight = 132,
@@ -20,13 +20,14 @@ const useOrgChartActions = <T extends OrgStructure>({
     parentHeight,
     parentWidth,
     breadCrumbs,
-    breadCrumbWidth = 232, //194
-    breadCrumbHeight = 104, //52
-    breadCrumbMargin = 32, //16
-}: OrgChartActionProps<T>) => {
-    const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    breadCrumbWidth = 194, //194
+    breadCrumbHeight = 52, //52
+    breadCrumbMargin = 16, //16,
+    bredCrumbView = 'collapsed',
+}: OrgChartActionProps<TChart, TBreadCrumb>) => {
+    const { dispatch } = useContext<OrgChartContextReducer<TChart, TBreadCrumb>>(OrgChartContext);
 
-    const generateNodes = (structure: T[]): OrgNode<T>[] => {
+    const generateNodes = (structure: TChart[]): OrgNode<TChart>[] => {
         return structure.map((item) => {
             return {
                 id: item.id,
@@ -104,6 +105,13 @@ const useOrgChartActions = <T extends OrgStructure>({
             breadcrumbs: breadCrumbs || null,
         });
     }, [breadCrumbs]);
+
+    useEffect(() => {
+        dispatch({
+            type: 'UPDATE_BREADCRUMB_VIEW',
+            breadCrumbView: bredCrumbView,
+        });
+    }, [bredCrumbView]);
 
     useEffect(() => {
         dispatch({

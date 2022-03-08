@@ -6,25 +6,27 @@ import { OrgStructure, OrgNode } from '../orgChartTypes';
 import styles from './styles.less';
 import classNames from 'classnames';
 
-const Links = <T extends OrgStructure>() => {
+const Links = <TChart extends OrgStructure>(): JSX.Element => {
     const {
         state: { allNodes, cardWidth, cardHeight, centerX, cardMargin, numberOfCardsPerRow, width },
-    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
 
-    const allChildren = useMemo(() => allNodes.filter((node) => !node.aside && node.parentId), [
-        allNodes,
-    ]);
+    const allChildren = useMemo(
+        () => allNodes.filter((node) => !node.aside && node.parentId),
+        [allNodes]
+    );
 
-    const allAside = useMemo(() => allNodes.filter((node) => node.aside && node.parentId), [
-        allNodes,
-    ]);
+    const allAside = useMemo(
+        () => allNodes.filter((node) => node.aside && node.parentId),
+        [allNodes]
+    );
 
     const centerHeight = cardHeight / 2;
     const centerWidth = cardWidth / 2;
     const pixelPusher = 0.5; //Needed for overlapping svg paths in Edge
 
     const getAsidePath = useCallback(
-        (node: OrgNode<T>, parent: OrgNode<T>) => {
+        (node: OrgNode<TChart>, parent: OrgNode<TChart>) => {
             if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
@@ -38,7 +40,7 @@ const Links = <T extends OrgStructure>() => {
     );
 
     const getChildPath = useCallback(
-        (node: OrgNode<T>, parent: OrgNode<T>, index: number) => {
+        (node: OrgNode<TChart>, parent: OrgNode<TChart>, index: number) => {
             if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
@@ -70,7 +72,7 @@ const Links = <T extends OrgStructure>() => {
     );
 
     const getSingleCardRowPath = useCallback(
-        (node: OrgNode<T>, parent: OrgNode<T>) => {
+        (node: OrgNode<TChart>, parent: OrgNode<TChart>) => {
             if (node.x === null || node.y === null || parent.x === null || parent.y === null) {
                 return '';
             }
@@ -100,7 +102,7 @@ const Links = <T extends OrgStructure>() => {
     );
 
     const renderLink = useCallback(
-        (node: OrgNode<T>, index: number) => {
+        (node: OrgNode<TChart>, index: number) => {
             if (!node.parentId) {
                 return null;
             }

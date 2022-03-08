@@ -24,6 +24,7 @@ type PositionPhotoIconProps = {
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
     anonymize?: boolean;
+    inline?: boolean;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -34,6 +35,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     personPhotoComponent,
     showTaskOwner,
     anonymize,
+    inline,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const taskOwnerRef = useTooltipRef('Task Owner', 'below');
@@ -63,7 +65,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                                 : undefined
                         }
                         additionalPersons={additionalPersons}
-                        size="large"
+                        size={inline ? 'small' : 'large'}
                         key={currentInstance ? currentInstance.id : (+new Date()).toString()}
                         customTooltip={anonymize ? 'Anonymous' : undefined}
                     />

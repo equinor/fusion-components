@@ -1,7 +1,7 @@
-import { OrgNode, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
+import { OrgNode, OrgChartItemProps, BreadCrumb, BreadCrumbView } from './orgChartTypes';
 import { FC, useReducer, Reducer, Context, createContext, Dispatch } from 'react';
 
-type Action<T> =
+type Action<TChart, TBreadCrumb> =
     | { type: 'UPDATE_SIZE'; width?: number; height?: number }
     | { type: 'UPDATE_CENTER'; x?: number; y?: number }
     | {
@@ -12,17 +12,17 @@ type Action<T> =
           initialWidth?: number;
       }
     | { type: 'UPDATE_ROW_MARGIN'; margin: number }
-    | { type: 'UPDATE_NODES'; nodes: OrgNode<T>[] }
+    | { type: 'UPDATE_NODES'; nodes: OrgNode<TChart>[] }
     | {
           type: 'UPDATE_COMPONENTS';
-          component?: FC<OrgChartItemProps<T>>;
-          breadCrumbComponent?: FC<BreadCrumb>;
+          component?: FC<OrgChartItemProps<TChart>>;
+          breadCrumbComponent?: FC<BreadCrumb<TBreadCrumb>>;
       }
     | { type: 'UPDATE_ASIDE_ROWS'; rows: number }
     | { type: 'UPDATE_CHILDREN_ROWS'; rows: number }
-    | { type: 'UPDATE_POSITION'; node: OrgNode<T>; x: number; y: number }
+    | { type: 'UPDATE_POSITION'; node: OrgNode<TChart>; x: number; y: number }
     | { type: 'UPDATE_LABELS'; childrenLabel?: string; asideLabel?: string }
-    | { type: 'UPDATE_BREADCRUMBS'; breadcrumbs: BreadCrumb[] | null }
+    | { type: 'UPDATE_BREADCRUMBS'; breadcrumbs: BreadCrumb<TBreadCrumb>[] | null }
     | { type: 'UPDATE_BREADCRUMBS_SIZE'; height?: number; width?: number; margin?: number }
     | { type: 'UPDATE_NUMBER_OF_CARDS_PER_ROW'; numberOfCardsPerRow: number }
     | {
@@ -30,9 +30,11 @@ type Action<T> =
           additionalChildRowHeight?: number;
           additionalAsideRowHeight?: number;
           additionalRootRowHeight?: number;
-      };
+      }
+    | { type: 'UPDATE_BREADCRUMB_VIEW'; breadCrumbView: BreadCrumbView }
+    | { type: 'UPDATE_START_Y_POSITION'; startY: number };
 
-export type OrgChartContextType<T> = {
+export type OrgChartContextType<TChart, TBreadCrumb> = {
     width: number;
     height: number;
     centerX: number;
@@ -42,33 +44,38 @@ export type OrgChartContextType<T> = {
     cardMargin: number;
     initialCardWidth: number;
     rowMargin: number;
-    allNodes: OrgNode<T>[];
-    component: FC<OrgChartItemProps<T>> | null;
+    allNodes: OrgNode<TChart>[];
+    component: FC<OrgChartItemProps<TChart>> | null;
     asideRows: number;
     childrenRows: number;
     childrenLabel: string | null;
     asideLabel: string | null;
-    breadCrumbs: BreadCrumb[] | null;
-    breadCrumbComponent: FC<BreadCrumb> | null;
+    breadCrumbs: BreadCrumb<TBreadCrumb>[] | null;
+    breadCrumbComponent: FC<BreadCrumb<TBreadCrumb>> | null;
     numberOfCardsPerRow: number;
     breadCrumbWidth: number;
     breadCrumbHeight: number;
     breadCrumbMargin: number;
+    breadCrumbView: BreadCrumbView;
     additionalChildRowHeight: number;
     additionalAsideRowHeight: number;
     additionalRootRowHeight: number;
+    startYPosition: number;
 };
 
-export type OrgChartContextReducer<T> = {
-    state: OrgChartContextType<T>;
-    dispatch: Dispatch<Action<T>>;
+export type OrgChartContextReducer<TChart = unknown, TBreadCrumb = unknown> = {
+    state: OrgChartContextType<TChart, TBreadCrumb>;
+    dispatch: Dispatch<Action<TChart, TBreadCrumb>>;
 };
 
-export const OrgChartContext: Context<OrgChartContextReducer<any>> = createContext<
-    OrgChartContextReducer<any>
->({} as OrgChartContextReducer<any>);
+export const OrgChartContext: Context<OrgChartContextReducer<any, any>> = createContext<
+    OrgChartContextReducer<any, any>
+>({} as OrgChartContextReducer<any, any>);
 
-function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartContextType<T> {
+function reducer<TChart, TBreadCrumb>(
+    state: OrgChartContextType<TChart, TBreadCrumb>,
+    action: Action<TChart, TBreadCrumb>
+): OrgChartContextType<TChart, TBreadCrumb> {
     switch (action.type) {
         case 'UPDATE_SIZE':
             return {
@@ -170,11 +177,21 @@ function reducer<T>(state: OrgChartContextType<T>, action: Action<T>): OrgChartC
                         ? action.additionalRootRowHeight
                         : state.additionalRootRowHeight,
             };
+        case 'UPDATE_BREADCRUMB_VIEW':
+            return {
+                ...state,
+                breadCrumbView: action.breadCrumbView,
+            };
+        case 'UPDATE_START_Y_POSITION':
+            return {
+                ...state,
+                startYPosition: action.startY,
+            };
     }
 }
 
-export function OrgChartContextProvider<T>({ children }: any) {
-    const initialState: OrgChartContextType<T> = {
+export function OrgChartContextProvider<TChart, TBreadCrumb>({ children }: any) {
+    const initialState: OrgChartContextType<TChart, TBreadCrumb> = {
         width: 0,
         height: 0,
         centerX: 0,
@@ -199,12 +216,13 @@ export function OrgChartContextProvider<T>({ children }: any) {
         additionalChildRowHeight: 0,
         additionalAsideRowHeight: 0,
         additionalRootRowHeight: 0,
+        breadCrumbView: 'collapsed',
+        startYPosition: 0,
     };
 
-    const [state, dispatch] = useReducer<Reducer<OrgChartContextType<T>, Action<T>>>(
-        reducer,
-        initialState
-    );
+    const [state, dispatch] = useReducer<
+        Reducer<OrgChartContextType<TChart, TBreadCrumb>, Action<TChart, TBreadCrumb>>
+    >(reducer, initialState);
     const value = { state, dispatch };
 
     return <OrgChartContext.Provider value={value}>{children}</OrgChartContext.Provider>;
