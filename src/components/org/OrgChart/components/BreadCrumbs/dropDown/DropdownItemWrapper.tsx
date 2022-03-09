@@ -16,6 +16,7 @@ const useDropdownItemStyles = makeStyles(
                 justifyContent: 'center',
                 fontWeight: 700,
                 fontSize: '.6rem',
+                padding: '.3rem 0',
             },
             itemContainer: {
                 width: '100%',
@@ -30,15 +31,11 @@ const useDropdownItemStyles = makeStyles(
     { name: 'dropdown-item-wrapper' }
 );
 
-type DropdownItemProps = {
-    index: number;
-};
-
-const DropdownItemWrapper: FC<PropsWithChildren<DropdownItemProps>> = ({ children, index }) => {
+const DropdownItemWrapper: FC = ({ children }) => {
     const styles = useDropdownItemStyles();
     return (
         <div className={styles.container}>
-            {index !== 0 && <Icon icon={'arrow_down'} className={styles.icon} />}
+            <Icon icon={'arrow_down'} className={styles.icon} />
             <div className={styles.itemContainer}>{children}</div>
         </div>
     );

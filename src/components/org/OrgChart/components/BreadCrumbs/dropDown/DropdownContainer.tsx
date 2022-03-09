@@ -1,6 +1,6 @@
 import { Dropdown, useDropdownController } from '@equinor/fusion-components';
 import Icon from '@equinor/fusion-react-icon';
-import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
+import { clsx, createStyles, makeStyles } from '@equinor/fusion-react-styles';
 import { FC, MutableRefObject, PropsWithChildren, useContext } from 'react';
 import { BreadCrumb } from '../../../orgChartTypes';
 import { OrgChartContext, OrgChartContextReducer } from '../../../store';
@@ -11,7 +11,7 @@ const useDropdownStyles = makeStyles(
         createStyles({
             dropdown: {
                 position: 'relative',
-                background: 'white',
+                background: theme.colors.text.static_icons__primary_white.getVariable('color'),
 
                 '&:hover': {
                     '& $separator': {
@@ -22,9 +22,7 @@ const useDropdownStyles = makeStyles(
                     },
                 },
             },
-            container: {
-                display: 'grid',
-                gridTemplateColumns: '1fr auto 2rem',
+            defaultStyle: {
                 border: '1px solid',
                 borderColor: theme.colors.ui.background__medium.getVariable('color'),
                 borderRadius: '4px',
@@ -32,6 +30,10 @@ const useDropdownStyles = makeStyles(
                     cursor: 'pointer',
                     borderColor: theme.colors.text.static_icons__secondary.getVariable('color'),
                 },
+            },
+            container: {
+                display: 'grid',
+                gridTemplateColumns: '1fr auto 2rem',
             },
             separator: {
                 borderLeft: `1px solid`,
@@ -41,6 +43,20 @@ const useDropdownStyles = makeStyles(
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                borderRadius: '0 4px 4px 0',
+                '&:hover': {
+                    backgroundColor:
+                        theme.colors.interactive.primary__hover_alt.getVariable('color'),
+                },
+            },
+            itemContainer: {
+                width: '100%',
+                borderRadius: '4px 0 0 4px',
+                '&:hover': {
+                    backgroundColor:
+                        theme.colors.interactive.primary__hover_alt.getVariable('color'),
+                    cursor: ' pointer',
+                },
             },
         }),
     { name: 'org-admin-dropdown-styles' }
@@ -57,8 +73,8 @@ const DropdownContainer: FC<PropsWithChildren<DropdownContainerProps>> = ({ item
     } = useContext<OrgChartContextReducer>(OrgChartContext);
 
     const dropdownController = useDropdownController((_, isOpen, setIsOpen) => (
-        <div className={styles.container}>
-            {children}
+        <div className={clsx(styles.defaultStyle, styles.container)}>
+            <div className={styles.itemContainer}>{children}</div>
             <div className={styles.separator} />
             <div className={styles.icon} onClick={() => setIsOpen(!isOpen)}>
                 <Icon icon="arrow_drop_down" />
@@ -70,14 +86,14 @@ const DropdownContainer: FC<PropsWithChildren<DropdownContainerProps>> = ({ item
         dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     if (!items?.length) {
-        return <>{children}</>;
+        return <div className={styles.defaultStyle}>{children}</div>;
     }
     const BreadCrumbComponent = breadCrumbComponent;
     return (
         <div className={styles.dropdown} ref={containerRef}>
             <Dropdown controller={dropdownController}>
                 {items.map((item, index) => (
-                    <DropdownItemWrapper index={index} key={index}>
+                    <DropdownItemWrapper key={index}>
                         <BreadCrumbComponent
                             label={item.label}
                             id={item.id}

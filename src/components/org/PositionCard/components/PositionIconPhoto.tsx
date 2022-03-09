@@ -14,6 +14,7 @@ import {
 } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
+import clsx from 'clsx';
 
 type PositionPhotoIconProps = {
     position: Position;
@@ -54,8 +55,14 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
         },
         []
     );
+    const photoIconContainerStyles = clsx(styles.photoIconContainer, {
+        [styles.inline]: inline,
+    });
+    const stateIconStyles = clsx(styles.stateIcons, {
+        [styles.inline]: inline,
+    });
     return (
-        <div className={styles.photoIconContainer} ref={containerRef}>
+        <div className={photoIconContainerStyles} ref={containerRef}>
             <div className={styles.personIconContainer}>
                 {personPhotoComponent || (
                     <PersonPhoto
@@ -72,7 +79,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                 )}
             </div>
             {(isTaskOwner || isLinked || isRotating) && (
-                <div className={styles.stateIcons}>
+                <div className={stateIconStyles}>
                     {showTaskOwner && isTaskOwner && (
                         <span ref={taskOwnerRef} className={styles.edsIcon}>
                             <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>

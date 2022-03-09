@@ -81,6 +81,10 @@
             display: flex;
             flex-direction: column;
 
+            &.inline {
+                flex-direction: row;
+            }
+
             .personIconContainer {
                 width: calc(var(--grid-unit) * 5px);
                 height: calc(var(--grid-unit) * 5px);
@@ -115,6 +119,12 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                
+                &.inline {
+                    flex-direction: row;
+                    padding-top: 0;
+                    justify-content: center;
+                }
             }
 
             .edsIcon > * {

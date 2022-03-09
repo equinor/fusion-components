@@ -28,8 +28,6 @@ function BreadCrumbs<TChart, TBreadCrumb>(): JSX.Element {
             const verticalBreadCrumbSpace =
                 fullWidthBreadCrumbs.length * (breadCrumbHeight + breadCrumbMargin);
             dispatch({ type: 'UPDATE_START_Y_POSITION', startY: verticalBreadCrumbSpace });
-        } else {
-            dispatch({ type: 'UPDATE_START_Y_POSITION', startY: 0 });
         }
     }, [fullWidthBreadCrumbs, breadCrumbView, breadCrumbHeight, breadCrumbMargin]);
 
