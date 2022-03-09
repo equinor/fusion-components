@@ -177,14 +177,12 @@ function reducer<TChart, TBreadCrumb>(
                         ? action.additionalRootRowHeight
                         : state.additionalRootRowHeight,
             };
-        case 'UPDATE_BREADCRUMB_VIEW': {
-            const isNotVertical = action.breadCrumbView !== 'vertical';
+        case 'UPDATE_BREADCRUMB_VIEW':
             return {
                 ...state,
                 breadCrumbView: action.breadCrumbView,
-                startYPosition: isNotVertical ? 0 : state.startYPosition,
             };
-        }
+
         case 'UPDATE_START_Y_POSITION':
             return {
                 ...state,

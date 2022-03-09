@@ -23,13 +23,12 @@ function BreadCrumbs<TChart, TBreadCrumb>(): JSX.Element {
     const collapsedBreadCrumbs = breadCrumbView === 'collapsed' ? breadCrumbs?.slice(1) : [];
 
     useEffect(() => {
-        if (breadCrumbView === 'vertical' && fullWidthBreadCrumbs?.length > 0) {
-            //Calculate new startY position to make room for vertical breadcrumbs
-            const verticalBreadCrumbSpace =
-                fullWidthBreadCrumbs.length * (breadCrumbHeight + breadCrumbMargin);
-            dispatch({ type: 'UPDATE_START_Y_POSITION', startY: verticalBreadCrumbSpace });
-        }
-    }, [fullWidthBreadCrumbs, breadCrumbView, breadCrumbHeight, breadCrumbMargin]);
+        const verticalBreadCrumbSpace =
+            breadCrumbView === 'vertical'
+                ? (breadCrumbs?.length || 0) * (breadCrumbHeight + breadCrumbMargin)
+                : 0;
+        dispatch({ type: 'UPDATE_START_Y_POSITION', startY: verticalBreadCrumbSpace });
+    }, [breadCrumbs, breadCrumbView, breadCrumbHeight, breadCrumbMargin]);
 
     const startXCoordinate = centerX - cardWidth / 2;
     const startYCoordinate = startYPosition;

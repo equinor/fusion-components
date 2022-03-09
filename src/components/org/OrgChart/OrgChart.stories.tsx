@@ -322,7 +322,7 @@ const OrgChartStory = () => {
                 breadCrumbHeight={52}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
-                bredCrumbView="collapsed"
+                bredCrumbView="vertical"
             />
         </div>
     );
