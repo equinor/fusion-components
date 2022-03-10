@@ -10,7 +10,7 @@ const CollapseExpandButton: FC<CollapseExpandButtonProps> = ({ isCollapsed, onCl
     const tooltipRef = useTooltipRef(isCollapsed ? 'Expand' : 'Collapse', 'right');
 
     return (
-        <IconButton ref={tooltipRef} onClick={onClick}>
+        <IconButton id="collapse-expand-btn" ref={tooltipRef} onClick={onClick}>
             <CollapseIcon isCollapsed={isCollapsed} screenPlacement="left" />
         </IconButton>
     );
