@@ -50,7 +50,7 @@ const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyle
     makeStyles((theme) =>
         createStyles({
             container: {
-                backgroundColor: !inline ? 'var(--color-white)' : 'none',
+                background: !inline ? 'var(--color-white)' : 'none',
                 border: !inline ? '2px solid var(--color-black-alt4)' : 'none',
                 '&$futureBackground': {
                     backgroundColor:
