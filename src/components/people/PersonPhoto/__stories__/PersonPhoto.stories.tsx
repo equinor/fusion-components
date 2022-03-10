@@ -50,6 +50,7 @@ const persons: PersonDictionary = {
         accountType: 'External',
         name: 'External Person',
         mail: 'external@gmail.com',
+        inactive: true,
     },
     Local: {
         ...basePerson,
@@ -72,7 +73,7 @@ const sizes = {
     small: 'small',
 };
 
-const PersonPhotoStory = () => {
+const DefaultPersonPhotoStory = () => {
     const personKey = select('Account type', personKeys, personKeys.Consultant);
     const person = persons[personKey];
 
@@ -81,4 +82,15 @@ const PersonPhotoStory = () => {
     return <PersonPhoto hideTooltip={boolean('Hide tooltip', true)} person={person} size={size} />;
 };
 
-stories.add('Default', () => <PersonPhotoStory />);
+const InactivePersonPhotoStory = () => {
+    const personKey = select('Account type', personKeys, personKeys.External);
+    const person = persons[personKey];
+
+    const size = select('Size', sizes, sizes.xlarge) as PhotoSize;
+
+    return <PersonPhoto hideTooltip={boolean('Hide tooltip', true)} person={person} size={size} />;
+};
+
+stories
+    .add('Default', () => <DefaultPersonPhotoStory />)
+    .add('Inactive', () => <InactivePersonPhotoStory />);
