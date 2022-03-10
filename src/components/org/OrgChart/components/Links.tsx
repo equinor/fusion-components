@@ -3,10 +3,11 @@ import { Fragment, useContext, useMemo, useCallback } from 'react';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgStructure, OrgNode } from '../orgChartTypes';
 
-import styles from './styles.less';
+import { useStyles } from './componentsStyle';
 import classNames from 'classnames';
 
 const Links = <T extends OrgStructure>() => {
+    const styles = useStyles();
     const {
         state: { allNodes, cardWidth, cardHeight, centerX, cardMargin, numberOfCardsPerRow, width },
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
@@ -120,8 +121,8 @@ const Links = <T extends OrgStructure>() => {
                 numberOfCardsPerRow === 1
                     ? getSingleCardRowPath(node, parent)
                     : node.aside
-                    ? getAsidePath(node, parent)
-                    : getChildPath(node, parent, index);
+                        ? getAsidePath(node, parent)
+                        : getChildPath(node, parent, index);
 
             return <path d={path} className={linkClassnames} />;
         },

@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useContext } from 'react';
 import { BreadCrumb } from '../orgChartTypes';
 
-import styles from './styles.less';
+import { useStyles } from './componentsStyle';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
 
 const BreadCrumbs = () => {
@@ -17,6 +17,7 @@ const BreadCrumbs = () => {
             breadCrumbMargin,
         },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
+    const styles = useStyles();
 
     const x = centerX - cardWidth / 2;
     const y = 0;

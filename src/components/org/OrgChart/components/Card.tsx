@@ -3,7 +3,7 @@ import { useMemo, useEffect, useContext } from 'react';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
-import styles from './styles.less';
+import { useStyles } from './componentsStyle';
 
 type CardProps<T> = {
     node: OrgNode<T>;
@@ -16,6 +16,8 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
         state: { cardWidth, cardHeight, component, numberOfCardsPerRow, rowMargin },
         dispatch,
     } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+
+    const styles = useStyles();
 
     useEffect(() => {
         if (node && (node.x !== x || node.y !== y)) {
@@ -34,7 +36,7 @@ function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
         () =>
             node.numberOfAssignees
                 ? Math.ceil(node.numberOfAssignees / 3) *
-                  (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
+                (numberOfCardsPerRow === 1 ? rowMargin - 20 : rowMargin)
                 : 0,
         [rowMargin, numberOfCardsPerRow, node.numberOfAssignees]
     );

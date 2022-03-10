@@ -2,7 +2,7 @@ import { useContext, useCallback, useMemo } from 'react';
 import { OrgChartContextReducer, OrgChartContext } from '../store';
 import { OrgNode } from '../orgChartTypes';
 
-import styles from './styles.less';
+import { useStyles } from './componentsStyle';
 import classNames from 'classnames';
 
 const Labels = () => {
@@ -20,6 +20,7 @@ const Labels = () => {
         },
     } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
 
+    const styles = useStyles();
     const labelRectClassnames = classNames(styles.labelObject, {
         [styles.oneCardRow]: numberOfCardsPerRow === 1,
     });
