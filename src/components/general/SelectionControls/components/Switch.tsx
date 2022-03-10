@@ -10,6 +10,10 @@ type SwitchProps = {
     disabled?: boolean;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/input-switch--page}
+ */
 const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
     ({ active, onChange, disabled }, ref) => {
         const switchRef = ref as MutableRefObject<HTMLInputElement | null>;

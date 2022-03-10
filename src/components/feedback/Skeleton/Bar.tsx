@@ -9,6 +9,10 @@ type SkeletonBarProps = {
     height?: number | string;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-skeleton--page}
+ */
 const SkeletonBar: FC<SkeletonBarProps> = ({ height, width }) => {
     const displayClassNames = useComponentDisplayClassNames(styles);
     const barClassNames = classNames(styles.bar, displayClassNames, styles.skeleton);

@@ -1,6 +1,7 @@
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 import { SortDirection } from '@equinor/fusion';
 
+
 const Default = (
     <path
         fillRule="evenodd"
@@ -27,6 +28,11 @@ const Desc = (
 type SortIconProps = {
     direction: SortDirection | null;
 };
+
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-icon--page}
+ */
 
 const SortIcon = ({ direction, ...props }: SortIconProps) => {
     const iconFactory = useIcon(direction === 'asc' ? Asc : direction === 'desc' ? Desc : Default);

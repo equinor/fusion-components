@@ -14,6 +14,10 @@ type CalendarProps = {
     interactive?: boolean;
     onChange?: (date: Date) => void;
 };
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-datepicker--date-picker}
+ */
 
 const Calendar: FC<CalendarProps> = ({
     initialYear,

@@ -1,5 +1,10 @@
 import useIcon, { IconProps } from '../../../../hooks/useIcon';
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-icon--page}
+ */
+
 const LinkIcon = (props: IconProps) => {
     const iconFactory = useIcon(
         <path

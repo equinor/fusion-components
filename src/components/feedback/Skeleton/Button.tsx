@@ -8,6 +8,10 @@ type SkeletonButtonProps = ButtonProps & {
     width: number | string;
 };
 
+/**
+ * @deprecated
+ * @see Link : {@link https://equinor.github.io/fusion-react-components/?path=/docs/data-skeleton--page}
+ */
 const SkeletonButton: FC<SkeletonButtonProps> = ({ width, ...buttonProps }) => {
     const displayClassNames = useComponentDisplayClassNames(styles);
     const barClassNames = classNames(styles.skeleton, displayClassNames, styles.button);
