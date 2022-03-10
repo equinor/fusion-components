@@ -1,4 +1,4 @@
-import styles from './styles.less';
+import { useTabsStyles } from './Tabs.style';
 import classNames from 'classnames';
 import { useEventListener } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -19,6 +19,7 @@ type TabContentType = {
 type GradientType = 'left' | 'right' | 'leftAndRight' | null;
 
 const TabContent: FC<TabContentType> = ({ children, activeTabKey }) => {
+    const styles = useTabsStyles();
     const active = Children.toArray(children).find(
         (child) => (child as ReactElement).props.tabKey === activeTabKey
     ) as ReactElement | null;
@@ -31,6 +32,7 @@ const TabContent: FC<TabContentType> = ({ children, activeTabKey }) => {
 };
 
 const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
+    const styles = useTabsStyles();
     const tabsPaneRef = useRef<HTMLDivElement | null>(null);
     const activeTabRef = useRef<HTMLElement | null>(null);
 
@@ -110,6 +112,7 @@ const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
 };
 
 const Tabs: FC<TabsProps> = ({ onChange, activeTabKey, noScrollGradient, children }) => {
+    const styles = useTabsStyles();
     return (
         <div className={styles.tabs}>
             <TabPane
