@@ -1,4 +1,4 @@
-import styles from '../styles.less';
+import { useStyles } from '../PositionCard.style';
 import { PositionInstance, Position } from '@equinor/fusion';
 import { PersonPhoto } from '@equinor/fusion-components';
 import { FC, useCallback, useMemo } from 'react';
@@ -10,6 +10,7 @@ type RotationInstancesProps = {
 };
 
 const RotationInstances: FC<RotationInstancesProps> = ({ allInstances, position, anonymize }) => {
+    const styles = useStyles();
     const instancesSortedByRotationId = useMemo(
         () =>
             allInstances.sort((a, b) => {

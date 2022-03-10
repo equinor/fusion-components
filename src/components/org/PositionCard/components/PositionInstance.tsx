@@ -2,7 +2,7 @@ import { useCallback, FC, MouseEvent, useMemo } from 'react';
 
 import { formatDate, Position, PositionInstance } from '@equinor/fusion';
 import classNames from 'classnames';
-import styles from '../styles.less';
+import { useStyles } from '../PositionCard.style';
 import {
     useTooltipRef,
     ExpandMoreIcon,
@@ -44,6 +44,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     selectedDate,
     anonymize,
 }) => {
+    const styles = useStyles();
     const assignedPersonName = useMemo(() => {
         if (anonymize) return '';
         if (!instance?.assignedPerson) return 'TBN - To Be Nominated';

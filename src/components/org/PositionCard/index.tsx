@@ -1,7 +1,7 @@
 import { ReactNode, useCallback, useMemo, CSSProperties } from 'react';
 import classNames from 'classnames';
 import { Position, useComponentDisplayClassNames, PositionInstance } from '@equinor/fusion';
-import styles from './styles.less';
+import { useStyles } from './PositionCard.style';
 import PositionIconPhoto from './components/PositionIconPhoto';
 import PositionInstanceComponent from './components/PositionInstance';
 import RotationInstances from './components/RotationInstances';
@@ -99,6 +99,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     borderStyle,
     anonymize,
 }) => {
+    const styles = useStyles();
     const isExternalHire =
         instance &&
         instance.assignedPerson &&
@@ -130,11 +131,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
         {
             [styles.isSelected]: isSelected,
             [styles.isClickable]: !!onClick,
-            [styles.isExternal]: isExternal,
-            [styles.isConsultant]: isConsultant,
-            [styles.isExternalHire]: isExternalHire,
             [styles.isLinked]: isLinked,
-            [styles.clear]: true,
             [background()]: !!background(),
             [border()]: !!border(),
         }
