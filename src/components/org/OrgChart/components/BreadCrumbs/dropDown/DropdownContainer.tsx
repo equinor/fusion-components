@@ -23,14 +23,19 @@ const useDropdownStyles = makeStyles(
                 },
             },
             defaultStyle: {
-                border: '1px solid',
+                border: '2px solid',
                 borderColor: theme.colors.ui.background__medium.getVariable('color'),
                 borderRadius: '4px',
+                borderStyle: 'solid',
                 '&:hover': {
                     cursor: 'pointer',
                     borderColor: theme.colors.text.static_icons__secondary.getVariable('color'),
                 },
             },
+            linked: {
+                borderStyle: 'dashed',
+            },
+
             container: {
                 display: 'grid',
                 gridTemplateColumns: '1fr auto 2rem',
@@ -52,11 +57,6 @@ const useDropdownStyles = makeStyles(
             itemContainer: {
                 width: '100%',
                 borderRadius: '4px 0 0 4px',
-                '&:hover': {
-                    backgroundColor:
-                        theme.colors.interactive.primary__hover_alt.getVariable('color'),
-                    cursor: ' pointer',
-                },
             },
         }),
     { name: 'org-admin-dropdown-styles' }
@@ -64,42 +64,56 @@ const useDropdownStyles = makeStyles(
 
 type DropdownContainerProps = {
     items: BreadCrumb[] | null;
+    breadCrumb: BreadCrumb;
 };
 
-const DropdownContainer: FC<PropsWithChildren<DropdownContainerProps>> = ({ items, children }) => {
+const DropdownContainer: FC<PropsWithChildren<DropdownContainerProps>> = ({
+    items,
+    children,
+    breadCrumb,
+}) => {
     const styles = useDropdownStyles();
     const {
         state: { breadCrumbComponent },
     } = useContext<OrgChartContextReducer>(OrgChartContext);
 
-    const dropdownController = useDropdownController((_, isOpen, setIsOpen) => (
-        <div className={clsx(styles.defaultStyle, styles.container)}>
-            <div className={styles.itemContainer}>{children}</div>
-            <div className={styles.separator} />
-            <div className={styles.icon} onClick={() => setIsOpen(!isOpen)}>
-                <Icon icon="arrow_drop_down" />
+    const dropdownController = useDropdownController((_, isOpen, setIsOpen) => {
+        const dropdownContainerStyles = clsx(styles.defaultStyle, styles.container, {
+            [styles.linked]: breadCrumb.linked,
+        });
+        return (
+            <div className={dropdownContainerStyles}>
+                <div className={styles.itemContainer}>{children}</div>
+                <div className={styles.separator} />
+                <div className={styles.icon} onClick={() => setIsOpen(!isOpen)}>
+                    <Icon icon="arrow_drop_down" />
+                </div>
             </div>
-        </div>
-    ));
+        );
+    });
 
     const containerRef =
         dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     if (!items?.length) {
-        return <div className={styles.defaultStyle}>{children}</div>;
+        const defaultChildrenStyles = clsx(styles.defaultStyle, {
+            [styles.linked]: breadCrumb.linked,
+        });
+        return <div className={defaultChildrenStyles}>{children}</div>;
     }
     const BreadCrumbComponent = breadCrumbComponent;
     return (
         <div className={styles.dropdown} ref={containerRef}>
             <Dropdown controller={dropdownController}>
                 {items.map((item, index) => (
-                    <DropdownItemWrapper key={index}>
+                    <DropdownItemWrapper key={index} breadCrumb={item}>
                         <BreadCrumbComponent
                             label={item.label}
                             id={item.id}
                             childId={item.childId}
                             content={item.content}
                             breadCrumbItem={item.breadCrumbItem}
+                            linked={item.linked}
                         />
                     </DropdownItemWrapper>
                 ))}

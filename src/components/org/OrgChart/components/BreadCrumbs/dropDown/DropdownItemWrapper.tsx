@@ -1,6 +1,7 @@
 import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
 import { FC, PropsWithChildren } from 'react';
 import Icon from '@equinor/fusion-react-icon';
+import { BreadCrumb } from '../../../orgChartTypes';
 
 const useDropdownItemStyles = makeStyles(
     (theme) =>
@@ -20,22 +21,19 @@ const useDropdownItemStyles = makeStyles(
             },
             itemContainer: {
                 width: '100%',
-
-                '&:hover': {
-                    backgroundColor:
-                        theme.colors.interactive.primary__hover_alt.getVariable('color'),
-                    cursor: ' pointer',
-                },
             },
         }),
     { name: 'dropdown-item-wrapper' }
 );
 
-const DropdownItemWrapper: FC = ({ children }) => {
+type DropdownItemWrapperProps = {
+    breadCrumb: BreadCrumb;
+};
+const DropdownItemWrapper: FC<DropdownItemWrapperProps> = ({ children, breadCrumb }) => {
     const styles = useDropdownItemStyles();
     return (
         <div className={styles.container}>
-            <Icon icon={'arrow_down'} className={styles.icon} />
+            {!breadCrumb.linked && <Icon icon={'arrow_down'} className={styles.icon} />}
             <div className={styles.itemContainer}>{children}</div>
         </div>
     );

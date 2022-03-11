@@ -3,7 +3,7 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
 import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 import { useComponentDisplayType, Position } from '@equinor/fusion';
-import { PositionCard } from '@equinor/fusion-components';
+import { PositionCard, InlineDepartmentCard } from '@equinor/fusion-components';
 import { FC, CSSProperties } from 'react';
 import { clsx, createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
@@ -185,77 +185,61 @@ const position: Position = {
 };
 
 const useStyles = makeStyles(
-    () =>
+    (theme) =>
         createStyles({
-            container: () => ({
-                display: 'grid',
-                gridTemplateColumns: '2rem 1fr',
-                width: '100%',
-                margin: '0.02rem',
-                alignItems: 'end',
-                cursor: 'pointer',
-                padding: ' 0.4rem 0 0.2rem 0',
-                background: 'white',
-            }),
-
-            avatar: {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            },
-            textContainer: {
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                marginLeft: '.5rem',
-            },
-            textOverflow: {
-                display: 'inline-block',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                width: '85%',
-            },
-            title: {
-                fontSize: '12px',
-                color: '#007079',
-                textDecorationLine: 'underline',
-                lineHeight: '1rem',
-                fontWeight: 500,
-            },
-            description: {
-                fontSize: '10px',
-                color: '#243746',
-                lineHeight: '12px',
+            breadcrumb: {
+                background: theme.colors.text.static_icons__primary_white.getVariable('color'),
+                borderRadius: '4px',
+                '&:hover': {
+                    background: theme.colors.interactive.primary__hover_alt.getVariable('color'),
+                    cursor: ' pointer',
+                },
             },
         }),
-    { name: 'breadcrumb-card' }
+    { name: 'dropdown-item-wrapper' }
 );
 
 type BreadCrumbItem = {
     position?: Position;
+    department?: {
+        name: string;
+        department: string;
+    };
 };
 
-const BreadCrumbComponent: FC<BreadCrumb<BreadCrumbItem>> = ({ breadCrumbItem }) => {
+const BreadCrumbComponent: FC<BreadCrumb<BreadCrumbItem>> = ({ breadCrumbItem, linked }) => {
     const styles = useStyles();
     const position = breadCrumbItem?.position;
-    const instance = breadCrumbItem?.position.instances[0];
-    if (!position) {
+    const instance = breadCrumbItem?.position?.instances[0];
+    const department = breadCrumbItem.department;
+    if (!position && !department) {
         return <div>No item test</div>;
+    }
+    if (department) {
+        return (
+            <div style={{ width: '15rem' }}>
+                <InlineDepartmentCard
+                    name={department.name}
+                    fullDepartmentName={department.department}
+                />
+            </div>
+        );
     }
 
     return (
-        <PositionCard
-            position={position}
-            instance={instance}
-            showDate={false}
-            showExternalId={false}
-            showLocation={false}
-            showObs={false}
-            isSelected={false}
-            onExpand={() => {}}
-            inline
-        />
+        <div className={styles.breadcrumb}>
+            <PositionCard
+                position={position}
+                instance={instance}
+                showDate={false}
+                showExternalId={false}
+                showLocation={false}
+                showObs={false}
+                isSelected={false}
+                onExpand={() => {}}
+                inline
+            />
+        </div>
     );
 };
 
@@ -295,7 +279,24 @@ const breadCrumbs: BreadCrumb<BreadCrumbItem>[] = [
         childId: '102',
         label: 'Director',
         id: '103',
-        breadCrumbItem: { position },
+        breadCrumbItem: {
+            department: {
+                department: 'Test deparmtnet Test deparmtnet long name',
+                name: 'Department name Department name long loogn',
+            },
+        },
+    },
+    {
+        childId: '103',
+        label: 'Lined department',
+        id: '104',
+        breadCrumbItem: {
+            department: {
+                department: 'Linked',
+                name: 'Linked department',
+            },
+        },
+        linked: true,
     },
 ];
 
@@ -322,7 +323,7 @@ const OrgChartStory = () => {
                 breadCrumbHeight={52}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
-                bredCrumbView="vertical"
+                bredCrumbView="collapsed"
             />
         </div>
     );

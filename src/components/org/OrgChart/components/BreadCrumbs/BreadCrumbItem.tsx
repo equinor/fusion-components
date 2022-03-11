@@ -83,13 +83,14 @@ function BreadCrumbItem<TChart, TBreadCrumb>({
                 height={breadCrumbHeight}
             >
                 {BreadCrumbComponent && (
-                    <DropdownContainer items={collapsedBreadCrumbs}>
+                    <DropdownContainer items={collapsedBreadCrumbs} breadCrumb={breadCrumb}>
                         <BreadCrumbComponent
                             label={breadCrumb.label}
                             id={breadCrumb.id}
                             childId={breadCrumb.childId}
                             content={breadCrumb.content}
                             breadCrumbItem={breadCrumb.breadCrumbItem}
+                            linked={breadCrumb.linked}
                         />
                     </DropdownContainer>
                 )}
