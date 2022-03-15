@@ -22,9 +22,7 @@ const VerticalBreadCrumbLink: FC<VerticalBreadCrumbLinkProps> = ({ index }) => {
 
     const startXPosition = numberOfCardsPerRow === 1 ? cardWidth / 2 + 0.5 : centerX + 0.5;
     const path = `
-    M ${startXPosition} ${
-        (breadCrumbHeight + breadCrumbMargin) * (index + 1) + breadCrumbHeight / 2
-    }
+    M ${startXPosition} ${(breadCrumbHeight + breadCrumbMargin) * index + breadCrumbHeight / 2}
     V ${startYPosition + (cardMargin + cardHeight) / 2}
     `;
     return <path d={path} className={styles.link} />;

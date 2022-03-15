@@ -23,6 +23,7 @@ const useOrgChartActions = <TChart extends OrgStructure, TBreadCrumb>({
     breadCrumbWidth = 194, //194
     breadCrumbHeight = 52, //52
     breadCrumbMargin = 16, //16,
+    breadCrumbBorder = 2,
     bredCrumbView = 'collapsed',
 }: OrgChartActionProps<TChart, TBreadCrumb>) => {
     const { dispatch } = useContext<OrgChartContextReducer<TChart, TBreadCrumb>>(OrgChartContext);
@@ -119,8 +120,9 @@ const useOrgChartActions = <TChart extends OrgStructure, TBreadCrumb>({
             width: breadCrumbWidth,
             height: breadCrumbHeight,
             margin: breadCrumbMargin,
+            border: breadCrumbBorder,
         });
-    }, [breadCrumbHeight, breadCrumbMargin, breadCrumbWidth]);
+    }, [breadCrumbHeight, breadCrumbMargin, breadCrumbWidth, breadCrumbBorder]);
 };
 
 export default useOrgChartActions;
