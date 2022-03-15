@@ -1,4 +1,4 @@
-import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
+import { clsx, createStyles, makeStyles } from '@equinor/fusion-react-styles';
 import { FC } from 'react';
 import OneEquinorIcon from './OneEquinorIcon';
 
@@ -8,46 +8,45 @@ type InlineDepartmentCardProps = {
 };
 
 const useDepartmentCardStyles = makeStyles(
-    (theme) =>
+    () =>
         createStyles({
             container: {
-                display: 'grid',
-                gridTemplateColumns: '2rem 1fr',
+                display: 'flex',
                 alignItems: 'center',
-                padding: ' 0.2rem 0 0.2rem 0',
+                margin: ' 0.2rem 0',
                 borderRadius: '4px',
                 width: '100%',
-                height: '40px',
-                background: theme.colors.ui.background__light.getVariable('color'),
+                height: '2.5rem',
             },
             logo: {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
-                width: '100%',
-                height: '65%',
+                flex: 0,
+                padding: '0 .2rem',
+                width: '2rem',
+                height: '2rem',
             },
             textContainer: {
-                marginLeft: '0.25rem',
+                margin: '0 0.25rem',
                 display: 'flex',
                 justifyContent: 'center',
                 flexDirection: 'column',
+                width: '100%',
+                overflow: 'hidden',
             },
-            department: {
+            ellipsisOverflow: {
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                width: '90%',
+            },
+            department: {
                 fontSize: '12px',
                 lineHeight: '1rem',
                 fontWeight: 500,
             },
             name: {
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                width: '90%',
                 fontSize: '10px',
                 lineHeight: '12px',
             },
@@ -67,8 +66,10 @@ const InlineDepartmentCard: FC<InlineDepartmentCardProps> = ({
             </div>
 
             <div className={styles.textContainer}>
-                <span className={styles.department}>{departmentName}</span>
-                <span className={styles.name}>{personName}</span>
+                <span className={clsx(styles.department, styles.ellipsisOverflow)}>
+                    {departmentName}
+                </span>
+                <span className={clsx(styles.name, styles.ellipsisOverflow)}>{personName}</span>
             </div>
         </div>
     );

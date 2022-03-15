@@ -14,6 +14,7 @@ import {
 } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
+import clsx from 'clsx';
 
 type PositionPhotoIconProps = {
     position: Position;
@@ -24,6 +25,7 @@ type PositionPhotoIconProps = {
     personPhotoComponent?: ReactNode;
     showTaskOwner?: boolean;
     anonymize?: boolean;
+    inline?: boolean;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -34,6 +36,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     personPhotoComponent,
     showTaskOwner,
     anonymize,
+    inline,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const taskOwnerRef = useTooltipRef('Task Owner', 'below');
@@ -52,8 +55,14 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
         },
         []
     );
+    const photoIconContainerStyles = clsx(styles.photoIconContainer, {
+        [styles.inline]: inline,
+    });
+    const stateIconStyles = clsx(styles.stateIcons, {
+        [styles.inline]: inline,
+    });
     return (
-        <div className={styles.photoIconContainer} ref={containerRef}>
+        <div className={photoIconContainerStyles} ref={containerRef}>
             <div className={styles.personIconContainer}>
                 {personPhotoComponent || (
                     <PersonPhoto
@@ -63,14 +72,14 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                                 : undefined
                         }
                         additionalPersons={additionalPersons}
-                        size="large"
+                        size={inline ? 'small' : 'large'}
                         key={currentInstance ? currentInstance.id : (+new Date()).toString()}
                         customTooltip={anonymize ? 'Anonymous' : undefined}
                     />
                 )}
             </div>
             {(isTaskOwner || isLinked || isRotating) && (
-                <div className={styles.stateIcons}>
+                <div className={stateIconStyles}>
                     {showTaskOwner && isTaskOwner && (
                         <span ref={taskOwnerRef} className={styles.edsIcon}>
                             <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>

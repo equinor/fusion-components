@@ -2,12 +2,12 @@ import { OrgNode } from '.';
 import { useContext, useMemo } from 'react';
 import { OrgChartContextReducer, OrgChartContext } from './store';
 
-export function getAdditionalRowHeight<T>(
-    cards: OrgNode<T>[],
+export function getAdditionalRowHeight<TChart>(
+    cards: OrgNode<TChart>[],
     cardMargin: number,
     rowMargin: number
 ) {
-    const greatestAdditionPersons = cards.reduce((highest: number, card: OrgNode<T>) => {
+    const greatestAdditionPersons = cards.reduce((highest: number, card: OrgNode<TChart>) => {
         if (card.numberOfAssignees && card.numberOfAssignees > highest) {
             return card.numberOfAssignees;
         }
@@ -21,7 +21,7 @@ export function getAdditionalRowHeight<T>(
     return rows * rowMargin - cardMargin * rows - additionalMargin;
 }
 
-export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
+export default <TChart>(rows: OrgNode<TChart>[][], isAside?: boolean) => {
     const {
         state: {
             rowMargin,
@@ -30,11 +30,11 @@ export default <T>(rows: OrgNode<T>[][], isAside?: boolean) => {
             additionalRootRowHeight,
             asideRows,
         },
-    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
 
     const additionalRowHeight = useMemo(
         () =>
-            rows.reduce((additionalHeight: number[], node: OrgNode<T>[], index: number) => {
+            rows.reduce((additionalHeight: number[], node: OrgNode<TChart>[], index: number) => {
                 const previousHeight = index === 0 ? 0 : additionalHeight[index - 1];
                 const isLastRow = index === rows.length - 1;
                 const isFirstRow = index === 0;

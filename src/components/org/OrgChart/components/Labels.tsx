@@ -5,7 +5,7 @@ import { OrgNode } from '../orgChartTypes';
 import styles from './styles.less';
 import classNames from 'classnames';
 
-const Labels = () => {
+const Labels = (): JSX.Element => {
     const {
         state: {
             allNodes,
@@ -18,13 +18,13 @@ const Labels = () => {
             asideRows,
             childrenRows,
         },
-    } = useContext<OrgChartContextReducer<any>>(OrgChartContext);
+    } = useContext<OrgChartContextReducer>(OrgChartContext);
 
     const labelRectClassnames = classNames(styles.labelObject, {
         [styles.oneCardRow]: numberOfCardsPerRow === 1,
     });
 
-    const getOneCardRowNode = useCallback((label: string, firstNode: OrgNode<any>) => {
+    const getOneCardRowNode = useCallback((label: string, firstNode: OrgNode) => {
         return {
             data: label,
             id: label,
@@ -64,7 +64,7 @@ const Labels = () => {
     }, [allNodes, asideLabel]);
 
     const renderLabel = useCallback(
-        (node: OrgNode<any>) => {
+        (node: OrgNode) => {
             if (node.x === null || node.y === null) {
                 return null;
             }

@@ -5,7 +5,7 @@ import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
 import useAdditionalRowHeight from '../useAdditionalRowHeight';
 
-function Aside<T>() {
+function Aside<TChart>(): JSX.Element {
     const {
         state: {
             allNodes,
@@ -17,9 +17,10 @@ function Aside<T>() {
             numberOfCardsPerRow,
             width,
             additionalAsideRowHeight,
+            startYPosition,
         },
         dispatch,
-    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
 
     const asideNodes = useMemo(() => allNodes.filter((d) => d.aside), [allNodes]);
 
@@ -27,10 +28,10 @@ function Aside<T>() {
         () =>
             asideNodes.reduce(
                 (
-                    prevValue: OrgNode<T>[][],
-                    currentValue: OrgNode<T>,
+                    prevValue: OrgNode<TChart>[][],
+                    currentValue: OrgNode<TChart>,
                     currentIndex: number
-                ): OrgNode<T>[][] => {
+                ): OrgNode<TChart>[][] => {
                     const index = Math.floor(currentIndex / (numberOfCardsPerRow === 1 ? 1 : 2));
                     if (!prevValue[index]) {
                         prevValue[index] = [];
@@ -38,7 +39,7 @@ function Aside<T>() {
                     prevValue[index].push(currentValue);
                     return prevValue;
                 },
-                [] as OrgNode<T>[][]
+                [] as OrgNode<TChart>[][]
             ),
         [asideNodes, numberOfCardsPerRow]
     );
@@ -76,18 +77,18 @@ function Aside<T>() {
     };
 
     const renderRow = useCallback(
-        (cards: OrgNode<T>[], rowNo: number, additionalRowHeight: number) => {
+        (cards: OrgNode<TChart>[], rowNo: number, additionalRowHeight: number) => {
             const startX = getStartXPosition();
             return cards.map((card, i) => (
                 <Card
                     key={card.id}
                     node={card}
                     x={startX + i * (cardWidth + cardMargin)}
-                    y={(rowNo + 1) * (rowMargin - 20) + 24 + additionalRowHeight}
+                    y={(rowNo + 1) * (rowMargin - 20) + 24 + additionalRowHeight + startYPosition}
                 />
             ));
         },
-        [centerX, cardWidth, cardMargin, rowMargin, numberOfCardsPerRow]
+        [centerX, cardWidth, cardMargin, rowMargin, numberOfCardsPerRow, startYPosition]
     );
 
     return (

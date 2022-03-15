@@ -4,7 +4,7 @@ import Card from './Card';
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { getAdditionalRowHeight } from '../useAdditionalRowHeight';
 
-function Root<T>() {
+function Root<TChart>(): JSX.Element {
     const {
         state: {
             allNodes,
@@ -16,9 +16,10 @@ function Root<T>() {
             initialCardWidth,
             rowMargin,
             additionalRootRowHeight,
+            startYPosition,
         },
         dispatch,
-    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
 
     const cardsPerRow = useMemo(() => {
         const cards = Math.floor((width + cardMargin) / (cardWidth + cardMargin));
@@ -64,7 +65,7 @@ function Root<T>() {
     }, [additionalRowHeight]);
 
     const x = cardsPerRow !== 1 ? centerX - cardWidth / 2 : 0;
-    return <g className="root">{root && <Card node={root} x={x} />}</g>;
+    return <g className="root">{root && <Card node={root} x={x} y={startYPosition} />}</g>;
 }
 
 export default Root;
