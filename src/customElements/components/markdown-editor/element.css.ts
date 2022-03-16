@@ -12,6 +12,9 @@ export const style = css`
         --editor-border-color-active: ${unsafeCSS(
             theme.colors.interactive.primary__resting.getVariable('color')
         )};
+        --editor-divider-color: ${unsafeCSS(
+            theme.colors.ui.background__medium.getVariable('color')
+        )};
         --editor-button-disabled-color: ${unsafeCSS(
             theme.colors.interactive.disabled__text.getVariable('color')
         )};
@@ -36,7 +39,9 @@ export const style = css`
         border-radius: 4px;
         padding: 8px;
     }
-
+    .focused {
+        border: 1px solid var(--editor-border-color-active);
+    }
     #editor {
         padding: 0.5rem;
         height: calc(100% - 3rem);
@@ -69,14 +74,13 @@ export const style = css`
 
     .ProseMirror-focused {
         outline: none;
-        border-color: var(--color-contrast);
     }
 
     #menu {
         display: flex;
         background: none;
         padding-bottom: 8px;
-        border-bottom: 1px solid var(--editor-border-color);
+        border-bottom: 1px solid var(--editor-divider-color);
         color: var(--editor-color-text);
     }
 
