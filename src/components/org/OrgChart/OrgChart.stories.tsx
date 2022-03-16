@@ -296,6 +296,7 @@ const breadCrumbs: BreadCrumb<BreadCrumbItem>[] = [
                 name: 'Linked department',
             },
         },
+        linked: true,
     },
 ];
 
@@ -323,7 +324,7 @@ const OrgChartStory = () => {
                 breadCrumbBorder={2}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
-                bredCrumbView="vertical"
+                bredCrumbView="collapsed"
             />
         </div>
     );
