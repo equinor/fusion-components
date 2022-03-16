@@ -39,9 +39,13 @@ function BreadCrumbs<TChart, TBreadCrumb>(): JSX.Element {
 
     return (
         <g className="bread-crumbs">
-            {fullWidthBreadCrumbs.map((breadCrumb, index) =>
+            {fullWidthBreadCrumbs.map((breadCrumb, index, allBreadCrumbs) =>
                 breadCrumb.linked ? null : breadCrumbView === 'vertical' ? (
-                    <VerticalBreadCrumbLink index={index} key={`${index} - link`} />
+                    <VerticalBreadCrumbLink
+                        index={index}
+                        key={`${index} - link`}
+                        totalBreadCrumbsLength={allBreadCrumbs.length}
+                    />
                 ) : (
                     <HorizontalBreadCrumbLink index={index} key={`${index} - link`} />
                 )

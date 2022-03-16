@@ -23,7 +23,13 @@ type Action<TChart, TBreadCrumb> =
     | { type: 'UPDATE_POSITION'; node: OrgNode<TChart>; x: number; y: number }
     | { type: 'UPDATE_LABELS'; childrenLabel?: string; asideLabel?: string }
     | { type: 'UPDATE_BREADCRUMBS'; breadcrumbs: BreadCrumb<TBreadCrumb>[] | null }
-    | { type: 'UPDATE_BREADCRUMBS_SIZE'; height?: number; width?: number; margin?: number }
+    | {
+          type: 'UPDATE_BREADCRUMBS_SIZE';
+          height?: number;
+          width?: number;
+          margin?: number;
+          border?: number;
+      }
     | { type: 'UPDATE_NUMBER_OF_CARDS_PER_ROW'; numberOfCardsPerRow: number }
     | {
           type: 'UPDATE_ADDITIONAL_ROW_HEIGHT';
@@ -56,6 +62,7 @@ export type OrgChartContextType<TChart, TBreadCrumb> = {
     breadCrumbWidth: number;
     breadCrumbHeight: number;
     breadCrumbMargin: number;
+    breadCrumbBorder: number;
     breadCrumbView: BreadCrumbView;
     additionalChildRowHeight: number;
     additionalAsideRowHeight: number;
@@ -155,6 +162,7 @@ function reducer<TChart, TBreadCrumb>(
                 breadCrumbWidth: action.width || state.breadCrumbWidth,
                 breadCrumbHeight: action.height || state.breadCrumbHeight,
                 breadCrumbMargin: action.margin || state.breadCrumbMargin,
+                breadCrumbBorder: action.border || state.breadCrumbBorder,
             };
         case 'UPDATE_NUMBER_OF_CARDS_PER_ROW':
             return {
@@ -214,6 +222,7 @@ export function OrgChartContextProvider<TChart, TBreadCrumb>({ children }: any) 
         breadCrumbWidth: 0,
         breadCrumbHeight: 0,
         breadCrumbMargin: 0,
+        breadCrumbBorder: 2,
         additionalChildRowHeight: 0,
         additionalAsideRowHeight: 0,
         additionalRootRowHeight: 0,

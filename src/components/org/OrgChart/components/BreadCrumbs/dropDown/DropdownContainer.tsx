@@ -22,8 +22,8 @@ const useDropdownStyles = makeStyles(
                     },
                 },
             },
-            defaultStyle: {
-                border: '2px solid',
+            defaultStyle: (props: { breadCrumbBorder: number }) => ({
+                border: `${props.breadCrumbBorder}px solid`,
                 borderColor: theme.colors.ui.background__medium.getVariable('color'),
                 borderRadius: '4px',
                 borderStyle: 'solid',
@@ -31,7 +31,7 @@ const useDropdownStyles = makeStyles(
                     cursor: 'pointer',
                     borderColor: theme.colors.text.static_icons__secondary.getVariable('color'),
                 },
-            },
+            }),
             linked: {
                 borderStyle: 'dashed',
             },
@@ -72,10 +72,11 @@ const DropdownContainer: FC<PropsWithChildren<DropdownContainerProps>> = ({
     children,
     breadCrumb,
 }) => {
-    const styles = useDropdownStyles();
     const {
-        state: { breadCrumbComponent },
+        state: { breadCrumbComponent, breadCrumbBorder },
     } = useContext<OrgChartContextReducer>(OrgChartContext);
+
+    const styles = useDropdownStyles({ breadCrumbBorder });
 
     const dropdownController = useDropdownController((_, isOpen, setIsOpen) => {
         const dropdownContainerStyles = clsx(styles.defaultStyle, styles.container, {

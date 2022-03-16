@@ -321,6 +321,7 @@ const OrgChartStory = () => {
                 breadCrumbMargin={10}
                 breadCrumbWidth={240}
                 breadCrumbHeight={52}
+                breadCrumbBorder={2}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
                 bredCrumbView="collapsed"

@@ -20,6 +20,7 @@ export type OrgChartProps<TChart, TBreadCrumb> = {
     breadCrumbWidth?: number;
     breadCrumbHeight?: number;
     breadCrumbMargin?: number;
+    breadCrumbBorder?: number;
     bredCrumbView?: BreadCrumbView;
 };
 
