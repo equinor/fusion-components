@@ -67,7 +67,9 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     );
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
     const childrenTooltipRef = useTooltipRef(
-        childCountType !== 'hidden' ? `${childCount} ${childrenTooltipName}` : '',
+        childCountType !== 'hidden' && childCount !== 0
+            ? `${childCount} ${childrenTooltipName}`
+            : `Linked ${childrenTooltipName}`,
         'above'
     );
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
@@ -132,7 +134,9 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
                 <div className={styles.expandButton}>
                     <IconButton ref={childrenTooltipRef} onClick={onExpandHandler}>
                         <div className={styles.childPositionCount}>
-                            {childCountType !== 'hidden' ? childCount : undefined}
+                            {childCountType !== 'hidden' && childCount !== 0
+                                ? childCount
+                                : undefined}
                             <ExpandMoreIcon height={16} isExpanded={false} />
                         </div>
                     </IconButton>
