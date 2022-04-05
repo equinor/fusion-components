@@ -24,7 +24,7 @@ export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
     }, []);
 
     useEffectAsync((signal) => {
-        if (!signal.abort && personId) {
+        if (!signal.aborted && personId) {
             fetchPersonData(personId);
         }
     }, [fetchPersonData, personId]);
