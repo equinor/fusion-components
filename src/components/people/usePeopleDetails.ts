@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { PersonDetails, useFusionContext } from '@equinor/fusion';
+import { PersonDetails, useEffectAsync, useFusionContext } from '@equinor/fusion';
 
 export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
     const [isFetching, setIsFetching] = useState(false);
@@ -23,8 +23,8 @@ export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
         }
     }, []);
 
-    useEffect(() => {
-        if (personId) {
+    useEffectAsync((signal) => {
+        if (!signal.abort && personId) {
             fetchPersonData(personId);
         }
     }, [fetchPersonData, personId]);
