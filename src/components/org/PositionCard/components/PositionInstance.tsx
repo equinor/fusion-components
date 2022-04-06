@@ -67,9 +67,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     );
     const currentPeriodTooltipRef = useTooltipRef('Current period', 'below');
     const childrenTooltipRef = useTooltipRef(
-        childCountType !== 'hidden' && childCount !== 0
-            ? `${childCount} ${childrenTooltipName}`
-            : `Linked ${childrenTooltipName}`,
+        childCountType !== 'hidden' ? `${childCount} ${childrenTooltipName}` : '',
         'above'
     );
     const externalIdTooltipRef = useTooltipRef('External ID: ' + position.externalId, 'below');
