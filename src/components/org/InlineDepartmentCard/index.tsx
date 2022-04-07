@@ -1,10 +1,12 @@
-import { clsx, createStyles, makeStyles } from '@equinor/fusion-react-styles';
+import { clsx, createStyles, theme, makeStyles } from '@equinor/fusion-react-styles';
 import { FC } from 'react';
 import OneEquinorIcon from './OneEquinorIcon';
+import Icon from '@equinor/fusion-react-icon';
 
 type InlineDepartmentCardProps = {
     fullDepartmentName: string;
     name: string;
+    displayLinkIcon?: boolean;
 };
 
 const useDepartmentCardStyles = makeStyles(
@@ -13,10 +15,10 @@ const useDepartmentCardStyles = makeStyles(
             container: {
                 display: 'flex',
                 alignItems: 'center',
-                margin: ' 0.2rem 0',
                 borderRadius: '4px',
                 width: '100%',
                 height: '2.5rem',
+                padding: '0.2rem 0 0.2rem 0',
             },
             logo: {
                 display: 'flex',
@@ -27,6 +29,14 @@ const useDepartmentCardStyles = makeStyles(
                 padding: '0 .2rem',
                 width: '2rem',
                 height: '2rem',
+            },
+            iconContainer: {
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                fontSize: '12px',
+                color: theme.colors.infographic.primary__moss_green_100.value.hex,
+                paddingRight: '0.2rem',
             },
             textContainer: {
                 margin: '0 0.25rem',
@@ -57,6 +67,7 @@ const useDepartmentCardStyles = makeStyles(
 const InlineDepartmentCard: FC<InlineDepartmentCardProps> = ({
     fullDepartmentName: departmentName,
     name: personName,
+    displayLinkIcon = false,
 }) => {
     const styles = useDepartmentCardStyles();
     return (
@@ -71,6 +82,12 @@ const InlineDepartmentCard: FC<InlineDepartmentCardProps> = ({
                 </span>
                 <span className={clsx(styles.name, styles.ellipsisOverflow)}>{personName}</span>
             </div>
+
+            {!!displayLinkIcon && (
+                <div className={styles.iconContainer}>
+                    <Icon icon={'external_link'} />
+                </div>
+            )}
         </div>
     );
 };
