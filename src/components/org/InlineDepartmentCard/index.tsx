@@ -36,7 +36,7 @@ const useDepartmentCardStyles = makeStyles(
                 flexDirection: 'column',
                 fontSize: '12px',
                 color: theme.colors.infographic.primary__moss_green_100.value.hex,
-                paddingRight: '0.2rem',
+                paddingRight: '0.6rem',
             },
             textContainer: {
                 margin: '0 0.25rem',
