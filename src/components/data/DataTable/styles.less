@@ -57,6 +57,7 @@
             position: sticky;
             top: 0;
             z-index: 2;
+            min-height: calc(var(--grid-unit) * 6px);
 
             &.isSortable {
                 cursor: pointer;
@@ -119,10 +120,6 @@
     }
 
     &.comfortable {
-        .table {
-            --row-height-multiplier: 6px;
-        }
-
         .cell {
             --cell-horizontal-padding-multiplier: 2px;
         }
