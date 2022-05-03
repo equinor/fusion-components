@@ -30,7 +30,7 @@ const TabContent: FC<TabContentType> = ({ children, activeTabKey }) => {
     const clonedChildren = Children.map(active.props.children, (child) => cloneElement(child));
     return <div className={styles.tabContent}>{clonedChildren}</div>;
 };
-
+//Tabs
 const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey, stickyTabs }) => {
     const tabsPaneRef = useRef<HTMLDivElement | null>(null);
     const activeTabRef = useRef<HTMLElement | null>(null);
