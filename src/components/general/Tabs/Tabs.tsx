@@ -63,8 +63,6 @@ const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey, stickyTabs }
         [styles.stickyTabs]: stickyTabs === true,
     });
 
-    console.log('stickyTabs her2', stickyTabs);
-    console.log('containerClassNames :>> ', containerClassNames);
     const scrollToTab = (tabRef: HTMLElement | null) => {
         if (!tabsPaneRef.current || !tabRef) {
             return;
@@ -120,12 +118,8 @@ const Tabs: FC<TabsProps> = ({
     children,
     stickyTabs = false,
 }) => {
-    const tabsClassNames = classNames(styles.tabs, useComponentDisplayClassNames(styles), {
-        [styles.stickyTabs]: stickyTabs,
-    });
-    console.log('stickyTabs her', stickyTabs);
     return (
-        <div className={tabsClassNames}>
+        <div className={styles.tabs}>
             <TabPane
                 activeTabKey={activeTabKey}
                 noScrollGradient={noScrollGradient}
