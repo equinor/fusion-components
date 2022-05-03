@@ -60,7 +60,7 @@ const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey, stickyTabs }
     const containerClassNames = classNames(styles.tabsPane, useComponentDisplayClassNames(styles), {
         [styles.showGradientLeft]: gradient === 'left' || gradient === 'leftAndRight',
         [styles.showGradientRight]: gradient === 'right' || gradient === 'leftAndRight',
-        [styles.stickyTabs]: stickyTabs === true,
+        [styles.stickyTabs]: stickyTabs,
     });
 
     const scrollToTab = (tabRef: HTMLElement | null) => {
