@@ -31,7 +31,7 @@ const TabContent: FC<TabContentType> = ({ children, activeTabKey }) => {
     return <div className={styles.tabContent}>{clonedChildren}</div>;
 };
 
-const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
+const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey, stickyTabs }) => {
     const tabsPaneRef = useRef<HTMLDivElement | null>(null);
     const activeTabRef = useRef<HTMLElement | null>(null);
 
@@ -60,8 +60,11 @@ const TabPane: FC<TabsProps> = ({ children, onChange, activeTabKey }) => {
     const containerClassNames = classNames(styles.tabsPane, useComponentDisplayClassNames(styles), {
         [styles.showGradientLeft]: gradient === 'left' || gradient === 'leftAndRight',
         [styles.showGradientRight]: gradient === 'right' || gradient === 'leftAndRight',
+        [styles.stickyTabs]: stickyTabs === true,
     });
 
+    console.log('stickyTabs her2', stickyTabs);
+    console.log('containerClassNames :>> ', containerClassNames);
     const scrollToTab = (tabRef: HTMLElement | null) => {
         if (!tabsPaneRef.current || !tabRef) {
             return;
@@ -120,12 +123,14 @@ const Tabs: FC<TabsProps> = ({
     const tabsClassNames = classNames(styles.tabs, useComponentDisplayClassNames(styles), {
         [styles.stickyTabs]: stickyTabs,
     });
+    console.log('stickyTabs her', stickyTabs);
     return (
         <div className={tabsClassNames}>
             <TabPane
                 activeTabKey={activeTabKey}
                 noScrollGradient={noScrollGradient}
                 onChange={(tabKey) => onChange(tabKey)}
+                stickyTabs={stickyTabs}
             >
                 {children}
             </TabPane>
