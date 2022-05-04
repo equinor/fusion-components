@@ -52,7 +52,7 @@ export const useStyles = makeStyles(
             fontWeight: 600,
             textDecoration: 'none',
 
-            '.linkContainer &': {
+            'a&': {
                 color: 'inherit',
             },
         },
