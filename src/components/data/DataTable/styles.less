@@ -1,7 +1,7 @@
 .container {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    min-height: calc(var(--grid-unit) * 6px);
     max-height: 100%;
     width: 100%;
     max-width: 100%;
@@ -143,10 +143,6 @@
     }
 
     &.compact {
-        .table {
-            --row-height-multiplier: 4px;
-        }
-
         .cell {
             --cell-horizontal-padding-multiplier: 1px;
         }
