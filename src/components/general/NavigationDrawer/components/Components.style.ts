@@ -41,7 +41,7 @@ export const useStyles = makeStyles(
         },
         linkContainer: {
             display: 'flex',
-            color: 'inherit',
+            //color: 'inherit',
             width: 'calc(var(--grid-unit) * 34px)',
             alignSelf: 'flex-end',
             height: '100%',
@@ -52,7 +52,7 @@ export const useStyles = makeStyles(
             fontWeight: 600,
             textDecoration: 'none',
 
-            '& a': {
+            '.linkContainer &': {
                 color: 'inherit',
             },
         },
