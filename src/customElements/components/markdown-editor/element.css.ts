@@ -1,26 +1,55 @@
-import { css } from '../base';
+import { css, unsafeCSS } from '../base';
+import { theme } from '@equinor/fusion-react-styles';
 
 export const style = css`
     :host {
-        --editor-color-background: var(--color-black-alt5);
-        --editor-color-text: var(--color-primary);
-        --editor-color-active: var(--color-primary-hover-alt1)
-        --border-radius: .5rem;
+        --editor-color-text: ${unsafeCSS(
+            theme.colors.text.static_icons__tertiary.getVariable('color')
+        )};
+        --editor-border-color: ${unsafeCSS(
+            theme.colors.ui.background__medium.getVariable('color')
+        )};
+        --editor-border-color-active: ${unsafeCSS(
+            theme.colors.interactive.primary__resting.getVariable('color')
+        )};
+        --editor-divider-color: ${unsafeCSS(
+            theme.colors.ui.background__medium.getVariable('color')
+        )};
+        --editor-button-disabled-color: ${unsafeCSS(
+            theme.colors.interactive.disabled__text.getVariable('color')
+        )};
+        --editor-button-hover-color: ${unsafeCSS(
+            theme.colors.interactive.primary__hover.getVariable('color')
+        )};
+        --editor-button-hover-background: ${unsafeCSS(
+            theme.colors.interactive.primary__selected_hover.getVariable('color')
+        )};
+        --editor-button-active-color: ${unsafeCSS(
+            theme.colors.text.static_icons__default.getVariable('color')
+        )};
+        --editor-button-active-background: ${unsafeCSS(
+            theme.colors.interactive.primary__selected_highlight.getVariable('color')
+        )};
         cursor: auto;
     }
 
-    .container{
+    .container {
         height: 100%;
+        border: 1px solid var(--editor-border-color);
+        border-radius: 4px;
+        padding: 8px;
     }
-
+    .focused {
+        border: 1px solid var(--editor-border-color-active);
+    }
     #editor {
-        padding: .5rem;
+        padding: 0.5rem;
         height: calc(100% - 3rem);
     }
 
     #editor p {
         font-size: 16px;
-        margin: .5rem 0;
+        margin: 0.5rem 0;
     }
 
     #editor p:last-child {
@@ -32,11 +61,8 @@ export const style = css`
     }
 
     .ProseMirror {
-        background: var(--editor-color-background);
-        border-radius: var(--border-radius) var(--border-radius) 0 0;
         color: var(--editor-color-text);
-        border-bottom: 1px solid var(--color-black-alt3);
-        padding: .5rem;
+        padding: 0.5rem;
         white-space: pre-wrap;
         height: 100%;
         overflow: auto;
@@ -48,35 +74,37 @@ export const style = css`
 
     .ProseMirror-focused {
         outline: none;
-        border-color: var(--color-contrast);
     }
 
     #menu {
         display: flex;
-        padding: .25rem;
         background: none;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--editor-divider-color);
+        color: var(--editor-color-text);
     }
 
     #menu .button {
         background: none;
         border: none;
-        border-radius: var(--border-radius);
         color: var(--color-contrast);
         cursor: pointer;
         font-family: Equinor, sans-serif;
     }
 
     #menu .button:hover {
-        color: var(--color-primary);
+        color: var(--editor-button-hover-color);
+        background: var(--editor-button-hover-background);
     }
 
     #menu .button.disabled {
-        background: var(--editor-color-background);
+        color: var(--editor-button-disabled-color);
         cursor: not-allowed;
     }
 
     #menu .button.active {
-        color: var(--editor-color-text);
+        color: var(--editor-button-active-color);
+        background: var(--editor-button-active-background);
     }
 
     #menu .button.heading {

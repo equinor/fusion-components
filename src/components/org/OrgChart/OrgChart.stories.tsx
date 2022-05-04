@@ -3,8 +3,9 @@ import withFusionStory from '../../../../.storybook/withFusionStory';
 import OrgChart from '.';
 import { OrgStructure, OrgChartItemProps, BreadCrumb } from './orgChartTypes';
 import { useComponentDisplayType, Position } from '@equinor/fusion';
-import { PositionCard } from '@equinor/fusion-components';
+import { PositionCard, InlineDepartmentCard } from '@equinor/fusion-components';
 import { FC, CSSProperties } from 'react';
+import { clsx, createStyles, makeStyles } from '@equinor/fusion-react-styles';
 
 type PositionStructure = OrgStructure & {
     name?: string;
@@ -180,26 +181,66 @@ const position: Position = {
     properties: {
         isSupport: false,
     },
-    name: 'Drilling Engineer',
+    name: 'Drilling Engineer test 123',
 };
 
-const breadCrumbStyle = {
-    display: 'flex',
-    justifyContent: 'left',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    boxShadow:
-        '0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
-    margin: '10px',
-    padding: '16px',
-    boxSizing: 'border-box',
-    flex: '1',
-    fontSize: '16px',
-    height: '32px',
-} as CSSProperties;
+const useStyles = makeStyles(
+    (theme) =>
+        createStyles({
+            breadcrumb: {
+                background: theme.colors.text.static_icons__primary_white.getVariable('color'),
+                borderRadius: '4px',
+                '&:hover': {
+                    background: theme.colors.interactive.primary__hover_alt.getVariable('color'),
+                    cursor: ' pointer',
+                },
+            },
+        }),
+    { name: 'dropdown-item-wrapper' }
+);
 
-const BreadCrumbComponent: FC<BreadCrumb> = ({ label }) => {
-    return <div style={{ ...breadCrumbStyle, cursor: 'pointer' }}>{label}</div>;
+type BreadCrumbItem = {
+    position?: Position;
+    department?: {
+        name: string;
+        department: string;
+    };
+};
+
+const BreadCrumbComponent: FC<BreadCrumb<BreadCrumbItem>> = ({ breadCrumbItem, linked }) => {
+    const styles = useStyles();
+    const position = breadCrumbItem?.position;
+    const instance = breadCrumbItem?.position?.instances[0];
+    const department = breadCrumbItem.department;
+    if (!position && !department) {
+        return <div>No item test</div>;
+    }
+    if (department) {
+        return (
+            <div style={{ width: '15rem' }}>
+                <InlineDepartmentCard
+                    name={department.name}
+                    fullDepartmentName={department.department}
+                />
+            </div>
+        );
+    }
+
+    return (
+        <div className={styles.breadcrumb}>
+            <PositionCard
+                position={position}
+                instance={instance}
+                showDate={false}
+                showExternalId={false}
+                showLocation={false}
+                showObs={false}
+                isSelected={false}
+                onExpand={() => {}}
+                inline
+            />
+        </div>
+    );
 };
 
 const PositionCardComponent: FC<OrgChartItemProps<PositionStructure>> = ({ item }) => {
@@ -221,16 +262,41 @@ const PositionCardComponent: FC<OrgChartItemProps<PositionStructure>> = ({ item 
     );
 };
 
-const breadCrumbs: BreadCrumb[] = [
+const breadCrumbs: BreadCrumb<BreadCrumbItem>[] = [
     {
         childId: '1',
         label: 'Boss',
         id: '101',
+        breadCrumbItem: { position },
     },
     {
         childId: '101',
         label: 'Director',
         id: '102',
+        breadCrumbItem: { position },
+    },
+    {
+        childId: '102',
+        label: 'Director',
+        id: '103',
+        breadCrumbItem: {
+            department: {
+                department: 'Test deparmtnet Test deparmtnet long name',
+                name: 'Department name Department name long loogn',
+            },
+        },
+    },
+    {
+        childId: '103',
+        label: 'Lined department',
+        id: '104',
+        breadCrumbItem: {
+            department: {
+                department: 'Linked',
+                name: 'Linked department',
+            },
+        },
+        linked: true,
     },
 ];
 
@@ -238,7 +304,7 @@ const OrgChartStory = () => {
     const componentDisplayType = useComponentDisplayType();
     const cardHeight = componentDisplayType === 'Compact' ? 110 : 142;
     const rowMargin = componentDisplayType === 'Compact' ? 138 : 164;
-    const cardMargin = componentDisplayType === 'Compact' ? 24 : 32;
+    const cardMargin = componentDisplayType === 'Compact' ? 24 : 24;
     const cardWidth = componentDisplayType === 'Compact' ? 300 : 340;
 
     return (
@@ -253,8 +319,12 @@ const OrgChartStory = () => {
                 rowMargin={rowMargin}
                 cardMargin={cardMargin}
                 breadCrumbMargin={10}
+                breadCrumbWidth={240}
+                breadCrumbHeight={52}
+                breadCrumbBorder={2}
                 asideLabel="ASIDE"
                 childrenLabel="CHILDREN"
+                bredCrumbView="collapsed"
             />
         </div>
     );

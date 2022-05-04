@@ -5,17 +5,17 @@ import { OrgNode } from '../orgChartTypes';
 
 import styles from './styles.less';
 
-type CardProps<T> = {
-    node: OrgNode<T>;
+type CardProps<TChart> = {
+    node: OrgNode<TChart>;
     x?: number;
     y?: number;
 };
 
-function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
+function Card<TChart>({ node, x = 0, y = 0 }: CardProps<TChart>): JSX.Element {
     const {
         state: { cardWidth, cardHeight, component, numberOfCardsPerRow, rowMargin },
         dispatch,
-    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
 
     useEffect(() => {
         if (node && (node.x !== x || node.y !== y)) {

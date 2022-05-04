@@ -5,7 +5,7 @@ import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
 import useAdditionalRowHeight from '../useAdditionalRowHeight';
 
-function Children<T>() {
+function Children<TChart>(): JSX.Element {
     const {
         state: {
             allNodes,
@@ -18,9 +18,10 @@ function Children<T>() {
             numberOfCardsPerRow,
             width,
             additionalChildRowHeight,
+            startYPosition,
         },
         dispatch,
-    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
 
     const childrenNodes = useMemo(() => allNodes.filter((d) => !d.aside && d.parentId), [allNodes]);
 
@@ -28,10 +29,10 @@ function Children<T>() {
         () =>
             childrenNodes.reduce(
                 (
-                    prevValue: OrgNode<T>[][],
-                    currentValue: OrgNode<T>,
+                    prevValue: OrgNode<TChart>[][],
+                    currentValue: OrgNode<TChart>,
                     currentIndex: number
-                ): OrgNode<T>[][] => {
+                ): OrgNode<TChart>[][] => {
                     if (numberOfCardsPerRow) {
                         const index = Math.floor(currentIndex / numberOfCardsPerRow);
                         if (!prevValue[index]) {
@@ -41,7 +42,7 @@ function Children<T>() {
                     }
                     return prevValue;
                 },
-                [] as OrgNode<T>[][]
+                [] as OrgNode<TChart>[][]
             ),
         [childrenNodes, numberOfCardsPerRow]
     );
@@ -67,9 +68,10 @@ function Children<T>() {
         }
     }, [additionalRowHeight]);
 
-    const initialMargin = (rowMargin - 20) * asideRows + (numberOfCardsPerRow === 1 ? 40 : 50);
+    const initialMargin =
+        (rowMargin - 20) * asideRows + (numberOfCardsPerRow === 1 ? 40 : 50) + startYPosition;
 
-    const getStartXPosition = (cards: OrgNode<T>[], rowNo: number) => {
+    const getStartXPosition = (cards: OrgNode<TChart>[], rowNo: number) => {
         if (numberOfCardsPerRow === 1) {
             if (width < cardWidth * 1.5 + 10) {
                 return width - cardWidth;
@@ -82,7 +84,7 @@ function Children<T>() {
     };
 
     const renderRow = useCallback(
-        (cards: OrgNode<T>[], rowNo: number, additionalRowHeight: number) => {
+        (cards: OrgNode<TChart>[], rowNo: number, additionalRowHeight: number) => {
             const startX = getStartXPosition(cards, rowNo);
             return cards.map((card, i) => (
                 <Fragment key={card.id}>

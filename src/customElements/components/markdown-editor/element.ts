@@ -3,25 +3,25 @@ import {
     LitElement,
     property,
     html,
-    internalProperty,
-    query,
-    eventOptions,
     throttle,
     queryAsync,
     PropertyValues,
+    TemplateResult,
+    state,
 } from '../base';
 
 import { baseKeymap } from 'prosemirror-commands';
 import { keymap } from 'prosemirror-keymap';
 import { schema, defaultMarkdownSerializer, defaultMarkdownParser } from 'prosemirror-markdown';
 import { history } from 'prosemirror-history';
-import { EditorState, TextSelection, Transaction } from 'prosemirror-state';
+import { EditorState, TextSelection, Transaction, Plugin } from 'prosemirror-state';
 import { EditorView } from 'prosemirror-view';
 import { buildKeymap } from './keymap';
 import menuPlugin from './menu';
 
 import styles from './element.css';
 import { MdMenuItemType } from './menuItems';
+import { classMap } from 'lit-html/directives/class-map';
 
 export interface MarkdownEditorElementProps {
     menuItems?: Array<MdMenuItemType>;
@@ -53,6 +53,9 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
 
     @property({ type: String, reflect: false })
     value: string;
+
+    @state()
+    _focused: boolean;
 
     protected view: EditorView;
 
@@ -134,6 +137,28 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
         this.view = await this.createEditorView(state);
     }
 
+    focusPlugin(element, handleActiveState) {
+        return new Plugin({
+            props: {
+                handleDOMEvents: {
+                    focus(view) {
+                        view.dom.classList.add('ProseMirror-focused');
+                        handleActiveState(element, true);
+                        return true;
+                    },
+                    blur() {
+                        handleActiveState(element, false);
+                        return true;
+                    },
+                },
+            },
+        });
+    }
+
+    handleActiveState(element: this, state: boolean): void {
+        element._focused = state;
+    }
+
     protected async createEditorState() {
         const menu = await this.menu;
         const { menuItems, value } = this;
@@ -145,13 +170,17 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
                 keymap(buildKeymap(schema)),
                 keymap(baseKeymap),
                 menuPlugin(menu, menuItems),
+                this.focusPlugin(this, this.handleActiveState),
             ],
         });
     }
 
     protected async createEditorView(state: EditorState) {
         const editor = await this.editor;
-        const options = { state, dispatchTransaction: this.handleTransaction.bind(this) };
+        const options = {
+            state,
+            dispatchTransaction: this.handleTransaction.bind(this),
+        };
         return new EditorView(editor, options);
     }
 
@@ -182,9 +211,9 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
         this.dispatchEvent(event);
     }
 
-    protected render() {
+    protected render(): TemplateResult {
         return html`
-            <div class="container">
+            <div class=${classMap({ container: true, focused: this._focused })}>
                 <div id="menu"></div>
                 <div id="editor"></div>
             </div>

@@ -1,4 +1,4 @@
-import { useRef, useMemo, useContext } from 'react';
+import { useRef, useMemo, useContext, useEffect } from 'react';
 import { useParentSize } from '@equinor/fusion-components';
 import { OrgChartContextProvider, OrgChartContextReducer, OrgChartContext } from './store';
 import { OrgStructure, OrgChartProps, OrgChartItemProps, OrgNode } from './orgChartTypes';
@@ -8,17 +8,21 @@ import Aside from './components/Aside';
 import Children from './components/Children';
 import Labels from './components/Labels';
 import useOrgChartActions from './actions';
-import BreadCrumbs from './components/BreadCrumbs';
+import { BreadCrumbs } from './components/BreadCrumbs';
 
 export { OrgStructure, OrgChartItemProps, OrgNode };
 
-const OrgChart = <T extends OrgStructure>(props: OrgChartProps<T>) => (
+const OrgChart = <TChart extends OrgStructure, TBreadCrumb>(
+    props: OrgChartProps<TChart, TBreadCrumb>
+): JSX.Element => (
     <OrgChartContextProvider>
         <OrgChartContent {...props} />
     </OrgChartContextProvider>
 );
 
-const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
+const OrgChartContent = <TChart extends OrgStructure, TBreadCrumb>(
+    props: OrgChartProps<TChart, TBreadCrumb>
+) => {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
     const { height, width } = useParentSize(orgContainerRef);
 
@@ -31,8 +35,19 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
             childrenRows,
             additionalAsideRowHeight,
             additionalChildRowHeight,
+            startYPosition,
+            numberOfCardsPerRow,
         },
-    } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+        dispatch,
+    } = useContext<OrgChartContextReducer<TChart, TBreadCrumb>>(OrgChartContext);
+
+    useEffect(() => {
+        if (numberOfCardsPerRow === 1) {
+            dispatch({ type: 'UPDATE_BREADCRUMB_VIEW', breadCrumbView: 'vertical' });
+        } else {
+            dispatch({ type: 'UPDATE_BREADCRUMB_VIEW', breadCrumbView: props.bredCrumbView });
+        }
+    }, [numberOfCardsPerRow]);
 
     const svgHeight = useMemo(() => {
         const rootMargin = rowMargin;
@@ -45,9 +60,17 @@ const OrgChartContent = <T extends OrgStructure>(props: OrgChartProps<T>) => {
             rootMargin +
             labelMargin +
             additionalAsideRowHeight +
-            additionalChildRowHeight
+            additionalChildRowHeight +
+            startYPosition
         );
-    }, [rowMargin, asideRows, childrenRows, additionalAsideRowHeight, additionalChildRowHeight]);
+    }, [
+        rowMargin,
+        asideRows,
+        childrenRows,
+        additionalAsideRowHeight,
+        additionalChildRowHeight,
+        startYPosition,
+    ]);
 
     return (
         <svg

@@ -81,6 +81,10 @@
             display: flex;
             flex-direction: column;
 
+            &.inline {
+                flex-direction: row;
+            }
+
             .personIconContainer {
                 width: calc(var(--grid-unit) * 5px);
                 height: calc(var(--grid-unit) * 5px);
@@ -115,6 +119,12 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                
+                &.inline {
+                    flex-direction: row;
+                    padding-top: 0;
+                    justify-content: center;
+                }
             }
 
             .edsIcon > * {
@@ -129,7 +139,10 @@
             flex-grow: 1;
             margin-left: var(--photo-and-details-spacing);
             width: 1px;
-            min-height: calc(var(--grid-unit) * 7px);
+            min-height: var(--instance-min-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
 
             .assignedPersonName span,
             .basePositionName span,
@@ -163,12 +176,12 @@
             .assignedPersonName {
                 font-size: var(--big-section-font-size);
                 line-height: var(--big-section-line-height);
-                margin-right: calc(var(--grid-unit) * 6px);
+                margin-right: var(--name-margin);
                 display: flex;
             }
             .basePositionName {
                 display: flex;
-                margin-right: calc(var(--grid-unit) * 6px);
+                margin-right: var(--name-margin);
             }
 
             .externalId {
@@ -203,14 +216,14 @@
 
             &.cropPositionName {
                 .positionName span {
-                    margin-right: calc(var(--grid-unit) * 6px);
+                    margin-right: var(--name-margin);
                 }
             }
 
             .positionTimeline {
                 display: flex;
                 width: 75%;
-                height: .5rem;
+                height: 0.5rem;
             }
         }
     }
@@ -254,6 +267,7 @@
         --container-padding: calc(var(--grid-unit) * 1px);
         --photo-and-details-spacing: calc(var(--grid-unit) * 2px);
         --position-name-spacing: calc(var(--grid-unit) * 1px);
+        --name-margin: calc(var(--grid-unit) * 6px)
 
         --child-position-padding: calc(var(--grid-unit) * 1px);
         --child-position-height: calc(var(--grid-unit) * 6px - 2px);
@@ -263,14 +277,19 @@
 
         --big-section-line-height: 16px;
         --big-section-font-size: 16px;
+
+        --instance-min-height:calc(var(--grid-unit) * 7px);
+
     }
 
-    &.compact {
+    &.compact,
+    &.inline {
         --container-width: calc(var(--grid-unit) * 35px);
         --container-height: calc(var(--grid-unit) * 12px);
         --container-padding: calc(var(--grid-unit) * 1px);
         --photo-and-details-spacing: calc(var(--grid-unit) * 1px);
-        --position-name-spacing: calc(var(--grid-unit) * 0.5px);
+        --position-name-spacing: 0;
+        --name-margin: calc(var(--grid-unit) * 6px)
 
         --child-position-padding: calc(var(--grid-unit) * 0.5px);
         --child-position-height: calc(var(--grid-unit) * 4px);
@@ -280,5 +299,14 @@
 
         --big-section-line-height: 16px;
         --big-section-font-size: 14px;
+
+        --instance-min-height:calc(var(--grid-unit) * 7px);
+    }
+    
+    &.inline {
+        --container-width: 100%;
+        --name-margin: 0;
+        --instance-min-height: 0;
+        --container-padding: calc(var(--grid-unit) * .5px);
     }
 }

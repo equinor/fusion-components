@@ -2,12 +2,12 @@ import { OrgNode, OrgChartProps, OrgStructure } from './orgChartTypes';
 import { useEffect, useContext } from 'react';
 import { OrgChartContextReducer, OrgChartContext } from './store';
 
-type OrgChartActionProps<T> = OrgChartProps<T> & {
+type OrgChartActionProps<TChart, TBreadCrumb> = OrgChartProps<TChart, TBreadCrumb> & {
     parentHeight: number;
     parentWidth: number;
 };
 
-const useOrgChartActions = <T extends OrgStructure>({
+const useOrgChartActions = <TChart extends OrgStructure, TBreadCrumb>({
     structure,
     cardWidth = 340,
     cardHeight = 132,
@@ -20,13 +20,15 @@ const useOrgChartActions = <T extends OrgStructure>({
     parentHeight,
     parentWidth,
     breadCrumbs,
-    breadCrumbWidth = 194,
-    breadCrumbHeight = 52,
-    breadCrumbMargin = 16,
-}: OrgChartActionProps<T>) => {
-    const { dispatch } = useContext<OrgChartContextReducer<T>>(OrgChartContext);
+    breadCrumbWidth = 194, //194
+    breadCrumbHeight = 52, //52
+    breadCrumbMargin = 16, //16,
+    breadCrumbBorder = 2,
+    bredCrumbView = 'collapsed',
+}: OrgChartActionProps<TChart, TBreadCrumb>) => {
+    const { dispatch } = useContext<OrgChartContextReducer<TChart, TBreadCrumb>>(OrgChartContext);
 
-    const generateNodes = (structure: T[]): OrgNode<T>[] => {
+    const generateNodes = (structure: TChart[]): OrgNode<TChart>[] => {
         return structure.map((item) => {
             return {
                 id: item.id,
@@ -107,12 +109,20 @@ const useOrgChartActions = <T extends OrgStructure>({
 
     useEffect(() => {
         dispatch({
+            type: 'UPDATE_BREADCRUMB_VIEW',
+            breadCrumbView: bredCrumbView,
+        });
+    }, [bredCrumbView]);
+
+    useEffect(() => {
+        dispatch({
             type: 'UPDATE_BREADCRUMBS_SIZE',
             width: breadCrumbWidth,
             height: breadCrumbHeight,
             margin: breadCrumbMargin,
+            border: breadCrumbBorder,
         });
-    }, [breadCrumbHeight, breadCrumbMargin, breadCrumbWidth]);
+    }, [breadCrumbHeight, breadCrumbMargin, breadCrumbWidth, breadCrumbBorder]);
 };
 
 export default useOrgChartActions;
