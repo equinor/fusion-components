@@ -60,7 +60,7 @@ export const useStyles = makeStyles(
         inputTextContent: {
             display: 'flex',
             flexDirection: 'column',
-            justifyontent: 'center',
+            justifyContent: 'center',
             position: 'relative',
             width: '100%',
 
