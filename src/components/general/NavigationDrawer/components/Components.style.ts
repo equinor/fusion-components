@@ -13,6 +13,20 @@ export const useStyles = makeStyles(
             position: 'relative',
             fontSize: '12px',
 
+            '& .linkContainer': {
+                display: 'flex',
+                color: 'inherit',
+                width: 'calc(var(--grid-unit) * 34px)',
+                alignSelf: 'flex-end',
+                height: '100%',
+                alignItems: 'center',
+                zIndex: 1,
+                justifyContent: 'space-between',
+                letterSpacing: 0.7,
+                fontWeight: 600,
+                textDecoration: 'none',
+            },
+
             '&:hover': {
                 backgroundColor: 'var(--color-primary-hover-alt1)',
                 color: 'var(--color-primary-hover)',
@@ -39,23 +53,7 @@ export const useStyles = makeStyles(
         isOpen: {
             paddingRight: 'calc(var(--grid-unit) * 1px)',
         },
-        linkContainer: {
-            display: 'flex',
-            color: 'var(--color-primary-accent)',
-            width: 'calc(var(--grid-unit) * 34px)',
-            alignSelf: 'flex-end',
-            height: '100%',
-            alignItems: 'center',
-            zIndex: 1,
-            justifyContent: 'space-between',
-            letterSpacing: 0.7,
-            fontWeight: 600,
-            textDecoration: 'none',
-
-            '& a': {
-                color: 'var(--color-primary-accent)',
-            },
-        },
+        linkContainer: {},
         linkText: {
             width: 'calc(var(--grid-unit) * 27px)',
             overflow: 'hidden',
