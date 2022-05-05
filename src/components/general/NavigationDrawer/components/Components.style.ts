@@ -52,9 +52,9 @@ export const useStyles = makeStyles(
             fontWeight: 600,
             textDecoration: 'none',
 
-            // 'a&': {
-            //     color: 'inherit',
-            // },
+            '& a': {
+                color: 'var(--color-primary-accent)',
+            },
         },
         linkText: {
             width: 'calc(var(--grid-unit) * 27px)',
