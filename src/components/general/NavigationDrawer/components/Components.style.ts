@@ -13,7 +13,7 @@ export const useStyles = makeStyles(
             position: 'relative',
             fontSize: '12px',
 
-            '& .navigationIcon': {
+            '& $navigationIcon': {
                 height: 'calc(var(--grid-unit) * 6px)',
                 minWidth: 'calc(var(--grid-unit) * 6px)',
                 maxWidth: 'calc(var(--grid-unit) * 6px)',
@@ -23,12 +23,12 @@ export const useStyles = makeStyles(
                 alignItems: 'center',
                 zIndex: 1,
 
-                '&.isOpen': {
+                '&$isOpen': {
                     paddingRight: 'calc(var(--grid-unit) * 1px)',
                 },
             },
 
-            '& .linkContainer': {
+            '& $linkContainer': {
                 display: 'flex',
                 color: 'inherit',
                 width: 'calc(var(--grid-unit) * 34px)',
@@ -41,17 +41,17 @@ export const useStyles = makeStyles(
                 fontWeight: 600,
                 textDecoration: 'none',
 
-                '& .linkText': {
+                '& $linkText': {
                     width: 'calc(var(--grid-unit) * 27px)',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     whiteSpace: 'nowrap',
                 },
-                '& .asideContainer': {
+                '& $asideContainer': {
                     padding: '0 calc(var(--grid-unit) * 1px)',
                 },
             },
-            '& .toggleOpenContainer': {
+            '& $toggleOpenContainer': {
                 minWidth: 'calc(var(--grid-unit) * 6px)',
                 height: '100%',
                 display: 'flex',
@@ -59,7 +59,7 @@ export const useStyles = makeStyles(
                 alignItems: 'center',
                 zIndex: 1,
             },
-            '& .visualOnClickContainer': {
+            '& $visualOnClickContainer': {
                 position: 'absolute',
                 zIndex: 0,
                 top: '50%',
@@ -73,7 +73,7 @@ export const useStyles = makeStyles(
                 alignSelf: 'center',
             },
 
-            '& .groupingContainer': {
+            '& $groupingContainer': {
                 display: 'flex',
                 justifyContent: 'flex-end',
                 width: '100%',
@@ -84,7 +84,7 @@ export const useStyles = makeStyles(
                 color: 'var(--color-primary-hover)',
             },
 
-            '&.isActive': {
+            '&$isActive': {
                 color: 'var(--color-primary)',
                 backgroundColor: 'var(--color-primary-alt4)',
             },
@@ -92,82 +92,82 @@ export const useStyles = makeStyles(
             '&:active': {
                 backgroundColor: 'var(--color-white)',
 
-                '& .visualOnClickContainer': {
+                '& $visualOnClickContainer': {
                     opacity: 1,
                 },
             },
 
-            '&.isDisabled': {
+            '&$isDisabled': {
                 backgroundColor: 'var(--color-white)',
 
-                '& .linkContainer': {
+                '& $linkContainer': {
                     color: 'var(--color-black-alt3)',
                     cursor: 'not-allowed',
                 },
 
-                '& .visualOnClickContainer': {
+                '& $visualOnClickContainer': {
                     opacity: 0,
                 },
             },
 
-            '&.menuChild': {
-                '& .linkContainer': {
+            '&$menuChild': {
+                '& $linkContainer': {
                     boxShadow: '-1px 0px 0px 0px var(--color-black-alt4)',
                     width: 'calc(var(--grid-unit) * 31px)',
                     paddingLeft: 'calc(var(--grid-unit) * 2px)',
                     letterSpacing: '0.9px',
                     fontWeight: 400,
                 },
-                '& .visualOnClickContainer': {
+                '& $visualOnClickContainer': {
                     width: 'calc(var(--grid-unit) * 31px)',
                 },
 
-                '&.isActive': {
-                    '& .linkContainer': {
+                '&$isActive': {
+                    '& $linkContainer': {
                         boxShadow:
                             '-13px 0px 0px -12px var(--color-primary), -1px 0px 0px 0px var(--color-black-alt4)',
                     },
                 },
             },
 
-            '&.menuSection': {
-                '& .linkContainer': {
+            '&$menuSection': {
+                '& $linkContainer': {
                     letterSpacing: '0.8px',
                     fontWeight: 500,
                     width: 'calc(100% - (var(--grid-unit) * 13px))',
                     display: 'flex',
 
-                    '& .linkText': {
+                    '& $linkText': {
                         flex: '1',
                     },
-                    '& .asideContainer': {
+                    '& $asideContainer': {
                         flex: '0',
                     },
                 },
 
-                '& .sectionContainer': {
+                '& $sectionContainer': {
                     display: 'flex',
                     justifyContent: 'flex-end',
                     width: '100%',
                 },
             },
 
-            '&.isCollapsed': {
-                '& .visualOnClickContainer': {
+            '&$isCollapsed': {
+                '& $visualOnClickContainer': {
                     width: 'calc(var(--grid-unit) * 5px)',
                     height: 'calc(var(--grid-unit) * 5px)',
                 },
             },
         },
 
-        '& .label': {
+        '& $label': {
             width: '100%',
             height: 'calc(var(--grid-unit) * 6px)',
-            '& .divider': {
+            '& $divider': {
                 borderBottom: '1px solid var(--color-black-alt4)',
                 paddingTop: 'calc(var(--grid-unit) * 2px)',
             },
-            '& .title': {
+            '& $title': {
                 position: 'relative',
                 padding:
                     '0 calc(var(--grid-unit) * 2px) calc(var(--grid-unit) * 1px) calc(var(--grid-unit) * 2px)',
@@ -175,8 +175,8 @@ export const useStyles = makeStyles(
                 lineHeight: 'calc(var(--grid-unit) * 3px)',
             },
 
-            '&.isCollapsed': {
-                '& .title': {
+            '&$isCollapsed': {
+                '& $title': {
                     textAlign: 'center',
                 },
             },
