@@ -43,6 +43,8 @@ function DataTable<T>({
     noColumnsCollapse,
     quickFactScope,
     id,
+    styleTableColumns,
+    styleTableRows,
 }: DataTableProps<T>) {
     const showSkeleton = isFetching && !data.length;
 
@@ -92,6 +94,8 @@ function DataTable<T>({
                     noColumnsCollapse={noColumnsCollapse}
                     quickFactScope={quickFactScope}
                     id={id}
+                    styleTableColumns={styleTableColumns}
+                    styleTableRows={styleTableRows}
                 />
             )}
         </div>
