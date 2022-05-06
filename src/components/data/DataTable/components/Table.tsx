@@ -27,6 +27,8 @@ function Table<T>({
     noColumnsCollapse: noColumnsCollapse,
     quickFactScope,
     id,
+    styleTableColumns,
+    styleTableRows,
 }: DataTableTableProps<T>) {
     const tableRef = useRef<HTMLDivElement>(null);
     const skeletonRows = pagination ? pagination.perPage : 10;
@@ -88,13 +90,15 @@ function Table<T>({
         setExpandedItems([]);
     }, [data]);
 
+    const gridTemplateColumns = styleTableColumns ? styleTableColumns : columnTemplate;
+    const gridTemplateRows = styleTableRows ? styleTableRows : rowTemplate;
     return (
         <>
             <div
                 id={id}
                 ref={tableRef}
                 className={styles.table}
-                style={{ gridTemplateColumns: columnTemplate, gridTemplateRows: rowTemplate }}
+                style={{ gridTemplateColumns, gridTemplateRows }}
             >
                 <DataTableHeader
                     columns={visibleColumns}
