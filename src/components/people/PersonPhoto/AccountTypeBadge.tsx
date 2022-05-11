@@ -5,7 +5,7 @@ import {
     useComponentDisplayClassNames,
     ComponentDisplayType,
 } from '@equinor/fusion';
-import styles from './styles.less';
+import { useStyles } from './PersonPhoto.style';
 import classNames from 'classnames';
 import ConsultantIcon from './icons/ConsultantIcon';
 import ExternalHireIcon from './icons/ExternalHireIcon';
@@ -26,6 +26,7 @@ const getIconSizes = (isCompact: boolean) => ({
 });
 
 const AccountTypeBadge = ({ size, currentPerson }: AccountTypeBageProps) => {
+    const styles = useStyles();
     const isExternalHire = !!(
         currentPerson.jobTitle && currentPerson.jobTitle.toLowerCase().startsWith('ext')
     );

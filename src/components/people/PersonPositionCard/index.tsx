@@ -1,6 +1,6 @@
 import { useCallback, FC } from 'react';
 
-import styles from './styles.less';
+import { useStyles } from './PersonPositionCard.style';
 import { PersonPosition, formatDate, useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
 import { useTooltipRef } from '@equinor/fusion-components';
@@ -9,6 +9,7 @@ type PersonPositionCardProps = {
     position: PersonPosition;
 };
 const PersonPositionCard: FC<PersonPositionCardProps> = ({ position }) => {
+    const styles = useStyles();
     const containerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
 
     const projectNameTooltip = useTooltipRef('Project: ' + position.project.name, 'below');

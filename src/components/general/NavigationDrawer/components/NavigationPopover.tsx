@@ -5,7 +5,7 @@ import {
     NavigationStructure,
     useElevationClassName,
 } from '@equinor/fusion-components';
-import styles from './styles.less';
+import { useStyles } from './Components.style';
 import CollapsedIcon from './CollapsedIcon';
 import NavigationItem from './NavigationItem';
 import { hasActive } from '../utils';
@@ -26,6 +26,7 @@ const NavigationPopover = ({
     isActive,
     navigationChildren,
 }: NavigationPopoverProps) => {
+    const styles = useStyles();
     const [isOpen, setIsOpen] = useState(false);
     const iconRef = useRef<HTMLDivElement | null>(null);
 

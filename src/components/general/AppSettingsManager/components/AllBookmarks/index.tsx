@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AccordionItem, Accordion, ErrorMessage } from '@equinor/fusion-components';
-import styles from './styles.less';
+import { useStyles } from './AllBookmarks.style';
 import { BookmarkContext, Bookmark, UpdateBookmarkOperation } from '../../useBookmarks';
 import BookmarkComponent from './Bookmark';
 
@@ -44,7 +44,7 @@ function AllBookmarks<T>({
     onBookmarkSelect,
 }: AllBookmarksProps<T>) {
     const [openAccordions, setOpenAccordions] = useState<OpenAccordion>({});
-
+    const styles = useStyles();
     const handleOpenAccordionChange = (id: string) => {
         setOpenAccordions({ ...openAccordions, [id]: !openAccordions[id] });
     };

@@ -2,7 +2,7 @@ import { IconButton, SaveIcon, CloseIcon, TextInput } from '@equinor/fusion-comp
 import { useState, useCallback, FC } from 'react';
 import { Bookmark } from '../../useBookmarks';
 import BookmarkOptions from './BookmarkOptions';
-import styles from './styles.less';
+import { useStyles } from './AllBookmarks.style';
 
 type BookmarkProps<T> = {
     bookmark: Bookmark<T>;
@@ -19,6 +19,7 @@ type EditBookmarkProps = {
 };
 
 const EditBookmark: FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
+    const styles = useStyles();
     const [bookmarkName, setBookmarkName] = useState<string>(name);
     const updateBookmarkName = useCallback((newName: string) => setBookmarkName(newName), []);
 
@@ -46,7 +47,7 @@ const EditBookmark: FC<EditBookmarkProps> = ({ name, onExit, onSave }) => {
 
 function Bookmarks<T>({ bookmark, onUpdate, onDelete, onSelect, accordionOpen }: BookmarkProps<T>) {
     const [isEditing, setIsEditing] = useState<boolean>(false);
-
+    const styles = useStyles();
     const enableEditing = useCallback(() => setIsEditing(true), []);
     const disableEditing = useCallback(() => setIsEditing(false), []);
 

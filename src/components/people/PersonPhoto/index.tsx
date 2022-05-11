@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment, useMemo } from 'react';
-import styles from './styles.less';
+import { useStyles } from './PersonPhoto.style';
 import classNames from 'classnames';
 import {
     useComponentDisplayClassNames,
@@ -44,6 +44,7 @@ export default ({
     customTooltip,
 }: PersonPhotoProps) => {
     const [currentPerson, setCurrentPerson] = useState<PersonDetails>(null);
+    const styles = useStyles();
 
     const id = useMemo(() => {
         if (person && additionalPersons.length === 0) return person.azureUniqueId;
@@ -83,8 +84,8 @@ export default ({
                             {!!customTooltip
                                 ? customTooltip
                                 : person
-                                ? person.name
-                                : 'TBN: To Be Nominated'}
+                                    ? person.name
+                                    : 'TBN: To Be Nominated'}
                         </span>
                         <br />
                     </Fragment>

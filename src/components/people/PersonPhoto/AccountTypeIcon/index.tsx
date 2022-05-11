@@ -5,7 +5,7 @@ import {
     useComponentDisplayClassNames,
     ComponentDisplayType,
 } from '@equinor/fusion';
-import styles from './styles.less';
+import { useStyles } from './AccountTypeIcon.style';
 import classNames from 'classnames';
 import ConsultantIcon from '../icons/ConsultantIcon';
 import ExternalHireIcon from '../icons/ExternalHireIcon';
@@ -27,6 +27,7 @@ const getIconSizes = (isCompact: boolean) => ({
 });
 
 const AccountTypeIkon = ({ size, currentPerson, hideTooltip }: AccountTypeIkonProps) => {
+    const styles = useStyles();
     const isExternalHire = !!(
         currentPerson.jobTitle && currentPerson.jobTitle.toLowerCase().startsWith('ext')
     );

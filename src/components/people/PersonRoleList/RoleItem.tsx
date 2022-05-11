@@ -7,7 +7,8 @@ import {
 import { Switch } from '@equinor/fusion-components';
 import { useCallback, useMemo, useState, FC } from 'react';
 
-import styles from './styles.less';
+import { useStyles } from './PersonRoleList.style';
+
 import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClient';
 import classNames from 'classnames';
 
@@ -28,6 +29,7 @@ const expiresIn = (activeTo: string) => {
 };
 
 const RoleItem: FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) => {
+    const styles = useStyles();
     const currentUser = useCurrentUser();
     const { peopleContainer } = useFusionContext();
     const [isActive, setIsActive] = useState<boolean>(role.isActive);

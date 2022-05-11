@@ -1,9 +1,10 @@
 import { FC } from 'react';
-import styles from './styles.less';
+import { useStyles } from './Components.style';
 import { NavigationComponentProps } from '..';
 import classNames from 'classnames';
 
 const Label: FC<NavigationComponentProps> = ({ navigationItem, isCollapsed }) => {
+    const styles = useStyles();
     const { id, title } = navigationItem;
 
     const labelTitle = isCollapsed ? title.charAt(0) : title;

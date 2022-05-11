@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useRef, FC, ReactNode, MouseEvent } from 'react';
-import styles from './styles.less';
+import { useStyles } from './Menu.style';
 
 export type MenuItemComponentProps<TItem extends MenuItemType> = {
     item: TItem;
@@ -28,6 +28,7 @@ const scrollElementIntoView = (el: HTMLElement & { scrollIntoViewIfNeeded?: () =
 };
 
 function MenuItem<TItem extends MenuItemType>(props: MenuItemProps<TItem>) {
+    const styles = useStyles();
     const ref = useRef<HTMLButtonElement>(null);
     const onClick = (e: MouseEvent<HTMLButtonElement>) => {
         if (ref.current) {
