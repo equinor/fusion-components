@@ -4,7 +4,7 @@ import { useState } from 'react';
 import useBookmarkContext from '../../../hooks/useBookmarkContext';
 import { BookmarkView } from '../../../types';
 import Options from './Options';
-import styles from './styles.less';
+import { useStyles } from './Bookmark.style';
 // TODO: replace with FusionIcon
 import '@equinor/fusion-wc-icon';
 
@@ -22,6 +22,7 @@ export const Bookmark = ({
     setEditBookmark,
     onClose,
 }: BookmarkProps): JSX.Element => {
+    const styles = useStyles();
     const [isDescriptionOpen, setIsDescriptionOpen] = useState<boolean>(false);
 
     const { store } = useBookmarkContext();

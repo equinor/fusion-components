@@ -1,7 +1,7 @@
 import { BookmarkListResponse, BookmarkPatchRequest, useNotificationCenter } from '@equinor/fusion';
 import { Button, TextInput } from '@equinor/fusion-components';
 import { useCallback, useState } from 'react';
-import styles from './styles.less';
+import { useStyles } from './BookmarkForm.style';
 type BookmarkFormProps = {
     contextName?: string;
     onCancel: () => void;
@@ -16,6 +16,7 @@ export const BookmarkForm = ({
     bookmark,
     onEditSave,
 }: BookmarkFormProps): JSX.Element => {
+    const styles = useStyles();
     const [name, setName] = useState<string>(bookmark?.name ? bookmark.name : '');
     const [description, setDescription] = useState<string>(
         bookmark?.description ? bookmark.description : ''
