@@ -171,6 +171,7 @@ export { default as SplitPopover } from './components/org/PositionTimeline/compo
 export { default as ReportingPath } from './components/org/ReportingPath';
 export { default as PositionPicker } from './components/org/PositionPicker';
 export { default as InlineDepartmentCard } from './components/org/InlineDepartmentCard';
+export { default as BasePositionCard } from './components/org/BasePositionCard';
 
 // Icons
 export { default as useIcon, IconProps } from './hooks/useIcon';

@@ -1,6 +1,8 @@
 import { BasePosition } from '@equinor/fusion';
+import { MarkdownViewer } from '@equinor/fusion-components';
 import Divider from '@equinor/fusion-react-divider';
 import { createStyles, makeStyles, theme } from '@equinor/fusion-react-styles';
+import { useMemo } from 'react';
 
 export const useStyles = makeStyles(
     createStyles({
@@ -9,6 +11,7 @@ export const useStyles = makeStyles(
             display: 'flex',
             flexDirection: 'column',
             gap: '1em',
+            minWidth: '500px',
         },
         headerText: {
             fontSize: '16px',
@@ -43,7 +46,19 @@ interface BasePositionCardProps {
 const BasePositionCard: React.FC<BasePositionCardProps> = ({ position }) => {
     const styles = useStyles();
 
-    const requestTypes = position.settings;
+    const requestTypes = `${position.settings?.directAssignmentEnabled ? 'Direct Request' : ''}`;
+    const competanceCenter = 'N/A';
+    const status = (position as any).inactive ? 'Disabled' : 'Enabled';
+    const roleDescription = useMemo(() => {
+        const pos = position as any;
+        if (
+            !pos.roleDescription ||
+            !pos.roleDescription.content ||
+            pos.roleDescription.content.length < 1
+        )
+            return 'No description provided';
+        return pos.roleDescription.content;
+    }, [position]);
 
     return (
         <div className={styles.container}>
@@ -58,20 +73,20 @@ const BasePositionCard: React.FC<BasePositionCardProps> = ({ position }) => {
                 </div>
                 <div className={styles.textContainer}>
                     <span className={styles.labelText}>Competence Center</span>
-                    <span> NA </span>
+                    <span> {competanceCenter} </span>
                 </div>
                 <div className={styles.textContainer}>
                     <span className={styles.labelText}>Status</span>
-                    <span> Enabled </span>
+                    <span> {status} </span>
                 </div>
             </div>
             <div className={styles.textContainer}>
                 <span className={styles.labelText}>Supports Request types</span>
-                <span> Direct Requests</span>
+                <span> {requestTypes} </span>
             </div>
             <div className={styles.roleDescription}>
                 <span className={styles.headerText}> Role and Responsibilities</span>
-                <p> {position.roleDescription}</p>
+                <MarkdownViewer markdown={roleDescription}></MarkdownViewer>
             </div>
         </div>
     );
