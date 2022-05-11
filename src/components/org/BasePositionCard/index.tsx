@@ -41,23 +41,22 @@ export const useStyles = makeStyles(
 
 interface BasePositionCardProps {
     position: BasePosition;
+    competanceCenter?: string;
 }
 
-const BasePositionCard: React.FC<BasePositionCardProps> = ({ position }) => {
+const BasePositionCard: React.FC<BasePositionCardProps> = ({ position, competanceCenter }) => {
     const styles = useStyles();
 
     const requestTypes = `${position.settings?.directAssignmentEnabled ? 'Direct Request' : ''}`;
-    const competanceCenter = 'N/A';
-    const status = (position as any).inactive ? 'Disabled' : 'Enabled';
+    const status = position.inactive ? 'Disabled' : 'Enabled';
     const roleDescription = useMemo(() => {
-        const pos = position as any;
         if (
-            !pos.roleDescription ||
-            !pos.roleDescription.content ||
-            pos.roleDescription.content.length < 1
+            !position.roleDescription ||
+            !position.roleDescription.content ||
+            position.roleDescription.content.length < 1
         )
             return 'No description provided';
-        return pos.roleDescription.content;
+        return position.roleDescription.content;
     }, [position]);
 
     return (
@@ -73,7 +72,7 @@ const BasePositionCard: React.FC<BasePositionCardProps> = ({ position }) => {
                 </div>
                 <div className={styles.textContainer}>
                     <span className={styles.labelText}>Competence Center</span>
-                    <span> {competanceCenter} </span>
+                    <span> {competanceCenter || 'N/A'} </span>
                 </div>
                 <div className={styles.textContainer}>
                     <span className={styles.labelText}>Status</span>
