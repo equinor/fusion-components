@@ -1,6 +1,5 @@
 import { useMemo, FC } from 'react';
-
-import styles from './styles.less';
+import { useStyles } from './Skeleton.style';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import classNames from 'classnames';
 
@@ -10,6 +9,7 @@ type SkeletonBarProps = {
 };
 
 const SkeletonBar: FC<SkeletonBarProps> = ({ height, width }) => {
+    const styles = useStyles();
     const displayClassNames = useComponentDisplayClassNames(styles);
     const barClassNames = classNames(styles.bar, displayClassNames, styles.skeleton);
 
