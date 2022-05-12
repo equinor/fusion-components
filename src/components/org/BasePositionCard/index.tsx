@@ -84,7 +84,7 @@ const BasePositionCard: React.FC<BasePositionCardProps> = ({ position, competanc
                 <span> {requestTypes} </span>
             </div>
             <div className={styles.roleDescription}>
-                <span className={styles.headerText}> Role and Responsibilities</span>
+                <span className={styles.headerText}> Role Description</span>
                 <MarkdownViewer markdown={roleDescription}></MarkdownViewer>
             </div>
         </div>
