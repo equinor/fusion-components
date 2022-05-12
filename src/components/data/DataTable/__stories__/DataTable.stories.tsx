@@ -121,6 +121,51 @@ const WithoutSkeleton: FC = () => {
         />
     );
 };
+const DefaultWithOwnStyle: FC = () => {
+    const [appSettings, setAppSetting] = useAppSettings();
+    const perPage = parseInt(appSettings['perPage'], 10) || 20;
+
+    const { sortedData, setSortBy, sortBy, direction } = useSorting(data, null, null);
+    const { pagination, pagedData, setCurrentPage } = usePagination(
+        sortedData as DataItem[],
+        perPage
+    );
+
+    const onPaginationChange = useCallback((newPage: Page, perPage: number) => {
+        setCurrentPage(newPage.index, perPage);
+        setAppSetting('perPage', perPage);
+    }, []);
+
+    const onSortChange = useCallback(
+        (column: DataTableColumn<DataItem>) => {
+            setSortBy(column.accessor, null);
+        },
+        [sortBy, direction]
+    );
+
+    const sortedByColumn = columns.find((c) => c.accessor === sortBy) || null;
+
+    return (
+        <DataTable
+            id='default-table'
+            columns={columns}
+            data={pagedData}
+            pagination={pagination}
+            onPaginationChange={onPaginationChange}
+            isFetching={false}
+            rowIdentifier={'id'}
+            onSortChange={onSortChange}
+            sortedBy={{
+                column: sortedByColumn,
+                direction,
+            }}
+            expandedComponent={ExpandedItem}
+            listComponent={ExpandedItem}
+            quickFactScope={'storybook'}
+            styleTableRows={"minmax(48px, 1fr)"}
+        />
+    );
+};
 
 const NoColumnsCollapse: FC = () => {
     const [appSettings, setAppSetting] = useAppSettings();
@@ -337,6 +382,7 @@ const ExpandableRows: FC = () => {
 storiesOf('Data/Data Table', module)
     .addParameters({ jest: ['DataTable.stories.jsx'] })
     .addDecorator(withFusionStory('Data Table'))
+    .add('Default with own row styles', () => <DefaultWithOwnStyle />)
     .add('Default', () => <WithoutSkeleton />)
     .add('With skeleton', () => <WithSkeleton />)
     .add('Single selectable', () => <SingleSelectable />)

@@ -60,6 +60,8 @@ export type DataTableProps<T> = {
     noColumnsCollapse?: boolean;
     quickFactScope?: string;
     id?: string;
+    styleTableColumns?: string;
+    styleTableRows?: string;
 };
 
 export type DataTableTableProps<T> = {
@@ -81,6 +83,8 @@ export type DataTableTableProps<T> = {
     noColumnsCollapse?: boolean;
     quickFactScope?: string;
     id?: string;
+    styleTableColumns?: string;
+    styleTableRows?: string;
 };
 
 export type DataTableListProps<T> = {
