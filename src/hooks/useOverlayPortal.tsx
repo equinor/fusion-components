@@ -19,7 +19,9 @@ export default (isVisible: boolean, content: ReactNode): void => {
 
         overlayContainer.appendChild(ref.current);
         render(
-            <Router history={fusionContext.history}>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore @odinr - temp fix for react router 5 apps
+            <Router history={fusionContext.history} location={fusionContext.history.location}>
                 <FusionContext.Provider value={fusionContext}>{content}</FusionContext.Provider>
             </Router>,
             ref.current
