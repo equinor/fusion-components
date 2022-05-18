@@ -41,10 +41,9 @@ export const useStyles = makeStyles(
 
 interface BasePositionCardProps {
     position: BasePosition;
-    competanceCenter?: string;
 }
 
-const BasePositionCard: React.FC<BasePositionCardProps> = ({ position, competanceCenter }) => {
+const BasePositionCard: React.FC<BasePositionCardProps> = ({ position }) => {
     const styles = useStyles();
 
     const requestTypes = `${position.settings?.directAssignmentEnabled ? 'Direct Request' : ''}`;
@@ -67,12 +66,8 @@ const BasePositionCard: React.FC<BasePositionCardProps> = ({ position, competanc
             </div>
             <div className={styles.horizontalContainer}>
                 <div className={styles.textContainer}>
-                    <span className={styles.labelText}>Department Owner</span>
+                    <span className={styles.labelText}>Department / Competence Center</span>
                     <span>{position.department}</span>
-                </div>
-                <div className={styles.textContainer}>
-                    <span className={styles.labelText}>Competence Center</span>
-                    <span> {competanceCenter || 'N/A'} </span>
                 </div>
                 <div className={styles.textContainer}>
                     <span className={styles.labelText}>Status</span>

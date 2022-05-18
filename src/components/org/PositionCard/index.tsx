@@ -30,6 +30,7 @@ type PositionCardProps = {
     showLocation: boolean;
     showDate: boolean;
     showObs: boolean;
+    obsProp?: 'organisation' | 'obs';
     showTimeline: boolean;
     isFuture?: boolean;
     isPast?: boolean;
@@ -85,6 +86,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     showLocation,
     showDate,
     showObs,
+    obsProp,
     showTimeline,
     onClick,
     onExpand,
@@ -190,6 +192,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     showDate={showDate}
                     showExternalId={showExternalId}
                     showObs={showObs}
+                    obsProp={obsProp}
                     showTimeline={showTimeline}
                     onClick={onClick}
                     onExpand={onExpand}
