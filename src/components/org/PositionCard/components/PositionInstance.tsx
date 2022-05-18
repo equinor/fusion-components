@@ -17,6 +17,7 @@ type PositionInstanceProps = {
     showLocation: boolean;
     showDate: boolean;
     showObs: boolean;
+    obsProp: 'organisation' | 'obs';
     showTimeline: boolean;
     showExternalId: boolean;
     onClick?: (position: Position, instance?: PositionInstance) => void;
@@ -35,6 +36,7 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
     showDate,
     showExternalId,
     showObs,
+    obsProp = 'obs',
     showTimeline,
     onClick,
     onExpand,
@@ -55,7 +57,15 @@ const PositionInstanceComponent: FC<PositionInstanceProps> = ({
 
     const locationName =
         instance && instance.location && instance.location.name ? instance.location.name : 'TBN';
-    const obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
+
+    let obs: string;
+    if (obsProp === 'obs')
+        obs = instance && instance.obs && instance.obs !== '' ? instance.obs : 'N/A';
+    else if (obsProp === 'organisation')
+        obs =
+            instance && instance.organisation && instance.organisation.name
+                ? instance.organisation.name
+                : 'N/A';
 
     const childrenTooltipName = childCountTypeNameMapping[childCountType] || 'positions';
 
