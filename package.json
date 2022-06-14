@@ -128,7 +128,7 @@
         "pixi.js-legacy": "^5.3.7",
         "powerbi-client": "^2.18.5",
         "react": "^17.0.x",
-        "react-router-dom": "5.x"
+        "react-router-dom": "5.x || ^6.0.0"
     },
     "resolutions": {
         "babel-core": "7.0.0-bridge.0"
