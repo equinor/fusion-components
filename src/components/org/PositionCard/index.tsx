@@ -45,6 +45,7 @@ type PositionCardProps = {
     showTaskOwner?: boolean;
     anonymize?: boolean;
     inline?: boolean;
+    highlightTaskOwner?: boolean;
 } & CustomCardStyles;
 
 const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyles) =>
@@ -66,6 +67,10 @@ const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyle
                 '&$pastBorder': {
                     borderColor: theme.colors.interactive.disabled__text.getVariable('color'),
                 },
+                '&$highlightTaskOwnerBackground': {
+                    backgroundColor:
+                        theme.colors.interactive.success__highlight.getVariable('color'),
+                },
                 '&$customBackgroundStyle': backgroundStyle,
                 '&$customBorderStyle': borderStyle,
             },
@@ -75,6 +80,7 @@ const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyle
             pastBorder: {},
             customBackgroundStyle: {},
             customBorderStyle: {},
+            highlightTaskOwnerBackground: {},
         })
     )();
 
@@ -103,6 +109,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     borderStyle,
     anonymize,
     inline,
+    highlightTaskOwner,
 }) => {
     const isExternalHire =
         instance &&
@@ -120,6 +127,8 @@ const PositionCard: React.FC<PositionCardProps> = ({
         if (!!backgroundStyle) return cardStyles.customBackgroundStyle;
         if (isFuture) return cardStyles.futureBackground;
         if (isPast) return cardStyles.pastBackground;
+        if (position.isTaskOwner && highlightTaskOwner)
+            return cardStyles.highlightTaskOwnerBackground;
     };
 
     const border = () => {
