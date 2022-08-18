@@ -67,14 +67,6 @@ const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyle
                 '&$pastBorder': {
                     borderColor: theme.colors.interactive.disabled__text.getVariable('color'),
                 },
-                '&$highlightTaskOwnerBackground': {
-                    backgroundColor:
-                        theme.colors.infographic.substitute__blue_sky.getVariable('color'),
-                },
-                '&$highlightTaskOwnerBorder': {
-                    borderColor:
-                        theme.colors.infographic.substitute__blue_overcast.getVariable('color'),
-                },
                 '&$customBackgroundStyle': backgroundStyle,
                 '&$customBorderStyle': borderStyle,
             },
@@ -84,8 +76,6 @@ const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyle
             pastBorder: {},
             customBackgroundStyle: {},
             customBorderStyle: {},
-            highlightTaskOwnerBackground: {},
-            highlightTaskOwnerBorder: {},
         })
     )();
 
@@ -129,15 +119,12 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const cardStyles = useCardStyles({ backgroundStyle, borderStyle, inline });
 
     const background = () => {
-        if (position.isTaskOwner && highlightTaskOwner)
-            return cardStyles.highlightTaskOwnerBackground;
         if (!!backgroundStyle) return cardStyles.customBackgroundStyle;
         if (isFuture) return cardStyles.futureBackground;
         if (isPast) return cardStyles.pastBackground;
     };
 
     const border = () => {
-        if (position.isTaskOwner && highlightTaskOwner) return cardStyles.highlightTaskOwnerBorder;
         if (!!borderStyle) return cardStyles.customBorderStyle;
         if (isFuture) return cardStyles.futureBorder;
         if (isPast) return cardStyles.pastBorder;
@@ -199,6 +186,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     showTaskOwner={showTaskOwner}
                     anonymize={anonymize}
                     inline={inline}
+                    highlightTaskOwner={highlightTaskOwner}
                 />
                 <PositionInstanceComponent
                     position={position}

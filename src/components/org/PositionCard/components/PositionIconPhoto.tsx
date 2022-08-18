@@ -26,6 +26,7 @@ type PositionPhotoIconProps = {
     showTaskOwner?: boolean;
     anonymize?: boolean;
     inline?: boolean;
+    highlightTaskOwner?: boolean;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -37,6 +38,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     showTaskOwner,
     anonymize,
     inline,
+    highlightTaskOwner,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const taskOwnerRef = useTooltipRef('Task Owner', 'below');
@@ -78,13 +80,20 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                     />
                 )}
             </div>
-            {(isTaskOwner || isLinked || isRotating) && (
+            {(isTaskOwner || isLinked || isRotating || highlightTaskOwner) && (
                 <div className={stateIconStyles}>
-                    {showTaskOwner && isTaskOwner && (
+                    {showTaskOwner && isTaskOwner && !highlightTaskOwner ? (
                         <span ref={taskOwnerRef} className={styles.edsIcon}>
                             <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
                         </span>
+                    ) : (
+                        <span ref={taskOwnerRef} className={styles.highlightTaskOwnerContainer}>
+                            <span className={styles.highligthTaskOwnerIcon}>
+                                <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
+                            </span>
+                        </span>
                     )}
+
                     {isLinked && (
                         <span ref={linkedRef}>
                             <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />
