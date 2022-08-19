@@ -1,4 +1,4 @@
-import { useRef, FC, ReactNode } from 'react';
+import { useRef, FC, ReactNode, useMemo } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 
@@ -63,6 +63,35 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     const stateIconStyles = clsx(styles.stateIcons, {
         [styles.inline]: inline,
     });
+
+    const displayIcons = useMemo(
+        () => isTaskOwner || isLinked || isRotating || highlightTaskOwner,
+        [isLinked, isTaskOwner, isRotating, highlightTaskOwner]
+    );
+
+    const showTaskOwnerIcon = useMemo(
+        () => showTaskOwner && isTaskOwner && highlightTaskOwner,
+        [showTaskOwner, isTaskOwner, highlightTaskOwner]
+    );
+
+    const showHighlightTaskowner = () => {
+        return (
+            <span ref={taskOwnerRef} className={styles.highligthTaskOwnerContainer}>
+                <span className={styles.highligthTaskOwnerIcon}>
+                    <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
+                </span>
+            </span>
+        );
+    };
+
+    const showRegularTaskOwnerIcon = () => {
+        return (
+            <span ref={taskOwnerRef} className={styles.edsIcon}>
+                <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
+            </span>
+        );
+    };
+
     return (
         <div className={photoIconContainerStyles} ref={containerRef}>
             <div className={styles.personIconContainer}>
@@ -80,19 +109,9 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                     />
                 )}
             </div>
-            {(isTaskOwner || isLinked || isRotating || highlightTaskOwner) && (
+            {displayIcons && (
                 <div className={stateIconStyles}>
-                    {showTaskOwner && isTaskOwner && highlightTaskOwner ? (
-                        <span ref={taskOwnerRef} className={styles.highligthTaskOwnerContainer}>
-                            <span className={styles.highligthTaskOwnerIcon}>
-                                <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
-                            </span>
-                        </span>
-                    ) : (
-                        <span ref={taskOwnerRef} className={styles.edsIcon}>
-                            <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
-                        </span>
-                    )}
+                    {showTaskOwnerIcon ? showHighlightTaskowner : showRegularTaskOwnerIcon}
 
                     {isLinked && (
                         <span ref={linkedRef}>
