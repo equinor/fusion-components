@@ -82,15 +82,15 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
             </div>
             {(isTaskOwner || isLinked || isRotating || highlightTaskOwner) && (
                 <div className={stateIconStyles}>
-                    {showTaskOwner && isTaskOwner && !highlightTaskOwner ? (
-                        <span ref={taskOwnerRef} className={styles.edsIcon}>
-                            <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
-                        </span>
-                    ) : (
-                        <span ref={taskOwnerRef} className={styles.highlightTaskOwnerContainer}>
+                    {showTaskOwner && isTaskOwner && highlightTaskOwner ? (
+                        <span ref={taskOwnerRef} className={styles.highligthTaskOwnerContainer}>
                             <span className={styles.highligthTaskOwnerIcon}>
                                 <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
                             </span>
+                        </span>
+                    ) : (
+                        <span ref={taskOwnerRef} className={styles.edsIcon}>
+                            <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
                         </span>
                     )}
 
