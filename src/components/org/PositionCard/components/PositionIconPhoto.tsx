@@ -2,9 +2,6 @@ import { useRef, FC, ReactNode, useMemo } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
 
-// TODO: replace with FusionIcon
-import { IconType } from '@equinor/fusion-wc-icon';
-
 import {
     PersonPhoto,
     LinkIcon,
@@ -15,6 +12,7 @@ import {
 
 import styles from '../styles.less';
 import clsx from 'clsx';
+import TaskOwner from './TaskOwner';
 
 type PositionPhotoIconProps = {
     position: Position;
@@ -41,7 +39,6 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     highlightTaskOwner,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const taskOwnerRef = useTooltipRef('Task Owner', 'below');
     const linkedRef = useTooltipRef('Linked', 'below');
     const rotatingRef = useTooltipRef('Rotating', 'below');
 
@@ -65,32 +62,9 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     });
 
     const displayIcons = useMemo(
-        () => isTaskOwner || isLinked || isRotating || highlightTaskOwner,
-        [isLinked, isTaskOwner, isRotating, highlightTaskOwner]
+        () => isTaskOwner || isLinked || isRotating,
+        [isRotating, isTaskOwner, isLinked]
     );
-
-    const showTaskOwnerIcon = useMemo(
-        () => showTaskOwner && isTaskOwner && highlightTaskOwner,
-        [showTaskOwner, isTaskOwner, highlightTaskOwner]
-    );
-
-    const showHighlightTaskowner = () => {
-        return (
-            <span ref={taskOwnerRef} className={styles.highligthTaskOwnerContainer}>
-                <span className={styles.highligthTaskOwnerIcon}>
-                    <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
-                </span>
-            </span>
-        );
-    };
-
-    const showRegularTaskOwnerIcon = () => {
-        return (
-            <span ref={taskOwnerRef} className={styles.edsIcon}>
-                <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
-            </span>
-        );
-    };
 
     return (
         <div className={photoIconContainerStyles} ref={containerRef}>
@@ -111,7 +85,9 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
             </div>
             {displayIcons && (
                 <div className={stateIconStyles}>
-                    {showTaskOwnerIcon ? showHighlightTaskowner : showRegularTaskOwnerIcon}
+                    {isTaskOwner && showTaskOwner && (
+                        <TaskOwner highlightTaskOwner={highlightTaskOwner} inline={inline} />
+                    )}
 
                     {isLinked && (
                         <span ref={linkedRef}>
