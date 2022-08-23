@@ -1,6 +1,6 @@
 {
     "name": "@equinor/fusion-components",
-    "version": "2.5.29-highlightTaskOwner.5",
+    "version": "2.5.29-highlightTaskOwner.6",
     "description": "Common react components used by fusion core and fusion apps",
     "main": "dist/index.js",
     "module": "dist/index.js",
