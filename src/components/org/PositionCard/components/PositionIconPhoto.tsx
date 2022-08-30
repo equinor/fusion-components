@@ -1,9 +1,6 @@
-import { useRef, FC, ReactNode } from 'react';
+import { useRef, FC, ReactNode, useMemo } from 'react';
 
 import { Position, PositionInstance, PersonDetails } from '@equinor/fusion';
-
-// TODO: replace with FusionIcon
-import { IconType } from '@equinor/fusion-wc-icon';
 
 import {
     PersonPhoto,
@@ -15,6 +12,7 @@ import {
 
 import styles from '../styles.less';
 import clsx from 'clsx';
+import TaskOwner from './TaskOwner';
 
 type PositionPhotoIconProps = {
     position: Position;
@@ -26,6 +24,7 @@ type PositionPhotoIconProps = {
     showTaskOwner?: boolean;
     anonymize?: boolean;
     inline?: boolean;
+    highlightTaskOwner?: boolean;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -37,9 +36,9 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     showTaskOwner,
     anonymize,
     inline,
+    highlightTaskOwner,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const taskOwnerRef = useTooltipRef('Task Owner', 'below');
     const linkedRef = useTooltipRef('Linked', 'below');
     const rotatingRef = useTooltipRef('Rotating', 'below');
 
@@ -61,6 +60,12 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     const stateIconStyles = clsx(styles.stateIcons, {
         [styles.inline]: inline,
     });
+
+    const displayIcons = useMemo(
+        () => isTaskOwner || isLinked || isRotating,
+        [isRotating, isTaskOwner, isLinked]
+    );
+
     return (
         <div className={photoIconContainerStyles} ref={containerRef}>
             <div className={styles.personIconContainer}>
@@ -78,13 +83,12 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                     />
                 )}
             </div>
-            {(isTaskOwner || isLinked || isRotating) && (
+            {displayIcons && (
                 <div className={stateIconStyles}>
-                    {showTaskOwner && isTaskOwner && (
-                        <span ref={taskOwnerRef} className={styles.edsIcon}>
-                            <fwc-icon type={IconType.EDS} icon="assignment_user"></fwc-icon>
-                        </span>
+                    {isTaskOwner && showTaskOwner && (
+                        <TaskOwner highlightTaskOwner={highlightTaskOwner} inline={inline} />
                     )}
+
                     {isLinked && (
                         <span ref={linkedRef}>
                             <LinkIcon color={styling.colors.blackAlt2} height={16} width={16} />

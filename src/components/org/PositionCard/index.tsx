@@ -45,6 +45,7 @@ type PositionCardProps = {
     showTaskOwner?: boolean;
     anonymize?: boolean;
     inline?: boolean;
+    highlightTaskOwner?: boolean;
 } & CustomCardStyles;
 
 const useCardStyles = ({ backgroundStyle, borderStyle, inline }: CustomCardStyles) =>
@@ -103,6 +104,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
     borderStyle,
     anonymize,
     inline,
+    highlightTaskOwner,
 }) => {
     const isExternalHire =
         instance &&
@@ -184,6 +186,7 @@ const PositionCard: React.FC<PositionCardProps> = ({
                     showTaskOwner={showTaskOwner}
                     anonymize={anonymize}
                     inline={inline}
+                    highlightTaskOwner={highlightTaskOwner}
                 />
                 <PositionInstanceComponent
                     position={position}
