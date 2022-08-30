@@ -1,6 +1,7 @@
 name: Build storybook
 
 on:
+  workflow_dispatch:
   release:
     types: 
       - published
