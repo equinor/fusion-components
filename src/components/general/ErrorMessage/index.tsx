@@ -1,5 +1,5 @@
 import Button from '../Button';
-import styles from './styles.less';
+import { useStyles } from './styles';
 import classNames from 'classnames';
 import { BlockIcon, WarningIcon, SyncDisabledIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -80,6 +80,7 @@ export const ErrorMessage: FC<ErrorMessageProps> = ({
 
     const error = useMemo(() => getErrorMessageForType(errorType), [errorType]);
 
+    const styles = useStyles();
     const messageContainerClasses = classNames(
         styles.messageContainer,
         useComponentDisplayClassNames(styles)
@@ -109,6 +110,7 @@ class ErrorMessageBoundry extends Component<ErrorMessageProps> {
     state = { didCatch: false };
     render() {
         if (this.state.didCatch) {
+            const styles = useStyles();
             return (
                 <div className={styles.container}>
                     <div className={styles.messageContainer}>
