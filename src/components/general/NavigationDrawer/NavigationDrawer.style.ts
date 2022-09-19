@@ -10,7 +10,7 @@ export const useStyles = makeStyles(
             overflowY: 'auto',
             overflowX: 'hidden',
             color: 'var(--color-primary-accent)',
-            width: 'calc(var(--grid-unit) * 40px + 2px)',
+            // width: 'calc(var(--grid-unit) * 40px + 2px)',
             flexShrink: 0,
         },
         collapseButtonContainer: {
