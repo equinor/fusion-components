@@ -6,11 +6,11 @@ export const useStyles = makeStyles(
             boxSizing: 'border-box',
             height: '100%',
             borderRight: '2px solid var(--color-black-alt4)',
-            transition: 'width 0.1s',
+            transition: 'max-width 0.1s',
             overflowY: 'auto',
             overflowX: 'hidden',
             color: 'var(--color-primary-accent)',
-            // width: 'calc(var(--grid-unit) * 40px + 2px)',
+            maxWidth: 'calc(var(--grid-unit) * 40px + 19px)',
             flexShrink: 0,
         },
         collapseButtonContainer: {
@@ -22,7 +22,7 @@ export const useStyles = makeStyles(
             alignItems: 'center',
         },
         isCollapsed: {
-            width: 'calc(var(--grid-unit) * 6px)',
+            maxWidth: 'calc(var(--grid-unit) * 6px)',
         },
         comfortable: {},
         compact: {},
