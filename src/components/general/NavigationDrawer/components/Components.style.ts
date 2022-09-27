@@ -2,13 +2,34 @@ import { makeStyles, createStyles } from '@equinor/fusion-react-styles';
 
 export const useStyles = makeStyles(
     createStyles({
+        // sidebarDarkmode: {
+        //     '--sidebar-backgroundColor': '#132634', //background for whole sidebar
+        //     '--sidebar-fontColor': '#E5E5E5', //background text color for unselected tab
+        //     '--sidebar-pressedColor': '#637583',
+
+        //     '--sidebar-hoverTextColor': '#E5E5E5',
+        //     '--sidebar-hoverBackgroundColor': '#637583',
+
+        //     '--sidebar-isActiveTextColor': '#97CACE',
+        //     '--sidebar-isActiveBackgroundColor': '#132634',
+
+        //     '--sidebar-activeBackgroundColor': '#637583',
+
+        //     '--sidebar-isDisabledTextColor': '#637583',
+        //     '--sidebar-isDisabledBackgroundColor': '#132634',
+
+        //     '--sidebar-navigationIconColor': '#9CA6AC',
+
+        //     '--sidebar-isActiveMenuChildBar': '#9CA6AC',
+        // },
+
         container: {
             width: '100%',
             height: 'calc(var(--grid-unit) * 6px)',
-            backgroundColor: 'var(--color-white)',
+            backgroundColor: 'var(--sidebar-backgroundColor, --color-white)', //background for everything
             display: 'flex',
             cursor: 'pointer',
-            color: 'var(--color-primary-accent)',
+            color: 'var(--sidebar-fontColor, --color-primary-accent)', //color of unselected text
             justifyContent: 'flex-end',
             position: 'relative',
             fontSize: '12px',
@@ -22,6 +43,7 @@ export const useStyles = makeStyles(
                 justifyContent: 'center',
                 alignItems: 'center',
                 zIndex: 1,
+                color: 'var(--sidebar-navigationIconColor, none)',
 
                 '&$isOpen': {
                     paddingRight: 'calc(var(--grid-unit) * 1px)',
@@ -67,7 +89,7 @@ export const useStyles = makeStyles(
                 transform: 'translateY(-50%)',
                 width: 'calc(var(--grid-unit) * 39px)',
                 height: 'calc(var(--grid-unit) * 5px)',
-                backgroundColor: 'var(--color-primary-alt4)',
+                backgroundColor: 'var(--sidebar-pressedColor, --color-primary-alt4)',
                 borderRadius: '4px',
                 opacity: 0,
                 alignSelf: 'center',
@@ -80,17 +102,17 @@ export const useStyles = makeStyles(
             },
 
             '&:hover': {
-                backgroundColor: 'var(--color-primary-hover-alt1)',
-                color: 'var(--color-primary-hover)',
+                backgroundColor: 'var(--sidebar-hoverBackgroundColor, --color-primary-hover-alt1)',
+                color: 'var(--sidebar-hoverTextColor, --color-primary-hover)',
             },
 
             '&$isActive': {
-                color: 'var(--color-primary)',
-                backgroundColor: 'var(--color-primary-alt4)',
+                color: 'var(--sidebar-isActiveTextColor, --color-primary)', //active text color
+                backgroundColor: 'var(--sidebar-isActiveBackgroundColor, --color-primary-alt4)', //active background color
             },
 
             '&:active': {
-                backgroundColor: 'var(--color-white)',
+                backgroundColor: 'var(--sidebar-activeBackgroundColor, --color-white)',
 
                 '& $visualOnClickContainer': {
                     opacity: 1,
@@ -98,10 +120,10 @@ export const useStyles = makeStyles(
             },
 
             '&$isDisabled': {
-                backgroundColor: 'var(--color-white)',
+                backgroundColor: 'var(--sidebar-isDisabledBackgroundColor, --color-white)',
 
                 '& $linkContainer': {
-                    color: 'var(--color-black-alt3)',
+                    color: 'var(--sidebar-isDisabledTextColor, --color-black-alt3)',
                     cursor: 'not-allowed',
                 },
 

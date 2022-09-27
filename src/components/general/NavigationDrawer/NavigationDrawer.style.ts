@@ -2,6 +2,10 @@ import { makeStyles, createStyles } from '@equinor/fusion-react-styles';
 
 export const useStyles = makeStyles(
     createStyles({
+        // sidebarDarkMode: {
+        //     '--sidebar-collapseButtonBackgroundColor': '#132634',
+        //     '--sidebar-collapseButtonTextColor': '#E5E5E5',
+        // },
         container: {
             boxSizing: 'border-box',
             height: '100%',
@@ -9,9 +13,10 @@ export const useStyles = makeStyles(
             transition: 'max-width 0.1s',
             overflowY: 'auto',
             overflowX: 'hidden',
-            color: 'var(--color-primary-accent)',
+            color: 'var(--sidebar-collapseButtonTextColor, --color-primary-accent)',
             maxWidth: 'calc(var(--grid-unit) * 40px + 19px)',
             flexShrink: 0,
+            backgroundColor: 'var(--sidebar-collapseButtonBackgroundColor, none)',
         },
         collapseButtonContainer: {
             width: 'calc(var(--grid-unit) * 6px)',
