@@ -16,6 +16,7 @@ export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
             );
             setPersonDetails(response.data);
             setIsFetching(false);
+            setError(null);
         } catch (e) {
             setPersonDetails(null);
             setIsFetching(false);
