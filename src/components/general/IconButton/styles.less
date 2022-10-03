@@ -63,7 +63,7 @@
         .iconContainer {
             background-color: var(--color-primary-alt4);
             border-color: var(--color-primary-alt4);
-            color: var(--color-primary-hover);
+            color: var(--sidebar-collapseButtonHoverTextColor,#004e55); //--color-primary-hover
         }
         &:not(:active) {
             .iconContainer {
@@ -71,7 +71,7 @@
             }
             &:not(.isActive) {
                 .iconContainer {
-                    background-color: var(--color-primary-hover-alt1);
+                    background-color: var(--sidebar-collapseButtonHoverBackgroundColor,rgba(0, 112, 121, 0.13)); //--color-primary-hover-alt1
                 }
             }
         }
@@ -117,9 +117,9 @@
     }
     &:active {
         .iconContainer {
-            background-color: var(--color-primary-alt4);
+            background-color: var( --sidebar-pressedCollapseIconBackgroundColor, #deedee); //fallback: --color-primary-alt4
             border-color: var(--color-primary-alt4);
-            color: var(--color-primary) !important;
+            color: var(--sidebar-pressedCollapseIconTextColor, #007079) !important; //fallback: --color-primary
         }
 
         &.isToggler {

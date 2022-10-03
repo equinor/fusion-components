@@ -19,6 +19,8 @@ import {
     toggleOpenByChildId,
 } from './utils';
 import { UseAnchorProps } from '../ApplicationGuidance';
+import { clsx } from '@equinor/fusion-react-styles';
+import useDarkmodeStyles from './darkmodeStyles';
 export { NavigationChild, NavigationSection, NavigationGrouping };
 
 const NAVIGATION_DRAWER_COLLAPSED_KEY = 'NAVIGATION_DRAWER_COLLAPSED_KEY';
@@ -39,6 +41,7 @@ export type NavigationComponentProps = {
     onChange?: (id: string, toggleOpen: boolean, toggleActive: boolean) => void;
     isCollapsed?: boolean;
     navigationItem: NavigationStructure;
+    darkTheme?: boolean;
 };
 
 export type NavigationStructure = {
@@ -62,6 +65,7 @@ type NavigationDrawerProps = {
     onChangeStructure: (newStructure: NavigationStructure[]) => void;
     selectedId?: string;
     onChangeSelectedId?: (newSelected: string) => void;
+    darkTheme?: boolean;
 };
 
 const NavigationDrawer: FC<NavigationDrawerProps> = ({
@@ -70,6 +74,7 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
     onChangeStructure,
     onChangeSelectedId,
     selectedId,
+    darkTheme,
 }) => {
     const styles = useStyles();
     const [isCollapsed, setIsCollapsed] = useState(getDefaultCollapsed(id));
@@ -119,16 +124,22 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
                     }
                 },
                 isCollapsed: isCollapsed,
+                darkTheme: darkTheme,
             }),
-        [internalStructure, onChangeStructure, isCollapsed]
+        [internalStructure, onChangeStructure, isCollapsed, darkTheme]
     );
 
+    const stylesDark = useDarkmodeStyles();
+    const darkClass = clsx(darkTheme && stylesDark.sidebarDarkmode);
+
     return (
-        <div className={containerClassNames}>
-            <div className={styles.collapseButtonContainer}>
-                <CollapseExpandButton isCollapsed={isCollapsed} onClick={toggleCollapsed} />
+        <div className={darkClass}>
+            <div className={containerClassNames}>
+                <div className={styles.collapseButtonContainer}>
+                    <CollapseExpandButton isCollapsed={isCollapsed} onClick={toggleCollapsed} />
+                </div>
+                {navigationStructure}
             </div>
-            {navigationStructure}
         </div>
     );
 };

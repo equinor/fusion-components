@@ -60,23 +60,6 @@ export default {
         danger: 'var(--color-danger)',
         dangerHover: 'var(--color-danger-hover)',
         dangerHighlight: 'var(--color-danger-highlight)',
-
-        // //Dark mode colors:
-        // sidebarBackgroundColor: 'var(--sidebar-backgroundColor)',
-        // sidebarFontColor: 'var(--sidebar-fontColor)',
-        // sidebarPressedColor: 'var(--sidebar-pressedColor)',
-        // sidebarHoverTextColor: 'var(--sidebar-hoverTextColor)',
-        // sidebarHoverBackgroundColor: 'var(--sidebar-hoverBackgroundColor)',
-        // sidebarIsActiveTextColor: 'var(--sidebar-isActiveTextColor)',
-        // sidebarIsActiveBackgroundColor: 'var(--sidebar-isActiveBackgroundColor)',
-        // sidebarIsDisabledTextColor: 'var(--sidebar-isDisabledTextColor)',
-        // sidebarIsDisabledBackgroundColor: 'var(--sidebar-isDisabledBackgroundColor)',
-        // sidebarActiveColor: 'var(--sidebar-activeColor)',
-        // sidebarNavigationIconColor: 'var(--sidebar-navigationIconColor)',
-        // sidebarIsActiveMenuChildBar: 'var(--sidebar-isActiveMenuChildBar)',
-        // sidebarCollapseButtonColor: 'var(--sidebar-collapseButtonColor)',
-        // sidebarCollapseButtonBackgroundColor: 'var(--sidebar-collapseButtonBackgroundColor)',
-        // sidebarCollapseButtonTextColor: 'var(--sidebar-collapseButtonTextColor)',
     },
 
     colors: {
@@ -193,52 +176,5 @@ export default {
         get dangerHighlight() {
             return computedStyle('--color-danger-highlight');
         },
-
-        // //Darkmode color
-        // get sidebarBackgroundColor() {
-        //     return computedStyle('--sidebar-backgroundColor');
-        // },
-        // get sidebarFontColor() {
-        //     return computedStyle('--sidebar-fontColor');
-        // },
-        // get sidebarPressedColor() {
-        //     return computedStyle('--sidebar-pressedColor');
-        // },
-        // get sidebarHoverTextColor() {
-        //     return computedStyle(' --sidebar-hoverTextColor');
-        // },
-        // get sidebarHoverBackgroundColor() {
-        //     return computedStyle(' --sidebar-hoverBackgroundColor');
-        // },
-        // get sidebarIsActiveTextColor() {
-        //     return computedStyle('--sidebar-isActiveTextColor');
-        // },
-        // get sidebarIsActiveBackgroundColor() {
-        //     return computedStyle('--sidebar-isActiveBackgroundColor');
-        // },
-        // get sidebarIsDisabledTextColor() {
-        //     return computedStyle('--sidebar-isDisabledTextColor');
-        // },
-        // get sidebarIsDisabledBackgroundColor() {
-        //     return computedStyle('--sidebar-isDisabledBackgroundColor');
-        // },
-        // get sidebarActiveColor() {
-        //     return computedStyle('--sidebar-activeColor');
-        // },
-        // get sidebarNavigationIconColor() {
-        //     return computedStyle('--sidebar-navigationIconColor');
-        // },
-        // get sidebarIsActiveMenuChildBar() {
-        //     return computedStyle('--sidebar-isActiveMenuChildBar');
-        // },
-        // get sidebarCollapseButtonColor() {
-        //     return computedStyle('--sidebar-collapseButtonColor');
-        // },
-        // get sidebarCollapseButtonBackgroundColor() {
-        //     return computedStyle('-sidebar-collapseButtonBackgroundColor');
-        // },
-        // get sidebarCollapseButtonTextColor() {
-        //     return computedStyle('-sidebar-collapseButtonTextColor');
-        // },
     },
 };

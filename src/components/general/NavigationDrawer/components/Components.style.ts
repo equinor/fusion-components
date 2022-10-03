@@ -76,6 +76,7 @@ export const useStyles = makeStyles(
                     },
                     '& $asideContainer': {
                         padding: '0 calc(var(--grid-unit) * 1px)',
+                        color: `var(--sidebar-textIconColor, none)`,
                     },
                 },
                 '& $toggleOpenContainer': {
@@ -85,6 +86,7 @@ export const useStyles = makeStyles(
                     justifyContent: 'center',
                     alignItems: 'center',
                     zIndex: 1,
+                    color: `var(--sidebar-toggleArrowColor, none)`,
                 },
                 '& $visualOnClickContainer': {
                     position: 'absolute',
@@ -155,7 +157,9 @@ export const useStyles = makeStyles(
 
                 '&$menuChild': {
                     '& $linkContainer': {
-                        boxShadow: '-1px 0px 0px 0px var(--color-black-alt4)',
+                        boxShadow: `-1px 0px 0px 0px var(--sidebar-isActiveMenuChildBackgroundBar, ${theme.colors.interactive.table__header__fill_resting.getVariable(
+                            'color'
+                        )})`,
                         width: 'calc(var(--grid-unit) * 31px)',
                         paddingLeft: 'calc(var(--grid-unit) * 2px)',
                         letterSpacing: '0.9px',
@@ -167,8 +171,11 @@ export const useStyles = makeStyles(
 
                     '&$isActive': {
                         '& $linkContainer': {
-                            boxShadow:
-                                '-13px 0px 0px -12px var(--color-primary), -1px 0px 0px 0px var(--color-black-alt4)',
+                            boxShadow: `-13px 0px 0px -12px var(--sidebar-isActiveMenuChildBar, ${theme.colors.infographic.primary__moss_green_100.getVariable(
+                                'color'
+                            )}), -1px 0px 0px 0px var(--sidebar-isActiveMenuChildBackgroundBar, ${theme.colors.interactive.table__header__fill_resting.getVariable(
+                                'color'
+                            )})`,
                         },
                     },
                 },
@@ -231,7 +238,9 @@ export const useStyles = makeStyles(
                 minWidth: '100%',
                 marginLeft: 'calc(var(--grid-unit) * 1px)',
                 pointerEvents: 'all',
-                background: 'white',
+                background: `var(--sidebar-popoverBackgroundColor, ${theme.colors.ui.background__default.getVariable(
+                    'color'
+                )})`,
                 borderRadius: '4px',
                 border: '1px solid var(--color-black-alt4)',
                 width: 'calc(var(--grid-unit) * 40px + 1px)',
