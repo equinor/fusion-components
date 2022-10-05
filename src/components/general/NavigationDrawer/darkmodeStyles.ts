@@ -3,7 +3,7 @@ const useDarkmodeStyles = makeStyles(
     createStyles({
         sidebarDarkmode: {
             '--sidebar-backgroundColor': '#132634',
-            '--sidebar-fontColor': '#E5E5E5',
+            '--sidebar-fontColor': '#DEE5E7',
             '--sidebar-pressedColor': '#364855',
             '--sidebar-pressedCollapseIconBackgroundColor': '#132634',
             '--sidebar-pressedCollapseIconTextColor': '#97CACE',
@@ -17,9 +17,9 @@ const useDarkmodeStyles = makeStyles(
             //'--sidebar-navigationIconColor': '#E5E5E5',
             '--sidebar-isActiveMenuChildBar': '#97CACE',
             '--sidebar-isActiveMenuChildBackgroundBar': '#9CA6AC',
-            '--sidebar-collapseButtonColor': '#97CACE',
-            '--sidebar-collapseButtonHoverTextColor': '#97CACE',
-            //'--sidebar-collapseButtonHoverBackgroundColor': '#73B1B5',
+            '--sidebar-collapseButtonColor': '#ADE2E6',
+            '--sidebar-collapseButtonHoverTextColor': '#ADE2E6',
+            '--sidebar-collapseButtonHoverBackgroundColor': '#364855',
             '--sidebar-collapseButtonBackgroundColor': '#132634',
             '--sidebar-collapseButtonTextColor': '#97CACE',
             '--sidebar-chipBackgroundColor': '#FFC1C1',
