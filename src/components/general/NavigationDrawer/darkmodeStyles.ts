@@ -14,22 +14,21 @@ const useDarkmodeStyles = makeStyles(
             '--sidebar-isDisabledTextColor': '#637583',
             '--sidebar-isDisabledBackgroundColor': '#132634',
             '--sidebar-activeBackgroundColor': '#132634',
-            //'--sidebar-navigationIconColor': '#E5E5E5',
             '--sidebar-isActiveMenuChildBar': '#97CACE',
             '--sidebar-isActiveMenuChildBackgroundBar': '#9CA6AC',
             '--sidebar-collapseButtonColor': '#ADE2E6',
             '--sidebar-collapseButtonHoverTextColor': '#ADE2E6',
             '--sidebar-collapseButtonHoverBackgroundColor': '#364855',
+            '--sidebar-collapseButtonHoverBorderColor': '#364855',
             '--sidebar-collapseButtonBackgroundColor': '#132634',
             '--sidebar-collapseButtonTextColor': '#97CACE',
             '--sidebar-chipBackgroundColor': '#FFC1C1',
             '--sidebar-chipTextColor': '#000000',
             '--sidebar-chipHoverTextColor': 'E5E5E5',
-            //'--sidebar-toggleArrowColor': 'red',
             '--sidebar-textIconColor': '#97CACE',
             '--sidebar-popoverBackgroundColor': '#132634',
         },
     }),
-    { name: 'darkmode' }
+    { name: 'navigation-drawer-dark-theme' }
 );
 export default useDarkmodeStyles;

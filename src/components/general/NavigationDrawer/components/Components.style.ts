@@ -48,7 +48,6 @@ export const useStyles = makeStyles(
                     justifyContent: 'center',
                     alignItems: 'center',
                     zIndex: 1,
-                    color: 'var(--sidebar-navigationIconColor, none)',
 
                     '&$isOpen': {
                         paddingRight: 'calc(var(--grid-unit) * 1px)',
@@ -86,7 +85,6 @@ export const useStyles = makeStyles(
                     justifyContent: 'center',
                     alignItems: 'center',
                     zIndex: 1,
-                    color: `var(--sidebar-toggleArrowColor, none)`,
                 },
                 '& $visualOnClickContainer': {
                     position: 'absolute',
