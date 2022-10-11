@@ -7,6 +7,8 @@
     cursor: pointer;
     overflow: visible;
 
+
+
     .iconContainer {
         border: none;
         border-radius: 0;
@@ -19,7 +21,7 @@
         box-sizing: border-box;
         border: 1px solid transparent;
         border-radius: 50%;
-        color: var(--color-primary);
+        color: var(--sidebar-collapseButtonColor, #007079);
     }
 
     &.isToggler {
@@ -60,8 +62,8 @@
     &:hover {
         .iconContainer {
             background-color: var(--color-primary-alt4);
-            border-color: var(--color-primary-alt4);
-            color: var(--color-primary-hover);
+            border-color: var(--sidebar-collapseButtonHoverBorderColor, #deedee); //----color-primary-alt4
+            color: var(--sidebar-collapseButtonHoverTextColor,#004e55); //--color-primary-hover
         }
         &:not(:active) {
             .iconContainer {
@@ -69,7 +71,7 @@
             }
             &:not(.isActive) {
                 .iconContainer {
-                    background-color: var(--color-primary-hover-alt1);
+                    background-color: var(--sidebar-collapseButtonHoverBackgroundColor,rgba(0, 112, 121, 0.13)); //--color-primary-hover-alt1
                 }
             }
         }
@@ -115,9 +117,9 @@
     }
     &:active {
         .iconContainer {
-            background-color: var(--color-primary-alt4);
+            background-color: var( --sidebar-pressedCollapseIconBackgroundColor, #deedee); //fallback: --color-primary-alt4
             border-color: var(--color-primary-alt4);
-            color: var(--color-primary) !important;
+            color: var(--sidebar-pressedCollapseIconTextColor, #007079) !important; //fallback: --color-primary
         }
 
         &.isToggler {

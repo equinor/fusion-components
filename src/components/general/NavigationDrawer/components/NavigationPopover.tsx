@@ -10,6 +10,8 @@ import CollapsedIcon from './CollapsedIcon';
 import NavigationItem from './NavigationItem';
 import { hasActive } from '../utils';
 import classNames from 'classnames';
+import { clsx } from '@equinor/fusion-react-styles';
+import useDarkmodeStyles from '../darkmodeStyles';
 
 type NavigationPopoverProps = {
     icon?: ReactNode;
@@ -17,6 +19,7 @@ type NavigationPopoverProps = {
     navigationStructure?: (JSX.Element | null)[] | null;
     navigationChildren?: NavigationStructure[];
     groupingComponent?: () => JSX.Element;
+    darkTheme?: boolean;
 };
 
 const NavigationPopover = ({
@@ -25,12 +28,15 @@ const NavigationPopover = ({
     groupingComponent,
     isActive,
     navigationChildren,
+    darkTheme,
 }: NavigationPopoverProps) => {
     const styles = useStyles();
     const [isOpen, setIsOpen] = useState(false);
     const iconRef = useRef<HTMLDivElement | null>(null);
 
-    const popoverClassNames = classNames(styles.popover, useElevationClassName(2));
+    const darkThemeStyle = useDarkmodeStyles();
+    const darkClass = clsx(darkTheme && darkThemeStyle.sidebarDarkmode);
+    const popoverClassNames = classNames(styles.popover, useElevationClassName(2), darkClass);
 
     const close = useCallback(() => isOpen && setIsOpen(false), [isOpen]);
     useClickOutsideOverlayPortal(close, iconRef.current);

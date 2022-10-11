@@ -8,7 +8,12 @@ import NavigationItem from './NavigationItem';
 import { useTooltipRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 
-const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCollapsed }) => {
+const Grouping: FC<NavigationComponentProps> = ({
+    navigationItem,
+    onChange,
+    isCollapsed,
+    darkTheme,
+}) => {
     const {
         id,
         icon,
@@ -89,6 +94,7 @@ const Grouping: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCo
                 navigationChildren={navigationChildren}
                 groupingComponent={getNavigationContent}
                 isActive={isActive}
+                darkTheme={darkTheme}
             />
         ),
         [icon, navigationStructure, getNavigationContent, navigationChildren, isActive]
