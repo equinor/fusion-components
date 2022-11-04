@@ -11,6 +11,7 @@ type NavigationItemProps = {
     onClick?: () => void;
     isDisabled?: boolean;
     info?: UseAnchorProps;
+		style?: React.CSSProperties;
 };
 
 const NavigationItem = ({
@@ -22,6 +23,7 @@ const NavigationItem = ({
     onClick,
     isDisabled,
     info,
+		style,
 }: NavigationItemProps) => {
     const styles = useStyles();
     const containerClassNames = classNames(styles.container, {
@@ -35,7 +37,7 @@ const NavigationItem = ({
     const anchorRef = useAnchor<HTMLDivElement>(info);
 
     return (
-        <div id={id} className={containerClassNames} onClick={onClick} ref={anchorRef}>
+        <div id={id} style={style} className={containerClassNames} onClick={onClick} ref={anchorRef}>
             {children}
             <div className={styles.visualOnClickContainer} />
         </div>
