@@ -26,6 +26,7 @@ const Grouping: FC<NavigationComponentProps> = ({
         isDisabled,
         href,
         info,
+				style
     } = navigationItem;
     const styles = useStyles();
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
@@ -113,6 +114,7 @@ const Grouping: FC<NavigationComponentProps> = ({
                 isCollapsed={isCollapsed}
                 isDisabled={isDisabled}
                 info={info}
+								style={style}
             >
                 {navigationContent}
             </NavigationItem>
