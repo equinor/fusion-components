@@ -15,6 +15,7 @@ const TaskOwner = ({ highlightTaskOwner, inline }: TaskOnwerProps): JSX.Element 
     const stateIconStyles = clsx(styles.stateIconsHighlight, {
         [styles.inline]: inline,
     });
+    console.log('');
     return (
         <div className={stateIconStyles}>
             {highlightTaskOwner ? (
