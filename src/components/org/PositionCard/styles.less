@@ -133,9 +133,22 @@
                 color: var(--color-black-alt2);
             }
 
+            .stateIconsHighlight {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                
+                &.inline {
+                    flex-direction: row;
+                    padding-top: 0;
+                    justify-content: center;
+                }
+            }
+
             .highligthTaskOwnerContainer {
                 background-color: #243746; //EDS- infographic primary/slate Blue
-                padding: 10px;
+                padding: 6px;
                 border-radius: 50%;
     
                 .highligthTaskOwnerIcon {
@@ -146,6 +159,9 @@
                     justify-content: center;
                     align-items: center;
                 }
+            }
+            .highligthTaskOwnerPadding{
+                padding: 4px; 
             }
         }
 
