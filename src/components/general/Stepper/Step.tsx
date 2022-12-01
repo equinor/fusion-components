@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, FC } from 'react';
+import { useEffect, useRef, useState, FC, MutableRefObject } from 'react';
 
 import { useStyles } from './style';
 import classNames from 'classnames';
@@ -13,12 +13,13 @@ type StepProps = {
     disabled?: boolean;
     isCurrent?: boolean;
     position?: number;
-    onChange?: (ref: HTMLElement) => void;
+    onChange?: () => void;
     isClickable?: boolean;
     done?: boolean;
     isLastStep?: boolean;
     stepCount?: number;
     verticalStep?: boolean;
+    stepPaneRef: MutableRefObject<HTMLElement>;
 };
 
 type BadgeProps = {
@@ -54,6 +55,7 @@ const Step: FC<StepProps> = ({
     isLastStep,
     stepCount,
     verticalStep,
+    stepPaneRef,
 }) => {
     const styles = useStyles();
     const stepRef = useRef<HTMLAnchorElement>(null);
@@ -82,10 +84,20 @@ const Step: FC<StepProps> = ({
     }, [windowWidth, verticalStep]);
 
     useEffect(() => {
-        if (isCurrent && onChange && stepRef.current) {
-            onChange(stepRef.current);
+        if (stepRef.current && stepPaneRef.current && isCurrent) {
+            if (!stepPaneRef.current || !stepRef) {
+                return;
+            }
+
+            const pane = stepPaneRef.current;
+
+            if (pane.scrollWidth === pane.offsetWidth) {
+                return;
+            }
+
+            pane.scrollTo(stepRef.current.offsetLeft - stepRef.current.offsetWidth, 0);
         }
-    }, [isCurrent, onChange, stepRef]);
+    }, [isCurrent, stepPaneRef, stepRef]);
 
     if (disabled) {
         return (
@@ -102,9 +114,7 @@ const Step: FC<StepProps> = ({
     return (
         <>
             <a
-                onClick={() =>
-                    !disabled && onChange && stepRef.current && onChange(stepRef.current)
-                }
+                onClick={() => !disabled && isClickable && onChange && onChange()}
                 ref={stepRef}
                 className={stepClasses}
             >
