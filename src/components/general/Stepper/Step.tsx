@@ -19,7 +19,7 @@ type StepProps = {
     isLastStep?: boolean;
     stepCount?: number;
     verticalStep?: boolean;
-    stepPaneRef: MutableRefObject<HTMLElement>;
+    stepPaneRef?: MutableRefObject<HTMLElement>;
 };
 
 type BadgeProps = {
