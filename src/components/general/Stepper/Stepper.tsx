@@ -54,12 +54,6 @@ const Stepper: FC<StepperProps> = ({
     }, [activeStepKey]);
 
     useEffect(() => {
-        if (onChange && currentStepKey) {
-            onChange(currentStepKey);
-        }
-    }, [onChange, currentStepKey]);
-
-    useEffect(() => {
         const current = stepKeys.find((sk) => sk.key === currentStepKey);
 
         if (current) {
@@ -88,14 +82,22 @@ const Stepper: FC<StepperProps> = ({
         [currentStepKey, stepKeys]
     );
 
+    const handleChange = useCallback(
+        (stepKey: string) => {
+            setCurrentStepKey(stepKey);
+            onChange && onChange(stepKey);
+        },
+        [onChange]
+    );
+
     const handleClickPrev = useCallback(() => {
         const prevKey = findStepKey('prev');
         if (!prevKey) {
             return;
         }
 
-        setCurrentStepKey(prevKey.key);
-    }, [currentStepKey, stepKeys]);
+        handleChange(prevKey.key);
+    }, [handleChange, findStepKey]);
 
     const handleClickNext = useCallback(() => {
         const nextKey = findStepKey('next');
@@ -104,17 +106,8 @@ const Stepper: FC<StepperProps> = ({
             return;
         }
 
-        setCurrentStepKey(nextKey.key);
-    }, [currentStepKey, stepKeys]);
-
-    const handleChange = useCallback(
-        (stepKey: string) => {
-            if (!forceOrder) {
-                setCurrentStepKey(stepKey);
-            }
-        },
-        [forceOrder, stepKeys]
-    );
+        handleChange(nextKey.key);
+    }, [handleChange, findStepKey]);
 
     const stepperContainerClasses = classNames(
         styles.stepperContainer,

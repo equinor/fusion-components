@@ -57,6 +57,7 @@ export type NavigationStructure = {
     isDisabled?: boolean;
     href?: string;
     info?: UseAnchorProps;
+    style?: React.CSSProperties;
 };
 
 type NavigationDrawerProps = {
