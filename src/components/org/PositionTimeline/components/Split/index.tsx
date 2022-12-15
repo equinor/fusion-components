@@ -19,10 +19,14 @@ type SplitProps = {
      * An object containing all relevant metadata about the split.
      */
     split: TimelineSplit;
+    /**
+     * All splits for current rotation group.
+     */
+    hasOverlap: boolean;
 };
 
-export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
-    const styles = useStyles({ isRotation: !!rotationId });
+export const Split: FC<SplitProps> = ({ id, rotationId, split, hasOverlap }) => {
+    const styles = useStyles({ isRotation: !!rotationId, hasOverlap });
     const {
         state: {
             position,
@@ -50,6 +54,9 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
     };
     if (!computePosition) return null;
 
+    const thisLeft = computePosition(split.appliesFrom.getTime(), 'start');
+    const thisRight = computePosition(split.appliesTo.getTime(), 'end');
+
     return (
         <div
             className={clsx(styles.container, {
@@ -58,8 +65,8 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
                 [styles.clickable]: mode !== 'slider' && !isDisabled,
             })}
             style={{
-                left: `${computePosition(split.appliesFrom.getTime(), 'start')}%`,
-                right: `${computePosition(split.appliesTo.getTime(), 'end')}%`,
+                left: `${thisLeft}%`,
+                right: `${thisRight}%`,
             }}
             onClick={handleClick}
         >
