@@ -52,7 +52,7 @@ export const MarkdownEditor: FC<MarkdownEditorProps> = (props: MarkdownEditorPro
         if (!editorRef.current) return;
         editorRef.current.addEventListener('change', onMarkdownChange);
         Object.assign(editorRef.current, attr);
-        return () => editorRef.current.removeEventListener('change', onMarkdownChange);
+        return () => editorRef?.current?.removeEventListener('change', onMarkdownChange);
     }, [editorRef]);
 
     return (
