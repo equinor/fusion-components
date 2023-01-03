@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
 import { MarkdownEditor } from '.';
@@ -12,6 +12,7 @@ const MarkdownEditorStory = () => {
         <div>
             <MarkdownEditor
                 onChange={setMarkDown}
+                minHeight="400px"
                 menuItems={[
                     'strong',
                     'em',

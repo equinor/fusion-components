@@ -25,6 +25,7 @@ import { classMap } from 'lit-html/directives/class-map';
 
 export interface MarkdownEditorElementProps {
     menuItems?: Array<MdMenuItemType>;
+    minHeight?: string;
 }
 
 const defaultMenuItem: Array<MdMenuItemType> = ['strong', 'em', 'bullet_list', 'ordered_list'];
@@ -50,6 +51,9 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
 
     @property({ reflect: false, type: Array, converter: (a) => a.split(',') })
     menuItems: Array<MdMenuItemType> = defaultMenuItem;
+
+    @property({ type: String, reflect: false })
+    minHeight: string;
 
     @property({ type: String, reflect: false })
     value: string;
@@ -187,7 +191,7 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
     /**
      *  handle editor transitions
      */
-    protected handleTransaction(tr: Transaction) {
+    protected handleTransaction(tr: Transaction): void {
         const state = this.view.state.apply(tr);
         this.view.updateState(state);
         if (tr.docChanged) {
@@ -204,11 +208,21 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
      * @todo this value might need to be increased
      */
     @throttle(250, { leading: false })
-    protected handleChange(tr: Transaction) {
+    protected handleChange(tr: Transaction): void {
         const { markdown } = this;
         this._value = markdown;
         const event = new CustomEvent('change', { detail: markdown });
         this.dispatchEvent(event);
+    }
+
+    private setMinHeight(): TemplateResult {
+        return !this.minHeight
+            ? html``
+            : html`<style>
+                  #editor {
+                      min-height: ${this.minHeight};
+                  }
+              </style>`;
     }
 
     protected render(): TemplateResult {
@@ -217,6 +231,7 @@ export class MarkdownEditorElement extends LitElement implements MarkdownEditorE
                 <div id="menu"></div>
                 <div id="editor"></div>
             </div>
+            ${this.setMinHeight()}
         `;
     }
 }
