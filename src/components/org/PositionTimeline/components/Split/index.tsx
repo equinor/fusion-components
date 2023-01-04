@@ -1,5 +1,5 @@
 import { clsx } from '@equinor/fusion-react-styles';
-import { FC, useContext } from 'react';
+import { FC, useContext, useMemo } from 'react';
 import { TimelineSplit } from '../../model';
 import { timelineContext } from '../../TimelineProvider';
 import { actions } from '../../TimelineProvider/actions';
@@ -19,10 +19,14 @@ type SplitProps = {
      * An object containing all relevant metadata about the split.
      */
     split: TimelineSplit;
+    /**
+     *  If split overlaps with dates from other splits.
+     */
+    hasOverlap: boolean;
 };
 
-export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
-    const styles = useStyles({ isRotation: !!rotationId });
+export const Split: FC<SplitProps> = ({ id, rotationId, split, hasOverlap }) => {
+    const styles = useStyles({ isRotation: !!rotationId, hasOverlap });
     const {
         state: {
             position,
@@ -50,16 +54,25 @@ export const Split: FC<SplitProps> = ({ id, rotationId, split }) => {
     };
     if (!computePosition) return null;
 
+    const thisLeftPos = computePosition(split.appliesFrom.getTime(), 'start');
+    const thisRightPos = computePosition(split.appliesTo.getTime(), 'end');
+
+    //  if mode is hightliht, only highlight array should be used
+    const shouldHighlightSplit = useMemo(() => {
+        if (mode === 'highlight') return highlighted.includes(id);
+        else return [...selected, ...highlighted].includes(id);
+    }, [id, mode, selected, highlighted]);
+
     return (
         <div
             className={clsx(styles.container, {
-                [styles.highlighted]: [...selected, ...highlighted].includes(id),
+                [styles.highlighted]: shouldHighlightSplit,
                 [styles.disabled]: isDisabled,
                 [styles.clickable]: mode !== 'slider' && !isDisabled,
             })}
             style={{
-                left: `${computePosition(split.appliesFrom.getTime(), 'start')}%`,
-                right: `${computePosition(split.appliesTo.getTime(), 'end')}%`,
+                left: `${thisLeftPos}%`,
+                right: `${thisRightPos}%`,
             }}
             onClick={handleClick}
         >

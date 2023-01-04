@@ -1,14 +1,13 @@
-import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
+import { createStyles, makeStyles, theme } from '@equinor/fusion-react-styles';
 
-export const useStyles = makeStyles((theme) =>
+export const useStyles = makeStyles(() =>
     createStyles({
-        container: (props: { isRotation: boolean }) => ({
+        container: (props: { isRotation: boolean; hasOverlap: boolean }) => ({
             top: 'calc(var(--grid-unit) * 1px)',
             position: 'absolute',
             height: 'calc(var(--grid-unit) * 5px)',
             display: 'flex',
             alignItems: 'center',
-            background: 'white',
             boxSizing: 'border-box',
             padding: '0 calc(var(--grid-unit) * 1px)',
             borderRadius: '4px',
@@ -16,7 +15,9 @@ export const useStyles = makeStyles((theme) =>
             overflow: 'hidden',
             borderWidth: props.isRotation ? '5px' : '2px',
             borderStyle: props.isRotation ? 'double' : 'solid',
-            borderColor: theme.colors.infographic.primary__moss_green_100.getVariable('color'),
+            borderColor: props.hasOverlap
+                ? theme.colors.interactive.danger__text.getVariable('color')
+                : theme.colors.infographic.primary__moss_green_100.getVariable('color'),
         }),
         content: {
             boxSizing: 'border-box',
@@ -35,8 +36,10 @@ export const useStyles = makeStyles((theme) =>
             alignItems: 'center',
             overflow: 'hidden',
         },
-        highlighted: (props: { isRotation: boolean }) => ({
-            background: theme.colors.interactive.success__highlight.getVariable('color'),
+        highlighted: (props: { isRotation: boolean; hasOverlap: boolean }) => ({
+            background: props.hasOverlap
+                ? theme.colors.interactive.danger__highlight.getVariable('color')
+                : theme.colors.interactive.success__highlight.getVariable('color'),
         }),
         disabled: {
             background: `${theme.colors.interactive.disabled__fill.getVariable(
@@ -51,12 +54,17 @@ export const useStyles = makeStyles((theme) =>
                 cursor: 'default',
             },
         },
-        clickable: {
+        clickable: (props: { isRotation: boolean; hasOverlap: boolean }) => ({
             '&:hover': {
-                background: theme.colors.interactive.primary__selected_hover.getVariable('color'),
-                borderColor: theme.colors.interactive.primary__hover.getVariable('color'),
+                background: props.hasOverlap
+                    ? theme.colors.interactive.danger__highlight.getVariable('color')
+                    : theme.colors.interactive.success__highlight.getVariable('color'),
+                borderColor: props.hasOverlap
+                    ? theme.colors.interactive.danger__text.getVariable('color')
+                    : theme.colors.interactive.primary__hover.getVariable('color'),
                 cursor: 'pointer',
+                opacity: 0.7,
             },
-        },
+        }),
     })
 );

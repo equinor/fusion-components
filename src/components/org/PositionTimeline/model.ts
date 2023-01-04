@@ -63,7 +63,7 @@ export type TimelineSlotProps = {
     isDisabled: boolean;
 };
 
-export type SelectMode = 'single' | 'multi' | 'slider';
+export type SelectMode = 'single' | 'multi' | 'slider' | 'highlight';
 
 export type PositionMark = 'start' | 'end';
 
