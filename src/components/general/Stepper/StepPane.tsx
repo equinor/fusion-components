@@ -24,25 +24,8 @@ const StepPane: FC<StepPaneProps> = ({
 }) => {
     const styles = useStyles();
     const stepPaneRef = useRef<HTMLDivElement | null>(null);
-    const activeStepRef = useRef<HTMLElement | null>(null);
 
     const windowWidth = useWindowWidth();
-
-    const scrollToStep = (stepRef: HTMLElement | null) => {
-        if (!stepPaneRef.current || !stepRef) {
-            return;
-        }
-
-        const pane = stepPaneRef.current;
-
-        if (pane.scrollWidth === pane.offsetWidth) {
-            return;
-        }
-
-        pane.scrollTo(stepRef.offsetLeft - stepRef.offsetWidth, 0);
-    };
-
-    useEffect(() => scrollToStep(activeStepRef.current), [activeStepKey]);
 
     const clonedChildren = Children.map(children, (child, index) => {
         const { title, stepKey, disabled } = child.props;
@@ -64,10 +47,7 @@ const StepPane: FC<StepPaneProps> = ({
         const position = index + 1;
 
         return cloneElement(child, {
-            onChange: (ref: HTMLElement) => {
-                activeStepRef.current = ref;
-                onChange(stepKey);
-            },
+            onChange: () => onChange(stepKey),
             isCurrent: stepKey === activeStepKey,
             position,
             isClickable: !forceOrder,
@@ -76,6 +56,7 @@ const StepPane: FC<StepPaneProps> = ({
             isLastStep: index === children.length - 1,
             stepCount: children.length,
             verticalStep: verticalSteps,
+            stepPaneRef: stepPaneRef,
         });
     });
 

@@ -74,10 +74,12 @@ export const reducer = (initial: TimelineState) =>
             selectedDate: action.payload,
             selected: getSelectedSplits(state.splits, action.payload),
         }))
-        .handleAction(actions.setHighlighted, (state, action) => ({
-            ...state,
-            highlighted: action.payload,
-        }))
+        .handleAction(actions.setHighlighted, (state, action) => {
+            return {
+                ...state,
+                highlighted: action.payload,
+            };
+        })
         .handleAction(actions.setDisabled, (state, action) => ({
             ...state,
             disabled: action.payload,
