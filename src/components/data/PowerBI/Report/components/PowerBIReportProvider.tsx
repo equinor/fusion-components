@@ -13,7 +13,11 @@ import PowerBITelemetryObserver from '../telemetry/observer';
 import { createStore } from '../store';
 import { distinctUntilKeyChanged, filter, switchMap } from 'rxjs/operators';
 
-type Props = PropsWithChildren<{ id: string; hasContext: boolean }>;
+type Props = PropsWithChildren<{
+    id: string;
+    hasContext: boolean;
+    reloadOnContextChange?: boolean;
+}>;
 
 const { Provider } = context;
 
@@ -21,6 +25,7 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
     children,
     id,
     hasContext,
+    reloadOnContextChange,
 }: Props) => {
     const clients = useApiClients();
     const store = useMemo(() => createStore(id, clients), [id, clients]);
@@ -49,6 +54,12 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
             };
         }
     }, [currentContext?.externalId, currentContext?.type]);
+
+    useEffect(() => {
+        if (reloadOnContextChange && component.current) {
+            component.current.reload();
+        }
+    }, [selectedContext, component, reloadOnContextChange]);
 
     // configure store and teardown
     useEffect(() => {
