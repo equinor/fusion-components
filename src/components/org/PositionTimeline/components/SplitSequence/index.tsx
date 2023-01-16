@@ -23,14 +23,19 @@ export const SplitSequence: FC<SplitSequenceProps> = ({ rotationKey }) => {
     const styles = useStyles({ hasRotationGroups });
 
     const doesSplitOverlap = (split: TimelineSplit, splits: TimelineSplit[]): boolean => {
-        const interval = { start: new Date(split.appliesFrom), end: new Date(split.appliesTo) };
+        const intervalA = { start: new Date(split.appliesFrom), end: new Date(split.appliesTo) };
         const hasOverlap = splits
             .filter((s) => s.id !== split.id)
-            .some(
-                (s) =>
-                    isWithinInterval(s.appliesFrom, interval) ||
-                    isWithinInterval(s.appliesTo, interval)
-            );
+            .some((s) => {
+                const aOverlapsB =
+                    isWithinInterval(s.appliesFrom, intervalA) ||
+                    isWithinInterval(s.appliesTo, intervalA);
+                const intervalB = { start: new Date(s.appliesFrom), end: new Date(s.appliesTo) };
+                const bOverlapsA =
+                    isWithinInterval(split.appliesFrom, intervalB) ||
+                    isWithinInterval(split.appliesTo, intervalB);
+                return aOverlapsB || bOverlapsA;
+            });
         return hasOverlap;
     };
 
