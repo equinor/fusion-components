@@ -11,7 +11,7 @@ export const singlePositionToDropdownOption = (
 
 const createPositionTitle = (position: Position) => {
     if (!position.externalId) {
-        return position.name;
+        return position?.name || '';
     }
 
     return `${position.externalId} - ${position.name}`;
