@@ -54,7 +54,7 @@ const FusionHeader: FC<FusionHeaderProps> = ({
     showSettings,
 }) => {
     const {
-        refs: { headerContent, headerAppAside },
+        refs: { headerAppAside },
     } = useFusionContext();
     const currentApp = useCurrentApp();
 
@@ -91,10 +91,7 @@ const FusionHeader: FC<FusionHeaderProps> = ({
                     </>
                 )}
             </div>
-            <div
-                className={styles.contentContainer}
-                ref={headerContent as MutableRefObject<HTMLDivElement | null>}
-            >
+            <div className={styles.contentContainer}>
                 {content && createElement(content, { app: currentApp })}
             </div>
 
