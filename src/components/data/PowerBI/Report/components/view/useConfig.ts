@@ -12,7 +12,6 @@ export const useConfig = (options: IEmbedConfiguration = {}) => {
     const pbiContext = useContext(context);
     if (!pbiContext) return {};
     const { store } = pbiContext;
-
     const embedInfo = useSelector(store, 'embedInfo');
     const config = useMemo(() => embedInfo && createConfig(embedInfo), [embedInfo]);
     const accessToken = useSelector(store, 'token')?.token;

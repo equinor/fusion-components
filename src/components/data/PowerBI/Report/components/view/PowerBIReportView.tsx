@@ -67,6 +67,17 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
     }, [metrics, component, embedConfig?.accessToken]);
 
     const cssClassName = useStyles().iframeContainer;
+
+    useEffect(() => {
+        if (embedConfig && embedConfig?.accessToken) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            component.current.config.contrastMode = embedConfig.contrastMode;
+            component.current.configChanged(false);
+            component.current.reload();
+        }
+    }, [embedConfig]);
+
     // only render component when access token
     if (embedConfig) {
         return (
