@@ -26,7 +26,7 @@ const Grouping: FC<NavigationComponentProps> = ({
         isDisabled,
         href,
         info,
-				style
+        style,
     } = navigationItem;
     const styles = useStyles();
     const [shouldHaveTooltip, setShouldHaveTooltip] = useState(false);
@@ -50,7 +50,7 @@ const Grouping: FC<NavigationComponentProps> = ({
     );
 
     const change = useCallback(() => {
-        onChange && onChange(id, !isOpen, !isDisabled);
+        onChange && onChange(id, onClick ? !isOpen : true, onClick ? !isDisabled : false);
         !isDisabled && onClick && onClick();
     }, [onClick, id, isOpen, onChange, isDisabled]);
 
@@ -96,6 +96,7 @@ const Grouping: FC<NavigationComponentProps> = ({
                 groupingComponent={getNavigationContent}
                 isActive={isActive}
                 darkTheme={darkTheme}
+                groupShouldNotBeClickable={!onClick}
             />
         ),
         [icon, navigationStructure, getNavigationContent, navigationChildren, isActive]
@@ -114,7 +115,7 @@ const Grouping: FC<NavigationComponentProps> = ({
                 isCollapsed={isCollapsed}
                 isDisabled={isDisabled}
                 info={info}
-								style={style}
+                style={style}
             >
                 {navigationContent}
             </NavigationItem>
