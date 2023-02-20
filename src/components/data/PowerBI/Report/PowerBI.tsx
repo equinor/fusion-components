@@ -12,6 +12,7 @@ import PowerBIReportView, { PowerBIComponentConfig } from './components/view/Pow
 export type PowerBIProps = {
     reportId: string;
     hasContext?: boolean;
+    reloadOnContextChange?: boolean;
     contextRef?: MutableRefObject<PowerBIReportContext>;
     config?: PowerBIComponentConfig;
 };
@@ -19,10 +20,15 @@ export type PowerBIProps = {
 export const PowerBI: FunctionComponent<PowerBIProps> = ({
     reportId,
     hasContext = false,
+    reloadOnContextChange = false,
     config,
     contextRef,
 }: PowerBIProps) => (
-    <PowerBIReportProvider id={reportId} hasContext={hasContext}>
+    <PowerBIReportProvider
+        id={reportId}
+        hasContext={hasContext}
+        reloadOnContextChange={reloadOnContextChange}
+    >
         <PowerBIStatus />
         <PowerBIReportErrorBoundary>
             <PowerBIReportView config={config}></PowerBIReportView>

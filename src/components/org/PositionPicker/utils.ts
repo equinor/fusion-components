@@ -12,4 +12,4 @@ export const sortInstancesByTo = (instances: PositionInstance[]) =>
     [...instances].sort((a, b) => b.appliesTo.getTime() - a.appliesTo.getTime());
 
 export const hasNameMatchInQuery = (instance: PositionInstance | undefined, query: string) =>
-    instance?.assignedPerson?.name.toLowerCase().includes(query);
+    instance?.assignedPerson?.name?.toLowerCase().includes(query);
