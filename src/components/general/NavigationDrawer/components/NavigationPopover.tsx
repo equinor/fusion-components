@@ -20,7 +20,6 @@ type NavigationPopoverProps = {
     navigationChildren?: NavigationStructure[];
     groupingComponent?: () => JSX.Element;
     darkTheme?: boolean;
-    groupShouldNotBeClickable?: boolean;
 };
 
 const NavigationPopover = ({
@@ -30,7 +29,6 @@ const NavigationPopover = ({
     isActive,
     navigationChildren,
     darkTheme,
-    groupShouldNotBeClickable,
 }: NavigationPopoverProps) => {
     const styles = useStyles();
     const [isOpen, setIsOpen] = useState(false);
@@ -56,12 +54,7 @@ const NavigationPopover = ({
 
             <RelativeOverlayPortal relativeRef={iconRef} show={isOpen}>
                 <div className={popoverClassNames} onClick={close}>
-                    <NavigationItem
-                        type="grouping"
-                        isActive={isActive}
-                        isCollapsed={false}
-                        noHoverContainer={groupShouldNotBeClickable}
-                    >
+                    <NavigationItem type="grouping" isActive={isActive} isCollapsed={false}>
                         {groupingComponent && groupingComponent()}
                     </NavigationItem>
                     {navigationStructure}

@@ -11,8 +11,7 @@ type NavigationItemProps = {
     onClick?: () => void;
     isDisabled?: boolean;
     info?: UseAnchorProps;
-    style?: React.CSSProperties;
-    noHoverContainer?: boolean;
+		style?: React.CSSProperties;
 };
 
 const NavigationItem = ({
@@ -24,14 +23,10 @@ const NavigationItem = ({
     onClick,
     isDisabled,
     info,
-    style,
-    noHoverContainer,
+		style,
 }: NavigationItemProps) => {
     const styles = useStyles();
-
-    const noHover = noHoverContainer || (!onClick && isCollapsed && type === 'section');
     const containerClassNames = classNames(styles.container, {
-        [styles.noHoverContainer]: noHover,
         [styles.isActive]: isActive,
         [styles.isCollapsed]: isCollapsed,
         [styles.menuSection]: type === 'section',
@@ -42,13 +37,7 @@ const NavigationItem = ({
     const anchorRef = useAnchor<HTMLDivElement>(info);
 
     return (
-        <div
-            id={id}
-            style={style}
-            className={containerClassNames}
-            onClick={onClick}
-            ref={anchorRef}
-        >
+        <div id={id} style={style} className={containerClassNames} onClick={onClick} ref={anchorRef}>
             {children}
             <div className={styles.visualOnClickContainer} />
         </div>
