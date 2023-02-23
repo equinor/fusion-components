@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { FC } from 'react';
 import { useAnchor, UseAnchorProps } from '../../ApplicationGuidance';
 import { useStyles } from './Components.style';
 
@@ -11,10 +12,11 @@ type NavigationItemProps = {
     onClick?: () => void;
     isDisabled?: boolean;
     info?: UseAnchorProps;
-		style?: React.CSSProperties;
+    style?: React.CSSProperties;
+    noHoverContainer?: boolean;
 };
 
-const NavigationItem = ({
+const NavigationItem: FC<NavigationItemProps> = ({
     id,
     children,
     isActive,
@@ -23,10 +25,13 @@ const NavigationItem = ({
     onClick,
     isDisabled,
     info,
-		style,
+    style,
+    noHoverContainer,
 }: NavigationItemProps) => {
     const styles = useStyles();
+
     const containerClassNames = classNames(styles.container, {
+        [styles.noHoverContainer]: noHoverContainer,
         [styles.isActive]: isActive,
         [styles.isCollapsed]: isCollapsed,
         [styles.menuSection]: type === 'section',
@@ -37,7 +42,13 @@ const NavigationItem = ({
     const anchorRef = useAnchor<HTMLDivElement>(info);
 
     return (
-        <div id={id} style={style} className={containerClassNames} onClick={onClick} ref={anchorRef}>
+        <div
+            id={id}
+            style={style}
+            className={containerClassNames}
+            onClick={onClick}
+            ref={anchorRef}
+        >
             {children}
             <div className={styles.visualOnClickContainer} />
         </div>

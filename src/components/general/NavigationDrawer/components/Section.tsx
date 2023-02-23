@@ -42,9 +42,16 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
     );
 
     const change = useCallback(() => {
-        onChange && onChange(id, !isOpen, !isDisabled);
+        //If no onClick function is defined the section should toggle open on the whole container and not toggle active.
+        const shouldToggleOpen = onClick ? !isOpen : true;
+        const shouldToggleActive = onClick ? !isDisabled : false;
+
+        onChange && onChange(id, shouldToggleOpen, shouldToggleActive);
         !isDisabled && onClick && onClick();
     }, [onClick, id, isOpen, onChange, isDisabled]);
+
+    //Collapsed sections with no onClick defined should not be hoverable
+    const noHoverContainer = !onClick && isCollapsed;
 
     return (
         <>
@@ -55,6 +62,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
                 isDisabled={isDisabled}
                 info={info}
                 style={style}
+                noHoverContainer={noHoverContainer}
             >
                 <div className={styles.sectionContainer} ref={tooltipRef}>
                     <a
