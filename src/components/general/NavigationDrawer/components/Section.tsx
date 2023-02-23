@@ -42,7 +42,7 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
     );
 
     const change = useCallback(() => {
-        onChange && onChange(id, onClick ? !isOpen : true, onClick ? !isDisabled : false);
+        onChange && onChange(id, !isOpen, !isDisabled);
         !isDisabled && onClick && onClick();
     }, [onClick, id, isOpen, onChange, isDisabled]);
 
@@ -55,7 +55,6 @@ const Section: FC<NavigationComponentProps> = ({ navigationItem, onChange, isCol
                 isDisabled={isDisabled}
                 info={info}
                 style={style}
-                isCollapsed={isCollapsed}
             >
                 <div className={styles.sectionContainer} ref={tooltipRef}>
                     <a
