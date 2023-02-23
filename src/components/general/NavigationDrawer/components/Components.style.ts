@@ -117,6 +117,10 @@ export const useStyles = makeStyles(
                     )})`,
                 },
 
+                '&$noHoverContainer': {
+                    pointerEvents: 'none !important',
+                },
+
                 '&$isActive': {
                     color: `var(--sidebar-isActiveTextColor, ${theme.colors.infographic.primary__moss_green_100.getVariable(
                         'color'
@@ -244,6 +248,7 @@ export const useStyles = makeStyles(
                 width: 'calc(var(--grid-unit) * 40px + 1px)',
                 paddingBottom: 'calc(var(--grid-unit) * 5px)',
             },
+            noHoverContainer: {},
             linkContainer: {},
             toggleOpenContainer: {},
             asideContainer: {},
