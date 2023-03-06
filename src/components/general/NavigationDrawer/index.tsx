@@ -131,16 +131,17 @@ const NavigationDrawer: FC<NavigationDrawerProps> = ({
     );
 
     const stylesDark = useDarkmodeStyles();
-    const darkClass = clsx(darkTheme && stylesDark.sidebarDarkmode);
+    const containerWithDarkmode = clsx(
+        darkTheme && stylesDark.sidebarDarkmode,
+        containerClassNames
+    );
 
     return (
-        <div className={darkClass}>
-            <div className={containerClassNames}>
-                <div className={styles.collapseButtonContainer}>
-                    <CollapseExpandButton isCollapsed={isCollapsed} onClick={toggleCollapsed} />
-                </div>
-                {navigationStructure}
+        <div className={containerWithDarkmode}>
+            <div className={styles.collapseButtonContainer}>
+                <CollapseExpandButton isCollapsed={isCollapsed} onClick={toggleCollapsed} />
             </div>
+            {navigationStructure}
         </div>
     );
 };
