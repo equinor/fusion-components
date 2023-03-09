@@ -111,7 +111,7 @@ export const useStyles = makeStyles(
                 '&:hover': {
                     backgroundColor: `var(--sidebar-hoverBackgroundColor, ${theme.colors.interactive.primary__hover_alt.getVariable(
                         'color'
-                    )})`,
+                    )}) !important`,
                     color: `var(--sidebar-hoverTextColor, ${theme.colors.interactive.primary__hover.getVariable(
                         'color'
                     )})`,
