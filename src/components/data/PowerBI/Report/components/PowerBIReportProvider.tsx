@@ -54,11 +54,6 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
         }
     }, [currentContext?.externalId, currentContext?.type]);
 
-    // useEffect(() => {
-    //     const subscription = store.subscribe((x) => console.log('😍 state changed', x));
-    //     return () => subscription.unsubscribe();
-    // }, [store]);
-
     // configure store and teardown
     useEffect(() => {
         const subscription = new Subscription(() => {
