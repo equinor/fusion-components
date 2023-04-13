@@ -25,7 +25,6 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
     children,
     id,
     hasContext,
-    reloadOnContextChange,
 }: Props) => {
     const clients = useApiClients();
     const store = useMemo(() => createStore(id, clients), [id, clients]);
@@ -55,15 +54,12 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
         }
     }, [currentContext?.externalId, currentContext?.type]);
 
-    useEffect(() => {
-        if (reloadOnContextChange && component.current) {
-            component.current.reload();
-        }
-    }, [selectedContext, component, reloadOnContextChange]);
-
     // configure store and teardown
     useEffect(() => {
-        const subscription = new Subscription(() => store.unsubscribe());
+        const subscription = new Subscription(() => {
+            store.reset();
+        });
+
         store.requestEmbedInfo();
 
         subscription.add(
@@ -90,6 +86,10 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
         );
 
         return () => subscription.unsubscribe();
+    }, [store, selectedContext]);
+
+    useEffect(() => {
+        return () => store.unsubscribe();
     }, [store]);
 
     useEffect(() => {

@@ -20,15 +20,10 @@ export type PowerBIProps = {
 export const PowerBI: FunctionComponent<PowerBIProps> = ({
     reportId,
     hasContext = false,
-    reloadOnContextChange = false,
     config,
     contextRef,
 }: PowerBIProps) => (
-    <PowerBIReportProvider
-        id={reportId}
-        hasContext={hasContext}
-        reloadOnContextChange={reloadOnContextChange}
-    >
+    <PowerBIReportProvider id={reportId} hasContext={hasContext}>
         <PowerBIStatus />
         <PowerBIReportErrorBoundary>
             <PowerBIReportView config={config}></PowerBIReportView>
