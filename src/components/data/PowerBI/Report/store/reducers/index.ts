@@ -1,5 +1,5 @@
 import { createReducer } from 'typesafe-actions';
-import { Actions } from '../actions';
+import { Actions, actions } from '../actions';
 import { State } from '../state';
 
 import { checkAccessContextReducer } from './context-access';
@@ -11,6 +11,12 @@ export const reducer = (initial: State) =>
         ...checkAccessContextReducer(initial).handlers,
         ...fetchAccessTokenReducer(initial).handlers,
         ...fetchEmbedInfoReducer(initial).handlers,
+    }).handleAction(actions.reset, (state) => {
+        return {
+            id: state.id,
+            errors: [],
+            status: [],
+        };
     });
 
 export default reducer;
