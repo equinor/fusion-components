@@ -43,15 +43,15 @@ type FusionHeaderProps = {
     settings: ReactElement | null;
     quickFactScope?: string;
     showSettings?: boolean;
+    currentContextId?: string;
 };
 
 const FusionHeader: FC<FusionHeaderProps> = ({
     start,
     content,
     aside,
-    settings,
     quickFactScope,
-    showSettings,
+    currentContextId,
 }) => {
     const {
         refs: { headerContent, headerAppAside },
@@ -83,7 +83,7 @@ const FusionHeader: FC<FusionHeaderProps> = ({
                     <>
                         <span className={styles.appNameDivider} />
                         <NavLink
-                            to={combineUrls('/apps', currentApp.key)}
+                            to={combineUrls('/apps', currentApp.key, currentContextId || '')}
                             className={styles.appNameLink}
                         >
                             {currentApp.name}
