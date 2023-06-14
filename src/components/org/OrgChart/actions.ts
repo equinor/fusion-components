@@ -59,16 +59,13 @@ const useOrgChartActions = <TChart extends OrgStructure, TBreadCrumb>({
     }, [structure]);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if (component || breadCrumbComponent) {
-                dispatch({
-                    type: 'UPDATE_COMPONENTS',
-                    component: component || undefined,
-                    breadCrumbComponent: breadCrumbComponent || undefined,
-                });
-            }
-        }, 200);
-        return () => clearTimeout(timer);
+        if (component || breadCrumbComponent) {
+            dispatch({
+                type: 'UPDATE_COMPONENTS',
+                component: component || undefined,
+                breadCrumbComponent: breadCrumbComponent || undefined,
+            });
+        }
     }, [component, breadCrumbComponent]);
 
     useEffect(() => {
