@@ -41,7 +41,7 @@ function Card<TChart>({ node, x = 0, y = 0 }: CardProps<TChart>): JSX.Element {
 
     useEffect(() => {
         console.log('node', node);
-        console.log('additionalCardHeight', additionalCardHeight)
+        console.log('additionalCardHeight', additionalCardHeight);
     }, [node, additionalCardHeight]);
 
     if (node.x === null || node.y == null) {
