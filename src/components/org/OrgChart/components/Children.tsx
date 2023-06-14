@@ -68,20 +68,26 @@ function Children<TChart>(): JSX.Element {
         }
     }, [additionalRowHeight]);
 
-    const initialMargin =
-        (rowMargin - 20) * asideRows + (numberOfCardsPerRow === 1 ? 40 : 50) + startYPosition;
+    const initialMargin = useMemo(
+        () => (rowMargin - 20) * asideRows + (numberOfCardsPerRow === 1 ? 40 : 50) + startYPosition,
+        [rowMargin, asideRows, numberOfCardsPerRow, startYPosition]
+    );
 
-    const getStartXPosition = (cards: OrgNode<TChart>[], rowNo: number) => {
-        if (numberOfCardsPerRow === 1) {
-            if (width < cardWidth * 1.5 + 10) {
-                return width - cardWidth;
+    const getStartXPosition = useCallback(
+        (cards: OrgNode<TChart>[], rowNo: number) => {
+            if (numberOfCardsPerRow === 1) {
+                if (width < cardWidth * 1.5 + 10) {
+                    return width - cardWidth;
+                }
+                return cardWidth / 2 + 10;
             }
-            return cardWidth / 2 + 10;
-        }
-        const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
-        const totalWidthFirstRow = rows[0].length * cardWidth + (rows[0].length - 1) * cardMargin;
-        return rowNo >= 1 ? centerX - totalWidthFirstRow / 2 : centerX - totalWidth / 2;
-    };
+            const totalWidth = cards.length * cardWidth + (cards.length - 1) * cardMargin;
+            const totalWidthFirstRow =
+                rows[0].length * cardWidth + (rows[0].length - 1) * cardMargin;
+            return rowNo >= 1 ? centerX - totalWidthFirstRow / 2 : centerX - totalWidth / 2;
+        },
+        [numberOfCardsPerRow, width, cardWidth, cardMargin, centerX]
+    );
 
     const renderRow = useCallback(
         (cards: OrgNode<TChart>[], rowNo: number, additionalRowHeight: number) => {
@@ -100,7 +106,7 @@ function Children<TChart>(): JSX.Element {
                 </Fragment>
             ));
         },
-        [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows, width]
+        [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows, width, getStartXPosition]
     );
 
     return (
