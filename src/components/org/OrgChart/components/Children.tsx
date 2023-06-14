@@ -109,6 +109,11 @@ function Children<TChart>(): JSX.Element {
         [centerX, cardWidth, cardMargin, rowMargin, initialMargin, rows, width, getStartXPosition]
     );
 
+    useEffect(() => {
+        console.log('additionalRowHeight', additionalRowHeight);
+        console.log('rowMargin', rowMargin);
+    }, [additionalRowHeight, rowMargin]);
+
     return (
         <g className="children">
             {rows.map((cards, rowNo) => (
