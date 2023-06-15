@@ -89,7 +89,7 @@ const OrgChartContent = <TChart extends OrgStructure, TBreadCrumb>(
             <Aside />
             <BreadCrumbs />
             <Root />
-            {render ? <Children /> : null}
+            <Children />
             <Labels />
         </svg>
     );
