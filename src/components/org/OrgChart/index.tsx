@@ -1,4 +1,4 @@
-import { useRef, useMemo, useContext, useEffect } from 'react';
+import { useRef, useMemo, useContext, useEffect, useState } from 'react';
 import { useParentSize } from '@equinor/fusion-components';
 import { OrgChartContextProvider, OrgChartContextReducer, OrgChartContext } from './store';
 import { OrgStructure, OrgChartProps, OrgChartItemProps, OrgNode } from './orgChartTypes';
@@ -25,6 +25,7 @@ const OrgChartContent = <TChart extends OrgStructure, TBreadCrumb>(
 ) => {
     const orgContainerRef = useRef<SVGSVGElement | null>(null);
     const { height, width } = useParentSize(orgContainerRef);
+    const [render, setRender] = useState<boolean>(false);
 
     useOrgChartActions({ ...props, parentHeight: height, parentWidth: width });
 
@@ -48,6 +49,11 @@ const OrgChartContent = <TChart extends OrgStructure, TBreadCrumb>(
             dispatch({ type: 'UPDATE_BREADCRUMB_VIEW', breadCrumbView: props.bredCrumbView });
         }
     }, [numberOfCardsPerRow]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setRender(true), 200);
+        return () => clearTimeout(timer);
+    }, []);
 
     const svgHeight = useMemo(() => {
         const rootMargin = rowMargin;
