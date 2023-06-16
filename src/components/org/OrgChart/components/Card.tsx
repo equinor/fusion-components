@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useContext } from 'react';
+import { useMemo, useEffect, useContext, useCallback } from 'react';
 
 import { OrgChartContext, OrgChartContextReducer } from '../store';
 import { OrgNode } from '../orgChartTypes';
@@ -12,12 +12,11 @@ type CardProps<TChart> = {
 };
 
 function Card<TChart>({ node, x = 0, y = 0 }: CardProps<TChart>): JSX.Element {
-    const {
-        state: { cardWidth, cardHeight, component, numberOfCardsPerRow, rowMargin },
-        dispatch,
-    } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
+    const { state, dispatch } = useContext<OrgChartContextReducer<TChart>>(OrgChartContext);
 
-    useEffect(() => {
+    const { cardWidth, cardHeight, component, numberOfCardsPerRow, rowMargin } = state;
+
+    const updatePositions = useCallback(() => {
         if (node && (node.x !== x || node.y !== y)) {
             dispatch({
                 type: 'UPDATE_POSITION',
@@ -27,6 +26,11 @@ function Card<TChart>({ node, x = 0, y = 0 }: CardProps<TChart>): JSX.Element {
             });
         }
     }, [node, x, y]);
+
+    useEffect(() => {
+        const timer = setTimeout(updatePositions, 20);
+        return () => clearTimeout(timer);
+    }, [updatePositions]);
 
     const Component = component;
 
@@ -56,6 +60,7 @@ function Card<TChart>({ node, x = 0, y = 0 }: CardProps<TChart>): JSX.Element {
                 y={node.y}
                 width={cardWidth}
                 height={cardHeight + additionalCardHeight}
+                id={node.id}
             >
                 {Component && <Component item={node.data} />}
             </foreignObject>
