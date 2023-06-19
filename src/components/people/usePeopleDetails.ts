@@ -24,11 +24,14 @@ export const usePeopleDetails = (personId?: string, person?: PersonDetails) => {
         }
     }, []);
 
-    useEffectAsync(async (signal) => {
-        if (!signal.aborted && personId) {
-            fetchPersonData(personId);
-        }
-    }, [fetchPersonData, personId]);
+    useEffectAsync(
+        async (signal) => {
+            if (!signal.aborted && personId) {
+                fetchPersonData(personId);
+            }
+        },
+        [fetchPersonData, personId]
+    );
 
     return personId
         ? { personDetails, isFetching, error }

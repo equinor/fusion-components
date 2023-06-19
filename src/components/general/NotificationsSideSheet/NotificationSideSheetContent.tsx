@@ -31,10 +31,8 @@ const NotificationsSideSheetContent: FC<NotificationsSideSheetContentProps> = ({
         }
         return <div className={styles.chip}>{unReadNotifications.length.toString()}</div>;
     };
-    const {
-        isMarkingNotifications,
-        markNotificationsAsSeenAsync,
-    } = useGlobalNotificationCardsActions();
+    const { isMarkingNotifications, markNotificationsAsSeenAsync } =
+        useGlobalNotificationCardsActions();
 
     const markNotificationAsSeen = useCallback(
         async (notifications: NotificationCard[]) => {

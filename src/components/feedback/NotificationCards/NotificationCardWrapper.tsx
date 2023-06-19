@@ -24,9 +24,8 @@ const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({
     onShowInList,
 }) => {
     const [isVisible, setIsVisible] = useState<boolean | undefined>();
-    const { isMarkingNotification, markNotificationsAsSeenAsync } = useNotificationCardActions(
-        notification
-    );
+    const { isMarkingNotification, markNotificationsAsSeenAsync } =
+        useNotificationCardActions(notification);
 
     const markNotificationAsSeen = useCallback(async () => {
         await markNotificationsAsSeenAsync();
@@ -55,10 +54,10 @@ const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({
         return () => clearTimeout(discardNotificationTimeout);
     }, []);
 
-    const discardNotification = useCallback(() => onDiscard(notification), [
-        onDiscard,
-        notification,
-    ]);
+    const discardNotification = useCallback(
+        () => onDiscard(notification),
+        [onDiscard, notification]
+    );
 
     useEffect(() => {
         if (isVisible === false) {

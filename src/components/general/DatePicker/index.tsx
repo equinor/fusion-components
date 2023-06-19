@@ -81,10 +81,10 @@ const DatePicker: FC<DatePickerProps> = ({
             [isOpen, tryParseDate, overlayContainer, isValidMask]
         );
 
-        const handleClick = useCallback(() => !isOpen && !disabled && setIsOpen(true), [
-            isOpen,
-            disabled,
-        ]);
+        const handleClick = useCallback(
+            () => !isOpen && !disabled && setIsOpen(true),
+            [isOpen, disabled]
+        );
 
         const handleInputChange = useCallback(
             (value: string) => setInputValue(unmaskString(dateMask, value)),

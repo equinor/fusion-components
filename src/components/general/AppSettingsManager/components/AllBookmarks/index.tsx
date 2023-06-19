@@ -77,33 +77,32 @@ function AllBookmarks<T>({
                 >
                     <div className={styles.contextBookmarks}>
                         {contextBookmark.bookmarks &&
-                            sortByString(
-                                contextBookmark.bookmarks,
-                                (b) => b.bookmarkName
-                            ).map((bookMark) => (
-                                <BookmarkComponent
-                                    key={bookMark.bookmarkId}
-                                    bookmark={bookMark}
-                                    onDelete={() =>
-                                        updateBookmark(
-                                            bookMark,
-                                            'delete',
-                                            contextBookmark.contextId
-                                        )
-                                    }
-                                    onUpdate={(updatedBookmark) =>
-                                        updateBookmark(
-                                            updatedBookmark,
-                                            'update',
-                                            contextBookmark.contextId
-                                        )
-                                    }
-                                    onSelect={() =>
-                                        onBookmarkSelect(bookMark, contextBookmark.contextId)
-                                    }
-                                    accordionOpen={openAccordions[contextBookmark.contextId]}
-                                />
-                            ))}
+                            sortByString(contextBookmark.bookmarks, (b) => b.bookmarkName).map(
+                                (bookMark) => (
+                                    <BookmarkComponent
+                                        key={bookMark.bookmarkId}
+                                        bookmark={bookMark}
+                                        onDelete={() =>
+                                            updateBookmark(
+                                                bookMark,
+                                                'delete',
+                                                contextBookmark.contextId
+                                            )
+                                        }
+                                        onUpdate={(updatedBookmark) =>
+                                            updateBookmark(
+                                                updatedBookmark,
+                                                'update',
+                                                contextBookmark.contextId
+                                            )
+                                        }
+                                        onSelect={() =>
+                                            onBookmarkSelect(bookMark, contextBookmark.contextId)
+                                        }
+                                        accordionOpen={openAccordions[contextBookmark.contextId]}
+                                    />
+                                )
+                            )}
                     </div>
                 </AccordionItem>
             ))}

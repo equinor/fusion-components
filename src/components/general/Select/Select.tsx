@@ -102,7 +102,8 @@ export const Select = ({
         [isOpen, onSelect]
     );
 
-    const containerRef = dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
+    const containerRef =
+        dropdownController.controllerRef as MutableRefObject<HTMLDivElement | null>;
 
     return (
         <div ref={containerRef}>

@@ -15,6 +15,6 @@ export const useStyles = makeStyles((theme) =>
             overflow: 'hidden',
             height: '.5rem',
             top: '-5px',
-        }
+        },
     })
 );

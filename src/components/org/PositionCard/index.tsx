@@ -119,13 +119,13 @@ const PositionCard: React.FC<PositionCardProps> = ({
     const cardStyles = useCardStyles({ backgroundStyle, borderStyle, inline });
 
     const background = () => {
-        if (!!backgroundStyle) return cardStyles.customBackgroundStyle;
+        if (backgroundStyle) return cardStyles.customBackgroundStyle;
         if (isFuture) return cardStyles.futureBackground;
         if (isPast) return cardStyles.pastBackground;
     };
 
     const border = () => {
-        if (!!borderStyle) return cardStyles.customBorderStyle;
+        if (borderStyle) return cardStyles.customBorderStyle;
         if (isFuture) return cardStyles.futureBorder;
         if (isPast) return cardStyles.pastBorder;
     };

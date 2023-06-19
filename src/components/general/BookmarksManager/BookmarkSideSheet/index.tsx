@@ -22,7 +22,7 @@ export const BookmarkSideSheet = <T extends unknown>({
     capturePayload,
     hasContext,
     disableCreateButton,
-    openOnCreate = false
+    openOnCreate = false,
 }: BookmarkSideSheetProps<T>): JSX.Element => {
     const [title, setTitle] = useState<string>('Bookmarks Manager');
     const { store } = useBookmarkContext();

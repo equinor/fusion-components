@@ -25,9 +25,8 @@ const BookmarkSideSheet: FC<BookmarkSideSheetProps> = ({
     hasContext,
 }) => {
     const [selectedTabKey, setSelectedTabKey] = useState<TabKey>('add-new');
-    const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
-        hasContext
-    );
+    const { currentContextName, currentContextId, updateBookmark, allBookmarks } =
+        useBookmarks(hasContext);
     const contextManager = useContextManager();
 
     const captureAndSaveBookmarkAsync = useCallback(

@@ -30,7 +30,7 @@ const RotationInstances: FC<RotationInstancesProps> = ({ allInstances, position,
     return (
         <div className={styles.rotationInstances}>
             {instancesSortedByRotationId.map((instance) => (
-                <div className={styles.assignee}>
+                <div className={styles.assignee} key={instance.id}>
                     <PersonPhoto
                         person={!anonymize ? instance.assignedPerson || undefined : undefined}
                         customTooltip={anonymize ? 'Anonymous' : undefined}

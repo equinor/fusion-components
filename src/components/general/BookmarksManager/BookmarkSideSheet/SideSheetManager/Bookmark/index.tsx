@@ -111,8 +111,7 @@ export const Bookmark = ({
                 title: `Unshare bookmark: '${bookmark.name}`,
                 confirmLabel: 'Unshare',
                 cancelLabel: 'Cancel',
-                body:
-                    'By unsharing this bookmark, it will also be removed from the people you have shared it with.',
+                body: 'By unsharing this bookmark, it will also be removed from the people you have shared it with.',
             });
             if (!response.confirmed) return;
 

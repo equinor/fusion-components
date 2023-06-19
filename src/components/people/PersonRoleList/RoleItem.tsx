@@ -67,11 +67,10 @@ const RoleItem: FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) =>
 
     const errorClassNames = classNames(styles.small, { [styles.error]: errorMessage });
 
-    const showExpireDate = useMemo(() => role.activeToUtc && showSwitch && !errorMessage, [
-        role,
-        showSwitch,
-        errorMessage,
-    ]);
+    const showExpireDate = useMemo(
+        () => role.activeToUtc && showSwitch && !errorMessage,
+        [role, showSwitch, errorMessage]
+    );
 
     return (
         <div key={role.name} className={styles.roleManagementContainer}>

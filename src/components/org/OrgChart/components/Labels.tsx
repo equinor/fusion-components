@@ -44,7 +44,7 @@ const Labels = (): JSX.Element => {
             data: childrenLabel,
             id: childrenLabel,
             x: centerX - cardWidth - 25,
-            y: firstChildNode && firstChildNode.y !== null && firstChildNode.y - marginY,
+            y: firstChildNode && firstChildNode.y !== null ? firstChildNode.y - marginY : null,
         } as OrgNode<string>;
     }, [allNodes, centerX, childrenLabel]);
 
@@ -58,8 +58,8 @@ const Labels = (): JSX.Element => {
         return {
             data: asideLabel,
             id: asideLabel,
-            x: firstAsideNode && firstAsideNode.x !== null && firstAsideNode.x - 15,
-            y: firstAsideNode && firstAsideNode.y !== null && firstAsideNode.y - 8,
+            x: (firstAsideNode && firstAsideNode.x) !== null ? firstAsideNode.x - 15 : null,
+            y: (firstAsideNode && firstAsideNode.y) !== null ? firstAsideNode.y - 8 : null,
         } as OrgNode<string>;
     }, [allNodes, asideLabel]);
 

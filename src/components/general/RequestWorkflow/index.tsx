@@ -1,9 +1,5 @@
 import { useCallback, useMemo, FC } from 'react';
-import {
-    WorkflowProvisioningStatus,
-    Workflow,
-    WorkflowStep,
-} from './models';
+import { WorkflowProvisioningStatus, Workflow, WorkflowStep } from './models';
 import styles from './styles.less';
 import RequestWorkflowStep from './WorkflowStep';
 
@@ -13,11 +9,7 @@ type RequestWorkflowProps = {
     inline?: boolean;
 };
 
-const RequestWorkflow: FC<RequestWorkflowProps> = ({
-    workflow,
-    inline,
-    provisioningStatus,
-}) => {
+const RequestWorkflow: FC<RequestWorkflowProps> = ({ workflow, inline, provisioningStatus }) => {
     const findWorkflowIndex = useCallback(
         (step: WorkflowStep, index: number, depth?: number): number => {
             if (depth > 50) {

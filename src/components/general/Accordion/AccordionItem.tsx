@@ -5,7 +5,6 @@ import { SortIcon } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 import { clsx } from '@equinor/fusion-react-styles';
 
-
 type AccordionItemProps = {
     isOpen?: boolean;
     disabled?: boolean;

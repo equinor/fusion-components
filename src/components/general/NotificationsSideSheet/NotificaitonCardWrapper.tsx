@@ -11,7 +11,6 @@ import classNames from 'classnames';
 import { useCallback, useMemo, FC } from 'react';
 import { useStyles } from './NotificationSideSheet.style';
 
-
 type NotificationCardWrapperProps = {
     notification: NotificationCard;
 };
@@ -44,10 +43,10 @@ const NotificationCardWrapper: FC<NotificationCardWrapperProps> = ({ notificatio
         () =>
             !isSeen
                 ? [
-                    <Button key="btn-notification-seen" outlined onClick={markNotificationAsSeen}>
-                        {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
-                    </Button>,
-                ]
+                      <Button key="btn-notification-seen" outlined onClick={markNotificationAsSeen}>
+                          {isMarkingNotification ? <Spinner inline /> : 'Mark as read'}
+                      </Button>,
+                  ]
                 : [],
         [isSeen, markNotificationAsSeen, isMarkingNotification]
     );

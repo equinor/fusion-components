@@ -9,7 +9,11 @@ type DialogProps = {
 };
 
 export const Dialog: FC<DialogProps> = ({ children, id }) => {
-    return <div id={id} className={classNames(styles.container, useElevationClassName(6))}>{children}</div>;
+    return (
+        <div id={id} className={classNames(styles.container, useElevationClassName(6))}>
+            {children}
+        </div>
+    );
 };
 
 export const DialogTitle: FC<DialogProps> = ({ children }) => (
