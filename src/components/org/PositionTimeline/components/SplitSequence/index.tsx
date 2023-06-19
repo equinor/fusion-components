@@ -23,25 +23,31 @@ export const SplitSequence: FC<SplitSequenceProps> = ({ rotationKey }) => {
     const styles = useStyles({ hasRotationGroups });
 
     const doesSplitOverlap = (split: TimelineSplit, splits: TimelineSplit[]): boolean => {
-				try {
-        const intervalA = { start: new Date(split.appliesFrom), end: new Date(split.appliesTo) };
-        const hasOverlap = splits
-            .filter((s) => s.id !== split.id)
-            .some((s) => {
-                const aOverlapsB =
-                    isWithinInterval(s.appliesFrom, intervalA) ||
-                    isWithinInterval(s.appliesTo, intervalA);
-                const intervalB = { start: new Date(s.appliesFrom), end: new Date(s.appliesTo) };
-                const bOverlapsA =
-                    isWithinInterval(split.appliesFrom, intervalB) ||
-                    isWithinInterval(split.appliesTo, intervalB);
-                return aOverlapsB || bOverlapsA;
-            });
-        return hasOverlap;
-		} catch {
-				// invalid date interval (toDate before fromDate) == self overlap
-				return true;
-		}
+        try {
+            const intervalA = {
+                start: new Date(split.appliesFrom),
+                end: new Date(split.appliesTo),
+            };
+            const hasOverlap = splits
+                .filter((s) => s.id !== split.id)
+                .some((s) => {
+                    const aOverlapsB =
+                        isWithinInterval(s.appliesFrom, intervalA) ||
+                        isWithinInterval(s.appliesTo, intervalA);
+                    const intervalB = {
+                        start: new Date(s.appliesFrom),
+                        end: new Date(s.appliesTo),
+                    };
+                    const bOverlapsA =
+                        isWithinInterval(split.appliesFrom, intervalB) ||
+                        isWithinInterval(split.appliesTo, intervalB);
+                    return aOverlapsB || bOverlapsA;
+                });
+            return hasOverlap;
+        } catch {
+            // invalid date interval (toDate before fromDate) == self overlap
+            return true;
+        }
     };
 
     return (

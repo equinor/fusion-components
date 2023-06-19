@@ -16,9 +16,9 @@ export type QuickFactEventDetail = {
     view?: ViewMode;
 };
 
-export class QuickFactEvent<T extends QuickFactEventType> extends CustomEvent<
-    QuickFactEventDetail
-> {
+export class QuickFactEvent<
+    T extends QuickFactEventType
+> extends CustomEvent<QuickFactEventDetail> {
     constructor(type: T, init: CustomEventInit<QuickFactEventDetail>) {
         super(type, init);
     }

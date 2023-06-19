@@ -41,7 +41,7 @@ const PersonRoleList: FC<PersonRoleListProps> = ({ roleType, personRoles }) => {
                     />
                 ))
             )}
-            { }
+            {}
         </div>
     );
 };

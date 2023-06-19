@@ -1,14 +1,9 @@
 import { FC, useMemo } from 'react';
 import styles from './styles.less';
-import {
-    CheckCircleIcon,
-    styling,
-    ScheduleIcon,
-    usePopoverRef,
-} from '@equinor/fusion-components';
+import { CheckCircleIcon, styling, ScheduleIcon, usePopoverRef } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import WorkflowPopover from './WorkflowPopover';
-import {  WorkflowProvisioningStatus, WorkflowStep } from './models';
+import { WorkflowProvisioningStatus, WorkflowStep } from './models';
 import CompletedBy from './CompletedBy';
 
 type RequestWorkflowStepProps = {
@@ -38,7 +33,7 @@ const RequestWorkflowStep: FC<RequestWorkflowStepProps> = ({
             case 'Skipped':
                 return <CheckCircleIcon color={styling.colors.green} />;
             case 'Pending':
-                return !!step.started ? (
+                return step.started ? (
                     <ScheduleIcon color={styling.colors.orange} />
                 ) : (
                     <ScheduleIcon color={styling.colors.blackAlt3} />

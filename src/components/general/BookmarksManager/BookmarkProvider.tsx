@@ -28,7 +28,7 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
     children,
     onBookmarkApplied,
     onBookmarkDeleted,
-    onBookmarkEdited
+    onBookmarkEdited,
 }: Props) => {
     const [showModal, setShowModal] = useState<ModalState>('Close');
     const clients = useApiClients();
@@ -47,17 +47,19 @@ export const BookmarkProvider: FunctionComponent<Props> = ({
     useEffect(() => {
         const subscription = new Subscription();
 
-        onBookmarkDeleted && subscription.add(
-            store.action$.pipe(filter(isActionOf(actions.remove.success))).subscribe((_b) => {
-                onBookmarkDeleted();
-            })
-        );
+        onBookmarkDeleted &&
+            subscription.add(
+                store.action$.pipe(filter(isActionOf(actions.remove.success))).subscribe((_b) => {
+                    onBookmarkDeleted();
+                })
+            );
 
-        onBookmarkEdited && subscription.add(
-            store.action$.pipe(filter(isActionOf(actions.update.success))).subscribe((_b) => {
-                onBookmarkEdited();
-            })
-        );
+        onBookmarkEdited &&
+            subscription.add(
+                store.action$.pipe(filter(isActionOf(actions.update.success))).subscribe((_b) => {
+                    onBookmarkEdited();
+                })
+            );
 
         subscription.add(
             store.action$.pipe(filter(isActionOf(actions.fetch.success))).subscribe((b) => {

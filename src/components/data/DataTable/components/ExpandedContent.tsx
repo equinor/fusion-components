@@ -42,7 +42,11 @@ function DataTableExpandedContent<T>({
         );
     };
 
-    return <div id={id} className={styles.expandedContent}>{renderExpandedContent()}</div>;
+    return (
+        <div id={id} className={styles.expandedContent}>
+            {renderExpandedContent()}
+        </div>
+    );
 }
 
 export default DataTableExpandedContent;

@@ -13,7 +13,13 @@ type InlineSplitProps = {
     size: TimelineSize;
 };
 
-export const InlineSplit: FC<InlineSplitProps> = ({ split, linked, computePosition, selected, size }) => {
+export const InlineSplit: FC<InlineSplitProps> = ({
+    split,
+    linked,
+    computePosition,
+    selected,
+    size,
+}) => {
     const isSelected = linked.map((split) => split.id).includes(selected);
     const isRotation = !!split.rotationId;
     const isAssigned = !!split.assignedPerson;
@@ -23,7 +29,9 @@ export const InlineSplit: FC<InlineSplitProps> = ({ split, linked, computePositi
     const startPosition = computePosition(split.appliesFrom.getTime(), 'start');
     const endPosition = computePosition(split.appliesTo.getTime(), 'end');
 
-    const splitTooltipRef = useTooltipRef(linked.map((split) => <TooltipContent split={split} />));
+    const splitTooltipRef = useTooltipRef(
+        linked.map((split) => <TooltipContent split={split} key={split.id} />)
+    );
 
     return (
         <div className={styles.split}>

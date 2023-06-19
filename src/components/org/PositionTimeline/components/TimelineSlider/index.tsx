@@ -13,7 +13,14 @@ export const TimelineSlider: FC = (props: PropsWithChildren<{}>) => {
     const { children } = props;
     const styles = useStyles(theme);
     const {
-        state: { selectedDate, topSliderMarkers, bottomSliderMarkers, rotationGroups, mode, previewDates },
+        state: {
+            selectedDate,
+            topSliderMarkers,
+            bottomSliderMarkers,
+            rotationGroups,
+            mode,
+            previewDates,
+        },
         dispatch,
     } = useContext(timelineContext);
 

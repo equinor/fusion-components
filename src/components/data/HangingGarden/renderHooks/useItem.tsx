@@ -36,11 +36,8 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
 
     const { createTextNode } = useTextNode();
 
-    const {
-        enqueueRenderer,
-        processRenderQueue,
-        processRenderQueueAnimationFrame,
-    } = useRenderQueue();
+    const { enqueueRenderer, processRenderQueue, processRenderQueueAnimationFrame } =
+        useRenderQueue();
 
     const { renderItemDescription } = useItemDescription<T>();
 
@@ -112,9 +109,8 @@ const useItem = <T extends HangingGardenColumnIndex>() => {
                 renderItemContext(item, itemRenderContext);
 
                 window.cancelAnimationFrame(processRenderQueueAnimationFrame.current);
-                processRenderQueueAnimationFrame.current = window.requestAnimationFrame(
-                    processRenderQueue
-                );
+                processRenderQueueAnimationFrame.current =
+                    window.requestAnimationFrame(processRenderQueue);
 
                 addTextureToCache('items', item[itemKeyProp as keyof T], renderedItem);
             }

@@ -50,7 +50,9 @@ const useHeader = <T extends HangingGardenColumnIndex>() => {
 
             const renderedDescriptions = column.data.map(getRenderedItemDescription);
 
-            const maxWidth = Math.max(...renderedDescriptions.map((description) => description.width));
+            const maxWidth = Math.max(
+                ...renderedDescriptions.map((description) => description.width)
+            );
 
             setExpandedColumns((prevColumns) => ({
                 ...prevColumns,

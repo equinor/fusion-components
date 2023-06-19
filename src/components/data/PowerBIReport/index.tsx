@@ -141,7 +141,11 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
         if (!currentContext?.externalId || !embedInfo?.embedConfig.rlsConfiguration) return;
         setError(null);
         try {
-            await reportApiClient.checkContextAccess(reportId, currentContext.externalId, currentContext.type.id);
+            await reportApiClient.checkContextAccess(
+                reportId,
+                currentContext.externalId,
+                currentContext.type.id
+            );
         } catch (error) {
             const { statusCode, response } = error;
             setError({
@@ -198,10 +202,17 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
         switch (Number(code)) {
             case 403: {
                 if (report && error.message === 'NotAuthorizedReport')
-                    return <ReportErrorMessage report={report} contextErrorType={'NotAuthorizedReport'} />;
+                    return (
+                        <ReportErrorMessage
+                            report={report}
+                            contextErrorType={'NotAuthorizedReport'}
+                        />
+                    );
 
                 if (report && (inner as FusionApiErrorMessage)?.code === 'NotAuthorized')
-                    return <ReportErrorMessage report={report} contextErrorType={'NotAuthorized'} />;
+                    return (
+                        <ReportErrorMessage report={report} contextErrorType={'NotAuthorized'} />
+                    );
 
                 if (report && (inner as FusionApiErrorMessage)?.code === 'MissingContextRelation')
                     return (
@@ -238,7 +249,9 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
                         hasError={true}
                         errorType={'throttle'}
                         resourceName={'PowerBI'}
-                        message={'We recorded too many requests from your client, please try again in one minute'}
+                        message={
+                            'We recorded too many requests from your client, please try again in one minute'
+                        }
                     />
                 );
 
@@ -280,4 +293,11 @@ const PowerBIReport: FC<PowerBIProps> = ({ reportId, filters, hasContext }) => {
 };
 
 export default PowerBIReport;
-export { ReportLevelFilters, IBasicFilter, IBasicFilterWithKeys, IAdvancedFilter, IRelativeDateFuilter, ITupleFilter };
+export {
+    ReportLevelFilters,
+    IBasicFilter,
+    IBasicFilterWithKeys,
+    IAdvancedFilter,
+    IRelativeDateFuilter,
+    ITupleFilter,
+};

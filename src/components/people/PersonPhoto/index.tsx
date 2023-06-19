@@ -81,11 +81,11 @@ export default ({
                 return (
                     <Fragment key={index}>
                         <span>
-                            {!!customTooltip
+                            {customTooltip
                                 ? customTooltip
                                 : person
-                                    ? person.name
-                                    : 'TBN: To Be Nominated'}
+                                ? person.name
+                                : 'TBN: To Be Nominated'}
                         </span>
                         <br />
                     </Fragment>

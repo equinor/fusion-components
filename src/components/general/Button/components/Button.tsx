@@ -15,7 +15,10 @@ type ButtonProps = {
 };
 
 const ButtonComponent = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
-    ({ children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, id, ...props }, ref) => (
+    (
+        { children, disabled, onMouseDown, onMouseUp, onClick, onClickCapture, id, ...props },
+        ref
+    ) => (
         <button
             type="button"
             className={getButtonClasses(props)}

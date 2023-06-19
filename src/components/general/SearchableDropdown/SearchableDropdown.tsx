@@ -34,7 +34,7 @@ export type SearchableDropdownSection = {
 };
 
 type SearchableDropdownProps = {
-    id?: string,
+    id?: string;
     label?: string;
     placeholder?: string;
     options?: SearchableDropdownOption[];
@@ -294,7 +294,7 @@ export const SearchableDropdown = ({
                     ) : (
                         <div className={styles.noResultsContainer}>
                             {inputValue ? (
-                                !!noResultComponent ? (
+                                noResultComponent ? (
                                     <div
                                         className={styles.customSlot}
                                         onClick={() => setIsOpen(true)}

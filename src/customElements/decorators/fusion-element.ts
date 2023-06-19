@@ -38,14 +38,13 @@ const standardCustomElement = (tagName: string, descriptor: ClassDescriptor) => 
     };
 };
 
-export const fusionElement = (tagName: string) => (
-    classOrDescriptor: Constructor<HTMLElement> | ClassDescriptor
-) => {
-    if (!window.customElements.get(tagName)) {
-        return typeof classOrDescriptor === 'function'
-            ? legacyCustomElement(tagName, classOrDescriptor)
-            : standardCustomElement(tagName, classOrDescriptor);
-    } else {
-        console.debug(`${tagName} has been defined twice`);
-    }
-};
+export const fusionElement =
+    (tagName: string) => (classOrDescriptor: Constructor<HTMLElement> | ClassDescriptor) => {
+        if (!window.customElements.get(tagName)) {
+            return typeof classOrDescriptor === 'function'
+                ? legacyCustomElement(tagName, classOrDescriptor)
+                : standardCustomElement(tagName, classOrDescriptor);
+        } else {
+            console.debug(`${tagName} has been defined twice`);
+        }
+    };

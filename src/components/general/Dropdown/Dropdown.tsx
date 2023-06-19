@@ -63,7 +63,7 @@ const useLoop = (handler: AsyncOperation<void>, dependencies: any[] = []) => {
         try {
             await enqueueAsyncOperation(handler, abortSignal);
             loopAsync(abortSignal);
-        } catch (e) { }
+        } catch (e) {}
     };
     useEffect(() => {
         const abortController = new AbortController();

@@ -18,7 +18,7 @@ export const InlineMarkers: FC<InlineMarkersProps> = ({
     rotationColumns,
     computePosition,
     selectedDate,
-    size
+    size,
 }) => {
     const sortedColumns = useMemo(() => {
         return Object.values(rotationColumns).sort(sortRotationColumns);

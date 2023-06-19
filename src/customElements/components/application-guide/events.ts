@@ -26,15 +26,9 @@ export class ApplicationGuideEvent<
 
 declare global {
     interface ElementEventMap {
-        [ApplicationGuideEventType.activated]: ApplicationGuideEvent<
-            ApplicationGuideEventType.activated
-        >;
-        [ApplicationGuideEventType.deactivated]: ApplicationGuideEvent<
-            ApplicationGuideEventType.deactivated
-        >;
+        [ApplicationGuideEventType.activated]: ApplicationGuideEvent<ApplicationGuideEventType.activated>;
+        [ApplicationGuideEventType.deactivated]: ApplicationGuideEvent<ApplicationGuideEventType.deactivated>;
         [ApplicationGuideEventType.show]: ApplicationGuideEvent<ApplicationGuideEventType.show>;
-        [ApplicationGuideEventType.selection]: ApplicationGuideEvent<
-            ApplicationGuideEventType.selection
-        >;
+        [ApplicationGuideEventType.selection]: ApplicationGuideEvent<ApplicationGuideEventType.selection>;
     }
 }

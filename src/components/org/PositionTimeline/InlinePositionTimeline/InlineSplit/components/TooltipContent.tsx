@@ -12,7 +12,7 @@ export const TooltipContent: FC<TooltipContentProps> = ({ split }) => {
             <span>
                 {split?.assignedPerson?.name || 'TBN'}
                 <br /> {formatDate(split.appliesFrom)} - {formatDate(split.appliesTo)} (
-                {split.workload || 0}%) <br/> {split?.location?.name || 'No location'}
+                {split.workload || 0}%) <br /> {split?.location?.name || 'No location'}
             </span>
             <br />
         </>

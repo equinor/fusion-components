@@ -24,9 +24,8 @@ function AppSettingsSideSheet<T>({
     anchorId,
 }: AppSettingsSideSheetProps<T>) {
     const [selectedTabKey, setSelectedTabKey] = useState<TabKey>('add-new');
-    const { currentContextName, currentContextId, updateBookmark, allBookmarks } = useBookmarks(
-        hasContext
-    );
+    const { currentContextName, currentContextId, updateBookmark, allBookmarks } =
+        useBookmarks(hasContext);
     const styles = useStyles();
     const contextManager = useContextManager();
 
@@ -45,7 +44,7 @@ function AppSettingsSideSheet<T>({
                     },
                     'add'
                 );
-            } catch (e) { }
+            } catch (e) {}
         },
         [updateBookmark, captureAppSetting]
     );
