@@ -45,7 +45,7 @@
         "@equinor/fusion": "^3.3.17",
         "@storybook/addon-actions": "^6.1.17",
         "@storybook/addon-docs": "^6.1.21",
-        "@storybook/addon-essentials": "^6.1.21",
+        "@storybook/addon-essentials": "^7.0.22",
         "@storybook/addon-knobs": "^6.1.17",
         "@storybook/addon-options": "^5.3.21",
         "@storybook/addon-storyshots": "^6.1.21",
