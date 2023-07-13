@@ -1,8 +1,4 @@
-import {
-    useComponentDisplayClassNames,
-    combineUrls,
-    useFusionContext,
-} from '@equinor/fusion';
+import { useComponentDisplayClassNames, combineUrls, useFusionContext } from '@equinor/fusion';
 
 import { useFramework } from '@equinor/fusion-framework-react';
 import { useObservableState } from '@equinor/fusion-observable/react';
@@ -16,7 +12,15 @@ import classNames from 'classnames';
 import ComponentDisplayToggleButton from './components/ComponentDisplayToggleButton';
 import CurrentUserButton from './components/CurrentUserButton';
 import { useHorizontalBreakpoint } from '@equinor/fusion-components';
-import { createElement, FC, ReactElement, MutableRefObject, useMemo, useState, useEffect } from 'react';
+import {
+    createElement,
+    FC,
+    ReactElement,
+    MutableRefObject,
+    useMemo,
+    useState,
+    useEffect,
+} from 'react';
 import FullscreenToggleButton from './components/FullscreenToggleButton';
 
 enum Breakpoints {
@@ -61,9 +65,11 @@ const FusionHeader: FC<FusionHeaderProps> = ({
     } = useFusionContext();
 
     const framework = useFramework<[AppModule]>();
-    const { value: currentApp} = useObservableState(useMemo(() => framework.modules.app.current$, [framework]));
+    const { value: currentApp } = useObservableState(
+        useMemo(() => framework.modules.app.current$, [framework])
+    );
     const [manifest, setManifest] = useState<AppManifest | null>(null);
-    
+
     useEffect(() => {
         if (currentApp) {
             currentApp.getManifestAsync().then((manifest) => setManifest(manifest));
