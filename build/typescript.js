@@ -4,7 +4,6 @@ module.exports = (rootDir) => ({
             {
                 test: /\.tsx?$/,
                 use: [
-                    'cache-loader',
                     'thread-loader',
                     {
                         loader: 'ts-loader',
