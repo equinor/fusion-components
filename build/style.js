@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = {
     module: {
         rules: [
@@ -27,7 +25,7 @@ module.exports = {
                             // lessOptions: {
                             //     paths: [path.resolve(__dirname, "../src")],
                             // },
-                        }
+                        },
                     },
                 ],
             },

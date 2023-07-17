@@ -2,7 +2,7 @@ const path = require('path');
 const { merge } = require('webpack-merge');
 const styles = require('../build/style');
 const fonts = require('../build/fonts');
-const eslint = require('../build/eslint');
+// const eslint = require('../build/eslint');
 const resolve = require('../build/resolve');
 const typescript = require('../build/typescript');
 const webpack = require('webpack');
@@ -19,10 +19,10 @@ module.exports = {
         check: true,
         reactDocgen: 'react-docgen-typescript',
     },
-    babel: (options) => {
-        options.plugins.push(["@babel/plugin-proposal-private-property-in-object", { "loose": true }]);
-        return options
-    },
+    // babel: (options) => {
+    //     options.plugins.push(["@babel/plugin-proposal-private-property-in-object", { "loose": true }]);
+    //     return options
+    // },
 
     webpackFinal: async (config) =>
         merge(
@@ -30,7 +30,7 @@ module.exports = {
             styles,
             resolve,
             fonts,
-            eslint,
+            // eslint,
             typescript('../'),
             {
                 resolve: {

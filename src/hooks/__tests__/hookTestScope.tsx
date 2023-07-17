@@ -19,7 +19,7 @@ afterEach(() => {
     }
 });
 
-export const hookTestScope = (useHook: (props: any) => void, props: Object = {}) => {
+export const hookTestScope = (useHook: (props: any) => void, props: Object = {}): ReactWrapper => {
     mounted = mount(<HookScopeComponent {...props} useHook={useHook} />);
     return mounted;
 };
