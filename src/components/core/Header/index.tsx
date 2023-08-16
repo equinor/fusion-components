@@ -1,9 +1,4 @@
-import { useComponentDisplayClassNames, combineUrls, useFusionContext } from '@equinor/fusion';
-
-import { useFramework } from '@equinor/fusion-framework-react';
-import { useObservableState } from '@equinor/fusion-observable/react';
-import type { AppModule, AppManifest } from '@equinor/fusion-framework-module-app';
-
+import { useComponentDisplayClassNames, combineUrls, useFusionContext, type AppManifest } from '@equinor/fusion';
 import { NavLink } from 'react-router-dom';
 import FusionLogo from '../FusionLogo';
 
@@ -16,10 +11,7 @@ import {
     createElement,
     FC,
     ReactElement,
-    MutableRefObject,
-    useMemo,
-    useState,
-    useEffect,
+    MutableRefObject
 } from 'react';
 import FullscreenToggleButton from './components/FullscreenToggleButton';
 
@@ -43,6 +35,11 @@ export type HeaderContentProps = {
     app: AppManifest | null;
 };
 
+type frameworkManifest = {
+    key: string;
+    name: string;
+}
+
 type FusionHeaderProps = {
     start: ReactElement | null;
     content: FC<HeaderContentProps> | null;
@@ -50,6 +47,7 @@ type FusionHeaderProps = {
     settings: ReactElement | null;
     quickFactScope?: string;
     showSettings?: boolean;
+    currentApp?: frameworkManifest;
     currentContextId?: string;
 };
 
@@ -58,26 +56,12 @@ const FusionHeader: FC<FusionHeaderProps> = ({
     content,
     aside,
     quickFactScope,
+    currentApp,
     currentContextId,
 }) => {
     const {
         refs: { headerContent, headerAppAside },
     } = useFusionContext();
-
-    const framework = useFramework<[AppModule]>();
-    const { value: currentApp } = useObservableState(
-        useMemo(() => framework.modules.app.current$, [framework])
-    );
-    const [manifest, setManifest] = useState<AppManifest | null>(null);
-
-    useEffect(() => {
-        if (currentApp) {
-            currentApp.getManifestAsync().then((manifest) => setManifest(manifest));
-            return;
-        }
-        // clear Manifest
-        setManifest(null);
-    }, [currentApp]);
 
     const headerClassNames = classNames(styles.container, useComponentDisplayClassNames(styles));
     const [breakpointRef, breakpointKey] = useHorizontalBreakpoint(breakpoints);
@@ -100,14 +84,14 @@ const FusionHeader: FC<FusionHeaderProps> = ({
                     </span>
                     <span className={styles.fusionTitle}>fusion</span>
                 </NavLink>
-                {manifest && (
+                {currentApp && (
                     <>
                         <span className={styles.appNameDivider} />
                         <NavLink
-                            to={combineUrls('/apps', manifest.key, currentContextId || '')}
+                            to={combineUrls('/apps', currentApp.key, currentContextId || '')}
                             className={styles.appNameLink}
                         >
-                            {manifest.name}
+                            {currentApp.name}
                         </NavLink>
                     </>
                 )}
@@ -116,7 +100,7 @@ const FusionHeader: FC<FusionHeaderProps> = ({
                 className={styles.contentContainer}
                 ref={headerContent as MutableRefObject<HTMLDivElement | null>}
             >
-                {manifest && content && createElement(content, { app: manifest })}
+                {currentApp && content && createElement(content)}
             </div>
 
             <aside className={styles.asideContainer}>
