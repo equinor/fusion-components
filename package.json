@@ -131,8 +131,6 @@
         "/dist"
     ],
     "dependencies": {
-        "@equinor/fusion-framework-module-app": "^5.2.1",
-        "@equinor/fusion-framework-react": "^5.2.2",
         "@equinor/fusion-observable": "^8.0.2",
         "@equinor/fusion-react-checkbox": "^0.5.15",
         "@equinor/fusion-react-divider": "^0.2.12",
