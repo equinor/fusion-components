@@ -5,8 +5,7 @@ import useBookmarkContext from '../../../hooks/useBookmarkContext';
 import { BookmarkView } from '../../../types';
 import Options from './Options';
 import styles from './styles.less';
-// TODO: replace with FusionIcon
-import '@equinor/fusion-wc-icon';
+import { Icon } from '@equinor/fusion-react-icon';
 
 type BookmarkProps = {
     bookmark: BookmarkListResponse;
@@ -173,7 +172,7 @@ export const Bookmark = ({
                 <div className={styles.sharedBookmark}>
                     {bookmark.isShared && (
                         <div className={styles.icon} ref={bookmarkRef}>
-                            <fwc-icon icon="share" />
+                            <Icon icon="share" />
                         </div>
                     )}
                 </div>

@@ -1,7 +1,7 @@
 import styles from '../styles.less';
 import { EditIcon, DeleteIcon } from '@equinor/fusion-components';
-// TODO: replace with FusionIcon
-import '@equinor/fusion-wc-icon';
+import { Icon } from '@equinor/fusion-react-icon';
+
 type OwnerOptionsProps = {
     onEditClick: () => void;
     onDeleteClick: () => void;
@@ -30,7 +30,7 @@ export const OwnerOptions = ({
             </div>
             <div className={styles.menuItem} key="share" onClick={() => handleSharingClick(true)}>
                 <div className={styles.icon}>
-                    <fwc-icon icon="share" />
+                    <Icon icon="share" />
                 </div>
                 <span className={styles.label}>{isShared ? 'Copy URL' : 'Share URL'}</span>
             </div>
@@ -41,7 +41,7 @@ export const OwnerOptions = ({
                     onClick={() => handleSharingClick(false)}
                 >
                     <div className={styles.icon}>
-                        <fwc-icon icon="share" />
+                        <Icon icon="share" />
                     </div>
                     <span className={styles.label}>Unshare URL</span>
                 </div>
