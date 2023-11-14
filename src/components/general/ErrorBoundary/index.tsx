@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import { ErrorMessage, ErrorMessageProps } from '../ErrorMessage';
 
-export default class ErrorBoundary extends Component<ErrorMessageProps> {
+export default class ErrorBoundary extends Component<
+    ErrorMessageProps & { onError?: (err: unknown, info: any) => void }
+> {
     static defaultProps = {
         errorType: 'error',
     };
@@ -20,6 +22,7 @@ export default class ErrorBoundary extends Component<ErrorMessageProps> {
             errorInfo,
             errorMessage: error.message || '',
         });
+        this.props.onError?.(error, errorInfo);
     }
 
     getErrorMessage() {
