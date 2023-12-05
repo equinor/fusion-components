@@ -8,6 +8,7 @@ import {
     styling,
     useTooltipRef,
     SyncIcon,
+    ErrorIcon,
 } from '@equinor/fusion-components';
 
 import styles from '../styles.less';
@@ -25,6 +26,7 @@ type PositionPhotoIconProps = {
     anonymize?: boolean;
     inline?: boolean;
     highlightTaskOwner?: boolean;
+		showPmt?: boolean;
 };
 
 const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
@@ -37,13 +39,22 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     anonymize,
     inline,
     highlightTaskOwner,
+		showPmt,
 }) => {
+
+    const isRotating = rotationInstances.length > 0;
+    const isTaskOwner = position.isTaskOwner;
+    const isPmt = position.isProjectManagementTeam && showPmt;
+
+		//show pmt as warning if allowExternalProjectManagementTeam is not enabled but non employee is assigned regardless
+		const pmtExternalWarning = isPmt && !(position.properties as Record<string, unknown>).allowExternalProjectManagementTeam && currentInstance.assignedPerson && currentInstance.assignedPerson?.accountType !== 'Employee'
+
     const containerRef = useRef<HTMLDivElement>(null);
     const linkedRef = useTooltipRef('Linked', 'below');
     const rotatingRef = useTooltipRef('Rotating', 'below');
 
-    const isRotating = rotationInstances.length > 0;
-    const isTaskOwner = position.isTaskOwner;
+		const pmtTooltip = pmtExternalWarning ? <p> PMT role is not enabled for external personnel on this position.<br /> You can turn on this setting while editing the position. </p>: <p>Personell allocated to this position has PMT (Project Management Team) role,<br/> giving them access to restricted information.</p>;
+    const pmtRef = useTooltipRef(pmtTooltip, 'below');
 
     const additionalPersons = rotationInstances.reduce(
         (previousPersons: PersonDetails[], instance) => {
@@ -62,7 +73,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     });
 
     const displayIcons = useMemo(
-        () => isTaskOwner || isLinked || isRotating,
+        () => isTaskOwner || isLinked || isRotating || isPmt,
         [isRotating, isTaskOwner, isLinked]
     );
 
@@ -97,6 +108,11 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                     {isRotating && (
                         <span ref={rotatingRef}>
                             <SyncIcon color={styling.colors.blackAlt2} height={16} width={16} />
+                        </span>
+                    )}
+                    {isPmt && (
+                        <span ref={pmtRef}>
+														{pmtExternalWarning ? (<div className={styles.pmtWarning}><s className={styles.pmtText}>PMT</s><ErrorIcon outline /> </div>) :  (<p className={styles.pmtText}>PMT</p>)}
                         </span>
                     )}
                 </div>
