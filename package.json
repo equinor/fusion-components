@@ -131,6 +131,7 @@
         "/dist"
     ],
     "dependencies": {
+        "@equinor/fusion-components": "file:.yalc/@equinor/fusion-components",
         "@equinor/fusion-observable": "^8.0.2",
         "@equinor/fusion-react-checkbox": "^0.5.15",
         "@equinor/fusion-react-divider": "^0.2.12",
