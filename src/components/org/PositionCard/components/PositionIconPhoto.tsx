@@ -46,7 +46,7 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     const isPmt = position.isProjectManagementTeam && showPmt;
 
     //show pmt as warning if allowExternalProjectManagementTeam is not enabled but non employee is assigned regardless
-    const pmtExternalWarning =
+    const pmtExternalIndication =
         isPmt &&
         !(position.properties as Record<string, unknown>).allowExternalProjectManagementTeam &&
         currentInstance.assignedPerson &&
@@ -56,11 +56,10 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
     const linkedRef = useTooltipRef('Linked', 'below');
     const rotatingRef = useTooltipRef('Rotating', 'below');
 
-    const pmtTooltip = pmtExternalWarning ? (
+    const pmtTooltip = pmtExternalIndication ? (
         <p>
-            {' '}
             PMT role is not enabled for external personnel on this position.
-            <br /> You can turn on this setting while editing the position.{' '}
+            <br /> You can turn on this setting while editing the position.
         </p>
     ) : (
         <p>
@@ -126,14 +125,9 @@ const PositionPhotoIcon: FC<PositionPhotoIconProps> = ({
                     )}
                     {isPmt && (
                         <span ref={pmtRef}>
-                            {pmtExternalWarning ? (
-                                <div className={styles.pmtWarning}>
-                                    <s className={styles.pmtText}>PMT</s>
-                                    <ErrorIcon outline />{' '}
-                                </div>
-                            ) : (
-                                <p className={styles.pmtText}>PMT</p>
-                            )}
+                            <p className={styles.pmtText}>
+                                {pmtExternalIndication ? '(PMT)' : 'PMT'}
+                            </p>
                         </span>
                     )}
                 </div>
