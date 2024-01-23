@@ -32,7 +32,7 @@ export const Bookmark = ({
         const base = `${window.location.origin}/apps/${bookmark.appKey}`;
 
         if (bookmark.context) return `${base}/${bookmark.context.id}?bookmarkId=${bookmark.id}`;
-        else return `${base}?bookmarkId=${bookmark.id}`;
+        else return `${base}/?bookmarkId=${bookmark.id}`;
     };
 
     const handleDelete = async () => {
