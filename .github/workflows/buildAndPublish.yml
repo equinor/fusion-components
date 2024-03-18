@@ -35,7 +35,7 @@ jobs:
         CI: true
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
     # @TODO use action for tag
-    - name: npm publish release
+    - name: npm publish pre-release
       if: "github.event.release.prerelease"
       run: | 
         npm publish --tag next --access public
