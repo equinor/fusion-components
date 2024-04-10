@@ -11,7 +11,7 @@ import BookmarkProvider from './BookmarkProvider';
 import BookmarkSideSheet from './BookmarkSideSheet';
 import { BookmarkPayloadResponse } from '@equinor/fusion';
 
-type BookmarkPayload<TPayload> = Omit<BookmarkPayloadResponse, 'payload'> & {
+export type BookmarkPayload<TPayload> = Omit<BookmarkPayloadResponse, 'payload'> & {
     payload: TPayload;
 };
 

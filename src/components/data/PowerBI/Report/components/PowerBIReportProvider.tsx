@@ -14,9 +14,9 @@ import { createStore } from '../store';
 import { distinctUntilKeyChanged, filter, switchMap } from 'rxjs/operators';
 
 type Props = PropsWithChildren<{
-    id: string;
-    hasContext: boolean;
-    reloadOnContextChange?: boolean;
+    readonly id: string;
+    readonly hasContext: boolean;
+    readonly reloadOnContextChange?: boolean;
 }>;
 
 const { Provider } = context;
@@ -38,10 +38,10 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
     const component = useRef<PowerBIEmbedComponent | undefined>(undefined);
     const logger = useTelemetryLogger();
     const metrics = useMemo(() => new PowerBITelemetryObserver(store, logger), [store, logger]);
-    const event$ = useMemo(() => new Subject<PowerBIEmbedEventEntry>(), [store]);
+    const event$ = useMemo(() => new Subject<PowerBIEmbedEventEntry>(), []);
     const value = useMemo<PowerBIReportContext>(
         () => ({ store, event$, metrics, component }),
-        [store, event$, metrics, component]
+        [store, event$, metrics, component],
     );
 
     const currentContext = useCurrentContext();
@@ -67,26 +67,26 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
                 .pipe(
                     distinctUntilKeyChanged('embedInfo'),
                     switchMap((x) =>
-                        x?.embedInfo ? of(Boolean(x.embedInfo?.rlsConfiguration)) : of(null)
-                    )
+                        x?.embedInfo ? of(Boolean(x.embedInfo?.rlsConfiguration)) : of(null),
+                    ),
                 )
                 .subscribe((rls) => {
                     setHasRls(rls);
                     setSilentAccessCheck(false);
-                })
+                }),
         );
 
         subscription.add(
             store.state$
                 .pipe(
                     distinctUntilKeyChanged('hasContextAccess'),
-                    filter((x) => Boolean(x.hasContextAccess && !x.token))
+                    filter((x) => Boolean(x.hasContextAccess && !x.token)),
                 )
-                .subscribe(() => store.requestAccessToken(silentAccessCheck))
+                .subscribe(() => store.requestAccessToken(silentAccessCheck)),
         );
 
         return () => subscription.unsubscribe();
-    }, [store, selectedContext]);
+    }, [store, selectedContext, silentAccessCheck]);
 
     useEffect(() => {
         return () => store.unsubscribe();
@@ -107,7 +107,7 @@ export const PowerBIReportProvider: FunctionComponent<Props> = ({
          * When EmbedInfo is fetched, the hasRls state should resolve to true/false or we have caught an error.
          */
         if (!hasContext || hasRls === false) store.contextAccess = true;
-    }, [store, hasContext, hasRls, selectedContext]);
+    }, [store, hasContext, hasRls, selectedContext, silentAccessCheck]);
 
     return <Provider value={value}>{children}</Provider>;
 };
