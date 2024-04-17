@@ -13,7 +13,7 @@ type Props = {
 export const PowerBIBookmark: FunctionComponent<Props> = ({ hasContext }: Props) => {
     const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const pbiContext = useContext(context);
-    const { id: portalContext } = useCurrentContext();
+    const portalContext = useCurrentContext();
     const { component, store, event$ } = pbiContext;
 
     /**
@@ -65,7 +65,7 @@ export const PowerBIBookmark: FunctionComponent<Props> = ({ hasContext }: Props)
         bookmark: BookmarkPayload<string>,
         _awaitForContextSwitch: boolean,
     ) => {
-        if (hasContext && bookmark.context?.id !== portalContext) {
+        if (hasContext && bookmark.context?.id !== portalContext?.id) {
             // set bookmark in state to apply after context change
             // applying bookmark in event$ observer here does not work for some unconcevable reason.
             setBookmarkPayload(bookmark.payload);
