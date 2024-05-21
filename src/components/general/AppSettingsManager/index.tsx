@@ -16,7 +16,9 @@ export type AppSettingsManagerProps<T> = {
     anchorId: string;
     hasContext?: boolean;
 };
-
+/**
+ * @deprecated Use the new BookmarksManager component instead.
+ */
 function AppSettingsManager<T>(props: AppSettingsManagerProps<T>) {
     const [isSideSheetOpen, setIsSideSheetOpen] = useState<boolean>(false);
     const openSideSheet = useCallback(() => setIsSideSheetOpen(true), []);
