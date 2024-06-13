@@ -1,6 +1,6 @@
 import { forwardRef, MutableRefObject } from 'react';
 import classNames from 'classnames';
-import styles from '../styles.less';
+import { useStyles } from '../styles';
 import { useElevationClassName } from '@equinor/fusion-components';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
@@ -12,6 +12,7 @@ type SwitchProps = {
 
 const Switch = forwardRef<HTMLDivElement | null, SwitchProps>(
     ({ active, onChange, disabled }, ref) => {
+        const styles = useStyles();
         const switchRef = ref as MutableRefObject<HTMLInputElement | null>;
 
         const containerClassNames = classNames(

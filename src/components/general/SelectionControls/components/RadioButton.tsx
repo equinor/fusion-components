@@ -1,5 +1,5 @@
 import { useCallback, MutableRefObject, forwardRef } from 'react';
-import styles from '../styles.less';
+import { useStyles } from '../styles';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
 
@@ -12,6 +12,7 @@ type RadioProps = {
 
 const Radio = forwardRef<HTMLInputElement | null, RadioProps>(
     ({ selected, onChange, disabled, color }, ref) => {
+        const styles = useStyles();
         const inputRef = ref as MutableRefObject<HTMLInputElement | null>;
         const containerClassNames = classNames(
             styles.container,
