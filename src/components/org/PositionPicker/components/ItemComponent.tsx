@@ -1,10 +1,11 @@
 import ItemComponentProps from './itemComponentProps';
-import styles from '../styles.less';
+import { useStyles } from '../itemComponentStyle';
 import { useMemo, FC } from 'react';
 import { usePositionPickerContext } from '../positionPickerContext';
 import usePositionInstance from '../hooks/usePositionInstance';
 
 const ItemComponent: FC<ItemComponentProps> = ({ item }) => {
+    const styles = useStyles();
     const { allowFuture, allowPast } = usePositionPickerContext();
     const { instance } = usePositionInstance(item.position?.instances, allowFuture, allowPast);
 
@@ -23,7 +24,7 @@ const ItemComponent: FC<ItemComponentProps> = ({ item }) => {
     return (
         <div className={styles.cardContainer}>
             <div className={styles.positionName}>{positionName}</div>
-            <div className={styles.assignedPersonName}>
+            <div className={styles.personName}>
                 {instance?.assignedPerson ? instance.assignedPerson.name : 'TNB'}
             </div>
         </div>
