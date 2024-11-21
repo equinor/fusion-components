@@ -47,8 +47,13 @@ export const useStyles = makeStyles(
         },
         label: {
             fontSize: 'var(--header-font-size)',
-            lineHeight: 'calc(var(--grid-unit) * 3px)',
+            lineHeight: 'calc(var(--grid-unit) * 2.5px)',
             padding: '0 calc(var(--grid-unit) * 2px)',
+            display: '-webkit-box',
+            '-webkit-line-clamp': '2',
+            '-webkit-box-orient': 'vertical',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
 
             '&$disabled': {
                 color: 'var(--color-black-alt2)',
@@ -89,6 +94,6 @@ export const useStyles = makeStyles(
         compact: {},
         comfortable: {},
     }),
-    { name: 'fusion-component-accordion' }
+    { name: 'fusion-component-accordion' },
 );
 export default useStyles;
