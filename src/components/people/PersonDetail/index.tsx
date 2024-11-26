@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState, Fragment } from 'react';
-
-import styles from './styles.less';
+import { useStyles } from './PersonDetails.style';
 import { PersonDetails, PersonPresence, useApiClients } from '@equinor/fusion';
 import {
     PersonPhoto,
@@ -35,6 +34,7 @@ const getAccountTypeName = (person: PersonDetails): string => {
 };
 
 const PersonDetail = ({ personId, person, noPhoto }: PersonDetailProps) => {
+    const styles = useStyles();
     const [currentPerson, setCurrentPerson] = useState<PersonDetails | null>(null);
     const [presence, setPresence] = useState<PersonPresence | null>(null);
     const [isFetchingPresence, setIsFetchingPresence] = useState<boolean>(false);
