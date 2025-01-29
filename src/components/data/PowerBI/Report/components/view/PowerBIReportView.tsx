@@ -9,13 +9,13 @@ import { createStyles, makeStyles } from '@equinor/fusion-react-styles';
 export type PowerBIComponentConfig = Omit<IEmbedConfiguration, 'accessToken'>;
 
 export type PowerBIComponentProps = {
-    config?: PowerBIComponentConfig;
+    readonly config?: PowerBIComponentConfig;
 };
 
 const service = new PowerBIServices.Service(
     factories.hpmFactory,
     factories.wpmpFactory,
-    factories.routerFactory
+    factories.routerFactory,
 );
 
 const useStyles = makeStyles(
@@ -28,21 +28,22 @@ const useStyles = makeStyles(
                 '&>iframe': { border: 'none' },
             },
         }),
-    { name: 'fusion-powerBi-iframe' }
+    { name: 'fusion-powerBi-iframe' },
 );
 
 export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBIComponentProps) => {
     const { metrics, component, event$ } = useContext(context);
 
     const embedConfig = useConfig(config);
+
     const eventHandlers = useMemo(
         () =>
             Object.values(PowerBIEmbedEvents).reduce(
                 (cur, type) =>
                     cur.set(type, (event, entity) => event$.next({ type, event, entity })),
-                new Map<any, EventHandler>()
+                new Map<any, EventHandler>(),
             ),
-        [event$]
+        [event$],
     );
 
     const getEmbeddedComponent = (value) => {
@@ -74,9 +75,12 @@ export const PowerBIReportView: FC<PowerBIComponentProps> = ({ config }: PowerBI
             // @ts-ignore
             component.current.config.contrastMode = embedConfig.contrastMode;
             component.current.configChanged(false);
-            component.current.reload();
+
+            // DEV: a reload might happen before the token is refreshed and the component is ready
+            // commenting out to fix issue with refreshing token
+            // component.current.reload();
         }
-    }, [embedConfig]);
+    }, [component, embedConfig]);
 
     // only render component when access token
     if (embedConfig) {
