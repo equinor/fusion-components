@@ -3,7 +3,7 @@ import { useEffect, useContext } from 'react';
 import { ReportingPathContext, ReportingPathContextReducer } from '../store';
 import { OrgNode } from '@equinor/fusion-components';
 
-import styles from './styles.less';
+import { useStyles } from './style';
 
 type CardProps<T> = {
     node: OrgNode<T>;
@@ -12,6 +12,7 @@ type CardProps<T> = {
 };
 
 function Card<T>({ node, x = 0, y = 0 }: CardProps<T>) {
+    const styles = useStyles();
     const {
         state: { cardWidth, cardHeight, component },
         dispatch,
