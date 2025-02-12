@@ -13,8 +13,8 @@ import { HttpClientRequestFailedError } from '@equinor/fusion/lib/http/HttpClien
 import classNames from 'classnames';
 
 export type RoleSwitchProps = {
-    role: PersonRole;
-    showSwitch: boolean;
+    readonly role: PersonRole;
+    readonly showSwitch: boolean;
 };
 
 const expiresIn = (activeTo: string) => {
@@ -45,7 +45,7 @@ const RoleItem: FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) =>
                 await peopleContainer.setRoleStatusForUser(
                     currentUser.id,
                     clickedRole.name,
-                    !clickedRole.isActive
+                    !clickedRole.isActive,
                 );
                 setErrorMessage('');
             } catch (e) {
@@ -62,20 +62,26 @@ const RoleItem: FC<RoleSwitchProps> = ({ role, showSwitch }: RoleSwitchProps) =>
                 }
             }
         },
-        [role]
+        [currentUser, peopleContainer],
     );
 
     const errorClassNames = classNames(styles.small, { [styles.error]: errorMessage });
 
     const showExpireDate = useMemo(
         () => role.activeToUtc && showSwitch && !errorMessage,
-        [role, showSwitch, errorMessage]
+        [role, showSwitch, errorMessage],
     );
 
+    const roleDisplayName = useCallback((role: PersonRole): string => {
+        return role.type === 'Scoped'
+            ? `${role.displayName} - (${role.scope.value})`
+            : role.displayName;
+    }, []);
+
     return (
-        <div key={role.name} className={styles.roleManagementContainer}>
+        <div className={styles.roleManagementContainer}>
             <div className={styles.row}>
-                <div>{role.displayName}</div>
+                <div>{roleDisplayName(role)}</div>
                 {role.onDemandSupport && showSwitch && (
                     <div>
                         <Switch
