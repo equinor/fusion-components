@@ -1,12 +1,12 @@
-import { useMemo, FC } from 'react';
+import { useMemo, FC, useCallback } from 'react';
 
 import { PersonRole } from '@equinor/fusion';
 import { useStyles } from './PersonRoleList.style';
 import RoleItem from './RoleItem';
 
 type PersonRoleListProps = {
-    roleType: 'permanent' | 'claimable';
-    personRoles: PersonRole[];
+    readonly roleType: 'permanent' | 'claimable';
+    readonly personRoles: PersonRole[];
 };
 
 const sortByDisplayName = (a: PersonRole, b: PersonRole) => {
@@ -15,18 +15,23 @@ const sortByDisplayName = (a: PersonRole, b: PersonRole) => {
 
 const PersonRoleList: FC<PersonRoleListProps> = ({ roleType, personRoles }) => {
     const styles = useStyles();
+
     const roles = useMemo(
         () =>
             personRoles.filter((role) =>
-                roleType === 'claimable' ? role.onDemandSupport : !role.onDemandSupport
+                roleType === 'claimable' ? role.onDemandSupport : !role.onDemandSupport,
             ),
-        [personRoles, roleType]
+        [personRoles, roleType],
     );
 
     const sortedRoles = useMemo(
         () => roles.sort((a: PersonRole, b: PersonRole) => sortByDisplayName(a, b)),
-        [roles]
+        [roles],
     );
+
+    const roleKey = useCallback((role: PersonRole): string => {
+        return role.type === 'Scoped' ? `${role.name}-${role.scope.value}` : role.name;
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -35,13 +40,12 @@ const PersonRoleList: FC<PersonRoleListProps> = ({ roleType, personRoles }) => {
             ) : (
                 sortedRoles.map((role: PersonRole) => (
                     <RoleItem
-                        key={role.name}
+                        key={roleKey(role)}
                         role={role}
                         showSwitch={!!(roleType === 'claimable')}
                     />
                 ))
             )}
-            {}
         </div>
     );
 };
