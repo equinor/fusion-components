@@ -3,10 +3,11 @@ import { Fragment, useContext, useMemo, useCallback } from 'react';
 import { ReportingPathContext, ReportingPathContextReducer } from '../store';
 import { OrgStructure, OrgNode } from '@equinor/fusion-components';
 
-import styles from './styles.less';
+import { useStyles } from './style';
 import classNames from 'classnames';
 
 const Links = <T extends OrgStructure>() => {
+    const styles = useStyles();
     const {
         state: { allNodes, cardHeight, width, cardMargin, cardWidth },
     } = useContext<ReportingPathContextReducer<T>>(ReportingPathContext);
