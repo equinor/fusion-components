@@ -1,6 +1,5 @@
 import { storiesOf } from '@storybook/react';
 import withFusionStory from '../../../../.storybook/withFusionStory';
-
 import { SkeletonBar, SkeletonButton, SkeletonDisc } from './index';
 import { styling } from '@equinor/fusion-components';
 import { DiscSize } from './Disc';
