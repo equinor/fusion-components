@@ -101,7 +101,7 @@
         "react-router-dom": "^5.0.1",
         "react-test-renderer": "^17.0.1",
         "storybook": "^6.5.16",
-        "style-loader": "^2.0.0",
+        "style-loader": "^4.0.0",
         "terser-webpack-plugin": "^5.1.1",
         "thread-loader": "^3.0.1",
         "ts-loader": "^8.0.16",
