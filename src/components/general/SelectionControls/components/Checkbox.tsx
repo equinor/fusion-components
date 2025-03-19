@@ -1,6 +1,6 @@
 import { useRef, MutableRefObject, forwardRef, useEffect, MouseEvent } from 'react';
 
-import styles from '../styles.less';
+import { useStyles } from '../styles';
 import { DoneIcon, MinimizeIcon } from '@equinor/fusion-components';
 import classNames from 'classnames';
 import { useComponentDisplayClassNames } from '@equinor/fusion';
@@ -15,6 +15,7 @@ type CheckboxProps = {
 
 const Checkbox = forwardRef<HTMLInputElement | null, CheckboxProps>(
     ({ selected, onChange, disabled, indeterminate, color }, ref) => {
+        const styles = useStyles();
         const inputRef =
             (ref as MutableRefObject<HTMLInputElement | null>) || useRef<HTMLInputElement | null>();
 
